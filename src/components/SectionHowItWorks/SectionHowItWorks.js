@@ -16,36 +16,36 @@ const SectionHowItWorks = props => {
       <div className={css.title}>
         <FormattedMessage id="SectionHowItWorks.titleLineOne" />
         <br />
-        <FormattedMessage id="SectionHowItWorks.titleLineTwo" />
+        {/* <FormattedMessage id="SectionHowItWorks.titleLineTwo" /> */}
       </div>
 
       <div className={css.steps}>
         <div className={css.step}>
-          <h2 className={css.stepTitle}>
+          {/* <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part1Title" />
-          </h2>
+          </h2> */}
           <p>
             <FormattedMessage id="SectionHowItWorks.part1Text" />
           </p>
         </div>
 
-        <div className={css.step}>
+        {/* <div className={css.step}>
           <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part2Title" />
           </h2>
           <p>
             <FormattedMessage id="SectionHowItWorks.part2Text" />
           </p>
-        </div>
+        </div> */}
 
-        <div className={css.step}>
+        {/* <div className={css.step}>
           <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part3Title" />
           </h2>
           <p>
             <FormattedMessage id="SectionHowItWorks.part3Text" />
           </p>
-        </div>
+        </div> */}
       </div>
 
       <div className={css.createListingLink}>

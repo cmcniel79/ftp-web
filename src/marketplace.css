@@ -21,9 +21,7 @@
 
   /* Full screen Background image located in root-folder/src/assets */
   --backgroundImage: {
-    /* Gradient direction and overlaying the black color on top of the image for better readability */
-    background: linear-gradient(-45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
-      url('../../assets/background-1440.jpg');
+    background: url('../../assets/Background_mobile.png');
 
     /* Add loading color for the div */
     background-color: var(--matterColor);
@@ -34,15 +32,19 @@
     /* Align the image within the container */
     background-position: center center;
 
+    border-radius: 40px;
+    border: solid 36px var(--matterColorBright);
+
     @media (--viewportLarge) {
-      border-radius: 40px;
-      border: solid 36px var(--matterColorBright);
+      background: url('../../assets/LandingBackground.png');
+      background-size: cover;
+      background-position: center center;
     }
   }
 
   /* ================ Colors ================ */
 
-  --marketplaceColor: #c0392b;
+  --marketplaceColor: #d40000;
   --marketplaceColorLight: #ff4c38;
   --marketplaceColorDark: #8c291e;
 

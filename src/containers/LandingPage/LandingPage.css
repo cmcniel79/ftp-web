@@ -18,6 +18,7 @@
 .root {
 }
 
+
 /* heroContainer gives the height for SectionHero */
 /* Safari has a bug with vw padding inside flexbox. Therefore we need an extra div (container) */
 /* If you've lot of content for the hero, multiple lines of text, make sure to adjust min-heights for each media breakpoint accordingly */
@@ -40,6 +41,74 @@
     min-height: 600px;
     height: calc(70vh - var(--topbarHeightDesktop));
   }
+}
+
+.buttonText{
+  color: white;
+  margin-bottom: 15px;
+  vertical-align: middle;
+  padding: 0 0 50px 0;
+}
+
+.donateButton{
+  @apply --marketplaceButtonStyles;
+  @media (--viewportMedium) {
+    display: block;
+    width: 260px;
+  }
+  margin: auto;
+  border-radius: 50px;
+}
+
+.donateSubText{
+  display: flex;
+  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+}
+
+.donateTitle{
+  font-size: 48px;
+  line-height: 52px;
+}
+
+.donateText{
+  width: 100%;
+  /* max-width: 1056px; */
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: start;
+  justify-content: space-between;
+  -webkit-box-align: start;
+  align-items: flex-start;
+}
+
+.sectionContentNarrow{
+  margin: 40px 24px 27px;
+  padding: 0;
+}
+
+.featuredListingsTitle{
+  /* text-align: center; */
+  font-size: 48px;
+  margin-bottom: 57px;
+}
+
+.featuredListings{
+  width: 100%;
+  /* max-width: 1056px; */
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: start;
+  justify-content: space-between;
+  -webkit-box-align: start;
+  align-items: flex-start;
+
+}
+
+.listingCard{
+  flex-basis: calc(33%-16px);
+  margin-bottom: 35px;
 }
 
 .hero {

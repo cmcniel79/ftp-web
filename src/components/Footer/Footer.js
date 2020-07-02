@@ -24,7 +24,11 @@ const renderSocialMediaLinks = intl => {
   const goToTwitter = intl.formatMessage({ id: 'Footer.goToTwitter' });
 
   const fbLink = siteFacebookPage ? (
-    <ExternalLink key="linkToFacebook" href={siteFacebookPage} className={css.icon} title={goToFb}>
+    <ExternalLink key="linkToFacebook" 
+    href={siteFacebookPage} 
+    className={css.icon} 
+    title={goToFb}
+    >
       <IconSocialMediaFacebook />
     </ExternalLink>
   ) : null;
@@ -50,6 +54,7 @@ const renderSocialMediaLinks = intl => {
       <IconSocialMediaInstagram />
     </ExternalLink>
   ) : null;
+
   return [fbLink, twitterLink, instragramLink].filter(v => v != null);
 };
 
@@ -64,6 +69,7 @@ const Footer = props => {
         <div className={css.content}>
           <div className={css.someLiksMobile}>{socialMediaLinks}</div>
           <div className={css.links}>
+
             <div className={css.organization} id="organization">
               <NamedLink name="LandingPage" className={css.logoLink}>
                 <Logo format="desktop" className={css.logo} />
@@ -79,6 +85,7 @@ const Footer = props => {
                 </p>
               </div>
             </div>
+
             <div className={css.infoLinks}>
               <ul className={css.list}>
                 <li className={css.listItem}>
@@ -108,6 +115,7 @@ const Footer = props => {
                 </li>
               </ul>
             </div>
+
             <div className={css.searches}>
               <ul className={css.list}>
                 <li className={css.listItem}>
@@ -119,7 +127,7 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchHelsinki" />
+                    <FormattedMessage id="Footer.searchJewelry" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
@@ -131,7 +139,7 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchTurku" />
+                    <FormattedMessage id="Footer.searchArt" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
@@ -143,7 +151,7 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchTampere" />
+                    <FormattedMessage id="Footer.searchApparel" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
@@ -155,87 +163,12 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchOulu" />
-                  </NamedLink>
-                </li>
-                <li className={css.listItem}>
-                  <NamedLink
-                    name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Rukatunturi%2C%20Kuusamo%2C%20Finland&bounds=66.1699707%2C29.167735499999935%2C66.1609529%2C29.13572069999998&origin=66.1654622%2C29.151728100000014',
-                    }}
-                    className={css.link}
-                  >
-                    <FormattedMessage id="Footer.searchRuka" />
+                    <FormattedMessage id="Footer.searchTraditional" />
                   </NamedLink>
                 </li>
               </ul>
             </div>
-            <div className={css.searchesExtra}>
-              <ul className={css.list}>
-                <li className={css.listItem}>
-                  <NamedLink
-                    name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Kuopio%2C%20Finland&bounds=63.40340329999999%2C28.457629300000008%2C62.592254%2C26.890028099999995&origin=62.89796999999999%2C27.67817249999996',
-                    }}
-                    className={css.link}
-                  >
-                    <FormattedMessage id="Footer.searchKuopio" />
-                  </NamedLink>
-                </li>
-                <li className={css.listItem}>
-                  <NamedLink
-                    name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Mikkeli%2C%20Finland&bounds=62.1990357%2C27.900274999999965%2C61.20955799999999%2C26.82762809999997&origin=61.68872709999999%2C27.27214570000001',
-                    }}
-                    className={css.link}
-                  >
-                    <FormattedMessage id="Footer.searchMikkeli" />
-                  </NamedLink>
-                </li>
-                <li className={css.listItem}>
-                  <NamedLink
-                    name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Espoo%2C%20Finland&bounds=60.3636105%2C24.8505715%2C60.0499087%2C24.499656500000015&origin=60.2054911%2C24.655899999999974',
-                    }}
-                    className={css.link}
-                  >
-                    <FormattedMessage id="Footer.searchEspoo" />
-                  </NamedLink>
-                </li>
-                <li className={css.listItem}>
-                  <NamedLink
-                    name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Vantaa%2C%20Finland&bounds=60.40113659999999%2C25.19306240000003%2C60.23714200000001%2C24.746512199999984&origin=60.29335239999999%2C25.037768599999936',
-                    }}
-                    className={css.link}
-                  >
-                    <FormattedMessage id="Footer.searchVantaa" />
-                  </NamedLink>
-                </li>
-                <li className={css.listItem}>
-                  <NamedLink
-                    name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Ahvenanmaan%20saaristo%2C%20Åland%20Islands&bounds=60.87664400000001%2C21.34532850000005%2C59.45425059999999%2C19.94061499999998&origin=59.8994405%2C20.593996100000027',
-                    }}
-                    className={css.link}
-                  >
-                    <FormattedMessage id="Footer.searchAhvenanmaa" />
-                  </NamedLink>
-                </li>
-              </ul>
-            </div>
+            
             <div className={css.extraLinks}>
               <div className={css.someLinks}>{socialMediaLinks}</div>
               <div className={css.legalMatters}>

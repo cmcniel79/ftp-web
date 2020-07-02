@@ -7,7 +7,7 @@
 
 .steps {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 
   @media (--viewportMedium) {
     flex-direction: row;
@@ -16,7 +16,7 @@
 
 .step {
   @media (--viewportMedium) {
-    width: 324px;
+    width: 1000px;
     margin-right: 40px;
   }
 }

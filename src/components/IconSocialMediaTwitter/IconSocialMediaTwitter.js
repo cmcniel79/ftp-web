@@ -10,8 +10,8 @@ const IconSocialMediaTwitter = props => {
   return (
     <svg
       className={classes}
-      width="16"
-      height="14"
+      width="26"
+      height="24"
       viewBox="0 0 16 14"
       xmlns="http://www.w3.org/2000/svg"
     >

@@ -34,16 +34,26 @@
  */
 
 export const filters = [
-  {
-    id: 'dates',
-    label: 'Dates',
-    type: 'BookingDateRangeFilter',
-    group: 'primary',
-    // Note: BookingDateRangeFilter is fixed filter,
-    // you can't change "queryParamNames: ['dates'],"
-    queryParamNames: ['dates'],
-    config: {},
-  },
+  // {
+  //   id: 'categories',
+  //   label: 'Categories',
+  //   type: 'SelectSingleFilter',
+  //   group: 'primary',
+  //   // Note: BookingDateRangeFilter is fixed filter,
+  //   // you can't change "queryParamNames: ['dates'],"
+  //   queryParamNames: ['pub_categories'],
+  //   config: {},
+  //   options: [
+  //     { key: 'jewelry', label: 'Jewelry' },
+  //     { key: 'accessories', label: 'Accessories' },
+  //     { key: 'apparel', label: 'Apparel' },
+  //     { key: 'traditional', label: 'Traditional Assortments' },
+  //     { key: 'Art', label: 'Art' },
+  //     { key: 'beauty', label: 'Beauty Products' },
+  //     { key: 'crafting', label: 'Crafting Supplies' },
+  //     { key: 'other', label: 'Other' },
+  //   ],
+  // },
   {
     id: 'price',
     label: 'Price',
@@ -60,89 +70,85 @@ export const filters = [
       step: 5,
     },
   },
-  {
-    id: 'keyword',
-    label: 'Keyword',
-    type: 'KeywordFilter',
-    group: 'primary',
-    // Note: KeywordFilter is fixed filter,
-    // you can't change "queryParamNames: ['keywords'],"
-    queryParamNames: ['keywords'],
-    // NOTE: If you are ordering search results by distance
-    // the keyword search can't be used at the same time.
-    // You can turn on/off ordering by distance from config.js file.
-    config: {},
-  },
-  {
-    id: 'category',
-    label: 'Category',
-    type: 'SelectSingleFilter',
-    group: 'secondary',
-    queryParamNames: ['pub_category'],
-    config: {
-      // "key" is the option you see in Flex Console.
-      // "label" is set here for the UI only.
-      // Note: label is not added through the translation files
-      // to make filter customizations a bit easier.
-      options: [
-        { key: 'smoke', label: 'Smoke' },
-        { key: 'electric', label: 'Electric' },
-        { key: 'wood', label: 'Wood' },
-        { key: 'other', label: 'Other' },
-      ],
-    },
-  },
-  {
-    id: 'amenities',
-    label: 'Amenities',
-    type: 'SelectMultipleFilter',
-    group: 'secondary',
-    queryParamNames: ['pub_amenities'],
-    config: {
-      // Optional modes: 'has_all', 'has_any'
-      // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
-      searchMode: 'has_all',
+  // {
+  //   id: 'region',
+  //   label: 'Region',
+  //   type: 'SelectMultipleFilter',
+  //   group: 'primary',
+  //   queryParamNames: ['pub_region'],
+  //   // NOTE: If you are ordering search results by distance
+  //   // the keyword search can't be used at the same time.
+  //   // You can turn on/off ordering by distance from config.js file.
+  //   config: {},
+  //   options: [
+  //     { key: 'plains', label: 'Plains', },
 
-      // "key" is the option you see in Flex Console.
-      // "label" is set here for this web app's UI only.
-      // Note: label is not added through the translation files
-      // to make filter customizations a bit easier.
-      options: [
-        {
-          key: 'towels',
-          label: 'Towels',
-        },
-        {
-          key: 'bathroom',
-          label: 'Bathroom',
-        },
-        {
-          key: 'swimming_pool',
-          label: 'Swimming pool',
-        },
-        {
-          key: 'own_drinks',
-          label: 'Own drinks allowed',
-        },
-        {
-          key: 'jacuzzi',
-          label: 'Jacuzzi',
-        },
-        {
-          key: 'audiovisual_entertainment',
-          label: 'Audiovisual entertainment',
-        },
-        {
-          key: 'barbeque',
-          label: 'Barbeque',
-        },
-        {
-          key: 'own_food_allowed',
-          label: 'Own food allowed',
-        },
-      ],
-    },
-  },
+  //     { key: 'southwest', label: 'Southwest',},
+      
+  //     { key: 'northwest', label: 'Pacific Northwest',},
+      
+  //     { key: 'west', label: 'West Coast', },
+
+  //     { key: 'east', label: 'Eastern U.S.', },
+
+  //     { key: 'pacific', label: 'Pacific Islands', },
+
+  //     { key: 'alaska', label: 'Alaska and Arctic', },
+
+  //     { key: 'central', label: 'Central and South America', },
+
+  //     { key: 'africa', label: 'Africa', },
+
+  //     { key: 'asia', label: 'Asia', },
+  //   ],
+  // },
+  // {
+  //   id: 'style',
+  //   label: 'Category',
+  //   type: 'SelectSingleFilter',
+  //   group: 'primary',
+  //   queryParamNames: ['pub_style'],
+  //   config: {
+  //     // "key" is the option you see in Flex Console.
+  //     // "label" is set here for the UI only.
+  //     // Note: label is not added through the translation files
+  //     // to make filter customizations a bit easier.
+  //     options: [
+  //       { key: 'contemporary', label: 'Contemporary' },
+  //       { key: 'traditional', label: 'Traditional' },
+  //     ],
+  //   },
+  // },
+  // {
+  //   id: 'material',
+  //   label: 'Material',
+  //   type: 'SelectMultipleFilter',
+  //   group: 'primary',
+  //   queryParamNames: ['pub_material'],
+  //   config: {
+  //     // Optional modes: 'has_all', 'has_any'
+  //     // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
+  //     searchMode: 'has_all',
+
+  //     // "key" is the option you see in Flex Console.
+  //     // "label" is set here for this web app's UI only.
+  //     // Note: label is not added through the translation files
+  //     // to make filter customizations a bit easier.
+  //     options: [
+  //       { key: 'turquoise', label: 'Turquoise', },
+
+  //       { key: 'coral', label: 'Coral',},
+        
+  //       { key: 'silver', label: 'Silver',},
+        
+  //       { key: 'copper', label: 'Copper', },
+
+  //       { key: 'beaded', label: 'Beaded', },
+
+  //       { key: 'gold', label: 'Gold', },
+  //     ],
+  //   },
+  // },
 ];
 
 export const sortConfig = {
