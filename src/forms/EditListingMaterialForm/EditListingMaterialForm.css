@@ -17,7 +17,7 @@
   }
 }
 
-.features {
+.material {
   margin-bottom: 24px;
 
   @media (--viewportMedium) {
@@ -37,6 +37,7 @@
   @media (--viewportLarge) {
     display: inline-block;
     width: 241px;
-    margin-top: 100px;
+    margin-top: 375px;
+    position: fixed;
   }
 }

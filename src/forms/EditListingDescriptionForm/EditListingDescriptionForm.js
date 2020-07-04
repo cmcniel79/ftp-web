@@ -6,7 +6,8 @@ import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput } from '../../components';
+import { Form, Button, FieldTextInput, FieldCheckboxGroup } from '../../components';
+import { findOptionsForSelectFilter } from '../../util/search';
 import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
 
 import css from './EditListingDescriptionForm.css';
@@ -30,6 +31,7 @@ const EditListingDescriptionFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
+        filterConfig,
       } = formRenderProps;
 
       const titleMessage = intl.formatMessage({ id: 'EditListingDescriptionForm.title' });
@@ -57,6 +59,16 @@ const EditListingDescriptionFormComponent = props => (
         id: 'EditListingDescriptionForm.descriptionRequired',
       });
 
+      const tribeMessage = intl.formatMessage({
+        id: 'EditListingDescriptionForm.tribe',
+      });
+      const tribePlaceholderMessage = intl.formatMessage({
+        id: 'EditListingDescriptionForm.tribePlaceholder',
+      });
+      const tribeRequiredMessage = intl.formatMessage({
+        id: 'EditListingDescriptionForm.tribeRequired',
+      });
+
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
         <p className={css.error}>
@@ -81,6 +93,7 @@ const EditListingDescriptionFormComponent = props => (
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
+      // const options = findOptionsForSelectFilter('style', filterConfig);
 
       return (
         <Form className={classes} onSubmit={handleSubmit}>
@@ -109,12 +122,31 @@ const EditListingDescriptionFormComponent = props => (
             validate={composeValidators(required(descriptionRequiredMessage))}
           />
 
-          <CustomCategorySelectFieldMaybe
+          <FieldTextInput
+            id="tribe"
+            name="tribe"
+            className={css.description}
+            type="textarea"
+            label={tribeMessage}
+            placeholder={tribePlaceholderMessage}
+            validate={composeValidators(required(tribeRequiredMessage))}
+          />
+
+          {/* Taken out Because it was too sauna specific */}
+          {/* <CustomCategorySelectFieldMaybe
             id="category"
             name="category"
             categories={categories}
             intl={intl}
-          />
+          /> */}
+
+          {/* <FieldCheckboxGroup
+            className={css.style}
+            id="style"
+            name="style"
+            options={options}
+          // validate={composeValidators(requiredFieldArrayCheckbox(selectionRequiredMessage))}
+          /> */}
 
           <Button
             className={css.submitButton}

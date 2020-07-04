@@ -12,10 +12,10 @@ import { createResourceLocatorString } from '../../util/routes';
 import {
   EditListingAvailabilityPanel,
   EditListingDescriptionPanel,
-  EditListingFeaturesPanel,
-  EditListingLocationPanel,
+  EditListingCategoryPanel,
+  EditListingMaterialPanel,
   EditListingPhotosPanel,
-  EditListingPoliciesPanel,
+  EditListingRegionPanel,
   EditListingPricingPanel,
 } from '../../components';
 
@@ -23,18 +23,18 @@ import css from './EditListingWizard.css';
 
 export const AVAILABILITY = 'availability';
 export const DESCRIPTION = 'description';
-export const FEATURES = 'features';
-export const POLICY = 'policy';
-export const LOCATION = 'location';
+export const CATEGORY = 'category';
+export const REGION = 'region';
+export const MATERIAL = 'material';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
 
 // EditListingWizardTab component supports these tabs
 export const SUPPORTED_TABS = [
   DESCRIPTION,
-  FEATURES,
-  POLICY,
-  LOCATION,
+  CATEGORY,
+  REGION,
+  MATERIAL,
   PRICING,
   AVAILABILITY,
   PHOTOS,
@@ -171,13 +171,13 @@ const EditListingWizardTab = props => {
         />
       );
     }
-    case FEATURES: {
+    case CATEGORY: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewFeatures'
-        : 'EditListingWizard.saveEditFeatures';
+        ? 'EditListingWizard.saveNewCategory'
+        : 'EditListingWizard.saveEditCategory';
       return (
-        <EditListingFeaturesPanel
-          {...panelProps(FEATURES)}
+        <EditListingCategoryPanel
+          {...panelProps(CATEGORY)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
@@ -185,13 +185,13 @@ const EditListingWizardTab = props => {
         />
       );
     }
-    case POLICY: {
+    case REGION: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewPolicies'
-        : 'EditListingWizard.saveEditPolicies';
+        ? 'EditListingWizard.saveNewRegion'
+        : 'EditListingWizard.saveEditRegion';
       return (
-        <EditListingPoliciesPanel
-          {...panelProps(POLICY)}
+        <EditListingRegionPanel
+          {...panelProps(REGION)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
@@ -199,13 +199,13 @@ const EditListingWizardTab = props => {
         />
       );
     }
-    case LOCATION: {
+    case MATERIAL: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewLocation'
-        : 'EditListingWizard.saveEditLocation';
+        ? 'EditListingWizard.saveNewMaterial'
+        : 'EditListingWizard.saveEditMaterial';
       return (
-        <EditListingLocationPanel
-          {...panelProps(LOCATION)}
+        <EditListingMaterialPanel
+          {...panelProps(MATERIAL)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);

@@ -2,17 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
+
 import { LISTING_STATE_DRAFT } from '../../util/types';
-import { ensureOwnListing } from '../../util/data';
-import { ListingLink } from '../../components';
-import { EditListingPoliciesForm } from '../../forms';
+import { ensureListing } from '../../util/data';
+import { EditListingCategoryForm } from '../../forms';
+import { ListingLink } from '..';
 
-import css from './EditListingPoliciesPanel.css';
+import css from './EditListingCategoryPanel.css';
 
-const EditListingPoliciesPanel = props => {
+const CATEGORY_NAME = 'categories';
+
+const EditListingCategoryPanel = props => {
   const {
-    className,
     rootClassName,
+    className,
     listing,
     disabled,
     ready,
@@ -25,39 +28,41 @@ const EditListingPoliciesPanel = props => {
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
-  const currentListing = ensureOwnListing(listing);
+  const currentListing = ensureListing(listing);
   const { publicData } = currentListing.attributes;
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
-      id="EditListingPoliciesPanel.title"
+      id="EditListingCategoryPanel.title"
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id="EditListingPoliciesPanel.createListingTitle" />
+    <FormattedMessage id="EditListingCategoryPanel.createListingTitle" />
   );
+
+  const categories = publicData && publicData.categories;
+  const initialValues = { categories };
 
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
-      <EditListingPoliciesForm
+      <EditListingCategoryForm
         className={css.form}
-        publicData={publicData}
-        initialValues={{ rules: publicData.rules }}
+        name={CATEGORY_NAME}
+        initialValues={initialValues}
         onSubmit={values => {
-          const { rules = '' } = values;
-          const updateValues = {
-            publicData: {
-              rules,
-            },
+          const { categories = [] } = values;
+
+          const updatedValues = {
+            publicData: { categories },
           };
-          onSubmit(updateValues);
+          onSubmit(updatedValues);
         }}
         onChange={onChange}
+        saveActionMsg={submitButtonText}
         disabled={disabled}
         ready={ready}
-        saveActionMsg={submitButtonText}
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
@@ -66,17 +71,17 @@ const EditListingPoliciesPanel = props => {
   );
 };
 
-const { func, object, string, bool } = PropTypes;
-
-EditListingPoliciesPanel.defaultProps = {
-  className: null,
+EditListingCategoryPanel.defaultProps = {
   rootClassName: null,
+  className: null,
   listing: null,
 };
 
-EditListingPoliciesPanel.propTypes = {
-  className: string,
+const { bool, func, object, string } = PropTypes;
+
+EditListingCategoryPanel.propTypes = {
   rootClassName: string,
+  className: string,
 
   // We cannot use propTypes.listing since the listing might be a draft.
   listing: object,
@@ -91,4 +96,4 @@ EditListingPoliciesPanel.propTypes = {
   errors: object.isRequired,
 };
 
-export default EditListingPoliciesPanel;
+export default EditListingCategoryPanel;

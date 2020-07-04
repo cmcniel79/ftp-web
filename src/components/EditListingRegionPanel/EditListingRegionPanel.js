@@ -5,14 +5,14 @@ import { FormattedMessage } from '../../util/reactIntl';
 
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
-import { EditListingFeaturesForm } from '../../forms';
-import { ListingLink } from '../../components';
+import { EditListingRegionForm } from '../../forms';
+import { ListingLink } from '..';
 
-import css from './EditListingFeaturesPanel.css';
+import css from './EditListingRegionPanel.css';
 
-const FEATURES_NAME = 'amenities';
+const REGION_NAME = 'regions';
 
-const EditListingFeaturesPanel = props => {
+const EditListingRegionPanel = props => {
   const {
     rootClassName,
     className,
@@ -34,28 +34,28 @@ const EditListingFeaturesPanel = props => {
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
-      id="EditListingFeaturesPanel.title"
+      id="EditListingRegionPanel.title"
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
+    <FormattedMessage id="EditListingRegionPanel.createListingTitle" />
   );
 
-  const amenities = publicData && publicData.amenities;
-  const initialValues = { amenities };
+  const regions = publicData && publicData.regions;
+  const initialValues = { regions };
 
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
-      <EditListingFeaturesForm
+      <EditListingRegionForm
         className={css.form}
-        name={FEATURES_NAME}
+        name={REGION_NAME}
         initialValues={initialValues}
         onSubmit={values => {
-          const { amenities = [] } = values;
+          const { regions = [] } = values;
 
           const updatedValues = {
-            publicData: { amenities },
+            publicData: { regions },
           };
           onSubmit(updatedValues);
         }}
@@ -71,7 +71,7 @@ const EditListingFeaturesPanel = props => {
   );
 };
 
-EditListingFeaturesPanel.defaultProps = {
+EditListingRegionPanel.defaultProps = {
   rootClassName: null,
   className: null,
   listing: null,
@@ -79,7 +79,7 @@ EditListingFeaturesPanel.defaultProps = {
 
 const { bool, func, object, string } = PropTypes;
 
-EditListingFeaturesPanel.propTypes = {
+EditListingRegionPanel.propTypes = {
   rootClassName: string,
   className: string,
 
@@ -96,4 +96,4 @@ EditListingFeaturesPanel.propTypes = {
   errors: object.isRequired,
 };
 
-export default EditListingFeaturesPanel;
+export default EditListingRegionPanel;

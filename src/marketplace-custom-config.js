@@ -34,26 +34,27 @@
  */
 
 export const filters = [
-  // {
-  //   id: 'categories',
-  //   label: 'Categories',
-  //   type: 'SelectSingleFilter',
-  //   group: 'primary',
-  //   // Note: BookingDateRangeFilter is fixed filter,
-  //   // you can't change "queryParamNames: ['dates'],"
-  //   queryParamNames: ['pub_categories'],
-  //   config: {},
-  //   options: [
-  //     { key: 'jewelry', label: 'Jewelry' },
-  //     { key: 'accessories', label: 'Accessories' },
-  //     { key: 'apparel', label: 'Apparel' },
-  //     { key: 'traditional', label: 'Traditional Assortments' },
-  //     { key: 'Art', label: 'Art' },
-  //     { key: 'beauty', label: 'Beauty Products' },
-  //     { key: 'crafting', label: 'Crafting Supplies' },
-  //     { key: 'other', label: 'Other' },
-  //   ],
-  // },
+  {
+    id: 'categories',
+    label: 'Categories',
+    type: 'SelectSingleFilter',
+    group: 'primary',
+    // Note: BookingDateRangeFilter is fixed filter,
+    // you can't change "queryParamNames: ['dates'],"
+    queryParamNames: ['pub_categories'],
+    config: {
+    options: [
+      { key: 'jewelry', label: 'Jewelry' },
+      { key: 'accessories', label: 'Accessories' },
+      { key: 'apparel', label: 'Apparel' },
+      { key: 'traditional', label: 'Traditional Assortments' },
+      { key: 'Art', label: 'Art' },
+      { key: 'beauty', label: 'Beauty Products' },
+      { key: 'crafting', label: 'Crafting Supplies' },
+      { key: 'other', label: 'Other' },
+    ],
+  },
+},
   {
     id: 'price',
     label: 'Price',
@@ -70,85 +71,86 @@ export const filters = [
       step: 5,
     },
   },
-  // {
-  //   id: 'region',
-  //   label: 'Region',
-  //   type: 'SelectMultipleFilter',
-  //   group: 'primary',
-  //   queryParamNames: ['pub_region'],
-  //   // NOTE: If you are ordering search results by distance
-  //   // the keyword search can't be used at the same time.
-  //   // You can turn on/off ordering by distance from config.js file.
-  //   config: {},
-  //   options: [
-  //     { key: 'plains', label: 'Plains', },
+  {
+    id: 'region',
+    label: 'Region',
+    type: 'SelectMultipleFilter',
+    group: 'primary',
+    queryParamNames: ['pub_region'],
+    // NOTE: If you are ordering search results by distance
+    // the keyword search can't be used at the same time.
+    // You can turn on/off ordering by distance from config.js file.
+    config: {searchMode: 'has_one',
+    options: [
+      { key: 'plains', label: 'Plains', },
 
-  //     { key: 'southwest', label: 'Southwest',},
+      { key: 'southwest', label: 'Southwest',},
       
-  //     { key: 'northwest', label: 'Pacific Northwest',},
+      { key: 'northwest', label: 'Pacific Northwest',},
       
-  //     { key: 'west', label: 'West Coast', },
+      { key: 'west', label: 'West Coast', },
 
-  //     { key: 'east', label: 'Eastern U.S.', },
+      { key: 'east', label: 'Eastern U.S.', },
 
-  //     { key: 'pacific', label: 'Pacific Islands', },
+      { key: 'pacific', label: 'Pacific Islands', },
 
-  //     { key: 'alaska', label: 'Alaska and Arctic', },
+      { key: 'alaska', label: 'Alaska and Arctic', },
 
-  //     { key: 'central', label: 'Central and South America', },
+      { key: 'central', label: 'Central and South America', },
 
-  //     { key: 'africa', label: 'Africa', },
+      { key: 'africa', label: 'Africa', },
 
-  //     { key: 'asia', label: 'Asia', },
-  //   ],
-  // },
-  // {
-  //   id: 'style',
-  //   label: 'Category',
-  //   type: 'SelectSingleFilter',
-  //   group: 'primary',
-  //   queryParamNames: ['pub_style'],
-  //   config: {
-  //     // "key" is the option you see in Flex Console.
-  //     // "label" is set here for the UI only.
-  //     // Note: label is not added through the translation files
-  //     // to make filter customizations a bit easier.
-  //     options: [
-  //       { key: 'contemporary', label: 'Contemporary' },
-  //       { key: 'traditional', label: 'Traditional' },
-  //     ],
-  //   },
-  // },
-  // {
-  //   id: 'material',
-  //   label: 'Material',
-  //   type: 'SelectMultipleFilter',
-  //   group: 'primary',
-  //   queryParamNames: ['pub_material'],
-  //   config: {
-  //     // Optional modes: 'has_all', 'has_any'
-  //     // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
-  //     searchMode: 'has_all',
+      { key: 'asia', label: 'Asia', },
+    ],
+  },
+},
+  {
+    id: 'style',
+    label: 'Style',
+    type: 'SelectSingleFilter',
+    group: 'primary',
+    queryParamNames: ['pub_style'],
+    config: {
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for the UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [
+        { key: 'contemporary', label: 'Contemporary' },
+        { key: 'traditional', label: 'Traditional' },
+      ],
+    },
+  },
+  {
+    id: 'material',
+    label: 'Material',
+    type: 'SelectMultipleFilter',
+    group: 'primary',
+    queryParamNames: ['pub_material'],
+    config: {
+      // Optional modes: 'has_all', 'has_any'
+      // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
+      searchMode: 'has_all',
 
-  //     // "key" is the option you see in Flex Console.
-  //     // "label" is set here for this web app's UI only.
-  //     // Note: label is not added through the translation files
-  //     // to make filter customizations a bit easier.
-  //     options: [
-  //       { key: 'turquoise', label: 'Turquoise', },
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for this web app's UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [
+        { key: 'turquoise', label: 'Turquoise', },
 
-  //       { key: 'coral', label: 'Coral',},
+        { key: 'coral', label: 'Coral',},
         
-  //       { key: 'silver', label: 'Silver',},
+        { key: 'silver', label: 'Silver',},
         
-  //       { key: 'copper', label: 'Copper', },
+        { key: 'copper', label: 'Copper', },
 
-  //       { key: 'beaded', label: 'Beaded', },
+        { key: 'beaded', label: 'Beaded', },
 
-  //       { key: 'gold', label: 'Gold', },
-  //     ],
-  //   },
-  // },
+        { key: 'gold', label: 'Gold', },
+      ],
+    },
+  },
 ];
 
 export const sortConfig = {

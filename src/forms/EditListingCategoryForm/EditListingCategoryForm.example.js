@@ -1,4 +1,4 @@
-import EditListingFeaturesForm from './EditListingFeaturesForm';
+import EditListingCategoryForm from './EditListingCategoryForm';
 
 const NAME = 'amenities';
 
@@ -33,12 +33,12 @@ const filterConfig = [
 ];
 
 export const Amenities = {
-  component: EditListingFeaturesForm,
+  component: EditListingCategoryForm,
   props: {
     name: NAME,
-    onSubmit: values => console.log('EditListingFeaturesForm submit:', values),
+    onSubmit: values => console.log('EditListingCategoryForm submit:', values),
     initialValues: initialValues,
-    saveActionMsg: 'Save amenities',
+    saveActionMsg: 'Save category',
     updated: false,
     updateInProgress: false,
     disabled: false,

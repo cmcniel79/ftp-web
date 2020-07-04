@@ -1,17 +1,20 @@
 import React from 'react';
 import { bool, func, shape, string } from 'prop-types';
 import classNames from 'classnames';
+import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
-import { FormattedMessage } from '../../util/reactIntl';
+import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import config from '../../config';
 import { Button, FieldCheckboxGroup, Form } from '../../components';
 
-import css from './EditListingFeaturesForm.css';
 
-const EditListingFeaturesFormComponent = props => (
+import css from './EditListingRegionForm.css';
+import { composeValidators, requiredFieldArrayCheckbox } from '../../util/validators';
+
+const EditListingRegionFormComponent = props => (
   <FinalForm
     {...props}
     mutators={{ ...arrayMutators }}
@@ -22,6 +25,8 @@ const EditListingFeaturesFormComponent = props => (
         rootClassName,
         className,
         name,
+        intl,
+        invalid,
         handleSubmit,
         pristine,
         saveActionMsg,
@@ -39,23 +44,32 @@ const EditListingFeaturesFormComponent = props => (
       const { updateListingError, showListingsError } = fetchErrors || {};
       const errorMessage = updateListingError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingFeaturesForm.updateFailed" />
+          <FormattedMessage id="EditListingRegionForm.updateFailed" />
         </p>
       ) : null;
 
       const errorMessageShowListing = showListingsError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingFeaturesForm.showListingFailed" />
+          <FormattedMessage id="EditListingRegionForm.showListingFailed" />
         </p>
       ) : null;
 
-      const options = findOptionsForSelectFilter('amenities', filterConfig);
+      const selectionRequiredMessage = intl.formatMessage({
+        id: 'EditListingRegionForm.selectionRequired'
+      });
+      const options = findOptionsForSelectFilter('region', filterConfig);
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
 
-          <FieldCheckboxGroup className={css.features} id={name} name={name} options={options} />
+          <FieldCheckboxGroup
+            className={css.region}
+            id={name}
+            name={name}
+            options={options}
+            // validate={composeValidators(requiredFieldArrayCheckbox(selectionRequiredMessage))}
+          />
 
           <Button
             className={css.submitButton}
@@ -72,18 +86,19 @@ const EditListingFeaturesFormComponent = props => (
   />
 );
 
-EditListingFeaturesFormComponent.defaultProps = {
+EditListingRegionFormComponent.defaultProps = {
   rootClassName: null,
   className: null,
   fetchErrors: null,
   filterConfig: config.custom.filters,
 };
 
-EditListingFeaturesFormComponent.propTypes = {
+EditListingRegionFormComponent.propTypes = {
   rootClassName: string,
   className: string,
   name: string.isRequired,
   onSubmit: func.isRequired,
+  intl: intlShape.isRequired,
   saveActionMsg: string.isRequired,
   disabled: bool.isRequired,
   ready: bool.isRequired,
@@ -96,6 +111,6 @@ EditListingFeaturesFormComponent.propTypes = {
   filterConfig: propTypes.filterConfig,
 };
 
-const EditListingFeaturesForm = EditListingFeaturesFormComponent;
+const EditListingRegionForm = EditListingRegionFormComponent;
 
-export default EditListingFeaturesForm;
+export default compose(injectIntl)(EditListingRegionForm);

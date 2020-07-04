@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
-import EditListingPoliciesForm from './EditListingPoliciesForm';
+import EditListingRegionForm from './EditListingRegionForm';
 
 export const Empty = {
-  component: EditListingPoliciesForm,
+  component: EditListingRegionForm,
   props: {
     publicData: {},
     onSubmit: values => {
-      console.log('Submit EditListingPoliciesForm with (unformatted) values:', values);
+      console.log('Submit EditListingRegionForm with (unformatted) values:', values);
     },
     saveActionMsg: 'Save rules',
     updated: false,

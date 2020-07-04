@@ -19,18 +19,18 @@ import { Modal, NamedRedirect, Tabs, StripeConnectAccountStatusBox } from '../..
 import { StripeConnectAccountForm } from '../../forms';
 
 import EditListingWizardTab, {
-  AVAILABILITY,
+  // AVAILABILITY,
   DESCRIPTION,
-  FEATURES,
-  POLICY,
-  LOCATION,
+  CATEGORY,
+  REGION,
+  MATERIAL,
   PRICING,
   PHOTOS,
 } from './EditListingWizardTab';
 import css from './EditListingWizard.css';
 
-// Show availability calendar only if environment variable availabilityEnabled is true
-const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
+// // Show availability calendar only if environment variable availabilityEnabled is true
+// const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 
 // You can reorder these panels.
 // Note 1: You need to change save button translations for new listing flow
@@ -38,11 +38,10 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // and listing publishing happens after last panel.
 export const TABS = [
   DESCRIPTION,
-  FEATURES,
-  POLICY,
-  LOCATION,
+  CATEGORY,
+  REGION,
+  MATERIAL,
   PRICING,
-  ...availabilityMaybe,
   PHOTOS,
 ];
 
@@ -56,16 +55,14 @@ const tabLabel = (intl, tab) => {
   let key = null;
   if (tab === DESCRIPTION) {
     key = 'EditListingWizard.tabLabelDescription';
-  } else if (tab === FEATURES) {
-    key = 'EditListingWizard.tabLabelFeatures';
-  } else if (tab === POLICY) {
-    key = 'EditListingWizard.tabLabelPolicy';
-  } else if (tab === LOCATION) {
-    key = 'EditListingWizard.tabLabelLocation';
+  } else if (tab === CATEGORY) {
+    key = 'EditListingWizard.tabLabelCategory';
+  } else if (tab === REGION) {
+    key = 'EditListingWizard.tabLabelRegion';
+  } else if (tab === MATERIAL) {
+    key = 'EditListingWizard.tabLabelMaterial';
   } else if (tab === PRICING) {
     key = 'EditListingWizard.tabLabelPricing';
-  } else if (tab === AVAILABILITY) {
-    key = 'EditListingWizard.tabLabelAvailability';
   } else if (tab === PHOTOS) {
     key = 'EditListingWizard.tabLabelPhotos';
   }
@@ -83,9 +80,7 @@ const tabLabel = (intl, tab) => {
  */
 const tabCompleted = (tab, listing) => {
   const {
-    availabilityPlan,
     description,
-    geolocation,
     price,
     title,
     publicData,
@@ -95,16 +90,16 @@ const tabCompleted = (tab, listing) => {
   switch (tab) {
     case DESCRIPTION:
       return !!(description && title);
-    case FEATURES:
-      return !!(publicData && publicData.amenities);
-    case POLICY:
-      return !!(publicData && typeof publicData.rules !== 'undefined');
-    case LOCATION:
-      return !!(geolocation && publicData && publicData.location && publicData.location.address);
+    case CATEGORY:
+      return !!(publicData && publicData.categories);
+    case REGION:
+      return !!(publicData && publicData.regions);
+    case MATERIAL:
+      return !!(publicData && publicData.materials);
     case PRICING:
       return !!price;
-    case AVAILABILITY:
-      return !!availabilityPlan;
+    // case AVAILABILITY:
+    //   return !!availabilityPlan;
     case PHOTOS:
       return images && images.length > 0;
     default:
