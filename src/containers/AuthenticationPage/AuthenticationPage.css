@@ -12,13 +12,14 @@
   @apply --marketplaceModalRootStyles;
 
   @media (--viewportMedium) {
-    @apply --backgroundImage;
+    @apply --backgroundFilled;
   }
 }
 
 .content {
   @apply --marketplaceModalBaseStyles;
   padding-top: 29px;
+  min-height: 677px;
 }
 
 /* ================ Tabs & Form ================ */

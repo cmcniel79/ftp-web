@@ -43,6 +43,7 @@
   }
 }
 
+
 .buttonText{
   color: white;
   margin-bottom: 15px;
@@ -61,10 +62,22 @@
 }
 
 .donateSubText{
+  margin-top: 35px;
   display: flex;
   flex-direction: column;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
+  justify-content: space-between;
+  @media (--viewportLarge) {
+    padding-top: 50px;
+    align-items: center;
+    text-align: center;
+    box-sizing: inherit;
+  }
+}
+
+.donateSubText .thirdDonate{
+  @media (--viewportLarge) {
+  width: 75%;
+  }
 }
 
 .donateTitle{
@@ -73,14 +86,13 @@
 }
 
 .donateText{
+  @media (--viewportLarge) {
   width: 100%;
-  /* max-width: 1056px; */
   display: flex;
-  flex-wrap: wrap;
-  -webkit-box-pack: start;
-  justify-content: space-between;
-  -webkit-box-align: start;
-  align-items: flex-start;
+  flex-direction: row;
+  vertical-align: text-top;
+  align-items: flex-end;
+  }
 }
 
 .sectionContentNarrow{
@@ -89,21 +101,21 @@
 }
 
 .featuredListingsTitle{
-  /* text-align: center; */
+  text-align: center;
   font-size: 48px;
   margin-bottom: 57px;
+  line-height: 52px;
 }
 
 .featuredListings{
   width: 100%;
-  /* max-width: 1056px; */
+  max-width: 1056px;
   display: flex;
   flex-wrap: wrap;
   -webkit-box-pack: start;
   justify-content: space-between;
   -webkit-box-align: start;
   align-items: flex-start;
-
 }
 
 .listingCard{

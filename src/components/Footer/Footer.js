@@ -67,9 +67,9 @@ const Footer = props => {
     <div className={classes}>
       <div className={css.topBorderWrapper}>
         <div className={css.content}>
-          <div className={css.someLiksMobile}>{socialMediaLinks}</div>
+          <div className={css.someLinksMobile}>{socialMediaLinks}</div>
+    
           <div className={css.links}>
-
             <div className={css.organization} id="organization">
               <NamedLink name="LandingPage" className={css.logoLink}>
                 <Logo format="desktop" className={css.logo} />
@@ -88,6 +88,11 @@ const Footer = props => {
 
             <div className={css.infoLinks}>
               <ul className={css.list}>
+                <li>
+                  <h2 className={css.title}>
+                    Get Started
+                  </h2>
+                </li>
                 <li className={css.listItem}>
                   <NamedLink name="NewListingPage" className={css.link}>
                     <FormattedMessage id="Footer.toNewListingPage" />
@@ -95,22 +100,22 @@ const Footer = props => {
                 </li>
                 <li className={css.listItem}>
                   <NamedLink name="AboutPage" className={css.link}>
-                    <FormattedMessage id="Footer.toAboutPage" />
+                    <FormattedMessage id="Footer.toAboutPage"/>
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
                   <NamedLink name="LandingPage" className={css.link}>
-                    <FormattedMessage id="Footer.toFAQPage" />
+                    <FormattedMessage id="Footer.toFAQPage"/>
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
                   <NamedLink name="LandingPage" className={css.link}>
-                    <FormattedMessage id="Footer.toHelpPage" />
+                    <FormattedMessage id="Footer.toHelpPage"/>
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
                   <NamedLink name="AboutPage" to={{ hash: '#contact' }} className={css.link}>
-                    <FormattedMessage id="Footer.toContactPage" />
+                    <FormattedMessage id="Footer.toContactPage"/>
                   </NamedLink>
                 </li>
               </ul>
@@ -118,51 +123,40 @@ const Footer = props => {
 
             <div className={css.searches}>
               <ul className={css.list}>
+                <li>
+                  <h2 className={css.title}>
+                    Shop 
+                  </h2>
+                </li>
                 <li className={css.listItem}>
                   <NamedLink
                     name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Helsinki%2C%20Finland&bounds=60.2978389%2C25.254484899999966%2C59.9224887%2C24.782875800000056&origin=60.16985569999999%2C24.93837910000002',
-                    }}
-                    className={css.link}
-                  >
+                    to={{search:'?',}}
+                    className={css.link}>
                     <FormattedMessage id="Footer.searchJewelry" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
                   <NamedLink
                     name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Turku%2C%20Finland&bounds=60.5304531%2C22.38197820000005%2C60.33361189999999%2C22.066440100000023&origin=60.4518126%2C22.26663020000001',
-                    }}
-                    className={css.link}
-                  >
+                    to={{search:'?',}}
+                    className={css.link}>
                     <FormattedMessage id="Footer.searchArt" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
                   <NamedLink
                     name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Tampere%2C%20Finland&bounds=61.83657359999999%2C24.118384099999957%2C61.42728169999999%2C23.542201299999988&origin=61.4977524%2C23.760953500000028',
-                    }}
-                    className={css.link}
-                  >
+                    to={{search:'?',}}
+                    className={css.link}>
                     <FormattedMessage id="Footer.searchApparel" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
                   <NamedLink
                     name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Oulu%2C%20Finland&bounds=65.5643426%2C26.770696000000044%2C64.8443082%2C24.114941999999928&origin=65.0120888%2C25.465077199999996',
-                    }}
-                    className={css.link}
-                  >
+                    to={{search:'?',}}
+                    className={css.link}>
                     <FormattedMessage id="Footer.searchTraditional" />
                   </NamedLink>
                 </li>

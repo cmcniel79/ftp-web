@@ -29,6 +29,7 @@ const EditListingDescriptionPanel = props => {
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { description, title, publicData } = currentListing.attributes;
+  const tribe = publicData && publicData.tribe;
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -40,22 +41,21 @@ const EditListingDescriptionPanel = props => {
     <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" />
   );
 
-  const categoryOptions = findOptionsForSelectFilter('category', config.custom.filters);
+  // const categoryOptions = findOptionsForSelectFilter('category', config.custom.filters);
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingDescriptionForm
         className={css.form}
-        initialValues={{ title, description, category: publicData.category }}
+        initialValues={{ title, description, tribe}}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, category } = values;
+          const { title, description, tribe} = values;
           const updateValues = {
             title: title.trim(),
             description,
-            publicData: { category },
+            publicData: { tribe },
           };
-
           onSubmit(updateValues);
         }}
         onChange={onChange}
@@ -64,7 +64,7 @@ const EditListingDescriptionPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
-        categories={categoryOptions}
+        // categories={categoryOptions}
       />
     </div>
   );

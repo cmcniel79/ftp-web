@@ -36,8 +36,6 @@
 }
 
 .content {
-  display: flex;
-  flex-direction: column;
   width: 100%;
 
   @media (--viewportMedium) {
@@ -56,7 +54,7 @@
 }
 
 /* Mobile only social media links */
-.someLiksMobile {
+.someLinksMobile {
   margin-bottom: 24px;
 
   @media (--viewportMedium) {
@@ -80,7 +78,8 @@
   justify-content: flex-start;
   width: 100%;
   margin-bottom: 18px;
-
+  flex-direction: row;
+  align-items: flex-start;
   @media (--viewportMedium) {
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -95,6 +94,7 @@
   display: none;
   margin-right: 24px;
   margin-bottom: 24px;
+  margin-top: 10px;
 
   @media (--viewportMedium) {
     display: block;
@@ -120,19 +120,20 @@
   object-fit: contain;
   object-position: left center;
   width: 100%;
-  height: 27px;
+  height: 35px;
 }
 
 .organizationInfo {
 }
 
 .organizationDescription {
-  @apply --marketplaceTinyFontStyles;
+  margin-top: 0;
+  @apply --marketplaceSmallFontStyles;
 }
 
 .organizationCopyright {
-  @apply --marketplaceTinyFontStyles;
-  margin-top: 32px;
+  @apply --marketplaceSmallFontStyles;
+  margin-top: 2px;
 }
 
 .copyrightLink {
@@ -151,6 +152,7 @@
   flex-basis: 165px;
   margin-right: 24px;
   margin-bottom: 24px;
+  margin-top: 0;
 
   @media (--viewportMedium) {
     padding-top: 2px;
@@ -161,6 +163,10 @@
 .list {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.list .title{
+  margin-top: 0px;
 }
 
 .listItem {
@@ -199,6 +205,7 @@
   flex-basis: 165px;
   margin-right: 24px;
   margin-bottom: 24px;
+  margin-top: 0px;
 
   @media (--viewportMedium) {
     padding-top: 2px;
@@ -245,6 +252,7 @@
   flex-grow: 1;
 
   /* Layout */
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

@@ -233,6 +233,7 @@ export class AuthenticationPageComponent extends Component {
           <LayoutWrapperTopbar>
             <TopbarContainer className={topbarClasses} />
           </LayoutWrapperTopbar>
+
           <LayoutWrapperMain className={css.layoutWrapperMain}>
             <div className={css.root}>
               {showEmailVerification ? emailVerificationContent : formContent}
@@ -242,8 +243,7 @@ export class AuthenticationPageComponent extends Component {
               isOpen={this.state.tosModalOpen}
               onClose={() => this.setState({ tosModalOpen: false })}
               usePortal
-              onManageDisableScrolling={onManageDisableScrolling}
-            >
+              onManageDisableScrolling={onManageDisableScrolling}>
               <div className={css.termsWrapper}>
                 <h2 className={css.termsHeading}>
                   <FormattedMessage id="AuthenticationPage.termsHeading" />
@@ -252,9 +252,11 @@ export class AuthenticationPageComponent extends Component {
               </div>
             </Modal>
           </LayoutWrapperMain>
+
           <LayoutWrapperFooter>
             <Footer />
           </LayoutWrapperFooter>
+          
         </LayoutSingleColumn>
       </Page>
     );

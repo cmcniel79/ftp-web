@@ -19,7 +19,7 @@ const EditListingDescriptionFormComponent = props => (
     {...props}
     render={formRenderProps => {
       const {
-        categories,
+        // categories,
         className,
         disabled,
         ready,
@@ -31,7 +31,7 @@ const EditListingDescriptionFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
-        filterConfig,
+        // filterConfig,
       } = formRenderProps;
 
       const titleMessage = intl.formatMessage({ id: 'EditListingDescriptionForm.title' });
@@ -179,12 +179,12 @@ EditListingDescriptionFormComponent.propTypes = {
     showListingsError: propTypes.error,
     updateListingError: propTypes.error,
   }),
-  categories: arrayOf(
-    shape({
-      key: string.isRequired,
-      label: string.isRequired,
-    })
-  ),
+  // categories: arrayOf(
+  //   shape({
+  //     key: string.isRequired,
+  //     label: string.isRequired,
+  //   })
+  // ),
 };
 
 export default compose(injectIntl)(EditListingDescriptionFormComponent);

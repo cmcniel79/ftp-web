@@ -147,10 +147,11 @@ export const LandingPageComponent = props => {
                 <h2 className={css.donateTitle}>
                   From The People is Committed to Representing Indigenous Peoples and Supporting Our Movements
                   </h2>
+
                 <div className={css.donateText}>
                   <div className={css.donateSubText}>
                     <h2>
-                      Coronavirus Relief Efforts
+                      Coronavirus Relief Efforts within Indian Country
                       </h2>
                     <p>
                       For the next three months From The People will be donating all profits
@@ -175,12 +176,35 @@ export const LandingPageComponent = props => {
                       Violence Against Native Women.
                       </p>
                     <button className={css.donateButton}>
-                      <ExternalLink 
+                      <ExternalLink
                         target="https://www.csvanw.org/mmiw/"
                         className={css.buttonText}>
                         <FormattedMessage id="LandingPage.mmiwButton" />
                       </ExternalLink>
                     </button>
+                  </div>
+                </div>
+
+                <div className={css.donateText}>
+                  <div className={css.donateSubText}>
+                    <div className={css.thirdDonate}>
+                      <h2>
+                        Black Lives Matter
+                      </h2>
+                      <p>
+                        With the unrest in many American cities, From The People would like
+                        to express our support for the protestors in their fight against police
+                        brutality. Your Indigenous allies are here to help! Please consider donating
+                        to the Black Visions Collective using the button below, and other organizations fighting for Black Lives.
+                      </p>
+                      <button className={css.donateButton}>
+                        <ExternalLink
+                          target="https://www.firstnations.org/covid-19-emergency-response-fund/"
+                          className={css.buttonText}>
+                          Support BLM
+                      </ExternalLink>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
