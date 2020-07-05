@@ -4,6 +4,7 @@ import {
   AuthenticationPage,
   CheckoutPage,
   ContactDetailsPage,
+  FAQPage,
   EditListingPage,
   EmailVerificationPage,
   InboxPage,
@@ -137,6 +138,12 @@ const routeConfiguration = () => {
       auth: true,
       component: props => <EditListingPage {...props} />,
       loadData: EditListingPage.loadData,
+    },
+
+    {
+      path: '/faq',
+      name: 'FAQPage',
+      component: FAQPage,
     },
 
     // Canonical path should be after the `/l/new` path since they

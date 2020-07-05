@@ -15,7 +15,7 @@ import css from './AboutPage.css';
 import image from './about-us.jpg';
 
 const AboutPage = () => {
-  const { siteTwitterHandle, siteFacebookPage } = config;
+  const { siteTwitterHandle, siteFacebookPage, siteInstagramPage } = config;
   const siteTwitterPage = twitterPageURL(siteTwitterHandle);
 
   // prettier-ignore
@@ -98,6 +98,7 @@ const AboutPage = () => {
               <p>
                 <br/>
                 You can also checkout our{' '}
+                <ExternalLink href={siteInstagramPage}>Instagram</ExternalLink>, {' '}
                 <ExternalLink href={siteFacebookPage}>Facebook</ExternalLink> and{' '}
                 <ExternalLink href={siteTwitterPage}>Twitter</ExternalLink>.
               </p>

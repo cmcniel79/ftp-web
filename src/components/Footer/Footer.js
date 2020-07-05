@@ -24,10 +24,10 @@ const renderSocialMediaLinks = intl => {
   const goToTwitter = intl.formatMessage({ id: 'Footer.goToTwitter' });
 
   const fbLink = siteFacebookPage ? (
-    <ExternalLink key="linkToFacebook" 
-    href={siteFacebookPage} 
-    className={css.icon} 
-    title={goToFb}
+    <ExternalLink key="linkToFacebook"
+      href={siteFacebookPage}
+      className={css.icon}
+      title={goToFb}
     >
       <IconSocialMediaFacebook />
     </ExternalLink>
@@ -68,7 +68,7 @@ const Footer = props => {
       <div className={css.topBorderWrapper}>
         <div className={css.content}>
           <div className={css.someLinksMobile}>{socialMediaLinks}</div>
-    
+
           <div className={css.links}>
             <div className={css.organization} id="organization">
               <NamedLink name="LandingPage" className={css.logoLink}>
@@ -100,23 +100,18 @@ const Footer = props => {
                 </li>
                 <li className={css.listItem}>
                   <NamedLink name="AboutPage" className={css.link}>
-                    <FormattedMessage id="Footer.toAboutPage"/>
+                    <FormattedMessage id="Footer.toAboutPage" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
-                  <NamedLink name="LandingPage" className={css.link}>
-                    <FormattedMessage id="Footer.toFAQPage"/>
+                <NamedLink name="FAQPage" className={css.link}>
+                  <FormattedMessage id="Footer.toFAQPage" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
-                  <NamedLink name="LandingPage" className={css.link}>
-                    <FormattedMessage id="Footer.toHelpPage"/>
-                  </NamedLink>
-                </li>
-                <li className={css.listItem}>
-                  <NamedLink name="AboutPage" to={{ hash: '#contact' }} className={css.link}>
-                    <FormattedMessage id="Footer.toContactPage"/>
-                  </NamedLink>
+                  <ExternalLink name="ContactEmail" className={css.link} href="mailto:customersupport@fromthepeople.co">
+                    <FormattedMessage id="Footer.toContactPage" />
+                  </ExternalLink>
                 </li>
               </ul>
             </div>
@@ -125,13 +120,13 @@ const Footer = props => {
               <ul className={css.list}>
                 <li>
                   <h2 className={css.title}>
-                    Shop 
+                    Shop
                   </h2>
                 </li>
                 <li className={css.listItem}>
                   <NamedLink
                     name="SearchPage"
-                    to={{search:'?',}}
+                    to={{ search: '?', }}
                     className={css.link}>
                     <FormattedMessage id="Footer.searchJewelry" />
                   </NamedLink>
@@ -139,7 +134,7 @@ const Footer = props => {
                 <li className={css.listItem}>
                   <NamedLink
                     name="SearchPage"
-                    to={{search:'?',}}
+                    to={{ search: '?', }}
                     className={css.link}>
                     <FormattedMessage id="Footer.searchArt" />
                   </NamedLink>
@@ -147,7 +142,7 @@ const Footer = props => {
                 <li className={css.listItem}>
                   <NamedLink
                     name="SearchPage"
-                    to={{search:'?',}}
+                    to={{ search: '?', }}
                     className={css.link}>
                     <FormattedMessage id="Footer.searchApparel" />
                   </NamedLink>
@@ -155,14 +150,14 @@ const Footer = props => {
                 <li className={css.listItem}>
                   <NamedLink
                     name="SearchPage"
-                    to={{search:'?',}}
+                    to={{ search: '?', }}
                     className={css.link}>
                     <FormattedMessage id="Footer.searchTraditional" />
                   </NamedLink>
                 </li>
               </ul>
             </div>
-            
+
             <div className={css.extraLinks}>
               <div className={css.someLinks}>{socialMediaLinks}</div>
               <div className={css.legalMatters}>

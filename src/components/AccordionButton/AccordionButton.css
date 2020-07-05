@@ -1,0 +1,46 @@
+.accordionItem {
+    width: 100%;
+}
+.accordionItem .title {
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.1s;
+}
+.accordionItem .title:after {
+    content: '⯆';
+   /* Unicode character */
+    font-size: 13px;
+    float: right;
+    margin-left: 5px;
+}
+.accordionItem .panel {
+    max-height: 0;
+    padding: 0 20px 0 20px;
+    transition: 0.45s ease-in;
+    overflow: hidden;
+}
+.active .title{
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.1s;
+}
+.active .title:after {
+    content: '⯅';
+   /* Unicode character */
+   font-size: 13px;
+   float: right;
+   margin-left: 5px;
+}
+.active .panel {
+    max-height: 1500px;
+    padding: 0 20px 0 20px;
+    transition: max-height .2s ease-in;
+}

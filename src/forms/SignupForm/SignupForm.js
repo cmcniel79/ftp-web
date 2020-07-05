@@ -5,7 +5,7 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Form as FinalForm } from 'react-final-form';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
-import { Form, PrimaryButton, FieldTextInput } from '../../components';
+import { Form, PrimaryButton, FieldTextInput, FieldBoolean } from '../../components';
 
 import css from './SignupForm.css';
 
@@ -82,6 +82,7 @@ const SignupFormComponent = props => (
         passwordMinLength,
         passwordMaxLength
       );
+      const boolRequired = validators.requiredBoolean('This field is required');
 
       // firstName
       const firstNameLabel = intl.formatMessage({
@@ -128,7 +129,6 @@ const SignupFormComponent = props => (
           <FormattedMessage id="SignupForm.termsAndConditionsLinkText" />
         </span>
       );
-
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           <div>
@@ -173,8 +173,25 @@ const SignupFormComponent = props => (
               placeholder={passwordPlaceholder}
               validate={passwordValidators}
             />
+            <FieldBoolean
+              className={css.sellBool}
+              id={formId ? `${formId}.seller` : 'seller'}
+              name="boolOption"
+              label="Do you plan on selling on From The People?"
+              placeholder="Choose yes/no"
+              validate={boolRequired}
+            />
+            {console.log(formId)}
+            <FieldTextInput
+              className={css.password}
+              type="text"
+              id="tribe"
+              name="tribe"
+              autoComplete="new-password"
+              label="What Tribal/Indigenous group affiliation do you claim?"
+              placeholder="Please enter affiliation..."
+            />
           </div>
-
           <div className={css.bottomWrapper}>
             <p className={css.bottomWrapperText}>
               <span className={css.termsText}>

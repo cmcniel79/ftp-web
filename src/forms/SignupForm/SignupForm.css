@@ -10,6 +10,10 @@
   }
 }
 
+.sellBool{
+  @apply --marketplaceModalPasswordMargins;
+}
+
 .name {
   display: flex;
   justify-content: space-between;
