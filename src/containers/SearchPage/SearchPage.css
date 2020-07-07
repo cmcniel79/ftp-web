@@ -180,3 +180,6 @@
     width: 37.5vw;
   }
 }
+.ListingCard{
+  max-width: 350px;
+}

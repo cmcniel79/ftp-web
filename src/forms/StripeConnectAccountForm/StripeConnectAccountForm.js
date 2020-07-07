@@ -19,6 +19,7 @@ import {
   FieldRadioButton,
   Form,
   StripeBankAccountTokenInputField,
+  FieldCheckbox,
 } from '../../components';
 
 import css from './StripeConnectAccountForm.css';
@@ -58,6 +59,8 @@ const CreateStripeAccountFields = props => {
 
   const companyAccountLabel = intl.formatMessage({ id: 'StripeConnectAccountForm.companyAccount' });
 
+  const contractAgreementLabel = intl.formatMessage({ id: 'StripeConnectAccountForm.contractAgreement' });
+
   const hasBusinessURL = values && values.businessProfileURL;
   // Use user profile page as business_url on this marketplace
   // or just fake it if it's dev environment using Stripe test endpoints
@@ -87,9 +90,36 @@ const CreateStripeAccountFields = props => {
       id: 'StripeConnectAccountForm.countryRequired',
     })
   );
+  
+  //Added for agreement to the sellers contract
+  const checkRequired = validators.required('This field is required');
 
   return (
     <div className={css.sectionContainer}>
+      <h3>
+        Seller's Contract
+      </h3>
+      <p>
+      From The People will not tolerate users who violate the Indian Arts and Crafts Act. By placing your items for sale on our 
+      site and becoming a Seller, you agree to comply with the Indian Arts and Crafts Act, and you agree to accept 
+      the sole responsibility of any legal penalties that result from a violation of the Act, and you also agree not to list or sell 
+      any of the prohibited items we have outlined on our FAQ page. If you are based outside of the U.S. then you agree to comply 
+      with any applicable laws protecting Indigenous Made goods and artwork.
+      </p>
+      <FieldRadioButton
+          id="sellerAgreement"
+          name="sellerAgreement"
+          label={contractAgreementLabel}
+          value="agreement"
+          showAsRequired={showAsRequired}
+          validate={checkRequired}
+        />
+      <h3 className={css.subTitle}>
+      <FormattedMessage id="StripeConnectAccountForm.accountPayoutPreferences"/>
+      </h3>
+      <p>
+      <FormattedMessage id="EditListingWizard.payoutModalInfo" />
+      </p>
       <h3 className={css.subTitle}>
         <FormattedMessage id="StripeConnectAccountForm.accountTypeTitle" />
       </h3>
@@ -278,18 +308,18 @@ const StripeConnectAccountFormComponent = props => {
             intl={intl}
           />
         ) : (
-          <UpdateStripeAccountFields
-            disabled={disabled}
-            countryLabel={countryLabel}
-            savedCountry={savedCountry}
-            stripeBankAccountLastDigits={stripeBankAccountLastDigits}
-            showCardUpdateInput={showCardUpdateInput}
-            values={values}
-            submitInProgress={submitInProgress}
-            setShowCardUpdateInput={setShowCardUpdateInput}
-            intl={intl}
-          />
-        );
+            <UpdateStripeAccountFields
+              disabled={disabled}
+              countryLabel={countryLabel}
+              savedCountry={savedCountry}
+              stripeBankAccountLastDigits={stripeBankAccountLastDigits}
+              showCardUpdateInput={showCardUpdateInput}
+              values={values}
+              submitInProgress={submitInProgress}
+              setShowCardUpdateInput={setShowCardUpdateInput}
+              intl={intl}
+            />
+          );
 
         const stripeConnectedAccountTermsLink = (
           <ExternalLink href="https://stripe.com/connect-account/legal" className={css.termsLink}>
@@ -328,10 +358,10 @@ const StripeConnectAccountFormComponent = props => {
             {!stripeConnected || accountDataLoaded ? (
               stripeAccountFields
             ) : (
-              <div className={css.savedInformation}>
-                <FormattedMessage id="StripeConnectAccountForm.loadingStripeAccountData" />
-              </div>
-            )}
+                <div className={css.savedInformation}>
+                  <FormattedMessage id="StripeConnectAccountForm.loadingStripeAccountData" />
+                </div>
+              )}
 
             <ErrorsMaybe
               stripeAccountError={stripeAccountError}
@@ -343,10 +373,10 @@ const StripeConnectAccountFormComponent = props => {
             {submitButtonMaybe}
           </Form>
         ) : (
-          <div className={css.missingStripeKey}>
-            <FormattedMessage id="StripeConnectAccountForm.missingStripeKey" />
-          </div>
-        );
+            <div className={css.missingStripeKey}>
+              <FormattedMessage id="StripeConnectAccountForm.missingStripeKey" />
+            </div>
+          );
       }}
     />
   );

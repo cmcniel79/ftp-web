@@ -17,7 +17,8 @@ import {
   LayoutWrapperFooter,
   Footer,
   SectionThumbnailLinks,
-  ExternalLink
+  ExternalLink,
+  ListingCard
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 import facebookImage from '../../assets/SocialMedia-791x791.png';
@@ -31,9 +32,11 @@ import css from './LandingPage.css';
 
 import { createListing, fakeIntl } from '../../util/test-data';
 import { ListingCardComponent } from '../../components/ListingCard/ListingCard';
+import { getListingsById } from '../../ducks/marketplaceData.duck';
 
 export const LandingPageComponent = props => {
-  const { history, intl, location, scrollingDisabled } = props;
+
+  const { history, intl, location, scrollingDisabled, listings} = props;
 
   // Schema for search engines (helps them to understand what this page is about)
   // http://schema.org
@@ -114,28 +117,30 @@ export const LandingPageComponent = props => {
                   Featured Listings
                 </h2>
                 <div className={css.featuredListings}>
-                  <ListingCardComponent className={css.listingCard}
-                    intl={fakeIntl}
-                    listing={createListing('featuredList1', { title: "Test 1" }, {})}
+                  <ListingCard
+                    className={css.listingCard}
+                    // key="5f031b4e-8463-4cf6-a272-1cdf01c9c6d5" 
+                    // listings = {l}
+                    listing={createListing('featuredList2', { title: "Test 1" }, {})}
                   />
-                  <ListingCardComponent className={css.listingCard}
-                    intl={fakeIntl}
+                  <ListingCard
+                    className={css.listingCard}
                     listing={createListing('featuredList2', { title: "Test 2" }, {})}
                   />
-                  <ListingCardComponent className={css.listingCard}
-                    intl={fakeIntl}
+                  <ListingCard
+                    className={css.listingCard}
                     listing={createListing('featuredList3', { title: "Test 3" }, {})}
                   />
-                  <ListingCardComponent className={css.listingCard}
-                    intl={fakeIntl}
+                  <ListingCard
+                    className={css.listingCard}
                     listing={createListing('featuredList4', { title: "Test 4" }, {})}
                   />
-                  <ListingCardComponent className={css.listingCard}
-                    intl={fakeIntl}
+                  <ListingCard
+                    className={css.listingCard}
                     listing={createListing('featuredList5', { title: "Test 5" }, {})}
                   />
-                  <ListingCardComponent className={css.listingCard}
-                    intl={fakeIntl}
+                  <ListingCard
+                    className={css.listingCard}
                     listing={createListing('featuredList6', { title: "Test 6" }, {})}
                   />
                 </div>

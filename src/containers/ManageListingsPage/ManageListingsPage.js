@@ -210,6 +210,7 @@ const mapStateToProps = state => {
     closingListing,
     closingListingError,
   } = state.ManageListingsPage;
+  console.log(currentPageResultIds);
   const listings = getOwnListingsById(state, currentPageResultIds);
   return {
     currentPageResultIds,

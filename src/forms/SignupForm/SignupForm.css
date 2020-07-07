@@ -10,9 +10,20 @@
   }
 }
 
+/* .seller{
+  @apply --marketplaceModalPasswordMargins;
+  max-height: 0;
+  transition: 0.45s ease-in;
+  overflow: hidden;
+}
+.active{
+  @apply --marketplaceModalPasswordMargins;
+  max-height: 200px;
+  transition: max-height .2s ease-in;
+}
 .sellBool{
   @apply --marketplaceModalPasswordMargins;
-}
+} */
 
 .name {
   display: flex;

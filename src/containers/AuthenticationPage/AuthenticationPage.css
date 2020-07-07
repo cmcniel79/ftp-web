@@ -19,7 +19,7 @@
 .content {
   @apply --marketplaceModalBaseStyles;
   padding-top: 29px;
-  min-height: 677px;
+  min-height: 700px;
 }
 
 /* ================ Tabs & Form ================ */

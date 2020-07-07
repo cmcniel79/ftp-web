@@ -379,8 +379,8 @@ export class ListingPageComponent extends Component {
       </NamedLink>
     );
 
-    const amenityOptions = findOptionsForSelectFilter('amenities', filterConfig);
-    const categoryOptions = findOptionsForSelectFilter('category', filterConfig);
+    const amenityOptions = findOptionsForSelectFilter('region', filterConfig);
+    const categoryOptions = findOptionsForSelectFilter('categories', filterConfig);
     const category =
       publicData && publicData.category ? (
         <span>
@@ -426,7 +426,7 @@ export class ListingPageComponent extends Component {
                 onManageDisableScrolling={onManageDisableScrolling}
               />
               <div className={css.contentContainer}>
-                <SectionAvatar user={currentAuthor} params={params} />
+                {/* <SectionAvatar user={currentAuthor} params={params} /> */}
                 <div className={css.mainContent}>
                   <SectionHeading
                     priceTitle={priceTitle}

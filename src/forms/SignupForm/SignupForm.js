@@ -112,6 +112,12 @@ const SignupFormComponent = props => (
       const submitInProgress = inProgress;
       const submitDisabled = invalid || submitInProgress;
 
+      var sellClassNames = css.seller;
+      var isSeller = false;
+      // if(isSeller){
+        sellClassNames = css.active;
+      // }
+
       const handleTermsKeyUp = e => {
         // Allow click action with keyboard like with normal links
         if (e.keyCode === KEY_CODE_ENTER) {
@@ -173,24 +179,30 @@ const SignupFormComponent = props => (
               placeholder={passwordPlaceholder}
               validate={passwordValidators}
             />
-            <FieldBoolean
+            {/* <FieldBoolean
               className={css.sellBool}
               id={formId ? `${formId}.seller` : 'seller'}
-              name="boolOption"
+              name="seller"
               label="Do you plan on selling on From The People?"
               placeholder="Choose yes/no"
               validate={boolRequired}
             />
-            {console.log(formId)}
+            <FieldBoolean
+              className={sellClassNames}
+              id={"sellerAgreement"}
+              name="sellerAgreement"
+              label="Do you agree to the Seller's contract below?"
+              placeholder="Choose yes/no"
+              validate={boolRequired}
+            />
             <FieldTextInput
-              className={css.password}
+              className={sellClassNames}
               type="text"
               id="tribe"
               name="tribe"
-              autoComplete="new-password"
               label="What Tribal/Indigenous group affiliation do you claim?"
               placeholder="Please enter affiliation..."
-            />
+            /> */}
           </div>
           <div className={css.bottomWrapper}>
             <p className={css.bottomWrapperText}>

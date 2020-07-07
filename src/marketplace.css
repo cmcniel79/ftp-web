@@ -53,6 +53,7 @@
 
     /* Align the image within the container */
     background-position: center center;
+    background-attachment: fixed;
 
     border-radius: 40px;
     border: solid 36px var(--matterColorBright);

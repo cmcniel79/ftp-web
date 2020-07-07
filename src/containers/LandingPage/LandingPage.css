@@ -119,6 +119,7 @@
 }
 
 .listingCard{
+  min-width: 300px;
   flex-basis: calc(33%-16px);
   margin-bottom: 35px;
 }

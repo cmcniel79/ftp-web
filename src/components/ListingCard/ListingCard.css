@@ -7,7 +7,6 @@
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   /* flex-basis: 100%; */
-  min-width: 300px;
 
   /* Remove link's hover effect */
   &:hover {

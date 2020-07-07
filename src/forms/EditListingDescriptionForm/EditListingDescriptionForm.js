@@ -121,16 +121,7 @@ const EditListingDescriptionFormComponent = props => (
             placeholder={descriptionPlaceholderMessage}
             validate={composeValidators(required(descriptionRequiredMessage))}
           />
-
-          <FieldTextInput
-            id="tribe"
-            name="tribe"
-            className={css.description}
-            type="textarea"
-            label={tribeMessage}
-            placeholder={tribePlaceholderMessage}
-            validate={composeValidators(required(tribeRequiredMessage))}
-          />
+          
 
           {/* Taken out Because it was too sauna specific */}
           {/* <CustomCategorySelectFieldMaybe
