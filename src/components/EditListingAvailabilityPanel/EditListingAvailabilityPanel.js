@@ -5,7 +5,7 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { ensureOwnListing } from '../../util/data';
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ListingLink } from '../../components';
-import { EditListingAvailabilityForm } from '../../forms';
+// import { EditListingAvailabilityForm } from '../../forms';
 
 import css from './EditListingAvailabilityPanel.css';
 

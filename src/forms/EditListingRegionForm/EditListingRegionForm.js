@@ -8,7 +8,7 @@ import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Button, FieldCheckboxGroup, Form } from '../../components';
+import { Button, FieldRadioButton, Form } from '../../components';
 
 
 import css from './EditListingRegionForm.css';
@@ -63,13 +63,17 @@ const EditListingRegionFormComponent = props => (
           {errorMessage}
           {errorMessageShowListing}
 
-          <FieldCheckboxGroup
-            className={css.region}
-            id={name}
-            name={name}
-            options={options}
-            // validate={composeValidators(requiredFieldArrayCheckbox(selectionRequiredMessage))}
-          />
+          {options.map(option => (
+            <div className={css.radioColumn} key={option.key}>
+            <FieldRadioButton
+              id={option.key}
+              name="region"
+              value={option.key}
+              label={option.label}
+              showAsRequired= {pristine}
+            />
+            </div>
+          ))}
 
           <Button
             className={css.submitButton}

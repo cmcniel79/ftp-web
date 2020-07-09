@@ -93,7 +93,7 @@ const tabCompleted = (tab, listing) => {
     case CATEGORY:
       return !!(publicData && publicData.categories);
     case REGION:
-      return !!(publicData && publicData.regions);
+      return !!(publicData && publicData.region);
     case MATERIAL:
       return !!(publicData && publicData.materials);
     case PRICING:

@@ -37,7 +37,6 @@
   @media (--viewportLarge) {
     display: inline-block;
     width: 241px;
-    margin-top: 375px;
-    position: fixed;
+    margin-top: 100px;
   }
 }

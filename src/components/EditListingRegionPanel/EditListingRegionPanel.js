@@ -10,7 +10,7 @@ import { ListingLink } from '..';
 
 import css from './EditListingRegionPanel.css';
 
-const REGION_NAME = 'regions';
+const REGION_NAME = 'region';
 
 const EditListingRegionPanel = props => {
   const {
@@ -41,8 +41,8 @@ const EditListingRegionPanel = props => {
     <FormattedMessage id="EditListingRegionPanel.createListingTitle" />
   );
 
-  const regions = publicData && publicData.regions;
-  const initialValues = { regions };
+  const region = publicData && publicData.region;
+  const initialValues = { region };
 
   return (
     <div className={classes}>
@@ -52,12 +52,13 @@ const EditListingRegionPanel = props => {
         name={REGION_NAME}
         initialValues={initialValues}
         onSubmit={values => {
-          const { regions = [] } = values;
+          const { region = [] } = values;
 
           const updatedValues = {
-            publicData: { regions },
+            publicData: { region },
           };
           onSubmit(updatedValues);
+          console.log(values);
         }}
         onChange={onChange}
         saveActionMsg={submitButtonText}

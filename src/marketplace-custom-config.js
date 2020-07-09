@@ -48,7 +48,7 @@ export const filters = [
       { key: 'accessories', label: 'Accessories' },
       { key: 'apparel', label: 'Apparel' },
       { key: 'traditional', label: 'Traditional Assortments' },
-      { key: 'Art', label: 'Art' },
+      { key: 'art', label: 'Art' },
       { key: 'beauty', label: 'Beauty Products' },
       { key: 'crafting', label: 'Crafting Supplies' },
       { key: 'other', label: 'Other' },
@@ -74,33 +74,24 @@ export const filters = [
   {
     id: 'region',
     label: 'Region',
-    type: 'SelectMultipleFilter',
+    type: 'SelectSingleFilter',
     group: 'primary',
     queryParamNames: ['pub_region'],
     // NOTE: If you are ordering search results by distance
     // the keyword search can't be used at the same time.
     // You can turn on/off ordering by distance from config.js file.
-    config: {searchMode: 'has_one',
+    config: {
     options: [
-      { key: 'plains', label: 'Plains', },
-
-      { key: 'southwest', label: 'Southwest',},
-      
-      { key: 'northwest', label: 'Pacific Northwest',},
-      
-      { key: 'west', label: 'West Coast', },
-
-      { key: 'east', label: 'Eastern U.S.', },
-
-      { key: 'pacific', label: 'Pacific Islands', },
-
-      { key: 'alaska', label: 'Alaska and Arctic', },
-
-      { key: 'central', label: 'Central and South America', },
-
-      { key: 'africa', label: 'Africa', },
-
-      { key: 'asia', label: 'Asia', },
+      { key: 'plains', label: 'Plains' },
+      { key: 'southwest', label: 'Southwest' },
+      { key: 'northwest', label: 'Pacific Northwest' },
+      { key: 'west', label: 'West Coast' },
+      { key: 'east', label: 'Eastern U.S.' },
+      { key: 'pacific', label: 'Pacific Islands' },
+      { key: 'alaska', label: 'Alaska and Arctic' },
+      { key: 'central', label: 'Central and South America' },
+      { key: 'africa', label: 'Africa' },
+      { key: 'asia', label: 'Asia' },
     ],
   },
 },
@@ -130,7 +121,7 @@ export const filters = [
     config: {
       // Optional modes: 'has_all', 'has_any'
       // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
-      searchMode: 'has_all',
+      searchMode: 'has_any',
 
       // "key" is the option you see in Flex Console.
       // "label" is set here for this web app's UI only.

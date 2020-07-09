@@ -8,7 +8,7 @@ import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Button, FieldCheckboxGroup, Form } from '../../components';
+import { Button, FieldCheckboxGroup, Form, FieldRadioButton } from '../../components';
 
 
 import css from './EditListingCategoryForm.css';
@@ -54,22 +54,32 @@ const EditListingCategoryFormComponent = props => (
         </p>
       ) : null;
 
-      const selectionRequiredMessage = intl.formatMessage({
-        id: 'EditListingCategoryForm.selectionRequired'
-      });
+      const selectionRequiredMessage = intl.formatMessage({ id: 'EditListingCategoryForm.selectionRequired' });
       const options = findOptionsForSelectFilter('categories', filterConfig);
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
 
-          <FieldCheckboxGroup
+          {options.map(option => (
+            <div className={css.radioColumn} key={option.key}>
+            <FieldRadioButton
+              id={option.key}
+              name="categories"
+              value={option.key}
+              label={option.label}
+              showAsRequired= {pristine}
+            />
+            </div>
+          ))}
+
+          {/* <FieldCheckboxGroup
             className={css.categories}
             id={name}
             name={name}
             options={options}
             validate={composeValidators(requiredFieldArrayCheckbox(selectionRequiredMessage))}
-          />
+          /> */}
 
           <Button
             className={css.submitButton}
