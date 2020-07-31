@@ -3,6 +3,7 @@ import { required } from '../../util/validators';
 import { FieldSelect } from '../../components';
 
 import css from './EditListingDescriptionForm.css';
+import { pick } from 'lodash';
 
 const CustomCategorySelectFieldMaybe = props => {
   const { name, id, categories, intl } = props;
@@ -17,23 +18,67 @@ const CustomCategorySelectFieldMaybe = props => {
       id: 'EditListingDescriptionForm.categoryRequired',
     })
   );
+
+  const subCategoryLabel = intl.formatMessage({
+    id: 'EditListingDescriptionForm.subCategoryLabel',
+  });
+  const subCategoryPlaceholder = intl.formatMessage({
+    id: 'EditListingDescriptionForm.subCategoryPlaceholder',
+  });
+  const subCategoryRequired = required(
+    intl.formatMessage({
+      id: 'EditListingDescriptionForm.subCategoryRequired',
+    })
+  );
+
+  var subCat = [];
+  const cat = document.getElementById('category');
+  const subs = document.getElementById('subCategory');
+
+  if (cat != null) {                                  // on change eventlistener is attached
+    cat.addEventListener('change', () => {            // getting value
+      var val = cat.value;
+      for (var i = 0; i < categories.length-1; i++) {
+        if (categories[i].label == val) {
+          subCat = categories[i].subCategories;
+          for (var j = 0; j < subCat.length; j++) {
+            subs.options[j + 1] = new Option(subCat[j].label, subCat[j].key);
+          }
+        }
+      }
+    })
+  }
+
   return categories ? (
-    <FieldSelect
-      className={css.category}
-      name={name}
-      id={id}
-      label={categoryLabel}
-      validate={categoryRequired}
-    >
-      { <option disabled value="">
-        {categoryPlaceholder}
-      </option> }
-      { categories.map(c => (
-        <option key={c.key} value={c.key}>
-          {c.label}
-        </option>
-      ))} 
-    </FieldSelect>
+    <div>
+      <FieldSelect
+        className={css.category}
+        name={name}
+        id={id}
+        label={categoryLabel}
+        validate={categoryRequired}
+      >
+        {<option disabled value="">
+          {categoryPlaceholder}
+        </option>}
+        {categories.map(c => (
+          <option key={c.key} value={c.value}>
+            {c.label}
+          </option>
+        ))}
+      </FieldSelect>
+      <FieldSelect
+        className={css.category}
+        name="subCategory"
+        id="subCategory"
+        label={subCategoryLabel}
+        validate={subCategoryRequired}
+      >
+        {<option disabled value="">
+          {subCategoryPlaceholder}
+        </option>}
+      </FieldSelect>
+    </div>
   ) : null;
 };
 

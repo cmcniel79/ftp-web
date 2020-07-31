@@ -19,7 +19,7 @@ const EditListingDescriptionFormComponent = props => (
     {...props}
     render={formRenderProps => {
       const {
-        // categories,
+        categories,
         className,
         disabled,
         ready,
@@ -31,7 +31,7 @@ const EditListingDescriptionFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
-        // filterConfig,
+        filterConfig,
       } = formRenderProps;
 
       const titleMessage = intl.formatMessage({ id: 'EditListingDescriptionForm.title' });
@@ -59,16 +59,6 @@ const EditListingDescriptionFormComponent = props => (
         id: 'EditListingDescriptionForm.descriptionRequired',
       });
 
-      const tribeMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.tribe',
-      });
-      const tribePlaceholderMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.tribePlaceholder',
-      });
-      const tribeRequiredMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.tribeRequired',
-      });
-
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
         <p className={css.error}>
@@ -93,7 +83,8 @@ const EditListingDescriptionFormComponent = props => (
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
-      // const options = findOptionsForSelectFilter('style', filterConfig);
+      // const categories = findOptionsForSelectFilter('categories', filterConfig);
+      // console.log(categories);
 
       return (
         <Form className={classes} onSubmit={handleSubmit}>
@@ -122,22 +113,12 @@ const EditListingDescriptionFormComponent = props => (
             validate={composeValidators(required(descriptionRequiredMessage))}
           />
           
-
-          {/* Taken out Because it was too sauna specific */}
-          {/* <CustomCategorySelectFieldMaybe
+          <CustomCategorySelectFieldMaybe
             id="category"
             name="category"
             categories={categories}
             intl={intl}
-          /> */}
-
-          {/* <FieldCheckboxGroup
-            className={css.style}
-            id="style"
-            name="style"
-            options={options}
-          // validate={composeValidators(requiredFieldArrayCheckbox(selectionRequiredMessage))}
-          /> */}
+          />
 
           <Button
             className={css.submitButton}

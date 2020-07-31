@@ -79,7 +79,7 @@ import * as EditListingDescriptionForm from './forms/EditListingDescriptionForm/
 import * as EditListingFeaturesForm from './forms/EditListingCategoryForm/EditListingCategoryForm.example';
 import * as EditListingLocationForm from './forms/EditListingLocationForm/EditListingLocationForm.example';
 import * as EditListingPhotosForm from './forms/EditListingPhotosForm/EditListingPhotosForm.example';
-import * as EditListingRegionForm from './forms/EditListingPoliciesForm/EditListingRegionForm.example';
+// import * as EditListingRegionForm from './forms/EditListingPoliciesForm/EditListingRegionForm.example';
 import * as EditListingPricingForm from './forms/EditListingPricingForm/EditListingPricingForm.example';
 import * as EmailVerificationForm from './forms/EmailVerificationForm/EmailVerificationForm.example';
 import * as EnquiryForm from './forms/EnquiryForm/EnquiryForm.example';

@@ -17,12 +17,29 @@
   }
 }
 
-.categories {
-  margin-bottom: 24px;
 
-  @media (--viewportMedium) {
-    margin-bottom: 32px;
+.categories {
+  @media (--viewportLarge) {
+  display: flex;
+  flex-direction: row;
   }
+}
+
+.mainCategories {
+  @media (--viewportLarge) {
+    display: flex;
+    flex-direction: column;
+  }
+
+}
+
+.subCategories {
+  @media (--viewportLarge) {
+    margin-left: 125px;
+    display: flex;
+    flex-direction: column;
+  }
+
 }
 
 .error {
@@ -30,7 +47,7 @@
 }
 
 .submitButton {
-  margin-top: auto;
+  margin-top: 50px;
   margin-bottom: 24px;
   flex-shrink: 0;
 

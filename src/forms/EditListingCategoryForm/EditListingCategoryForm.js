@@ -8,11 +8,10 @@ import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Button, FieldCheckboxGroup, Form, FieldRadioButton } from '../../components';
-
+import { Button, Form, FieldRadioButton, EditListingSubCategory } from '../../components';
 
 import css from './EditListingCategoryForm.css';
-import { composeValidators, requiredFieldArrayCheckbox } from '../../util/validators';
+import { composeValidators, required } from '../../util/validators';
 
 const EditListingCategoryFormComponent = props => (
   <FinalForm
@@ -56,30 +55,57 @@ const EditListingCategoryFormComponent = props => (
 
       const selectionRequiredMessage = intl.formatMessage({ id: 'EditListingCategoryForm.selectionRequired' });
       const options = findOptionsForSelectFilter('categories', filterConfig);
+
+
+      var option = options[1];
+      var sub_options = option.subCategories;
+
+      function onClick(option) {
+        console.log("Hello");
+      };
+
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
 
-          {options.map(option => (
-            <div className={css.radioColumn} key={option.key}>
-            <FieldRadioButton
-              id={option.key}
-              name="categories"
-              value={option.key}
-              label={option.label}
-              showAsRequired= {pristine}
-            />
+          <div className={css.categories}>
+            <div className={css.mainCategories}>
+              <h2>
+                Main Categories
+              </h2>
+              {options.map(option => (
+                <div className={css.radioColumn} key={option.key} onClick={onClick(option)}>
+                  <FieldRadioButton
+                    id={option.key}
+                    name="categories"
+                    value={option.key}
+                    label={option.label}
+                    showAsRequired={pristine}
+                    // validate={composeValidators(required(selectionRequiredMessage))}
+                  />
+                </div>
+              ))}
             </div>
-          ))}
 
-          {/* <FieldCheckboxGroup
-            className={css.categories}
-            id={name}
-            name={name}
-            options={options}
-            validate={composeValidators(requiredFieldArrayCheckbox(selectionRequiredMessage))}
-          /> */}
+            <div className={css.subCategories}>
+              <h2>
+                Sub-Categories
+              </h2>
+              {sub_options.map(sub_option => (
+                <div className={css.radioColumn} key={sub_option.key}>
+                  <FieldRadioButton
+                    id={sub_option.key}
+                    name="categories"
+                    value={sub_option.key}
+                    label={sub_option.label}
+                    showAsRequired={pristine}
+                    validate={composeValidators(required(selectionRequiredMessage))}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
 
           <Button
             className={css.submitButton}
@@ -90,11 +116,12 @@ const EditListingCategoryFormComponent = props => (
           >
             {saveActionMsg}
           </Button>
-        </Form>
+        </Form >
       );
     }}
   />
 );
+
 
 EditListingCategoryFormComponent.defaultProps = {
   rootClassName: null,

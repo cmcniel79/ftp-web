@@ -41,7 +41,7 @@ const EditListingDescriptionPanel = props => {
     <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" />
   );
 
-  // const categoryOptions = findOptionsForSelectFilter('category', config.custom.filters);
+  const categoryOptions = findOptionsForSelectFilter('categories', config.custom.filters);
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
@@ -64,7 +64,7 @@ const EditListingDescriptionPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
-        // categories={categoryOptions}
+        categories={categoryOptions}
       />
     </div>
   );

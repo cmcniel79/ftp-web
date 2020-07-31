@@ -44,13 +44,64 @@ export const filters = [
     queryParamNames: ['pub_categories'],
     config: {
     options: [
-      { key: 'jewelry', label: 'Jewelry' },
-      { key: 'accessories', label: 'Accessories' },
-      { key: 'apparel', label: 'Apparel' },
-      { key: 'traditional', label: 'Traditional Assortments' },
-      { key: 'art', label: 'Art' },
-      { key: 'beauty', label: 'Beauty Products' },
-      { key: 'crafting', label: 'Crafting Supplies' },
+      { key: 'jewelry', label: 'Jewelry',
+        subCategories: [
+          { key: 'necklaces', label: 'Necklaces'},
+          { key: 'earrings', label: 'Earrings'},
+          { key: 'rings', label: 'Rings'},
+          { key: 'bracelets', label: 'Bracelets'},
+          { key: 'anklets', label: 'Anklets'},
+        ]
+      },
+      { key: 'accessories', label: 'Accessories',
+        subCategories: [
+          { key: 'bags', label: 'Bags'},
+          { key: 'belts', label: 'Belts'},
+          { key: 'hair', label: 'Hair Accessories'},
+          { key: 'hats', label: 'Hats'},
+          { key: 'scarves', label: 'Scarves'},
+          { key: 'sunglasses', label: 'Sunglasses'},
+          { key: 'ties', label: 'Ties'},
+          { key: 'lanyards', label: 'Lanyards'},
+        ] 
+      },
+      { key: 'apparel', label: 'Apparel',
+        subCategories: [
+          { key: 'tops', label: 'Tops'},
+          { key: 'bottoms', label: 'Bottoms'},
+          { key: 'dresses', label: 'Dresses'},
+          { key: 'shoes', label: 'Shoes'},
+        ] 
+      },
+      { key: 'traditional', label: 'Traditional Assortments',
+        subCategories: [
+          { key: 'botanicals', label: 'Botanicals'},
+          { key: 'regalia', label: 'Regalia'},
+        ] 
+      },
+      { key: 'art', label: 'Art',
+        subCategories: [
+          { key: 'paintings', label: 'Paintings'},
+          { key: 'beadwork', label: 'Beadwork'},
+          { key: 'photo', label: 'Photography'},
+          { key: 'prints', label: 'Prints'},
+          { key: 'stickers', label: 'Stickers & Patches'},
+          { key: 'carvings', label: 'Carvings'},
+          { key: 'baskets', label: 'Baskets & Pottery'},
+          { key: 'rugs', label: 'Rugs & Weaving'},
+        ] },
+      { key: 'beauty', label: 'Beauty Products',
+        subCategories: [
+          { key: 'skincare', label: 'Skincare'},
+          { key: 'makeup', label: 'Makeup'},
+        ]
+       },
+      { key: 'crafting', label: 'Crafting Supplies',
+        subCategories: [
+          { key: 'beading', label: 'Beading Supplies'},
+          { key: 'jewelry', label: 'Jewelry Making'},
+        ]
+       },
       { key: 'other', label: 'Other' },
     ],
   },
