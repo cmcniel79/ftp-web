@@ -25,6 +25,14 @@
   }
 }
 
+.region {
+  margin-bottom: 24px;
+
+  @media (--viewportMedium) {
+    margin-bottom: 32px;
+  }
+}
+
 .error {
   color: var(--failColor);
 }

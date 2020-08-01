@@ -1,5 +1,4 @@
 @import '../../marketplace.css';
-
 :root {
   /*
     These variables are available in global scope through ":root"
@@ -9,10 +8,8 @@
     are left to CSS bundle. We are planning to enable it in the future
     since browsers support CSS Properties already.
  */
-
   --EditListingDescriptionForm_formMargins: {
     margin-bottom: 24px;
-
     @media (--viewportMedium) {
       margin-bottom: 32px;
     }
@@ -21,7 +18,6 @@
 
 .style {
   margin-bottom: 24px;
-
   @media (--viewportMedium) {
     margin-bottom: 32px;
   }
@@ -31,17 +27,43 @@
   /* Dimensions */
   width: 100%;
   height: auto;
-
   /* Layout */
   display: flex;
   flex: 1;
   flex-direction: column;
-
   padding-top: 1px;
-
   @media (--viewportMedium) {
     padding-top: 2px;
   }
+}
+
+.checkTitle {
+  @media (--viewportLarge) {
+    margin-bottom: 0px;
+  }
+}
+
+.checkBoxes {
+  @media (--viewportLarge) {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.region {
+  @media (--viewportLarge) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.material {
+  @media (--viewportLarge) {
+    margin-left: 125px;
+    display: flex;
+    flex-direction: column;
+  }
+  margin-bottom: 50px;
 }
 
 .error {
@@ -65,7 +87,6 @@
   margin-top: auto;
   margin-bottom: 24px;
   flex-shrink: 0;
-
   @media (--viewportLarge) {
     display: inline-block;
     width: 241px;

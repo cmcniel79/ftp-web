@@ -32,22 +32,33 @@ const CustomCategorySelectFieldMaybe = props => {
   );
 
   var subCat = [];
+  var validateSub = subCategoryRequired;
   const cat = document.getElementById('category');
   const subs = document.getElementById('subCategory');
 
   if (cat != null) {                                  // on change eventlistener is attached
     cat.addEventListener('change', () => {            // getting value
+      if(subs.options.length > 1){
+      for(var k = subs.options.length-1; k > 0; k--){
+        subs.options[k] = null;
+      }
+    }
       var val = cat.value;
-      for (var i = 0; i < categories.length-1; i++) {
-        if (categories[i].label == val) {
-          subCat = categories[i].subCategories;
-          for (var j = 0; j < subCat.length; j++) {
-            subs.options[j + 1] = new Option(subCat[j].label, subCat[j].key);
+      if (val != "Other") {
+        for (var i = 0; i < categories.length - 1; i++) {
+          if (categories[i].label == val) {
+            subCat = categories[i].subCategories;
+            for (var j = 0; j < subCat.length; j++) {
+              subs.options[j + 1] = new Option(subCat[j].label, subCat[j].key);
+            }
           }
         }
+      } else {
+          subs.options[1] = new Option("No Subcategory");
       }
     })
   }
+  
 
   return categories ? (
     <div>
@@ -72,7 +83,7 @@ const CustomCategorySelectFieldMaybe = props => {
         name="subCategory"
         id="subCategory"
         label={subCategoryLabel}
-        validate={subCategoryRequired}
+        validate={validateSub}
       >
         {<option disabled value="">
           {subCategoryPlaceholder}

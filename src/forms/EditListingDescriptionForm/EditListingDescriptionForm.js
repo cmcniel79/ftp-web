@@ -6,9 +6,11 @@ import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput, FieldCheckboxGroup } from '../../components';
+import { Form, Button, FieldTextInput, FieldRadioButton, FieldCheckboxGroup } from '../../components';
 import { findOptionsForSelectFilter } from '../../util/search';
 import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
+import config from '../../config';
+import arrayMutators from 'final-form-arrays';
 
 import css from './EditListingDescriptionForm.css';
 
@@ -17,6 +19,7 @@ const TITLE_MAX_LENGTH = 60;
 const EditListingDescriptionFormComponent = props => (
   <FinalForm
     {...props}
+    mutators={{ ...arrayMutators }}
     render={formRenderProps => {
       const {
         categories,
@@ -83,8 +86,9 @@ const EditListingDescriptionFormComponent = props => (
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
-      // const categories = findOptionsForSelectFilter('categories', filterConfig);
-      // console.log(categories);
+      const region_options = findOptionsForSelectFilter('region', filterConfig);
+      const material_options = findOptionsForSelectFilter('material', filterConfig);
+      console.log(material_options);
 
       return (
         <Form className={classes} onSubmit={handleSubmit}>
@@ -112,13 +116,42 @@ const EditListingDescriptionFormComponent = props => (
             placeholder={descriptionPlaceholderMessage}
             validate={composeValidators(required(descriptionRequiredMessage))}
           />
-          
+
           <CustomCategorySelectFieldMaybe
             id="category"
             name="category"
             categories={categories}
             intl={intl}
           />
+
+          <div className={css.checkBoxes}>
+            <div className={css.region}>
+              <h2 className={css.checkTitle}>Region</h2>
+              <h4>Please pick a region associated with your listing</h4>
+              {region_options.map(option => (
+                <div key={option.key}>
+                  <FieldRadioButton
+                    id={option.key}
+                    name="region"
+                    value={option.key}
+                    label={option.label}
+                    showAsRequired={pristine}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className={css.material}>
+              <h2 className={css.checkTitle}>Material</h2>
+              <h4>Please pick your listing's material(s)</h4>
+              <FieldCheckboxGroup
+                id="material"
+                name="material"
+                options={material_options}
+              // validate={composeValidators(requiredFieldArrayCheckbox(selectionRequiredMessage))}
+              />
+            </div>
+          </div>
 
           <Button
             className={css.submitButton}
@@ -135,7 +168,7 @@ const EditListingDescriptionFormComponent = props => (
   />
 );
 
-EditListingDescriptionFormComponent.defaultProps = { className: null, fetchErrors: null };
+EditListingDescriptionFormComponent.defaultProps = { className: null, fetchErrors: null, filterConfig: config.custom.filters, };
 
 EditListingDescriptionFormComponent.propTypes = {
   className: string,
@@ -151,6 +184,7 @@ EditListingDescriptionFormComponent.propTypes = {
     showListingsError: propTypes.error,
     updateListingError: propTypes.error,
   }),
+  filterConfig: propTypes.filterConfig,
   // categories: arrayOf(
   //   shape({
   //     key: string.isRequired,

@@ -29,7 +29,6 @@ const EditListingDescriptionPanel = props => {
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { description, title, publicData } = currentListing.attributes;
-  const tribe = publicData && publicData.tribe;
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -47,14 +46,14 @@ const EditListingDescriptionPanel = props => {
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingDescriptionForm
         className={css.form}
-        initialValues={{ title, description, tribe}}
+        initialValues={{ title, description}}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, tribe} = values;
+          const { title, description} = values;
           const updateValues = {
             title: title.trim(),
             description,
-            publicData: { tribe },
+            publicData: {},
           };
           onSubmit(updateValues);
         }}
