@@ -44,9 +44,9 @@ const CustomCategorySelectFieldMaybe = props => {
       }
     }
       var val = cat.value;
-      if (val != "Other") {
+      if (val != "other") {
         for (var i = 0; i < categories.length - 1; i++) {
-          if (categories[i].label == val) {
+          if (categories[i].key == val) {
             subCat = categories[i].subCategories;
             for (var j = 0; j < subCat.length; j++) {
               subs.options[j + 1] = new Option(subCat[j].label, subCat[j].key);
@@ -73,7 +73,7 @@ const CustomCategorySelectFieldMaybe = props => {
           {categoryPlaceholder}
         </option>}
         {categories.map(c => (
-          <option key={c.key} value={c.value}>
+          <option key={c.key} value={c.key}>
             {c.label}
           </option>
         ))}

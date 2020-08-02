@@ -22,8 +22,8 @@ import EditListingWizardTab, {
   // AVAILABILITY,
   DESCRIPTION,
   CATEGORY,
-  REGION,
-  MATERIAL,
+  // REGION,
+  // MATERIAL,
   PRICING,
   PHOTOS,
 } from './EditListingWizardTab';
@@ -38,9 +38,9 @@ import css from './EditListingWizard.css';
 // and listing publishing happens after last panel.
 export const TABS = [
   DESCRIPTION,
-  CATEGORY,
-  REGION,
-  MATERIAL,
+  // CATEGORY,
+  // REGION,
+  // MATERIAL,
   PRICING,
   PHOTOS,
 ];
@@ -55,12 +55,12 @@ const tabLabel = (intl, tab) => {
   let key = null;
   if (tab === DESCRIPTION) {
     key = 'EditListingWizard.tabLabelDescription';
-  } else if (tab === CATEGORY) {
-    key = 'EditListingWizard.tabLabelCategory';
-  } else if (tab === REGION) {
-    key = 'EditListingWizard.tabLabelRegion';
-  } else if (tab === MATERIAL) {
-    key = 'EditListingWizard.tabLabelMaterial';
+  // } else if (tab === CATEGORY) {
+  //   key = 'EditListingWizard.tabLabelCategory';
+  // } else if (tab === REGION) {
+  //   key = 'EditListingWizard.tabLabelRegion';
+  // } else if (tab === MATERIAL) {
+  //   key = 'EditListingWizard.tabLabelMaterial';
   } else if (tab === PRICING) {
     key = 'EditListingWizard.tabLabelPricing';
   } else if (tab === PHOTOS) {
@@ -90,12 +90,12 @@ const tabCompleted = (tab, listing) => {
   switch (tab) {
     case DESCRIPTION:
       return !!(description && title);
-    case CATEGORY:
-      return !!(publicData && publicData.categories);
-    case REGION:
-      return !!(publicData && publicData.region);
-    case MATERIAL:
-      return !!(publicData && publicData.materials);
+    // case CATEGORY:
+    //   return !!(publicData && publicData.categories);
+    // case REGION:
+    //   return !!(publicData && publicData.region);
+    // case MATERIAL:
+    //   return !!(publicData && publicData.materials);
     case PRICING:
       return !!price;
     // case AVAILABILITY:

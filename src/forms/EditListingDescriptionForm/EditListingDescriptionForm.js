@@ -86,9 +86,9 @@ const EditListingDescriptionFormComponent = props => (
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
+      const style_options = findOptionsForSelectFilter('style', filterConfig);
       const region_options = findOptionsForSelectFilter('region', filterConfig);
       const material_options = findOptionsForSelectFilter('material', filterConfig);
-      console.log(material_options);
 
       return (
         <Form className={classes} onSubmit={handleSubmit}>
@@ -117,12 +117,31 @@ const EditListingDescriptionFormComponent = props => (
             validate={composeValidators(required(descriptionRequiredMessage))}
           />
 
-          <CustomCategorySelectFieldMaybe
-            id="category"
-            name="category"
-            categories={categories}
-            intl={intl}
-          />
+          <div className={css.midSection}>
+            <div className={css.categories}>
+              <CustomCategorySelectFieldMaybe
+                id="category"
+                name="category"
+                categories={categories}
+                intl={intl}
+              />
+            </div>
+            {/* <div className={css.style}>
+              <h2 className={css.checkTitle}>Style</h2>
+              <h4>Please pick a style for your listing</h4>
+              {style_options.map(option => (
+                <div key={option.key}>
+                  <FieldRadioButton
+                    id={option.key}
+                    name="style"
+                    value={option.key}
+                    label={option.label}
+                    showAsRequired={pristine}
+                  />
+                </div>
+              ))}
+            </div> */}
+          </div>
 
           <div className={css.checkBoxes}>
             <div className={css.region}>
@@ -143,7 +162,7 @@ const EditListingDescriptionFormComponent = props => (
 
             <div className={css.material}>
               <h2 className={css.checkTitle}>Material</h2>
-              <h4>Please pick your listing's material(s)</h4>
+              <h4>Please pick material(s) used in your listing</h4>
               <FieldCheckboxGroup
                 id="material"
                 name="material"
@@ -151,7 +170,26 @@ const EditListingDescriptionFormComponent = props => (
               // validate={composeValidators(requiredFieldArrayCheckbox(selectionRequiredMessage))}
               />
             </div>
+
+            
+          <div className={css.style}>
+              <h2 className={css.checkTitle}>Style</h2>
+              <h4>Please pick a style for your listing</h4>
+              {style_options.map(option => (
+                <div key={option.key}>
+                  <FieldRadioButton
+                    id={option.key}
+                    name="style"
+                    value={option.key}
+                    label={option.label}
+                    showAsRequired={pristine}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
+
+          
 
           <Button
             className={css.submitButton}

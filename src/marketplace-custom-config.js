@@ -35,13 +35,13 @@
 
 export const filters = [
   {
-    id: 'categories',
-    label: 'Categories',
+    id: 'category',
+    label: 'Category',
     type: 'SelectSingleFilter',
     group: 'primary',
     // Note: BookingDateRangeFilter is fixed filter,
     // you can't change "queryParamNames: ['dates'],"
-    queryParamNames: ['pub_categories'],
+    queryParamNames: ['pub_category'],
     config: {
     options: [
       { key: 'jewelry', label: 'Jewelry',
