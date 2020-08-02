@@ -49,14 +49,14 @@ import {
   fetchTransactionLineItems,
 } from './ListingPage.duck';
 import SectionImages from './SectionImages';
-import SectionAvatar from './SectionAvatar';
+import SectionAvatar from './SectionAvatar';                // taken out by Chase, don't like the look of the avatars
 import SectionHeading from './SectionHeading';
 import SectionDescriptionMaybe from './SectionDescriptionMaybe';
-import SectionFeaturesMaybe from './SectionFeaturesMaybe';
+import SectionMaterialsMaybe from './SectionMaterialsMaybe';
 import SectionReviews from './SectionReviews';
 import SectionHostMaybe from './SectionHostMaybe';
 import SectionRulesMaybe from './SectionRulesMaybe';
-import SectionMapMaybe from './SectionMapMaybe';
+import SectionMapMaybe from './SectionMapMaybe';            // taken out, will not need
 import css from './ListingPage.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -379,7 +379,7 @@ export class ListingPageComponent extends Component {
       </NamedLink>
     );
 
-    const amenityOptions = findOptionsForSelectFilter('region', filterConfig);
+    const materialOptions = findOptionsForSelectFilter('material', filterConfig);
     const categoryOptions = findOptionsForSelectFilter('categories', filterConfig);
     const category =
       publicData && publicData.category ? (
@@ -411,6 +411,7 @@ export class ListingPageComponent extends Component {
           <LayoutWrapperMain>
             <div>
               <SectionImages
+                className={css.sectionImages}
                 title={title}
                 listing={currentListing}
                 isOwnListing={isOwnListing}
@@ -426,7 +427,7 @@ export class ListingPageComponent extends Component {
                 onManageDisableScrolling={onManageDisableScrolling}
               />
               <div className={css.contentContainer}>
-                {/* <SectionAvatar user={currentAuthor} params={params} /> */}
+                <SectionAvatar user={currentAuthor} params={params} />
                 <div className={css.mainContent}>
                   <SectionHeading
                     priceTitle={priceTitle}
@@ -438,13 +439,13 @@ export class ListingPageComponent extends Component {
                     onContactUser={this.onContactUser}
                   />
                   <SectionDescriptionMaybe description={description} />
-                  <SectionFeaturesMaybe options={amenityOptions} publicData={publicData} />
+                  <SectionMaterialsMaybe options={materialOptions} publicData={publicData} />
                   <SectionRulesMaybe publicData={publicData} />
-                  <SectionMapMaybe
+                  {/* <SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}
                     listingId={currentListing.id}
-                  />
+                  /> */}
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
                   <SectionHostMaybe
                     title={title}

@@ -47,10 +47,10 @@ const SectionImages = props => {
             alt={title}
             image={firstImage}
             variants={[
-              'landscape-crop',
-              'landscape-crop2x',
-              'landscape-crop4x',
-              'landscape-crop6x',
+              'scaled-large',
+              // 'landscape-crop2x',
+              // 'landscape-crop4x',
+              // 'landscape-crop6x',
             ]}
           />
           {viewPhotosButton}

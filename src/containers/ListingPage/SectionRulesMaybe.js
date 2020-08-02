@@ -6,14 +6,22 @@ import classNames from 'classnames';
 import css from './SectionRulesMaybe.css';
 
 const SectionRulesMaybe = props => {
-  const { className, rootClassName, publicData } = props;
-  const classes = classNames(rootClassName || css.root, className);
-  return publicData && publicData.rules ? (
-    <div className={classes}>
+  const { publicData } = props;
+  return publicData && publicData.style && publicData.region ? (
+    <div className={css.root}>
+      <div className={css.regionContainer}>
       <h2 className={css.title}>
-        <FormattedMessage id="ListingPage.rulesTitle" />
+        <FormattedMessage id="ListingPage.regionTitle" />
       </h2>
-      <p className={css.rules}>{publicData.rules}</p>
+      <p className={css.text}>{publicData.region}</p>
+      </div>
+
+      <div className={css.styleContainer}>
+      <h2 className={css.title}>
+        <FormattedMessage id="ListingPage.styleTitle" />
+      </h2>
+      <p className={css.text}>{publicData.style}</p>
+      </div>
     </div>
   ) : null;
 };
