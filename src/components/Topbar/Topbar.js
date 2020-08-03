@@ -94,18 +94,15 @@ class TopbarComponent extends Component {
   handleMobileSearchClose() {
     redirectToURLWithoutModalState(this.props, 'mobilesearch');
   }
-
+   //Replaced location autocomplete code for this function
+   //with code taken from here: https://www.sharetribe.com/docs/cookbook-search/use-keyword-search-in-topbar/#gatsby-focus-wrapper
   handleSubmit(values) {
     const { currentSearchParams } = this.props;
-    const { search, selectedPlace } = values.location;
+    const keywords = values.keywords;
     const { history } = this.props;
-    const { origin, bounds } = selectedPlace;
-    const originMaybe = config.sortSearchByDistance ? { origin } : {};
     const searchParams = {
       ...currentSearchParams,
-      ...originMaybe,
-      address: search,
-      bounds,
+      keywords,
     };
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, searchParams));
   }

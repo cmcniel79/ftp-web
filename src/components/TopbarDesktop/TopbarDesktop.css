@@ -86,6 +86,7 @@
 
 /* Search */
 .searchLink {
+  max-width: 300px;
   flex-grow: 1;
   height: 100%;
   margin-right: 24px;
@@ -140,7 +141,7 @@
 }
 
 /* Inbox */
-.inboxLink {
+.customLink {
   @apply --TopbarDesktop_linkHover;
   @apply --marketplaceH4FontStyles;
   height: 100%;
@@ -159,7 +160,7 @@
   }
 }
 
-.inbox {
+.custom {
   @apply --TopbarDesktop_label;
   position: relative;
 }

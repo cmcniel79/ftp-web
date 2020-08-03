@@ -13,6 +13,7 @@ import {
   MenuContent,
   MenuItem,
   NamedLink,
+  ExternalLink,
 } from '../../components';
 import { TopbarSearchForm } from '../../forms';
 
@@ -56,11 +57,11 @@ const TopbarDesktop = props => {
 
   const inboxLink = authenticatedOnClientSide ? (
     <NamedLink
-      className={css.inboxLink}
+      className={css.customLink}
       name="InboxPage"
       params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
     >
-      <span className={css.inbox}>
+      <span className={css.custom}>
         <FormattedMessage id="TopbarDesktop.inbox" />
         {notificationDot}
       </span>
@@ -116,6 +117,36 @@ const TopbarDesktop = props => {
     </Menu>
   ) : null;
 
+  const aboutLink =
+    <NamedLink className={css.customLink} name="AboutPage">
+      <span className={css.custom}>
+        <FormattedMessage id="TopbarDesktop.aboutPage" />
+      </span>
+    </NamedLink>;
+
+  const shopLink =
+    <NamedLink className={css.customLink} name="SearchPage">
+      <span className={css.custom}>
+        <FormattedMessage id="TopbarDesktop.searchPage" />
+      </span>
+    </NamedLink>;
+
+  const faqLink =
+    <NamedLink className={css.customLink} name="FAQPage">
+      <span className={css.custom}>
+        <FormattedMessage id="TopbarDesktop.faqPage" />
+      </span>
+    </NamedLink>;
+
+  const blogLink =
+    <ExternalLink className={css.customLink} key="linkToBlog"
+      href="https://fromthepeople.blog/"
+    >
+      <span className={css.custom}>
+        Blog
+    </span>
+    </ExternalLink>
+
   const signupLink = isAuthenticatedOrJustHydrated ? null : (
     <NamedLink name="SignupPage" className={css.signupLink}>
       <span className={css.signup}>
@@ -142,11 +173,10 @@ const TopbarDesktop = props => {
         />
       </NamedLink>
       {search}
-      <NamedLink className={css.createListingLink} name="NewListingPage">
-        <span className={css.createListing}>
-          <FormattedMessage id="TopbarDesktop.createListing" />
-        </span>
-      </NamedLink>
+      {aboutLink}
+      {shopLink}
+      {faqLink}
+      {blogLink}
       {inboxLink}
       {profileMenu}
       {signupLink}

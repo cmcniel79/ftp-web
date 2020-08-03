@@ -35,12 +35,23 @@
 
 export const filters = [
   {
+    id: 'keyword',
+    label: 'Keyword',
+    type: 'KeywordFilter',
+    group: 'primary',
+    // Note: KeywordFilter is fixed filter,
+    // you can't change "queryParamNames: ['keywords'],"
+    queryParamNames: ['keywords'],
+    // NOTE: If you are ordering search results by distance
+    // the keyword search can't be used at the same time.
+    // You can turn on/off ordering by distance from config.js file.
+    config: {},
+  },
+  {
     id: 'category',
     label: 'Category',
     type: 'SelectSingleFilter',
     group: 'primary',
-    // Note: BookingDateRangeFilter is fixed filter,
-    // you can't change "queryParamNames: ['dates'],"
     queryParamNames: ['pub_category'],
     config: {
     options: [
@@ -128,9 +139,6 @@ export const filters = [
     type: 'SelectSingleFilter',
     group: 'primary',
     queryParamNames: ['pub_region'],
-    // NOTE: If you are ordering search results by distance
-    // the keyword search can't be used at the same time.
-    // You can turn on/off ordering by distance from config.js file.
     config: {
     options: [
       { key: 'plains', label: 'Plains' },
