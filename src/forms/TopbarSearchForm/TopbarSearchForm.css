@@ -19,11 +19,23 @@
   );
 }
 
+.searchBox {
+  display: flex;
+  flex-direction: row;
+}
+
+.searchImage {
+  display: flex;
+  align-self: center;
+  margin-right: 15px;
+}
+
 .mobileInputRoot {
   width: 100%;
 }
 
 .desktopInputRoot {
+  border: none;
   height: var(--topbarHeightDesktop);
 }
 
@@ -114,7 +126,7 @@
     text-overflow: ellipsis;
     overflow-x: hidden;
     font-weight: var(--fontWeightRegular);
-    transition: var(--transitionStyleButton);
+    /* transition: var(--transitionStyleButton); */
   }
 
   margin-top: 0;
