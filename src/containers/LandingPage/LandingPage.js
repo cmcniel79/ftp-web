@@ -30,9 +30,7 @@ import traditionalImage from './images/traditional.jpg';
 
 import css from './LandingPage.css';
 
-import { createListing, fakeIntl } from '../../util/test-data';
-import { ListingCardComponent } from '../../components/ListingCard/ListingCard';
-import { getListingsById } from '../../ducks/marketplaceData.duck';
+import { createListing } from '../../util/test-data';
 
 export const LandingPageComponent = props => {
 
@@ -83,25 +81,25 @@ export const LandingPageComponent = props => {
                     {
                       imageUrl: jewelryImage,
                       imageAltText: 'Link 1',
-                      linkProps: { type: 'ExternalLink', href: 'http://example.com/1' },
+                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=jewelry' } },
                       text: 'Jewelry',
                     },
                     {
                       imageUrl: artImage,
                       imageAltText: 'Link 2',
-                      linkProps: { type: 'ExternalLink', href: 'http://example.com/2' },
+                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=art' } },
                       text: 'Art',
                     },
                     {
                       imageUrl: apparelImage,
                       imageAltText: 'Link 3',
-                      linkProps: { type: 'ExternalLink', href: 'http://example.com/3' },
+                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=apparel' } },
                       text: 'Apparel',
                     },
                     {
                       imageUrl: traditionalImage,
                       imageAltText: 'Link 4',
-                      linkProps: { type: 'ExternalLink', href: 'http://example.com/3' },
+                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=traditional' } },
                       text: 'Traditional',
                     },
                   ]}
