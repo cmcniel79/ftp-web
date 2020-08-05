@@ -30,7 +30,17 @@ const EditListingPricingPanel = props => {
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
-  const { price } = currentListing.attributes;
+
+  const { price, publicData } = currentListing.attributes;
+  const shippingFee =
+    publicData && publicData.shippingFee ? publicData.shippingFee : null;
+  var shippingFeeAsMoney = new Money;
+  if (shippingFee == null) {
+    shippingFeeAsMoney = new Money(0, config.currency);
+  } else {
+    shippingFeeAsMoney = new Money(shippingFee.amount, shippingFee.currency);
+  }
+  const initialValues = { price, shippingFeeAsMoney };
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -39,15 +49,26 @@ const EditListingPricingPanel = props => {
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id="EditListingPricingPanel.createListingTitle" />
-  );
+      <FormattedMessage id="EditListingPricingPanel.createListingTitle" />
+    );
 
   const priceCurrencyValid = price instanceof Money ? price.currency === config.currency : true;
   const form = priceCurrencyValid ? (
     <EditListingPricingForm
       className={css.form}
-      initialValues={{ price }}
-      onSubmit={onSubmit}
+      initialValues={initialValues}
+      // Code for onSubmit function was taken from here: 
+      // https://www.sharetribe.com/docs/tutorial-transaction-process/customize-pricing-tutorial/
+      onSubmit={values => {
+        const { price, shippingFee = null } = values;
+        const updatedValues = {
+          price,
+          publicData: {
+            cleaningFee: { amount: shippingFee.amount, currency: shippingFee.currency },
+          },
+        };
+        onSubmit(updatedValues);
+      }}
       onChange={onChange}
       saveActionMsg={submitButtonText}
       disabled={disabled}
@@ -57,10 +78,10 @@ const EditListingPricingPanel = props => {
       fetchErrors={errors}
     />
   ) : (
-    <div className={css.priceCurrencyInvalid}>
-      <FormattedMessage id="EditListingPricingPanel.listingPriceCurrencyInvalid" />
-    </div>
-  );
+      <div className={css.priceCurrencyInvalid}>
+        <FormattedMessage id="EditListingPricingPanel.listingPriceCurrencyInvalid" />
+      </div>
+    );
 
   return (
     <div className={classes}>

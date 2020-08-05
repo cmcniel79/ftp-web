@@ -39,9 +39,17 @@ export const EditListingPricingFormComponent = props => (
       const translationKey = isNightly
         ? 'EditListingPricingForm.pricePerNight'
         : isDaily
-        ? 'EditListingPricingForm.pricePerDay'
-        : 'EditListingPricingForm.pricePerUnit';
+          ? 'EditListingPricingForm.pricePerDay'
+          : 'EditListingPricingForm.pricePerUnit';
 
+      const shippingFeeMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.shippingFeeInputMessage',
+      });
+
+      const shippingFeePlaceholderMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.shippingFeeInputPlaceholder',
+      });
+      
       const pricePerUnitMessage = intl.formatMessage({
         id: translationKey,
       });
@@ -96,6 +104,17 @@ export const EditListingPricingFormComponent = props => (
             autoFocus
             label={pricePerUnitMessage}
             placeholder={pricePlaceholderMessage}
+            currencyConfig={config.currencyConfig}
+            validate={priceValidators}
+          />
+
+          <FieldCurrencyInput
+            id="shippingFee"
+            name="shippingFee"
+            className={css.shippingFeeInput}
+            autoFocus
+            label={shippingFeeMessage}
+            placeholder={shippingFeePlaceholderMessage}
             currencyConfig={config.currencyConfig}
             validate={priceValidators}
           />
