@@ -275,14 +275,15 @@ const mapStateToProps = state => {
     activeListingId,
   } = state.SearchPage;
   const pageListings = getListingsById(state, currentPageResultIds);
-  const mapListings = getListingsById(
-    state,
-    unionWith(currentPageResultIds, searchMapListingIds, (id1, id2) => id1.uuid === id2.uuid)
-  );
+  // Taken Out Because No Need For Map
+  // const mapListings = getListingsById(   
+  //   state,
+  //   unionWith(currentPageResultIds, searchMapListingIds, (id1, id2) => id1.uuid === id2.uuid)
+  // );
 
   return {
     listings: pageListings,
-    mapListings,
+    // mapListings, // No Map
     pagination,
     scrollingDisabled: isScrollingDisabled(state),
     searchInProgress,

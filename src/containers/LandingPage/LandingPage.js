@@ -23,7 +23,7 @@ import {
 import { TopbarContainer } from '../../containers';
 import facebookImage from '../../assets/SocialMedia-791x791.png';
 import twitterImage from '../../assets/SocialMedia-791x791.png';
-import jewelryImage from './images/jewelry.jpg';
+import jewelryImage from './images/jewelry.png';
 import artImage from './images/art.jpg';
 import apparelImage from './images/apparel.jpg';
 import traditionalImage from './images/traditional.jpg';
@@ -32,9 +32,12 @@ import css from './LandingPage.css';
 
 import { createListing } from '../../util/test-data';
 
+import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
+import { loadData } from './LandingPage.duck';
+
 export const LandingPageComponent = props => {
 
-  const { history, intl, location, scrollingDisabled, listings} = props;
+  const { history, intl, location, scrollingDisabled, listings } = props;
 
   // Schema for search engines (helps them to understand what this page is about)
   // http://schema.org
@@ -43,6 +46,7 @@ export const LandingPageComponent = props => {
   const schemaTitle = intl.formatMessage({ id: 'LandingPage.schemaTitle' }, { siteTitle });
   const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
   const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
+  const hasListings = props.listings.length > 0;
 
   return (
     <Page
@@ -109,41 +113,22 @@ export const LandingPageComponent = props => {
               </div>
             </li>
 
+            {hasListings ? (
             <li className={css.section}>
               <div className={css.sectionContent}>
                 <h2 className={css.featuredListingsTitle}>
                   Featured Listings
                 </h2>
-                <div className={css.featuredListings}>
-                  <ListingCard
-                    className={css.listingCard}
-                    // key="5f031b4e-8463-4cf6-a272-1cdf01c9c6d5" 
-                    // listings = {l}
-                    listing={createListing('featuredList2', { title: "Test 1" }, {})}
-                  />
-                  <ListingCard
-                    className={css.listingCard}
-                    listing={createListing('featuredList2', { title: "Test 2" }, {})}
-                  />
-                  <ListingCard
-                    className={css.listingCard}
-                    listing={createListing('featuredList3', { title: "Test 3" }, {})}
-                  />
-                  <ListingCard
-                    className={css.listingCard}
-                    listing={createListing('featuredList4', { title: "Test 4" }, {})}
-                  />
-                  <ListingCard
-                    className={css.listingCard}
-                    listing={createListing('featuredList5', { title: "Test 5" }, {})}
-                  />
-                  <ListingCard
-                    className={css.listingCard}
-                    listing={createListing('featuredList6', { title: "Test 6" }, {})}
-                  />
-                </div>
+               
+                  <div className={css.featuredListings}>
+                    {console.log(listings)}
+                    {listings.map(l => (
+                      <ListingCard className={css.listingCard} listing={l} key={l.id.uuid}/>
+                    ))}
+                  </div>
               </div>
             </li>
+            ) : null}
 
             <li className={css.section}>
               <div className={css.sectionContent}>
@@ -231,7 +216,7 @@ export const LandingPageComponent = props => {
   );
 };
 
-const { bool, object } = PropTypes;
+const { bool, object, arrayOf } = PropTypes;
 
 LandingPageComponent.propTypes = {
   scrollingDisabled: bool.isRequired,
@@ -242,11 +227,19 @@ LandingPageComponent.propTypes = {
 
   // from injectIntl
   intl: intlShape.isRequired,
+
+  listings: arrayOf(PropTypes.listing).isRequired,
 };
 
 const mapStateToProps = state => {
+  console.log(state);
+  const {
+    promotedListingRefs,
+  } = state.LandingPage;
+  const listings = getMarketplaceEntities(state, promotedListingRefs);
   return {
     scrollingDisabled: isScrollingDisabled(state),
+    listings,
   };
 };
 
@@ -261,5 +254,7 @@ const LandingPage = compose(
   connect(mapStateToProps),
   injectIntl
 )(LandingPageComponent);
+
+LandingPage.loadData = loadData;
 
 export default LandingPage;

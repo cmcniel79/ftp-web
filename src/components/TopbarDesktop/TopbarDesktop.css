@@ -145,7 +145,6 @@
   @apply --TopbarDesktop_label;
 }
 
-/* Inbox */
 .customLink {
   @apply --TopbarDesktop_linkHover;
   @apply --marketplaceH4FontStyles;

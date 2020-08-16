@@ -64,7 +64,7 @@ const EditListingPricingPanel = props => {
         const updatedValues = {
           price,
           publicData: {
-            cleaningFee: { amount: shippingFee.amount, currency: shippingFee.currency },
+            shippingFee: { amount: shippingFee.amount, currency: shippingFee.currency },
           },
         };
         onSubmit(updatedValues);
