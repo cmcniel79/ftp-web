@@ -132,16 +132,11 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
   };
 
   return sdk.listings
-    // .query(params) // Original code from sharetribe
-    // Below query request works to get the publicData from the user
-    // taken from the landingPage.duck file
-    .query({
-      include: ['author', 'images'],
-    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
-    per_page: perPage,})
+    .query(params)
     .then(response => {
       dispatch(addMarketplaceEntities(response));
       dispatch(searchListingsSuccess(response));
+      console.log(rest);
       return response;
     })
     .catch(e => {

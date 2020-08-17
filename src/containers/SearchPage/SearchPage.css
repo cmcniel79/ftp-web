@@ -49,6 +49,8 @@
   padding: 2px 0 0 0;
 
   @media (--viewportMedium) {
+    display: flex;
+    flex-direction: row;
     padding: 18px 0 0 0;
     /**
      * .container is using flexbox,
@@ -58,6 +60,8 @@
   }
 
   @media (--viewportLarge) {
+    display: flex;
+    flex-direction: row;
     flex-basis: 62.5%;
     padding: 23px 0 0 0;
   }
@@ -81,10 +85,14 @@
     display: flex;
     padding: 0 24px;
     margin-bottom: 21px;
+    display: flex;
+    flex-direction: column;
   }
 
   @media (--viewportLarge) {
     padding: 0 36px;
+    display: flex;
+    flex-direction: column;
   }
 }
 

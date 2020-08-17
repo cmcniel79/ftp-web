@@ -3,6 +3,7 @@
 .root {
   position: relative;
   display: inline-block;
+  margin-bottom: 6px;
 }
 
 .label {

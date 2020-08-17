@@ -12,11 +12,13 @@
 }
 
 .filters {
-  & > *:not(:last-child) {
+   
+    display: flex;
+    flex-direction: column;
+    max-width: 75%;
     margin-right: 8px;
     margin-bottom: 8px;
     height: auto;
-  }
 }
 
 .searchOptions {
@@ -66,7 +68,7 @@
   background-color: var(--matterColorBright);
 
   @media (--viewportLarge) {
-    padding: 9px 36px 0 36px;
+    padding: 9px 0 0 36px;
   }
 }
 

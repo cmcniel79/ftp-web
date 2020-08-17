@@ -2,6 +2,7 @@
 
 .root {
   display: inline-block;
+  margin-bottom: 6px;
 
   &:last-of-type {
     padding-right: 0;

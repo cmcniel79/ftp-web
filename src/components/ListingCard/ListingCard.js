@@ -92,7 +92,7 @@ export const ListingCardComponent = props => {
           {enrolled &&
             <span className={css.imageTag}>
               <img className={css.verifiedImage} src={verifiedImage} alt="image sourced from Freepik.com"/>
-              Verified
+              {/* Verified */}
             </span>
           }
         </div>
