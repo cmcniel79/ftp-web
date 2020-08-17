@@ -10,6 +10,7 @@ import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
 import { NamedLink, ResponsiveImage } from '../../components';
+import verifiedImage from './images/check.png';
 
 import css from './ListingCard.css';
 
@@ -50,6 +51,14 @@ export const ListingCardComponent = props => {
   const slug = createSlug(title);
   const author = ensureUser(listing.author);
   const authorName = author.attributes.profile.displayName;
+  var enrolled = Boolean;
+  // var tribe;
+  try {
+    enrolled = author.attributes.profile.publicData.enrolled;
+    // tribe = author.attributes.profile.publicData.tribe;
+  } catch (error) {
+    enrolled = false;
+  }
   const firstImage =
     currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
 
@@ -62,8 +71,8 @@ export const ListingCardComponent = props => {
   const unitTranslationKey = isNightly
     ? 'ListingCard.perNight'
     : isDaily
-    ? 'ListingCard.perDay'
-    : 'ListingCard.perUnit';
+      ? 'ListingCard.perDay'
+      : 'ListingCard.perUnit';
 
   return (
     <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
@@ -80,8 +89,26 @@ export const ListingCardComponent = props => {
             variants={['landscape-crop', 'landscape-crop2x']}
             sizes={renderSizes}
           />
+          {enrolled &&
+            <span className={css.imageTag}>
+              <img className={css.verifiedImage} src={verifiedImage} alt="image sourced from Freepik.com"/>
+              Verified
+            </span>
+          }
         </div>
       </div>
+      {/* {enrolled &&
+        <div className={css.tags}>
+          <span className={css.verified}>
+            Verified
+        </span>
+          {typeof tribe !== "undefined" &&
+            <span className={css.tribe}>
+              {tribe}
+            </span>
+          }
+        </div>
+      } */}
       <div className={css.info}>
         <div className={css.price}>
           <div className={css.priceValue} title={priceTitle}>
@@ -95,9 +122,10 @@ export const ListingCardComponent = props => {
               longWordClass: css.longWord,
             })}
           </div>
-          <div className={css.authorInfo}>
+          {/* Not sure if I want the author on the listing card */}
+          {/* <div className={css.authorInfo}>
             <FormattedMessage id="ListingCard.postedBy" values={{ authorName }} />
-          </div>
+          </div> */}
         </div>
       </div>
     </NamedLink>

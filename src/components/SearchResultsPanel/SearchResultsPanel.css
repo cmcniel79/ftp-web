@@ -1,5 +1,4 @@
 @import '../../marketplace.css';
-
 .root {
   display: flex;
   flex-direction: column;
@@ -7,13 +6,11 @@
 
 .listingCards {
   padding: 0 24px 96px 24px;
-
   @media (--viewportMedium) {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
   }
-
   @media (--viewportLarge) {
     padding: 0 36px 96px 36px;
   }
@@ -23,7 +20,6 @@
   margin-bottom: 36px;
   flex-basis: 100%;
   max-width: 350px;
-
   @media (--viewportLarge) {
     /**
       * resultPanelWidthRatio = 0.625 aka 62.5%
@@ -40,9 +36,8 @@
     * flex-basis: calc((100%/columnCount) - (guttersBetweenColumns / columnCount))
     */
     flex-basis: calc(50% - 12px);
-    margin-right: 24px;
+    margin-right: 30px;
   }
-
   @media (--viewportXLarge) {
     /**
      * resultPanelWidthRatio = 0.625 aka 62.5%
@@ -58,9 +53,8 @@
 
      * flex-basis: calc((100%/columnCount) - (guttersBetweenColumns / columnCount))
      */
-
     flex-basis: calc(33.33% - 16px);
-    margin-right: 24px;
+    margin-right: 30px;
   }
 }
 
@@ -70,11 +64,11 @@
  * Here we take margin-right away, but we don't want it affect the next column breakpoint.
  */
 
-.listingCard:nth-of-type(2n) {
+/* .listingCard:nth-of-type(2n) {
   @media screen and (min-width: 1024px) and (max-width: 1920px) {
     margin-right: 0;
   }
-}
+} */
 
 .listingCard:nth-of-type(3n) {
   @media (--viewportXLarge) {
@@ -87,7 +81,6 @@
   margin-top: auto;
   background-color: var(--matterColorLight);
   padding: 0 24px;
-
   @media (--viewportLarge) {
     padding: 0 36px;
   }

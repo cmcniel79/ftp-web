@@ -109,7 +109,6 @@
 
 .featuredListings{
   width: 100%;
-  max-width: 1056px;
   display: flex;
   flex-wrap: wrap;
   -webkit-box-pack: start;
@@ -119,7 +118,7 @@
 }
 
 .listingCard{
-  min-width: 300px;
+  width: 340px;
   flex-basis: calc(33%-16px);
   margin-bottom: 35px;
 }

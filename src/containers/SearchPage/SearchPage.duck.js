@@ -25,8 +25,6 @@ const initialState = {
   searchInProgress: false,
   searchListingsError: null,
   currentPageResultIds: [],
-  searchMapListingIds: [],
-  searchMapListingsError: null,
 };
 
 const resultIds = data => data.data.map(l => l.id);
@@ -39,7 +37,6 @@ const listingPageReducer = (state = initialState, action = {}) => {
         ...state,
         searchParams: payload.searchParams,
         searchInProgress: true,
-        searchMapListingIds: [],
         searchListingsError: null,
       };
     case SEARCH_LISTINGS_SUCCESS:
@@ -53,27 +50,6 @@ const listingPageReducer = (state = initialState, action = {}) => {
       // eslint-disable-next-line no-console
       console.error(payload);
       return { ...state, searchInProgress: false, searchListingsError: payload };
-
-    case SEARCH_MAP_LISTINGS_REQUEST:
-      return {
-        ...state,
-        searchMapListingsError: null,
-      };
-    case SEARCH_MAP_LISTINGS_SUCCESS: {
-      const searchMapListingIds = unionWith(
-        state.searchMapListingIds,
-        resultIds(payload.data),
-        (id1, id2) => id1.uuid === id2.uuid
-      );
-      return {
-        ...state,
-        searchMapListingIds,
-      };
-    }
-    case SEARCH_MAP_LISTINGS_ERROR:
-      // eslint-disable-next-line no-console
-      console.error(payload);
-      return { ...state, searchMapListingsError: payload };
 
     case SEARCH_MAP_SET_ACTIVE_LISTING:
       return {
@@ -112,15 +88,9 @@ export const searchMapListingsSuccess = response => ({
   payload: { data: response.data },
 });
 
-export const searchMapListingsError = e => ({
-  type: SEARCH_MAP_LISTINGS_ERROR,
-  error: true,
-  payload: e,
-});
 
 export const searchListings = searchParams => (dispatch, getState, sdk) => {
   dispatch(searchListingsRequest(searchParams));
-
   const priceSearchParams = priceParam => {
     const inSubunits = value =>
       convertUnitToSubUnit(value, unitDivisor(config.currencyConfig.currency));
@@ -162,7 +132,13 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
   };
 
   return sdk.listings
-    .query(params)
+    // .query(params) // Original code from sharetribe
+    // Below query request works to get the publicData from the user
+    // taken from the landingPage.duck file
+    .query({
+      include: ['author', 'images'],
+    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
+    per_page: perPage,})
     .then(response => {
       dispatch(addMarketplaceEntities(response));
       dispatch(searchListingsSuccess(response));
@@ -196,7 +172,6 @@ export const searchMapListings = searchParams => (dispatch, getState, sdk) => {
       return response;
     })
     .catch(e => {
-      dispatch(searchMapListingsError(storableError(e)));
       throw e;
     });
 };

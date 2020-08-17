@@ -159,11 +159,11 @@ export const ManageListingCardComponent = props => {
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
 
-  const unitTranslationKey = isNightly
-    ? 'ManageListingCard.perNight'
-    : isDaily
-    ? 'ManageListingCard.perDay'
-    : 'ManageListingCard.perUnit';
+  // const unitTranslationKey = isNightly
+  //   ? 'ManageListingCard.perNight'
+  //   : isDaily
+  //   ? 'ManageListingCard.perDay'
+  //   : 'ManageListingCard.perUnit';
 
   return (
     <div className={classes}>
@@ -301,9 +301,6 @@ export const ManageListingCardComponent = props => {
               <div className={css.priceValue} title={priceTitle}>
                 {formattedPrice}
               </div>
-              <div className={css.perUnit}>
-                <FormattedMessage id={unitTranslationKey} />
-              </div>
             </React.Fragment>
           ) : (
             <div className={css.noPrice}>
@@ -335,20 +332,6 @@ export const ManageListingCardComponent = props => {
           >
             <FormattedMessage id="ManageListingCard.editListing" />
           </NamedLink>
-
-          {availabilityEnabled ? (
-            <React.Fragment>
-              <span className={css.manageLinksSeparator}>{' • '}</span>
-
-              <NamedLink
-                className={css.manageLink}
-                name="EditListingPage"
-                params={{ id, slug, type: editListingLinkType, tab: 'availability' }}
-              >
-                <FormattedMessage id="ManageListingCard.manageAvailability" />
-              </NamedLink>
-            </React.Fragment>
-          ) : null}
         </div>
       </div>
     </div>

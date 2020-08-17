@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { array } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -121,7 +121,6 @@ export const LandingPageComponent = props => {
                 </h2>
                
                   <div className={css.featuredListings}>
-                    {console.log(listings)}
                     {listings.map(l => (
                       <ListingCard className={css.listingCard} listing={l} key={l.id.uuid}/>
                     ))}
@@ -216,7 +215,7 @@ export const LandingPageComponent = props => {
   );
 };
 
-const { bool, object, arrayOf } = PropTypes;
+const { bool, object } = PropTypes;
 
 LandingPageComponent.propTypes = {
   scrollingDisabled: bool.isRequired,
@@ -228,11 +227,10 @@ LandingPageComponent.propTypes = {
   // from injectIntl
   intl: intlShape.isRequired,
 
-  listings: arrayOf(PropTypes.listing).isRequired,
+  listings: array.isRequired,
 };
 
 const mapStateToProps = state => {
-  console.log(state);
   const {
     promotedListingRefs,
   } = state.LandingPage;
