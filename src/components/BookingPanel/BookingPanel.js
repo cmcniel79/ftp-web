@@ -113,11 +113,11 @@ const BookingPanel = props => {
             <FormattedMessage id="BookingPanel.hostedBy" values={{ name: authorDisplayName }} />
           </div>
         </div>
-
+{/* 
         <div className={css.bookingHeading}>
           <h2 className={titleClasses}>{title}</h2>
           {subTitleText ? <div className={css.bookingHelp}>{subTitleText}</div> : null}
-        </div>
+        </div> */}
         {showBookingDatesForm ? (
           <BookingDatesForm
             className={css.bookingForm}

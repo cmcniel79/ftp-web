@@ -38,10 +38,9 @@ const SectionHeading = props => {
         </div> */}
       </div>
       <div className={css.heading}>
-        <h1 className={css.title}>{richTitle}</h1>
+        <h3 className={css.title}>{richTitle}</h3>
         <div className={css.author}>
-          {category}
-          <FormattedMessage id="ListingPage.postedBy" values={{ name: hostLink }} />
+          {/* <FormattedMessage id="ListingPage.postedBy" values={{ name: hostLink }} /> */}
           {showContactUser ? (
             <span className={css.contactWrapper}>
               <span className={css.separator}>•</span>

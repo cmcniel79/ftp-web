@@ -200,7 +200,7 @@ export class BookingDatesFormComponent extends Component {
                   this.handleOnChange(values);
                 }}
               />
-              <FieldDateRangeInput
+              {/* <FieldDateRangeInput
                 className={css.bookingDates}
                 name="bookingDates"
                 unitType={unitType}
@@ -220,7 +220,7 @@ export class BookingDatesFormComponent extends Component {
                   bookingDatesRequired(startDateErrorMessage, endDateErrorMessage)
                 )}
                 disabled={fetchLineItemsInProgress}
-              />
+              /> */}
 
               {bookingInfoMaybe}
               {loadingSpinnerMaybe}
