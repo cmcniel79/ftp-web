@@ -7,6 +7,7 @@ export { default as EmailVerificationPage } from './EmailVerificationPage/EmailV
 export { default as FAQPage } from './FAQPage/FAQPage';
 export { default as InboxPage } from './InboxPage/InboxPage';
 export { default as LandingPage } from './LandingPage/LandingPage';
+export { default as LikedListingsPage } from './LikedListingsPage/LikedListingsPage';
 export { default as ListingPage } from './ListingPage/ListingPage';
 export { default as ManageListingsPage } from './ManageListingsPage/ManageListingsPage';
 export { default as NotFoundPage } from './NotFoundPage/NotFoundPage';

@@ -20,6 +20,13 @@ const UserNav = props => {
       },
     },
     {
+      text: <FormattedMessage id="ManageListingsPage.yourLikedListings" />,
+      selected: selectedPageName === 'LikedListingsPage',
+      linkProps: {
+        name: 'LikedListingsPage',
+      },
+    },
+    {
       text: <FormattedMessage id="ManageListingsPage.profileSettings" />,
       selected: selectedPageName === 'ProfileSettingsPage',
       disabled: false,
