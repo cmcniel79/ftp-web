@@ -142,9 +142,9 @@ const BookingPanel = props => {
           <div className={css.priceValue} title={priceTitle}>
             {formattedPrice}
           </div>
-          <div className={css.perUnit}>
+          {/* <div className={css.perUnit}>
             <FormattedMessage id={unitTranslationKey} />
-          </div>
+          </div> */}
         </div>
 
         {showBookingDatesForm ? (

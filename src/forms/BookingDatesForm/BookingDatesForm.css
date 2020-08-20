@@ -83,9 +83,15 @@
   flex-shrink: 0;
   padding: 0 24px 24px 24px;
   width: 100%;
-
   @media (--viewportMedium) {
     padding: 0;
     width: 100%;
   }
+}
+
+.bookButton {
+  @apply --marketplaceButtonStyles;
+
+  /* Clear padding that is set for link elements looking like buttons */
+  padding: 0;
 }

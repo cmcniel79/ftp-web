@@ -31,19 +31,18 @@ const SectionImages = props => {
   // put back in: https://github.com/sharetribe/ftw-daily/blob/master/src/components/ImageCarousel/ImageCarousel.js
   return (
     <div className={css.sectionImages}>
-        {actionBar}
+      {actionBar}
       {images.map(i => (
         <ResponsiveImage
-          key = {i.id.uuid}
+          key={i.id.uuid}
           className={css.images}
           alt={title}
           image={i}
-          variants= {[
+          variants={[
             'landscape-crop2x',
           ]}
         />
       ))}
-
     </div>
   );
 };
