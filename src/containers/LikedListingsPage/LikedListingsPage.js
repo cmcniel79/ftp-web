@@ -1,7 +1,8 @@
 import React from 'react';
+import { NativeLand } from '../../components';
 
 const LikedListingsPage = () => {
-  return <h1>Hello World</h1>;
+  return <NativeLand/>;
 };
 
 export default LikedListingsPage;

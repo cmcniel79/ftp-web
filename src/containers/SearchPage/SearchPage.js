@@ -14,7 +14,7 @@ import { parse, stringify } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
 import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
-import { SearchMap, ModalInMobile, Page } from '../../components';
+import { Page } from '../../components';
 import { TopbarContainer } from '../../containers';
 
 import { searchListings, searchMapListings, setActiveListing } from './SearchPage.duck';
@@ -191,33 +191,6 @@ export class SearchPageComponent extends Component {
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             history={history}
           />
-          {/* <ModalInMobile
-            className={css.mapPanel}
-            id="SearchPage.map"
-            isModalOpenOnMobile={this.state.isSearchMapOpenOnMobile}
-            onClose={() => this.setState({ isSearchMapOpenOnMobile: false })}
-            showAsModalMaxWidth={MODAL_BREAKPOINT}
-            onManageDisableScrolling={onManageDisableScrolling}
-          >
-            <div className={css.mapWrapper}>
-              {shouldShowSearchMap ? (
-                <SearchMap
-                  reusableContainerClassName={css.map}
-                  activeListingId={activeListingId}
-                  bounds={bounds}
-                  center={origin}
-                  isSearchMapOpenOnMobile={this.state.isSearchMapOpenOnMobile}
-                  location={location}
-                  listings={mapListings || []}
-                  onMapMoveEnd={this.onMapMoveEnd}
-                  onCloseAsModal={() => {
-                    onManageDisableScrolling('SearchPage.map', false);
-                  }}
-                  messages={intl.messages}
-                />
-              ) : null}
-            </div>
-          </ModalInMobile> */}
         </div>
       </Page>
     );

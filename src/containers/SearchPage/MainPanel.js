@@ -14,6 +14,7 @@ import {
   SearchFiltersPrimary,
   SearchFiltersSecondary,
   SortBy,
+  NativeLand
 } from '../../components';
 
 import FilterComponent from './FilterComponent';
@@ -247,6 +248,7 @@ class MainPanel extends Component {
               );
             }
           })}
+        <NativeLand/>
         </SearchFiltersPrimary>
         <SearchFiltersMobile
           className={css.searchFiltersMobile}

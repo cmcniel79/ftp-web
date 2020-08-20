@@ -89,7 +89,7 @@ const TopbarDesktop = props => {
             <FormattedMessage id="TopbarDesktop.yourListingsLink" />
           </NamedLink>
         </MenuItem>
-        <MenuItem key="ManageListingsPage">
+        <MenuItem key="LikedListingsPage">
           <NamedLink
             className={classNames(css.yourListingsLink, currentPageClass('LikedListingsPage'))}
             name="LikedListingsPage"
