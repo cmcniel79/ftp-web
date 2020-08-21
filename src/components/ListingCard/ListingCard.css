@@ -14,6 +14,12 @@
   }
 }
 
+.link {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .threeToTwoWrapper {
   /* Layout */
   display: block;
@@ -84,7 +90,6 @@
   margin-right: 5px;
 }
 
-
 .tribe {
   display: flex;
   flex-direction: column;
@@ -112,6 +117,7 @@
 
 .priceValue {
   /* Font */
+  color: var(--marketplaceColor);
   @apply --marketplaceH3FontStyles;
   font-size: 25px;
 

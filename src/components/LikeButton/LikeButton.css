@@ -1,0 +1,11 @@
+@import '../../marketplace.css';
+
+.likeButton {
+    cursor: pointer;
+    margin: 10px auto 0;
+    border: none;
+}   
+
+.heart {
+    width: 20px;
+}

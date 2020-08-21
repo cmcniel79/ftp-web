@@ -48,7 +48,7 @@ const listingPageReducer = (state = initialState, action = {}) => {
       };
     case SEARCH_LISTINGS_ERROR:
       // eslint-disable-next-line no-console
-      console.error(payload);
+      console.error(payload);  // Did I add this in?
       return { ...state, searchInProgress: false, searchListingsError: payload };
 
     case SEARCH_MAP_SET_ACTIVE_LISTING:
@@ -136,7 +136,6 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
     .then(response => {
       dispatch(addMarketplaceEntities(response));
       dispatch(searchListingsSuccess(response));
-      console.log(rest);
       return response;
     })
     .catch(e => {

@@ -9,7 +9,7 @@ import { ensureListing, ensureUser } from '../../util/data';
 import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
-import { NamedLink, ResponsiveImage } from '../../components';
+import { LikeButton, NamedLink, ResponsiveImage } from '../../components';
 import verifiedImage from './images/check.png';
 
 import css from './ListingCard.css';
@@ -51,11 +51,9 @@ export const ListingCardComponent = props => {
   const slug = createSlug(title);
   const author = ensureUser(listing.author);
   const authorName = author.attributes.profile.displayName;
-  var enrolled = Boolean;
-  // var tribe;
+  let enrolled;
   try {
     enrolled = author.attributes.profile.publicData.enrolled;
-    // tribe = author.attributes.profile.publicData.tribe;
   } catch (error) {
     enrolled = false;
   }
@@ -65,23 +63,16 @@ export const ListingCardComponent = props => {
   const { formattedPrice, priceTitle } = priceData(price, intl);
 
   const unitType = config.bookingUnitType;
-  const isNightly = unitType === LINE_ITEM_NIGHT;
-  const isDaily = unitType === LINE_ITEM_DAY;
-
-  const unitTranslationKey = isNightly
-    ? 'ListingCard.perNight'
-    : isDaily
-      ? 'ListingCard.perDay'
-      : 'ListingCard.perUnit';
 
   return (
-    <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
+    <div className={classes}>
       <div
         className={css.threeToTwoWrapper}
         onMouseEnter={() => setActiveListing(currentListing.id)}
         onMouseLeave={() => setActiveListing(null)}
       >
         <div className={css.aspectWrapper}>
+          <NamedLink name="ListingPage" params={{ id, slug }}>
           <LazyImage
             rootClassName={css.rootForImage}
             alt={title}
@@ -92,29 +83,19 @@ export const ListingCardComponent = props => {
           {enrolled &&
             <span className={css.imageTag}>
               <img className={css.verifiedImage} src={verifiedImage} alt="image sourced from Freepik.com"/>
-              {/* Verified */}
             </span>
           }
+          </NamedLink> 
         </div>
       </div>
-      {/* {enrolled &&
-        <div className={css.tags}>
-          <span className={css.verified}>
-            Verified
-        </span>
-          {typeof tribe !== "undefined" &&
-            <span className={css.tribe}>
-              {tribe}
-            </span>
-          }
-        </div>
-      } */}
       <div className={css.info}>
         <div className={css.price}>
           <div className={css.priceValue} title={priceTitle}>
             {formattedPrice}
           </div>
+          <LikeButton/>
         </div>
+        <NamedLink className={css.link} name="ListingPage" params={{ id, slug }}>
         <div className={css.mainInfo}>
           <div className={css.title}>
             {richText(title, {
@@ -122,13 +103,10 @@ export const ListingCardComponent = props => {
               longWordClass: css.longWord,
             })}
           </div>
-          {/* Not sure if I want the author on the listing card */}
-          {/* <div className={css.authorInfo}>
-            <FormattedMessage id="ListingCard.postedBy" values={{ authorName }} />
-          </div> */}
         </div>
+        </NamedLink>
       </div>
-    </NamedLink>
+    </div>
   );
 };
 

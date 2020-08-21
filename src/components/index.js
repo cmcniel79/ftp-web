@@ -61,6 +61,7 @@ export { default as ValidationError } from './ValidationError/ValidationError';
 
 export { default as Accordion } from './Accordion/Accordion';
 export { default as AccordionButton } from './AccordionButton/AccordionButton';
+export { default as LikeButton } from './LikeButton/LikeButton';
 export { default as Button, PrimaryButton, SecondaryButton, InlineTextButton } from './Button/Button';
 export { default as CookieConsent } from './CookieConsent/CookieConsent';
 export { default as ImageCarousel } from './ImageCarousel/ImageCarousel';

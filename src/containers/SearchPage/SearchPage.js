@@ -105,6 +105,7 @@ export class SearchPageComponent extends Component {
 
   render() {
     const {
+      currentUser,
       intl,
       listings,
       filterConfig,
@@ -159,6 +160,7 @@ export class SearchPageComponent extends Component {
       ? classNames(css.topbarBehindModal, css.topbar)
       : css.topbar;
 
+
     // N.B. openMobileMap button is sticky.
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
     /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -190,6 +192,7 @@ export class SearchPageComponent extends Component {
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             history={history}
+            currentUser={currentUser}
           />
         </div>
       </Page>
@@ -238,25 +241,20 @@ SearchPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
+  const { currentUser } = state.user;
   const {
     currentPageResultIds,
     pagination,
     searchInProgress,
     searchListingsError,
     searchParams,
-    searchMapListingIds,
     activeListingId,
   } = state.SearchPage;
   const pageListings = getListingsById(state, currentPageResultIds);
-  // Taken Out Because No Need For Map
-  // const mapListings = getListingsById(   
-  //   state,
-  //   unionWith(currentPageResultIds, searchMapListingIds, (id1, id2) => id1.uuid === id2.uuid)
-  // );
 
   return {
+    currentUser,
     listings: pageListings,
-    // mapListings, // No Map
     pagination,
     scrollingDisabled: isScrollingDisabled(state),
     searchInProgress,
