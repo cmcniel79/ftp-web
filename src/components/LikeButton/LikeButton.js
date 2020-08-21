@@ -4,11 +4,14 @@ import heartOutline from './Images/heart-outline.svg';
 import heartFilled from './Images/heart-filled.svg';
 
 class LikeButton extends Component {
-
-    state = {
+    constructor(props) {
+        super(props);
+    
+    this.state = {
         ifLiked: false,
-        likes: 0
+        likes: props.likes
     };
+}
 
     addLike = () => {
         let newCount;

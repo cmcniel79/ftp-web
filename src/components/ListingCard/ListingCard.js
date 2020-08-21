@@ -47,10 +47,9 @@ export const ListingCardComponent = props => {
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
-  const { title = '', price } = currentListing.attributes;
+  const { title = '', price, metadata } = currentListing.attributes;
   const slug = createSlug(title);
   const author = ensureUser(listing.author);
-  const authorName = author.attributes.profile.displayName;
   let enrolled;
   try {
     enrolled = author.attributes.profile.publicData.enrolled;
@@ -62,8 +61,11 @@ export const ListingCardComponent = props => {
 
   const { formattedPrice, priceTitle } = priceData(price, intl);
 
-  const unitType = config.bookingUnitType;
-
+  let likes = metadata.likes;
+  console.log(likes);
+  if(likes == null){
+    likes = 0;
+  }
   return (
     <div className={classes}>
       <div
@@ -91,7 +93,9 @@ export const ListingCardComponent = props => {
           <div className={css.priceValue} title={priceTitle}>
             {formattedPrice}
           </div>
-          <LikeButton/>
+          <LikeButton
+          likes={likes}
+          />
         </div>
         <NamedLink className={css.link} name="ListingPage" params={{ id, slug }}>
         <div className={css.mainInfo}>
