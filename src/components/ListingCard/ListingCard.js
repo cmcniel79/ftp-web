@@ -10,7 +10,7 @@ import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
 import { LikeButton, NamedLink, ResponsiveImage } from '../../components';
-import verifiedImage from './images/check.png';
+import verifiedImage from './images/checkmark-circle.svg';
 
 import css from './ListingCard.css';
 
@@ -81,9 +81,7 @@ export const ListingCardComponent = props => {
             sizes={renderSizes}
           />
           {enrolled &&
-            <span className={css.imageTag}>
               <img className={css.verifiedImage} src={verifiedImage} alt="image sourced from Freepik.com"/>
-            </span>
           }
           </NamedLink> 
         </div>
