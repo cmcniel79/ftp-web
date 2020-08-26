@@ -37,15 +37,15 @@ export class BookingDatesFormComponent extends Component {
   // default handleSubmit function.
   handleFormSubmit(e) {
     const { startDate, endDate } = e.bookingDates || {};
-    if (!startDate) {
-      e.preventDefault();
-      this.setState({ focusedInput: START_DATE });
-    } else if (!endDate) {
-      e.preventDefault();
-      this.setState({ focusedInput: END_DATE });
-    } else {
+    // if (!startDate) {
+    //   e.preventDefault();
+    //   this.setState({ focusedInput: START_DATE });
+    // } else if (!endDate) {
+    //   e.preventDefault();
+    //   this.setState({ focusedInput: END_DATE });
+    // } else {
       this.props.onSubmit(e);
-    }
+    // }
   }
 
   // When the values of the form are updated we need to fetch

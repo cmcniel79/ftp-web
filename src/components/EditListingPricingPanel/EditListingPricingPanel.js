@@ -10,6 +10,7 @@ import { types as sdkTypes } from '../../util/sdkLoader';
 import config from '../../config';
 
 import css from './EditListingPricingPanel.css';
+import { update } from 'lodash';
 
 const { Money } = sdkTypes;
 
@@ -32,15 +33,11 @@ const EditListingPricingPanel = props => {
   const currentListing = ensureOwnListing(listing);
 
   const { price, publicData } = currentListing.attributes;
+ 
   const shippingFee =
     publicData && publicData.shippingFee ? publicData.shippingFee : null;
-  var shippingFeeAsMoney = new Money;
-  if (shippingFee == null) {
-    shippingFeeAsMoney = new Money(0, config.currency);
-  } else {
-    shippingFeeAsMoney = new Money(shippingFee.amount, shippingFee.currency);
-  }
-  const initialValues = { price, shippingFeeAsMoney };
+
+  const initialValues = { price, shippingFee };
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -60,13 +57,14 @@ const EditListingPricingPanel = props => {
       // Code for onSubmit function was taken from here: 
       // https://www.sharetribe.com/docs/tutorial-transaction-process/customize-pricing-tutorial/
       onSubmit={values => {
-        const { price, shippingFee = null } = values;
+        const { price, shippingFee} = values;
         const updatedValues = {
           price,
           publicData: {
-            shippingFee: { amount: shippingFee.amount, currency: shippingFee.currency },
+            shippingFee: { shippingFee },
           },
         };
+        console.log(updatedValues);
         onSubmit(updatedValues);
       }}
       onChange={onChange}

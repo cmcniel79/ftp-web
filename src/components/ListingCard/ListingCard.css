@@ -107,8 +107,8 @@
   /* Font */
   color: var(--marketplaceColor);
   @apply --marketplaceH3FontStyles;
-  font-size: 25px;
-
+  font-size: 20px;
+  margin: auto;
   /* Remove default margins from font */
   margin-top: 0;
   margin-bottom: 0;

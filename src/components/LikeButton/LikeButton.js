@@ -29,8 +29,9 @@ class LikeButton extends Component {
     render() {
         const image = this.state.ifLiked ? heartFilled: heartOutline;
         return <button className={css.likeButton} onClick={this.addLike}>
-            <img src={image} className={css.heart} />
-            {this.state.likes} </button>
+            <img src={image} className={css.heart}/>
+            Like
+            </button>
     }
 }
 

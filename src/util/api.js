@@ -85,6 +85,7 @@ export const transactionLineItems = body => {
 // See `server/api/initiate-privileged.js` to see what data should be
 // sent in the body.
 export const initiatePrivileged = body => {
+  console.log(body);
   return post('/api/initiate-privileged', body);
 };
 

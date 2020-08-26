@@ -2,7 +2,7 @@ const { calculateQuantityFromDates, calculateTotalFromLineItems } = require('./l
 const { types } = require('sharetribe-flex-sdk');
 const { Money } = types;
 
-const unitType = 'line-item/night';
+const unitType = 'line-item/units';
 const PROVIDER_COMMISSION_PERCENTAGE = -10;
 
 /** Returns collection of lineItems (max 50)

@@ -1,9 +1,19 @@
 @import '../../marketplace.css';
 
 .likeButton {
+    width: 65px;
+    display: flex;
     cursor: pointer;
-    margin: 10px auto 0;
-    border: none;
+    margin: 2px auto 0;
+    border: solid;
+    border-color: var(--marketplaceColor);
+    border-radius: 16px;
+    justify-content: space-between;
+    font-weight: var(--fontWeightRegular);
+    font-size: 14px;
+    letter-spacing: 0;
+    padding: 0 6px;
+
 }   
 
 .heart {

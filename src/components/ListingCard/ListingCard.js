@@ -43,7 +43,7 @@ class ListingImage extends Component {
 const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export const ListingCardComponent = props => {
-  const { className, rootClassName, intl, listing, renderSizes, setActiveListing } = props;
+  const { className, rootClassName, intl, listing, renderSizes, setActiveListing, isRealUser } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
@@ -62,7 +62,6 @@ export const ListingCardComponent = props => {
   const { formattedPrice, priceTitle } = priceData(price, intl);
 
   let likes = metadata.likes;
-  console.log(likes);
   if(likes == null){
     likes = 0;
   }
@@ -93,9 +92,11 @@ export const ListingCardComponent = props => {
           <div className={css.priceValue} title={priceTitle}>
             {formattedPrice}
           </div>
+          {isRealUser &&
           <LikeButton
           likes={likes}
           />
+          }
         </div>
         <NamedLink className={css.link} name="ListingPage" params={{ id, slug }}>
         <div className={css.mainInfo}>

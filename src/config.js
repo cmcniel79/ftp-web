@@ -32,7 +32,7 @@ const sortSearchByDistance = false;
 //
 // In a way, 'processAlias' defines which transaction process (or processes)
 // this particular web application is able to handle.
-const bookingProcessAlias = 'flex-default-process/release-1';
+const bookingProcessAlias = 'ftp-item-transaction/release-1';
 
 // The transaction line item code for the main unit type in bookings.
 //
@@ -40,7 +40,7 @@ const bookingProcessAlias = 'flex-default-process/release-1';
 //
 // Note: translations will use different translation keys for night, day or unit
 // depending on the value chosen.
-const bookingUnitType = 'line-item/night';
+const bookingUnitType = 'line-item/units';
 
 // Should the application fetch available time slots (currently defined as
 // start and end dates) to be shown on listing page.
@@ -68,7 +68,7 @@ const currencyConfig = currencyConfiguration(currency);
 
 // Listing minimum price in currency sub units, e.g. cents.
 // 0 means no restriction to the price
-const listingMinimumPriceSubUnits = 0;
+const listingMinimumPriceSubUnits = 500;
 
 // Sentry DSN (Data Source Name), a client key for authenticating calls to Sentry
 const sentryDsn = process.env.REACT_APP_SENTRY_DSN;

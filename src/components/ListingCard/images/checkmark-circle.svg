@@ -42,7 +42,7 @@
      id="namedview8"
      showgrid="false"
      inkscape:zoom="0.921875"
-     inkscape:cx="146.26988"
+     inkscape:cx="-52.780967"
      inkscape:cy="362.60675"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
@@ -51,11 +51,11 @@
   <title
      id="title2">ionicons-v5-e</title>
   <circle
-     style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:1.55262244"
+     style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:10.13333416;stroke-miterlimit:4;stroke-dasharray:none"
      id="path820"
      cx="256"
      cy="256"
-     r="225" />
+     r="237.5" />
   <ellipse
      style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:1.15314329"
      id="path816"

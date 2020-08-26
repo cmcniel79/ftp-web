@@ -162,6 +162,7 @@ class MainPanel extends Component {
       showAsModalMaxWidth,
       filterConfig,
       sortConfig,
+      isRealUser
     } = this.props;
 
     const primaryFilters = filterConfig.filter(f => f.group === 'primary');
@@ -323,6 +324,7 @@ class MainPanel extends Component {
                 pagination={listingsAreLoaded ? pagination : null}
                 search={searchParamsForPagination}
                 setActiveListing={onActivateListing}
+                isRealUser={isRealUser}
               />
             </div>
           )}

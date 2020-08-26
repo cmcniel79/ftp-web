@@ -32,16 +32,6 @@ export const EditListingPricingFormComponent = props => (
         fetchErrors,
       } = formRenderProps;
 
-      const unitType = config.bookingUnitType;
-      const isNightly = unitType === LINE_ITEM_NIGHT;
-      const isDaily = unitType === LINE_ITEM_DAY;
-
-      const translationKey = isNightly
-        ? 'EditListingPricingForm.pricePerNight'
-        : isDaily
-          ? 'EditListingPricingForm.pricePerDay'
-          : 'EditListingPricingForm.pricePerUnit';
-
       const shippingFeeMessage = intl.formatMessage({
         id: 'EditListingPricingForm.shippingFeeInputMessage',
       });
@@ -51,7 +41,7 @@ export const EditListingPricingFormComponent = props => (
       });
       
       const pricePerUnitMessage = intl.formatMessage({
-        id: translationKey,
+        id: 'EditListingPricingForm.pricePerUnit',
       });
 
       const pricePlaceholderMessage = intl.formatMessage({
@@ -112,11 +102,9 @@ export const EditListingPricingFormComponent = props => (
             id="shippingFee"
             name="shippingFee"
             className={css.shippingFeeInput}
-            autoFocus
             label={shippingFeeMessage}
             placeholder={shippingFeePlaceholderMessage}
             currencyConfig={config.currencyConfig}
-            validate={priceValidators}
           />
 
           <Button

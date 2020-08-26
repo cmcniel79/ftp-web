@@ -173,8 +173,7 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
   const isPrivilegedTransition = isPrivileged(transition);
 
   const bookingData = {
-    startDate: orderParams.bookingStart,
-    endDate: orderParams.bookingEnd,
+    lineItems: orderParams.lineItems,
   };
 
   const bodyParams = isTransition
@@ -215,7 +214,7 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
 
   if (isTransition && isPrivilegedTransition) {
     // transition privileged
-    return transitionPrivileged({ isSpeculative: false, bookingData, bodyParams, queryParams })
+    return transitionPrivileged({ isSpeculative: false, bookingData, bodyParams, queryParams }) //took out bookingData
       .then(handleSucces)
       .catch(handleError);
   } else if (isTransition) {
@@ -226,7 +225,7 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
       .catch(handleError);
   } else if (isPrivilegedTransition) {
     // initiate privileged
-    return initiatePrivileged({ isSpeculative: false, bookingData, bodyParams, queryParams })
+    return initiatePrivileged({ isSpeculative: false, bookingData, bodyParams, queryParams }) //took out bookingData
       .then(handleSucces)
       .catch(handleError);
   } else {
@@ -299,6 +298,7 @@ export const sendMessage = params => (dispatch, getState, sdk) => {
  * the price with the chosen information.
  */
 export const speculateTransaction = (orderParams, transactionId) => (dispatch, getState, sdk) => {
+  console.log(orderParams);
   dispatch(speculateTransactionRequest());
 
   // If we already have a transaction ID, we should transition, not
@@ -310,8 +310,7 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
   const isPrivilegedTransition = isPrivileged(transition);
 
   const bookingData = {
-    startDate: orderParams.bookingStart,
-    endDate: orderParams.bookingEnd,
+    lineItems: orderParams.lineItems,
   };
 
   const params = {
@@ -346,18 +345,19 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
   };
 
   const handleError = e => {
-    const { listingId, bookingStart, bookingEnd } = params;
+    const { listingId } = params;  //took out bookingStart and BookingEnd
     log.error(e, 'speculate-transaction-failed', {
       listingId: listingId.uuid,
-      bookingStart,
-      bookingEnd,
+      bookingData: bookingData
+      // bookingStart,
+      // bookingEnd,
     });
     return dispatch(speculateTransactionError(storableError(e)));
   };
 
   if (isTransition && isPrivilegedTransition) {
     // transition privileged
-    return transitionPrivileged({ isSpeculative: true, bookingData, bodyParams, queryParams })
+    return transitionPrivileged({ isSpeculative: true, bookingData, bodyParams, queryParams }) // took out bookingData
       .then(handleSuccess)
       .catch(handleError);
   } else if (isTransition) {
@@ -368,7 +368,7 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
       .catch(handleError);
   } else if (isPrivilegedTransition) {
     // initiate privileged
-    return initiatePrivileged({ isSpeculative: true, bookingData, bodyParams, queryParams })
+    return initiatePrivileged({ isSpeculative: true, bookingData, bodyParams, queryParams }) //took out bookingData
       .then(handleSuccess)
       .catch(handleError);
   } else {
