@@ -8,8 +8,6 @@ import {
   LayoutWrapperMain,
   LayoutWrapperFooter,
   Footer,
-  NamedLink,
-  ExternalLink,
 } from '../../components';
 
 import css from './FAQPage.css';

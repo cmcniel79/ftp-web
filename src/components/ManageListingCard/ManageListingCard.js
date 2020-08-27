@@ -123,7 +123,6 @@ export const ManageListingCardComponent = props => {
     onOpenListing,
     onToggleMenu,
     renderSizes,
-    availabilityEnabled,
   } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
@@ -154,16 +153,6 @@ export const ManageListingCardComponent = props => {
   const editListingLinkType = isDraft
     ? LISTING_PAGE_PARAM_TYPE_DRAFT
     : LISTING_PAGE_PARAM_TYPE_EDIT;
-
-  const unitType = config.bookingUnitType;
-  const isNightly = unitType === LINE_ITEM_NIGHT;
-  const isDaily = unitType === LINE_ITEM_DAY;
-
-  // const unitTranslationKey = isNightly
-  //   ? 'ManageListingCard.perNight'
-  //   : isDaily
-  //   ? 'ManageListingCard.perDay'
-  //   : 'ManageListingCard.perUnit';
 
   return (
     <div className={classes}>

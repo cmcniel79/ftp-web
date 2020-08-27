@@ -343,7 +343,7 @@ export const txRoleIsCustomer = userRole => userRole === TX_TRANSITION_ACTOR_CUS
 // should go through the local API endpoints, or if using JS SDK is
 // enough.
 export const isPrivileged = transition => {
-  return [TRANSITION_REQUEST_PAYMENT, TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY].includes(
+  return [TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY].includes(
     transition
   );
 };

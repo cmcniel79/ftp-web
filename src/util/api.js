@@ -7,9 +7,9 @@ const apiBaseUrl = () => {
   const useDevApiServer = process.env.NODE_ENV === 'development' && !!port;
 
   // In development, the dev API server is running in a different port
-  if (useDevApiServer) {
-    return `http://localhost:${port}`;
-  }
+  // if (useDevApiServer) {
+  //   return `http://localhost:${port}`;
+  // }
 
   // Otherwise, use the same domain and port as the frontend
   return `${window.location.origin}`;

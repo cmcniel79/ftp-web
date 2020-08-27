@@ -10,33 +10,21 @@ import {
 import { ensureListing } from '../../util/data';
 import { createResourceLocatorString } from '../../util/routes';
 import {
-  // EditListingAvailabilityPanel,
   EditListingDescriptionPanel,
-  EditListingCategoryPanel,
-  EditListingMaterialPanel,
   EditListingPhotosPanel,
-  EditListingRegionPanel,
   EditListingPricingPanel,
 } from '../../components';
 
 import css from './EditListingWizard.css';
 
-export const AVAILABILITY = 'availability';
 export const DESCRIPTION = 'description';
-export const CATEGORY = 'category';
-export const REGION = 'region';
-export const MATERIAL = 'material';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
 
 // EditListingWizardTab component supports these tabs
 export const SUPPORTED_TABS = [
   DESCRIPTION,
-  CATEGORY,
-  REGION,
-  MATERIAL,
   PRICING,
-  AVAILABILITY,
   PHOTOS,
 ];
 
@@ -171,49 +159,6 @@ const EditListingWizardTab = props => {
         />
       );
     }
-    case CATEGORY: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewCategory'
-        : 'EditListingWizard.saveEditCategory';
-      return (
-        <EditListingCategoryPanel
-          {...panelProps(CATEGORY)}
-          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
-            onCompleteEditListingWizardTab(tab, values);
-            console.log(values);
-          }}
-        />
-      );
-    }
-    case REGION: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewRegion'
-        : 'EditListingWizard.saveEditRegion';
-      return (
-        <EditListingRegionPanel
-          {...panelProps(REGION)}
-          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
-            onCompleteEditListingWizardTab(tab, values);
-          }}
-        />
-      );
-    }
-    case MATERIAL: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewMaterial'
-        : 'EditListingWizard.saveEditMaterial';
-      return (
-        <EditListingMaterialPanel
-          {...panelProps(MATERIAL)}
-          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
-            onCompleteEditListingWizardTab(tab, values);
-          }}
-        />
-      );
-    }
     case PRICING: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewPricing'
@@ -228,21 +173,6 @@ const EditListingWizardTab = props => {
         />
       );
     }
-    // case AVAILABILITY: {
-    //   const submitButtonTranslationKey = isNewListingFlow
-    //     ? 'EditListingWizard.saveNewAvailability'
-    //     : 'EditListingWizard.saveEditAvailability';
-    //   return (
-    //     <EditListingAvailabilityPanel
-    //       {...panelProps(AVAILABILITY)}
-    //       availability={availability}
-    //       submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-    //       onSubmit={values => {
-    //         onCompleteEditListingWizardTab(tab, values);
-    //       }}
-    //     />
-    //   );
-    // }
     case PHOTOS: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewPhotos'
