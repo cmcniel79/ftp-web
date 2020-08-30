@@ -14,7 +14,7 @@ module.exports = (req, res) => {
     .then(listingResponse => {
       const listing = listingResponse.data.data;
       lineItems = transactionLineItems(listing, bookingData);
-
+      console.log(lineItems);
       return getTrustedSdk(req);
     })
     .then(trustedSdk => {

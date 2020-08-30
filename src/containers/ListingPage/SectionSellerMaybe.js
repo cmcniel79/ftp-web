@@ -5,7 +5,7 @@ import { EnquiryForm } from '../../forms';
 
 import css from './ListingPage.css';
 
-const SectionHostMaybe = props => {
+const SectionSellerMaybe = props => {
   const {
     title,
     listing,
@@ -25,9 +25,9 @@ const SectionHostMaybe = props => {
   }
 
   return (
-    <div id="host" className={css.sectionHost}>
-      <h2 className={css.yourHostHeading}>
-        <FormattedMessage id="ListingPage.yourHostHeading" />
+    <div id="seller" className={css.sectionSeller}>
+      <h2 className={css.yourSellerHeading}>
+        <FormattedMessage id="ListingPage.yourSellerHeading" />
       </h2>
       <UserCard user={listing.author} currentUser={currentUser} onContactUser={onContactUser} />
       <Modal
@@ -52,4 +52,4 @@ const SectionHostMaybe = props => {
   );
 };
 
-export default SectionHostMaybe;
+export default SectionSellerMaybe;

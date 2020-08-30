@@ -297,6 +297,9 @@ export const sendEnquiry = (listingId, message) => (dispatch, getState, sdk) => 
 };
 
 export const fetchTransactionLineItems = ({ bookingData, listingId, isOwnListing }) => dispatch => {
+  console.log(bookingData);
+  console.log(listingId);
+  console.log(isOwnListing);
   dispatch(fetchLineItemsRequest());
   transactionLineItems({ bookingData, listingId, isOwnListing })
     .then(response => {

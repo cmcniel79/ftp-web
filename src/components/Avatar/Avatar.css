@@ -38,6 +38,19 @@
   }
 }
 
+
+.verifiedImage {
+  position: absolute;
+  bottom: 35px;
+  left: 80px;
+  width: 40px;
+  @media (--viewportLarge) {
+    bottom: 50px;
+    left: 60px;
+    width: 40px;
+  }
+}
+
 /* Small Avatar */
 
 .root {

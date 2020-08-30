@@ -211,7 +211,7 @@ SearchPageComponent.defaultProps = {
   filterConfig: config.custom.filters,
   sortConfig: config.custom.sortConfig,
   activeListingId: null,
-  isRealUser: false
+  currentUser: []
 };
 
 SearchPageComponent.propTypes = {
@@ -228,6 +228,7 @@ SearchPageComponent.propTypes = {
   tab: oneOf(['filters', 'listings', 'map']).isRequired,
   filterConfig: propTypes.filterConfig,
   sortConfig: propTypes.sortConfig,
+  // currentUser: array,
 
   // from withRouter
   history: shape({
@@ -242,7 +243,6 @@ SearchPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { isRealUser } = state.user;
   const {
     currentPageResultIds,
     pagination,
@@ -251,9 +251,12 @@ const mapStateToProps = state => {
     searchParams,
     activeListingId,
   } = state.SearchPage;
+  console.log(state.SearchPage);
   const pageListings = getListingsById(state, currentPageResultIds);
+  console.log(state.user.currentUser);
+  const { currentUser } = state.user;
   return {
-    isRealUser,
+    currentUser,
     listings: pageListings,
     pagination,
     scrollingDisabled: isScrollingDisabled(state),

@@ -10,7 +10,7 @@ import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
 import { LikeButton, NamedLink, ResponsiveImage } from '../../components';
-import verifiedImage from './images/checkmark-circle.svg';
+import verifiedImage from '../../assets/checkmark-circle.svg';
 
 import css from './ListingCard.css';
 
@@ -43,19 +43,15 @@ class ListingImage extends Component {
 const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export const ListingCardComponent = props => {
-  const { className, rootClassName, intl, listing, renderSizes, setActiveListing, isRealUser } = props;
+  const { className, rootClassName, intl, listing, renderSizes, setActiveListing, currentUser } = props;
+  console.log(currentUser);
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
   const { title = '', price, metadata } = currentListing.attributes;
   const slug = createSlug(title);
   const author = ensureUser(listing.author);
-  let enrolled;
-  try {
-    enrolled = author.attributes.profile.publicData.enrolled;
-  } catch (error) {
-    enrolled = false;
-  }
+  const enrolled = author.attributes.profile.publicData.enrolled ? true: false;
   const firstImage =
     currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
 
@@ -92,7 +88,7 @@ export const ListingCardComponent = props => {
           <div className={css.priceValue} title={priceTitle}>
             {formattedPrice}
           </div>
-          {isRealUser &&
+          {currentUser &&
           <LikeButton
           likes={likes}
           />

@@ -55,6 +55,9 @@ import {
 } from './CheckoutPage.duck';
 import { storeData, storedData, clearData } from './CheckoutPageSessionHelpers';
 import css from './CheckoutPage.css';
+import { types as sdkTypes } from '../../util/sdkLoader';
+import Decimal from 'decimal.js';
+const { UUID, Money} = sdkTypes;
 
 const STORAGE_KEY = 'CheckoutPage';
 
@@ -179,8 +182,6 @@ export class CheckoutPageComponent extends Component {
     if (shouldFetchSpeculatedTransaction) {
       const listingId = pageData.listing.id;
       const transactionId = tx ? tx.id : null;
-      const bookingStart = new Date("2018-04-20T00:00:00.000Z");
-      const bookingEnd = new Date("2018-04-22T00:00:00.000Z");
 
 
       // Fetch speculated transaction for showing price in booking breakdown
@@ -189,8 +190,7 @@ export class CheckoutPageComponent extends Component {
       fetchSpeculatedTransaction(
         {
           listingId,
-          bookingStart,
-          bookingEnd
+          bookingData,
         },
         transactionId
       );
@@ -371,8 +371,9 @@ export class CheckoutPageComponent extends Component {
 
     const orderParams = {
       listingId: pageData.listing.id,
-      bookingStart: tx.booking.attributes.start,
-      bookingEnd: tx.booking.attributes.end,
+      // bookingStart: tx.booking.attributes.start,
+      // bookingEnd: tx.booking.attributes.end,
+      lineItems: tx.attributes.lineItems,
       ...optionalPaymentParams,
     };
 

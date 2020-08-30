@@ -72,6 +72,7 @@ const UserCard = props => {
   const isCurrentUser =
     ensuredUser.id && ensuredCurrentUser.id && ensuredUser.id.uuid === ensuredCurrentUser.id.uuid;
   const { displayName, bio } = ensuredUser.attributes.profile;
+  const enrolled = ensuredUser.attributes.profile.publicData.enrolled ? true: false;
 
   const handleContactUserClick = () => {
     onContactUser(user);
@@ -119,7 +120,7 @@ const UserCard = props => {
   return (
     <div className={classes}>
       <div className={css.content}>
-        <AvatarLarge className={css.avatar} user={user} />
+        <AvatarLarge className={css.avatar} user={user} enrolled={enrolled}/>
         <div className={css.info}>
           <div className={css.headingRow}>
             <h3 className={css.heading}>

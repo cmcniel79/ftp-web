@@ -173,8 +173,9 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
   const isPrivilegedTransition = isPrivileged(transition);
 
   const bookingData = {
-    startDate: orderParams.bookingStart,
-    endDate: orderParams.bookingEnd,
+    // startDate: orderParams.bookingStart,
+    // endDate: orderParams.bookingEnd,
+    lineItems: orderParams.lineItems,
   };
 
   const bodyParams = isTransition
@@ -189,7 +190,7 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
         params: orderParams,
       };
   const queryParams = {
-    include: ['booking', 'provider'],
+    include: ['provider'],
     expand: true,
   };
 
@@ -207,8 +208,7 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
     log.error(e, 'initiate-order-failed', {
       ...transactionIdMaybe,
       listingId: orderParams.listingId.uuid,
-      bookingStart: orderParams.bookingStart,
-      bookingEnd: orderParams.bookingEnd,
+      lineItems: orderParams.bookingData.lineItems,
     });
     throw e;
   };
@@ -226,6 +226,9 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
       .catch(handleError);
   } else if (isPrivilegedTransition) {
     // initiate privileged
+    console.log("Initiate actual");
+    console.log(bodyParams);
+    console.log(queryParams);
     return initiatePrivileged({ isSpeculative: false, bookingData, bodyParams, queryParams })
       .then(handleSucces)
       .catch(handleError);
@@ -310,9 +313,11 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
   const isPrivilegedTransition = isPrivileged(transition);
 
   const bookingData = {
-    startDate: orderParams.bookingStart,
-    endDate: orderParams.bookingEnd,
+    // startDate: orderParams.bookingStart,
+    // endDate: orderParams.bookingEnd,
+    lineItems: orderParams.lineItems,
   };
+  console.log(bookingData);
 
   const params = {
     ...orderParams,
@@ -332,7 +337,7 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
       };
 
   const queryParams = {
-    include: ['booking', 'provider'],
+    include: ['provider'],
     expand: true,
   };
 
@@ -346,11 +351,10 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
   };
 
   const handleError = e => {
-    const { listingId, bookingStart, bookingEnd } = params;
+    const { listingId, lineItems } = params;
     log.error(e, 'speculate-transaction-failed', {
       listingId: listingId.uuid,
-      bookingStart,
-      bookingEnd,
+      lineItems: lineItems
     });
     return dispatch(speculateTransactionError(storableError(e)));
   };
@@ -368,13 +372,14 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
       .catch(handleError);
   } else if (isPrivilegedTransition) {
     // initiate privileged
+    console.log("Initiate Speculative");
+    console.log(bodyParams);
+    console.log(queryParams);
     return initiatePrivileged({ isSpeculative: true, bookingData, bodyParams, queryParams })
       .then(handleSuccess)
       .catch(handleError);
   } else {
     // initiate non-privileged
-    console.log(bodyParams);
-    console.log(queryParams);
     return sdk.transactions
       .initiateSpeculative(bodyParams, queryParams)
       .then(handleSuccess)

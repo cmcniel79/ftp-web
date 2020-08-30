@@ -10,6 +10,7 @@ import {
   userAbbreviatedName,
 } from '../../util/data';
 import { ResponsiveImage, IconBannedUser, NamedLink } from '../../components/';
+import verifiedImage from '../../assets/checkmark-circle.svg';
 
 import css from './Avatar.css';
 
@@ -27,9 +28,8 @@ const AVATAR_IMAGE_VARIANTS = [
 ];
 
 export const AvatarComponent = props => {
-  const { rootClassName, className, user, renderSizes, disableProfileLink, intl } = props;
+  const { rootClassName, className, user, renderSizes, disableProfileLink, intl, enrolled } = props;
   const classes = classNames(rootClassName || css.root, className);
-
   const userIsCurrentUser = user && user.type === 'currentUser';
   const avatarUser = userIsCurrentUser ? ensureCurrentUser(user) : ensureUser(user);
 
@@ -47,8 +47,8 @@ export const AvatarComponent = props => {
   const defaultUserDisplayName = isBannedUser
     ? bannedUserDisplayName
     : isDeletedUser
-    ? deletedUserDisplayName
-    : '';
+      ? deletedUserDisplayName
+      : '';
 
   const defaultUserAbbreviatedName = '';
 
@@ -77,6 +77,9 @@ export const AvatarComponent = props => {
           variants={AVATAR_IMAGE_VARIANTS}
           sizes={renderSizes}
         />
+        {enrolled &&
+          <img className={css.verifiedImage} src={verifiedImage} />
+        }
       </NamedLink>
     );
   } else if (hasProfileImage) {
@@ -89,6 +92,9 @@ export const AvatarComponent = props => {
           variants={AVATAR_IMAGE_VARIANTS}
           sizes={renderSizes}
         />
+        {enrolled &&
+          <img className={css.verifiedImage} src={verifiedImage} />
+        }
       </div>
     );
   } else if (profileLinkEnabled) {

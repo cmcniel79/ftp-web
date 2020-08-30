@@ -63,7 +63,7 @@ const estimatedTotalPrice = lineItems => {
 //
 // We need to use FTW backend to calculate the correct line items through thransactionLineItems
 // endpoint so that they can be passed to this estimated transaction.
-const estimatedTransaction = (bookingStart, bookingEnd, lineItems, userRole) => {
+const estimatedTransaction = (lineItems, userRole) => {
   const now = new Date();
 
   const isCustomer = userRole === 'customer';
@@ -73,22 +73,6 @@ const estimatedTransaction = (bookingStart, bookingEnd, lineItems, userRole) => 
 
   const payinTotal = estimatedTotalPrice(customerLineItems);
   const payoutTotal = estimatedTotalPrice(providerLineItems);
-
-  // bookingStart: "Fri Mar 30 2018 12:00:00 GMT-1100 (SST)" aka "Fri Mar 30 2018 23:00:00 GMT+0000 (UTC)"
-  // Server normalizes night/day bookings to start from 00:00 UTC aka "Thu Mar 29 2018 13:00:00 GMT-1100 (SST)"
-  // The result is: local timestamp.subtract(12h).add(timezoneoffset) (in eg. -23 h)
-
-  // local noon -> startOf('day') => 00:00 local => remove timezoneoffset => 00:00 API (UTC)
-  const serverDayStart = dateFromLocalToAPI(
-    moment(bookingStart)
-      .startOf('day')
-      .toDate()
-  );
-  const serverDayEnd = dateFromLocalToAPI(
-    moment(bookingEnd)
-      .startOf('day')
-      .toDate()
-  );
 
   return {
     id: new UUID('estimated-transaction'),
@@ -111,16 +95,16 @@ const estimatedTransaction = (bookingStart, bookingEnd, lineItems, userRole) => 
     booking: {
       id: new UUID('estimated-booking'),
       type: 'booking',
-      attributes: {
-        start: serverDayStart,
-        end: serverDayEnd,
-      },
+      // attributes: {
+      //   start: null,
+      //   end: null,
+      // },
     },
   };
 };
 
 const EstimatedBreakdownMaybe = props => {
-  const { unitType, startDate, endDate } = props.bookingData;
+  const { unitType } = props.bookingData;
   const lineItems = props.lineItems;
 
   // Currently the estimated breakdown is used only on ListingPage where we want to
@@ -128,8 +112,8 @@ const EstimatedBreakdownMaybe = props => {
   const userRole = 'customer';
 
   const tx =
-    startDate && endDate && lineItems
-      ? estimatedTransaction(startDate, endDate, lineItems, userRole)
+    lineItems
+      ? estimatedTransaction(lineItems, userRole)
       : null;
 
   return tx ? (

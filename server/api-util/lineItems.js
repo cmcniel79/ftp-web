@@ -1,8 +1,8 @@
-const { calculateQuantityFromDates, calculateTotalFromLineItems } = require('./lineItemHelpers');
+const { calculateQuantityFromDates, calculateTotalFromLineItems, resolveShippingFeePrice } = require('./lineItemHelpers');
 const { types } = require('sharetribe-flex-sdk');
 const { Money } = types;
 
-const unitType = 'line-item/units';
+const unitType = 'line-item/night';
 const PROVIDER_COMMISSION_PERCENTAGE = -10;
 
 /** Returns collection of lineItems (max 50)
@@ -27,7 +27,7 @@ const PROVIDER_COMMISSION_PERCENTAGE = -10;
  */
 exports.transactionLineItems = (listing, bookingData) => {
   const unitPrice = listing.attributes.price;
-  const { startDate, endDate } = bookingData;
+  const { hasShippingFee } = bookingData;
 
   /**
    * If you want to use pre-defined component and translations for printing the lineItems base price for booking,
@@ -39,21 +39,35 @@ exports.transactionLineItems = (listing, bookingData) => {
    *
    * By default BookingBreakdown prints line items inside LineItemUnknownItemsMaybe if the lineItem code is not recognized. */
 
+   console.log("I am in LineItems.js");
   const booking = {
-    code: 'line-item/night',
-    unitPrice,
-    quantity: calculateQuantityFromDates(startDate, endDate, unitType),
+    code: 'line-item/units',
+    unitPrice: unitPrice,
+    quantity: 1,
     includeFor: ['customer', 'provider'],
   };
 
+  const shippingFeePrice = hasShippingFee ? resolveShippingFeePrice(listing) : null;
+  const shippingFee = shippingFeePrice
+    ? 
+      {
+        code: 'line-item/shipping-fee',
+        unitPrice: shippingFeePrice,
+        quantity: 1,
+        includeFor: ['customer', 'provider'],
+      }
+    : [];
+
+
+
   const providerCommission = {
     code: 'line-item/provider-commission',
-    unitPrice: calculateTotalFromLineItems([booking]),
+    unitPrice: calculateTotalFromLineItems([booking, shippingFee]),
     percentage: PROVIDER_COMMISSION_PERCENTAGE,
     includeFor: ['provider'],
   };
 
-  const lineItems = [booking, providerCommission];
+  const lineItems = [booking, shippingFee, providerCommission];
 
   return lineItems;
 };

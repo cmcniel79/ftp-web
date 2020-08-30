@@ -49,14 +49,13 @@ import {
   fetchTransactionLineItems,
 } from './ListingPage.duck';
 import SectionImages from './SectionImages';
-import SectionAvatar from './SectionAvatar';                // taken out by Chase, don't like the look of the avatars
 import SectionHeading from './SectionHeading';
 import SectionDescriptionMaybe from './SectionDescriptionMaybe';
 import SectionMaterialsMaybe from './SectionMaterialsMaybe';
 import SectionReviews from './SectionReviews';
-import SectionHostMaybe from './SectionHostMaybe';
-import SectionRulesMaybe from './SectionRulesMaybe';
-import SectionMapMaybe from './SectionMapMaybe';            // taken out, will not need
+import SectionSellerMaybe from './SectionSellerMaybe';
+import SectionRegionMaybe from './SectionRegionMaybe';
+import SectionStyleMaybe from './SectionStyleMaybe';
 import css from './ListingPage.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -333,6 +332,8 @@ export class ListingPageComponent extends Component {
     // banned or deleted display names for the function
     const authorDisplayName = userDisplayNameAsString(ensuredAuthor, '');
 
+    const authorTribe = ensuredAuthor.attributes.profile.publicData.tribe ? ensuredAuthor.attributes.profile.publicData.tribe : null;
+
     const { formattedPrice, priceTitle } = priceData(price, intl);
 
     const handleBookingSubmit = values => {
@@ -389,6 +390,15 @@ export class ListingPageComponent extends Component {
         </span>
       ) : null;
 
+    const authorTribeSection = authorTribe ? (
+      <span>
+        <div className={css.sectionDescription}>
+        <h2 className={css.descriptionTitle}>Author's Tribe:</h2>
+        <p className={css.text}>{authorTribe}</p>
+        </div>
+      </span>
+    ) : null;
+
     return (
       <Page
         title={schemaTitle}
@@ -439,7 +449,7 @@ export class ListingPageComponent extends Component {
                   />
                 </div>
                 <div className={css.bookingPanel}>
-                  <SectionHostMaybe
+                  <SectionSellerMaybe
                     title={title}
                     listing={currentListing}
                     authorDisplayName={authorDisplayName}
@@ -453,10 +463,13 @@ export class ListingPageComponent extends Component {
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
+                  {authorTribeSection}
                   <SectionDescriptionMaybe description={description} />
                   <SectionMaterialsMaybe options={materialOptions} publicData={publicData} />
-                  <SectionRulesMaybe publicData={publicData} />
-                  {/* Price: {formattedPrice}  */}
+                  <div className={css.root}>
+                  <SectionRegionMaybe publicData={publicData} />
+                  <SectionStyleMaybe publicData={publicData} />
+                  </div>
                   <BookingPanel
                     // className={css.bookingPanel}
                     listing={currentListing}

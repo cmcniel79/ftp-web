@@ -11,6 +11,8 @@ module.exports = (req, res) => {
     ? sdk.ownListings.show({ id: listingId })
     : sdk.listings.show({ id: listingId });
 
+  console.log("I am local");
+
   listingPromise
     .then(apiResponse => {
       const listing = apiResponse.data.data;
@@ -19,7 +21,6 @@ module.exports = (req, res) => {
       // Because we are using returned lineItems directly in FTW we need to use the helper function
       // to add some attributes like lineTotal and reversal that Marketplace API also adds to the response.
       const validLineItems = constructValidLineItems(lineItems);
-
       res
         .status(200)
         .set('Content-Type', 'application/transit+json')
