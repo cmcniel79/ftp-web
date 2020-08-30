@@ -106,15 +106,18 @@ export class ListingPageComponent extends Component {
     const listingId = new UUID(params.id);
     const listing = getListing(listingId);
 
-    const { bookingDates, ...bookingData } = values;
+    const { bookingData } = values;
+
+
+    const hasShippingFee =
+      listing.attributes.publicData &&
+        listing.attributes.publicData.shippingFee
+        ? true
+        : null;
 
     const initialValues = {
       listing,
-      bookingData,
-      // bookingDates: {
-      //   bookingStart: bookingDates.startDate,
-      //   bookingEnd: bookingDates.endDate,
-      // },
+      bookingData: { hasShippingFee },
       confirmPaymentError: null,
     };
 
@@ -393,8 +396,8 @@ export class ListingPageComponent extends Component {
     const authorTribeSection = authorTribe ? (
       <span>
         <div className={css.sectionDescription}>
-        <h2 className={css.descriptionTitle}>Author's Tribe:</h2>
-        <p className={css.text}>{authorTribe}</p>
+          <h2 className={css.descriptionTitle}>Author's Tribe:</h2>
+          <p className={css.text}>{authorTribe}</p>
         </div>
       </span>
     ) : null;
@@ -427,9 +430,9 @@ export class ListingPageComponent extends Component {
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
                     category={category}
-                    // hostLink={hostLink}
-                    // showContactUser={showContactUser}
-                    // onContactUser={this.onContactUser}
+                  // hostLink={hostLink}
+                  // showContactUser={showContactUser}
+                  // onContactUser={this.onContactUser}
                   />
                   <SectionImages
                     className={css.sectionImages}
@@ -466,9 +469,9 @@ export class ListingPageComponent extends Component {
                   {authorTribeSection}
                   <SectionDescriptionMaybe description={description} />
                   <SectionMaterialsMaybe options={materialOptions} publicData={publicData} />
-                  <div className={css.root}>
-                  <SectionRegionMaybe publicData={publicData} />
-                  <SectionStyleMaybe publicData={publicData} />
+                  <div className={css.regionAndStyle}>
+                    <SectionRegionMaybe publicData={publicData} />
+                    <SectionStyleMaybe publicData={publicData} />
                   </div>
                   <BookingPanel
                     // className={css.bookingPanel}

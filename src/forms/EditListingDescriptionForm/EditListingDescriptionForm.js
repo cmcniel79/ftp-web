@@ -6,7 +6,7 @@ import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput, FieldRadioButton, FieldCheckboxGroup } from '../../components';
+import { Form, Button, FieldTextInput, FieldRadioButton, FieldCheckboxGroup, FieldBoolean } from '../../components';
 import { findOptionsForSelectFilter } from '../../util/search';
 import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
 import config from '../../config';
@@ -126,21 +126,6 @@ const EditListingDescriptionFormComponent = props => (
                 intl={intl}
               />
             </div>
-            {/* <div className={css.style}>
-              <h2 className={css.checkTitle}>Style</h2>
-              <h4>Please pick a style for your listing</h4>
-              {style_options.map(option => (
-                <div key={option.key}>
-                  <FieldRadioButton
-                    id={option.key}
-                    name="style"
-                    value={option.key}
-                    label={option.label}
-                    showAsRequired={pristine}
-                  />
-                </div>
-              ))}
-            </div> */}
           </div>
 
           <div className={css.checkBoxes}>
@@ -171,8 +156,8 @@ const EditListingDescriptionFormComponent = props => (
               />
             </div>
 
-            
-          <div className={css.style}>
+
+            <div className={css.style}>
               <h2 className={css.checkTitle}>Style</h2>
               <h4>Please pick a style for your listing</h4>
               {style_options.map(option => (
@@ -189,7 +174,18 @@ const EditListingDescriptionFormComponent = props => (
             </div>
           </div>
 
-          
+          <div className={css.custom}>
+            <h2 className={css.checkTitle}>Custom Orders</h2>
+            <FieldBoolean
+              id="customOrders"
+              name="customOrders"
+              label="Are custom orders available for this listing?"
+              placeholder="Choose yes/no"
+              validate={composeValidators(required("This is required"))}
+            />
+          </div>
+
+
 
           <Button
             className={css.submitButton}

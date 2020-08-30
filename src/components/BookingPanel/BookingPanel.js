@@ -96,11 +96,10 @@ const BookingPanel = props => {
 
   const classes = classNames(rootClassName || css.root, className);
   const titleClasses = classNames(titleClassName || css.bookingTitle);
-
-  const shippingFee =
+  const hasShippingFee =
   listing.attributes.publicData &&
-  listing.attributes.publicData.shippingFee
-    ? listing.attributes.publicData.shippingFee
+    listing.attributes.publicData.shippingFee
+    ? true
     : null;
 
   return (
@@ -140,7 +139,7 @@ const BookingPanel = props => {
             lineItems={lineItems}
             fetchLineItemsInProgress={fetchLineItemsInProgress}
             fetchLineItemsError={fetchLineItemsError}
-            shippingFee={shippingFee}
+            hasShippingFee={hasShippingFee}
           />
         ) : null}
       </ModalInMobile>

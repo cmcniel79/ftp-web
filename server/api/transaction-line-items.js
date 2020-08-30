@@ -11,8 +11,6 @@ module.exports = (req, res) => {
     ? sdk.ownListings.show({ id: listingId })
     : sdk.listings.show({ id: listingId });
 
-  console.log("I am local");
-
   listingPromise
     .then(apiResponse => {
       const listing = apiResponse.data.data;

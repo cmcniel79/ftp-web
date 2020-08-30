@@ -48,7 +48,7 @@ export class BookingDatesFormComponent extends Component {
   handleOnChange(formValues) {
     const listingId = this.props.listingId;
     const isOwnListing = this.props.isOwnListing;
-    const hasShippingFee = this.props.shippingFee;
+    const hasShippingFee = this.props.hasShippingFee;
     if (!this.props.fetchLineItemsInProgress) {
       this.props.onFetchTransactionLineItems({
         bookingData: { hasShippingFee },

@@ -97,6 +97,14 @@ class ProfileSettingsFormComponent extends Component {
             id: 'ProfileSettingsForm.bioPlaceholder',
           });
 
+          // Tribe
+          const tribeLabel = intl.formatMessage({
+            id: 'ProfileSettingsForm.tribeLabel',
+          });
+          const tribePlaceholder = intl.formatMessage({
+            id: 'ProfileSettingsForm.tribePlaceholder',
+          });
+
           const uploadingOverlay =
             uploadInProgress || this.state.uploadDelay ? (
               <div className={css.uploadingImageOverlay}>
@@ -108,6 +116,7 @@ class ProfileSettingsFormComponent extends Component {
           const errorClasses = classNames({ [css.avatarUploadError]: hasUploadError });
           const transientUserProfileImage = profileImage.uploadedImage || user.profileImage;
           const transientUser = { ...user, profileImage: transientUserProfileImage };
+          const enrolled = transientUser.attributes.profile.publicData.enrolled ? true : false;
 
           // Ensure that file exists if imageFromFile is used
           const fileExists = !!profileImage.file;
@@ -152,15 +161,15 @@ class ProfileSettingsFormComponent extends Component {
                 </div>
               </div>
             ) : (
-              <div className={css.avatarPlaceholder}>
-                <div className={css.avatarPlaceholderText}>
-                  <FormattedMessage id="ProfileSettingsForm.addYourProfilePicture" />
+                <div className={css.avatarPlaceholder}>
+                  <div className={css.avatarPlaceholderText}>
+                    <FormattedMessage id="ProfileSettingsForm.addYourProfilePicture" />
+                  </div>
+                  <div className={css.avatarPlaceholderTextMobile}>
+                    <FormattedMessage id="ProfileSettingsForm.addYourProfilePictureMobile" />
+                  </div>
                 </div>
-                <div className={css.avatarPlaceholderTextMobile}>
-                  <FormattedMessage id="ProfileSettingsForm.addYourProfilePictureMobile" />
-                </div>
-              </div>
-            );
+              );
 
           const submitError = updateProfileError ? (
             <div className={css.error}>
@@ -277,7 +286,7 @@ class ProfileSettingsFormComponent extends Component {
                   />
                 </div>
               </div>
-              <div className={classNames(css.sectionContainer, css.lastSection)}>
+              <div className={classNames(css.sectionContainer)}>
                 <h3 className={css.sectionTitle}>
                   <FormattedMessage id="ProfileSettingsForm.bioHeading" />
                 </h3>
@@ -292,6 +301,23 @@ class ProfileSettingsFormComponent extends Component {
                   <FormattedMessage id="ProfileSettingsForm.bioInfo" />
                 </p>
               </div>
+              {enrolled &&
+                <div className={classNames(css.sectionContainer, css.lastSection)}>
+                  <h3 className={css.sectionTitle}>
+                    <FormattedMessage id="ProfileSettingsForm.tribeHeading" />
+                  </h3>
+                  <FieldTextInput
+                    type="textarea"
+                    id="tribe"
+                    name="tribe"
+                    label={tribeLabel}
+                    placeholder={tribePlaceholder}
+                  />
+                  <p className={css.bioInfo}>
+                    <FormattedMessage id="ProfileSettingsForm.tribeInfo" />
+                  </p>
+                </div>
+              }
               {submitError}
               <Button
                 className={css.submitButton}

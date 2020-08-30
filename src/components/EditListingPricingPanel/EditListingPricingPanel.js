@@ -32,7 +32,7 @@ const EditListingPricingPanel = props => {
   const currentListing = ensureOwnListing(listing);
 
   const { price, publicData } = currentListing.attributes;
- 
+
   const shippingFee =
     publicData && publicData.shippingFee ? publicData.shippingFee : null;
 
@@ -56,13 +56,18 @@ const EditListingPricingPanel = props => {
       // Code for onSubmit function was taken from here: 
       // https://www.sharetribe.com/docs/tutorial-transaction-process/customize-pricing-tutorial/
       onSubmit={values => {
-        const { price, shippingFee} = values;
-        const updatedValues = {
+        const { price, shippingFee } = values;
+        const updatedValues = shippingFee ? {
           price,
           publicData: {
-            shippingFee: { shippingFee },
+            shippingFee: { amount: shippingFee.amount, currency: shippingFee.currency },
           },
-        };
+        } : {
+            price,
+            publicData: {
+              shippingFee: { amount: 0, currency: shippingFee.currency },
+            },
+          }
         console.log(updatedValues);
         onSubmit(updatedValues);
       }}

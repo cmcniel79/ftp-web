@@ -39,7 +39,6 @@ exports.transactionLineItems = (listing, bookingData) => {
    *
    * By default BookingBreakdown prints line items inside LineItemUnknownItemsMaybe if the lineItem code is not recognized. */
 
-   console.log("I am in LineItems.js");
   const booking = {
     code: 'line-item/units',
     unitPrice: unitPrice,

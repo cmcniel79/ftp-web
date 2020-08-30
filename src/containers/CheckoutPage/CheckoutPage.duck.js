@@ -172,11 +172,14 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
     : TRANSITION_REQUEST_PAYMENT;
   const isPrivilegedTransition = isPrivileged(transition);
 
-  const bookingData = {
-    // startDate: orderParams.bookingStart,
-    // endDate: orderParams.bookingEnd,
-    lineItems: orderParams.lineItems,
-  };
+  console.log(orderParams);
+
+  const bookingData = orderParams.bookingData;
+  // {
+  //   // startDate: orderParams.bookingStart,
+  //   // endDate: orderParams.bookingEnd,
+  //   shippingFee: orderParams.lineItems,
+  // };
 
   const bodyParams = isTransition
     ? {
@@ -226,9 +229,6 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
       .catch(handleError);
   } else if (isPrivilegedTransition) {
     // initiate privileged
-    console.log("Initiate actual");
-    console.log(bodyParams);
-    console.log(queryParams);
     return initiatePrivileged({ isSpeculative: false, bookingData, bodyParams, queryParams })
       .then(handleSucces)
       .catch(handleError);
@@ -312,12 +312,15 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
     : TRANSITION_REQUEST_PAYMENT;
   const isPrivilegedTransition = isPrivileged(transition);
 
-  const bookingData = {
-    // startDate: orderParams.bookingStart,
-    // endDate: orderParams.bookingEnd,
-    lineItems: orderParams.lineItems,
-  };
-  console.log(bookingData);
+  console.log(orderParams);
+
+
+  const bookingData = orderParams.bookingData;
+  // {
+  //   // startDate: orderParams.bookingStart,
+  //   // endDate: orderParams.bookingEnd,
+  //   // lineItems: orderParams.lineItems,
+  // };
 
   const params = {
     ...orderParams,
@@ -372,9 +375,7 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
       .catch(handleError);
   } else if (isPrivilegedTransition) {
     // initiate privileged
-    console.log("Initiate Speculative");
-    console.log(bodyParams);
-    console.log(queryParams);
+    console.log(bookingData);
     return initiatePrivileged({ isSpeculative: true, bookingData, bodyParams, queryParams })
       .then(handleSuccess)
       .catch(handleError);

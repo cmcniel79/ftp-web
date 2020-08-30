@@ -9,10 +9,10 @@ const SectionRegionMaybe = props => {
   const { publicData } = props;
   return publicData && publicData.region ? (
       <div className={css.regionContainer}>
-      <h2 className={css.title}>
+      <h2 className={css.regionTitle}>
         <FormattedMessage id="ListingPage.regionTitle" />
       </h2>
-      <p className={css.text}>{publicData.region}</p>
+      <p className={css.regionText}>{publicData.region}</p>
       </div>
   ) : null;
 };

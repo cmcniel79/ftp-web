@@ -6,7 +6,7 @@ import css from './ListingPage.css';
 
 const SectionFeaturesMaybe = props => {
   const { options, publicData } = props;
-  if (!publicData) {
+  if (!publicData || !publicData.material) {
     return null;
   }
 

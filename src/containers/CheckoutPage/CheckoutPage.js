@@ -138,13 +138,13 @@ export class CheckoutPageComponent extends Component {
   loadInitialData() {
     const {
       bookingData,
-      bookingDates,
       listing,
       transaction,
       fetchSpeculatedTransaction,
       fetchStripeCustomer,
       history,
     } = this.props;
+    console.log(bookingData);
 
     // Fetch currentUser with stripeCustomer entity
     // Note: since there's need for data loading in "componentWillMount" function,

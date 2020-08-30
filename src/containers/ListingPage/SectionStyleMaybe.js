@@ -9,10 +9,10 @@ const SectionStyleMaybe = props => {
   const { publicData } = props;
   return publicData && publicData.style ? (
       <div className={css.styleContainer}>
-      <h2 className={css.title}>
+      <h2 className={css.regionTitle}>
         <FormattedMessage id="ListingPage.styleTitle" />
       </h2>
-      <p className={css.text}>{publicData.style}</p>
+      <p className={css.regionText}>{publicData.style}</p>
       </div>
   ) : null;
 };

@@ -548,7 +548,7 @@
   }
 }
 
-.root {
+.regionAndStyle {
   padding: 0 24px;
   margin-bottom: 35px;
 
@@ -560,7 +560,7 @@
   }
 }
 
-.title {
+.regionHeading {
   /* Font */
   @apply --marketplaceH3FontStyles;
   color: var(--matterColorAnti);
@@ -573,7 +573,7 @@
   }
 }
 
-.text {
+.regionText {
   text-transform: capitalize;
   margin-top: 0;
   margin-bottom: 35px;
