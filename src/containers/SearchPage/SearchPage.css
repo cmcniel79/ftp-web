@@ -82,15 +82,10 @@
   display: none;
 
   @media (--viewportMedium) {
+    width: 25%;
     display: flex;
     padding: 0 24px;
     margin-bottom: 21px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  @media (--viewportLarge) {
-    padding: 0 36px;
     display: flex;
     flex-direction: column;
   }

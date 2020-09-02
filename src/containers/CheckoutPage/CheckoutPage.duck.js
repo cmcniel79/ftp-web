@@ -354,10 +354,10 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
   };
 
   const handleError = e => {
-    const { listingId, lineItems } = params;
+    const { listingId, lineItems, bookingData } = params;
     log.error(e, 'speculate-transaction-failed', {
       listingId: listingId.uuid,
-      lineItems: lineItems
+      bookingData: bookingData
     });
     return dispatch(speculateTransactionError(storableError(e)));
   };

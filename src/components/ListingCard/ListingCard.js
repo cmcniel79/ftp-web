@@ -44,23 +44,25 @@ const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRenderi
 
 export const ListingCardComponent = props => {
   const { className, rootClassName, intl, listing, renderSizes, setActiveListing, currentUser } = props;
-  console.log(currentUser);
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
   const { title = '', price, metadata } = currentListing.attributes;
   const slug = createSlug(title);
   const author = ensureUser(listing.author);
-  const enrolled = author.attributes.profile.publicData.enrolled ? true: false;
+  const enrolled = author.attributes.profile.publicData.enrolled ? true : false;
   const firstImage =
     currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
 
   const { formattedPrice, priceTitle } = priceData(price, intl);
 
-  let likes = metadata.likes;
-  if(likes == null){
-    likes = 0;
-  }
+  const authorAvailable = currentListing && currentListing.author;
+  const userAndListingAuthorAvailable = !!(currentUser && authorAvailable);
+  const isOwnListing =
+    userAndListingAuthorAvailable && currentListing.author.id.uuid === currentUser.id.uuid;
+  const likedListings = currentUser.publicData && currentUser.publicData.likedListings ? 
+    currentUser.publicData.likedListings : null;
+
   return (
     <div className={classes}>
       <div
@@ -70,17 +72,17 @@ export const ListingCardComponent = props => {
       >
         <div className={css.aspectWrapper}>
           <NamedLink name="ListingPage" params={{ id, slug }}>
-          <LazyImage
-            rootClassName={css.rootForImage}
-            alt={title}
-            image={firstImage}
-            variants={['landscape-crop', 'landscape-crop2x']}
-            sizes={renderSizes}
-          />
-          {enrolled &&
-              <img className={css.verifiedImage} src={verifiedImage} alt="image sourced from Freepik.com"/>
-          }
-          </NamedLink> 
+            <LazyImage
+              rootClassName={css.rootForImage}
+              alt={title}
+              image={firstImage}
+              variants={['landscape-crop', 'landscape-crop2x']}
+              sizes={renderSizes}
+            />
+            {enrolled &&
+              <img className={css.verifiedImage} src={verifiedImage} alt="image sourced from Freepik.com" />
+            }
+          </NamedLink>
         </div>
       </div>
       <div className={css.info}>
@@ -88,21 +90,22 @@ export const ListingCardComponent = props => {
           <div className={css.priceValue} title={priceTitle}>
             {formattedPrice}
           </div>
-          {currentUser &&
-          <LikeButton
-          likes={likes}
-          />
+          {currentUser && !isOwnListing &&
+            <LikeButton 
+            currentListing={currentListing}
+            likedListings={likedListings}
+            />
           }
         </div>
         <NamedLink className={css.link} name="ListingPage" params={{ id, slug }}>
-        <div className={css.mainInfo}>
-          <div className={css.title}>
-            {richText(title, {
-              longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
-              longWordClass: css.longWord,
-            })}
+          <div className={css.mainInfo}>
+            <div className={css.title}>
+              {richText(title, {
+                longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
+                longWordClass: css.longWord,
+              })}
+            </div>
           </div>
-        </div>
         </NamedLink>
       </div>
     </div>

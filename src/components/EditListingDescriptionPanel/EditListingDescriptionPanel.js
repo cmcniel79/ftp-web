@@ -28,7 +28,8 @@ const EditListingDescriptionPanel = props => {
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
-  const { description, title, publicData } = currentListing.attributes;
+  const { description, title, publicData, metadata } = currentListing.attributes;
+  console.log(currentListing);
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -37,16 +38,15 @@ const EditListingDescriptionPanel = props => {
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" />
-  );
+      <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" />
+    );
 
   const category = publicData && publicData.category;
   const subCategory = publicData && publicData.subCategory;
   const style = publicData && publicData.style;
   const region = publicData && publicData.region;
   const material = publicData && publicData.material;
-
-
+  const customOrders = publicData && publicData.customOrders;
 
   const categoryOptions = findOptionsForSelectFilter('category', config.custom.filters);
   return (
@@ -54,15 +54,14 @@ const EditListingDescriptionPanel = props => {
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingDescriptionForm
         className={css.form}
-        initialValues={{ title, description, category, subCategory, style, region, material}}
+        initialValues={{ title, description, category, subCategory, style, region, material, customOrders }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, category, subCategory, style, region, material, customOrders} = values;
-          const updateValues = {
-            title: title.trim(),
-            description,
-            publicData: {category, subCategory, style, region, material, customOrders},
-          };
+          const { title, description, category, subCategory, style, region, material, customOrders } = values;
+          const updateValues = {title: title.trim(),
+          description,
+          publicData: {category, subCategory, style, region, material, customOrders},
+        };
           onSubmit(updateValues);
         }}
         onChange={onChange}

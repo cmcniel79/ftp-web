@@ -105,7 +105,7 @@ export class SearchPageComponent extends Component {
 
   render() {
     const {
-      isRealUser,
+      currentUser,
       intl,
       listings,
       filterConfig,
@@ -192,7 +192,7 @@ export class SearchPageComponent extends Component {
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             history={history}
-            isRealUser={isRealUser}
+            currentUser={currentUser}
           />
         </div>
       </Page>
@@ -211,7 +211,7 @@ SearchPageComponent.defaultProps = {
   filterConfig: config.custom.filters,
   sortConfig: config.custom.sortConfig,
   activeListingId: null,
-  currentUser: []
+  currentUser: null
 };
 
 SearchPageComponent.propTypes = {
@@ -228,7 +228,7 @@ SearchPageComponent.propTypes = {
   tab: oneOf(['filters', 'listings', 'map']).isRequired,
   filterConfig: propTypes.filterConfig,
   sortConfig: propTypes.sortConfig,
-  // currentUser: array,
+  currentUser: propTypes.currentUser,
 
   // from withRouter
   history: shape({
@@ -251,9 +251,7 @@ const mapStateToProps = state => {
     searchParams,
     activeListingId,
   } = state.SearchPage;
-  console.log(state.SearchPage);
   const pageListings = getListingsById(state, currentPageResultIds);
-  console.log(state.user.currentUser);
   const { currentUser } = state.user;
   return {
     currentUser,

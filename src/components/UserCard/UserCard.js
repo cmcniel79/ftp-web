@@ -92,8 +92,8 @@ const UserCard = props => {
     </InlineTextButton>
   );
 
-  const editProfileMobile = (
-    <span className={css.editProfileMobile}>
+  const editProfile = (
+    <span className={css.editProfile}>
       <span className={css.linkSeparator}>•</span>
       <NamedLink name="ProfileSettingsPage">
         <FormattedMessage id="ListingPage.editProfileLink" />
@@ -101,11 +101,7 @@ const UserCard = props => {
     </span>
   );
 
-  const editProfileDesktop = isCurrentUser ? (
-    <NamedLink className={css.editProfileDesktop} name="ProfileSettingsPage">
-      <FormattedMessage id="ListingPage.editProfileLink" />
-    </NamedLink>
-  ) : null;
+
 
   const links = ensuredUser.id ? (
     <p className={linkClasses}>
@@ -113,7 +109,7 @@ const UserCard = props => {
         <FormattedMessage id="UserCard.viewProfileLink" />
       </NamedLink>
       {separator}
-      {isCurrentUser ? editProfileMobile : contact}
+      {isCurrentUser ? editProfile : contact}
     </p>
   ) : null;
 
@@ -126,9 +122,8 @@ const UserCard = props => {
             <h3 className={css.heading}>
               <FormattedMessage id="UserCard.heading" values={{ name: displayName }} />
             </h3>
-            {editProfileDesktop}
           </div>
-          {hasBio ? <ExpandableBio className={css.desktopBio} bio={bio} /> : null}
+          {/* {hasBio ? <ExpandableBio className={css.desktopBio} bio={bio} /> : null} */}
           {links}
         </div>
       </div>

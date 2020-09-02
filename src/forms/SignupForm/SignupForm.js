@@ -179,30 +179,6 @@ const SignupFormComponent = props => (
               placeholder={passwordPlaceholder}
               validate={passwordValidators}
             />
-            {/* <FieldBoolean
-              className={css.sellBool}
-              id={formId ? `${formId}.seller` : 'seller'}
-              name="seller"
-              label="Do you plan on selling on From The People?"
-              placeholder="Choose yes/no"
-              validate={boolRequired}
-            />
-            <FieldBoolean
-              className={sellClassNames}
-              id={"sellerAgreement"}
-              name="sellerAgreement"
-              label="Do you agree to the Seller's contract below?"
-              placeholder="Choose yes/no"
-              validate={boolRequired}
-            />
-            <FieldTextInput
-              className={sellClassNames}
-              type="text"
-              id="tribe"
-              name="tribe"
-              label="What Tribal/Indigenous group affiliation do you claim?"
-              placeholder="Please enter affiliation..."
-            /> */}
           </div>
           <div className={css.bottomWrapper}>
             <p className={css.bottomWrapperText}>

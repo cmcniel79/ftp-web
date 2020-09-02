@@ -156,7 +156,6 @@ const EditListingDescriptionFormComponent = props => (
               />
             </div>
 
-
             <div className={css.style}>
               <h2 className={css.checkTitle}>Style</h2>
               <h4>Please pick a style for your listing</h4>
@@ -184,8 +183,6 @@ const EditListingDescriptionFormComponent = props => (
               validate={composeValidators(required("This is required"))}
             />
           </div>
-
-
 
           <Button
             className={css.submitButton}

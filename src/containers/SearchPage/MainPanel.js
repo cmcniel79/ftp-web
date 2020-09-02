@@ -342,6 +342,7 @@ MainPanel.defaultProps = {
   searchParamsForPagination: {},
   filterConfig: config.custom.filters,
   sortConfig: config.custom.sortConfig,
+  currentUser: null
 };
 
 MainPanel.propTypes = {
@@ -363,6 +364,7 @@ MainPanel.propTypes = {
   showAsModalMaxWidth: number.isRequired,
   filterConfig: propTypes.filterConfig,
   sortConfig: propTypes.sortConfig,
+  currentUser: propTypes.currentUser,
 
   history: shape({
     push: func.isRequired,

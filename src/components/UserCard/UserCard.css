@@ -22,7 +22,7 @@
   margin: 20px 0 0 0;
 
   @media (--viewportMedium) {
-    margin: 15px 0 0 0;
+    margin: 0 0 0 0;
   }
 }
 
@@ -107,13 +107,9 @@
   }
 }
 
-.editProfileMobile {
+.editProfile {
   @apply --marketplaceH4FontStyles;
   display: inline;
-
-  @media (--viewportMedium) {
-    display: none;
-  }
 }
 
 .contact {

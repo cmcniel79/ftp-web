@@ -218,7 +218,7 @@
     border-left-color: var(--matterColorNegative);
     padding-left: 60px;
     /* The calendar needs 312px */
-    flex-basis: 312px;
+    flex-basis: 450px;
     flex-shrink: 0;
   }
 }

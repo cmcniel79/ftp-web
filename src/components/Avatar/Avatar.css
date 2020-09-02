@@ -21,8 +21,6 @@
 
     /* Position possible initials to the center of the component */
     display: flex;
-    align-items: center;
-    justify-content: center;
 
     /* Colors */
     background-image: linear-gradient(
@@ -40,15 +38,10 @@
 
 
 .verifiedImage {
-  position: absolute;
-  bottom: 35px;
-  left: 80px;
+  position: relative;
+  top: 35px;
+  right: 40px;
   width: 40px;
-  @media (--viewportLarge) {
-    bottom: 50px;
-    left: 60px;
-    width: 40px;
-  }
 }
 
 /* Small Avatar */

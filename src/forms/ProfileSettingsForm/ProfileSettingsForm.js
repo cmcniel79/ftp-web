@@ -10,6 +10,7 @@ import { propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { isUploadImageOverLimitError } from '../../util/errors';
 import { Form, Avatar, Button, ImageFromFile, IconSpinner, FieldTextInput } from '../../components';
+import TribeSelectFieldMaybe from './TribeSelectFieldMaybe';
 
 import css from './ProfileSettingsForm.css';
 
@@ -318,6 +319,11 @@ class ProfileSettingsFormComponent extends Component {
                   </p>
                 </div>
               }
+              {/* <TribeSelectFieldMaybe
+                id="nativeLandsSelect"
+                name="nativeLandsSelect"
+                intl={intl}
+              /> */}
               {submitError}
               <Button
                 className={css.submitButton}

@@ -102,9 +102,10 @@ const CreateStripeAccountFields = props => {
       <p>
       From The People will not tolerate users who violate the Indian Arts and Crafts Act. By placing your items for sale on our 
       site and becoming a Seller, you agree to comply with the Indian Arts and Crafts Act, and you agree to accept 
-      the sole responsibility of any legal penalties that result from a violation of the Act, and you also agree not to list or sell 
-      any of the prohibited items we have outlined on our FAQ page. If you are based outside of the U.S. then you agree to comply 
-      with any applicable laws protecting Indigenous Made goods and artwork.
+      the sole responsibility of any legal penalties that result from a violation of the Act.
+      <br/> 
+      You also agree not to list or sell any of the prohibited items we have outlined on our FAQ page. If you are based 
+      outside of the U.S. then you agree to comply with any applicable laws protecting Indigenous Made goods and artwork.
       </p>
       <FieldRadioButton
           id="sellerAgreement"
