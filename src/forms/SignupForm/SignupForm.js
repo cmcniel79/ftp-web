@@ -5,7 +5,9 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Form as FinalForm } from 'react-final-form';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
-import { Form, PrimaryButton, FieldTextInput, FieldBoolean } from '../../components';
+import { Form, PrimaryButton, FieldTextInput, FieldSelect } from '../../components';
+import getCountryCodes from '../../translations/countryCodes';
+import config from '../../config';
 
 import css from './SignupForm.css';
 
@@ -106,17 +108,20 @@ const SignupFormComponent = props => (
       const lastNameRequiredMessage = intl.formatMessage({
         id: 'SignupForm.lastNameRequired',
       });
+
+      const countryLabel = intl.formatMessage({ id: 'SignupForm.countryLabel' });
+      const countryPlaceholder = intl.formatMessage({ id: 'SignupForm.countryPlaceholder' });
+      const countryRequired = validators.required(
+        intl.formatMessage({
+          id: 'SignupForm.countryRequired',
+        })
+      );
       const lastNameRequired = validators.required(lastNameRequiredMessage);
 
       const classes = classNames(rootClassName || css.root, className);
       const submitInProgress = inProgress;
       const submitDisabled = invalid || submitInProgress;
-
-      var sellClassNames = css.seller;
-      var isSeller = false;
-      // if(isSeller){
-        sellClassNames = css.active;
-      // }
+      const countryCodes = getCountryCodes(config.locale);
 
       const handleTermsKeyUp = e => {
         // Allow click action with keyboard like with normal links
@@ -169,6 +174,24 @@ const SignupFormComponent = props => (
                 validate={lastNameRequired}
               />
             </div>
+              <FieldSelect
+                className={css.country}
+                id={`${formId}.country`}
+                name="country"
+                label={countryLabel}
+                validate={countryRequired}
+              >
+                <option disabled value="">
+                  {countryPlaceholder}
+                </option>
+                {countryCodes.map(country => {
+                  return (
+                    <option key={country.code} value={country.name}>
+                      {country.name}
+                    </option>
+                  );
+                })}
+              </FieldSelect>
             <FieldTextInput
               className={css.password}
               type="password"

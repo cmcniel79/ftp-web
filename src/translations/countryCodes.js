@@ -1,6 +1,9 @@
 // Add here the translations of the country names using key "<language_code>: 'transalation'" e.g. fi: 'Afganistan'
 // prettier-ignore
 const countryCodes = [
+  { code: 'US', en: 'United States', fr: 'États-Unis', es: 'Estados Unidos de América', de: 'Vereinigte Staaten von Amerika' },
+  { code: 'CA', en: 'Canada', fr: 'Canada', es: 'Canadá', de: 'Kanada' },
+  { code: 'MX', en: 'Mexico', fr: 'Mexique', es: 'México', de: 'Mexiko' },
   { code: 'AF', en: 'Afghanistan', fr: 'Afghanistan', es: 'Afganistán', de: 'Afghanistan' },
   { code: 'AX', en: 'Åland Islands', fr: 'Îles Åland', es: 'Islas Áland', de: 'Åland' },
   { code: 'AL', en: 'Albania', fr: 'Albanie', es: 'Albania', de: 'Albanien' },
@@ -40,7 +43,6 @@ const countryCodes = [
   { code: 'BI', en: 'Burundi', fr: 'Burundi', es: 'Burundi', de: 'Burundi' },
   { code: 'KH', en: 'Cambodia', fr: 'Cambodge', es: 'Camboya', de: 'Kambodscha' },
   { code: 'CM', en: 'Cameroon', fr: 'Cameroun', es: 'Camerún', de: 'Kamerun' },
-  { code: 'CA', en: 'Canada', fr: 'Canada', es: 'Canadá', de: 'Kanada' },
   { code: 'CV', en: 'Cape Verde', fr: 'Cap-Vert', es: 'Cabo Verde', de: 'Kap Verde' },
   { code: 'KY', en: 'Cayman Islands', fr: 'Iles Cayman', es: 'Islas Caimán', de: 'Kaimaninseln' },
   { code: 'CF', en: 'Central African Republic', fr: 'République centrafricaine', es: 'República Centro-Africana', de: 'Zentralafrikanische Republik' },
@@ -144,7 +146,6 @@ const countryCodes = [
   { code: 'MR', en: 'Mauritania', fr: 'Mauritanie', es: 'Mauritania', de: 'Mauretanien' },
   { code: 'MU', en: 'Mauritius', fr: 'Maurice', es: 'Mauricio', de: 'Mauritius' },
   { code: 'YT', en: 'Mayotte', fr: 'Mayotte', es: 'Mayotte', de: 'Mayotte' },
-  { code: 'MX', en: 'Mexico', fr: 'Mexique', es: 'México', de: 'Mexiko' },
   { code: 'FM', en: 'Micronesia, Federated States of', fr: 'Micronésie', es: 'Micronesia', de: 'Mikronesien' },
   { code: 'MD', en: 'Moldova', fr: 'Moldavie', es: 'Moldova', de: 'Moldawien' },
   { code: 'MC', en: 'Monaco', fr: 'Monaco', es: 'Mónaco', de: 'Monaco' },
@@ -236,7 +237,6 @@ const countryCodes = [
   { code: 'UA', en: 'Ukraine', fr: 'Ukraine', es: 'Ucrania', de: 'Ukraine' },
   { code: 'AE', en: 'United Arab Emirates', fr: 'Émirats Arabes Unis', es: 'Emiratos Árabes Unidos', de: 'Vereinigte Arabische Emirate' },
   { code: 'GB', en: 'United Kingdom', fr: 'Royaume-Uni', es: 'Reino Unido', de: 'Vereinigtes Königreich Großbritannien und Nordirland' },
-  { code: 'US', en: 'United States', fr: 'États-Unis', es: 'Estados Unidos de América', de: 'Vereinigte Staaten von Amerika' },
   { code: 'UM', en: 'United States Minor Outlying Islands', fr: 'Îles mineures éloignées des États-Unis', es: 'Islas Ultramarinas Menores de Estados Unidos', de: 'United States Minor Outlying Islands' },
   { code: 'UY', en: 'Uruguay', fr: 'Uruguay', es: 'Uruguay', de: 'Uruguay' },
   { code: 'UZ', en: 'Uzbekistan', fr: 'Ouzbékistan', es: 'Uzbekistán', de: 'Usbekistan' },

@@ -17,7 +17,7 @@ import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck
 import { Page } from '../../components';
 import { TopbarContainer } from '../../containers';
 
-import { searchListings, searchMapListings, setActiveListing } from './SearchPage.duck';
+import { searchListings, setActiveListing, updateLikedListings, getNativeLand } from './SearchPage.duck';
 import {
   pickSearchParamsOnly,
   validURLParamsForExtendedData,
@@ -42,53 +42,8 @@ export class SearchPageComponent extends Component {
       isSearchMapOpenOnMobile: props.tab === 'map',
       isMobileModalOpen: false,
     };
-
-    this.searchMapListingsInProgress = false;
-
-    this.onMapMoveEnd = debounce(this.onMapMoveEnd.bind(this), SEARCH_WITH_MAP_DEBOUNCE);
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
-  }
-
-  // Callback to determine if new search is needed
-  // when map is moved by user or viewport has changed
-  onMapMoveEnd(viewportBoundsChanged, data) {
-    const { viewportBounds, viewportCenter } = data;
-
-    const routes = routeConfiguration();
-    const searchPagePath = pathByRouteName('SearchPage', routes);
-    const currentPath =
-      typeof window !== 'undefined' && window.location && window.location.pathname;
-
-    // When using the ReusableMapContainer onMapMoveEnd can fire from other pages than SearchPage too
-    const isSearchPage = currentPath === searchPagePath;
-
-    // If mapSearch url param is given
-    // or original location search is rendered once,
-    // we start to react to "mapmoveend" events by generating new searches
-    // (i.e. 'moveend' event in Mapbox and 'bounds_changed' in Google Maps)
-    if (viewportBoundsChanged && isSearchPage) {
-      const { history, location, filterConfig } = this.props;
-
-      // parse query parameters, including a custom attribute named category
-      const { address, bounds, mapSearch, ...rest } = parse(location.search, {
-        latlng: ['origin'],
-        latlngBounds: ['bounds'],
-      });
-
-      //const viewportMapCenter = SearchMap.getMapCenter(map);
-      const originMaybe = config.sortSearchByDistance ? { origin: viewportCenter } : {};
-
-      const searchParams = {
-        address,
-        ...originMaybe,
-        bounds: viewportBounds,
-        mapSearch: true,
-        ...validFilterParams(rest, filterConfig),
-      };
-
-      history.push(createResourceLocatorString('SearchPage', routes, {}, searchParams));
-    }
   }
 
   // Invoked when a modal is opened from a child component,
@@ -112,7 +67,6 @@ export class SearchPageComponent extends Component {
       sortConfig,
       history,
       location,
-      mapListings,
       onManageDisableScrolling,
       pagination,
       scrollingDisabled,
@@ -121,6 +75,7 @@ export class SearchPageComponent extends Component {
       searchParams,
       activeListingId,
       onActivateListing,
+      onUpdateLikedListings,
     } = this.props;
     // eslint-disable-next-line no-unused-vars
     const { mapSearch, page, ...searchInURL } = parse(location.search, {
@@ -193,6 +148,7 @@ export class SearchPageComponent extends Component {
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             history={history}
             currentUser={currentUser}
+            onUpdateLikedListings={onUpdateLikedListings}
           />
         </div>
       </Page>
@@ -203,7 +159,6 @@ export class SearchPageComponent extends Component {
 
 SearchPageComponent.defaultProps = {
   listings: [],
-  mapListings: [],
   pagination: null,
   searchListingsError: null,
   searchParams: {},
@@ -216,10 +171,8 @@ SearchPageComponent.defaultProps = {
 
 SearchPageComponent.propTypes = {
   listings: array,
-  mapListings: array,
   onActivateListing: func.isRequired,
   onManageDisableScrolling: func.isRequired,
-  onSearchMapListings: func.isRequired,
   pagination: propTypes.pagination,
   scrollingDisabled: bool.isRequired,
   searchInProgress: bool.isRequired,
@@ -268,8 +221,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
-  onSearchMapListings: searchParams => dispatch(searchMapListings(searchParams)),
   onActivateListing: listingId => dispatch(setActiveListing(listingId)),
+  onUpdateLikedListings: data => dispatch(updateLikedListings(data)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

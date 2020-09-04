@@ -8,15 +8,20 @@ class LikeButton extends Component {
     // in the future.
     constructor(props) {
         super(props);
-        console.log(props);
-        const { currentListing, likedListings } = props;
-        const listingIsLiked = currentListing && likedListings && likedListings.includes(currentListing) ? true : false; 
-    
-    this.state = {
-        ifLiked: listingIsLiked,
-        // likes: props.likes
-    };
-}
+        const { currentListingID, likedListings } = props;
+        const listingIsLiked = currentListingID && likedListings && likedListings.includes(currentListingID) ? true : false;
+        this.state = {
+            ifLiked: listingIsLiked,
+            // likes: props.likes
+        };
+    }
+
+    removeListing() {
+        const index = this.props.likedListings.indexOf(this.props.currentListingID);
+        if (index > -1) {
+            this.props.likedListings.splice(index, 1);
+          }
+    }
 
     addLike = () => {
         // let newCount;
@@ -25,19 +30,32 @@ class LikeButton extends Component {
         // } else {
         //     newCount = this.state.likes + 1;
         // }
+        if(this.state.ifLiked) { 
+        this.removeListing();
+        } else {
+        this.props.likedListings.push(this.props.currentListingID);
+        };
+        console.log(this.props.likedListings);
+
         this.setState({
             ifLiked: !this.state.ifLiked,
             // likes: newCount
         });
+
+        const updatedLikes = { privateData : {
+                    likedListings: this.props.likedListings}};
+        console.log(updatedLikes);
+        console.log(JSON.stringify(updatedLikes));
+            this.props.onUpdateLikedListings(updatedLikes);
     };
 
-    render() {
-        const image = this.state.ifLiked ? heartFilled: heartOutline;
-        return <button className={css.likeButton} onClick={this.addLike}>
-            <img src={image} className={css.heart}/>
+render() {
+    const image = this.state.ifLiked ? heartFilled : heartOutline;
+    return <button className={css.likeButton} onClick={this.addLike}>
+        <img src={image} className={css.heart} />
             Like
             </button>
-    }
+}
 }
 
 export default LikeButton;

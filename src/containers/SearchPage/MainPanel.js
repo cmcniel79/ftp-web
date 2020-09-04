@@ -162,7 +162,8 @@ class MainPanel extends Component {
       showAsModalMaxWidth,
       filterConfig,
       sortConfig,
-      currentUser
+      currentUser,
+      onUpdateLikedListings,
     } = this.props;
 
     const primaryFilters = filterConfig.filter(f => f.group === 'primary');
@@ -325,6 +326,7 @@ class MainPanel extends Component {
                 search={searchParamsForPagination}
                 setActiveListing={onActivateListing}
                 currentUser={currentUser}
+                onUpdateLikedListings={onUpdateLikedListings}
               />
             </div>
           )}

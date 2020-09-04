@@ -5,6 +5,7 @@ import css from './NativeLand.css';
 class NativeLand extends Component {
   constructor(props) {
     super(props);
+    this._isMounted = false;
     this.state = {
       tribes: [],
     };
@@ -12,22 +13,28 @@ class NativeLand extends Component {
 
   //Code below taken and modified from https://stackoverflow.com/questions/47058386/react-map-function-in-component-doesnt-work
   componentDidMount() {
+    this._isMounted = true;
     var baseUrl = 'https://native-land.ca/api/index.php?maps=territories&position=';
     // Correct URL will look like 'https://native-land.ca/api/index.php?maps=territories&position=42.553080,-86.473389'
-    userLocation().then(location => {
-      console.log(location.lat + " + " + location.lng);
+    this._isMounted && userLocation().then(location => {
+      // console.log(location.lat + " + " + location.lng);
       const apiURL = baseUrl + location.lat + "," + location.lng;
       // const apiURL = 'https://native-land.ca/api/index.php?maps=territories&position='; //for testing
-      fetch(apiURL)
+      this._isMounted && fetch(apiURL)
         .then(response =>
           response.ok
             ? response.json()
             : Promise.reject(`Can't communicate with REST API server (${response.statusText})`),
         )
         .then(tribes => {
-          this.setState({ tribes }) // Notify your component that products have been fetched
+          console.log("Native Lands Component");
+          this._isMounted && this.setState({ tribes }) // Notify your component that products have been fetched
         })
     })
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {

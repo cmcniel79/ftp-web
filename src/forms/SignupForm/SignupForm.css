@@ -1,35 +1,21 @@
 @import '../../marketplace.css';
-
 .root {
   @apply --marketplaceModalFormRootStyles;
-
   justify-content: flex-start;
-
   @media (--viewportMedium) {
     justify-content: space-between;
   }
 }
 
-/* .seller{
-  @apply --marketplaceModalPasswordMargins;
-  max-height: 0;
-  transition: 0.45s ease-in;
-  overflow: hidden;
+.country {
+  width: 100%;
+  margin-top: 24px;
 }
-.active{
-  @apply --marketplaceModalPasswordMargins;
-  max-height: 200px;
-  transition: max-height .2s ease-in;
-}
-.sellBool{
-  @apply --marketplaceModalPasswordMargins;
-} */
 
 .name {
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
-
   @media (--viewportMedium) {
     margin-top: 32px;
   }
@@ -61,7 +47,6 @@
 
 .termsLink {
   @apply --marketplaceModalHelperLink;
-
   &:hover {
     text-decoration: underline;
     cursor: pointer;

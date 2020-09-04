@@ -65,7 +65,7 @@ export class ProfileSettingsPageComponent extends Component {
         uploadedImage && uploadedImage.imageId && uploadedImage.file
           ? { ...profile, profileImageId: uploadedImage.imageId }
           : profile;
-
+      console.log(updatedValues);
       onUpdateProfile(updatedValues);
     };
 
@@ -73,7 +73,6 @@ export class ProfileSettingsPageComponent extends Component {
     const { firstName, lastName, bio } = user.attributes.profile;
     const profileImageId = user.profileImage ? user.profileImage.id : null;
     const profileImage = image || { imageId: profileImageId };
-    console.log(user);
     const tribe = user.attributes.profile.publicData ? user.attributes.profile.publicData.tribe : null;
 
     const profileSettingsForm = user.id ? (

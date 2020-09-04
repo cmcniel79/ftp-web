@@ -43,14 +43,15 @@ class ListingImage extends Component {
 const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export const ListingCardComponent = props => {
-  const { className, rootClassName, intl, listing, renderSizes, setActiveListing, currentUser } = props;
+  const { className, rootClassName, intl, listing, renderSizes, setActiveListing, currentUser, onUpdateLikedListings } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
   const { title = '', price, metadata } = currentListing.attributes;
   const slug = createSlug(title);
   const author = ensureUser(listing.author);
-  const enrolled = author.attributes.profile.publicData.enrolled ? true : false;
+  const enrolled = author && author.attributes && author.attributes.profile && author.attributes.profile.publicData && 
+    author.attributes.profile.publicData.enrolled ? true : false;
   const firstImage =
     currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
 
@@ -60,8 +61,9 @@ export const ListingCardComponent = props => {
   const userAndListingAuthorAvailable = !!(currentUser && authorAvailable);
   const isOwnListing =
     userAndListingAuthorAvailable && currentListing.author.id.uuid === currentUser.id.uuid;
-  const likedListings = currentUser.publicData && currentUser.publicData.likedListings ? 
-    currentUser.publicData.likedListings : null;
+
+  const likedListings = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likedListings ? 
+    Object.values(currentUser.attributes.profile.privateData.likedListings) : [];
 
   return (
     <div className={classes}>
@@ -90,9 +92,10 @@ export const ListingCardComponent = props => {
           <div className={css.priceValue} title={priceTitle}>
             {formattedPrice}
           </div>
-          {currentUser && !isOwnListing &&
+          {currentUser &&
             <LikeButton 
-            currentListing={currentListing}
+            onUpdateLikedListings={onUpdateLikedListings}
+            currentListingID={id}
             likedListings={likedListings}
             />
           }
