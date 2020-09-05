@@ -1,6 +1,7 @@
 import React from 'react';
 import { required } from '../../util/validators';
 import { FieldSelect } from '../../components';
+import getNativeTribes from '../../translations/nativeTribes';
 
 import css from './ProfileSettingsForm.css';
 
@@ -18,18 +19,8 @@ const { name, id, intl } = props;
     })
   );
 
- const nativeLandsTribes = ['Acaxees',
- 'Wailaki',
- 'Yinhawangka',
- 'Quinnipiac',
- 'Guachichil',
- 'Nahuatl (Mexico)',
- 'Náayerite (Cora)',
- 'Yiiji',
- 'P’urhépecha',
- 'Kiowa-Comanche-Apache (Oklahoma)',
- 'Kuyani'
-];
+ const nativeLandsTribes = getNativeTribes();
+ console.log(nativeLandsTribes);
   
 
   return(
@@ -45,8 +36,8 @@ const { name, id, intl } = props;
           {nativeLandsTribePlaceholder}
         </option>}
         {nativeLandsTribes.map(t => (
-          <option key={t} value={t}>
-            {t}
+          <option key={t.name} value={t.name}>
+            {t.name}
           </option>
         ))}
       </FieldSelect>

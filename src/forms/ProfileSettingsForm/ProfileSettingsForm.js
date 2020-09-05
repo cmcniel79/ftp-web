@@ -319,11 +319,11 @@ class ProfileSettingsFormComponent extends Component {
                   </p>
                 </div>
               }
-              {/* <TribeSelectFieldMaybe
+              <TribeSelectFieldMaybe
                 id="nativeLandsSelect"
                 name="nativeLandsSelect"
                 intl={intl}
-              /> */}
+              />
               {submitError}
               <Button
                 className={css.submitButton}
