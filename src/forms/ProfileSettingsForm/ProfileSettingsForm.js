@@ -317,13 +317,13 @@ class ProfileSettingsFormComponent extends Component {
                   <p className={css.bioInfo}>
                     <FormattedMessage id="ProfileSettingsForm.tribeInfo" />
                   </p>
+                  <TribeSelectFieldMaybe
+                    id="nativeLands"
+                    name="nativeLands"
+                    intl={intl}
+                  />
                 </div>
               }
-              <TribeSelectFieldMaybe
-                id="nativeLandsSelect"
-                name="nativeLandsSelect"
-                intl={intl}
-              />
               {submitError}
               <Button
                 className={css.submitButton}

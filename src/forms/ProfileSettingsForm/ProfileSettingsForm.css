@@ -22,6 +22,15 @@
   }
 }
 
+.nativeLandsInfo {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.tribeSelect {
+  margin-top: 56px;
+}
+
 .sectionContainer {
   padding: 0;
   margin-bottom: 36px;
