@@ -81,11 +81,12 @@
   @apply --marketplaceSearchFilterLabelFontStyles;
 
   display: inline-block;
-  padding: 9px 16px 10px 16px;
   width: auto;
-  height: auto;
+  height: 100%;
   min-height: 0;
   border-radius: 4px;
+  margin: auto;
+  padding: 9px 16px 10px 16px;
 
   &:focus {
     outline: none;
@@ -102,12 +103,13 @@
   font-weight: var(--fontWeightSemiBold);
 
   display: inline-block;
-  padding: 9px 16px 10px 16px;
   width: auto;
-  height: auto;
+  height: 100%;
   min-height: 0;
   border-radius: 4px;
+  margin: auto;
   border: 1px solid var(--marketplaceColor);
+  padding: 9px 16px 10px 16px;
 
   &:hover,
   &:focus {

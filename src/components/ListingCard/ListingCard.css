@@ -14,10 +14,6 @@
   }
 }
 
-.like {
-  position: absolute;
-}
-
 .link {
   &:hover {
     text-decoration: none;
@@ -101,7 +97,7 @@
 .price {
   /* Layout */
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
   flex-shrink: 0;
   margin-right: 18px;
@@ -116,6 +112,8 @@
   /* Remove default margins from font */
   margin-top: 0;
   margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 5px;
 
   @media (--viewportMedium) {
     margin-top: 0;

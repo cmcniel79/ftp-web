@@ -671,7 +671,7 @@
   "ProfileSettingsPage.title": "Profile settings",
   "ProfileSettingsPage.viewProfileLink": "View your profile",
   "ProfileSettingsForm.tribeHeading": "Your tribe",
-  "ProfileSettingsForm.tribeInfo": "We have verified your tribal enrollment. You can now enter your tribal affiliation.",
+  "ProfileSettingsForm.tribeInfo": "Your enrollment has been verified. You can now enter what you would like your tribal affilation to be displayed as.",
   "ProfileSettingsForm.tribeLabel": "Tribe",
   "ProfileSettingsForm.tribePlaceholder": "Enter your tribal affilation here...",
   "ProfileSettingsForm.nativeLandsLabel": "Enter a tribal affiliation for the Native Lands Integration",

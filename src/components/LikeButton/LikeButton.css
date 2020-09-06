@@ -1,20 +1,11 @@
 @import '../../marketplace.css';
 
 .likeButton {
-    width: 65px;
+    position: absolute;
+    bottom: 5px;
+    left: -5px;
     display: flex;
     cursor: pointer;
-    margin: 2px auto 0;
-    border: solid;
-    border-color: var(--marketplaceColor);
-    border-radius: 16px;
-    justify-content: space-between;
-    font-weight: var(--fontWeightRegular);
-    font-size: 14px;
-    letter-spacing: 0;
-    padding: 0 6px;
+    border: none;
+    width: 50px;
 }   
-
-.heart {
-    width: 20px;
-}

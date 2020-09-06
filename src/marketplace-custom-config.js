@@ -175,7 +175,7 @@ export const filters = [
     id: 'material',
     label: 'Material',
     type: 'SelectMultipleFilter',
-    group: 'primary',
+    group: 'secondary',
     queryParamNames: ['pub_material'],
     config: {
       // Optional modes: 'has_all', 'has_any'
@@ -199,6 +199,47 @@ export const filters = [
 
         { key: 'gold', label: 'Gold', },
       ],
+    },
+  },
+  {
+    id: 'customOrders',
+    label: 'Custom Orders Available',
+    type: 'SelectSingleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_customOrders'],
+    config: {
+      options: [
+        { key: true, label: "Listings Available for Custom Orders" },
+        { key: false, label: "All Listings" }  
+      ]
+    }
+  },
+  {
+    id: 'verifiedSellers',
+    label: 'Verified Sellers',
+    type: 'SelectSingleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_verifiedSellers'],
+    config: {
+      options: [
+        { key: true, label: "Only Verified Sellers" },
+        { key: false, label: "All Sellers" }  
+      ]
+    }
+  },
+  {
+    id: 'nativeLands',
+    label: 'Native Lands',
+    type: 'SelectSingleFilter',
+    group: 'primary',
+    queryParamNames: ['pub_nativeLands'],
+    config: {
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for the UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [ 
+      ]
     },
   },
 ];

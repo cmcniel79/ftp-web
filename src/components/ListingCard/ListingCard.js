@@ -50,7 +50,7 @@ export const ListingCardComponent = props => {
   const { title = '', price, metadata } = currentListing.attributes;
   const slug = createSlug(title);
   const author = ensureUser(listing.author);
-  const enrolled = author && author.attributes && author.attributes.profile && author.attributes.profile.publicData && 
+  const enrolled = author && author.attributes && author.attributes.profile && author.attributes.profile.publicData &&
     author.attributes.profile.publicData.enrolled ? true : false;
   const firstImage =
     currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
@@ -62,7 +62,7 @@ export const ListingCardComponent = props => {
   const isOwnListing =
     userAndListingAuthorAvailable && currentListing.author.id.uuid === currentUser.id.uuid;
 
-  const likedListings = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likedListings ? 
+  const likedListings = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likedListings ?
     Object.values(currentUser.attributes.profile.privateData.likedListings) : [];
 
   return (
@@ -85,21 +85,16 @@ export const ListingCardComponent = props => {
               <img className={css.verifiedImage} src={verifiedImage} alt="image sourced from Freepik.com" />
             }
           </NamedLink>
+          {currentUser &&
+              <LikeButton
+                onUpdateLikedListings={onUpdateLikedListings}
+                currentListingID={id}
+                likedListings={likedListings}
+              />
+            }
         </div>
       </div>
       <div className={css.info}>
-        <div className={css.price}>
-          <div className={css.priceValue} title={priceTitle}>
-            {formattedPrice}
-          </div>
-          {currentUser &&
-            <LikeButton 
-            onUpdateLikedListings={onUpdateLikedListings}
-            currentListingID={id}
-            likedListings={likedListings}
-            />
-          }
-        </div>
         <NamedLink className={css.link} name="ListingPage" params={{ id, slug }}>
           <div className={css.mainInfo}>
             <div className={css.title}>
@@ -111,6 +106,14 @@ export const ListingCardComponent = props => {
           </div>
         </NamedLink>
       </div>
+      <div className={css.price}>
+          <div className={css.priceValue} title={priceTitle}>
+            {formattedPrice}
+          </div>
+          <div className={css.priceValue} title={priceTitle}>
+          • No Reviews Yet
+          </div>
+        </div>
     </div>
   );
 };

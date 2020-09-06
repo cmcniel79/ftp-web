@@ -164,6 +164,7 @@ class MainPanel extends Component {
       sortConfig,
       currentUser,
       onUpdateLikedListings,
+      tribes
     } = this.props;
 
     const primaryFilters = filterConfig.filter(f => f.group === 'primary');
@@ -194,6 +195,7 @@ class MainPanel extends Component {
     const hasPaginationInfo = !!pagination && pagination.totalItems != null;
     const totalItems = searchParamsAreInSync && hasPaginationInfo ? pagination.totalItems : 0;
     const listingsAreLoaded = !searchInProgress && searchParamsAreInSync && hasPaginationInfo;
+    let nativeLandsConfig;
 
     const sortBy = mode => {
       const conflictingFilterActive = isAnyFilterActive(
@@ -222,7 +224,6 @@ class MainPanel extends Component {
     };
 
     const classes = classNames(rootClassName || css.searchResultContainer, className);
-
     return (
       <div className={classes}>
         <SearchFiltersPrimary
@@ -235,7 +236,8 @@ class MainPanel extends Component {
           {...propsForSecondaryFiltersToggle}
         >
           {primaryFilters.map(config => {
-            if (config.id != 'keyword') {
+            if (config.id != 'keyword' && config.id != 'nativeLands') {
+              // console.log(config.id)
               return (
                 <FilterComponent
                   key={`SearchFiltersPrimary.${config.id}`}
@@ -248,9 +250,10 @@ class MainPanel extends Component {
                   contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
                 />
               );
+            } else if (config.id == 'nativeLands') {
+              nativeLandsConfig = config;
             }
           })}
-        <NativeLand/>
         </SearchFiltersPrimary>
         <SearchFiltersMobile
           className={css.searchFiltersMobile}
@@ -330,6 +333,13 @@ class MainPanel extends Component {
               />
             </div>
           )}
+        {/* {nativeLandsConfig && <NativeLand
+          tribes={tribes}
+          getHandleChangedValueFn={this.getHandleChangedValueFn}
+          filterConfig={nativeLandsConfig}
+          onSelect={this.getHandleChangedValueFn(true)}
+        />
+        } */}
       </div>
     );
   }

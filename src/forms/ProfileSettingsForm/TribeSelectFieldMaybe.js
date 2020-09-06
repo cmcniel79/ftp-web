@@ -52,13 +52,13 @@ const TribeSelectFieldMaybe = props => {
         name={name}
         id={id}
         label={nativeLandsLabel}
-        validate={nativeLandsRequired}
+        // validate={nativeLandsRequired}
       >
         {<option disabled value="">
           {nativeLandsPlaceholder}
         </option>}
         {nativeLandsTribes.map(t => (
-          <option key={t.name} value={t.name}>
+          <option key={t.slug} value={t.slug}>
             {t.name}
           </option>
         ))}

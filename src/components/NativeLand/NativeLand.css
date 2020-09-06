@@ -1,5 +1,18 @@
 @import '../../marketplace.css';
 
+.button {
+    display: flex;
+    flex-direction: row;
+    /* Override button styles */
+    outline: none;
+    text-align: left;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
 .nativeLandHeader {
     width: 80%;
+    display: flex;
+    flex-direction: column;
 }

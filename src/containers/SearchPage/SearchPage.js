@@ -16,6 +16,7 @@ import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
 import { Page } from '../../components';
 import { TopbarContainer } from '../../containers';
+import { userLocation } from '../../util/maps';
 
 import { searchListings, setActiveListing, updateLikedListings, getNativeLand } from './SearchPage.duck';
 import {
@@ -38,12 +39,38 @@ export class SearchPageComponent extends Component {
   constructor(props) {
     super(props);
 
+    this._isMounted = false;
     this.state = {
       isSearchMapOpenOnMobile: props.tab === 'map',
       isMobileModalOpen: false,
+      tribes: []
     };
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+    var baseUrl = 'https://native-land.ca/api/index.php?maps=territories&position=';
+    // Correct URL will look like 'https://native-land.ca/api/index.php?maps=territories&position=42.553080,-86.473389'
+    this._isMounted && userLocation().then(location => {
+      // console.log(location.lat + " + " + location.lng);
+      const apiURL = baseUrl + location.lat + "," + location.lng;
+      // const apiURL = 'https://native-land.ca/api/index.php?maps=territories&position='; //for testing
+      this._isMounted && fetch(apiURL)
+        .then(response =>
+          response.ok
+            ? response.json()
+            : Promise.reject(`Can't communicate with REST API server (${response.statusText})`),
+        )
+        .then(tribes => {
+          this._isMounted && this.setState({ tribes }) // Notify your component that products have been fetched
+        })
+    })
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   // Invoked when a modal is opened from a child component,
@@ -149,6 +176,7 @@ export class SearchPageComponent extends Component {
             history={history}
             currentUser={currentUser}
             onUpdateLikedListings={onUpdateLikedListings}
+            tribes={this.state.tribes}
           />
         </div>
       </Page>

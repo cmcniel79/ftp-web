@@ -41,9 +41,9 @@
      inkscape:window-height="1001"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="0.4609375"
-     inkscape:cx="-8.6779661"
-     inkscape:cy="256"
+     inkscape:zoom="0.65186406"
+     inkscape:cx="-266.40064"
+     inkscape:cy="437.924"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
@@ -51,7 +51,13 @@
   <title
      id="title2">ionicons-v5-f</title>
   <path
-     d="M352.92,80C288,80,256,144,256,144s-32-64-96.92-64C106.32,80,64.54,124.14,64,176.81c-1.1,109.33,86.73,187.08,183,252.42a16,16,0,0,0,18,0c96.26-65.34,184.09-143.09,183-252.42C447.46,124.14,405.68,80,352.92,80Z"
-     style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"
-     id="path4" />
+     inkscape:connector-curvature="0"
+     d="m 352.9201,80.009773 c -64.92,0 -96.92001,63.999997 -96.92001,63.999997 0,0 -32,-63.999997 -96.92,-63.999997 -52.76001,0 -94.540004,44.139997 -95.080004,96.809997 -1.1,109.33 86.730004,187.08 183.000004,252.42 a 16,16 0 0 0 18,0 c 96.26001,-65.34 184.09001,-143.09 183.00001,-252.42 -0.54,-52.67 -42.32,-96.809997 -95.08,-96.809997 z"
+     style="fill:#000000;stroke:#ffffff;stroke-width:32px;stroke-linecap:round;stroke-linejoin:round;opacity:0.3"
+     id="path4-7" />
+  <path
+     d="m 352.92009,80.009773 c -64.92,0 -96.92,63.999997 -96.92,63.999997 0,0 -32,-63.999997 -96.92,-63.999997 -52.76,0 -94.539999,44.139997 -95.079999,96.809997 -1.1,109.33 86.729999,187.08 182.999999,252.42 a 16,16 0 0 0 18,0 c 96.26,-65.34 184.09,-143.09 183,-252.42 -0.54,-52.67 -42.32,-96.809997 -95.08,-96.809997 z"
+     style="fill:none;stroke:#ffffff;stroke-width:32px;stroke-linecap:round;stroke-linejoin:round"
+     id="path4"
+     inkscape:connector-curvature="0" />
 </svg>

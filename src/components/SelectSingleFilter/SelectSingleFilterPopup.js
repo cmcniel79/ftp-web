@@ -29,6 +29,7 @@ class SelectSingleFilterPopup extends Component {
   }
 
   selectOption(queryParamName, option) {
+    console.log(queryParamName);
     this.setState({ isOpen: false });
     this.props.onSelect({ [queryParamName]: option });
   }

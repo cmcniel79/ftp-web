@@ -9,7 +9,7 @@ class LikeButton extends Component {
     constructor(props) {
         super(props);
         const { currentListingID, likedListings } = props;
-        const listingIsLiked = currentListingID && likedListings && likedListings.includes(currentListingID) ? true : false;
+        const listingIsLiked = currentListingID && likedListings && likedListings.uuid && likedListings.uuid.includes(currentListingID) ? true : false;
         this.state = {
             ifLiked: listingIsLiked,
             // likes: props.likes
@@ -20,7 +20,7 @@ class LikeButton extends Component {
         const index = this.props.likedListings.indexOf(this.props.currentListingID);
         if (index > -1) {
             this.props.likedListings.splice(index, 1);
-          }
+        }
     }
 
     addLike = () => {
@@ -30,32 +30,33 @@ class LikeButton extends Component {
         // } else {
         //     newCount = this.state.likes + 1;
         // }
-        if(this.state.ifLiked) { 
-        this.removeListing();
+        if (this.state.ifLiked) {
+            this.removeListing();
         } else {
-        this.props.likedListings.push(this.props.currentListingID);
+            this.props.likedListings.push({ uuid: this.props.currentListingID });
         };
-        console.log(this.props.likedListings);
-
         this.setState({
             ifLiked: !this.state.ifLiked,
             // likes: newCount
         });
 
-        const updatedLikes = { privateData : {
-                    likedListings: this.props.likedListings}};
+        const updatedLikes = {
+            privateData: {
+                likedListings: this.props.likedListings
+            }
+        };
+        console.log(this.props.likedListings);
         console.log(updatedLikes);
-        console.log(JSON.stringify(updatedLikes));
-            this.props.onUpdateLikedListings(updatedLikes);
+        this.props.onUpdateLikedListings(updatedLikes);
     };
 
-render() {
-    const image = this.state.ifLiked ? heartFilled : heartOutline;
-    return <button className={css.likeButton} onClick={this.addLike}>
-        <img src={image} className={css.heart} />
-            Like
-            </button>
-}
+    render() {
+        const image = this.state.ifLiked ? heartFilled : heartOutline;
+        return <button className={css.likeButton} onClick={this.addLike}>
+            <img src={image}/>
+            <a class="link" href=""></a>
+        </button>
+    }
 }
 
 export default LikeButton;
