@@ -36,7 +36,7 @@
     */
     flex-basis: calc(50% - 12px);
     margin-right: 12px;
-    max-width: 23%;
+    max-width: 30%;
   }
   @media (--viewportXLarge) {
     /**
@@ -55,7 +55,7 @@
      */
     flex-basis: calc(33.33% - 16px);
     margin-right: 12px;
-    max-width: 23%;
+    max-width: 30%;
   }
 }
 

@@ -94,6 +94,21 @@
   margin-right: 30px;
 }
 
+.ratings {
+  @apply --marketplaceH4FontStyles;
+  /* margin: auto; */
+  /* Remove default margins from font */
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 5px;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
 .price {
   /* Layout */
   display: flex;
@@ -106,9 +121,8 @@
 .priceValue {
   /* Font */
   color: var(--marketplaceColor);
-  @apply --marketplaceH3FontStyles;
-  font-size: 20px;
-  margin: auto;
+  @apply --marketplaceH4FontStyles;
+  /* margin: auto; */
   /* Remove default margins from font */
   margin-top: 0;
   margin-bottom: 0;
@@ -143,7 +157,7 @@
 
 .title {
   /* Font */
-  @apply --marketplaceH3FontStyles;
+  @apply --marketplaceH4FontStyles;
   color: var(--matterColor);
 
   /* Remove default margins from font */

@@ -316,6 +316,7 @@ class EditListingWizard extends Component {
     const ensuredCurrentUser = ensureCurrentUser(currentUser);
     const currentUserLoaded = !!ensuredCurrentUser.id;
     const stripeConnected = currentUserLoaded && !!stripeAccount && !!stripeAccount.id;
+    const enrolledStatus = currentUserLoaded ? ensuredCurrentUser.attributes.profile.publicData.enrolled : null;
 
     const rootURL = config.canonicalRootURL;
     const routes = routeConfiguration();
@@ -387,6 +388,7 @@ class EditListingWizard extends Component {
                 handleCreateFlowTabScrolling={this.handleCreateFlowTabScrolling}
                 handlePublishListing={this.handlePublishListing}
                 fetchInProgress={fetchInProgress}
+                enrolledStatus={enrolledStatus}
               />
             );
           })}

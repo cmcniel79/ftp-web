@@ -14,7 +14,7 @@ import arrayMutators from 'final-form-arrays';
 
 import css from './EditListingDescriptionForm.css';
 
-const TITLE_MAX_LENGTH = 60;
+const TITLE_MAX_LENGTH = 46;
 
 const EditListingDescriptionFormComponent = props => (
   <FinalForm

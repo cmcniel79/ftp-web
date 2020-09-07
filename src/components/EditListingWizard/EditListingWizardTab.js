@@ -82,6 +82,7 @@ const EditListingWizardTab = props => {
     updatedTab,
     updateInProgress,
     intl,
+    enrolledStatus
   } = props;
 
   const { type } = params;
@@ -141,6 +142,7 @@ const EditListingWizardTab = props => {
       // newListingPublished and fetchInProgress are flags for the last wizard tab
       ready: newListingPublished,
       disabled: fetchInProgress,
+      enrolledStatus
     };
   };
 

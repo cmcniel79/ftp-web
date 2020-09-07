@@ -255,6 +255,15 @@ class MainPanel extends Component {
             }
           })}
         </SearchFiltersPrimary>
+        <div className={css.nativeLandsSection}>
+          {nativeLandsConfig && <NativeLand
+            tribes={tribes}
+            getHandleChangedValueFn={this.getHandleChangedValueFn}
+            filterConfig={nativeLandsConfig}
+            onSelect={this.getHandleChangedValueFn(true)}
+          />
+          }
+        </div>
         <SearchFiltersMobile
           className={css.searchFiltersMobile}
           urlQueryParams={urlQueryParams}
@@ -272,74 +281,78 @@ class MainPanel extends Component {
           selectedFiltersCount={selectedFiltersCount}
         >
           {filterConfig.map(config => {
-            return (
-              <FilterComponent
-                key={`SearchFiltersMobile.${config.id}`}
-                idPrefix="SearchFiltersMobile"
-                filterConfig={config}
-                urlQueryParams={urlQueryParams}
-                initialValues={this.initialValues}
-                getHandleChangedValueFn={this.getHandleChangedValueFn}
-                liveEdit
-                showAsPopup={false}
-              />
-            );
+            if (config.id != 'keyword' && config.id != 'nativeLands') {
+              return (
+                <FilterComponent
+                  key={`SearchFiltersMobile.${config.id}`}
+                  idPrefix="SearchFiltersMobile"
+                  filterConfig={config}
+                  urlQueryParams={urlQueryParams}
+                  initialValues={this.initialValues}
+                  getHandleChangedValueFn={this.getHandleChangedValueFn}
+                  liveEdit
+                  showAsPopup={false}
+                />
+              );
+            } else if (config.id == 'nativeLands') {
+              nativeLandsConfig = config;
+            }
           })}
+          {nativeLandsConfig && <NativeLand
+            tribes={tribes}
+            getHandleChangedValueFn={this.getHandleChangedValueFn}
+            filterConfig={nativeLandsConfig}
+            onSelect={this.getHandleChangedValueFn(true)}
+          />
+          }
         </SearchFiltersMobile>
-        {isSecondaryFiltersOpen ? (
-          <div className={classNames(css.searchFiltersPanel)}>
-            <SearchFiltersSecondary
-              urlQueryParams={urlQueryParams}
-              listingsAreLoaded={listingsAreLoaded}
-              applyFilters={this.applyFilters}
-              cancelFilters={this.cancelFilters}
-              resetAll={this.resetAll}
-              onClosePanel={() => this.setState({ isSecondaryFiltersOpen: false })}
-            >
-              {secondaryFilters.map(config => {
-                return (
-                  <FilterComponent
-                    key={`SearchFiltersSecondary.${config.id}`}
-                    idPrefix="SearchFiltersSecondary"
-                    filterConfig={config}
-                    urlQueryParams={urlQueryParams}
-                    initialValues={this.initialValues}
-                    getHandleChangedValueFn={this.getHandleChangedValueFn}
-                    showAsPopup={false}
-                  />
-                );
-              })}
-            </SearchFiltersSecondary>
-          </div>
-        ) : (
-            <div
-              className={classNames(css.listings, {
-                [css.newSearchInProgress]: !listingsAreLoaded,
-              })}
-            >
-              {searchListingsError ? (
-                <h2 className={css.error}>
-                  <FormattedMessage id="SearchPage.searchError" />
-                </h2>
-              ) : null}
-              <SearchResultsPanel
-                className={css.searchListingsPanel}
-                listings={listings}
-                pagination={listingsAreLoaded ? pagination : null}
-                search={searchParamsForPagination}
-                setActiveListing={onActivateListing}
-                currentUser={currentUser}
-                onUpdateLikedListings={onUpdateLikedListings}
-              />
-            </div>
-          )}
-        {/* {nativeLandsConfig && <NativeLand
-          tribes={tribes}
-          getHandleChangedValueFn={this.getHandleChangedValueFn}
-          filterConfig={nativeLandsConfig}
-          onSelect={this.getHandleChangedValueFn(true)}
-        />
-        } */}
+        {/* {isSecondaryFiltersOpen ? ( */}
+        <div className={classNames(css.searchFiltersPanel)}>
+          <SearchFiltersSecondary
+            urlQueryParams={urlQueryParams}
+            listingsAreLoaded={listingsAreLoaded}
+            applyFilters={this.applyFilters}
+            cancelFilters={this.cancelFilters}
+            resetAll={this.resetAll}
+            onClosePanel={() => this.setState({ isSecondaryFiltersOpen: false })}
+          >
+            {secondaryFilters.map(config => {
+              return (
+                <FilterComponent
+                  key={`SearchFiltersSecondary.${config.id}`}
+                  idPrefix="SearchFiltersSecondary"
+                  filterConfig={config}
+                  urlQueryParams={urlQueryParams}
+                  initialValues={this.initialValues}
+                  getHandleChangedValueFn={this.getHandleChangedValueFn}
+                  showAsPopup={false}
+                />
+              );
+            })}
+          </SearchFiltersSecondary>
+        </div>
+        {/* ) : ( */}
+        <div
+          className={classNames(css.listings, {
+            [css.newSearchInProgress]: !listingsAreLoaded,
+          })}
+        >
+          {searchListingsError ? (
+            <h2 className={css.error}>
+              <FormattedMessage id="SearchPage.searchError" />
+            </h2>
+          ) : null}
+          <SearchResultsPanel
+            className={css.searchListingsPanel}
+            listings={listings}
+            pagination={listingsAreLoaded ? pagination : null}
+            search={searchParamsForPagination}
+            setActiveListing={onActivateListing}
+            currentUser={currentUser}
+            onUpdateLikedListings={onUpdateLikedListings}
+          />
+        </div>
+        {/* )} */}
       </div>
     );
   }

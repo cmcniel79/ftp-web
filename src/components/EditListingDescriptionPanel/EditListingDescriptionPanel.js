@@ -24,8 +24,9 @@ const EditListingDescriptionPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
+    enrolledStatus
   } = props;
-
+  const verifiedSellers = enrolledStatus;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { description, title, publicData, metadata } = currentListing.attributes;
@@ -60,7 +61,7 @@ const EditListingDescriptionPanel = props => {
           const { title, description, category, subCategory, style, region, material, customOrders } = values;
           const updateValues = {title: title.trim(),
           description,
-          publicData: {category, subCategory, style, region, material, customOrders},
+          publicData: {category, subCategory, style, region, material, customOrders, verifiedSellers},
         };
           onSubmit(updateValues);
         }}

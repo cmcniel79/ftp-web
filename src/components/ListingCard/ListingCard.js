@@ -107,10 +107,10 @@ export const ListingCardComponent = props => {
         </NamedLink>
       </div>
       <div className={css.price}>
-          <div className={css.priceValue} title={priceTitle}>
+          <div className={css.priceValue}>
             {formattedPrice}
           </div>
-          <div className={css.priceValue} title={priceTitle}>
+          <div className={css.ratings}>
           • No Reviews Yet
           </div>
         </div>
