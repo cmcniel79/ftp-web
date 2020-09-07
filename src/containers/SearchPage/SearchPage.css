@@ -13,8 +13,16 @@
   --SearchPage_containerHeight: calc(100vh - var(--topbarHeightDesktop));
 }
 
+.searchPanelNativeLand {
+  max-width: 20%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2px 0 0 0;
+}
+
 .nativeLandsSection {
-  width: 20px;
+  padding: 0 24px;
 }
 
 /* Can be given to Topbar when a modal is opened
@@ -86,10 +94,9 @@
   display: none;
 
   @media (--viewportMedium) {
-    width: 25%;
     display: flex;
     padding: 0 24px;
-    margin-bottom: 21px;
+    /* margin-bottom: 15px; */
     display: flex;
     flex-direction: column;
   }

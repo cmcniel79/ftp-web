@@ -1,18 +1,72 @@
 @import '../../marketplace.css';
-
 .button {
-    display: flex;
-    flex-direction: row;
-    /* Override button styles */
-    outline: none;
-    text-align: left;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-  }
+  display: flex;
+  flex-direction: row;
+  /* Override button styles */
+  outline: none;
+  text-align: left;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.buttonSelected {
+  display: flex;
+  flex-direction: row;
+  /* Override button styles */
+  outline: none;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  border-left-style: solid;
+  border-left-color: var(--marketplaceColor);
+  border-left-width: 5px;
+  padding-left: 10px;
+}
+
+.buttonText {
+  margin: 5px 0;
+  font-size: 20px
+}
+
+.nativeLandInfo {
+  display: flex;
+  flex-direction: column;
+}
 
 .nativeLandHeader {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
+  margin-top: 10px;
+}
+
+.half {
+  margin-top: 10px;
+  width: 20%;
+  height: 0;
+  border-top-style: solid;
+  border-top-color: var(--marketplaceColor);
+  border-top-width: 10px;
+}
+
+
+.clearButton {
+  @apply --marketplaceH5FontStyles;
+  font-weight: var(--fontWeightMedium);
+  color: var(--matterColorAnti);
+
+  /* Layout */
+  display: inline;
+  float: right;
+  margin-top: 6px;
+  padding: 0;
+
+  /* Override button styles */
+  outline: none;
+  text-align: left;
+  border: none;
+
+  &:focus,
+  &:hover {
+    color: var(--matterColor);
+  }
 }

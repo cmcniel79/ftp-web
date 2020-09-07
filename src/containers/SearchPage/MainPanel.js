@@ -14,7 +14,8 @@ import {
   SearchFiltersPrimary,
   SearchFiltersSecondary,
   SortBy,
-  NativeLand
+  NativeLand,
+  Modal
 } from '../../components';
 
 import FilterComponent from './FilterComponent';
@@ -226,43 +227,45 @@ class MainPanel extends Component {
     const classes = classNames(rootClassName || css.searchResultContainer, className);
     return (
       <div className={classes}>
-        <SearchFiltersPrimary
-          className={css.searchFiltersPrimary}
-          sortByComponent={sortBy('desktop')}
-          listingsAreLoaded={listingsAreLoaded}
-          resultsCount={totalItems}
-          searchInProgress={searchInProgress}
-          searchListingsError={searchListingsError}
-          {...propsForSecondaryFiltersToggle}
-        >
-          {primaryFilters.map(config => {
-            if (config.id != 'keyword' && config.id != 'nativeLands') {
-              // console.log(config.id)
-              return (
-                <FilterComponent
-                  key={`SearchFiltersPrimary.${config.id}`}
-                  idPrefix="SearchFiltersPrimary"
-                  filterConfig={config}
-                  urlQueryParams={urlQueryParams}
-                  initialValues={this.initialValues}
-                  getHandleChangedValueFn={this.getHandleChangedValueFn}
-                  showAsPopup
-                  contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-                />
-              );
-            } else if (config.id == 'nativeLands') {
-              nativeLandsConfig = config;
+        <div className={css.searchPanelNativeLand}>
+          <SearchFiltersPrimary
+            className={css.searchFiltersPrimary}
+            sortByComponent={sortBy('desktop')}
+            listingsAreLoaded={listingsAreLoaded}
+            resultsCount={totalItems}
+            searchInProgress={searchInProgress}
+            searchListingsError={searchListingsError}
+            {...propsForSecondaryFiltersToggle}
+          >
+            {primaryFilters.map(config => {
+              if (config.id != 'keyword' && config.id != 'nativeLands') {
+                return (
+                  <FilterComponent
+                    key={`SearchFiltersPrimary.${config.id}`}
+                    idPrefix="SearchFiltersPrimary"
+                    filterConfig={config}
+                    urlQueryParams={urlQueryParams}
+                    initialValues={this.initialValues}
+                    getHandleChangedValueFn={this.getHandleChangedValueFn}
+                    showAsPopup
+                    contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+                  />
+                );
+              } else if (config.id == 'nativeLands') {
+                nativeLandsConfig = config;
+              }
+            })}
+          </SearchFiltersPrimary>
+          <div className={css.nativeLandsSection}>
+            {nativeLandsConfig && <NativeLand
+              tribes={tribes}
+              getHandleChangedValueFn={this.getHandleChangedValueFn}
+              filterConfig={nativeLandsConfig}
+              onSelect={this.getHandleChangedValueFn(true)}
+              initialValues={this.initialValues}
+            />
             }
-          })}
-        </SearchFiltersPrimary>
-        <div className={css.nativeLandsSection}>
-          {nativeLandsConfig && <NativeLand
-            tribes={tribes}
-            getHandleChangedValueFn={this.getHandleChangedValueFn}
-            filterConfig={nativeLandsConfig}
-            onSelect={this.getHandleChangedValueFn(true)}
-          />
-          }
+          </div>
         </div>
         <SearchFiltersMobile
           className={css.searchFiltersMobile}
@@ -298,40 +301,40 @@ class MainPanel extends Component {
               nativeLandsConfig = config;
             }
           })}
-          {nativeLandsConfig && <NativeLand
-            tribes={tribes}
-            getHandleChangedValueFn={this.getHandleChangedValueFn}
-            filterConfig={nativeLandsConfig}
-            onSelect={this.getHandleChangedValueFn(true)}
-          />
-          }
         </SearchFiltersMobile>
-        {/* {isSecondaryFiltersOpen ? ( */}
-        <div className={classNames(css.searchFiltersPanel)}>
-          <SearchFiltersSecondary
-            urlQueryParams={urlQueryParams}
-            listingsAreLoaded={listingsAreLoaded}
-            applyFilters={this.applyFilters}
-            cancelFilters={this.cancelFilters}
-            resetAll={this.resetAll}
-            onClosePanel={() => this.setState({ isSecondaryFiltersOpen: false })}
-          >
-            {secondaryFilters.map(config => {
-              return (
-                <FilterComponent
-                  key={`SearchFiltersSecondary.${config.id}`}
-                  idPrefix="SearchFiltersSecondary"
-                  filterConfig={config}
-                  urlQueryParams={urlQueryParams}
-                  initialValues={this.initialValues}
-                  getHandleChangedValueFn={this.getHandleChangedValueFn}
-                  showAsPopup={false}
-                />
-              );
-            })}
-          </SearchFiltersSecondary>
-        </div>
-        {/* ) : ( */}
+        {isSecondaryFiltersOpen ? (
+          <div className={classNames(css.searchFiltersPanel)}>
+            <Modal
+              id='secondaryFilterModal'
+              onClose={() => this.setState({ isSecondaryFiltersOpen: false })}
+              onManageDisableScrolling={this.props.onManageDisableScrolling}
+              isOpen={isSecondaryFiltersOpen}
+            >
+              <SearchFiltersSecondary
+                urlQueryParams={urlQueryParams}
+                listingsAreLoaded={listingsAreLoaded}
+                applyFilters={this.applyFilters}
+                cancelFilters={this.cancelFilters}
+                resetAll={this.resetAll}
+                onClosePanel={() => this.setState({ isSecondaryFiltersOpen: false })}
+              >
+                {secondaryFilters.map(config => {
+                  return (
+                    <FilterComponent
+                      key={`SearchFiltersSecondary.${config.id}`}
+                      idPrefix="SearchFiltersSecondary"
+                      filterConfig={config}
+                      urlQueryParams={urlQueryParams}
+                      initialValues={this.initialValues}
+                      getHandleChangedValueFn={this.getHandleChangedValueFn}
+                      showAsPopup={false}
+                    />
+                  );
+                })}
+              </SearchFiltersSecondary>
+            </Modal>
+          </div>
+        ) : (null)}
         <div
           className={classNames(css.listings, {
             [css.newSearchInProgress]: !listingsAreLoaded,
@@ -352,7 +355,6 @@ class MainPanel extends Component {
             onUpdateLikedListings={onUpdateLikedListings}
           />
         </div>
-        {/* )} */}
       </div>
     );
   }
