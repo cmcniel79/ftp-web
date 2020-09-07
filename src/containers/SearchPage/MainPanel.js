@@ -301,6 +301,16 @@ class MainPanel extends Component {
               nativeLandsConfig = config;
             }
           })}
+          <div className={css.nativeLandsMobile}>
+            {nativeLandsConfig && <NativeLand
+              tribes={tribes}
+              getHandleChangedValueFn={this.getHandleChangedValueFn}
+              filterConfig={nativeLandsConfig}
+              onSelect={this.getHandleChangedValueFn(true)}
+              initialValues={this.initialValues}
+            />
+            }
+          </div>
         </SearchFiltersMobile>
         {isSecondaryFiltersOpen ? (
           <div className={classNames(css.searchFiltersPanel)}>
@@ -310,6 +320,7 @@ class MainPanel extends Component {
               onManageDisableScrolling={this.props.onManageDisableScrolling}
               isOpen={isSecondaryFiltersOpen}
             >
+              <h2 className={css.modalHeading}>Secondary Search Filters</h2>
               <SearchFiltersSecondary
                 urlQueryParams={urlQueryParams}
                 listingsAreLoaded={listingsAreLoaded}

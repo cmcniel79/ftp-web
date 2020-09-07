@@ -40,12 +40,15 @@
 }
 
 .half {
+  border: none;
+  @media (--viewportMedium) {
   margin-top: 10px;
   width: 20%;
   height: 0;
   border-top-style: solid;
   border-top-color: var(--marketplaceColor);
   border-top-width: 10px;
+  }
 }
 
 

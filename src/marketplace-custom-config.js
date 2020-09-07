@@ -203,14 +203,14 @@ export const filters = [
   },
   {
     id: 'customOrders',
-    label: 'Custom Orders Available',
+    label: 'Custom Orders',
     type: 'SelectSingleFilter',
     group: 'secondary',
     queryParamNames: ['pub_customOrders'],
     config: {
       options: [
-        { key: true, label: "Listings Available for Custom Orders" },
-        { key: false, label: "All Listings" }  
+        { key: 'available', label: "Show Listings Available for Custom Orders" },
+        { key: 'unavailable', label: "Show All Listings" }  
       ]
     }
   },
@@ -222,8 +222,8 @@ export const filters = [
     queryParamNames: ['pub_verifiedSellers'],
     config: {
       options: [
-        { key: true, label: "Only Verified Sellers" },
-        { key: false, label: "All Sellers" }  
+        { key: 'verified', label: "Show Only Verified Sellers" },
+        { key: 'unverified', label: "Show All Sellers" }  
       ]
     }
   },

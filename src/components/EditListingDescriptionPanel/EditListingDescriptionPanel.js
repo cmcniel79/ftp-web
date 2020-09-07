@@ -26,11 +26,10 @@ const EditListingDescriptionPanel = props => {
     errors,
     enrolledStatus
   } = props;
-  const verifiedSellers = enrolledStatus;
+  const verifiedSellers = enrolledStatus ? 'verified' : 'unverified';
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { description, title, publicData, metadata } = currentListing.attributes;
-  console.log(currentListing);
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -59,9 +58,10 @@ const EditListingDescriptionPanel = props => {
         saveActionMsg={submitButtonText}
         onSubmit={values => {
           const { title, description, category, subCategory, style, region, material, customOrders } = values;
+          const customIsAvailable = customOrders ? 'available':'unavailable';
           const updateValues = {title: title.trim(),
           description,
-          publicData: {category, subCategory, style, region, material, customOrders, verifiedSellers},
+          publicData: {category, subCategory, style, region, material, customOrders: customIsAvailable, verifiedSellers},
         };
           onSubmit(updateValues);
         }}

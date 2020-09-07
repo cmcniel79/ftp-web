@@ -37,9 +37,7 @@ class NativeLand extends Component {
       <div className={css.nativeLandInfo}>
         <div className={css.half}></div>
         <h2 className={css.nativeLandHeader}>
-          You Are On
-          <br />
-        Native Land
+          You Are On Native Land
         </h2>
         {tribes.map(t => {
           return (
