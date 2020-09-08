@@ -65,6 +65,9 @@ export const ListingCardComponent = props => {
   const likedListings = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likedListings ?
     Object.values(currentUser.attributes.profile.privateData.likedListings) : [];
 
+  const isPremium = currentListing.attributes.metadata.premium;
+  console.log(isPremium);
+
   return (
     <div className={classes}>
       <div
@@ -73,47 +76,74 @@ export const ListingCardComponent = props => {
         onMouseLeave={() => setActiveListing(null)}
       >
         <div className={css.aspectWrapper}>
-          <NamedLink name="ListingPage" params={{ id, slug }}>
-            <LazyImage
-              rootClassName={css.rootForImage}
-              alt={title}
-              image={firstImage}
-              variants={['landscape-crop', 'landscape-crop2x']}
-              sizes={renderSizes}
-            />
-            {enrolled &&
-              <img className={css.verifiedImage} src={verifiedImage} alt="image sourced from Freepik.com" />
-            }
-          </NamedLink>
-          {currentUser &&
-              <LikeButton
-                onUpdateLikedListings={onUpdateLikedListings}
-                currentListingID={id}
-                likedListings={likedListings}
+          {isPremium ? (
+            <NamedLink name="PremiumPage" params={{ id, slug }}>
+              {console.log("Premium for: " + slug)}
+              <LazyImage
+                rootClassName={css.rootForImage}
+                alt={title}
+                image={firstImage}
+                variants={['landscape-crop', 'landscape-crop2x']}
+                sizes={renderSizes}
               />
-            }
+              {enrolled &&
+                <img className={css.verifiedImage} src={verifiedImage} alt="image sourced from Freepik.com" />
+              }
+            </NamedLink>
+          ) : (
+              <NamedLink name="ListingPage" params={{ id, slug }}>
+                <LazyImage
+                  rootClassName={css.rootForImage}
+                  alt={title}
+                  image={firstImage}
+                  variants={['landscape-crop', 'landscape-crop2x']}
+                  sizes={renderSizes}
+                />
+                {enrolled &&
+                  <img className={css.verifiedImage} src={verifiedImage} alt="image sourced from Freepik.com" />
+                }
+              </NamedLink>)}
+          {currentUser &&
+            <LikeButton
+              onUpdateLikedListings={onUpdateLikedListings}
+              currentListingID={id}
+              likedListings={likedListings}
+            />
+          }
         </div>
       </div>
       <div className={css.info}>
-        <NamedLink className={css.link} name="ListingPage" params={{ id, slug }}>
-          <div className={css.mainInfo}>
-            <div className={css.title}>
-              {richText(title, {
-                longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
-                longWordClass: css.longWord,
-              })}
+        {isPremium ? (
+          <NamedLink className={css.link} name="PremiumPage" params={{ id, slug }}>
+            <div className={css.mainInfo}>
+              <div className={css.title}>
+                {richText(title, {
+                  longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
+                  longWordClass: css.longWord,
+                })}
+              </div>
             </div>
-          </div>
-        </NamedLink>
+          </NamedLink>
+        ) : (
+            <NamedLink className={css.link} name="ListingPage" params={{ id, slug }}>
+              <div className={css.mainInfo}>
+                <div className={css.title}>
+                  {richText(title, {
+                    longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
+                    longWordClass: css.longWord,
+                  })}
+                </div>
+              </div>
+            </NamedLink>)}
       </div>
       <div className={css.price}>
-          <div className={css.priceValue}>
-            {formattedPrice}
-          </div>
-          <div className={css.ratings}>
+        <div className={css.priceValue}>
+          {formattedPrice}
+        </div>
+        <div className={css.ratings}>
           • No Reviews Yet
           </div>
-        </div>
+      </div>
     </div>
   );
 };
