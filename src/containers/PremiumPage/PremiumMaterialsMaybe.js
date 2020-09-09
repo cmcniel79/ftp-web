@@ -4,7 +4,7 @@ import { PropertyGroup } from '../../components';
 
 import css from './PremiumPage.css';
 
-const SectionFeaturesMaybe = props => {
+const PremiumFeaturesMaybe = props => {
   const { options, publicData } = props;
   if (!publicData || !publicData.material) {
     return null;
@@ -26,4 +26,4 @@ const SectionFeaturesMaybe = props => {
   );
 };
 
-export default SectionFeaturesMaybe;
+export default PremiumFeaturesMaybe;

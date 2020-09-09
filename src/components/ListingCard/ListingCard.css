@@ -57,41 +57,53 @@
   padding: 16px 0 2px 0;
 }
 
-.tags{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  min-height: 45px;
-  margin-top: 5px;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 16px;
-  padding-bottom: 10px;
-  border-bottom-style: solid;
-  border-bottom-color: lightslategrey;
+.premiumTag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: auto;
+  color: white;
+  font-weight: 900;
+  background-color: #26428b;
+  border-radius: 5px;
+  border: 3px solid white;
+  padding: 1px 5px 1px 5px;
+  font-size: 14px;
+}
+
+.adTag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: auto;
+  color: white;
+  font-weight: 900;
+  background-color: #c4a03e;
+  border-radius: 5px;
+  border: 3px solid white;
+  padding: 1px 5px 1px 5px;
+  font-size: 14px;
+}
+
+.nonProfitTag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: auto;
+  color: white;
+  font-weight: 900;
+  background-color: darkseagreen;
+  border-radius: 5px;
+  border: 3px solid white;
+  padding: 1px 5px 1px 5px;
+  font-size: 14px;
 }
 
 .verifiedImage {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 5px;
+  right: 5px;
   width: 40px;
-}
-
-.tribe {
-  display: flex;
-  flex-direction: column;
-  color: var(--marketplaceColor);
-}
-
-.verified {
-  display: flex;
-  flex-direction: column;
-  color: white;
-  background-color: var(--marketplaceColor);
-  border-radius: 4px;
-  padding: 3px 5px;
-  margin-right: 30px;
 }
 
 .ratings {

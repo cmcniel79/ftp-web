@@ -5,7 +5,7 @@ import ActionBarMaybe from './ActionBarMaybe';
 
 import css from './PremiumPage.css';
 
-const SectionImages = props => {
+const PremiumImages = props => {
   const {
     title,
     listing,
@@ -47,4 +47,4 @@ const SectionImages = props => {
   );
 };
 
-export default SectionImages;
+export default PremiumImages;

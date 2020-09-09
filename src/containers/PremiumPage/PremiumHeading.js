@@ -1,7 +1,7 @@
 import React from 'react';
 import css from './PremiumPage.css';
 
-const SectionHeading = props => {
+const PremiumHeading = props => {
   const {
     richTitle,
   } = props;
@@ -16,4 +16,4 @@ const SectionHeading = props => {
   );
 };
 
-export default SectionHeading;
+export default PremiumHeading;

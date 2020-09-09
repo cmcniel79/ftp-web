@@ -13,6 +13,7 @@ import { LikeButton, NamedLink, ResponsiveImage } from '../../components';
 import verifiedImage from '../../assets/checkmark-circle.svg';
 
 import css from './ListingCard.css';
+import ExternalLink from '../ExternalLink/ExternalLink';
 
 const MIN_LENGTH_FOR_LONG_WORDS = 10;
 
@@ -35,6 +36,13 @@ const priceData = (price, intl) => {
   return {};
 };
 
+const checkAccountCode = (letter) => {
+  if (letter == "e" || letter == "p" || letter == "a" || letter == "n") {
+    return letter;
+  }
+  return null;
+}
+
 class ListingImage extends Component {
   render() {
     return <ResponsiveImage {...this.props} />;
@@ -49,24 +57,89 @@ export const ListingCardComponent = props => {
   const id = currentListing.id.uuid;
   const { title = '', price, metadata } = currentListing.attributes;
   const slug = createSlug(title);
+
   const author = ensureUser(listing.author);
-  const enrolled = author && author.attributes && author.attributes.profile && author.attributes.profile.publicData &&
-    author.attributes.profile.publicData.enrolled ? true : false;
+  const accountType = author && author.attributes.profile.publicData &&
+    author.attributes.profile.publicData.account ? author.attributes.profile.publicData.account : null;
+  const validAccountType = checkAccountCode(accountType);
+  console.log(validAccountType);
+
   const firstImage =
     currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
 
   const { formattedPrice, priceTitle } = priceData(price, intl);
 
-  const authorAvailable = currentListing && currentListing.author;
-  const userAndListingAuthorAvailable = !!(currentUser && authorAvailable);
-  const isOwnListing =
-    userAndListingAuthorAvailable && currentListing.author.id.uuid === currentUser.id.uuid;
-
   const likedListings = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likedListings ?
     Object.values(currentUser.attributes.profile.privateData.likedListings) : [];
 
-  const isPremium = currentListing.attributes.metadata.premium;
-  console.log(isPremium);
+  let imagesAndLinks;
+
+  switch (validAccountType) {
+    case "" || null:
+      imagesAndLinks =
+        <NamedLink name="ListingPage" params={{ id, slug }}>
+          <LazyImage
+            rootClassName={css.rootForImage}
+            alt={title}
+            image={firstImage}
+            variants={['landscape-crop', 'landscape-crop2x']}
+            sizes={renderSizes}
+          />
+        </NamedLink>;
+      break;
+    case "e":
+      imagesAndLinks =
+        <NamedLink name="ListingPage" params={{ id, slug }}>
+          <LazyImage
+            rootClassName={css.rootForImage}
+            alt={title}
+            image={firstImage}
+            variants={['landscape-crop', 'landscape-crop2x']}
+            sizes={renderSizes}
+          />
+          <img className={css.verifiedImage} src={verifiedImage} alt="image sourced from Freepik.com" />
+        </NamedLink>;
+      break;
+    case "p":
+      imagesAndLinks =
+      <NamedLink name="PremiumPage" params={{ id, slug }}>
+      <LazyImage
+        rootClassName={css.rootForImage}
+        alt={title}
+        image={firstImage}
+        variants={['landscape-crop', 'landscape-crop2x']}
+        sizes={renderSizes}
+      />
+      <span className={css.premiumTag}> Premium </span>
+      </NamedLink>;
+      break;
+    case "a":
+      imagesAndLinks =
+      <ExternalLink href="">
+        <LazyImage
+          rootClassName={css.rootForImage}
+          alt={title}
+          image={firstImage}
+          variants={['landscape-crop', 'landscape-crop2x']}
+          sizes={renderSizes}
+        />
+        <span className={css.adTag}> Ad </span>
+      </ExternalLink>;
+      break;
+      case "n":
+        imagesAndLinks =
+        <ExternalLink href="">
+          <LazyImage
+            rootClassName={css.rootForImage}
+            alt={title}
+            image={firstImage}
+            variants={['landscape-crop', 'landscape-crop2x']}
+            sizes={renderSizes}
+          />
+          <span className={css.nonProfitTag}> Non-Profit </span>
+        </ExternalLink>;
+        break;
+  }
 
   return (
     <div className={classes}>
@@ -76,33 +149,7 @@ export const ListingCardComponent = props => {
         onMouseLeave={() => setActiveListing(null)}
       >
         <div className={css.aspectWrapper}>
-          {isPremium ? (
-            <NamedLink name="PremiumPage" params={{ id, slug }}>
-              {console.log("Premium for: " + slug)}
-              <LazyImage
-                rootClassName={css.rootForImage}
-                alt={title}
-                image={firstImage}
-                variants={['landscape-crop', 'landscape-crop2x']}
-                sizes={renderSizes}
-              />
-              {enrolled &&
-                <img className={css.verifiedImage} src={verifiedImage} alt="image sourced from Freepik.com" />
-              }
-            </NamedLink>
-          ) : (
-              <NamedLink name="ListingPage" params={{ id, slug }}>
-                <LazyImage
-                  rootClassName={css.rootForImage}
-                  alt={title}
-                  image={firstImage}
-                  variants={['landscape-crop', 'landscape-crop2x']}
-                  sizes={renderSizes}
-                />
-                {enrolled &&
-                  <img className={css.verifiedImage} src={verifiedImage} alt="image sourced from Freepik.com" />
-                }
-              </NamedLink>)}
+          {imagesAndLinks}
           {currentUser &&
             <LikeButton
               onUpdateLikedListings={onUpdateLikedListings}
@@ -113,7 +160,7 @@ export const ListingCardComponent = props => {
         </div>
       </div>
       <div className={css.info}>
-        {isPremium ? (
+        {accountType == "p" ? (
           <NamedLink className={css.link} name="PremiumPage" params={{ id, slug }}>
             <div className={css.mainInfo}>
               <div className={css.title}>
@@ -136,6 +183,7 @@ export const ListingCardComponent = props => {
               </div>
             </NamedLink>)}
       </div>
+      {accountType != "a" && accountType != "n" &&
       <div className={css.price}>
         <div className={css.priceValue}>
           {formattedPrice}
@@ -144,6 +192,7 @@ export const ListingCardComponent = props => {
           • No Reviews Yet
           </div>
       </div>
+    }
     </div>
   );
 };

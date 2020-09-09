@@ -624,6 +624,10 @@
   "PayoutDetailsForm.stripeToSText": "By saving details, you agree to the {stripeConnectedAccountTermsLink}",
   "PayoutDetailsForm.submitButtonText": "Save details & publish listing",
   "PayoutDetailsForm.title": "One more thing: payout preferences",
+  "PremiumPage.buyButtonMessage": "Buy Now",
+  "PremiumPage.premiumPartnerHeading": "Premium Partner",
+  "PremiumUserCard.websiteLink": "View Partner's Website", 
+  "PremiumUserCard.heading": "{name}",
   "PriceFilter.clear": "Clear",
   "PriceFilter.label": "Price",
   "PriceFilter.labelSelectedPlain": "Price: {minPrice} - {maxPrice}",
@@ -1030,8 +1034,10 @@
   "TransactionPanel.sendMessagePlaceholder": "Send a message to {name}…",
   "UserCard.contactUser": "Contact",
   "UserCard.heading": "{name}.",
-  "UserCard.showFullBioLink": "more",
+  "UserCard.showFullBioLink": "Show more",
+  "UserCard.showLessBioLink": "Show less",
   "UserCard.viewProfileLink": "View profile",
   "UserDisplayName.banned": "Banned user",
-  "UserDisplayName.deleted": "Deleted user"
+  "UserDisplayName.deleted": "Deleted user",
+  "UserSocialMedia.socialAccounts": "Social Media:"
 }

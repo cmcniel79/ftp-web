@@ -38,7 +38,8 @@ import {
   LayoutWrapperMain,
   LayoutWrapperFooter,
   Footer,
-  BookingPanel,
+  Button,
+  ExternalLink
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '..';
 
@@ -48,14 +49,14 @@ import {
   setInitialValues,
   fetchTransactionLineItems,
 } from './PremiumPage.duck';
-import SectionImages from './SectionImages';
-import SectionHeading from './SectionHeading';
-import SectionDescriptionMaybe from './SectionDescriptionMaybe';
-import SectionMaterialsMaybe from './SectionMaterialsMaybe';
-import SectionReviews from './SectionReviews';
-import SectionSellerMaybe from './SectionSellerMaybe';
-import SectionRegionMaybe from './SectionRegionMaybe';
-import SectionStyleMaybe from './SectionStyleMaybe';
+import PremiumImages from './PremiumImages';
+import PremiumHeading from './PremiumHeading';
+import PremiumDescriptionMaybe from './PremiumDescriptionMaybe';
+import PremiumMaterialsMaybe from './PremiumMaterialsMaybe';
+import PremiumSellerMaybe from './PremiumSellerMaybe';
+import PremiumRegionMaybe from './PremiumRegionMaybe';
+import PremiumStyleMaybe from './PremiumStyleMaybe';
+import PremiumPrice from './PremiumPrice';
 import css from './PremiumPage.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -335,7 +336,8 @@ export class PremiumPageComponent extends Component {
     // banned or deleted display names for the function
     const authorDisplayName = userDisplayNameAsString(ensuredAuthor, '');
 
-    const authorTribe = ensuredAuthor.attributes.profile.publicData.tribe ? ensuredAuthor.attributes.profile.publicData.tribe : null;
+    const authorTribe = ensuredAuthor.attributes.profile.publicData.tribe ?
+      ensuredAuthor.attributes.profile.publicData.tribe : null;
 
     const { formattedPrice, priceTitle } = priceData(price, intl);
 
@@ -393,6 +395,11 @@ export class PremiumPageComponent extends Component {
         </span>
       ) : null;
 
+    const region =
+      publicData && publicData.region ? publicData.region : null;
+    const style =
+      publicData && publicData.style ? publicData.style : null;
+
     const authorTribeSection = authorTribe ? (
       <span>
         <div className={css.sectionDescription}>
@@ -425,8 +432,7 @@ export class PremiumPageComponent extends Component {
             <div>
               <div className={css.contentContainer}>
                 <div className={css.mainContent}>
-                  <h1>PREMIUM BABY!!!!</h1>
-                  {/* <SectionHeading
+                  <PremiumHeading
                     priceTitle={priceTitle}
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
@@ -435,7 +441,7 @@ export class PremiumPageComponent extends Component {
                   // showContactUser={showContactUser}
                   // onContactUser={this.onContactUser}
                   />
-                  <SectionImages
+                  <PremiumImages
                     className={css.sectionImages}
                     title={title}
                     listing={currentListing}
@@ -450,14 +456,13 @@ export class PremiumPageComponent extends Component {
                     onImageCarouselClose={() => this.setState({ imageCarouselOpen: false })}
                     handleViewPhotosClick={handleViewPhotosClick}
                     onManageDisableScrolling={onManageDisableScrolling}
-                  /> */}
+                  />
                 </div>
-                {/* <div className={css.bookingPanel}>
-                  <SectionSellerMaybe
+                <div className={css.bookingPanel}>
+                  <PremiumSellerMaybe
                     title={title}
                     listing={currentListing}
                     authorDisplayName={authorDisplayName}
-                    onContactUser={this.onContactUser}
                     isEnquiryModalOpen={isAuthenticated && this.state.enquiryModalOpen}
                     onCloseEnquiryModal={() => this.setState({ enquiryModalOpen: false })}
                     sendEnquiryError={sendEnquiryError}
@@ -466,32 +471,15 @@ export class PremiumPageComponent extends Component {
                     currentUser={currentUser}
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
-                  <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
                   {authorTribeSection}
-                  <SectionDescriptionMaybe description={description} />
-                  <SectionMaterialsMaybe options={materialOptions} publicData={publicData} />
+                  <PremiumDescriptionMaybe description={description} />
+                  <PremiumMaterialsMaybe options={materialOptions} publicData={publicData} />
                   <div className={css.regionAndStyle}>
-                    <SectionRegionMaybe publicData={publicData} />
-                    <SectionStyleMaybe publicData={publicData} />
+                    <PremiumRegionMaybe region={region} />
+                    <PremiumStyleMaybe style={style} region={region} />
                   </div>
-                  <BookingPanel
-                    // className={css.bookingPanel}
-                    listing={currentListing}
-                    isOwnListing={isOwnListing}
-                    unitType={unitType}
-                    onSubmit={handleBookingSubmit}
-                    title={bookingTitle}
-                    subTitle={bookingSubTitle}
-                    authorDisplayName={authorDisplayName}
-                    onManageDisableScrolling={onManageDisableScrolling}
-                    timeSlots={timeSlots}
-                    fetchTimeSlotsError={fetchTimeSlotsError}
-                    onFetchTransactionLineItems={onFetchTransactionLineItems}
-                    lineItems={lineItems}
-                    fetchLineItemsInProgress={fetchLineItemsInProgress}
-                    fetchLineItemsError={fetchLineItemsError}
-                  />
-                </div> */}
+                    <PremiumPrice price={price} websiteLink="https://www.cookiesandyou.com/" />
+                </div>
               </div>
             </div>
           </LayoutWrapperMain>

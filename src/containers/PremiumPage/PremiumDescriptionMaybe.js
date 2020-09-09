@@ -6,7 +6,7 @@ import css from './PremiumPage.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_DESCRIPTION = 20;
 
-const SectionDescriptionMaybe = props => {
+const PremiumDescriptionMaybe = props => {
   const { description } = props;
   return description ? (
     <div className={css.sectionDescription}>
@@ -23,4 +23,4 @@ const SectionDescriptionMaybe = props => {
   ) : null;
 };
 
-export default SectionDescriptionMaybe;
+export default PremiumDescriptionMaybe;

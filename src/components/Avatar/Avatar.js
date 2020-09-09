@@ -9,7 +9,7 @@ import {
   userDisplayNameAsString,
   userAbbreviatedName,
 } from '../../util/data';
-import { ResponsiveImage, IconBannedUser, NamedLink } from '../../components/';
+import { ResponsiveImage, IconBannedUser, NamedLink, ExternalLink } from '../../components/';
 import verifiedImage from '../../assets/checkmark-circle.svg';
 
 import css from './Avatar.css';
@@ -28,7 +28,7 @@ const AVATAR_IMAGE_VARIANTS = [
 ];
 
 export const AvatarComponent = props => {
-  const { rootClassName, className, user, renderSizes, disableProfileLink, intl, enrolled } = props;
+  const { rootClassName, className, user, renderSizes, disableProfileLink, intl, enrolled, externalLink } = props;
   const classes = classNames(rootClassName || css.root, className);
   const userIsCurrentUser = user && user.type === 'currentUser';
   const avatarUser = userIsCurrentUser ? ensureCurrentUser(user) : ensureUser(user);
@@ -67,8 +67,28 @@ export const AvatarComponent = props => {
         <IconBannedUser className={css.bannedUserIcon} />
       </div>
     );
+  } else if (hasProfileImage && externalLink) {
+    return (
+      <ExternalLink {...rootProps} href={externalLink}>
+        <ResponsiveImage
+          rootClassName={css.avatarImage}
+          alt="Logo"
+          image={avatarUser.profileImage}
+          variants={AVATAR_IMAGE_VARIANTS}
+          sizes={renderSizes}
+        />
+      </ExternalLink>
+    );
+  } else if (externalLink) {
+    // Placeholder avatar (initials)
+    return (
+      <ExternalLink {...rootProps} href={externalLink}>
+        <span className={css.initials}>{abbreviatedName}</span>
+      </ExternalLink>
+    );
   } else if (hasProfileImage && profileLinkEnabled) {
     return (
+
       <NamedLink {...rootProps} {...linkProps}>
         <ResponsiveImage
           rootClassName={css.avatarImage}
@@ -81,6 +101,7 @@ export const AvatarComponent = props => {
           <img className={css.verifiedImage} src={verifiedImage} />
         }
       </NamedLink>
+
     );
   } else if (hasProfileImage) {
     return (

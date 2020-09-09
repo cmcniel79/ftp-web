@@ -3,15 +3,15 @@ import { string, func, oneOfType } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import truncate from 'lodash/truncate';
 import classNames from 'classnames';
-import { AvatarLarge, NamedLink, InlineTextButton } from '../../components';
+import { AvatarLarge, NamedLink, InlineTextButton, ExternalLink, UserSocialMedia } from '..';
 import { ensureUser, ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
 
-import css from './UserCard.css';
+import css from './PremiumUserCard.css';
 
 // Approximated collapsed size so that there are ~three lines of text
 // in the desktop layout in the host section of the ListingPage.
-const BIO_COLLAPSED_LENGTH = 170;
+const BIO_COLLAPSED_LENGTH = 120;
 
 const truncated = s => {
   return truncate(s, {
@@ -41,15 +41,23 @@ class ExpandableBio extends Component {
     const handleShowMoreClick = () => {
       this.setState({ expand: true });
     };
+    const handleShowLessClick = () => {
+      this.setState({ expand: false });
+    };
     const showMore = (
       <InlineTextButton rootClassName={css.showMore} onClick={handleShowMoreClick}>
         <FormattedMessage id="UserCard.showFullBioLink" />
       </InlineTextButton>
     );
+    const showLess = (
+      <InlineTextButton rootClassName={css.showMore} onClick={handleShowLessClick}>
+        <FormattedMessage id="UserCard.showLessBioLink" />
+      </InlineTextButton>
+    );
     return (
       <p className={className}>
         {expand ? bio : truncatedBio}
-        {bio !== truncatedBio && !expand ? showMore : null}
+        {bio !== truncatedBio && !expand ? showMore : showLess}
       </p>
     );
   }
@@ -62,7 +70,7 @@ ExpandableBio.propTypes = {
   bio: string.isRequired,
 };
 
-const UserCard = props => {
+const PremiumUserCard = props => {
   const { rootClassName, className, user, currentUser, onContactUser } = props;
 
   const userIsCurrentUser = user && user.type === 'currentUser';
@@ -71,26 +79,17 @@ const UserCard = props => {
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
   const isCurrentUser =
     ensuredUser.id && ensuredCurrentUser.id && ensuredUser.id.uuid === ensuredCurrentUser.id.uuid;
-  const { displayName, bio } = ensuredUser.attributes.profile;
-  const enrolled = ensuredUser.attributes.profile.publicData.enrolled ? true : false;
-
-  const handleContactUserClick = () => {
-    onContactUser(user);
-  };
+  const bio = ensuredUser.attributes.profile.bio;
+  const companyName = ensuredUser.attributes.profile.publicData.companyName ? 
+    ensuredUser.attributes.profile.publicData.companyName : "Urban Native Era";
+  const socialMedia = ensuredUser.attributes.profile.publicData.socialMedia ? 
+  ensuredUser.attributes.profile.publicData.socialMedia : null;
 
   const hasBio = !!bio;
   const classes = classNames(rootClassName || css.root, className);
   const linkClasses = classNames(css.links, {
     [css.withBioMissingAbove]: !hasBio,
   });
-
-  const separator = isCurrentUser ? null : <span className={css.linkSeparator}>•</span>;
-
-  const contact = (
-    <InlineTextButton rootClassName={css.contact} onClick={handleContactUserClick}>
-      <FormattedMessage id="UserCard.contactUser" />
-    </InlineTextButton>
-  );
 
   const editProfile = (
     <span className={css.editProfile}>
@@ -105,46 +104,46 @@ const UserCard = props => {
 
   const links = ensuredUser.id ? (
     <p className={linkClasses}>
-      <NamedLink className={css.link} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
-        <FormattedMessage id="UserCard.viewProfileLink" />
-      </NamedLink>
-      {separator}
-      {isCurrentUser ? editProfile : contact}
+      <ExternalLink className={css.link} href="https://cookiesandyou.com">
+        <FormattedMessage id="PremiumUserCard.websiteLink" />
+      </ExternalLink>
+      {isCurrentUser ? editProfile : null}
     </p>
   ) : null;
 
   return (
     <div className={classes}>
       <div className={css.content}>
-        <AvatarLarge className={css.avatar} user={user} enrolled={enrolled}/>
+        <AvatarLarge className={css.avatar} user={user} externalLink={"https://cookiesandyou.com"}/>
         <div className={css.info}>
           <div className={css.headingRow}>
             <h3 className={css.heading}>
-              <FormattedMessage id="UserCard.heading" values={{ name: displayName }} />
+              <FormattedMessage id="PremiumUserCard.heading" values={{ name: companyName }} />
             </h3>
           </div>
           {/* {hasBio ? <ExpandableBio className={css.desktopBio} bio={bio} /> : null} */}
+          <UserSocialMedia socialMedia={socialMedia} />
           {links}
         </div>
       </div>
+      {hasBio ? <ExpandableBio className={css.desktopBio} bio={bio} /> : null}
       {hasBio ? <ExpandableBio className={css.mobileBio} bio={bio} /> : null}
     </div>
   );
 };
 
-UserCard.defaultProps = {
+PremiumUserCard.defaultProps = {
   rootClassName: null,
   className: null,
   user: null,
   currentUser: null,
 };
 
-UserCard.propTypes = {
+PremiumUserCard.propTypes = {
   rootClassName: string,
   className: string,
   user: oneOfType([propTypes.user, propTypes.currentUser]),
   currentUser: propTypes.currentUser,
-  onContactUser: func.isRequired,
 };
 
-export default UserCard;
+export default PremiumUserCard;
