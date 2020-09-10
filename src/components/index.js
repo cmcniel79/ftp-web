@@ -147,6 +147,7 @@ export { default as SearchMapPriceLabel } from './SearchMapPriceLabel/SearchMapP
 export { default as SearchResultsPanel } from './SearchResultsPanel/SearchResultsPanel';
 export { default as SelectMultipleFilter } from './SelectMultipleFilter/SelectMultipleFilter';
 export { default as SelectSingleFilter } from './SelectSingleFilter/SelectSingleFilter';
+export { default as SelectSubcategoryFilter } from './SelectSubcategoryFilter/SelectSubcategoryFilter';
 export { default as SortBy } from './SortBy/SortBy';
 export { default as StripeConnectAccountStatusBox } from './StripeConnectAccountStatusBox/StripeConnectAccountStatusBox';
 export { default as StripePaymentAddress } from './StripePaymentAddress/StripePaymentAddress';

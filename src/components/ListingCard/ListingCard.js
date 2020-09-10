@@ -62,7 +62,6 @@ export const ListingCardComponent = props => {
   const accountType = author && author.attributes.profile.publicData &&
     author.attributes.profile.publicData.account ? author.attributes.profile.publicData.account : null;
   const validAccountType = checkAccountCode(accountType);
-  console.log(validAccountType);
 
   const firstImage =
     currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;

@@ -50,7 +50,7 @@ export const filters = [
   {
     id: 'category',
     label: 'Category',
-    type: 'SelectSingleFilter',
+    type: 'SelectSubcategoryFilter',
     group: 'primary',
     queryParamNames: ['pub_category'],
     config: {
