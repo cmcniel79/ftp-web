@@ -12,20 +12,28 @@ const getQueryParamName = queryParamNames => {
 class SelectSubcategoryFilterPlain extends Component {
   constructor(props) {
     super(props);
-    this.state = { isOpen: true };
+    this.state = { isOpen: true, categorySelected: false, subCategory: null };
     this.selectOption = this.selectOption.bind(this);
     this.toggleIsOpen = this.toggleIsOpen.bind(this);
   }
 
-  selectOption(option, e) {
-    const { queryParamNames, onSelect } = this.props;
-    console.log(queryParamNames);
-    const queryParamName = getQueryParamName(queryParamNames);
+  selectOption(queryParamName, option) {
+    const { onSelect } = this.props;
+    // console.log(queryParamNames);
+    // const queryParamName = getQueryParamName(queryParamNames);
     onSelect({ [queryParamName]: option });
 
-    // blur event target if event is passed
-    if (e && e.currentTarget) {
-      e.currentTarget.blur();
+    // // blur event target if event is passed
+    // if (e && e.currentTarget) {
+    //   e.currentTarget.blur();
+    // }
+  }
+
+  selectCategory(option) {
+    const sub = option.key != "other" ? option.subCategories : null;
+    if (sub != null) {
+      this.setState({ subCategory: sub });
+      this.setState({ categorySelected: true });
     }
   }
 
@@ -46,7 +54,7 @@ class SelectSubcategoryFilterPlain extends Component {
     } = this.props;
 
     console.log(options);
-    const queryParamName = getQueryParamName(queryParamNames);
+    const queryParamName = "pub_subcategory";
     const initialValue =
       initialValues && initialValues[queryParamName] ? initialValues[queryParamName] : null;
     const labelClass = initialValue ? css.filterLabelSelected : css.filterLabel;
@@ -61,43 +69,98 @@ class SelectSubcategoryFilterPlain extends Component {
 
     const classes = classNames(rootClassName || css.root, className);
 
+    const bottomLinks = !this.state.categorySelected ?
+      <div className={css.bottomLinks}>
+        <button className={css.clearButton} onClick={e => this.selectOption(null, e)}>
+          <FormattedMessage id={'SelectSingleFilter.plainClear'} />
+        </button>
+      </div>
+      :
+      <div className={css.bottomLinks}>
+        <button className={css.searchAllButton} onClick={() => this.selectOption(queryParamName, this.state.subCategory.map(s => s.key))}
+        >
+          Search All
+  </button>
+        <button className={css.clearButton} onClick={e => this.selectOption(null, e)}>
+          <FormattedMessage id={'SelectSingleFilter.plainClear'} />
+        </button>
+      </div>
+
+    const content = !this.state.categorySelected ?
+      <div className={optionsContainerClass}>
+        {options.map(option => {
+          // check if this option is selected
+          const selected = initialValue === option.key;
+          const optionClass = hasBullets && selected ? css.optionSelected : css.option;
+          // menu item selected bullet or border class
+          const optionBorderClass = hasBullets
+            ? classNames({
+              [css.optionBulletSelected]: selected,
+              [css.optionBullet]: !selected,
+            })
+            : classNames({
+              [css.optionBorderSelected]: selected,
+              [css.optionBorder]: !selected,
+            });
+          return (
+            <button
+              key={option.key}
+              className={optionClass}
+              onClick={() => this.selectCategory(option)}
+            >
+              <span className={optionBorderClass} />
+              {option.label}
+            </button>
+          );
+        })}
+        {bottomLinks}
+      </div>
+      :
+      <div className={optionsContainerClass}>
+        <button
+          className={css.option}
+          onClick={() => this.setState({ categorySelected: false })}
+        >
+          ˂ Back to Main Categories
+          </button>
+        {this.state.subCategory.map(sub => {
+          // check if this option is selected
+          // const selected = initialValue === option.key;
+          // const optionClass = hasBullets && selected ? css.optionSelected : css.option;
+          // menu item selected bullet or border class
+          // const optionBorderClass = hasBullets
+          //   ? classNames({
+          //     [css.optionBulletSelected]: selected,
+          //     [css.optionBullet]: !selected,
+          //   })
+          //   : classNames({
+          //     [css.optionBorderSelected]: selected,
+          //     [css.optionBorder]: !selected,
+          //   });
+          return (
+            <button
+              key={sub.key}
+              className={css.option}
+              onClick={() => this.selectOption(queryParamName, sub.key)}
+            >
+              <span className={css.optionBullet} />
+              {sub.label}
+            </button>
+          );
+        })}
+        {bottomLinks}
+      </div>;
+
+
     return (
-      <div className={classes}>
+      <div className={classes} >
         <div className={labelClass}>
-          <button className={css.labelButton} onClick={this.toggleIsOpen}>
-            <span className={labelClass}>{label}</span>
-          </button>
-          <button className={css.clearButton} onClick={e => this.selectOption(null, e)}>
-            <FormattedMessage id={'SelectSingleFilter.plainClear'} />
+          <span className={labelClass}>{label}</span>
+          <button className={css.collapseButton} onClick={this.toggleIsOpen}>
+            <span className={css.collapseFont}>Collapse</span>
           </button>
         </div>
-        <div className={optionsContainerClass}>
-          {options.map(option => {
-            // check if this option is selected
-            const selected = initialValue === option.key;
-            const optionClass = hasBullets && selected ? css.optionSelected : css.option;
-            // menu item selected bullet or border class
-            const optionBorderClass = hasBullets
-              ? classNames({
-                  [css.optionBulletSelected]: selected,
-                  [css.optionBullet]: !selected,
-                })
-              : classNames({
-                  [css.optionBorderSelected]: selected,
-                  [css.optionBorder]: !selected,
-                });
-            return (
-              <button
-                key={option.key}
-                className={optionClass}
-                onClick={() => this.selectOption(option.key)}
-              >
-                <span className={optionBorderClass} />
-                {option.label}
-              </button>
-            );
-          })}
-        </div>
+        { content}
       </div>
     );
   }

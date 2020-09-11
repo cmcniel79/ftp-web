@@ -22,18 +22,13 @@ class SelectSubcategoryFilterPopup extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { isOpen: false, categorySelected: false, subCategory: null, index: 0 };
+    this.state = { isOpen: false, categorySelected: false, subCategory: null };
     this.onToggleActive = this.onToggleActive.bind(this);
-    this.onToggSubleActive = this.onToggleSubActive.bind(this);
     this.selectOption = this.selectOption.bind(this);
   }
 
   onToggleActive(isOpen) {
     this.setState({ isOpen: isOpen });
-  }
-
-  onToggleSubActive(isOpen) {
-
   }
 
   selectOption(queryParamName, option) {
@@ -42,12 +37,11 @@ class SelectSubcategoryFilterPopup extends Component {
     this.props.onSelect({ [queryParamName]: option });
   }
 
-  selectCategory(option, index) {
+  selectCategory(option) {
     const sub = option.key != "other" ? option.subCategories : null;
     if (sub != null) {
       this.setState({ subCategory: sub });
       this.setState({ categorySelected: true });
-      this.setState({ margin: index })
     }
   }
 
@@ -65,7 +59,7 @@ class SelectSubcategoryFilterPopup extends Component {
     // const queryParamName = getQueryParamName(queryParamNames);
     const queryParamName = "pub_subcategory";
     const initialValue =
-      initialValues && initialValues[queryParamNames] ? initialValues[queryParamNames] : null;
+      initialValues && initialValues[queryParamName] ? initialValues[queryParamName] : null;
 
     // resolve menu label text and class
     const menuLabel = initialValue ? optionLabel(options, initialValue) : label;
@@ -84,7 +78,7 @@ class SelectSubcategoryFilterPopup extends Component {
             <MenuItem key={option.key}>
               <button
                 className={css.menuItem}
-                onClick={() => this.selectCategory(option, options.indexOf(option))}
+                onClick={() => this.selectCategory(option)}
               >
                 <span className={menuItemBorderClass} />
                 {option.label}
