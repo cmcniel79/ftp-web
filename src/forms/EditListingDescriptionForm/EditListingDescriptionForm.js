@@ -6,15 +6,22 @@ import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput, FieldRadioButton, FieldCheckboxGroup, FieldBoolean } from '../../components';
+import { Form, Button, FieldTextInput, FieldRadioButton, FieldCheckboxGroup, FieldBoolean, FieldSelect } from '../../components';
 import { findOptionsForSelectFilter } from '../../util/search';
-import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
 import config from '../../config';
 import arrayMutators from 'final-form-arrays';
 
 import css from './EditListingDescriptionForm.css';
 
 const TITLE_MAX_LENGTH = 46;
+var subcategories = [];
+var hasInitialized = false;
+
+function getSubcategories(categories, selectedCategory) {
+  const keys = categories.map(s => s.key);
+  const index = keys.indexOf(selectedCategory);
+  return (categories[index].subcategories);
+}
 
 const EditListingDescriptionFormComponent = props => (
   <FinalForm
@@ -35,6 +42,7 @@ const EditListingDescriptionFormComponent = props => (
         updateInProgress,
         fetchErrors,
         filterConfig,
+        initialValues
       } = formRenderProps;
 
       const titleMessage = intl.formatMessage({ id: 'EditListingDescriptionForm.title' });
@@ -61,6 +69,30 @@ const EditListingDescriptionFormComponent = props => (
       const descriptionRequiredMessage = intl.formatMessage({
         id: 'EditListingDescriptionForm.descriptionRequired',
       });
+
+      const categoryLabel = intl.formatMessage({
+        id: 'EditListingDescriptionForm.categoryLabel',
+      });
+      const categoryPlaceholder = intl.formatMessage({
+        id: 'EditListingDescriptionForm.categoryPlaceholder',
+      });
+      const categoryRequired = required(
+        intl.formatMessage({
+          id: 'EditListingDescriptionForm.categoryRequired',
+        })
+      );
+
+      const subCategoryLabel = intl.formatMessage({
+        id: 'EditListingDescriptionForm.subCategoryLabel',
+      });
+      const subCategoryPlaceholder = intl.formatMessage({
+        id: 'EditListingDescriptionForm.subCategoryPlaceholder',
+      });
+      const subCategoryRequired = required(
+        intl.formatMessage({
+          id: 'EditListingDescriptionForm.subCategoryRequired',
+        })
+      );
 
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
@@ -89,6 +121,20 @@ const EditListingDescriptionFormComponent = props => (
       const style_options = findOptionsForSelectFilter('style', filterConfig);
       const region_options = findOptionsForSelectFilter('region', filterConfig);
       const material_options = findOptionsForSelectFilter('material', filterConfig);
+
+      const category = initialValues && initialValues.category ? initialValues.category : null;
+      
+      if (category && !hasInitialized) {
+        subcategories = getSubcategories(categories, category);
+        hasInitialized = true;
+      }
+
+      const cat = document.getElementById('category');
+      if (cat) {
+        cat.addEventListener('change', () => {
+          subcategories = getSubcategories(categories, cat.value);
+        })
+      }
 
       return (
         <Form className={classes} onSubmit={handleSubmit}>
@@ -119,12 +165,38 @@ const EditListingDescriptionFormComponent = props => (
 
           <div className={css.midSection}>
             <div className={css.categories}>
-              <CustomCategorySelectFieldMaybe
-                id="category"
+              <FieldSelect
+                className={css.category}
                 name="category"
-                categories={categories}
-                intl={intl}
-              />
+                id="category"
+                label={categoryLabel}
+                validate={categoryRequired}
+              >
+                {<option disabled value="">
+                  {categoryPlaceholder}
+                </option>}
+                {categories.map(c => (
+                  <option key={c.key} value={c.key}>
+                    {c.label}
+                  </option>
+                ))}
+              </FieldSelect>
+              <FieldSelect
+                className={css.category}
+                name="subcategory"
+                id="subcategory"
+                label={subCategoryLabel}
+                validate={subCategoryRequired}
+              >
+                {<option disabled value="">
+                  {subCategoryPlaceholder}
+                </option>}
+                {subcategories.map(s => (
+                  <option key={s.key} value={s.key}>
+                    {s.label}
+                  </option>
+                ))}
+              </FieldSelect>
             </div>
           </div>
 

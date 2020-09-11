@@ -53,7 +53,7 @@ export const ContactDetailsPageComponent = props => {
       savePhoneNumberError={savePhoneNumberError}
       currentUser={currentUser}
       onResendVerificationEmail={onResendVerificationEmail}
-      onSubmit={values => onSubmitContactDetails({ ...values, currentEmail, currentPhoneNumber, currentShippingAddress })}
+      onSubmit={values => onSubmitContactDetails({ ...values, currentEmail, currentShippingAddress })}
       onChange={onChange}
       inProgress={saveContactDetailsInProgress}
       ready={contactDetailsChanged}

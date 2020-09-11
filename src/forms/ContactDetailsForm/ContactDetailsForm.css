@@ -32,6 +32,7 @@
 .address {
   display: flex;
   flex-direction: column;
+  margin-bottom: 35px;
 }
 
 .paymentAddressField {
@@ -65,11 +66,11 @@
 
 .contactDetailsSection {
   margin-top: 16px;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   padding-top: 6px;
 
   @media (--viewportMedium) {
-    margin-bottom: 56px;
+    margin-bottom: 30px;
     padding-top: 0;
   }
 }
@@ -87,7 +88,7 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   padding: 0;
   opacity: 0;
 }
@@ -168,11 +169,7 @@
 }
 
 .bottomWrapper {
-  margin-top: 46px;
-
-  @media (--viewportMedium) {
-    margin-top: 96px;
-  }
+  margin-top: 0;
 }
 
 .error {
@@ -186,4 +183,8 @@
   @media (--viewportMedium) {
     margin: 24px 0;
   }
+}
+
+.submitButton {
+  background-color: var(--marketplaceColor);
 }

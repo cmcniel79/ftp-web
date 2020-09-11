@@ -65,7 +65,7 @@ class ContactDetailsFormComponent extends Component {
             sendVerificationEmailInProgress,
             values,
           } = fieldRenderProps;
-          const { email, phoneNumber, shippingAddress } = values;
+          const { email, shippingAddress } = values;
 
           const user = ensureCurrentUser(currentUser);
 
@@ -178,18 +178,6 @@ class ContactDetailsFormComponent extends Component {
             );
           }
 
-          // phone
-          const protectedData = profile.protectedData || {};
-          const currentPhoneNumber = protectedData.phoneNumber;
-
-          // has the phone number changed
-          const phoneNumberChanged = currentPhoneNumber !== phoneNumber;
-
-          const phonePlaceholder = intl.formatMessage({
-            id: 'ContactDetailsForm.phonePlaceholder',
-          });
-          const phoneLabel = intl.formatMessage({ id: 'ContactDetailsForm.phoneLabel' });
-
           // password
           const passwordLabel = intl.formatMessage({
             id: 'ContactDetailsForm.passwordLabel',
@@ -233,6 +221,12 @@ class ContactDetailsFormComponent extends Component {
             [css.confirmChangesSectionVisible]: emailChanged,
           });
 
+          //shipping address, get from protected data
+          const protectedData = profile.protectedData || {};
+          const currentShippingAddress = protectedData.shippingAddress;
+
+          const shippingAddressChanged = currentShippingAddress !== shippingAddress;
+
           const addressLine1Label = intl.formatMessage({
             id: 'ContactDetailsForm.addressLine1Label',
           });
@@ -265,16 +259,18 @@ class ContactDetailsFormComponent extends Component {
 
           const cityLabel = intl.formatMessage({ id: 'ContactDetailsForm.cityLabel' });
           const cityPlaceholder = intl.formatMessage({ id: 'ContactDetailsForm.cityPlaceholder' });
-          const cityRequired = validators.required(
-            intl.formatMessage({
+          const cityRequired = validators.required(intl.formatMessage({
               id: 'ContactDetailsForm.cityRequired',
             })
           );
 
-          const stateLabel = intl.formatMessage(
-            { id: 'ContactDetailsForm.stateLabel' },
-          );
+          const stateLabel = intl.formatMessage({ id: 'ContactDetailsForm.stateLabel' },);
           const statePlaceholder = intl.formatMessage({ id: 'ContactDetailsForm.statePlaceholder' });
+          const stateRequired = validators.required(
+            intl.formatMessage({
+              id: 'ContactDetailsForm.stateRequired',
+            })
+          );
 
           const countryLabel = intl.formatMessage({ id: 'ContactDetailsForm.countryLabel' });
           const countryPlaceholder = intl.formatMessage({ id: 'ContactDetailsForm.countryPlaceholder' });
@@ -312,6 +308,9 @@ class ContactDetailsFormComponent extends Component {
             );
           }
 
+          const isCompleteShippingAddress = shippingAddress && shippingAddress.addressLine1 &&
+            shippingAddress.city && shippingAddress.state && shippingAddress.country ? true : false;
+
           const classes = classNames(rootClassName || css.root, className);
           const submittedOnce = Object.keys(this.submittedValues).length > 0;
           const pristineSinceLastSubmit = submittedOnce && isEqual(values, this.submittedValues);
@@ -319,7 +318,11 @@ class ContactDetailsFormComponent extends Component {
             invalid ||
             pristineSinceLastSubmit ||
             inProgress ||
-            !(emailChanged || phoneNumberChanged);
+            !(emailChanged || shippingAddressChanged && isCompleteShippingAddress);
+          
+            console.log(emailChanged);
+            console.log(isCompleteShippingAddress);
+            console.log(submitDisabled);
 
           return (
             <Form
@@ -330,22 +333,22 @@ class ContactDetailsFormComponent extends Component {
               }}
             >
               <div className={css.contactDetailsSection}>
-              <div className={className ? className : css.address}>
-                <h2>Shipping Address</h2>
+                <div className={className ? className : css.address}>
+                  <h3>Default Shipping Address </h3>
                   <div className={css.formRow}>
                     <FieldTextInput
                       id={`${formId}.addressLine1`}
-                      name="addressLine1"
+                      name="shippingAddress.addressLine1"
                       className={css.field}
                       type="text"
                       autoComplete="billing address-line1"
                       label={addressLine1Label}
                       placeholder={addressLine1Placeholder}
-                      validate={addressLine1Required}
+                      // validate={addressLine1Required}
                     />
                     <FieldTextInput
                       id={`${formId}.addressLine2`}
-                      name="addressLine2"
+                      name="shippingAddress.addressLine2"
                       className={css.field}
                       type="text"
                       autoComplete="billing address-line2"
@@ -356,43 +359,44 @@ class ContactDetailsFormComponent extends Component {
                   <div className={css.formRow}>
                     <FieldTextInput
                       id={`${formId}.postalCode`}
-                      name="postal"
+                      name="shippingAddress.postal"
                       className={css.field}
                       type="text"
                       autoComplete="billing postal-code"
                       label={postalCodeLabel}
                       placeholder={postalCodePlaceholder}
-                      validate={postalCodeRequired}
+                      // validate={postalCodeRequired}
                     />
 
                     <FieldTextInput
                       id={`${formId}.city`}
-                      name="city"
+                      name="shippingAddress.city"
                       className={css.field}
                       type="text"
                       autoComplete="billing address-level2"
                       label={cityLabel}
                       placeholder={cityPlaceholder}
-                      validate={cityRequired}
+                      // validate={cityRequired}
                     />
                   </div>
                   <div className={css.formRow}>
                     <FieldTextInput
                       id={`${formId}.state`}
-                      name="state"
+                      name="shippingAddress.state"
                       className={css.field}
                       type="text"
                       autoComplete="billing address-level1"
                       label={stateLabel}
                       placeholder={statePlaceholder}
+                      // validate={stateRequired}
                     />
 
                     <FieldSelect
                       id={`${formId}.country`}
-                      name="country"
+                      name="shippingAddress.country"
                       className={css.field}
                       label={countryLabel}
-                      validate={countryRequired}
+                      // validate={countryRequired}
                     >
                       <option disabled value="">
                         {countryPlaceholder}
@@ -406,13 +410,6 @@ class ContactDetailsFormComponent extends Component {
                       })}
                     </FieldSelect>
                   </div>
-                  <FieldPhoneNumberInput
-                  className={css.phone}
-                  name="phoneNumber"
-                  id={formId ? `${formId}.phoneNumber` : 'phoneNumber'}
-                  label={phoneLabel}
-                  placeholder={phonePlaceholder}
-                />
                 </div>
                 <FieldTextInput
                   type="email"
@@ -454,6 +451,7 @@ class ContactDetailsFormComponent extends Component {
                   inProgress={inProgress}
                   ready={pristineSinceLastSubmit}
                   disabled={submitDisabled}
+                  className={css.submitButton}
                 >
                   <FormattedMessage id="ContactDetailsForm.saveChanges" />
                 </PrimaryButton>

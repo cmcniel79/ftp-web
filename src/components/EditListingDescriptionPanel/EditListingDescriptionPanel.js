@@ -26,7 +26,7 @@ const EditListingDescriptionPanel = props => {
     errors,
     enrolledStatus
   } = props;
-  const verifiedSellers = enrolledStatus ? 'verified' : 'unverified';
+  const verifiedSeller = enrolledStatus ? 'verified' : 'unverified';
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { description, title, publicData, metadata } = currentListing.attributes;
@@ -42,7 +42,7 @@ const EditListingDescriptionPanel = props => {
     );
 
   const category = publicData && publicData.category;
-  const subCategory = publicData && publicData.subCategory;
+  const subcategory = publicData && publicData.subcategory;
   const style = publicData && publicData.style;
   const region = publicData && publicData.region;
   const material = publicData && publicData.material;
@@ -54,14 +54,14 @@ const EditListingDescriptionPanel = props => {
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingDescriptionForm
         className={css.form}
-        initialValues={{ title, description, category, subCategory, style, region, material, customOrders }}
+        initialValues={{ title, description, category, subcategory, style, region, material, customOrders }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, category, subCategory, style, region, material, customOrders } = values;
+          const { title, description, category, subcategory, style, region, material, customOrders } = values;
           const customIsAvailable = customOrders ? 'available':'unavailable';
           const updateValues = {title: title.trim(),
           description,
-          publicData: {category, subCategory, style, region, material, customOrders: customIsAvailable, verifiedSellers},
+          publicData: {category, subcategory, style, region, material, customOrders: customIsAvailable, verifiedSeller},
         };
           onSubmit(updateValues);
         }}
