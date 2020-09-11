@@ -1,4 +1,5 @@
 const helmet = require('helmet');
+const { connect } = require('react-redux');
 
 const dev = process.env.REACT_APP_ENV === 'development';
 const self = "'self'";
@@ -95,9 +96,13 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
   // const { imgSrc = [self] } = defaultDirectives;
   // const exampleImgSrc = imgSrc.concat('my-custom-domain.example.com');
 
+  const { connectSrc = [self] } = defaultDirectives;
+  const nativeLandsSrc = connectSrc.concat('https://native-land.ca/');
+
   const customDirectives = {
     // Example: Add custom directive override
     // imgSrc: exampleImgSrc,
+    connectSrc: nativeLandsSrc
   };
 
   // ================ END CUSTOM CSP URLs ================ //
