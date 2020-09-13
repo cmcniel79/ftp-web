@@ -26,6 +26,7 @@ const EditListingPricingPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
+    userCountry
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
@@ -34,9 +35,15 @@ const EditListingPricingPanel = props => {
   const { price, publicData } = currentListing.attributes;
 
   const shippingFee =
-    publicData && publicData.shippingFee ? publicData.shippingFee : null;
+    publicData && publicData.shippingFee ? 
+      new Money(publicData.shippingFee.amount, publicData.shippingFee.currency) : null;
+  
+  const internationalFee =
+    publicData && publicData.internationalFee ? 
+      new Money(publicData.internationalFee.amount, publicData.internationalFee.currency) : null;
 
-  const initialValues = { price, shippingFee };
+  const initialValues = { price, shippingFee, internationalFee };
+  console.log(initialValues);
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -56,18 +63,31 @@ const EditListingPricingPanel = props => {
       // Code for onSubmit function was taken from here: 
       // https://www.sharetribe.com/docs/tutorial-transaction-process/customize-pricing-tutorial/
       onSubmit={values => {
-        const { price, shippingFee } = values;
-        const updatedValues = shippingFee ? {
-          price,
-          publicData: {
-            shippingFee: { amount: shippingFee.amount, currency: shippingFee.currency },
-          },
+        const { price, shippingFee, internationalFee } = values;
+
+        const publicData = shippingFee && internationalFee ? {
+          shippingFee: { amount: shippingFee.amount, currency: shippingFee.currency },
+          internationalFee: { amount: internationalFee.amount, currency: internationalFee.currency },
+          country: userCountry,
+        } : shippingFee ? {
+          shippingFee: { amount: shippingFee.amount, currency: shippingFee.currency },
+          internationalFee: { amount: 0, currency: config.currency },
+          country: userCountry,
+        } : internationalFee ? {
+          shippingFee: { amount: 0, currency: config.currency },
+          internationalFee: { amount: internationalFee.amount, currency: internationalFee.currency },
+          country: userCountry,
         } : {
-            price,
-            publicData: {
-              shippingFee: { amount: 0, currency: config.currency },
-            },
-          }
+          shippingFee: { amount: 0, currency: config.currency },
+          internationalFee: { amount: 0, currency: config.currency },
+          country: userCountry,
+        };
+
+        const updatedValues = {
+          price,
+          publicData: publicData
+        };
+
         console.log(updatedValues);
         onSubmit(updatedValues);
       }}
@@ -78,6 +98,7 @@ const EditListingPricingPanel = props => {
       updated={panelUpdated}
       updateInProgress={updateInProgress}
       fetchErrors={errors}
+      userCountry={userCountry}
     />
   ) : (
       <div className={css.priceCurrencyInvalid}>

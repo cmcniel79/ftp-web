@@ -18,15 +18,16 @@
   transform: translate3d(0, 0, 0);
 
   @media (--viewportMedium) {
-    padding: 18px 60px 18px 60px;
-  }
-
-  @media (--viewportLarge) {
-    display: none;
+    background-color: var(--matterColorBright);
+    position: relative;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    box-shadow: none;
   }
 }
 .price {
-
+  margin: 0;
 }
 
 .authorSocialMedia {
@@ -35,6 +36,7 @@
 
 .partnerLink {
   color: white;
+  width: 100%;
 }
 
 .buyButton {

@@ -49,9 +49,10 @@ export class BookingDatesFormComponent extends Component {
     const listingId = this.props.listingId;
     const isOwnListing = this.props.isOwnListing;
     const hasShippingFee = this.props.hasShippingFee;
+    const isDomesticOrder = this.props.isDomesticOrder;
     if (!this.props.fetchLineItemsInProgress) {
       this.props.onFetchTransactionLineItems({
-        bookingData: { hasShippingFee },
+        bookingData: { isDomesticOrder },
         listingId,
         isOwnListing,
       });
@@ -98,7 +99,8 @@ export class BookingDatesFormComponent extends Component {
             lineItems,
             fetchLineItemsInProgress,
             fetchLineItemsError,
-            shippingFee
+            shippingFee,
+            isDomesticOrder,
           } = fieldRenderProps;
           
           const quantityMessage = intl.formatMessage({

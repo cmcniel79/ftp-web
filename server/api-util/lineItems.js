@@ -27,7 +27,7 @@ const PROVIDER_COMMISSION_PERCENTAGE = -10;
  */
 exports.transactionLineItems = (listing, bookingData) => {
   const unitPrice = listing.attributes.price;
-  const { hasShippingFee } = bookingData;
+  const { isDomesticOrder } = bookingData;
 
   /**
    * If you want to use pre-defined component and translations for printing the lineItems base price for booking,
@@ -46,16 +46,17 @@ exports.transactionLineItems = (listing, bookingData) => {
     includeFor: ['customer', 'provider'],
   };
 
-  const shippingFeePrice = hasShippingFee ? resolveShippingFeePrice(listing) : null;
-  const shippingFee = shippingFeePrice
-    ? 
-      {
+  const shippingFeePrice = isDomesticOrder
+  ? resolveShippingFeePrice(listing.attributes.publicData.shippingFee)
+  : resolveShippingFeePrice(listing.attributes.publicData.internationalFee);
+  console.log(shippingFeePrice);
+
+  const shippingFee = {
         code: 'line-item/shipping-fee',
         unitPrice: shippingFeePrice,
         quantity: 1,
         includeFor: ['customer', 'provider'],
-      }
-    : [];
+      };
 
 
 
@@ -65,7 +66,7 @@ exports.transactionLineItems = (listing, bookingData) => {
     percentage: PROVIDER_COMMISSION_PERCENTAGE,
     includeFor: ['provider'],
   };
-
+ 
   const lineItems = [booking, shippingFee, providerCommission];
 
   return lineItems;

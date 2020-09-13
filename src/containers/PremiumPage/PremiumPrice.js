@@ -1,19 +1,19 @@
 import React from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
-import { richText } from '../../util/richText';
 import {
     Button,
     ExternalLink
 } from '../../components';
 
 import css from './PremiumPage.css';
+import { string } from 'prop-types';
 
-const PremiumDescriptionMaybe = props => {
+const PremiumPrice = props => {
     const { price, websiteLink } = props;
     return (
         <div className={css.sectionPrice}>
             <h2 className={css.price}>
-                Price:
+                Price: {price}
             </h2>
             <ExternalLink href={websiteLink} className={css.partnerLink}>
                 <Button
@@ -26,4 +26,11 @@ const PremiumDescriptionMaybe = props => {
     )
 };
 
-export default PremiumDescriptionMaybe;
+PremiumPrice.defaultProps = { price: null, websiteLink: null };
+
+PremiumPrice.propTypes = {
+  price: string,
+  websiteLink: string,
+};
+
+export default PremiumPrice;

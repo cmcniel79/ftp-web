@@ -478,7 +478,7 @@ export class PremiumPageComponent extends Component {
                     <PremiumRegionMaybe region={region} />
                     <PremiumStyleMaybe style={style} region={region} />
                   </div>
-                    <PremiumPrice price={price} websiteLink="https://www.cookiesandyou.com/" />
+                    <PremiumPrice price={formattedPrice} websiteLink="https://www.cookiesandyou.com/" />
                 </div>
               </div>
             </div>

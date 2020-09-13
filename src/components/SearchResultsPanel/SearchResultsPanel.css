@@ -2,6 +2,7 @@
 .root {
   display: flex;
   flex-direction: column;
+  max-width: 1760px;
 }
 
 .listingCards {
@@ -19,6 +20,11 @@
 .listingCard {
   margin-bottom: 36px;
   flex-basis: 100%;
+  @media (--viewportMedium) {
+    flex-basis: calc(50% - 12px);
+    margin-right: 12px;
+    max-width: 50%;
+  }
   @media (--viewportLarge) {
     /**
       * resultPanelWidthRatio = 0.625 aka 62.5%
@@ -34,9 +40,9 @@
 
     * flex-basis: calc((100%/columnCount) - (guttersBetweenColumns / columnCount))
     */
-    flex-basis: calc(50% - 12px);
+    /* flex-basis: calc(50% - 12px); */
     margin-right: 12px;
-    max-width: 24%;
+    max-width: 23%;
   }
   @media (--viewportXLarge) {
     /**
@@ -53,9 +59,9 @@
 
      * flex-basis: calc((100%/columnCount) - (guttersBetweenColumns / columnCount))
      */
-    flex-basis: calc(33.33% - 16px);
+    /* flex-basis: calc(33.33% - 16px); */
     margin-right: 12px;
-    max-width: 24%;
+    max-width: 18%;
   }
 }
 
@@ -70,12 +76,6 @@
     margin-right: 0;
   }
 } */
-
-.listingCard:nth-of-type(3n) {
-  @media (--viewportXLarge) {
-    margin-right: 0;
-  }
-}
 
 .pagination {
   /* margin-top: auto; pushes pagination to the end of the page. */

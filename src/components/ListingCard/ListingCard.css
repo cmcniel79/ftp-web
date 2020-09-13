@@ -1,5 +1,4 @@
 @import '../../marketplace.css';
-
 .root {
   /* Layout */
   display: flex;
@@ -7,7 +6,6 @@
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   /* flex-basis: 100%; */
-
   /* Remove link's hover effect */
   &:hover {
     text-decoration: none;
@@ -15,6 +13,24 @@
 }
 
 .link {
+    /* Font */
+    max-width: 290px;
+    @apply --marketplaceH4FontStyles;
+    color: var(--matterColor);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    -webkit-line-clamp: 1;
+    -moz-box-orient: vertical;
+    /* fallback option */
+    word-break: break-all;
+    /* use break-word if available */
+    word-break: break-word;
+    hyphens: auto;
+    /* Remove default margins from font */
+    margin-top: 0;
+    margin-bottom: 0;
   &:hover {
     text-decoration: none;
   }
@@ -26,7 +42,6 @@
   width: 100%;
   position: relative;
   transition: var(--transitionStyleButton);
-
   &:hover {
     transform: scale(1.02);
     box-shadow: var(--boxShadowListingCard);
@@ -34,9 +49,12 @@
 }
 
 /* Firefox doesn't support image aspect ratio inside flexbox */
+
 .aspectWrapper {
-  padding-bottom: 66.6667%; /* 3:2 Aspect Ratio */
-  background: var(--matterColorNegative); /* Loading BG color */
+  padding-bottom: 66.6667%;
+  /* 3:2 Aspect Ratio */
+  background: var(--matterColorNegative);
+  /* Loading BG color */
 }
 
 .rootForImage {
@@ -112,7 +130,6 @@
   margin-bottom: 0;
   margin-left: 0;
   margin-right: 5px;
-
   @media (--viewportMedium) {
     margin-top: 0;
     margin-bottom: 0;
@@ -138,7 +155,6 @@
   margin-bottom: 0;
   margin-left: 0;
   margin-right: 5px;
-
   @media (--viewportMedium) {
     margin-top: 0;
     margin-bottom: 0;
@@ -149,11 +165,9 @@
   /* Font */
   @apply --marketplaceTinyFontStyles;
   color: var(--matterColor);
-
   /* Remove default margins from font */
   margin-top: 0;
   margin-bottom: 0;
-
   @media (--viewportMedium) {
     margin-top: 0;
     margin-bottom: 0;
@@ -169,14 +183,22 @@
   /* Font */
   @apply --marketplaceH4FontStyles;
   color: var(--matterColor);
-
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  -webkit-line-clamp: 1;
+  -moz-box-orient: vertical;
+  /* fallback option */
+  word-break: break-all;
+  /* use break-word if available */
+  word-break: break-word;
+  hyphens: auto;
   /* Remove default margins from font */
   margin-top: 0;
   margin-bottom: 0;
-
-  @media (--viewportMedium) {
-    margin-top: 0;
-    margin-bottom: 0;
+  @media (--viewportLarge) {
+    width: 350px;
   }
 }
 
@@ -184,11 +206,9 @@
   /* Font */
   @apply --marketplaceTinyFontStyles;
   color: var(--matterColor);
-
   /* Remove default margins from font */
   margin-top: 0;
   margin-bottom: 0;
-
   @media (--viewportMedium) {
     margin-top: 0;
     margin-bottom: 0;

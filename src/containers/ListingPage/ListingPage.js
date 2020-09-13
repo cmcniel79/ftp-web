@@ -102,6 +102,7 @@ export class ListingPageComponent extends Component {
       params,
       callSetInitialValues,
       onInitializeCardPaymentData,
+      isDomesticOrder
     } = this.props;
     const listingId = new UUID(params.id);
     const listing = getListing(listingId);
@@ -109,15 +110,13 @@ export class ListingPageComponent extends Component {
     const { bookingData } = values;
 
 
-    const hasShippingFee =
-      listing.attributes.publicData &&
-        listing.attributes.publicData.shippingFee
-        ? true
-        : null;
+    const shippingFee = isDomesticOrder
+        ? listing.attributes.publicData.shippingFee
+        : listing.attributes.publicData.internationalFee;
 
     const initialValues = {
       listing,
-      bookingData: { hasShippingFee },
+      bookingData: { isDomesticOrder },
       confirmPaymentError: null,
     };
 
@@ -335,7 +334,19 @@ export class ListingPageComponent extends Component {
     // banned or deleted display names for the function
     const authorDisplayName = userDisplayNameAsString(ensuredAuthor, '');
 
-    const authorTribe = ensuredAuthor.attributes.profile.publicData.tribe ? ensuredAuthor.attributes.profile.publicData.tribe : null;
+    const authorTribe = ensuredAuthor.attributes.profile.publicData.tribe ? 
+      ensuredAuthor.attributes.profile.publicData.tribe : null;
+
+    const authorCountry = publicData && publicData.country ?
+      publicData.country : null;
+
+    const userCountry = currentUser && currentUser.attributes.profile.protectedData && 
+      currentUser.attributes.profile.protectedData.shippingAddress ?
+      currentUser.attributes.profile.protectedData.shippingAddress.country : null;
+
+    const isDomesticOrder = authorCountry && userCountry && authorCountry === userCountry ? true : false;
+
+    console.log(isDomesticOrder);
 
     const { formattedPrice, priceTitle } = priceData(price, intl);
 
@@ -489,6 +500,7 @@ export class ListingPageComponent extends Component {
                     lineItems={lineItems}
                     fetchLineItemsInProgress={fetchLineItemsInProgress}
                     fetchLineItemsError={fetchLineItemsError}
+                    isDomesticOrder={isDomesticOrder}
                   />
                 </div>
               </div>

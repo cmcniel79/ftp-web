@@ -82,7 +82,8 @@ const EditListingWizardTab = props => {
     updatedTab,
     updateInProgress,
     intl,
-    enrolledStatus
+    accountType,
+    userCountry
   } = props;
 
   const { type } = params;
@@ -96,6 +97,7 @@ const EditListingWizardTab = props => {
   };
 
   const onCompleteEditListingWizardTab = (tab, updateValues) => {
+    console.log(updateValues);
     // Normalize images for API call
     const { images: updatedImages, ...otherValues } = updateValues;
     const imageProperty =
@@ -142,7 +144,6 @@ const EditListingWizardTab = props => {
       // newListingPublished and fetchInProgress are flags for the last wizard tab
       ready: newListingPublished,
       disabled: fetchInProgress,
-      enrolledStatus
     };
   };
 
@@ -155,6 +156,7 @@ const EditListingWizardTab = props => {
         <EditListingDescriptionPanel
           {...panelProps(DESCRIPTION)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          accountType={accountType}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
@@ -169,6 +171,7 @@ const EditListingWizardTab = props => {
         <EditListingPricingPanel
           {...panelProps(PRICING)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          userCountry={userCountry}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}

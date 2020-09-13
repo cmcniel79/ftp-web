@@ -24,6 +24,7 @@ const EditListingDescriptionPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
+    accountType,
     enrolledStatus
   } = props;
   const verifiedSeller = enrolledStatus ? 'verified' : 'unverified';
@@ -46,7 +47,7 @@ const EditListingDescriptionPanel = props => {
   const style = publicData && publicData.style;
   const region = publicData && publicData.region;
   const material = publicData && publicData.material;
-  const customOrders = publicData && publicData.customOrders;
+  const customOrders = publicData && publicData.customOrders == 'available' ? true : false;;
 
   const categoryOptions = findOptionsForSelectFilter('category', config.custom.filters);
   return (
@@ -72,6 +73,7 @@ const EditListingDescriptionPanel = props => {
         updateInProgress={updateInProgress}
         fetchErrors={errors}
         categories={categoryOptions}
+        accountType={accountType}
       />
     </div>
   );

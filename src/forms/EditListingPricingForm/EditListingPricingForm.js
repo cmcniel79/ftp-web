@@ -14,6 +14,8 @@ import css from './EditListingPricingForm.css';
 
 const { Money } = sdkTypes;
 
+var hasInternationalFee = false;
+
 export const EditListingPricingFormComponent = props => (
   <FinalForm
     {...props}
@@ -30,6 +32,8 @@ export const EditListingPricingFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
+        accountType,
+        userCountry
       } = formRenderProps;
 
       const shippingFeeMessage = intl.formatMessage({
@@ -39,7 +43,15 @@ export const EditListingPricingFormComponent = props => (
       const shippingFeePlaceholderMessage = intl.formatMessage({
         id: 'EditListingPricingForm.shippingFeeInputPlaceholder',
       });
-      
+
+      const internationalFeeMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.internationalFeeInputMessage',
+      });
+
+      const internationalFeePlaceholderMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.internationalFeeInputPlaceholder',
+      });
+
       const pricePerUnitMessage = intl.formatMessage({
         id: 'EditListingPricingForm.pricePerUnit',
       });
@@ -75,6 +87,25 @@ export const EditListingPricingFormComponent = props => (
       const submitDisabled = invalid || disabled || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
 
+      const internationalInput = document.getElementById('internationalFee');
+      if (internationalInput) {
+        internationalInput.addEventListener('input', () => {
+          hasInternationalFee = true;
+        })
+      }
+
+      const internationalInstructions = hasInternationalFee ?
+        <div className={css.instructions}>
+          <p className={css.instructionsText}>The international fee will be used automatically if a buyer is from a
+          different country from you. Currrently, your country of origin is listed as {userCountry}.
+            <br />
+            <br />
+             If this is the wrong country, you should go to your account settings and change your address before posting
+             this item.
+          </p>
+        </div>
+        : null;
+
       return (
         <Form onSubmit={handleSubmit} className={classes}>
           {updateListingError ? (
@@ -87,26 +118,40 @@ export const EditListingPricingFormComponent = props => (
               <FormattedMessage id="EditListingPricingForm.showListingFailed" />
             </p>
           ) : null}
-          <FieldCurrencyInput
-            id="price"
-            name="price"
-            className={css.priceInput}
-            autoFocus
-            label={pricePerUnitMessage}
-            placeholder={pricePlaceholderMessage}
-            currencyConfig={config.currencyConfig}
-            validate={priceValidators}
-          />
 
-          <FieldCurrencyInput
-            id="shippingFee"
-            name="shippingFee"
-            className={css.shippingFeeInput}
-            label={shippingFeeMessage}
-            placeholder={shippingFeePlaceholderMessage}
-            currencyConfig={config.currencyConfig}
-          />
+          <div className={css.columns}>
+            <div className={css.priceInputs}>
+              <FieldCurrencyInput
+                id="price"
+                name="price"
+                className={css.priceInput}
+                autoFocus
+                label={pricePerUnitMessage}
+                placeholder={pricePlaceholderMessage}
+                currencyConfig={config.currencyConfig}
+                validate={priceValidators}
+              />
 
+              <FieldCurrencyInput
+                id="shippingFee"
+                name="shippingFee"
+                className={css.priceInput}
+                label={shippingFeeMessage}
+                placeholder={shippingFeePlaceholderMessage}
+                currencyConfig={config.currencyConfig}
+              />
+
+              <FieldCurrencyInput
+                id="internationalFee"
+                name="internationalFee"
+                className={css.priceInput}
+                label={internationalFeeMessage}
+                placeholder={internationalFeePlaceholderMessage}
+                currencyConfig={config.currencyConfig}
+              />
+            </div>
+            {internationalInstructions}
+          </div>
           <Button
             className={css.submitButton}
             type="submit"

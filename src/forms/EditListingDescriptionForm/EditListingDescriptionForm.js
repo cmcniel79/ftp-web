@@ -42,6 +42,7 @@ const EditListingDescriptionFormComponent = props => (
         updateInProgress,
         fetchErrors,
         filterConfig,
+        accountType,
         initialValues
       } = formRenderProps;
 
@@ -68,6 +69,16 @@ const EditListingDescriptionFormComponent = props => (
       const maxLength60Message = maxLength(maxLengthMessage, TITLE_MAX_LENGTH);
       const descriptionRequiredMessage = intl.formatMessage({
         id: 'EditListingDescriptionForm.descriptionRequired',
+      });
+
+      const websiteMessage = intl.formatMessage({
+        id: 'EditListingDescriptionForm.website',
+      });
+      const websitePlaceholderMessage = intl.formatMessage({
+        id: 'EditListingDescriptionForm.websitePlaceholder',
+      });
+      const websiteRequiredMessage = intl.formatMessage({
+        id: 'EditListingDescriptionForm.websiteRequired',
       });
 
       const categoryLabel = intl.formatMessage({
@@ -123,7 +134,21 @@ const EditListingDescriptionFormComponent = props => (
       const material_options = findOptionsForSelectFilter('material', filterConfig);
 
       const category = initialValues && initialValues.category ? initialValues.category : null;
-      
+
+      console.log(accountType);
+
+      const websiteLink = accountType && (accountType == "p" || accountType == "a") ?
+        <FieldTextInput
+          id="websiteLink"
+          name="websiteLink"
+          className={css.title}
+          type="text"
+          label={websiteMessage}
+          placeholder={websitePlaceholderMessage}
+          validate={composeValidators(required(websiteRequiredMessage))}
+          autoFocus
+        /> : null;
+
       if (category && !hasInitialized) {
         subcategories = getSubcategories(categories, category);
         hasInitialized = true;
@@ -135,6 +160,102 @@ const EditListingDescriptionFormComponent = props => (
           subcategories = getSubcategories(categories, cat.value);
         })
       }
+
+      const physicalItemFields = (accountType != "a" && accountType !="n") ? 
+      <div>
+      <div className={css.midSection}>
+      <div className={css.categories}>
+        <FieldSelect
+          className={css.category}
+          name="category"
+          id="category"
+          label={categoryLabel}
+          validate={categoryRequired}
+        >
+          {<option disabled value="">
+            {categoryPlaceholder}
+          </option>}
+          {categories.map(c => (
+            <option key={c.key} value={c.key}>
+              {c.label}
+            </option>
+          ))}
+        </FieldSelect>
+        <FieldSelect
+          className={css.category}
+          name="subcategory"
+          id="subcategory"
+          label={subCategoryLabel}
+          validate={subCategoryRequired}
+        >
+          {<option disabled value="">
+            {subCategoryPlaceholder}
+          </option>}
+          {subcategories.map(s => (
+            <option key={s.key} value={s.key}>
+              {s.label}
+            </option>
+          ))}
+        </FieldSelect>
+      </div>
+    </div>
+    <h2 className={css.optionalHeader}>Optional Fields</h2>
+    <div className={css.checkBoxes}>
+      <div className={css.region}>
+        <h2 className={css.checkTitle}>Region</h2>
+        <h4>Please pick a region associated with your listing</h4>
+        {region_options.map(option => (
+          <div key={option.key}>
+            <FieldRadioButton
+              id={option.key}
+              name="region"
+              value={option.key}
+              label={option.label}
+              showAsRequired={pristine}
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className={css.material}>
+        <h2 className={css.checkTitle}>Material</h2>
+        <h4>Please pick material(s) used in your listing</h4>
+        <FieldCheckboxGroup
+          id="material"
+          name="material"
+          options={material_options}
+        // validate={composeValidators(requiredFieldArrayCheckbox(selectionRequiredMessage))}
+        />
+      </div>
+
+      <div className={css.style}>
+        <h2 className={css.checkTitle}>Style</h2>
+        <h4>Please pick a style for your listing</h4>
+        {style_options.map(option => (
+          <div key={option.key}>
+            <FieldRadioButton
+              id={option.key}
+              name="style"
+              value={option.key}
+              label={option.label}
+              showAsRequired={pristine}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div className={css.custom}>
+      <h2 className={css.checkTitle}>Custom Orders</h2>
+      <FieldBoolean
+        id="customOrders"
+        name="customOrders"
+        label="Are custom orders available for this listing?"
+        placeholder="Choose yes or no"
+      />
+    </div> 
+    </div>
+    : null;
 
       return (
         <Form className={classes} onSubmit={handleSubmit}>
@@ -163,98 +284,8 @@ const EditListingDescriptionFormComponent = props => (
             validate={composeValidators(required(descriptionRequiredMessage))}
           />
 
-          <div className={css.midSection}>
-            <div className={css.categories}>
-              <FieldSelect
-                className={css.category}
-                name="category"
-                id="category"
-                label={categoryLabel}
-                validate={categoryRequired}
-              >
-                {<option disabled value="">
-                  {categoryPlaceholder}
-                </option>}
-                {categories.map(c => (
-                  <option key={c.key} value={c.key}>
-                    {c.label}
-                  </option>
-                ))}
-              </FieldSelect>
-              <FieldSelect
-                className={css.category}
-                name="subcategory"
-                id="subcategory"
-                label={subCategoryLabel}
-                validate={subCategoryRequired}
-              >
-                {<option disabled value="">
-                  {subCategoryPlaceholder}
-                </option>}
-                {subcategories.map(s => (
-                  <option key={s.key} value={s.key}>
-                    {s.label}
-                  </option>
-                ))}
-              </FieldSelect>
-            </div>
-          </div>
-
-          <div className={css.checkBoxes}>
-            <div className={css.region}>
-              <h2 className={css.checkTitle}>Region</h2>
-              <h4>Please pick a region associated with your listing</h4>
-              {region_options.map(option => (
-                <div key={option.key}>
-                  <FieldRadioButton
-                    id={option.key}
-                    name="region"
-                    value={option.key}
-                    label={option.label}
-                    showAsRequired={pristine}
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className={css.material}>
-              <h2 className={css.checkTitle}>Material</h2>
-              <h4>Please pick material(s) used in your listing</h4>
-              <FieldCheckboxGroup
-                id="material"
-                name="material"
-                options={material_options}
-              // validate={composeValidators(requiredFieldArrayCheckbox(selectionRequiredMessage))}
-              />
-            </div>
-
-            <div className={css.style}>
-              <h2 className={css.checkTitle}>Style</h2>
-              <h4>Please pick a style for your listing</h4>
-              {style_options.map(option => (
-                <div key={option.key}>
-                  <FieldRadioButton
-                    id={option.key}
-                    name="style"
-                    value={option.key}
-                    label={option.label}
-                    showAsRequired={pristine}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className={css.custom}>
-            <h2 className={css.checkTitle}>Custom Orders</h2>
-            <FieldBoolean
-              id="customOrders"
-              name="customOrders"
-              label="Are custom orders available for this listing?"
-              placeholder="Choose yes/no"
-              validate={composeValidators(required("This is required"))}
-            />
-          </div>
+          {websiteLink}
+          {physicalItemFields}
 
           <Button
             className={css.submitButton}

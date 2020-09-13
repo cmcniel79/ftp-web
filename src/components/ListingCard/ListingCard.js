@@ -161,25 +161,23 @@ export const ListingCardComponent = props => {
       <div className={css.info}>
         {accountType == "p" ? (
           <NamedLink className={css.link} name="PremiumPage" params={{ id, slug }}>
-            <div className={css.mainInfo}>
-              <div className={css.title}>
-                {richText(title, {
+              {/* <div className={css.title}> */}
+                {title}
+                {/* {richText(title, {
                   longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
                   longWordClass: css.longWord,
-                })}
-              </div>
-            </div>
+                })} */}
+              {/* </div> */}
           </NamedLink>
         ) : (
             <NamedLink className={css.link} name="ListingPage" params={{ id, slug }}>
-              <div className={css.mainInfo}>
-                <div className={css.title}>
-                  {richText(title, {
+                {/* <div className={css.title}> */}
+                  {title}
+                  {/* {richText(title, {
                     longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
                     longWordClass: css.longWord,
-                  })}
-                </div>
-              </div>
+                  })} */}
+                {/* </div> */}
             </NamedLink>)}
       </div>
       {accountType != "a" && accountType != "n" &&
