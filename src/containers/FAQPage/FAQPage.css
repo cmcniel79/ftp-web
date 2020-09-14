@@ -1,20 +1,23 @@
 @import '../../marketplace.css';
-
 .root {
   padding: 24px;
 }
 
 .faq {
-  margin: 50px auto;
-  width: 100vw;
-  display: block;
-  max-width: 993px;
-  padding: 24px;
+  width: 100%;
+  @media (--viewportMedium) {
+    margin: 50px auto;
+    width: 100vw;
+    display: block;
+    max-width: 993px;
+    padding: 24px;
+  }
 }
 
-.faqTitle{
+.faqTitle {
   margin-bottom: 50px;
 }
 
-.accordian{
+.accordian {
+  
 }

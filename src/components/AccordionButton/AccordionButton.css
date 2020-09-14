@@ -1,46 +1,40 @@
 .accordionItem {
     width: 100%;
+    border: solid;
+    border-radius: 5px;
+    border-color: gray;
+    margin-bottom: 8px;
 }
-.accordionItem .title {
+
+.title {
     cursor: pointer;
-    padding: 18px;
     width: 100%;
     text-align: left;
     border: none;
     outline: none;
-    transition: 0.1s;
+    transition: 0.1s ease-in;
+    font-weight: 550;
+    padding: 18px 5px 18px 5px;
+    @media (--viewportMedium) {
+        padding: 18px;
+      }
 }
-.accordionItem .title:after {
-    content: '⯆';
-   /* Unicode character */
+
+.arrow {
     font-size: 13px;
     float: right;
-    margin-left: 5px;
 }
-.accordionItem .panel {
+
+.panelClosed {
     max-height: 0;
     padding: 0 20px 0 20px;
-    transition: 0.45s ease-in;
+    transition: .5s;
     overflow: hidden;
 }
-.active .title{
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    text-align: left;
-    border: none;
-    outline: none;
-    transition: 0.1s;
-}
-.active .title:after {
-    content: '⯅';
-   /* Unicode character */
-   font-size: 13px;
-   float: right;
-   margin-left: 5px;
-}
-.active .panel {
+
+.panelOpened {
     max-height: 1500px;
     padding: 0 20px 0 20px;
-    transition: max-height .2s ease-in;
+    transition: .2s ease-in;
+    overflow: hidden;
 }

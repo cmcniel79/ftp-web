@@ -18,47 +18,23 @@ class AccordionButton extends Component {
     this.mounted = true;
   }
 
-  handleDocumentClick = event => {
-    if (
-      this.mounted &&
-      !ReactDOM.findDOMNode(this).contains(event.target) &&
-      this.state.isOpen
-    ) {
-      this.setState({ isOpen: false });
-    }
-  };
-
-  componentDidMount() {
-    if (this.props.atomic) {
-      document.addEventListener('click', this.handleDocumentClick, false);
-      document.addEventListener('touchend', this.handleDocumentClick, false);
-    }
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-    document.removeEventListener('click', this.handleDocumentClick, false);
-    document.removeEventListener('touchend', this.handleDocumentClick, false);
-  }
-
   onClick = () => {
     this.setState({ isOpen: !this.state.isOpen });
   };
 
   render() {
-   
-    var accordionItemClassNames = css.accordionItem;
-      
-    if(this.state.isOpen){
-      accordionItemClassNames = css.active;
-    }
+    const panelClassNames = this.state.isOpen ? css.panelOpened : css.panelClosed;
+    const arrow = this.state.isOpen ?  '⯅' : '⯆';
 
     return (
-      <div className={accordionItemClassNames}>
+      <div className={css.accordionItem}>
         <button className={css.title} onClick={this.onClick}>
           {this.props.title}
+          <span className={css.arrow}>
+            {arrow}
+          </span>
         </button>
-        <div className={css.panel}> {this.props.children}</div>
+        <div className={panelClassNames}> {this.props.children}</div>
       </div>
     );
   }
