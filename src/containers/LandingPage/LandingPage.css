@@ -116,9 +116,12 @@
 }
 
 .listingCard{
-  width: 340px;
-  flex-basis: calc(33%-16px);
+  width: 100%;
   margin-bottom: 35px;
+  @media (--viewportMedium) {
+    width: 340px;
+    flex-basis: calc(33%-16px);
+  }
 }
 
 .hero {
