@@ -4,8 +4,11 @@
     position: absolute;
     bottom: 5px;
     left: -5px;
-    display: flex;
     cursor: pointer;
     border: none;
-    width: 50px;
 }   
+
+.heartImage {
+    width: 35px;
+    height: 35px;
+}

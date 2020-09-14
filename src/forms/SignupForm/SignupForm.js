@@ -5,13 +5,14 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Form as FinalForm } from 'react-final-form';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
-import { Form, PrimaryButton, FieldTextInput, FieldSelect } from '../../components';
+import { Form, PrimaryButton, FieldTextInput, FieldSelect, FieldBoolean } from '../../components';
 import getCountryCodes from '../../translations/countryCodes';
 import config from '../../config';
 
 import css from './SignupForm.css';
 
 const KEY_CODE_ENTER = 13;
+var showMinorsInfo = null;
 
 const SignupFormComponent = props => (
   <FinalForm
@@ -109,6 +110,14 @@ const SignupFormComponent = props => (
         id: 'SignupForm.lastNameRequired',
       });
 
+      const isAdultLabel = intl.formatMessage({ id: 'SignupForm.isAdultLabel' });
+      const isAdultPlaceholder = intl.formatMessage({ id: 'SignupForm.isAdultPlaceholder' });
+      const isAdultRequired = validators.required(
+        intl.formatMessage({
+          id: 'SignupForm.isAdultRequired',
+        })
+      );
+
       const countryLabel = intl.formatMessage({ id: 'SignupForm.countryLabel' });
       const countryPlaceholder = intl.formatMessage({ id: 'SignupForm.countryPlaceholder' });
       const countryRequired = validators.required(
@@ -122,6 +131,32 @@ const SignupFormComponent = props => (
       const submitInProgress = inProgress;
       const submitDisabled = invalid || submitInProgress;
       const countryCodes = getCountryCodes(config.locale);
+
+      const adultBool = document.getElementById("isAdult");
+      if (adultBool) {
+        adultBool.addEventListener('change', () => {
+          console.log(adultBool.value);
+          showMinorsInfo = !adultBool.value;
+        })
+      };
+
+      console.log(showMinorsInfo);
+
+      const minorsInfo = adultBool != null && adultBool.value == 'false' ?
+        <div>
+          <p className={css.minorsInfo}>
+            From The People's Terms of Use require all account owners to be at least 18 years of age. Individuals under 
+            the age of 18 are considered minors on Etsy. Minors under age 13 are not allowed on Etsy.
+            <br/>
+            <br/>
+            Minors under 18 and at least 13 years of age are permitted to use Etsy's services only if 
+            they have the appropriate permission and direct supervision of their parent or legal guardian 
+            who is the owner of the account.
+            <br/>
+            <br/>
+            You are responsible for any and all account activity conducted by a minor on your account.
+          </p>
+        </div> : null;
 
       const handleTermsKeyUp = e => {
         // Allow click action with keyboard like with normal links
@@ -174,24 +209,35 @@ const SignupFormComponent = props => (
                 validate={lastNameRequired}
               />
             </div>
-              <FieldSelect
-                className={css.country}
-                id={`${formId}.country`}
-                name="country"
-                label={countryLabel}
-                validate={countryRequired}
-              >
-                <option disabled value="">
-                  {countryPlaceholder}
-                </option>
-                {countryCodes.map(country => {
-                  return (
-                    <option key={country.code} value={country.name}>
-                      {country.name}
-                    </option>
-                  );
-                })}
-              </FieldSelect>
+
+            <FieldBoolean
+              className={css.adultBool}
+              id={formId ? `${formId}.isAdult` : 'isAdult'}
+              name="isAdult"
+              label={isAdultLabel}
+              placeholder={isAdultPlaceholder}
+              validate={isAdultRequired}
+            // onChange={adultInputChange}
+            />
+            {minorsInfo}
+            <FieldSelect
+              className={css.country}
+              id={formId ? `${formId}.country` : 'country'}
+              name="country"
+              label={countryLabel}
+              validate={countryRequired}
+            >
+              <option disabled value="">
+                {countryPlaceholder}
+              </option>
+              {countryCodes.map(country => {
+                return (
+                  <option key={country.code} value={country.name}>
+                    {country.name}
+                  </option>
+                );
+              })}
+            </FieldSelect>
             <FieldTextInput
               className={css.password}
               type="password"

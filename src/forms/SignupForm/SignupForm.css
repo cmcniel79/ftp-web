@@ -12,6 +12,16 @@
   margin-top: 24px;
 }
 
+.adultBool {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.minorsInfo {
+  font-size: 15px;
+  line-height: 20px;
+}
+
 .name {
   display: flex;
   justify-content: space-between;
