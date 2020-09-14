@@ -37,8 +37,9 @@
   }
 }
 
-.createListingLink {
+.signUpLink {
   margin-top: 36px;
+  font-size: 25px;
 
   @media (--viewportMedium) {
     margin-top: 52px;

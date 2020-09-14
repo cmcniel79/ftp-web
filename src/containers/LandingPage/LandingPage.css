@@ -40,17 +40,10 @@
   }
 }
 
-
-.buttonText{
-  color: white;
-  margin-bottom: 15px;
-  vertical-align: middle;
-  padding: 0 0 50px 0;
-}
-
 .donateButton{
   @apply --marketplaceButtonStyles;
   width: auto;
+  max-width: 300px;
   padding: 20px 20px 0;
   @media (--viewportMedium) {
     display: block;
@@ -119,8 +112,7 @@
   width: 100%;
   margin-bottom: 35px;
   @media (--viewportMedium) {
-    width: 340px;
-    flex-basis: calc(33%-16px);
+    width: 32.5%;
   }
 }
 
@@ -174,7 +166,7 @@
   @media (--viewportLarge) {
     max-width: 1128px;
     padding: 0 36px 0 36px;
-    margin: var(--LandingPage_sectionMarginTopLarge) auto 93px auto;
+    margin: 60px auto 60px auto;
   }
 
   @media (--viewportXLarge) {

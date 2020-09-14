@@ -14,7 +14,6 @@
 
 .link {
     /* Font */
-    max-width: 290px;
     @apply --marketplaceH4FontStyles;
     color: var(--matterColor);
     white-space: nowrap;

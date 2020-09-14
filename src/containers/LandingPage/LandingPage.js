@@ -24,14 +24,11 @@ import { TopbarContainer } from '../../containers';
 import facebookImage from '../../assets/SocialMedia-791x791.png';
 import twitterImage from '../../assets/SocialMedia-791x791.png';
 import jewelryImage from './images/jewelry.png';
-import artImage from './images/art.jpg';
-import apparelImage from './images/apparel.jpg';
-import traditionalImage from './images/traditional.jpg';
+import artImage from './images/art.png';
+import apparelImage from './images/apparel.png';
+import traditionalImage from './images/traditional.png';
 
 import css from './LandingPage.css';
-
-import { createListing } from '../../util/test-data';
-
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { loadData } from './LandingPage.duck';
 
@@ -46,7 +43,9 @@ export const LandingPageComponent = props => {
   const schemaTitle = intl.formatMessage({ id: 'LandingPage.schemaTitle' }, { siteTitle });
   const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
   const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
-  const hasListings = props.listings.length > 0;
+
+  // Only want to show featured listings if we have 6
+  const hasListings = props.listings && props.listings.length == 6;
 
   return (
     <Page
@@ -84,27 +83,27 @@ export const LandingPageComponent = props => {
                   links={[
                     {
                       imageUrl: jewelryImage,
-                      imageAltText: 'Link 1',
+                      imageAltText: 'Jewelry',
                       linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=jewelry' } },
                       text: 'Jewelry',
                     },
                     {
                       imageUrl: artImage,
-                      imageAltText: 'Link 2',
+                      imageAltText: 'Art',
                       linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=art' } },
                       text: 'Art',
                     },
                     {
-                      imageUrl: apparelImage,
-                      imageAltText: 'Link 3',
-                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=apparel' } },
-                      text: 'Apparel',
+                      imageUrl: traditionalImage,
+                      imageAltText: 'Traditional',
+                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=traditional' } },
+                      text: 'Traditional Assortments',
                     },
                     {
-                      imageUrl: traditionalImage,
-                      imageAltText: 'Link 4',
-                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=traditional' } },
-                      text: 'Traditional',
+                      imageUrl: apparelImage,
+                      imageAltText: 'Apparel',
+                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=apparel' } },
+                      text: 'Apparel',
                     },
                   ]}
                   heading='Featured Categories'
@@ -119,7 +118,6 @@ export const LandingPageComponent = props => {
                 <h2 className={css.featuredListingsTitle}>
                   Featured Listings
                 </h2>
-               
                   <div className={css.featuredListings}>
                     {listings.map(l => (
                       <ListingCard className={css.listingCard} listing={l} key={l.id.uuid}/>
@@ -134,7 +132,6 @@ export const LandingPageComponent = props => {
                 <h2 className={css.donateTitle}>
                   From The People is Committed to Representing Indigenous Peoples and Supporting Our Movements
                   </h2>
-
                 <div className={css.donateText}>
                   <div className={css.donateSubText}>
                     <h2>
@@ -144,15 +141,12 @@ export const LandingPageComponent = props => {
                       For the next three months From The People will be donating all profits
                       to help tribes fight COVID-19 in Indian Country
                       </p>
-                    <button className={css.donateButton}>
                       <ExternalLink
-                        target="https://www.firstnations.org/covid-19-emergency-response-fund/"
-                        className={css.buttonText}>
+                        href="https://www.firstnations.org/covid-19-emergency-response-fund/"
+                        className={css.donateButton}>
                         <FormattedMessage id="LandingPage.covidButton" />
                       </ExternalLink>
-                    </button>
                   </div>
-
                   <div className={css.donateSubText}>
                     <h2>
                       Missing and Murdered Indigenous Womxn, Girls and Two Spirit
@@ -162,13 +156,11 @@ export const LandingPageComponent = props => {
                       donating a percentage of our profits to the Coalition to Stop
                       Violence Against Native Women.
                       </p>
-                    <button className={css.donateButton}>
                       <ExternalLink
-                        target="https://www.csvanw.org/mmiw/"
-                        className={css.buttonText}>
+                        href="https://www.csvanw.org/mmiw/"
+                        className={css.donateButton}>
                         <FormattedMessage id="LandingPage.mmiwButton" />
                       </ExternalLink>
-                    </button>
                   </div>
                 </div>
 
@@ -184,13 +176,11 @@ export const LandingPageComponent = props => {
                         brutality. Your Indigenous allies are here to help! Please consider donating
                         to the Black Visions Collective using the button below, and other organizations fighting for Black Lives.
                       </p>
-                      <button className={css.donateButton}>
                         <ExternalLink
-                          target="https://www.firstnations.org/covid-19-emergency-response-fund/"
-                          className={css.buttonText}>
-                          Support BLM
+                          href="https://www.firstnations.org/covid-19-emergency-response-fund/"
+                          className={css.donateButton}>
+                          <FormattedMessage id="LandingPage.blmButton" />
                       </ExternalLink>
-                      </button>
                     </div>
                   </div>
                 </div>
