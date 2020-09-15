@@ -9,7 +9,17 @@ import { ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { isUploadImageOverLimitError } from '../../util/errors';
-import { Form, Avatar, Button, ImageFromFile, IconSpinner, FieldTextInput } from '../../components';
+import {
+  Form,
+  Avatar,
+  Button,
+  ImageFromFile,
+  IconSpinner,
+  FieldTextInput,
+  IconSocialMediaFacebook,
+  IconSocialMediaInstagram,
+  IconSocialMediaTwitter,
+} from '../../components';
 import TribeSelectFieldMaybe from './TribeSelectFieldMaybe';
 
 import css from './ProfileSettingsForm.css';
@@ -62,9 +72,34 @@ class ProfileSettingsFormComponent extends Component {
             uploadInProgress,
             form,
             values,
+            accountType
           } = fieldRenderProps;
 
           const user = ensureCurrentUser(currentUser);
+
+          // Company Name
+          const companyNameLabel = intl.formatMessage({
+            id: 'ProfileSettingsForm.companyNameLabel',
+          });
+          const companyNamePlaceholder = intl.formatMessage({
+            id: 'ProfileSettingsForm.companyNamePlaceholder',
+          });
+          const companyNameRequiredMessage = intl.formatMessage({
+            id: 'ProfileSettingsForm.companyNameRequired',
+          });
+          const companyNameRequired = validators.required(companyNameRequiredMessage);
+
+          // Company Website
+          const companyWebsiteLabel = intl.formatMessage({
+            id: 'ProfileSettingsForm.companyWebsiteLabel',
+          });
+          const companyWebsitePlaceholder = intl.formatMessage({
+            id: 'ProfileSettingsForm.companyWebsitePlaceholder',
+          });
+          const companyWebsiteRequiredMessage = intl.formatMessage({
+            id: 'ProfileSettingsForm.companyWebsiteRequired',
+          });
+          const companyWebsiteRequired = validators.required(companyWebsiteRequiredMessage);
 
           // First name
           const firstNameLabel = intl.formatMessage({
@@ -98,6 +133,31 @@ class ProfileSettingsFormComponent extends Component {
             id: 'ProfileSettingsForm.bioPlaceholder',
           });
 
+          // Social Media Fields
+          // Facebook
+          const facebookLabel = intl.formatMessage({
+            id: 'ProfileSettingsForm.facebookLabel',
+          });
+          const facebookPlaceholder = intl.formatMessage({
+            id: 'ProfileSettingsForm.facebookPlaceholder',
+          });
+
+          // Twitter
+          const twitterLabel = intl.formatMessage({
+            id: 'ProfileSettingsForm.twitterLabel',
+          });
+          const twitterPlaceholder = intl.formatMessage({
+            id: 'ProfileSettingsForm.twitterPlaceholder',
+          });
+
+          // Insta
+          const instaLabel = intl.formatMessage({
+            id: 'ProfileSettingsForm.instaLabel',
+          });
+          const instaPlaceholder = intl.formatMessage({
+            id: 'ProfileSettingsForm.instaPlaceholder',
+          });
+
           // Tribe
           const tribeLabel = intl.formatMessage({
             id: 'ProfileSettingsForm.tribeLabel',
@@ -117,7 +177,12 @@ class ProfileSettingsFormComponent extends Component {
           const errorClasses = classNames({ [css.avatarUploadError]: hasUploadError });
           const transientUserProfileImage = profileImage.uploadedImage || user.profileImage;
           const transientUser = { ...user, profileImage: transientUserProfileImage };
-          const enrolled = transientUser.attributes.profile.publicData.enrolled ? true : false;
+          const showTribeSelection = accountType == "e" || accountType == "p" || accountType == "a" || accountType == "n" ?
+            true : false;
+          const showCompanyInfo = accountType == "p" || accountType == "a" || accountType == "n" ?
+            true : false;
+          const showSocialMediaFields = accountType != "a" || accountType != "n" ?
+            true : false;
 
           // Ensure that file exists if imageFromFile is used
           const fileExists = !!profileImage.file;
@@ -262,6 +327,33 @@ class ProfileSettingsFormComponent extends Component {
                   <FormattedMessage id="ProfileSettingsForm.fileInfo" />
                 </div>
               </div>
+              {showCompanyInfo &&
+                <div className={css.sectionContainer}>
+                  <h3 className={css.sectionTitle}>
+                    <FormattedMessage id="ProfileSettingsForm.companyInfo" />
+                  </h3>
+                  <div className={css.companyContainer}>
+                    <FieldTextInput
+                      className={css.companyName}
+                      type="text"
+                      id="companyName"
+                      name="companyName"
+                      label={companyNameLabel}
+                      placeholder={companyNamePlaceholder}
+                      validate={companyNameRequired}
+                    />
+                    <FieldTextInput
+                      className={css.companyWebsite}
+                      type="text"
+                      id="companyWebsite"
+                      name="companyWebsite"
+                      label={companyWebsiteLabel}
+                      placeholder={companyWebsitePlaceholder}
+                      validate={companyWebsiteRequired}
+                    />
+                  </div>
+                </div>
+              }
               <div className={css.sectionContainer}>
                 <h3 className={css.sectionTitle}>
                   <FormattedMessage id="ProfileSettingsForm.yourName" />
@@ -302,7 +394,49 @@ class ProfileSettingsFormComponent extends Component {
                   <FormattedMessage id="ProfileSettingsForm.bioInfo" />
                 </p>
               </div>
-              {enrolled &&
+              {showSocialMediaFields &&
+                <div className={css.sectionContainer}>
+                  <h3 className={css.sectionTitle}>
+                    <FormattedMessage id="ProfileSettingsForm.socialMedia" />
+                  </h3>
+                  <div className={css.socialMediaContainer}>
+                    <div className={css.socialMediaField}>
+                      <IconSocialMediaFacebook />
+                      <FieldTextInput
+                        className={css.socialMediaInput}
+                        type="text"
+                        id="facebook"
+                        name="facebook"
+                        label={facebookLabel}
+                        placeholder={facebookPlaceholder}
+                      />
+                    </div>
+                    <div className={css.socialMediaField}>
+                      <IconSocialMediaTwitter />
+                      <FieldTextInput
+                        className={css.socialMediaInput}
+                        type="text"
+                        id="twitter"
+                        name="twitter"
+                        label={twitterLabel}
+                        placeholder={twitterPlaceholder}
+                      />
+                    </div>
+                    <div className={css.socialMediaField}>
+                      <IconSocialMediaInstagram />
+                      <FieldTextInput
+                        className={css.socialMediaInput}
+                        type="text"
+                        id="insta"
+                        name="insta"
+                        label={instaLabel}
+                        placeholder={instaPlaceholder}
+                      />
+                    </div>
+                  </div>
+                </div>
+              }
+              {showTribeSelection &&
                 <div className={classNames(css.sectionContainer, css.lastSection)}>
                   <h3 className={css.sectionTitle}>
                     <FormattedMessage id="ProfileSettingsForm.tribeHeading" />
@@ -348,6 +482,7 @@ ProfileSettingsFormComponent.defaultProps = {
   uploadImageError: null,
   updateProfileError: null,
   updateProfileReady: false,
+  accountType: null
 };
 
 ProfileSettingsFormComponent.propTypes = {
@@ -359,6 +494,7 @@ ProfileSettingsFormComponent.propTypes = {
   updateInProgress: bool.isRequired,
   updateProfileError: propTypes.error,
   updateProfileReady: bool,
+  accountType: string,
 
   // from injectIntl
   intl: intlShape.isRequired,

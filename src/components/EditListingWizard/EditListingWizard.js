@@ -318,7 +318,6 @@ class EditListingWizard extends Component {
     const stripeConnected = currentUserLoaded && !!stripeAccount && !!stripeAccount.id;
     const accountType =  currentUserLoaded ? 
       ensuredCurrentUser.attributes.profile.publicData.account : null;
-    console.log(accountType);
     const userCountry = currentUserLoaded ? 
       ensuredCurrentUser.attributes.profile.protectedData.shippingAddress.country : null;
 

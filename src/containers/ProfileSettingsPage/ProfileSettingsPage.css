@@ -42,3 +42,26 @@
     margin: 37px 0 0 auto;
   }
 }
+
+.sectionTitle {
+  /* Font */
+  color: var(--matterColorAnti);
+
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+.faqLink {
+  font-size: 17px;
+  line-height: 20px;
+  margin: 0;
+}

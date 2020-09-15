@@ -20,11 +20,19 @@
       }
 }
 
-.arrow {
-    font-size: 13px;
+.chevronUp {
+    width: 20px;
+    height: 20px;
     float: right;
+    transition: transform .5s,-webkit-transform .5s;
 }
-
+.chevronDown {
+    transform: rotate(180deg);
+    width: 20px;
+    height: 20px;
+    float: right;
+    transition: transform .2s,-webkit-transform .2s;
+}
 .panelClosed {
     max-height: 0;
     padding: 0 20px 0 20px;

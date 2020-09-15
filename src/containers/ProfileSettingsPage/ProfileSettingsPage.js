@@ -45,20 +45,33 @@ export class ProfileSettingsPageComponent extends Component {
     } = this.props;
 
     const handleSubmit = values => {
-      const { firstName, lastName, bio: rawBio, tribe, nativeLands } = values;
+      const { firstName, lastName, bio: rawBio, tribe, nativeLands, companyName, companyWebsite,
+        facebook, twitter, insta } = values;
 
       // Ensure that the optional bio is a string
       const bio = rawBio || '';
 
-      const profile = {
+      const profile = companyName && companyWebsite ? {
         firstName: firstName.trim(),
         lastName: lastName.trim(),
         bio,
         publicData: {
           tribe: tribe,
-          nativeLands: nativeLands
+          nativeLands: nativeLands,
+          companyName: companyName,
+          companyWebsite: companyWebsite,
+          socialMedia: { facebook: facebook, twitter: twitter, insta: insta }
         }
-      };
+      } : {
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          bio,
+          publicData: {
+            tribe: tribe,
+            nativeLands: nativeLands,
+            socialMedia: { facebook: facebook, twitter: twitter, insta: insta }
+          },
+        };
       const uploadedImage = this.props.image;
 
       // Update profileImage only if file system has been accessed
@@ -74,12 +87,53 @@ export class ProfileSettingsPageComponent extends Component {
     const profileImageId = user.profileImage ? user.profileImage.id : null;
     const profileImage = image || { imageId: profileImageId };
     const tribe = user.attributes.profile.publicData ? user.attributes.profile.publicData.tribe : null;
+    const accountType = user.attributes.profile.publicData ? user.attributes.profile.publicData.account : null;
+    const companyName = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyName : null;
+    const companyWebsite = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyName : null;
+    const socialMedia = user.attributes.profile.publicData ? user.attributes.profile.publicData.socialMedia : null;
+    const facebook = socialMedia && socialMedia.facebook ? socialMedia.facebook : null;
+    const twitter = socialMedia && socialMedia.twitter ? socialMedia.twitter : null;
+    const insta = socialMedia && socialMedia.insta ? socialMedia.insta : null; 
+
+    const faqLink = <NamedLink
+      name="FAQPage"
+    > FAQ Page
+    </NamedLink>;
+
+    let accountHeading;
+    switch (accountType) {
+      case null:
+        accountHeading = null;
+        break;
+      case "":
+        accountHeading =
+          <FormattedMessage id="ProfileSettingsPage.accountHeadingStandard" />;
+        break;
+      case "e":
+        accountHeading =
+          <FormattedMessage id="ProfileSettingsPage.accountHeadingEnrolled" />;
+        break;
+      case "p":
+        accountHeading =
+          <FormattedMessage id="ProfileSettingsPage.accountHeadingPremium" />;
+        break;
+      case "a":
+        accountHeading =
+          <FormattedMessage id="ProfileSettingsPage.accountHeadingAd" />;
+        break;
+      case "n":
+        accountHeading =
+          <FormattedMessage id="ProfileSettingsPage.accountHeadingNonProfit" />;
+        break;
+    }
 
     const profileSettingsForm = user.id ? (
       <ProfileSettingsForm
         className={css.form}
+        accountType={accountType}
         currentUser={currentUser}
-        initialValues={{ firstName, lastName, bio, profileImage: user.profileImage, tribe }}
+        initialValues={{ firstName, lastName, bio, profileImage: user.profileImage, tribe, companyName, companyWebsite,
+          facebook, twitter, insta }}
         profileImage={profileImage}
         onImageUpload={e => onImageUploadHandler(e, onImageUpload)}
         uploadInProgress={uploadInProgress}
@@ -115,6 +169,19 @@ export class ProfileSettingsPageComponent extends Component {
                   </NamedLink>
                 ) : null}
               </div>
+              {accountHeading &&
+                <div className={css.accountInfo}>
+                  <h3 className={css.sectionTitle}>
+                    Account Type
+                  </h3>
+                  <h3>
+                    {accountHeading}
+                  </h3>
+                  <p className={css.faqLink}>
+                    <FormattedMessage id="ProfileSettingsPage.faqInfoLink" values={{ faqLink }} />
+                  </p>
+                </div>
+              }
               {profileSettingsForm}
             </div>
           </LayoutWrapperMain>

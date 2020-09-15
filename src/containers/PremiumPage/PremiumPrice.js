@@ -10,6 +10,7 @@ import { string } from 'prop-types';
 
 const PremiumPrice = props => {
     const { price, websiteLink } = props;
+    console.log(websiteLink);
     return (
         <div className={css.sectionPrice}>
             <h2 className={css.price}>

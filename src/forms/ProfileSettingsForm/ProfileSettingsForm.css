@@ -294,6 +294,25 @@
   }
 }
 
+.companyContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+
+  @media (--viewportMedium) {
+    margin-top: 24px;
+  }
+}
+
+.companyName {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.companyWebsite {
+  width: 100%;
+}
+
 .nameContainer {
   display: flex;
   justify-content: space-between;
@@ -319,6 +338,29 @@
   @media (--viewportMedium) {
     margin-top: 16px;
   }
+}
+
+.socialMediaContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 12px;
+
+  @media (--viewportMedium) {
+    margin-top: 24px;
+  }
+}
+
+.socialMediaField {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.socialMediaInput {
+  width: 90%;
 }
 
 .submitButton {

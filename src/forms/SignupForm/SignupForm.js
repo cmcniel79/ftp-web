@@ -85,7 +85,6 @@ const SignupFormComponent = props => (
         passwordMinLength,
         passwordMaxLength
       );
-      const boolRequired = validators.requiredBoolean('This field is required');
 
       // firstName
       const firstNameLabel = intl.formatMessage({
@@ -135,21 +134,18 @@ const SignupFormComponent = props => (
       const adultBool = document.getElementById("isAdult");
       if (adultBool) {
         adultBool.addEventListener('change', () => {
-          console.log(adultBool.value);
           showMinorsInfo = !adultBool.value;
         })
       };
-
-      console.log(showMinorsInfo);
 
       const minorsInfo = adultBool != null && adultBool.value == 'false' ?
         <div>
           <p className={css.minorsInfo}>
             From The People's Terms of Use require all account owners to be at least 18 years of age. Individuals under 
-            the age of 18 are considered minors on Etsy. Minors under age 13 are not allowed on Etsy.
+            the age of 18 are considered minors on From The People. Minors under age 13 are not allowed on From The People.
             <br/>
             <br/>
-            Minors under 18 and at least 13 years of age are permitted to use Etsy's services only if 
+            Minors under 18 and at least 13 years of age are permitted to use From The People's services only if 
             they have the appropriate permission and direct supervision of their parent or legal guardian 
             who is the owner of the account.
             <br/>

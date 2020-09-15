@@ -79,11 +79,13 @@ const PremiumUserCard = props => {
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
   const isCurrentUser =
     ensuredUser.id && ensuredCurrentUser.id && ensuredUser.id.uuid === ensuredCurrentUser.id.uuid;
-  const bio = ensuredUser.attributes.profile.bio;
-  const companyName = ensuredUser.attributes.profile.publicData.companyName ? 
-    ensuredUser.attributes.profile.publicData.companyName : "Urban Native Era";
-  const socialMedia = ensuredUser.attributes.profile.publicData.socialMedia ? 
-  ensuredUser.attributes.profile.publicData.socialMedia : null;
+  const { displayName, bio } = ensuredUser.attributes.profile;
+  const companyName = ensuredUser.attributes.profile.publicData.companyName ?
+    ensuredUser.attributes.profile.publicData.companyName : null;
+  const companyWebsite = ensuredUser.attributes.profile.publicData.companyWebsite ?
+    ensuredUser.attributes.profile.publicData.companyWebsite : null;
+  const socialMedia = ensuredUser.attributes.profile.publicData.socialMedia ?
+    ensuredUser.attributes.profile.publicData.socialMedia : null;
 
   const hasBio = !!bio;
   const classes = classNames(rootClassName || css.root, className);
@@ -100,13 +102,17 @@ const PremiumUserCard = props => {
     </span>
   );
 
-
-
   const links = ensuredUser.id ? (
     <p className={linkClasses}>
-      <ExternalLink className={css.link} href="https://cookiesandyou.com">
-        <FormattedMessage id="PremiumUserCard.websiteLink" />
-      </ExternalLink>
+      {companyWebsite ?
+        <ExternalLink className={css.link} href={companyWebsite}>
+          <FormattedMessage id="PremiumUserCard.websiteLink" />
+        </ExternalLink> 
+        :
+        <NamedLink className={css.link} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
+          <FormattedMessage id="PremiumUserCard.viewProfileLink" />
+        </NamedLink>
+        }
       {isCurrentUser ? editProfile : null}
     </p>
   ) : null;
@@ -114,11 +120,15 @@ const PremiumUserCard = props => {
   return (
     <div className={classes}>
       <div className={css.content}>
-        <AvatarLarge className={css.avatar} user={user} externalLink={"https://cookiesandyou.com"}/>
+        <AvatarLarge className={css.avatar} user={user} externalLink={companyWebsite} />
         <div className={css.info}>
           <div className={css.headingRow}>
             <h3 className={css.heading}>
-              <FormattedMessage id="PremiumUserCard.heading" values={{ name: companyName }} />
+              {companyName ?
+                <FormattedMessage id="PremiumUserCard.heading" values={{ name: companyName }} />
+                :
+                <FormattedMessage id="UserCard.heading" values={{ name: displayName }} />
+              }
             </h3>
           </div>
           {/* {hasBio ? <ExpandableBio className={css.desktopBio} bio={bio} /> : null} */}

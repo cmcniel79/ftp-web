@@ -71,6 +71,10 @@ export const ListingCardComponent = props => {
   const likedListings = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likedListings ?
     Object.values(currentUser.attributes.profile.privateData.likedListings) : [];
 
+  const externalLink = currentListing && currentListing.attributes.publicData && 
+    currentListing.attributes.publicData.websiteLink ? currentListing.attributes.publicData.websiteLink : null;
+  console.log(currentListing);
+
   let imagesAndLinks;
 
   switch (validAccountType) {
@@ -114,7 +118,7 @@ export const ListingCardComponent = props => {
       break;
     case "a":
       imagesAndLinks =
-      <ExternalLink href="">
+      <ExternalLink href={externalLink}>
         <LazyImage
           rootClassName={css.rootForImage}
           alt={title}
@@ -127,7 +131,7 @@ export const ListingCardComponent = props => {
       break;
       case "n":
         imagesAndLinks =
-        <ExternalLink href="">
+        <ExternalLink href={externalLink}>
           <LazyImage
             rootClassName={css.rootForImage}
             alt={title}

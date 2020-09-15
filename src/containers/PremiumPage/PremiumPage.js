@@ -399,6 +399,8 @@ export class PremiumPageComponent extends Component {
       publicData && publicData.region ? publicData.region : null;
     const style =
       publicData && publicData.style ? publicData.style : null;
+    const externalLink = 
+    publicData && publicData.websiteLink ? publicData.websiteLink : null;
 
     const authorTribeSection = authorTribe ? (
       <span>
@@ -478,7 +480,7 @@ export class PremiumPageComponent extends Component {
                     <PremiumRegionMaybe region={region} />
                     <PremiumStyleMaybe style={style} region={region} />
                   </div>
-                    <PremiumPrice price={formattedPrice} websiteLink="https://www.cookiesandyou.com/" />
+                  <PremiumPrice price={formattedPrice} websiteLink={externalLink} />
                 </div>
               </div>
             </div>

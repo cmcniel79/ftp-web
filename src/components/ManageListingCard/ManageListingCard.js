@@ -6,8 +6,6 @@ import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import classNames from 'classnames';
 import routeConfiguration from '../../routeConfiguration';
 import {
-  LINE_ITEM_NIGHT,
-  LINE_ITEM_DAY,
   LISTING_STATE_PENDING_APPROVAL,
   LISTING_STATE_CLOSED,
   LISTING_STATE_DRAFT,

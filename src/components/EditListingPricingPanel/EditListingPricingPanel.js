@@ -26,7 +26,8 @@ const EditListingPricingPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
-    userCountry
+    userCountry,
+    accountType
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
@@ -43,7 +44,6 @@ const EditListingPricingPanel = props => {
       new Money(publicData.internationalFee.amount, publicData.internationalFee.currency) : null;
 
   const initialValues = { price, shippingFee, internationalFee };
-  console.log(initialValues);
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -88,7 +88,6 @@ const EditListingPricingPanel = props => {
           publicData: publicData
         };
 
-        console.log(updatedValues);
         onSubmit(updatedValues);
       }}
       onChange={onChange}
@@ -99,6 +98,7 @@ const EditListingPricingPanel = props => {
       updateInProgress={updateInProgress}
       fetchErrors={errors}
       userCountry={userCountry}
+      accountType={accountType}
     />
   ) : (
       <div className={css.priceCurrencyInvalid}>

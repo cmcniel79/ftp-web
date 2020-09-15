@@ -5,7 +5,7 @@ import { Form as FinalForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import config from '../../config';
-import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
+import { propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
@@ -106,6 +106,14 @@ export const EditListingPricingFormComponent = props => (
         </div>
         : null;
 
+      const specialAccountInfo = (accountType == "n" || accountType == "a") ?
+        <div className={css.accountInfo}>
+          <p>You have either a Ad or Non-profit account and do not need to enter pricing information. Press the button below to
+          continue.
+        </p>
+        </div> : null;
+
+console.log(accountType);
       return (
         <Form onSubmit={handleSubmit} className={classes}>
           {updateListingError ? (
@@ -120,36 +128,41 @@ export const EditListingPricingFormComponent = props => (
           ) : null}
 
           <div className={css.columns}>
-            <div className={css.priceInputs}>
-              <FieldCurrencyInput
-                id="price"
-                name="price"
-                className={css.priceInput}
-                autoFocus
-                label={pricePerUnitMessage}
-                placeholder={pricePlaceholderMessage}
-                currencyConfig={config.currencyConfig}
-                validate={priceValidators}
-              />
-
-              <FieldCurrencyInput
-                id="shippingFee"
-                name="shippingFee"
-                className={css.priceInput}
-                label={shippingFeeMessage}
-                placeholder={shippingFeePlaceholderMessage}
-                currencyConfig={config.currencyConfig}
-              />
-
-              <FieldCurrencyInput
-                id="internationalFee"
-                name="internationalFee"
-                className={css.priceInput}
-                label={internationalFeeMessage}
-                placeholder={internationalFeePlaceholderMessage}
-                currencyConfig={config.currencyConfig}
-              />
-            </div>
+            {accountType != "n" && accountType != "a" &&
+              <div className={css.priceInputs}>
+                <FieldCurrencyInput
+                  id="price"
+                  name="price"
+                  className={css.priceInput}
+                  autoFocus
+                  label={pricePerUnitMessage}
+                  placeholder={pricePlaceholderMessage}
+                  currencyConfig={config.currencyConfig}
+                  validate={priceValidators}
+                />
+                {accountType != "p" ?
+                  <div className={css.shippingFees}>
+                    <FieldCurrencyInput
+                      id="shippingFee"
+                      name="shippingFee"
+                      className={css.priceInput}
+                      label={shippingFeeMessage}
+                      placeholder={shippingFeePlaceholderMessage}
+                      currencyConfig={config.currencyConfig}
+                    />
+                    <FieldCurrencyInput
+                      id="internationalFee"
+                      name="internationalFee"
+                      className={css.priceInput}
+                      label={internationalFeeMessage}
+                      placeholder={internationalFeePlaceholderMessage}
+                      currencyConfig={config.currencyConfig}
+                    />
+                  </div>
+                : null}
+              </div>
+            }
+            {specialAccountInfo}
             {internationalInstructions}
           </div>
           <Button

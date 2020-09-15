@@ -16,6 +16,12 @@
   }
 }
 
+.optionalHeader {
+  border-left: 5px solid;
+  border-left-color: var(--marketplaceColor); 
+  padding-left: 5px;
+}
+
 .custom {
   margin-bottom: 24px;
   @media (--viewportMedium) {
