@@ -4,6 +4,7 @@ import css from './ListingPage.css';
 const SectionHeading = props => {
   const {
     richTitle,
+    subTitle
   } = props;
 
 
@@ -12,6 +13,7 @@ const SectionHeading = props => {
       <div className={css.heading}>
         <h3 className={css.title}>{richTitle}</h3>
       </div>
+      {subTitle}
     </div>
   );
 };

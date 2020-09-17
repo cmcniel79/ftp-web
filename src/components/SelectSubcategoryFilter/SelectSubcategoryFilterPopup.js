@@ -53,7 +53,7 @@ class SelectSubcategoryFilterPopup extends Component {
     } = this.props;
 
     // const queryParamName = getQueryParamName(queryParamNames);
-    const queryParamName = "pub_subcategory";
+    const queryParamName = "pub_subCategory";
     const initialValue =
       initialValues && initialValues[queryParamName] ? initialValues[queryParamName] : null;
 

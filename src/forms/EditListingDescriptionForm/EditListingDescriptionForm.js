@@ -14,13 +14,13 @@ import arrayMutators from 'final-form-arrays';
 import css from './EditListingDescriptionForm.css';
 
 const TITLE_MAX_LENGTH = 60;
-var subcategories = [];
+var subCategories = [];
 var hasInitialized = false;
 
 function getSubcategories(categories, selectedCategory) {
   const keys = categories.map(s => s.key);
   const index = keys.indexOf(selectedCategory);
-  return (categories[index].subcategories);
+  return (categories[index].subCategories);
 }
 
 const EditListingDescriptionFormComponent = props => (
@@ -137,14 +137,14 @@ const EditListingDescriptionFormComponent = props => (
       // before any sub-categories show up in the field.
       const category = initialValues && initialValues.category ? initialValues.category : null;
       if (category && !hasInitialized) {
-        subcategories = getSubcategories(categories, category);
+        subCategories = getSubcategories(categories, category);
         hasInitialized = true;
       }
 
       const cat = document.getElementById('category');
       if (cat) {
         cat.addEventListener('change', () => {
-          subcategories = getSubcategories(categories, cat.value);
+          subCategories = getSubcategories(categories, cat.value);
         })
       }
 
@@ -188,15 +188,15 @@ const EditListingDescriptionFormComponent = props => (
               </FieldSelect>
               <FieldSelect
                 className={css.category}
-                name="subcategory"
-                id="subcategory"
+                name="subCategory"
+                id="subCategory"
                 label={subCategoryLabel}
                 validate={subCategoryRequired}
               >
                 {<option disabled value="">
                   {subCategoryPlaceholder}
                 </option>}
-                {subcategories.map(s => (
+                {subCategories.map(s => (
                   <option key={s.key} value={s.key}>
                     {s.label}
                   </option>

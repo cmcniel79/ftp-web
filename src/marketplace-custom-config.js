@@ -56,7 +56,7 @@ export const filters = [
     config: {
     options: [
       { key: 'jewelry', label: 'Jewelry',
-        subcategories: [
+        subCategories: [
           { key: 'necklaces', label: 'Necklaces'},
           { key: 'earrings', label: 'Earrings'},
           { key: 'rings', label: 'Rings'},
@@ -65,7 +65,7 @@ export const filters = [
         ]
       },
       { key: 'accessories', label: 'Accessories',
-        subcategories: [
+        subCategories: [
           { key: 'bags', label: 'Bags'},
           { key: 'belts', label: 'Belts'},
           { key: 'hair', label: 'Hair Accessories'},
@@ -77,7 +77,7 @@ export const filters = [
         ] 
       },
       { key: 'apparel', label: 'Apparel',
-        subcategories: [
+        subCategories: [
           { key: 'tops', label: 'Tops'},
           { key: 'bottoms', label: 'Bottoms'},
           { key: 'dresses', label: 'Dresses'},
@@ -85,13 +85,13 @@ export const filters = [
         ] 
       },
       { key: 'traditional', label: 'Traditional Assortments',
-        subcategories: [
+        subCategories: [
           { key: 'botanicals', label: 'Botanicals'},
           { key: 'regalia', label: 'Regalia'},
         ] 
       },
       { key: 'art', label: 'Art',
-        subcategories: [
+        subCategories: [
           { key: 'paintings', label: 'Paintings'},
           { key: 'beadwork', label: 'Beadwork'},
           { key: 'photo', label: 'Photography'},
@@ -102,19 +102,19 @@ export const filters = [
           { key: 'rugs', label: 'Rugs & Weaving'},
         ] },
       { key: 'beauty', label: 'Beauty Products',
-        subcategories: [
+        subCategories: [
           { key: 'skincare', label: 'Skincare'},
           { key: 'makeup', label: 'Makeup'},
         ]
        },
       { key: 'crafting', label: 'Crafting Supplies',
-        subcategories: [
+        subCategories: [
           { key: 'beading', label: 'Beading Supplies'},
           { key: 'jewelry', label: 'Jewelry Making'},
         ]
        },
       { key: 'other', label: 'Other',
-      subcategories: [
+      subCategories: [
         { key: 'other', label: 'No Subcategory'},
       ] 
     },  

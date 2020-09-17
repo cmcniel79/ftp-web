@@ -43,7 +43,7 @@ const EditListingDescriptionPanel = props => {
     );
 
   const category = publicData && publicData.category;
-  const subcategory = publicData && publicData.subcategory;
+  const subCategory = publicData && publicData.subCategory;
   const style = publicData && publicData.style;
   const region = publicData && publicData.region;
   const material = publicData && publicData.material;
@@ -56,14 +56,14 @@ const EditListingDescriptionPanel = props => {
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingDescriptionForm
         className={css.form}
-        initialValues={{ title, description, category, subcategory, style, region, material, customOrders, websiteLink }}
+        initialValues={{ title, description, category, subCategory, style, region, material, customOrders, websiteLink }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, category, subcategory, style, region, material, customOrders, websiteLink } = values;
+          const { title, description, category, subCategory, style, region, material, customOrders, websiteLink } = values;
           const customIsAvailable = customOrders ? 'available':'unavailable';
           const updateValues = {title: title.trim(),
           description,
-          publicData: {category, subcategory, style, region, material, customOrders: customIsAvailable, verifiedSeller, websiteLink},
+          publicData: {category, subCategory, style, region, material, customOrders: customIsAvailable, verifiedSeller, websiteLink},
         };
           onSubmit(updateValues);
         }}

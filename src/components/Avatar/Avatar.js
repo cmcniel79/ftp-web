@@ -98,7 +98,7 @@ export const AvatarComponent = props => {
           sizes={renderSizes}
         />
         {enrolled &&
-          <img className={css.verifiedImage} src={verifiedImage} alt="enrolled tag"/>
+          <img className={css.verifiedImage} src={verifiedImage} alt="verified tag"/>
         }
       </NamedLink>
 

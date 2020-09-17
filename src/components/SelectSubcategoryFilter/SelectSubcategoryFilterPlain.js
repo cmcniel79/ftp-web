@@ -49,7 +49,7 @@ class SelectSubcategoryFilterPlain extends Component {
     } = this.props;
 
     console.log(options);
-    const queryParamName = "pub_subcategory";
+    const queryParamName = "pub_subCategory";
     const initialValue =
       initialValues && initialValues[queryParamName] ? initialValues[queryParamName] : null;
     const labelClass = initialValue ? css.filterLabelSelected : css.filterLabel;

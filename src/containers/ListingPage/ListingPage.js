@@ -326,6 +326,9 @@ export class ListingPageComponent extends Component {
     // banned or deleted display names for the function
     const authorDisplayName = userDisplayNameAsString(ensuredAuthor, '');
 
+    const authorTribe = ensuredAuthor.attributes.profile.publicData && ensuredAuthor.attributes.profile.publicData.tribe ?
+      ensuredAuthor.attributes.profile.publicData.tribe : null;
+
     const authorCountry = publicData && publicData.country ?
       publicData.country : null;
     const userCountry = currentUser && currentUser.attributes.profile.protectedData &&
@@ -370,20 +373,27 @@ export class ListingPageComponent extends Component {
 
     const materialOptions = findOptionsForSelectFilter('material', filterConfig);
     const categoryOptions = findOptionsForSelectFilter('categories', filterConfig);
-    const category =
-      publicData && publicData.category ? (
+    const headingSubtitle =
+      publicData && publicData.category && publicData.subCategory ? (
         <span>
           {categoryLabel(categoryOptions, publicData.category)}
           <span className={css.separator}>•</span>
+          {publicData.subCategory}
+          {authorTribe && 
+          <div>
+          <span className={css.separator}>•</span>
+          {authorTribe}
+          </div>
+          }
         </span>
       ) : null;
 
     const material =
-    publicData && publicData.material ? publicData.material : null;
+      publicData && publicData.material ? publicData.material : null;
     const region =
       publicData && publicData.region ? publicData.region : null;
     const style =
-      publicData && publicData.style ? publicData.style : null;
+      publicData && publicData.style ? publicData.style : null; 
 
     return (
       <Page
@@ -412,7 +422,7 @@ export class ListingPageComponent extends Component {
                     priceTitle={priceTitle}
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
-                    category={category}
+                    subTitle={headingSubtitle}
                   // hostLink={hostLink}
                   // showContactUser={showContactUser}
                   // onContactUser={this.onContactUser}
@@ -433,7 +443,7 @@ export class ListingPageComponent extends Component {
                     handleViewPhotosClick={handleViewPhotosClick}
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
-                  <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
+                  <SectionReviews className={css.sectionImages} reviews={reviews} fetchReviewsError={fetchReviewsError} />
                 </div>
                 <div className={css.bookingPanel}>
                   <SectionSellerMaybe
@@ -451,12 +461,14 @@ export class ListingPageComponent extends Component {
                   />
                   <SectionDescriptionMaybe description={description} />
                   <SectionMaterialsMaybe options={materialOptions} material={material} />
+                  { (region || style) && 
                   <div className={css.regionAndStyle}>
                     <SectionRegionMaybe region={region} />
                     <SectionStyleMaybe style={style} />
                   </div>
+                  }
                   <BookingPanel
-                    // className={css.bookingPanel}
+                    className={css.bookingBreakdown}
                     listing={currentListing}
                     isOwnListing={isOwnListing}
                     unitType={unitType}
