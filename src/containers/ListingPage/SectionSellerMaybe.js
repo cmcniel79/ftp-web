@@ -18,36 +18,48 @@ const SectionSellerMaybe = props => {
     onSubmitEnquiry,
     currentUser,
     onManageDisableScrolling,
+    isVerified,
+    isPremium
   } = props;
 
   if (!listing.author) {
     return null;
   }
 
+  const sellerHeading = isPremium ?
+    <h2 className={css.premiumSellerHeading}>
+      <FormattedMessage id="ListingPage.premiumPartnerHeading" />
+    </h2>
+    :
+    <h2 className={css.yourSellerHeading}>
+      <FormattedMessage id="ListingPage.yourSellerHeading" />
+    </h2>;
+
   return (
     <div id="seller" className={css.sectionSeller}>
-      <h2 className={css.yourSellerHeading}>
-        <FormattedMessage id="ListingPage.yourSellerHeading" />
-      </h2>
-      <UserCard user={listing.author} currentUser={currentUser} onContactUser={onContactUser} />
-      <Modal
-        id="ListingPage.enquiry"
-        contentClassName={css.enquiryModalContent}
-        isOpen={isEnquiryModalOpen}
-        onClose={onCloseEnquiryModal}
-        usePortal
-        onManageDisableScrolling={onManageDisableScrolling}
-      >
-        <EnquiryForm
-          className={css.enquiryForm}
-          submitButtonWrapperClassName={css.enquirySubmitButtonWrapper}
-          listingTitle={title}
-          authorDisplayName={authorDisplayName}
-          sendEnquiryError={sendEnquiryError}
-          onSubmit={onSubmitEnquiry}
-          inProgress={sendEnquiryInProgress}
-        />
-      </Modal>
+      {sellerHeading}
+      <UserCard user={listing.author} currentUser={currentUser} onContactUser={onContactUser}
+        isVerified={isVerified} isPremium={isPremium} />
+      {!isPremium &&
+        <Modal
+          id="ListingPage.enquiry"
+          contentClassName={css.enquiryModalContent}
+          isOpen={isEnquiryModalOpen}
+          onClose={onCloseEnquiryModal}
+          usePortal
+          onManageDisableScrolling={onManageDisableScrolling}
+        >
+          <EnquiryForm
+            className={css.enquiryForm}
+            submitButtonWrapperClassName={css.enquirySubmitButtonWrapper}
+            listingTitle={title}
+            authorDisplayName={authorDisplayName}
+            sendEnquiryError={sendEnquiryError}
+            onSubmit={onSubmitEnquiry}
+            inProgress={sendEnquiryInProgress}
+          />
+        </Modal>
+      }
     </div>
   );
 };

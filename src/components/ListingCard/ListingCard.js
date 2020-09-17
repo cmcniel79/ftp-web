@@ -140,7 +140,7 @@ export const ListingCardComponent = props => {
       break;
     case "p":
       imagesAndLinks =
-        <NamedLink name="PremiumPage" params={{ id, slug }}>
+        <NamedLink name="ListingPage" params={{ id, slug }}>
           <LazyImage
             rootClassName={css.rootForImage}
             alt={title}
@@ -202,12 +202,7 @@ export const ListingCardComponent = props => {
         </div>
       </div>
       <div className={css.cardText}>
-        {accountType === "p" ? (
-          <NamedLink className={css.link} name="PremiumPage" params={{ id, slug }}>
-            {optionalText}
-            {title}
-          </NamedLink>
-        ) : accountType === "a" || accountType === "n" ? (
+        { accountType === "a" || accountType === "n" ? (
           <ExternalLink className={css.adLink} href={externalLink}>
             {optionalText}
             {title}

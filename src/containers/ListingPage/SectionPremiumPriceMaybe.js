@@ -5,12 +5,11 @@ import {
     ExternalLink
 } from '../../components';
 
-import css from './PremiumPage.css';
+import css from './ListingPage.css';
 import { string } from 'prop-types';
 
-const PremiumPrice = props => {
+const SectionPremiumPriceMaybe = props => {
     const { price, websiteLink } = props;
-    console.log(websiteLink);
     return (
         <div className={css.sectionPrice}>
             <h2 className={css.price}>
@@ -20,18 +19,18 @@ const PremiumPrice = props => {
                 <Button
                     className={css.buyButton}
                 >
-                    <FormattedMessage id="PremiumPage.buyButtonMessage" />
+                    <FormattedMessage id="ListingPage.buyButtonMessage" />
                 </Button>
             </ExternalLink>
         </div>
     )
 };
 
-PremiumPrice.defaultProps = { price: null, websiteLink: null };
+SectionPremiumPriceMaybe.defaultProps = { price: null, websiteLink: null };
 
-PremiumPrice.propTypes = {
+SectionPremiumPriceMaybe.propTypes = {
   price: string,
   websiteLink: string,
 };
 
-export default PremiumPrice;
+export default SectionPremiumPriceMaybe;

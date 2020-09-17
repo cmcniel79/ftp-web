@@ -53,8 +53,9 @@ import SectionDescriptionMaybe from './SectionDescriptionMaybe';
 import SectionMaterialsMaybe from './SectionMaterialsMaybe';
 import SectionReviews from './SectionReviews';
 import SectionSellerMaybe from './SectionSellerMaybe';
-import SectionRegionMaybe from './SectionRegionMaybe';
-import SectionStyleMaybe from './SectionStyleMaybe';
+import SectionSizesMaybe from './SectionSizesMaybe';
+import SectionCustomOrdersMaybe from './SectionCustomOrdersMaybe';
+import SectionPremiumPriceMaybe from './SectionPremiumPriceMaybe';
 import css from './ListingPage.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -77,6 +78,13 @@ const priceData = (price, intl) => {
 const categoryLabel = (categories, key) => {
   const cat = categories.find(c => c.key === key);
   return cat ? cat.label : key;
+};
+
+const subCategoryLabel = (categories, category, subCategoryKey) => {
+  const cat = categories.find(c => c.key === category);
+  const sub = cat.subCategories ? cat.subCategories.find(s => s.key === subCategoryKey) :
+    null;
+  return sub && sub.key !== 'other' ? sub.label : null;
 };
 
 export class ListingPageComponent extends Component {
@@ -328,6 +336,10 @@ export class ListingPageComponent extends Component {
 
     const authorTribe = ensuredAuthor.attributes.profile.publicData && ensuredAuthor.attributes.profile.publicData.tribe ?
       ensuredAuthor.attributes.profile.publicData.tribe : null;
+    const accountType = ensuredAuthor.attributes.profile.publicData && ensuredAuthor.attributes.profile.publicData.account ?
+      ensuredAuthor.attributes.profile.publicData.account : null;
+    const isPremium = accountType && accountType === "p" ? true : false;
+    const isVerified = accountType && accountType === "e" ? true : false;
 
     const authorCountry = publicData && publicData.country ?
       publicData.country : null;
@@ -372,28 +384,30 @@ export class ListingPageComponent extends Component {
     );
 
     const materialOptions = findOptionsForSelectFilter('material', filterConfig);
-    const categoryOptions = findOptionsForSelectFilter('categories', filterConfig);
+    const categoryOptions = findOptionsForSelectFilter('category', filterConfig);
     const headingSubtitle =
       publicData && publicData.category && publicData.subCategory ? (
-        <span>
+        <span className={css.headingSubtitle}>
           {categoryLabel(categoryOptions, publicData.category)}
           <span className={css.separator}>•</span>
-          {publicData.subCategory}
-          {authorTribe && 
-          <div>
-          <span className={css.separator}>•</span>
-          {authorTribe}
-          </div>
+          {subCategoryLabel(categoryOptions, publicData.category, publicData.subCategory)}
+          {authorTribe &&
+            <span className={css.separator}>•</span>
+          }
+          {authorTribe &&
+            authorTribe
           }
         </span>
       ) : null;
 
     const material =
       publicData && publicData.material ? publicData.material : null;
-    const region =
-      publicData && publicData.region ? publicData.region : null;
-    const style =
-      publicData && publicData.style ? publicData.style : null; 
+    const sizes =
+      publicData && publicData.sizes ? publicData.sizes : null;
+    const customOrders =
+      publicData && publicData.customOrders ? publicData.customOrders : null;
+    const externalLink =
+      isPremium && publicData && publicData.websiteLink ? publicData.websiteLink : null;
 
     return (
       <Page
@@ -423,9 +437,6 @@ export class ListingPageComponent extends Component {
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
                     subTitle={headingSubtitle}
-                  // hostLink={hostLink}
-                  // showContactUser={showContactUser}
-                  // onContactUser={this.onContactUser}
                   />
                   <SectionImages
                     className={css.sectionImages}
@@ -443,7 +454,9 @@ export class ListingPageComponent extends Component {
                     handleViewPhotosClick={handleViewPhotosClick}
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
+                  {!isPremium &&
                   <SectionReviews className={css.sectionImages} reviews={reviews} fetchReviewsError={fetchReviewsError} />
+                  }
                 </div>
                 <div className={css.bookingPanel}>
                   <SectionSellerMaybe
@@ -458,33 +471,35 @@ export class ListingPageComponent extends Component {
                     onSubmitEnquiry={this.onSubmitEnquiry}
                     currentUser={currentUser}
                     onManageDisableScrolling={onManageDisableScrolling}
+                    isVerified={isVerified}
+                    isPremium={isPremium}
                   />
                   <SectionDescriptionMaybe description={description} />
+                  <SectionCustomOrdersMaybe customOrders={customOrders} />
                   <SectionMaterialsMaybe options={materialOptions} material={material} />
-                  { (region || style) && 
-                  <div className={css.regionAndStyle}>
-                    <SectionRegionMaybe region={region} />
-                    <SectionStyleMaybe style={style} />
-                  </div>
+                  <SectionSizesMaybe sizes={sizes} />
+                  {!isPremium ?
+                    <BookingPanel
+                      className={css.bookingBreakdown}
+                      listing={currentListing}
+                      isOwnListing={isOwnListing}
+                      unitType={unitType}
+                      onSubmit={handleBookingSubmit}
+                      title={bookingTitle}
+                      subTitle={bookingSubTitle}
+                      authorDisplayName={authorDisplayName}
+                      onManageDisableScrolling={onManageDisableScrolling}
+                      timeSlots={timeSlots}
+                      fetchTimeSlotsError={fetchTimeSlotsError}
+                      onFetchTransactionLineItems={onFetchTransactionLineItems}
+                      lineItems={lineItems}
+                      fetchLineItemsInProgress={fetchLineItemsInProgress}
+                      fetchLineItemsError={fetchLineItemsError}
+                      isDomesticOrder={isDomesticOrder}
+                    />
+                    :
+                    <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={externalLink} />
                   }
-                  <BookingPanel
-                    className={css.bookingBreakdown}
-                    listing={currentListing}
-                    isOwnListing={isOwnListing}
-                    unitType={unitType}
-                    onSubmit={handleBookingSubmit}
-                    title={bookingTitle}
-                    subTitle={bookingSubTitle}
-                    authorDisplayName={authorDisplayName}
-                    onManageDisableScrolling={onManageDisableScrolling}
-                    timeSlots={timeSlots}
-                    fetchTimeSlotsError={fetchTimeSlotsError}
-                    onFetchTransactionLineItems={onFetchTransactionLineItems}
-                    lineItems={lineItems}
-                    fetchLineItemsInProgress={fetchLineItemsInProgress}
-                    fetchLineItemsError={fetchLineItemsError}
-                    isDomesticOrder={isDomesticOrder}
-                  />
                 </div>
               </div>
             </div>

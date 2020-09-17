@@ -153,7 +153,6 @@ export { default as StripeConnectAccountStatusBox } from './StripeConnectAccount
 export { default as StripePaymentAddress } from './StripePaymentAddress/StripePaymentAddress';
 export { default as UserCard } from './UserCard/UserCard';
 export { default as UserSocialMedia } from './UserSocialMedia/UserSocialMedia';
-export { default as PremiumUserCard } from './PremiumUserCard/PremiumUserCard';
 
 //////////////////////////////////////////////
 // Page sections and modal content wrappers //

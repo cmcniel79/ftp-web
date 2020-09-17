@@ -18,7 +18,6 @@ import {
   PasswordResetPage,
   StripePayoutPage,
   PaymentMethodsPage,
-  PremiumPage,
   PrivacyPolicyPage,
   ProfilePage,
   ProfileSettingsPage,
@@ -101,12 +100,6 @@ const routeConfiguration = () => {
       name: 'ListingPage',
       component: props => <ListingPage {...props} />,
       loadData: ListingPage.loadData,
-    },
-    {
-      path: '/l/:slug/:id/premium',
-      name: 'PremiumPage',
-      component: props => <PremiumPage {...props} />,
-      loadData: PremiumPage.loadData,
     },
     {
       path: '/l/:slug/:id/checkout',

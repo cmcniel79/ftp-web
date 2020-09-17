@@ -3,7 +3,7 @@ import { string, func, oneOfType } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import truncate from 'lodash/truncate';
 import classNames from 'classnames';
-import { AvatarLarge, NamedLink, InlineTextButton, UserSocialMedia } from '../../components';
+import { AvatarLarge, NamedLink, InlineTextButton, UserSocialMedia, ExternalLink } from '../../components';
 import { ensureUser, ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
 
@@ -24,7 +24,7 @@ const truncated = s => {
     // This ensures that the final text doesn't get cut in the middle
     // of a word.
     separator: /\s|,|\.|:|;/,
-    omission: '…',
+    omission: '',
   });
 };
 
@@ -71,7 +71,7 @@ ExpandableBio.propTypes = {
 };
 
 const UserCard = props => {
-  const { rootClassName, className, user, currentUser, onContactUser } = props;
+  const { rootClassName, className, user, currentUser, onContactUser, isVerified, isPremium } = props;
 
   const userIsCurrentUser = user && user.type === 'currentUser';
   const ensuredUser = userIsCurrentUser ? ensureCurrentUser(user) : ensureUser(user);
@@ -80,9 +80,10 @@ const UserCard = props => {
   const isCurrentUser =
     ensuredUser.id && ensuredCurrentUser.id && ensuredUser.id.uuid === ensuredCurrentUser.id.uuid;
   const { displayName, bio } = ensuredUser.attributes.profile;
-  const enrolled = ensuredUser.attributes.profile.publicData.account === 'e' ? true : false;
-  const tribe = ensuredUser.attributes.profile.publicData.tribe ?
-    ensuredUser.attributes.profile.publicData.tribe : null;
+  const companyName = isPremium && ensuredUser.attributes.profile.publicData.companyName ?
+    ensuredUser.attributes.profile.publicData.companyName : null;
+  const companyWebsite = isPremium && ensuredUser.attributes.profile.publicData.companyWebsite ?
+    ensuredUser.attributes.profile.publicData.companyWebsite : null;
   const socialMedia = ensuredUser.attributes.profile.publicData.socialMedia ?
     ensuredUser.attributes.profile.publicData.socialMedia : null;
 
@@ -98,11 +99,12 @@ const UserCard = props => {
 
   const separator = isCurrentUser ? null : <span className={css.linkSeparator}>•</span>;
 
-  const contact = (
+  const contact = !isPremium ? (
     <InlineTextButton rootClassName={css.contact} onClick={handleContactUserClick}>
       <FormattedMessage id="UserCard.contactUser" />
     </InlineTextButton>
-  );
+  )
+    : null;
 
   const editProfile = (
     <span className={css.editProfile}>
@@ -115,35 +117,49 @@ const UserCard = props => {
 
   const links = ensuredUser.id ? (
     <p className={linkClasses}>
-      <NamedLink className={css.link} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
-        <FormattedMessage id="UserCard.viewProfileLink" />
-      </NamedLink>
+      {isPremium && companyWebsite ?
+        <ExternalLink className={css.link} href={companyWebsite}>
+          <FormattedMessage id="UserCard.websiteLink" />
+        </ExternalLink>
+        :
+        <NamedLink className={css.link} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
+          <FormattedMessage id="UserCard.viewProfileLink" />
+        </NamedLink>
+      }
       {separator}
       {isCurrentUser ? editProfile : contact}
     </p>
   ) : null;
 
-  const tribeSection = tribe ? (
-        <p className={css.tribeText}>Tribe: {tribe}</p>
-  ) : null;
+  const avatarClassNames = isPremium ? css.premiumAvatar : css.avatar;
 
   return (
     <div className={classes}>
       <div className={css.content}>
-        <AvatarLarge className={css.avatar} user={user} enrolled={enrolled}/>
+        <AvatarLarge className={avatarClassNames} user={user} enrolled={isVerified} />
         <div className={css.info}>
           <div className={css.headingRow}>
             <h3 className={css.heading}>
-              <FormattedMessage id="UserCard.heading" values={{ name: displayName }} />
+              {isPremium && companyName ?
+                <FormattedMessage id="UserCard.heading" values={{ name: companyName }} />
+                :
+                <FormattedMessage id="UserCard.heading" values={{ name: displayName }} />
+              }
             </h3>
           </div>
           <UserSocialMedia socialMedia={socialMedia} />
           {links}
         </div>
       </div>
-      {tribeSection}
-      {hasBio ? <ExpandableBio className={css.desktopBio} bio={bio} /> : null}
-      {hasBio ? <ExpandableBio className={css.mobileBio} bio={bio} /> : null}
+      {isPremium && hasBio &&
+      <div>
+        <h2 className={css.bioTitle}>
+        <FormattedMessage id="UserCard.bioTitle"/>
+        </h2>
+        <ExpandableBio className={css.desktopBio} bio={bio} />
+        <ExpandableBio className={css.mobileBio} bio={bio} />
+      </div>
+      }
     </div>
   );
 };

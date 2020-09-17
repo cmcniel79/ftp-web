@@ -247,12 +247,20 @@ const EditListingDescriptionFormComponent = props => (
             </div>
           </div>
           <div className={css.custom}>
+          <h2 className={css.checkTitle}>Available Sizes</h2>
+          <FieldTextInput
+            id="sizes"
+            name="sizes"
+            type="text"
+            label="What sizes are available for purchase?"
+            placeholder="eg. S, M, L, XL..."
+            maxLength={TITLE_MAX_LENGTH}
+          />
             <h2 className={css.checkTitle}>Custom Orders</h2>
             <FieldBoolean
               id="customOrders"
               name="customOrders"
               label="Are custom orders available for this listing?"
-              placeholder="Choose yes or no"
             />
           </div>
         </div>

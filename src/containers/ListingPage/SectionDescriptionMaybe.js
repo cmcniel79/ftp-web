@@ -10,7 +10,7 @@ const SectionDescriptionMaybe = props => {
   const { description } = props;
   return description ? (
     <div className={css.sectionDescription}>
-      <h2 className={css.descriptionTitle}>
+      <h2 className={css.featuresTitle}>
         <FormattedMessage id="ListingPage.descriptionTitle" />
       </h2>
       <p className={css.description}>

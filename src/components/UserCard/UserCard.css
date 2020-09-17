@@ -11,6 +11,18 @@
   margin-right: 36px;
 }
 
+.premiumAvatar {
+  flex-shrink: 0;
+  margin-right: 25px;
+  width: 120px;
+  height: 120px;
+
+  @media (--viewportMedium) {
+    width: 150px;
+    height: 150px;
+  }
+}
+
 .info {
   flex: 1;
 }
@@ -38,9 +50,22 @@
   white-space: pre-line;
   margin: 18px 0 0 0;
   transition: all 1s ease-in;
+  font-size: 20px;
+  line-height: 32px;
+  letter-spacing: -0.1px;
   @apply --marketplaceH4FontStyles;
   @media (--viewportMedium) {
     margin: 18px 0 0 0;
+  }
+}
+
+.bioTitle {
+  /* Font */
+  @apply --marketplaceH3FontStyles;
+  color: var(--matterColorAnti);
+  margin-top: 10px;
+  @media (--viewportMedium) {
+    margin-top: 18px;
   }
 }
 

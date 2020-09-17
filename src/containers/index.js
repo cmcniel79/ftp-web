@@ -16,7 +16,6 @@ export { default as PasswordRecoveryPage } from './PasswordRecoveryPage/Password
 export { default as PasswordResetPage } from './PasswordResetPage/PasswordResetPage';
 export { default as PaymentMethodsPage } from './PaymentMethodsPage/PaymentMethodsPage';
 export { default as StripePayoutPage } from './StripePayoutPage/StripePayoutPage'; // this line didnt end in a ;, why would that be
-export { default as PremiumPage } from './PremiumPage/PremiumPage';
 export { default as PrivacyPolicyPage } from './PrivacyPolicyPage/PrivacyPolicyPage';
 export { default as ProfilePage } from './ProfilePage/ProfilePage';
 export { default as ProfileSettingsPage } from './ProfileSettingsPage/ProfileSettingsPage';

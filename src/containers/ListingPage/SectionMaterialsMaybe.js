@@ -4,15 +4,15 @@ import { PropertyGroup } from '../../components';
 
 import css from './ListingPage.css';
 
-const SectionFeaturesMaybe = props => {
+const SectionMaterialsMaybe = props => {
   const { options, material } = props;
-  if (!material) {
+  if (!material || material.length === 0) {
     return null;
   }
   return (
-    <div className={css.sectionFeatures}>
+    <div className={css.sectionMaterial}>
       <h2 className={css.featuresTitle}>
-        <FormattedMessage id="ListingPage.featuresTitle" />
+        <FormattedMessage id="ListingPage.materialsTitle" />
       </h2>
       <PropertyGroup
         id="ListingPage.material"
@@ -24,4 +24,10 @@ const SectionFeaturesMaybe = props => {
   );
 };
 
-export default SectionFeaturesMaybe;
+SectionMaterialsMaybe.defaultProps = { material: null };
+
+SectionMaterialsMaybe.propTypes = {
+  Sizes: []
+};
+
+export default SectionMaterialsMaybe;
