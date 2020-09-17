@@ -45,7 +45,7 @@ export const LandingPageComponent = props => {
   const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
 
   // Only want to show featured listings if we have 6
-  const hasListings = props.listings && props.listings.length == 6;
+  const hasListings = props.listings && props.listings.length === 6;
 
   return (
     <Page

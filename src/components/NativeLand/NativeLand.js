@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { userLocation } from '../../util/maps';
 import css from './NativeLand.css';
-import { func } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 
 const getQueryParamName = queryParamNames => {
@@ -41,7 +39,8 @@ class NativeLand extends Component {
         </h2>
         {tribes.map(t => {
           return (
-            <button className={t.properties.Slug == initialValue[queryParamName] ?
+            <button className=
+            { t.properties.Slug === initialValue[queryParamName] ?
               css.buttonSelected : css.button
             }
               key={t.properties.Name}

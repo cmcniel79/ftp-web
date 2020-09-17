@@ -30,6 +30,20 @@
     /* Remove default margins from font */
     margin-top: 0;
     margin-bottom: 0;
+    font-size: 16px;
+    line-height: 22px;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.adLink {
+  @apply --marketplaceH4FontStyles;
+  color: var(--matterColor);
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  line-height: 22px;
   &:hover {
     text-decoration: none;
   }
@@ -41,6 +55,7 @@
   width: 100%;
   position: relative;
   transition: var(--transitionStyleButton);
+  margin-bottom: 10px;;
   &:hover {
     transform: scale(1.02);
     box-shadow: var(--boxShadowListingCard);
@@ -67,11 +82,19 @@
   border-radius: var(--borderRadius);
 }
 
-.info {
+.cardText {
   /* Layout */
   display: flex;
   flex-direction: row;
-  padding: 16px 0 2px 0;
+  padding: 0;
+}
+
+.optionalText {
+
+}
+
+.categoryAndTribe {
+  text-transform: capitalize;
 }
 
 .premiumTag {
@@ -118,7 +141,7 @@
   position: absolute;
   top: 5px;
   right: 5px;
-  width: 40px;
+  width: 33px;
 }
 
 .ratings {
@@ -135,25 +158,15 @@
   }
 }
 
-.price {
-  /* Layout */
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  margin-right: 18px;
-}
-
 .priceValue {
   /* Font */
   color: var(--marketplaceColor);
   @apply --marketplaceH4FontStyles;
   /* margin: auto; */
   /* Remove default margins from font */
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-left: 0;
-  margin-right: 5px;
+  font-size: 16px;
+  line-height: 22px;
+  margin: 0;
   @media (--viewportMedium) {
     margin-top: 0;
     margin-bottom: 0;

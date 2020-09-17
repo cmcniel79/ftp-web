@@ -11,10 +11,6 @@ import {
   LINE_ITEM_CUSTOMER_COMMISSION,
   LINE_ITEM_PROVIDER_COMMISSION,
 } from '../../util/types';
-
-// import LineItemBookingPeriod from './LineItemBookingPeriod';
-import LineItemBasePriceMaybe from './LineItemBasePriceMaybe';
-import LineItemUnitsMaybe from './LineItemUnitsMaybe';
 import LineItemUnitPriceMaybe from './LineItemUnitPriceMaybe';
 import LineItemSubTotalMaybe from './LineItemSubTotalMaybe';
 import LineItemCustomerCommissionMaybe from './LineItemCustomerCommissionMaybe';
@@ -34,9 +30,7 @@ export const BookingBreakdownComponent = props => {
     userRole,
     unitType,
     transaction,
-    booking,
     intl,
-    dateType,
   } = props;
 
   const isCustomer = userRole === 'customer';

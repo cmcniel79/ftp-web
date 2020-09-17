@@ -12,7 +12,6 @@ import config from '../../config';
 import css from './SignupForm.css';
 
 const KEY_CODE_ENTER = 13;
-var showMinorsInfo = null;
 
 const SignupFormComponent = props => (
   <FinalForm
@@ -132,13 +131,7 @@ const SignupFormComponent = props => (
       const countryCodes = getCountryCodes(config.locale);
 
       const adultBool = document.getElementById("isAdult");
-      if (adultBool) {
-        adultBool.addEventListener('change', () => {
-          showMinorsInfo = !adultBool.value;
-        })
-      };
-
-      const minorsInfo = adultBool != null && adultBool.value == 'false' ?
+      const minorsInfo = adultBool != null && adultBool.value === 'false' ?
         <div>
           <p className={css.minorsInfo}>
             From The People's Terms of Use require all account owners to be at least 18 years of age. Individuals under 

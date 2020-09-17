@@ -106,7 +106,7 @@ export const EditListingPricingFormComponent = props => (
         </div>
         : null;
 
-      const specialAccountInfo = (accountType == "n" || accountType == "a") ?
+      const specialAccountInfo = (accountType === "n" || accountType === "a") ?
         <div className={css.accountInfo}>
           <p>You have either a Ad or Non-profit account and do not need to enter pricing information. Press the button below to
           continue.
@@ -128,7 +128,7 @@ console.log(accountType);
           ) : null}
 
           <div className={css.columns}>
-            {accountType != "n" && accountType != "a" &&
+            {accountType !== "n" && accountType !== "a" &&
               <div className={css.priceInputs}>
                 <FieldCurrencyInput
                   id="price"
@@ -140,7 +140,7 @@ console.log(accountType);
                   currencyConfig={config.currencyConfig}
                   validate={priceValidators}
                 />
-                {accountType != "p" ?
+                {accountType !== "p" ?
                   <div className={css.shippingFees}>
                     <FieldCurrencyInput
                       id="shippingFee"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, bool, func, shape, string } from 'prop-types';
+import { bool, func, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
@@ -13,7 +13,7 @@ import arrayMutators from 'final-form-arrays';
 
 import css from './EditListingDescriptionForm.css';
 
-const TITLE_MAX_LENGTH = 46;
+const TITLE_MAX_LENGTH = 60;
 var subcategories = [];
 var hasInitialized = false;
 
@@ -151,7 +151,7 @@ const EditListingDescriptionFormComponent = props => (
       // Special account users need to provide a link for their items. These can be either ad accounts,
       // non-profit accounts, or premium account users. The link will be used in the ListingCard componenent.
       // Use accountType prop to check which type of account they have.
-      const websiteLink = accountType && (accountType == "p" || accountType == "a" || accountType == "n") ?
+      const websiteLink = accountType && (accountType === "p" || accountType === "a" || accountType === "n") ?
         <FieldTextInput
           id="websiteLink"
           name="websiteLink"
@@ -166,7 +166,7 @@ const EditListingDescriptionFormComponent = props => (
       // Ad account and non-profit account users are not selling physical products and do not need to 
       // fill in the optional fields category. They will not even have a listing page.
       // Use accountType prop to check which type of account they have. "n" for non-profits and "a" for ad accounts.
-      const physicalItemFields = (accountType != "a" && accountType != "n") ?
+      const physicalItemFields = (accountType !== "a" && accountType !== "n") ?
         <div className={css.physicalItemFields}>
           <div className={css.midSection}>
             <div className={css.categories}>

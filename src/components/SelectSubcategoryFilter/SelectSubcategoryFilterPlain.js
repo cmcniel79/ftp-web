@@ -5,10 +5,6 @@ import { FormattedMessage } from '../../util/reactIntl';
 
 import css from './SelectSubcategoryFilterPlain.css';
 
-const getQueryParamName = queryParamNames => {
-  return Array.isArray(queryParamNames) ? queryParamNames[0] : queryParamNames;
-};
-
 class SelectSubcategoryFilterPlain extends Component {
   constructor(props) {
     super(props);
@@ -30,8 +26,8 @@ class SelectSubcategoryFilterPlain extends Component {
   }
 
   selectCategory(option) {
-    const sub = option.key != "other" ? option.subCategories : null;
-    if (sub != null) {
+    const sub = option.key !== "other" ? option.subCategories : null;
+    if (sub !== null) {
       this.setState({ subCategory: sub });
       this.setState({ categorySelected: true });
     }
@@ -47,7 +43,6 @@ class SelectSubcategoryFilterPlain extends Component {
       className,
       label,
       options,
-      queryParamNames,
       initialValues,
       twoColumns,
       useBullets,

@@ -1,7 +1,5 @@
 @import '../../marketplace.css';
-
-.root {
-}
+.root {}
 
 .content {
   display: flex;
@@ -20,24 +18,27 @@
 .heading {
   @apply --marketplaceH2FontStyles;
   margin: 20px 0 0 0;
-
   @media (--viewportMedium) {
     margin: 0 0 0 0;
   }
+}
+
+.tribeText {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .link {
   white-space: nowrap;
 }
 
-.mobileBio,
-.desktopBio {
+.mobileBio, .desktopBio {
   /* Preserve newlines, but collapse other whitespace */
   white-space: pre-line;
   margin: 18px 0 0 0;
   transition: all 1s ease-in;
   @apply --marketplaceH4FontStyles;
-
   @media (--viewportMedium) {
     margin: 18px 0 0 0;
   }
@@ -51,7 +52,6 @@
 
 .desktopBio {
   display: none;
-
   @media (--viewportMedium) {
     margin-top: 16px;
     display: block;
@@ -67,7 +67,6 @@
 .links {
   @apply --marketplaceH4FontStyles;
   margin-top: 13px;
-
   @media (--viewportMedium) {
     margin: 16px 0 0 0;
   }
@@ -76,7 +75,7 @@
 .withBioMissingAbove {
   @media (--viewportMedium) {
     /* Fix baseline alignment if bio is missing from above */
-    margin-top: 16px;
+    margin-top: 10px;
   }
 }
 
@@ -88,7 +87,6 @@
 .headingRow {
   display: flex;
   flex-direction: column;
-
   @media (--viewportMedium) {
     flex-direction: row;
     justify-content: space-between;
@@ -101,7 +99,6 @@
   display: none;
   margin-bottom: 0;
   white-space: nowrap;
-
   @media (--viewportMedium) {
     display: inline;
   }

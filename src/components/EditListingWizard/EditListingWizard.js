@@ -19,11 +19,7 @@ import { Modal, NamedRedirect, Tabs, StripeConnectAccountStatusBox } from '../..
 import { StripeConnectAccountForm } from '../../forms';
 
 import EditListingWizardTab, {
-  // AVAILABILITY,
   DESCRIPTION,
-  CATEGORY,
-  // REGION,
-  // MATERIAL,
   PRICING,
   PHOTOS,
 } from './EditListingWizardTab';
@@ -38,9 +34,6 @@ import css from './EditListingWizard.css';
 // and listing publishing happens after last panel.
 export const TABS = [
   DESCRIPTION,
-  // CATEGORY,
-  // REGION,
-  // MATERIAL,
   PRICING,
   PHOTOS,
 ];
@@ -55,18 +48,11 @@ const tabLabel = (intl, tab) => {
   let key = null;
   if (tab === DESCRIPTION) {
     key = 'EditListingWizard.tabLabelDescription';
-  // } else if (tab === CATEGORY) {
-  //   key = 'EditListingWizard.tabLabelCategory';
-  // } else if (tab === REGION) {
-  //   key = 'EditListingWizard.tabLabelRegion';
-  // } else if (tab === MATERIAL) {
-  //   key = 'EditListingWizard.tabLabelMaterial';
   } else if (tab === PRICING) {
     key = 'EditListingWizard.tabLabelPricing';
   } else if (tab === PHOTOS) {
     key = 'EditListingWizard.tabLabelPhotos';
   }
-
   return intl.formatMessage({ id: key });
 };
 
@@ -83,23 +69,14 @@ const tabCompleted = (tab, listing) => {
     description,
     price,
     title,
-    publicData,
   } = listing.attributes;
   const images = listing.images;
 
   switch (tab) {
     case DESCRIPTION:
       return !!(description && title);
-    // case CATEGORY:
-    //   return !!(publicData && publicData.categories);
-    // case REGION:
-    //   return !!(publicData && publicData.region);
-    // case MATERIAL:
-    //   return !!(publicData && publicData.materials);
     case PRICING:
       return !!price;
-    // case AVAILABILITY:
-    //   return !!availabilityPlan;
     case PHOTOS:
       return images && images.length > 0;
     default:

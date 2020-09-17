@@ -1,4 +1,3 @@
-import unionWith from 'lodash/unionWith';
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { convertUnitToSubUnit, unitDivisor } from '../../util/currency';
@@ -6,7 +5,6 @@ import { formatDateStringToUTC, getExclusiveEndDate } from '../../util/dates';
 import config from '../../config';
 import { denormalisedResponseEntities } from '../../util/data';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
-import { userLocation } from '../../util/maps';
 
 // ================ Action types ================ //
 
@@ -159,6 +157,7 @@ export const setActiveListing = listingId => ({
 });
 
 export const updateLikedListings = actionPayload => {
+  console.log(actionPayload);
   return (dispatch, getState, sdk) => {
     dispatch(updateProfileRequest());
 

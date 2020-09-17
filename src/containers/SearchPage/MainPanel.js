@@ -165,6 +165,8 @@ class MainPanel extends Component {
       sortConfig,
       currentUser,
       onUpdateLikedListings,
+      isListingLiked,
+      removeListing,
       tribes
     } = this.props;
 
@@ -238,7 +240,7 @@ class MainPanel extends Component {
             {...propsForSecondaryFiltersToggle}
           >
             {primaryFilters.map(config => {
-              if (config.id != 'keyword' && config.id != 'nativeLands') {
+              if (config.id !== 'keyword' && config.id !== 'nativeLands') {
                 return (
                   <FilterComponent
                     key={`SearchFiltersPrimary.${config.id}`}
@@ -251,7 +253,7 @@ class MainPanel extends Component {
                     contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
                   />
                 );
-              } else if (config.id == 'nativeLands') {
+              } else if (config.id === 'nativeLands') {
                 nativeLandsConfig = config;
               }
             })}
@@ -284,7 +286,7 @@ class MainPanel extends Component {
           selectedFiltersCount={selectedFiltersCount}
         >
           {filterConfig.map(config => {
-            if (config.id != 'keyword' && config.id != 'nativeLands') {
+            if (config.id !== 'keyword' && config.id !== 'nativeLands') {
               return (
                 <FilterComponent
                   key={`SearchFiltersMobile.${config.id}`}
@@ -297,7 +299,7 @@ class MainPanel extends Component {
                   showAsPopup={false}
                 />
               );
-            } else if (config.id == 'nativeLands') {
+            } else if (config.id === 'nativeLands') {
               nativeLandsConfig = config;
             }
           })}
@@ -364,6 +366,8 @@ class MainPanel extends Component {
             setActiveListing={onActivateListing}
             currentUser={currentUser}
             onUpdateLikedListings={onUpdateLikedListings}
+            isListingLiked={isListingLiked}
+            removeListing={removeListing}
           />
         </div>
       </div>

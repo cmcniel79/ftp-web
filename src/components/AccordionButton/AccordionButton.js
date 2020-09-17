@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import css from './AccordionButton.css';
 import chevron from './Images/chevron-down-outline.svg';
@@ -32,7 +31,7 @@ class AccordionButton extends Component {
         <button className={css.title} onClick={this.onClick}>
           {this.props.title}
           <span className={css.arrow}>
-          <img className={chevronClasses} src={chevron} alt="image sourced from Freepik.com" />
+          <img className={chevronClasses} src={chevron} alt="chevron" />
           </span>
         </button>
         <div className={panelClassNames}> {this.props.children}</div>

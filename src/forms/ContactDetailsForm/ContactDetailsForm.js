@@ -14,7 +14,7 @@ import {
   isTooManyEmailVerificationRequestsError,
 } from '../../util/errors';
 import getCountryCodes from '../../translations/countryCodes';
-import { FieldPhoneNumberInput, Form, PrimaryButton, FieldTextInput, FieldSelect } from '../../components';
+import { Form, PrimaryButton, FieldTextInput, FieldSelect } from '../../components';
 import config from '../../config';
 
 import css from './ContactDetailsForm.css';
@@ -233,11 +233,6 @@ class ContactDetailsFormComponent extends Component {
           const addressLine1Placeholder = intl.formatMessage({
             id: 'ContactDetailsForm.addressLine1Placeholder',
           });
-          const addressLine1Required = validators.required(
-            intl.formatMessage({
-              id: 'ContactDetailsForm.addressLine1Required',
-            })
-          );
 
           const addressLine2Label = intl.formatMessage(
             { id: 'ContactDetailsForm.addressLine2Label' },
@@ -251,34 +246,15 @@ class ContactDetailsFormComponent extends Component {
           const postalCodePlaceholder = intl.formatMessage({
             id: 'ContactDetailsForm.postalCodePlaceholder',
           });
-          const postalCodeRequired = validators.required(
-            intl.formatMessage({
-              id: 'ContactDetailsForm.postalCodeRequired',
-            })
-          );
 
           const cityLabel = intl.formatMessage({ id: 'ContactDetailsForm.cityLabel' });
           const cityPlaceholder = intl.formatMessage({ id: 'ContactDetailsForm.cityPlaceholder' });
-          const cityRequired = validators.required(intl.formatMessage({
-              id: 'ContactDetailsForm.cityRequired',
-            })
-          );
 
           const stateLabel = intl.formatMessage({ id: 'ContactDetailsForm.stateLabel' },);
           const statePlaceholder = intl.formatMessage({ id: 'ContactDetailsForm.statePlaceholder' });
-          const stateRequired = validators.required(
-            intl.formatMessage({
-              id: 'ContactDetailsForm.stateRequired',
-            })
-          );
 
           const countryLabel = intl.formatMessage({ id: 'ContactDetailsForm.countryLabel' });
           const countryPlaceholder = intl.formatMessage({ id: 'ContactDetailsForm.countryPlaceholder' });
-          const countryRequired = validators.required(
-            intl.formatMessage({
-              id: 'ContactDetailsForm.countryRequired',
-            })
-          );
 
           // Use tha language set in config.locale to get the correct translations of the country names
           const countryCodes = getCountryCodes(config.locale);
@@ -318,7 +294,7 @@ class ContactDetailsFormComponent extends Component {
             invalid ||
             pristineSinceLastSubmit ||
             inProgress ||
-            !(emailChanged || shippingAddressChanged && isCompleteShippingAddress);
+            !((emailChanged || shippingAddressChanged) && isCompleteShippingAddress);
           
             console.log(emailChanged);
             console.log(isCompleteShippingAddress);

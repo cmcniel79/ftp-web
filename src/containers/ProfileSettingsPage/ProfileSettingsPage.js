@@ -87,9 +87,10 @@ export class ProfileSettingsPageComponent extends Component {
     const profileImageId = user.profileImage ? user.profileImage.id : null;
     const profileImage = image || { imageId: profileImageId };
     const tribe = user.attributes.profile.publicData ? user.attributes.profile.publicData.tribe : null;
+    const nativeLands =  user.attributes.profile.publicData ? user.attributes.profile.publicData.nativeLands : null;
     const accountType = user.attributes.profile.publicData ? user.attributes.profile.publicData.account : null;
     const companyName = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyName : null;
-    const companyWebsite = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyName : null;
+    const companyWebsite = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyWebsite : null;
     const socialMedia = user.attributes.profile.publicData ? user.attributes.profile.publicData.socialMedia : null;
     const facebook = socialMedia && socialMedia.facebook ? socialMedia.facebook : null;
     const twitter = socialMedia && socialMedia.twitter ? socialMedia.twitter : null;
@@ -132,8 +133,8 @@ export class ProfileSettingsPageComponent extends Component {
         className={css.form}
         accountType={accountType}
         currentUser={currentUser}
-        initialValues={{ firstName, lastName, bio, profileImage: user.profileImage, tribe, companyName, companyWebsite,
-          facebook, twitter, insta }}
+        initialValues={{ firstName, lastName, bio, profileImage: user.profileImage, tribe, nativeLands, 
+          companyName, companyWebsite, facebook, twitter, insta }}
         profileImage={profileImage}
         onImageUpload={e => onImageUploadHandler(e, onImageUpload)}
         uploadInProgress={uploadInProgress}

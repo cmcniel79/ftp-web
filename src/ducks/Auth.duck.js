@@ -181,9 +181,21 @@ export const signup = params => (dispatch, getState, sdk) => {
   dispatch(signupRequest());
   const { email, password, firstName, lastName, country, isAdult, ...rest } = params;
 
+  // Account, shippingAddress and isAdult gets set for each user at signup. It makes it easier to change
+  // user's account types later on in console if account type is already initialized. Country is also used
+  // in figuring out the correct shipping amount (domestic vs international shipping fee). isAdult is just a 
+  // boolean used to figure out if a user should be shown casino ads.
   const createUserParams = isEmpty(rest)
-    ? { email, password, firstName, lastName, protectedData: { isAdult: isAdult, shippingAddress: { country: country} }, publicData: { account: "" } }
-    : { email, password, firstName, lastName, protectedData: { isAdult: isAdult, shippingAddress: { country: country}, ...rest }, publicData: { account: "" } };
+    ? {
+      email, password, firstName, lastName, protectedData: {
+        isAdult: isAdult, shippingAddress: { country: country } },
+      publicData: { account: "" }
+    }
+    : {
+      email, password, firstName, lastName, protectedData: {
+        isAdult: isAdult, shippingAddress: { country: country }, ...rest}, 
+      publicData: { account: "" }
+    };
 
   // We must login the user if signup succeeds since the API doesn't
   // do that automatically.

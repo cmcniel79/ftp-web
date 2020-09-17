@@ -1,16 +1,11 @@
 import React from 'react';
-import { shape, string } from 'prop-types';
-import {
-  FormattedMessage,
-} from '../../util/reactIntl';
+import { string } from 'prop-types';
 import {
   IconSocialMediaFacebook,
   IconSocialMediaInstagram,
   IconSocialMediaTwitter,
   ExternalLink 
 } from '..';
-import classNames from 'classnames';
-
 import css from './UserSocialMedia.css';
 
 const UserSocialMedia = props => {

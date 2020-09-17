@@ -38,7 +38,7 @@ The following definitions shall have the same meaning regardless of whether they
 <p><strong>Account</strong> means a unique account created for You to access our Service or parts of our Service.</p>
 </li>
 <li>
-<p><strong>Website</strong> refers to From The People, accessible from <a href="https://www.fromthepeople.co/" rel="external nofollow noopener" target="_blank">https://www.fromthepeople.co/</a></p>
+<p><strong>Website</strong> refers to From The People, accessible from <ExternalLink href="https://www.fromthepeople.co/" rel="external nofollow noopener" target="_blank">https://www.fromthepeople.co/</ExternalLink></p>
 </li>
 <li>
 <p><strong>Service</strong> refers to the Website.</p>
@@ -121,7 +121,7 @@ For the purpose of the GDPR, Service Providers are considered Data Processors.</
 <h3>Tracking Technologies and Cookies</h3>
 <p>We use Cookies and similar tracking technologies to track the activity on Our Service and store certain information. Tracking technologies used are beacons, tags, and scripts to collect and track information and to improve and analyze Our Service.</p>
 <p>You can instruct Your browser to refuse all Cookies or to indicate when a Cookie is being sent. However, if You do not accept Cookies, You may not be able to use some parts of our Service.</p>
-<p>Cookies can be &quot;Persistent&quot; or &quot;Session&quot; Cookies. Persistent Cookies remain on your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close your web browser. Learn more about cookies: <a href="https://www.termsfeed.com/blog/cookies/" target="_blank">All About Cookies</a>.</p>
+<p>Cookies can be &quot;Persistent&quot; or &quot;Session&quot; Cookies. Persistent Cookies remain on your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close your web browser. Learn more about cookies: <ExternalLink href="https://www.termsfeed.com/blog/cookies/" target="_blank">All About Cookies</ExternalLink>.</p>
 <p>We use both session and persistent Cookies for the purposes set out below:</p>
 <ul>
 <li>
@@ -200,7 +200,7 @@ For the purpose of the GDPR, Service Providers are considered Data Processors.</
 <p><strong>Google Analytics</strong></p>
 <p>Google Analytics is a web analytics service offered by Google that tracks and reports website traffic. Google uses the data collected to track and monitor the use of our Service. This data is shared with other Google services. Google may use the collected data to contextualise and personalise the ads of its own advertising network.</p>
 <p>You can opt-out of having made your activity on the Service available to Google Analytics by installing the Google Analytics opt-out browser add-on. The add-on prevents the Google Analytics JavaScript (ga.js, analytics.js and dc.js) from sharing information with Google Analytics about visits activity.</p>
-<p>For more information on the privacy practices of Google, please visit the Google Privacy &amp; Terms web page: <a href="https://policies.google.com/privacy" rel="external nofollow noopener" target="_blank">https://policies.google.com/privacy</a></p>
+<p>For more information on the privacy practices of Google, please visit the Google Privacy &amp; Terms web page: <ExternalLink href="https://policies.google.com/privacy" rel="external nofollow noopener" target="_blank">https://policies.google.com/privacy</ExternalLink></p>
 </li>
 </ul>
 <h2>Email Marketing</h2>
@@ -209,7 +209,7 @@ For the purpose of the GDPR, Service Providers are considered Data Processors.</
 <ul>
 <li>
 <p><strong>Sendinblue</strong></p>
-<p>Their Privacy Policy can be viewed at <a href="https://www.sendinblue.com/legal/privacypolicy/" rel="external nofollow noopener" target="_blank">https://www.sendinblue.com/legal/privacypolicy/</a></p>
+<p>Their Privacy Policy can be viewed at <ExternalLink href="https://www.sendinblue.com/legal/privacypolicy/" rel="external nofollow noopener" target="_blank">https://www.sendinblue.com/legal/privacypolicy/</ExternalLink></p>
 </li>
 </ul>
 <h2>Payments</h2>
@@ -218,11 +218,11 @@ For the purpose of the GDPR, Service Providers are considered Data Processors.</
 <ul>
 <li>
 <p><strong>Stripe</strong></p>
-<p>Their Privacy Policy can be viewed at <a href="https://stripe.com/us/privacy" rel="external nofollow noopener" target="_blank">https://stripe.com/us/privacy</a></p>
+<p>Their Privacy Policy can be viewed at <ExternalLink href="https://stripe.com/us/privacy" rel="external nofollow noopener" target="_blank">https://stripe.com/us/privacy</ExternalLink></p>
 </li>
 <li>
 <p><strong>PayPal</strong></p>
-<p>Their Privacy Policy can be viewed at <a href="https://www.paypal.com/webapps/mpp/ua/privacy-full" rel="external nofollow noopener" target="_blank">https://www.paypal.com/webapps/mpp/ua/privacy-full</a></p>
+<p>Their Privacy Policy can be viewed at <ExternalLink href="https://www.paypal.com/webapps/mpp/ua/privacy-full" rel="external nofollow noopener" target="_blank">https://www.paypal.com/webapps/mpp/ua/privacy-full</ExternalLink></p>
 </li>
 </ul>
 <h1>GDPR Privacy</h1>
@@ -350,7 +350,7 @@ For the purpose of the GDPR, Service Providers are considered Data Processors.</
 <p>By email: customersupport@fromthepeople.co</p>
 </li>
 <li>
-<p>By visiting this page on our website: <a href="https://www.fromthepeople.co/en/infos/privacy" rel="external nofollow noopener" target="_blank">https://www.fromthepeople.co/en/infos/privacy</a></p>
+<p>By visiting this page on our website: <ExternalLink href="https://www.fromthepeople.co/en/infos/privacy" rel="external nofollow noopener" target="_blank">https://www.fromthepeople.co/en/infos/privacy</ExternalLink></p>
 </li>
 </ul>
     </div>

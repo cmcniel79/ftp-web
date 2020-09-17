@@ -8,7 +8,8 @@ import searchImage from '../../assets/search.png'; // gives image path
 
 import css from './TopbarSearchForm.css';
 
-const identity = v => v;
+// What was this orginally used for in the template?
+// const identity = v => v;
 
 class TopbarSearchFormComponent extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class TopbarSearchFormComponent extends Component {
   render() {
     return (
       <div className={css.searchBox}>
-      <img className={css.searchImage} src={searchImage} alt="search image" />
+      <img className={css.searchImage} src={searchImage} alt="search" />
       <FinalForm
         {...this.props}
         onSubmit={this.onSubmit}

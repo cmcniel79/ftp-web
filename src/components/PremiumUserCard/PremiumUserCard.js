@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, func, oneOfType } from 'prop-types';
+import { string,  oneOfType } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import truncate from 'lodash/truncate';
 import classNames from 'classnames';
@@ -71,7 +71,7 @@ ExpandableBio.propTypes = {
 };
 
 const PremiumUserCard = props => {
-  const { rootClassName, className, user, currentUser, onContactUser } = props;
+  const { rootClassName, className, user, currentUser } = props;
 
   const userIsCurrentUser = user && user.type === 'currentUser';
   const ensuredUser = userIsCurrentUser ? ensureCurrentUser(user) : ensureUser(user);
@@ -131,7 +131,6 @@ const PremiumUserCard = props => {
               }
             </h3>
           </div>
-          {/* {hasBio ? <ExpandableBio className={css.desktopBio} bio={bio} /> : null} */}
           <UserSocialMedia socialMedia={socialMedia} />
           {links}
         </div>

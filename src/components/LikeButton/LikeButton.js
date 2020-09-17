@@ -8,55 +8,53 @@ class LikeButton extends Component {
     // in the future.
     constructor(props) {
         super(props);
-        const { currentListingID, likedListings } = props;
-        const listingIsLiked = currentListingID && likedListings && likedListings.uuid && likedListings.uuid.includes(currentListingID) ? true : false;
+        const { currentListingID, isListingLiked } = props;
+        const listingIsLiked = isListingLiked({ uuid: currentListingID }) ? true : false;
         this.state = {
             ifLiked: listingIsLiked,
-            // likes: props.likes
         };
-    }
-
-    removeListing() {
-        const index = this.props.likedListings.indexOf(this.props.currentListingID);
-        if (index > -1) {
-            this.props.likedListings.splice(index, 1);
-        }
     }
 
     addLike = () => {
-        // let newCount;
-        // if(this.state.ifLiked){
-        //     newCount = this.state.likes - 1;
-        // } else {
-        //     newCount = this.state.likes + 1;
-        // }
-        if (this.state.ifLiked) {
-            this.removeListing();
+        if (!this.state.ifLiked) {
+            this.props.onUpdateLikedListings({ uuid: this.props.currentListingID });
         } else {
-            this.props.likedListings.push({ uuid: this.props.currentListingID });
-        };
+            this.props.removeListing({ uuid: this.props.currentListingID })
+        }
         this.setState({
             ifLiked: !this.state.ifLiked,
-            // likes: newCount
         });
 
-        const updatedLikes = {
-            privateData: {
-                likedListings: this.props.likedListings
-            }
-        };
-        console.log(this.props.likedListings);
-        console.log(updatedLikes);
-        this.props.onUpdateLikedListings(updatedLikes);
+        // const updatedLikes = {
+        //     privateData: {
+        //         likedListings: this.props.likedListings
+        //     }
+        // };
     };
 
     render() {
+        // const likedStatus = this.props.isListingLiked({ uuid: this.props.currentListingID });
+        // this.setState( {ifLiked: likedStatus} )
         const image = this.state.ifLiked ? heartFilled : heartOutline;
         return <button className={css.likeButton} onClick={this.addLike}>
-            <img src={image} className={css.heartImage}/>
+            <img src={image} className={css.heartImage} />
             <a href=""></a>
         </button>
     }
 }
 
 export default LikeButton;
+
+
+
+        // let newCount;
+        // if(this.state.ifLiked){
+        //     newCount = this.state.likes - 1;
+        // } else {
+        //     newCount = this.state.likes + 1;
+        // }
+        // if (this.state.ifLiked) {
+        //     this.removeListing();
+        // } else {
+        //     this.props.likedListings.push({ uuid: this.props.currentListingID });
+        // };

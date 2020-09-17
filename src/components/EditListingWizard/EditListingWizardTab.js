@@ -69,7 +69,6 @@ const EditListingWizardTab = props => {
     newListingPublished,
     history,
     images,
-    availability,
     listing,
     handleCreateFlowTabScrolling,
     handlePublishListing,

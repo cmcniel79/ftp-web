@@ -1,7 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
-import { PremiumUserCard, Modal, AvatarLarge } from '../../components';
-import { EnquiryForm } from '../../forms';
+import { PremiumUserCard } from '../../components';
 
 import css from './PremiumPage.css';
 

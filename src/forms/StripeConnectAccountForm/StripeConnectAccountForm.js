@@ -19,7 +19,6 @@ import {
   FieldRadioButton,
   Form,
   StripeBankAccountTokenInputField,
-  FieldCheckbox,
 } from '../../components';
 
 import css from './StripeConnectAccountForm.css';

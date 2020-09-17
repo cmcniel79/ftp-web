@@ -1,30 +1,25 @@
 import React from 'react';
-import { shape, string } from 'prop-types';
+import { string } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
-import classNames from 'classnames';
 
 import css from './ListingPage.css';
 
 const SectionStyleMaybe = props => {
-  const { publicData } = props;
-  return publicData && publicData.style ? (
+  const { style } = props;
+  return style ? (
       <div className={css.styleContainer}>
       <h2 className={css.regionTitle}>
         <FormattedMessage id="ListingPage.styleTitle" />
       </h2>
-      <p className={css.regionText}>{publicData.style}</p>
+      <p className={css.regionText}>{style}</p>
       </div>
   ) : null;
 };
 
-SectionStyleMaybe.defaultProps = { className: null, rootClassName: null };
+SectionStyleMaybe.defaultProps = { style: null, };
 
 SectionStyleMaybe.propTypes = {
-  className: string,
-  rootClassName: string,
-  publicData: shape({
-    rules: string,
-  }),
+  style: string
 };
 
 export default SectionStyleMaybe;

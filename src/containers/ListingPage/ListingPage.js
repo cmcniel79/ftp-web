@@ -31,7 +31,6 @@ import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck
 import { initializeCardPaymentData } from '../../ducks/stripe.duck.js';
 import {
   Page,
-  NamedLink,
   NamedRedirect,
   LayoutSingleColumn,
   LayoutWrapperTopbar,
@@ -106,13 +105,6 @@ export class ListingPageComponent extends Component {
     } = this.props;
     const listingId = new UUID(params.id);
     const listing = getListing(listingId);
-
-    const { bookingData } = values;
-
-
-    const shippingFee = isDomesticOrder
-        ? listing.attributes.publicData.shippingFee
-        : listing.attributes.publicData.internationalFee;
 
     const initialValues = {
       listing,
@@ -240,7 +232,6 @@ export class ListingPageComponent extends Component {
 
     const {
       description = '',
-      geolocation = null,
       price = null,
       title = '',
       publicData,
@@ -324,7 +315,8 @@ export class ListingPageComponent extends Component {
     const userAndListingAuthorAvailable = !!(currentUser && authorAvailable);
     const isOwnListing =
       userAndListingAuthorAvailable && currentListing.author.id.uuid === currentUser.id.uuid;
-    const showContactUser = authorAvailable && (!currentUser || (currentUser && !isOwnListing));
+    // Should check where showContactUser was originally used in the templace 
+    // const showContactUser = authorAvailable && (!currentUser || (currentUser && !isOwnListing));
 
     const currentAuthor = authorAvailable ? currentListing.author : null;
     const ensuredAuthor = ensureUser(currentAuthor);
@@ -334,19 +326,12 @@ export class ListingPageComponent extends Component {
     // banned or deleted display names for the function
     const authorDisplayName = userDisplayNameAsString(ensuredAuthor, '');
 
-    const authorTribe = ensuredAuthor.attributes.profile.publicData.tribe ? 
-      ensuredAuthor.attributes.profile.publicData.tribe : null;
-
     const authorCountry = publicData && publicData.country ?
       publicData.country : null;
-
-    const userCountry = currentUser && currentUser.attributes.profile.protectedData && 
+    const userCountry = currentUser && currentUser.attributes.profile.protectedData &&
       currentUser.attributes.profile.protectedData.shippingAddress ?
       currentUser.attributes.profile.protectedData.shippingAddress.country : null;
-
     const isDomesticOrder = authorCountry && userCountry && authorCountry === userCountry ? true : false;
-
-    console.log(isDomesticOrder);
 
     const { formattedPrice, priceTitle } = priceData(price, intl);
 
@@ -383,17 +368,6 @@ export class ListingPageComponent extends Component {
       { title, price: formattedPrice, siteTitle }
     );
 
-    const hostLink = (
-      <NamedLink
-        className={css.authorNameLink}
-        name="ListingPage"
-        params={params}
-        to={{ hash: '#host' }}
-      >
-        {authorDisplayName}
-      </NamedLink>
-    );
-
     const materialOptions = findOptionsForSelectFilter('material', filterConfig);
     const categoryOptions = findOptionsForSelectFilter('categories', filterConfig);
     const category =
@@ -404,14 +378,12 @@ export class ListingPageComponent extends Component {
         </span>
       ) : null;
 
-    const authorTribeSection = authorTribe ? (
-      <span>
-        <div className={css.sectionDescription}>
-          <h2 className={css.descriptionTitle}>Author's Tribe:</h2>
-          <p className={css.text}>{authorTribe}</p>
-        </div>
-      </span>
-    ) : null;
+    const material =
+    publicData && publicData.material ? publicData.material : null;
+    const region =
+      publicData && publicData.region ? publicData.region : null;
+    const style =
+      publicData && publicData.style ? publicData.style : null;
 
     return (
       <Page
@@ -461,6 +433,7 @@ export class ListingPageComponent extends Component {
                     handleViewPhotosClick={handleViewPhotosClick}
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
+                  <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
                 </div>
                 <div className={css.bookingPanel}>
                   <SectionSellerMaybe
@@ -476,13 +449,11 @@ export class ListingPageComponent extends Component {
                     currentUser={currentUser}
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
-                  <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
-                  {authorTribeSection}
                   <SectionDescriptionMaybe description={description} />
-                  <SectionMaterialsMaybe options={materialOptions} publicData={publicData} />
+                  <SectionMaterialsMaybe options={materialOptions} material={material} />
                   <div className={css.regionAndStyle}>
-                    <SectionRegionMaybe publicData={publicData} />
-                    <SectionStyleMaybe publicData={publicData} />
+                    <SectionRegionMaybe region={region} />
+                    <SectionStyleMaybe style={style} />
                   </div>
                   <BookingPanel
                     // className={css.bookingPanel}

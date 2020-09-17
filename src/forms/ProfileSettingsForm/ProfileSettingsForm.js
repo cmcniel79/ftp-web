@@ -177,11 +177,11 @@ class ProfileSettingsFormComponent extends Component {
           const errorClasses = classNames({ [css.avatarUploadError]: hasUploadError });
           const transientUserProfileImage = profileImage.uploadedImage || user.profileImage;
           const transientUser = { ...user, profileImage: transientUserProfileImage };
-          const showTribeSelection = accountType == "e" || accountType == "p" || accountType == "a" || accountType == "n" ?
+          const showTribeSelection = accountType === "e" || accountType === "p" || accountType === "a" || accountType === "n" ?
             true : false;
-          const showCompanyInfo = accountType == "p" || accountType == "a" || accountType == "n" ?
+          const showCompanyInfo = accountType === "p" || accountType === "a" || accountType === "n" ?
             true : false;
-          const showSocialMediaFields = accountType != "a" || accountType != "n" ?
+          const showSocialMediaFields = accountType !== "a" || accountType !== "n" ?
             true : false;
 
           // Ensure that file exists if imageFromFile is used

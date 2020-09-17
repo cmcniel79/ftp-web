@@ -38,8 +38,6 @@ import {
   LayoutWrapperMain,
   LayoutWrapperFooter,
   Footer,
-  Button,
-  ExternalLink
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '..';
 
@@ -106,10 +104,6 @@ export class PremiumPageComponent extends Component {
     } = this.props;
     const listingId = new UUID(params.id);
     const listing = getListing(listingId);
-
-    const { bookingData } = values;
-
-
     const hasShippingFee =
       listing.attributes.publicData &&
         listing.attributes.publicData.shippingFee
@@ -180,7 +174,6 @@ export class PremiumPageComponent extends Component {
 
   render() {
     const {
-      unitType,
       isAuthenticated,
       currentUser,
       getListing,
@@ -191,17 +184,9 @@ export class PremiumPageComponent extends Component {
       location,
       scrollingDisabled,
       showListingError,
-      reviews,
-      fetchReviewsError,
       sendEnquiryInProgress,
       sendEnquiryError,
-      timeSlots,
-      fetchTimeSlotsError,
       filterConfig,
-      onFetchTransactionLineItems,
-      lineItems,
-      fetchLineItemsInProgress,
-      fetchLineItemsError,
     } = this.props;
 
     const listingId = new UUID(rawParams.id);
@@ -242,7 +227,6 @@ export class PremiumPageComponent extends Component {
 
     const {
       description = '',
-      geolocation = null,
       price = null,
       title = '',
       publicData,
@@ -256,11 +240,6 @@ export class PremiumPageComponent extends Component {
         })}
       </span>
     );
-
-    const bookingTitle = (
-      <FormattedMessage id="ListingPage.bookingTitle" values={{ title: richTitle }} />
-    );
-    const bookingSubTitle = intl.formatMessage({ id: 'ListingPage.bookingSubTitle' });
 
     const topbar = <TopbarContainer />;
 
@@ -326,8 +305,6 @@ export class PremiumPageComponent extends Component {
     const userAndListingAuthorAvailable = !!(currentUser && authorAvailable);
     const isOwnListing =
       userAndListingAuthorAvailable && currentListing.author.id.uuid === currentUser.id.uuid;
-    const showContactUser = authorAvailable && (!currentUser || (currentUser && !isOwnListing));
-
     const currentAuthor = authorAvailable ? currentListing.author : null;
     const ensuredAuthor = ensureUser(currentAuthor);
 
@@ -340,15 +317,6 @@ export class PremiumPageComponent extends Component {
       ensuredAuthor.attributes.profile.publicData.tribe : null;
 
     const { formattedPrice, priceTitle } = priceData(price, intl);
-
-    const handleBookingSubmit = values => {
-      const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;
-      if (isOwnListing || isCurrentlyClosed) {
-        window.scrollTo(0, 0);
-      } else {
-        this.handleSubmit(values);
-      }
-    };
 
     const listingImages = (listing, variantName) =>
       (listing.images || [])
@@ -374,17 +342,6 @@ export class PremiumPageComponent extends Component {
       { title, price: formattedPrice, siteTitle }
     );
 
-    const hostLink = (
-      <NamedLink
-        className={css.authorNameLink}
-        name="ListingPage"
-        params={params}
-        to={{ hash: '#host' }}
-      >
-        {authorDisplayName}
-      </NamedLink>
-    );
-
     const materialOptions = findOptionsForSelectFilter('material', filterConfig);
     const categoryOptions = findOptionsForSelectFilter('categories', filterConfig);
     const category =
@@ -395,12 +352,14 @@ export class PremiumPageComponent extends Component {
         </span>
       ) : null;
 
+    const material =
+      publicData && publicData.material ? publicData.material : null;
     const region =
       publicData && publicData.region ? publicData.region : null;
     const style =
       publicData && publicData.style ? publicData.style : null;
-    const externalLink = 
-    publicData && publicData.websiteLink ? publicData.websiteLink : null;
+    const externalLink =
+      publicData && publicData.websiteLink ? publicData.websiteLink : null;
 
     const authorTribeSection = authorTribe ? (
       <span>
@@ -475,7 +434,7 @@ export class PremiumPageComponent extends Component {
                   />
                   {authorTribeSection}
                   <PremiumDescriptionMaybe description={description} />
-                  <PremiumMaterialsMaybe options={materialOptions} publicData={publicData} />
+                  <PremiumMaterialsMaybe options={materialOptions} material={material} />
                   <div className={css.regionAndStyle}>
                     <PremiumRegionMaybe region={region} />
                     <PremiumStyleMaybe style={style} region={region} />

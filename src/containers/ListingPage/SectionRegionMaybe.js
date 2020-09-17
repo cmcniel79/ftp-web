@@ -1,30 +1,25 @@
 import React from 'react';
-import { shape, string } from 'prop-types';
+import { string } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
-import classNames from 'classnames';
 
 import css from './ListingPage.css';
 
 const SectionRegionMaybe = props => {
-  const { publicData } = props;
-  return publicData && publicData.region ? (
+  const { region } = props;
+  return region ? (
       <div className={css.regionContainer}>
       <h2 className={css.regionTitle}>
         <FormattedMessage id="ListingPage.regionTitle" />
       </h2>
-      <p className={css.regionText}>{publicData.region}</p>
+      <p className={css.regionText}>{region}</p>
       </div>
   ) : null;
 };
 
-SectionRegionMaybe.defaultProps = { className: null, rootClassName: null };
+SectionRegionMaybe.defaultProps = { region: null, };
 
 SectionRegionMaybe.propTypes = {
-  className: string,
-  rootClassName: string,
-  publicData: shape({
-    rules: string,
-  }),
+  region: string
 };
 
 export default SectionRegionMaybe;

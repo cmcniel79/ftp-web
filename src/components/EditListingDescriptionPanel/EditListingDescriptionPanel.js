@@ -30,7 +30,7 @@ const EditListingDescriptionPanel = props => {
   const verifiedSeller = enrolledStatus ? 'verified' : 'unverified';
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
-  const { description, title, publicData, metadata } = currentListing.attributes;
+  const { description, title, publicData } = currentListing.attributes;
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -47,7 +47,7 @@ const EditListingDescriptionPanel = props => {
   const style = publicData && publicData.style;
   const region = publicData && publicData.region;
   const material = publicData && publicData.material;
-  const customOrders = publicData && publicData.customOrders == 'available' ? true : false;
+  const customOrders = publicData && publicData.customOrders === 'available' ? true : false;
   const websiteLink = publicData && publicData.websiteLink;
 
   const categoryOptions = findOptionsForSelectFilter('category', config.custom.filters);

@@ -5,9 +5,6 @@ import classNames from 'classnames';
 
 import { Menu, MenuContent, MenuItem, MenuLabel } from '..';
 import css from './SelectSubcategoryFilterPopup.css';
-import { composeValidators } from '../../util/validators';
-
-const CATEGORYBUTTONHEIGHT = 40;
 
 const optionLabel = (options, key) => {
   const option = options.find(o => o.key === key);
@@ -38,8 +35,8 @@ class SelectSubcategoryFilterPopup extends Component {
   }
 
   selectCategory(option) {
-    const sub = option.key != "other" ? option.subCategories : null;
-    if (sub != null) {
+    const sub = option.key !== "other" ? option.subCategories : null;
+    if (sub !== null) {
       this.setState({ subCategory: sub });
       this.setState({ categorySelected: true });
     }
@@ -51,7 +48,6 @@ class SelectSubcategoryFilterPopup extends Component {
       className,
       label,
       options,
-      queryParamNames,
       initialValues,
       contentPlacementOffset,
     } = this.props;

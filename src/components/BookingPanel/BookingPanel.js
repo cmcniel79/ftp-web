@@ -5,7 +5,7 @@ import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import { arrayOf, array, bool, func, node, oneOfType, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
-import { propTypes, LISTING_STATE_CLOSED, LINE_ITEM_NIGHT, LINE_ITEM_DAY } from '../../util/types';
+import { propTypes, LISTING_STATE_CLOSED } from '../../util/types';
 import { formatMoney } from '../../util/currency';
 import { parse, stringify } from '../../util/urlHelpers';
 import config from '../../config';
@@ -51,13 +51,11 @@ const BookingPanel = props => {
   const {
     rootClassName,
     className,
-    titleClassName,
     listing,
     isOwnListing,
     unitType,
     onSubmit,
     title,
-    subTitle,
     authorDisplayName,
     onManageDisableScrolling,
     timeSlots,
@@ -76,27 +74,12 @@ const BookingPanel = props => {
   const hasListingState = !!listing.attributes.state;
   const isClosed = hasListingState && listing.attributes.state === LISTING_STATE_CLOSED;
   const showBookingDatesForm = hasListingState && !isClosed;
-  const showClosedListingHelpText = listing.id && isClosed;
+  // Check where this is used in template
+  // const showClosedListingHelpText = listing.id && isClosed; 
   const { formattedPrice, priceTitle } = priceData(price, intl);
   const isBook = !!parse(location.search).book;
 
-  const subTitleText = !!subTitle
-    ? subTitle
-    : showClosedListingHelpText
-    ? intl.formatMessage({ id: 'BookingPanel.subTitleClosedListing' })
-    : null;
-
-  const isNightly = unitType === LINE_ITEM_NIGHT;
-  const isDaily = unitType === LINE_ITEM_DAY;
-
-  const unitTranslationKey = isNightly
-    ? 'BookingPanel.perNight'
-    : isDaily
-    ? 'BookingPanel.perDay'
-    : 'BookingPanel.perUnit';
-
   const classes = classNames(rootClassName || css.root, className);
-  const titleClasses = classNames(titleClassName || css.bookingTitle);
   const hasShippingFee =
   listing.attributes.publicData &&
     listing.attributes.publicData.shippingFee

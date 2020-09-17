@@ -1,6 +1,5 @@
 import React from 'react';
-import { FormattedMessage } from '../../util/reactIntl';
-import { ResponsiveImage, Modal, ImageCarousel } from '../../components';
+import { ResponsiveImage } from '../../components';
 import ActionBarMaybe from './ActionBarMaybe';
 
 import css from './PremiumPage.css';
@@ -11,10 +10,6 @@ const PremiumImages = props => {
     listing,
     isOwnListing,
     editParams,
-    handleViewPhotosClick,
-    imageCarouselOpen,
-    onImageCarouselClose,
-    onManageDisableScrolling,
   } = props;
 
   const hasImages = listing.images && listing.images.length > 0;

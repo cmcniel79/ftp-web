@@ -4,12 +4,8 @@ import { injectIntl, intlShape } from '../../util/reactIntl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import debounce from 'lodash/debounce';
-import unionWith from 'lodash/unionWith';
 import classNames from 'classnames';
 import config from '../../config';
-import routeConfiguration from '../../routeConfiguration';
-import { createResourceLocatorString, pathByRouteName } from '../../util/routes';
 import { parse, stringify } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
 import { getListingsById } from '../../ducks/marketplaceData.duck';
@@ -18,11 +14,10 @@ import { Page } from '../../components';
 import { TopbarContainer } from '../../containers';
 import { userLocation } from '../../util/maps';
 
-import { searchListings, setActiveListing, updateLikedListings, getNativeLand } from './SearchPage.duck';
+import { searchListings, setActiveListing, updateLikedListings } from './SearchPage.duck';
 import {
   pickSearchParamsOnly,
   validURLParamsForExtendedData,
-  validFilterParams,
   createSearchResultSchema,
 } from './SearchPage.helpers';
 import MainPanel from './MainPanel';
@@ -33,20 +28,53 @@ import css from './SearchPage.css';
 // So, there's enough cards to fill all columns on full pagination pages
 const RESULT_PAGE_SIZE = 24;
 const MODAL_BREAKPOINT = 768; // Search is in modal on mobile layout
-const SEARCH_WITH_MAP_DEBOUNCE = 300; // Little bit of debounce before search is initiated.
 
 export class SearchPageComponent extends Component {
   constructor(props) {
     super(props);
 
     this._isMounted = false;
+    this.likedListings = [];
     this.state = {
       isSearchMapOpenOnMobile: props.tab === 'map',
       isMobileModalOpen: false,
-      tribes: []
+      tribes: [],
     };
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
+    this.addToLikedListings = this.addToLikedListings.bind(this);
+    this.removeFromLikedListings = this.removeFromLikedListings.bind(this);
+    this.isListingLiked = this.isListingLiked.bind(this);
+  }
+
+  isListingLiked(listing) {
+    var x;
+    for (x in this.likedListings) {
+      if (this.likedListings[x].uuid === listing.uuid) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  addToLikedListings(listing) {
+    console.log(listing);
+    if (!this.isListingLiked(listing)) {
+      this.likedListings.push(listing);
+      console.log("Added!");
+      console.log(this.likedListings);
+    }
+  }
+
+  removeFromLikedListings(listing) {
+    const index = this.likedListings.findIndex(x => x.uuid === listing.uuid);
+    console.log(index);
+    console.log(listing);
+    if (index > -1) {
+      this.likedListings.splice(index, 1);
+      console.log("Removed!");
+      console.log(this.likedListings);
+    }
   }
 
   componentDidMount() {
@@ -71,6 +99,12 @@ export class SearchPageComponent extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;
+    const updatedLikes = {
+      privateData: {
+        likedListings: this.likedListings
+      }
+    };
+    this.props.onUpdateLikedListings(updatedLikes);
   }
 
   // Invoked when a modal is opened from a child component,
@@ -100,15 +134,17 @@ export class SearchPageComponent extends Component {
       searchInProgress,
       searchListingsError,
       searchParams,
-      activeListingId,
       onActivateListing,
-      onUpdateLikedListings,
     } = this.props;
     // eslint-disable-next-line no-unused-vars
     const { mapSearch, page, ...searchInURL } = parse(location.search, {
       latlng: ['origin'],
       latlngBounds: ['bounds'],
     });
+
+    if (this.props.currentUser && this.props.currentUser.attributes.profile.privateData.likedListings) {
+      this.likedListings = Object.values(this.props.currentUser.attributes.profile.privateData.likedListings);
+    }
 
     // urlQueryParams doesn't contain page specific url params
     // like mapSearch, page or origin (origin depends on config.sortSearchByDistance)
@@ -123,17 +159,12 @@ export class SearchPageComponent extends Component {
 
     const validQueryParams = validURLParamsForExtendedData(searchInURL, filterConfig);
 
-    const isWindowDefined = typeof window !== 'undefined';
-    const isMobileLayout = isWindowDefined && window.innerWidth < MODAL_BREAKPOINT;
-    const shouldShowSearchMap =
-      !isMobileLayout || (isMobileLayout && this.state.isSearchMapOpenOnMobile);
-
     const onMapIconClick = () => {
       this.useLocationSearchBounds = true;
       this.setState({ isSearchMapOpenOnMobile: true });
     };
 
-    const { address, bounds, origin } = searchInURL || {};
+    const { address } = searchInURL || {};
     const { title, description, schema } = createSearchResultSchema(listings, address, intl);
 
     // Set topbar class based on if a modal is open in
@@ -141,6 +172,8 @@ export class SearchPageComponent extends Component {
     const topbarClasses = this.state.isMobileModalOpen
       ? classNames(css.topbarBehindModal, css.topbar)
       : css.topbar;
+    // this.state.likedListings = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likedListings ?
+    //   Object.values(currentUser.attributes.profile.privateData.likedListings) : [];
 
 
     // N.B. openMobileMap button is sticky.
@@ -175,7 +208,9 @@ export class SearchPageComponent extends Component {
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             history={history}
             currentUser={currentUser}
-            onUpdateLikedListings={onUpdateLikedListings}
+            onUpdateLikedListings={this.addToLikedListings}
+            isListingLiked={this.isListingLiked}
+            removeListing={this.removeFromLikedListings}
             tribes={this.state.tribes}
           />
         </div>
@@ -281,7 +316,7 @@ SearchPage.loadData = (params, search) => {
     page,
     perPage: RESULT_PAGE_SIZE,
     include: ['author', 'images'],
-    'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink'],
+    'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink', 'publicData.category', 'publicData.companyName'],
     'fields.user': ['profile.displayName', 'profile.abbreviatedName', 'profile.publicData'], //added metadata for verify badge
     'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
     'limit.images': 1,

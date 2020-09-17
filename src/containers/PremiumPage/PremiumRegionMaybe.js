@@ -1,7 +1,6 @@
 import React from 'react';
-import { shape, string } from 'prop-types';
+import { string } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
-import classNames from 'classnames';
 
 import css from './PremiumPage.css';
 

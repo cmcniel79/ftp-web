@@ -3,7 +3,7 @@ import { string, func, oneOfType } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import truncate from 'lodash/truncate';
 import classNames from 'classnames';
-import { AvatarLarge, NamedLink, InlineTextButton } from '../../components';
+import { AvatarLarge, NamedLink, InlineTextButton, UserSocialMedia } from '../../components';
 import { ensureUser, ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
 
@@ -11,7 +11,7 @@ import css from './UserCard.css';
 
 // Approximated collapsed size so that there are ~three lines of text
 // in the desktop layout in the host section of the ListingPage.
-const BIO_COLLAPSED_LENGTH = 170;
+const BIO_COLLAPSED_LENGTH = 120;
 
 const truncated = s => {
   return truncate(s, {
@@ -41,15 +41,23 @@ class ExpandableBio extends Component {
     const handleShowMoreClick = () => {
       this.setState({ expand: true });
     };
+    const handleShowLessClick = () => {
+      this.setState({ expand: false });
+    };
     const showMore = (
       <InlineTextButton rootClassName={css.showMore} onClick={handleShowMoreClick}>
         <FormattedMessage id="UserCard.showFullBioLink" />
       </InlineTextButton>
     );
+    const showLess = (
+      <InlineTextButton rootClassName={css.showMore} onClick={handleShowLessClick}>
+        <FormattedMessage id="UserCard.showLessBioLink" />
+      </InlineTextButton>
+    );
     return (
       <p className={className}>
         {expand ? bio : truncatedBio}
-        {bio !== truncatedBio && !expand ? showMore : null}
+        {bio !== truncatedBio && !expand ? showMore : showLess}
       </p>
     );
   }
@@ -72,7 +80,11 @@ const UserCard = props => {
   const isCurrentUser =
     ensuredUser.id && ensuredCurrentUser.id && ensuredUser.id.uuid === ensuredCurrentUser.id.uuid;
   const { displayName, bio } = ensuredUser.attributes.profile;
-  const enrolled = ensuredUser.attributes.profile.publicData.enrolled ? true : false;
+  const enrolled = ensuredUser.attributes.profile.publicData.account === 'e' ? true : false;
+  const tribe = ensuredUser.attributes.profile.publicData.tribe ?
+    ensuredUser.attributes.profile.publicData.tribe : null;
+  const socialMedia = ensuredUser.attributes.profile.publicData.socialMedia ?
+    ensuredUser.attributes.profile.publicData.socialMedia : null;
 
   const handleContactUserClick = () => {
     onContactUser(user);
@@ -101,8 +113,6 @@ const UserCard = props => {
     </span>
   );
 
-
-
   const links = ensuredUser.id ? (
     <p className={linkClasses}>
       <NamedLink className={css.link} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
@@ -111,6 +121,10 @@ const UserCard = props => {
       {separator}
       {isCurrentUser ? editProfile : contact}
     </p>
+  ) : null;
+
+  const tribeSection = tribe ? (
+        <p className={css.tribeText}>Tribe: {tribe}</p>
   ) : null;
 
   return (
@@ -123,10 +137,12 @@ const UserCard = props => {
               <FormattedMessage id="UserCard.heading" values={{ name: displayName }} />
             </h3>
           </div>
-          {/* {hasBio ? <ExpandableBio className={css.desktopBio} bio={bio} /> : null} */}
+          <UserSocialMedia socialMedia={socialMedia} />
           {links}
         </div>
       </div>
+      {tribeSection}
+      {hasBio ? <ExpandableBio className={css.desktopBio} bio={bio} /> : null}
       {hasBio ? <ExpandableBio className={css.mobileBio} bio={bio} /> : null}
     </div>
   );

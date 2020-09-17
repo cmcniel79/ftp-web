@@ -1,5 +1,4 @@
 import React from 'react';
-import { required } from '../../util/validators';
 import { FieldSelect, ExternalLink } from '../../components';
 import getNativeTribes from '../../translations/nativeTribes';
 import { FormattedMessage } from '../../util/reactIntl';
@@ -20,12 +19,11 @@ const TribeSelectFieldMaybe = props => {
   const nativeLandsInfoLine1 = intl.formatMessage({
     id: 'ProfileSettingsForm.nativeLandsInfoLine1',
   });
-
-  const nativeLandsRequired = required(
-    intl.formatMessage({
-      id: 'ProfileSettingsForm.nativeLandsRequired',
-    })
-  );
+  // const nativeLandsRequired = required(
+  //   intl.formatMessage({
+  //     id: 'ProfileSettingsForm.nativeLandsRequired',
+  //   })
+  // );
   const contactEmail = <ExternalLink name="ContactEmail" href="mailto:customersupport@fromthepeople.co">
     here
   </ExternalLink>;
