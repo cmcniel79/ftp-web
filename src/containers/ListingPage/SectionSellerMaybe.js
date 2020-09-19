@@ -18,6 +18,7 @@ const SectionSellerMaybe = props => {
     onSubmitEnquiry,
     currentUser,
     onManageDisableScrolling,
+    websiteLink,
     isVerified,
     isPremium
   } = props;
@@ -38,7 +39,7 @@ const SectionSellerMaybe = props => {
   return (
     <div id="seller" className={css.sectionSeller}>
       {sellerHeading}
-      <UserCard user={listing.author} currentUser={currentUser} onContactUser={onContactUser}
+      <UserCard user={listing.author} currentUser={currentUser} onContactUser={onContactUser} websiteLink={websiteLink}
         isVerified={isVerified} isPremium={isPremium} />
       {!isPremium &&
         <Modal

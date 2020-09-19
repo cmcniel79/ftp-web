@@ -44,6 +44,7 @@ export class SearchPageComponent extends Component {
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
     this.addToLikedListings = this.addToLikedListings.bind(this);
     this.removeFromLikedListings = this.removeFromLikedListings.bind(this);
+    this.sendUpdatedLikedListings = this.sendUpdatedLikedListings.bind(this);
     this.isListingLiked = this.isListingLiked.bind(this);
   }
 
@@ -63,6 +64,7 @@ export class SearchPageComponent extends Component {
       this.likedListings.push(listing);
       console.log("Added!");
       console.log(this.likedListings);
+      this.sendUpdatedLikedListings(this.likedListings);
     }
   }
 
@@ -74,11 +76,24 @@ export class SearchPageComponent extends Component {
       this.likedListings.splice(index, 1);
       console.log("Removed!");
       console.log(this.likedListings);
+      this.sendUpdatedLikedListings(this.likedListings);
     }
   }
 
+  sendUpdatedLikedListings() {
+    console.log("Updated");
+    const updatedLikes = {
+      privateData: {
+        likedListings: this.likedListings
+      }
+    };
+    this.props.onUpdateLikedListings(updatedLikes);
+  }
+
+
   componentDidMount() {
     this._isMounted = true;
+
     var baseUrl = 'https://native-land.ca/api/index.php?maps=territories&position=';
     // Correct URL will look like 'https://native-land.ca/api/index.php?maps=territories&position=42.553080,-86.473389'
     this._isMounted && userLocation().then(location => {
@@ -99,12 +114,7 @@ export class SearchPageComponent extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;
-    const updatedLikes = {
-      privateData: {
-        likedListings: this.likedListings
-      }
-    };
-    this.props.onUpdateLikedListings(updatedLikes);
+    this.sendUpdatedLikedListings();
   }
 
   // Invoked when a modal is opened from a child component,

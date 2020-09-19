@@ -29,7 +29,7 @@ import apparelImage from './images/apparel.png';
 import traditionalImage from './images/traditional.png';
 
 import css from './LandingPage.css';
-import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
+import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { loadData } from './LandingPage.duck';
 
 export const LandingPageComponent = props => {
@@ -220,7 +220,7 @@ const mapStateToProps = state => {
   const {
     promotedListingRefs,
   } = state.LandingPage;
-  const listings = getMarketplaceEntities(state, promotedListingRefs);
+  const listings = getListingsById(state, promotedListingRefs);
   return {
     scrollingDisabled: isScrollingDisabled(state),
     listings,

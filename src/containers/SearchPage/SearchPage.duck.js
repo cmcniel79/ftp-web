@@ -49,7 +49,7 @@ const listingPageReducer = (state = initialState, action = {}) => {
       };
     case SEARCH_LISTINGS_ERROR:
       // eslint-disable-next-line no-console
-      console.error(payload);  // Did I add this in?
+      console.error(payload);  
       return { ...state, searchInProgress: false, searchListingsError: payload };
 
     case SEARCH_MAP_SET_ACTIVE_LISTING:

@@ -406,7 +406,7 @@ export class ListingPageComponent extends Component {
       publicData && publicData.sizes ? publicData.sizes : null;
     const customOrders =
       publicData && publicData.customOrders ? publicData.customOrders : null;
-    const externalLink =
+    const websiteLink =
       isPremium && publicData && publicData.websiteLink ? publicData.websiteLink : null;
 
     return (
@@ -473,6 +473,7 @@ export class ListingPageComponent extends Component {
                     onManageDisableScrolling={onManageDisableScrolling}
                     isVerified={isVerified}
                     isPremium={isPremium}
+                    websiteLink={websiteLink}
                   />
                   <SectionDescriptionMaybe description={description} />
                   <SectionCustomOrdersMaybe customOrders={customOrders} />
@@ -498,7 +499,7 @@ export class ListingPageComponent extends Component {
                       isDomesticOrder={isDomesticOrder}
                     />
                     :
-                    <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={externalLink} />
+                    <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
                   }
                 </div>
               </div>

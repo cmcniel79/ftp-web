@@ -71,7 +71,7 @@ ExpandableBio.propTypes = {
 };
 
 const UserCard = props => {
-  const { rootClassName, className, user, currentUser, onContactUser, isVerified, isPremium } = props;
+  const { rootClassName, className, user, currentUser, onContactUser, websiteLink, isVerified, isPremium } = props;
 
   const userIsCurrentUser = user && user.type === 'currentUser';
   const ensuredUser = userIsCurrentUser ? ensureCurrentUser(user) : ensureUser(user);
@@ -124,9 +124,9 @@ const UserCard = props => {
         :
         <NamedLink className={css.link} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
           <FormattedMessage id="UserCard.viewProfileLink" />
+          {separator}
         </NamedLink>
       }
-      {separator}
       {isCurrentUser ? editProfile : contact}
     </p>
   ) : null;
@@ -136,7 +136,7 @@ const UserCard = props => {
   return (
     <div className={classes}>
       <div className={css.content}>
-        <AvatarLarge className={avatarClassNames} user={user} enrolled={isVerified} />
+        <AvatarLarge className={avatarClassNames} user={user} enrolled={isVerified} websiteLink={websiteLink}/>
         <div className={css.info}>
           <div className={css.headingRow}>
             <h3 className={css.heading}>

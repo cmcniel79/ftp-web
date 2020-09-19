@@ -18,8 +18,13 @@ import {
   Footer,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
+import {
+  queryLikedListings,
+} from './LikedListingsPage.duck';
 import css from './LikedListingsPage.css';
 import { getListingsById } from '../../ducks/marketplaceData.duck';
+import { ensureListing } from '../../util/data';
+
 
 // Pagination page size might need to be dynamic on responsive page layouts
 // Current design has max 3 columns 42 is divisible by 2 and 3
@@ -46,9 +51,10 @@ export class LikedListingsPageComponent extends Component {
       queryParams,
       scrollingDisabled,
       intl,
-      currentUser,
       listings
     } = this.props;
+
+    listings.map(l => ensureListing(l));
 
     const hasPaginationInfo = !!pagination && pagination.totalItems != null;
     const listingsAreLoaded = !queryInProgress && hasPaginationInfo;
@@ -119,11 +125,10 @@ export class LikedListingsPageComponent extends Component {
             <div className={css.listingPanel}>
               {heading}
               {listings && <div className={css.listingCards}>
-                {console.log(listings)}
                 {listings.map(l => (
                   <ListingCard
                     className={css.listingCard}
-                    key={l}
+                    key={l.id.uuid}
                     listing={l}
                     renderSizes={renderSizes}
                   />
@@ -150,7 +155,7 @@ LikedListingsPageComponent.defaultProps = {
 const { arrayOf, bool } = PropTypes;
 
 LikedListingsPageComponent.propTypes = {
-  listings: arrayOf(propTypes.ownListing),
+  listings: arrayOf(propTypes.listing),
   pagination: propTypes.pagination,
   scrollingDisabled: bool.isRequired,
   // from injectIntl
@@ -159,18 +164,14 @@ LikedListingsPageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const {
-    pagination,
-  } = state.ManageListingsPage;
-  const { currentUser } = state.user;
-  console.log(currentUser);
-  const likedListings = currentUser.attributes.profile.privateData.likedListings;
-  console.log(likedListings);
-  const listings = getListingsById(state, likedListings);
+    // pagination,
+    currentPageResultIds,
+  } = state.LikedListingsPage;
+  const listings = getListingsById(state, currentPageResultIds); 
   return {
-    pagination,
+    // pagination,
     scrollingDisabled: isScrollingDisabled(state),
-    currentUser,
-    listings: listings
+    listings
   };
 };
 
@@ -181,17 +182,17 @@ const LikedListingsPage = compose(
   injectIntl
 )(LikedListingsPageComponent);
 
-// LikedListingsPage.loadData = (params, search) => {
-//   const queryParams = parse(search);
-//   const page = queryParams.page || 1;
-//   return queryOwnListings({
-//     ...queryParams,
-//     page,
-//     perPage: RESULT_PAGE_SIZE,
-//     include: ['images'],
-//     'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
-//     'limit.images': 1,
-//   });
-// };
+LikedListingsPage.loadData = (params, search) => {
+  const queryParams = parse(search);
+  const page = queryParams.page || 1;
+  return queryLikedListings({
+    ...queryParams,
+    page,
+    perPage: RESULT_PAGE_SIZE,
+    include: ['images'],
+    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
+    'limit.images': 1,
+  });
+};
 
 export default LikedListingsPage;

@@ -76,8 +76,10 @@ export const queryPromotedListings = queryParams => (dispatch, getState, sdk) =>
         'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
       })
       .then(response => {
+        console.log(response);
         // Pick only the id and type properties from the response listings
-        const listingRefs = response.data.data.map(({ id, type }) => ({ id, type }));
+        const listingRefs = response.data.data.map(l => l.id);
+        console.log(response);
         dispatch(addMarketplaceEntities(response));
         dispatch(queryListingsSuccess(listingRefs));
         return response;
