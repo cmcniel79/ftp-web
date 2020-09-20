@@ -9,31 +9,31 @@ const { LatLng, LatLngBounds } = sdkTypes;
 // `predictionPlace` (util.types.place) properties.
 export default [
   {
-    id: 'default-jewelry',
+    id: 'default-albuquerque',
     predictionPlace: {
-      address: 'Jewelry',
-      bounds: new LatLngBounds(new LatLng(60.29783, 25.25448), new LatLng(59.92248, 24.78287)),
+      address: 'Albuquerque, NM',
+      origin: new LatLng(35.106766, -106.629181)
     },
   },
   {
-    id: 'default-art',
+    id: 'default-seattle',
     predictionPlace: {
-      address: 'Art',
-      bounds: new LatLngBounds(new LatLng(60.53045, 22.38197), new LatLng(60.33361, 22.06644)),
+      address: 'Seattle, WA',
+      origin: new LatLng(47.6038321, -122.3300624)
     },
   },
   {
-    id: 'default-apparel',
+    id: 'default-los-angeles',
     predictionPlace: {
-      address: 'Apparel',
-      bounds: new LatLngBounds(new LatLng(61.83657, 24.11838), new LatLng(61.42728, 23.5422)),
+      address: 'Los Angeles, CA',
+      origin: new LatLng(34.0536909, -118.242766)
     },
   },
   {
-    id: 'default-supplies',
+    id: 'default-new-york',
     predictionPlace: {
-      address: 'Supplies',
-      bounds: new LatLngBounds(new LatLng(65.56434, 26.77069), new LatLng(64.8443, 24.11494)),
+      address: 'New York, NY',
+      origin: new LatLng(40.7648, -73.9808)
     },
   },
 ];
