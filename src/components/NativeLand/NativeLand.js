@@ -16,9 +16,9 @@ class NativeLand extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.useCurrentLocation = this.useCurrentLocation.bind(this);
     this.state = {
-      isLocationEntered: false,
+      tribeSearchInProgress: false,
       isModalOpen: false,
-      tribes: []
+      tribes: this.props.tribes
     };
   }
 
@@ -26,9 +26,8 @@ class NativeLand extends Component {
     const { queryParamNames } = this.props.filterConfig;
     const onSelect = this.props.getHandleChangedValueFn(true);
     const queryParamName = getQueryParamName(queryParamNames);
-    console.log(queryParamName);
     onSelect({ [queryParamName]: option });
-
+    this.props.saveTribes(this.state.tribes);
     // blur event target if event is passed
     if (e && e.currentTarget) {
       e.currentTarget.blur();
@@ -37,11 +36,9 @@ class NativeLand extends Component {
 
   handleSubmit(values) {
     const { lat, lng } = values.location.selectedPlace.origin;
-    console.log(lat);
-    console.log(lng);
-    console.log('Submitted!');
     this.getTribes(lat, lng);
     this.setState({ isModalOpen: false });
+    this.setState({ tribeSearchInProgress: true })
   }
 
   getTribes(lat, lng) {
@@ -57,12 +54,13 @@ class NativeLand extends Component {
           : Promise.reject(`Can't communicate with REST API server (${response.statusText})`),
       )
       .then(tribes => {
-        this.setState({ tribes }) // Notify your component that products have been fetched
+        this.setState({ tribes: tribes }) // Notify your component that products have been fetched
+        this.setState({ tribeSearchInProgress: false })
       })
   }
 
   useCurrentLocation() {
-    this.setState({ isLocationEntered: true });
+    this.setState({ tribeSearchInProgress: true });
     userLocation().then(location =>
       this.getTribes(location.lat, location.lng)
     )
@@ -73,6 +71,7 @@ class NativeLand extends Component {
     const { queryParamNames } = this.props.filterConfig;
     const queryParamName = getQueryParamName(queryParamNames);
     const initialValue = initialValues(queryParamNames);
+    console.log(initialValue);
     const modal =
       <Modal
         id="NativeLandLocationSearch"
@@ -82,8 +81,8 @@ class NativeLand extends Component {
         usePortal
         onManageDisableScrolling={() => null}
       >
-        <h2>
-          Native Land Search
+        <h2 className={css.modalHeading}>
+        <FormattedMessage id={'NativeLand.modalHeading'} />
         </h2>
         <NativeLandSearchForm
           onSubmit={this.handleSubmit}
@@ -91,7 +90,7 @@ class NativeLand extends Component {
       </Modal>;
 
     const tribes =
-      this.state.tribes.length > 0 ?
+      !this.state.tribeSearchInProgress && this.state.tribes.length > 0 ?
         <div>
           {this.state.tribes.map(t => {
             return (
@@ -117,7 +116,7 @@ class NativeLand extends Component {
         </div> : null;
 
     const locationButtons =
-      this.state.tribes.length === 0 ?
+      !this.state.tribeSearchInProgress && this.state.tribes.length === 0 ?
         <div>
           <button className={css.menuLabel} onClick={this.useCurrentLocation}>
             <FormattedMessage id={'NativeLand.currentLocation'} />
@@ -127,6 +126,15 @@ class NativeLand extends Component {
           </button>
           <h5>
             <FormattedMessage id={'NativeLand.nativeLandInfo'} />
+          </h5>
+        </div>
+        : null;
+
+    const loadingTribes =
+      this.state.tribeSearchInProgress ?
+        <div>
+          <h5>
+            <FormattedMessage id={'NativeLand.nativeLandInProgress'} />
           </h5>
         </div>
         : null;
@@ -145,6 +153,7 @@ class NativeLand extends Component {
         }
         {modal}
         {tribes}
+        {loadingTribes}
         {locationButtons}
       </div>
     );

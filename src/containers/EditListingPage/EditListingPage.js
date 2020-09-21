@@ -39,6 +39,7 @@ import {
   loadData,
   clearUpdatedTab,
   savePayoutDetails,
+  queryOwnListings
 } from './EditListingPage.duck';
 
 import css from './EditListingPage.css';
@@ -55,6 +56,7 @@ const { UUID } = sdkTypes;
 // N.B. All the presentational content needs to be extracted to their own components
 export const EditListingPageComponent = props => {
   const {
+    allOwnListings,
     currentUser,
     createStripeAccountError,
     fetchInProgress,
@@ -101,6 +103,8 @@ export const EditListingPageComponent = props => {
 
   const hasStripeOnboardingDataIfNeeded = returnURLType ? !!(currentUser && currentUser.id) : true;
   const showForm = hasStripeOnboardingDataIfNeeded && (isNewURI || currentListing.id);
+
+  console.log(allOwnListings);
 
   if (shouldRedirect) {
     const isPendingApproval =
@@ -307,16 +311,18 @@ const mapStateToProps = state => {
     stripeAccountFetched,
   } = state.stripeConnectAccount;
 
+  const { allOwnListings } = state.EditListingPage;
   const { currentUser } = state.user;
 
   const fetchInProgress = createStripeAccountInProgress;
 
   const getOwnListing = id => {
     const listings = getMarketplaceEntities(state, [{ id, type: 'ownListing' }]);
-
     return listings.length === 1 ? listings[0] : null;
   };
+
   return {
+    allOwnListings,
     getAccountLinkInProgress,
     getAccountLinkError,
     createStripeAccountError,

@@ -101,6 +101,10 @@ const errorAction = actionType => error => ({ type: actionType, payload: error, 
 
 // ================ Action types ================ //
 
+export const FETCH_LISTINGS_REQUEST = 'app/ManageListingsPage/FETCH_LISTINGS_REQUEST';
+export const FETCH_LISTINGS_SUCCESS = 'app/ManageListingsPage/FETCH_LISTINGS_SUCCESS';
+export const FETCH_LISTINGS_ERROR = 'app/ManageListingsPage/FETCH_LISTINGS_ERROR';
+
 export const MARK_TAB_UPDATED = 'app/EditListingPage/MARK_TAB_UPDATED';
 export const CLEAR_UPDATED_TAB = 'app/EditListingPage/CLEAR_UPDATED_TAB';
 
@@ -395,12 +399,62 @@ export default function reducer(state = initialState, action = {}) {
 
     default:
       return state;
+
+    case FETCH_LISTINGS_REQUEST:
+      return {
+        ...state,
+        getOwnListingsInProgress: true,
+      };
+    case FETCH_LISTINGS_SUCCESS:
+      return {
+        ...state,
+        getOwnListingsInProgress: false,
+        allOwnListings: payload
+      };
+    case FETCH_LISTINGS_ERROR:
+      // eslint-disable-next-line no-console
+      console.error(payload);
+      return { 
+        ...state, 
+        queryListingsError: payload, 
+        getOwnListingsInProgress: false
+      };
   }
 }
 
 // ================ Selectors ================ //
 
 // ================ Action creators ================ //
+
+export const queryListingsRequest = () => ({
+  type: FETCH_LISTINGS_REQUEST,
+  payload: {},
+});
+
+export const queryListingsSuccess = response => ({
+  type: FETCH_LISTINGS_SUCCESS,
+  payload: { data: response.data },
+});
+
+export const queryListingsError = e => ({
+  type: FETCH_LISTINGS_ERROR,
+  error: true,
+  payload: e,
+});
+
+export const queryOwnListings = (queryParams) => (dispatch, getState, sdk) => {
+  dispatch(queryListingsRequest());
+  return sdk.ownListings
+    .query({})
+    .then(response => {
+      dispatch(queryListingsSuccess(response));
+      return response;
+    })
+    .catch(e => {
+      dispatch(queryListingsError(storableError(e)));
+      throw e;
+    });
+};
 
 export const markTabUpdated = tab => ({
   type: MARK_TAB_UPDATED,
@@ -693,6 +747,7 @@ export const savePayoutDetails = (values, isUpdateCall) => (dispatch, getState, 
 export const loadData = params => (dispatch, getState, sdk) => {
   dispatch(clearUpdatedTab());
   const { id, type } = params;
+  dispatch(queryOwnListings(params));
 
   if (type === 'new') {
     // No need to listing data when creating a new listing

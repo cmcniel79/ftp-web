@@ -162,7 +162,7 @@ export const filters = [
     id: 'style',
     label: 'Style',
     type: 'SelectSingleFilter',
-    group: 'primary',
+    group: 'secondary',
     queryParamNames: ['pub_style'],
     config: {
       // "key" is the option you see in Flex Console.

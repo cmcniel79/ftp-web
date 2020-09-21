@@ -167,6 +167,7 @@ class MainPanel extends Component {
       onUpdateLikedListings,
       isListingLiked,
       removeListing,
+      saveTribes,
       tribes
     } = this.props;
 
@@ -259,7 +260,9 @@ class MainPanel extends Component {
             })}
           </SearchFiltersPrimary>
           <div className={css.nativeLandsSection}>
-            {nativeLandsConfig && <NativeLand
+            {nativeLandsConfig && !searchInProgress && 
+            <NativeLand
+              saveTribes={saveTribes}
               tribes={tribes}
               getHandleChangedValueFn={this.getHandleChangedValueFn}
               filterConfig={nativeLandsConfig}
@@ -304,12 +307,14 @@ class MainPanel extends Component {
             }
           })}
           <div className={css.nativeLandsMobile}>
-            {nativeLandsConfig && <NativeLand
+            {nativeLandsConfig && !searchInProgress && 
+            <NativeLand
               tribes={tribes}
               getHandleChangedValueFn={this.getHandleChangedValueFn}
               filterConfig={nativeLandsConfig}
               onSelect={this.getHandleChangedValueFn(true)}
               initialValues={this.initialValues}
+              searchInProgress={searchInProgress}
             />
             }
           </div>
@@ -322,7 +327,9 @@ class MainPanel extends Component {
               onManageDisableScrolling={this.props.onManageDisableScrolling}
               isOpen={isSecondaryFiltersOpen}
             >
-              <h2 className={css.modalHeading}>Secondary Search Filters</h2>
+              <h2 className={css.modalHeading}>
+              <FormattedMessage id="SearchPage.secondaryFiltersHeading" />
+              </h2>
               <SearchFiltersSecondary
                 urlQueryParams={urlQueryParams}
                 listingsAreLoaded={listingsAreLoaded}

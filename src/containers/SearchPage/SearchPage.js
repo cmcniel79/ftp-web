@@ -32,6 +32,7 @@ export class SearchPageComponent extends Component {
   constructor(props) {
     super(props);
 
+    this.tribes = [];
     this.likedListings = [];
     this.state = {
       isSearchMapOpenOnMobile: props.tab === 'map',
@@ -43,6 +44,11 @@ export class SearchPageComponent extends Component {
     this.removeFromLikedListings = this.removeFromLikedListings.bind(this);
     this.sendUpdatedLikedListings = this.sendUpdatedLikedListings.bind(this);
     this.isListingLiked = this.isListingLiked.bind(this);
+    this.saveTribes = this.saveTribes.bind(this);
+  }
+
+  saveTribes(nativeLandTribes) {
+    this.tribes = nativeLandTribes;
   }
 
   isListingLiked(listing) {
@@ -183,6 +189,8 @@ export class SearchPageComponent extends Component {
             onUpdateLikedListings={this.addToLikedListings}
             isListingLiked={this.isListingLiked}
             removeListing={this.removeFromLikedListings}
+            saveTribes={this.saveTribes}
+            tribes={this.tribes}
           />
         </div>
       </Page>

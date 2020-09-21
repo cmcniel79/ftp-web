@@ -79,7 +79,6 @@ export const queryPromotedListings = queryParams => (dispatch, getState, sdk) =>
         console.log(response);
         // Pick only the id and type properties from the response listings
         const listingRefs = response.data.data.map(l => l.id);
-        console.log(response);
         dispatch(addMarketplaceEntities(response));
         dispatch(queryListingsSuccess(listingRefs));
         return response;

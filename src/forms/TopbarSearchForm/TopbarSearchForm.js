@@ -4,7 +4,7 @@ import { Form as FinalForm, Field } from 'react-final-form';
 import { intlShape, injectIntl } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { Form } from '../../components';
-import searchImage from '../../assets/search.png'; // gives image path
+import IconHourGlass from './IconHourGlass';
 
 import css from './TopbarSearchForm.css';
 
@@ -32,7 +32,7 @@ class TopbarSearchFormComponent extends Component {
   render() {
     return (
       <div className={css.searchBox}>
-      <img className={css.searchImage} src={searchImage} alt="search" />
+      <IconHourGlass/>
       <FinalForm
         {...this.props}
         onSubmit={this.onSubmit}

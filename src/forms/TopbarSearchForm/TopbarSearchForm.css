@@ -177,3 +177,16 @@
   );
   max-width: 434px;
 }
+
+.iconSvg {
+  margin: auto 10px auto;
+}
+
+.iconSvgGroup {
+  stroke: var(--marketplaceColor);
+  stroke-width: 2.5px;
+
+  @media (--viewportMedium) {
+    stroke-width: 2px;
+  }
+}

@@ -121,3 +121,11 @@
   margin-top: 6px;
   display: inline-block;
 }
+
+.modalHeading {
+  padding-bottom: 25px;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 36px;
+  letter-spacing: -1px;
+}

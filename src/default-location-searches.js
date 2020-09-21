@@ -30,10 +30,24 @@ export default [
     },
   },
   {
-    id: 'default-new-york',
+    id: 'default-toronto',
     predictionPlace: {
-      address: 'New York, NY',
-      origin: new LatLng(40.7648, -73.9808)
+      address: 'Toronto, ON',
+      origin: new LatLng(43.7001100,-79.4163000)
+    },
+  },
+  {
+    id: 'default-vancouver',
+    predictionPlace: {
+      address: 'Vancouver, BC',
+      origin: new LatLng(49.246292, -123.116226)
+    },
+  },
+  {
+    id: 'default-winnipeg',
+    predictionPlace: {
+      address: 'Winnipeg, MB',
+      origin: new LatLng(49.895077, -97.138451)
     },
   },
 ];
