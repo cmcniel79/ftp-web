@@ -30,10 +30,14 @@ const SearchResultsPanel = props => {
     `${panelLargeWidth / 3}vw`,
   ].join(', ');
 
+  const random = listings.sort(function() {
+    return .5 - Math.random();
+  });
+
   return (
     <div className={classes}>
       <div className={css.listingCards}>
-        {listings.map(l => (
+        {random.map(l => (
           <ListingCard
             className={css.listingCard}
             key={l.id.uuid}
