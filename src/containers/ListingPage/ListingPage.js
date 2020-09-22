@@ -193,11 +193,12 @@ export class ListingPageComponent extends Component {
       fetchReviewsError,
       sendEnquiryInProgress,
       sendEnquiryError,
-      // timeSlots,
-      // fetchTimeSlotsError,
+      timeSlots,
+      fetchTimeSlotsError,
       filterConfig,
       onFetchTransactionLineItems,
-      lineItems,
+      domesticLineItems,
+      internationalLineItems,
       fetchLineItemsInProgress,
       fetchLineItemsError,
     } = this.props;
@@ -348,6 +349,8 @@ export class ListingPageComponent extends Component {
       currentUser.attributes.profile.protectedData.shippingAddress.country : null;
     const isDomesticOrder = authorCountry && userCountry && authorCountry === userCountry ? true : false;
 
+    const lineItems = isDomesticOrder ? domesticLineItems : internationalLineItems;
+
     const { formattedPrice, priceTitle } = priceData(price, intl);
 
     const handleBookingSubmit = values => {
@@ -490,8 +493,8 @@ export class ListingPageComponent extends Component {
                       subTitle={bookingSubTitle}
                       authorDisplayName={authorDisplayName}
                       onManageDisableScrolling={onManageDisableScrolling}
-                      // timeSlots={timeSlots}
-                      // fetchTimeSlotsError={fetchTimeSlotsError}
+                      timeSlots={timeSlots}
+                      fetchTimeSlotsError={fetchTimeSlotsError}
                       onFetchTransactionLineItems={onFetchTransactionLineItems}
                       lineItems={lineItems}
                       fetchLineItemsInProgress={fetchLineItemsInProgress}
@@ -578,11 +581,12 @@ const mapStateToProps = state => {
     showListingError,
     reviews,
     fetchReviewsError,
-    // timeSlots,
-    // fetchTimeSlotsError,
+    timeSlots,
+    fetchTimeSlotsError,
     sendEnquiryInProgress,
     sendEnquiryError,
-    lineItems,
+    domesticLineItems,
+    internationalLineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
     enquiryModalOpenForListingId,
@@ -611,9 +615,10 @@ const mapStateToProps = state => {
     showListingError,
     reviews,
     fetchReviewsError,
-    // timeSlots,
-    // fetchTimeSlotsError,
-    lineItems,
+    timeSlots,
+    fetchTimeSlotsError,
+    domesticLineItems,
+    internationalLineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
     sendEnquiryInProgress,

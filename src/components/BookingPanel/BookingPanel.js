@@ -70,8 +70,6 @@ const BookingPanel = props => {
     isDomesticOrder
   } = props;
 
-  console.log("Took out time slots");
-  console.log("Took out form spy");
   const price = listing.attributes.price;
   const hasListingState = !!listing.attributes.state;
   const isClosed = hasListingState && listing.attributes.state === LISTING_STATE_CLOSED;

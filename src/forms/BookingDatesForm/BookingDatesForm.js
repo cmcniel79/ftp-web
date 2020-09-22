@@ -46,6 +46,7 @@ export class BookingDatesFormComponent extends Component {
   // the values here to the bookingData object.
   // See https://www.sharetribe.com/docs/tutorial-transaction-process/customize-pricing-tutorial/
   handleOnChange(formValues) {
+    console.log("On change happening");
     const listingId = this.props.listingId;
     const isOwnListing = this.props.isOwnListing;
     const hasShippingFee = this.props.hasShippingFee;
@@ -101,6 +102,8 @@ export class BookingDatesFormComponent extends Component {
             fetchLineItemsError,
             shippingFee,
             isDomesticOrder,
+            onFetchTransactionLineItems,
+            listingId
           } = fieldRenderProps;
           
           const quantityMessage = intl.formatMessage({
@@ -111,7 +114,7 @@ export class BookingDatesFormComponent extends Component {
             id: 'BookingDatesForm.quantityPlaceholder',
           });
 
-          const bookingData = { unitType, shippingFee };
+          const bookingData = { unitType, isDomesticOrder };
 
           const showEstimatedBreakdown =
             bookingData && lineItems && !fetchLineItemsInProgress && !fetchLineItemsError;
@@ -141,7 +144,7 @@ export class BookingDatesFormComponent extends Component {
           );
 
           return (
-            <Form onSubmit={handleSubmit} className={classes}>
+            <Form onSubmit={handleSubmit} className={classes}> 
               {/* <FormSpy
                 subscription={{ values: true }}
                 onChange={values => {
