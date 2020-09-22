@@ -142,12 +142,12 @@ export class BookingDatesFormComponent extends Component {
 
           return (
             <Form onSubmit={handleSubmit} className={classes}>
-              <FormSpy
+              {/* <FormSpy
                 subscription={{ values: true }}
                 onChange={values => {
                   this.handleOnChange(values);
                 }}
-              />
+              /> */}
               {bookingInfoMaybe}
               {loadingSpinnerMaybe}
               {bookingInfoErrorMaybe}

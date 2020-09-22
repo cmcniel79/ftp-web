@@ -24,10 +24,4 @@ const SectionMaterialsMaybe = props => {
   );
 };
 
-SectionMaterialsMaybe.defaultProps = { material: null };
-
-SectionMaterialsMaybe.propTypes = {
-  Sizes: []
-};
-
 export default SectionMaterialsMaybe;

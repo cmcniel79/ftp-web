@@ -71,6 +71,7 @@ const BookingPanel = props => {
   } = props;
 
   console.log("Took out time slots");
+  console.log("Took out form spy");
   const price = listing.attributes.price;
   const hasListingState = !!listing.attributes.state;
   const isClosed = hasListingState && listing.attributes.state === LISTING_STATE_CLOSED;
@@ -163,8 +164,8 @@ BookingPanel.defaultProps = {
   isOwnListing: false,
   subTitle: null,
   unitType: config.bookingUnitType,
-  timeSlots: null,
-  fetchTimeSlotsError: null,
+  // timeSlots: null,
+  // fetchTimeSlotsError: null,
   lineItems: null,
   fetchLineItemsError: null,
 };
@@ -181,8 +182,8 @@ BookingPanel.propTypes = {
   subTitle: oneOfType([node, string]),
   authorDisplayName: oneOfType([node, string]).isRequired,
   onManageDisableScrolling: func.isRequired,
-  timeSlots: arrayOf(propTypes.timeSlot),
-  fetchTimeSlotsError: propTypes.error,
+  // timeSlots: arrayOf(propTypes.timeSlot),
+  // fetchTimeSlotsError: propTypes.error,
   onFetchTransactionLineItems: func.isRequired,
   lineItems: array,
   fetchLineItemsInProgress: bool.isRequired,
