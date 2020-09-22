@@ -479,7 +479,7 @@ export class ListingPageComponent extends Component {
                   <SectionCustomOrdersMaybe customOrders={customOrders} />
                   <SectionMaterialsMaybe options={materialOptions} material={material} />
                   <SectionSizesMaybe sizes={sizes} />
-                  {/* {!isPremium ?
+                  {!isPremium ?
                     <BookingPanel
                       className={css.bookingBreakdown}
                       listing={currentListing}
@@ -490,8 +490,8 @@ export class ListingPageComponent extends Component {
                       subTitle={bookingSubTitle}
                       authorDisplayName={authorDisplayName}
                       onManageDisableScrolling={onManageDisableScrolling}
-                      timeSlots={timeSlots}
-                      fetchTimeSlotsError={fetchTimeSlotsError}
+                      // timeSlots={timeSlots}
+                      // fetchTimeSlotsError={fetchTimeSlotsError}
                       onFetchTransactionLineItems={onFetchTransactionLineItems}
                       lineItems={lineItems}
                       fetchLineItemsInProgress={fetchLineItemsInProgress}
@@ -500,7 +500,7 @@ export class ListingPageComponent extends Component {
                     />
                     :
                     <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
-                  } */}
+                  }
                 </div>
               </div>
             </div>
