@@ -71,7 +71,6 @@ class NativeLand extends Component {
     const { queryParamNames } = this.props.filterConfig;
     const queryParamName = getQueryParamName(queryParamNames);
     const initialValue = initialValues(queryParamNames);
-    console.log(initialValue);
     const modal =
       <Modal
         id="NativeLandLocationSearch"

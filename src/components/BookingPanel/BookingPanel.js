@@ -58,8 +58,8 @@ const BookingPanel = props => {
     title,
     authorDisplayName,
     onManageDisableScrolling,
-    timeSlots,
-    fetchTimeSlotsError,
+    // timeSlots,
+    // fetchTimeSlotsError,
     history,
     location,
     intl,
@@ -70,6 +70,7 @@ const BookingPanel = props => {
     isDomesticOrder
   } = props;
 
+  console.log("Took out time slots");
   const price = listing.attributes.price;
   const hasListingState = !!listing.attributes.state;
   const isClosed = hasListingState && listing.attributes.state === LISTING_STATE_CLOSED;
