@@ -454,9 +454,9 @@ export class ListingPageComponent extends Component {
                     handleViewPhotosClick={handleViewPhotosClick}
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
-                  {/* {!isPremium &&
+                  {!isPremium &&
                   <SectionReviews className={css.sectionImages} reviews={reviews} fetchReviewsError={fetchReviewsError} />
-                  } */}
+                  }
                 </div>
                 <div className={css.bookingPanel}>
                   <SectionSellerMaybe
@@ -479,7 +479,7 @@ export class ListingPageComponent extends Component {
                   <SectionCustomOrdersMaybe customOrders={customOrders} />
                   <SectionMaterialsMaybe options={materialOptions} material={material} />
                   <SectionSizesMaybe sizes={sizes} />
-                  {!isPremium ?
+                  {/* {!isPremium ?
                     <BookingPanel
                       className={css.bookingBreakdown}
                       listing={currentListing}
@@ -500,7 +500,7 @@ export class ListingPageComponent extends Component {
                     />
                     :
                     <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
-                  }
+                  } */}
                 </div>
               </div>
             </div>
