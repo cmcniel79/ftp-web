@@ -454,9 +454,9 @@ export class ListingPageComponent extends Component {
                     handleViewPhotosClick={handleViewPhotosClick}
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
-                  {!isPremium &&
+                  {/* {!isPremium &&
                   <SectionReviews className={css.sectionImages} reviews={reviews} fetchReviewsError={fetchReviewsError} />
-                  }
+                  } */}
                 </div>
                 <div className={css.bookingPanel}>
                   <SectionSellerMaybe
