@@ -49,8 +49,8 @@ export class BookingDatesFormComponent extends Component {
     console.log("On change happening");
     const listingId = this.props.listingId;
     const isOwnListing = this.props.isOwnListing;
-    const hasShippingFee = this.props.hasShippingFee;
     const isDomesticOrder = this.props.isDomesticOrder;
+    console.log(listingId);
     if (!this.props.fetchLineItemsInProgress) {
       this.props.onFetchTransactionLineItems({
         bookingData: { isDomesticOrder },
@@ -90,35 +90,48 @@ export class BookingDatesFormComponent extends Component {
         onSubmit={this.handleFormSubmit}
         render={fieldRenderProps => {
           const {
-            formId,
+            // formId,
             handleSubmit,
-            intl,
+            // intl,
             isOwnListing,
             submitButtonWrapperClassName,
             unitType,
-            values,
+            // values,
             lineItems,
-            fetchLineItemsInProgress,
-            fetchLineItemsError,
+            // fetchLineItemsInProgress,
+            // fetchLineItemsError,
             shippingFee,
             isDomesticOrder,
-            onFetchTransactionLineItems,
-            listingId
+            // onFetchTransactionLineItems,
+            // listingId
           } = fieldRenderProps;
           
-          const quantityMessage = intl.formatMessage({
-            id: 'BookingDatesForm.quantityMessage',
-          });
+          // const quantityMessage = intl.formatMessage({
+          //   id: 'BookingDatesForm.quantityMessage',
+          // });
     
-          const quantityPlaceholderMessage = intl.formatMessage({
-            id: 'BookingDatesForm.quantityPlaceholder',
-          });
+          // const quantityPlaceholderMessage = intl.formatMessage({
+          //   id: 'BookingDatesForm.quantityPlaceholder',
+          // });
 
           const bookingData = { unitType, isDomesticOrder };
+          const shippingFeeItem = {
+            code: 'line-item/shipping-fee',
+            unitPrice: shippingFee,
+            quantity: 1,
+            includeFor: ['customer', 'provider'],
+          };
+          const booking = {
+            code: 'line-item/units',
+            unitPrice: unitPrice,
+            quantity: 1,
+            includeFor: ['customer', 'provider'],
+          };
 
-          const showEstimatedBreakdown =
-            bookingData && lineItems && !fetchLineItemsInProgress && !fetchLineItemsError;
+          // const lineItems = [booking, shippingFeeItem];
 
+          const showEstimatedBreakdown = bookingData && lineItems;
+          // bookingData && lineItems && !fetchLineItemsInProgress && !fetchLineItemsError;
 
           const bookingInfoMaybe = showEstimatedBreakdown ? (
             <div className={css.priceBreakdownContainer}>
@@ -129,15 +142,15 @@ export class BookingDatesFormComponent extends Component {
             </div>
           ) : null;
 
-          const loadingSpinnerMaybe = fetchLineItemsInProgress ? (
-            <IconSpinner className={css.spinner} />
-          ) : null;
+          // const loadingSpinnerMaybe = fetchLineItemsInProgress ? (
+          //   <IconSpinner className={css.spinner} />
+          // ) : null;
 
-          const bookingInfoErrorMaybe = fetchLineItemsError ? (
-            <span className={css.sideBarError}>
-              <FormattedMessage id="BookingDatesForm.fetchLineItemsError" />
-            </span>
-          ) : null;
+          // const bookingInfoErrorMaybe = fetchLineItemsError ? (
+          //   <span className={css.sideBarError}>
+          //     <FormattedMessage id="BookingDatesForm.fetchLineItemsError" />
+          //   </span>
+          // ) : null;
 
           const submitButtonClasses = classNames(
             submitButtonWrapperClassName || css.submitButtonWrapper
@@ -152,8 +165,8 @@ export class BookingDatesFormComponent extends Component {
                 }}
               /> */}
               {bookingInfoMaybe}
-              {loadingSpinnerMaybe}
-              {bookingInfoErrorMaybe}
+              {/* {loadingSpinnerMaybe}
+              {bookingInfoErrorMaybe} */}
 
               <p className={css.smallPrint}>
                 <FormattedMessage

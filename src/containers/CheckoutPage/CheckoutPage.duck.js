@@ -171,9 +171,6 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
     ? TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY
     : TRANSITION_REQUEST_PAYMENT;
   const isPrivilegedTransition = isPrivileged(transition);
-
-  console.log(orderParams);
-
   const bookingData = orderParams.bookingData;
   // {
   //   // startDate: orderParams.bookingStart,
@@ -312,9 +309,6 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
     : TRANSITION_REQUEST_PAYMENT;
   const isPrivilegedTransition = isPrivileged(transition);
 
-  console.log(orderParams);
-
-
   const bookingData = orderParams.bookingData;
   // {
   //   // startDate: orderParams.bookingStart,
@@ -375,7 +369,6 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
       .catch(handleError);
   } else if (isPrivilegedTransition) {
     // initiate privileged
-    console.log(bookingData);
     return initiatePrivileged({ isSpeculative: true, bookingData, bodyParams, queryParams })
       .then(handleSuccess)
       .catch(handleError);

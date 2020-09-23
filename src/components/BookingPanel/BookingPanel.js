@@ -67,7 +67,8 @@ const BookingPanel = props => {
     lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
-    isDomesticOrder
+    isDomesticOrder,
+    shippingFee
   } = props;
 
   const price = listing.attributes.price;
@@ -78,13 +79,7 @@ const BookingPanel = props => {
   // const showClosedListingHelpText = listing.id && isClosed; 
   const { formattedPrice, priceTitle } = priceData(price, intl);
   const isBook = !!parse(location.search).book;
-
   const classes = classNames(rootClassName || css.root, className);
-  const hasShippingFee =
-  listing.attributes.publicData &&
-    listing.attributes.publicData.shippingFee
-    ? true
-    : null;
 
   return (
     <div className={classes}>
@@ -123,8 +118,8 @@ const BookingPanel = props => {
             lineItems={lineItems}
             fetchLineItemsInProgress={fetchLineItemsInProgress}
             fetchLineItemsError={fetchLineItemsError}
-            hasShippingFee={hasShippingFee}
             isDomesticOrder={isDomesticOrder}
+            shippingFee={shippingFee}
           />
         ) : null}
       </ModalInMobile>

@@ -60,7 +60,15 @@ import css from './ListingPage.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
-const { UUID } = sdkTypes;
+const { UUID, Money } = sdkTypes;
+
+const resolveShippingFeePrice = shippingFee => {
+  const { amount, currency } = shippingFee;
+  if (amount && currency || amount == 0 && currency) {
+    return new Money(amount, currency);
+  }
+  return null;
+};
 
 const priceData = (price, intl) => {
   if (price && price.currency === config.currency) {
@@ -411,6 +419,14 @@ export class ListingPageComponent extends Component {
       publicData && publicData.customOrders ? publicData.customOrders : null;
     const websiteLink =
       isPremium && publicData && publicData.websiteLink ? publicData.websiteLink : null;
+    const domesticFee =
+      publicData && publicData.shippingFee ? publicData.shippingFee : null;
+    const internationalFee =
+      publicData && publicData.internationalFee ? publicData.internationalFee : null;
+    const shippingFee =
+      isDomesticOrder && domesticFee ? resolveShippingFeePrice(publicData.shippingFee) :
+        !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
+          resolveShippingFeePrice({ amount: 0, currency: config.currency });
 
     return (
       <Page
@@ -458,7 +474,7 @@ export class ListingPageComponent extends Component {
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
                   {!isPremium &&
-                  <SectionReviews className={css.sectionImages} reviews={reviews} fetchReviewsError={fetchReviewsError} />
+                    <SectionReviews className={css.sectionImages} reviews={reviews} fetchReviewsError={fetchReviewsError} />
                   }
                 </div>
                 <div className={css.bookingPanel}>
@@ -500,6 +516,7 @@ export class ListingPageComponent extends Component {
                       fetchLineItemsInProgress={fetchLineItemsInProgress}
                       fetchLineItemsError={fetchLineItemsError}
                       isDomesticOrder={isDomesticOrder}
+                      shippingFee={shippingFee}
                     />
                     :
                     <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
