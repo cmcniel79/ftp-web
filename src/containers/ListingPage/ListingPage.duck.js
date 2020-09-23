@@ -327,11 +327,14 @@ export const fetchTransactionLineItems = (bookingData, listingId, isOwnListing) 
 };
 
 export const loadData = (params, search) => dispatch => {
+  console.log("at beginning");
   const listingId = new UUID(params.id);
   const domesticBookingData = { isDomesticOrder: true };
   const internationalBookingData = { isDomesticOrder: false };
 
   // console.log(listingId);
+  dispatch(fetchTransactionLineItems(domesticBookingData, listingId, false));
+  dispatch(fetchTransactionLineItems(internationalBookingData, listingId, false));
 
   const ownListingVariants = [LISTING_PAGE_DRAFT_VARIANT, LISTING_PAGE_PENDING_APPROVAL_VARIANT];
   if (ownListingVariants.includes(params.variant)) {
@@ -343,15 +346,13 @@ export const loadData = (params, search) => dispatch => {
       dispatch(showListing(listingId)),
       // dispatch(fetchTimeSlots(listingId)),
       dispatch(fetchReviews(listingId)),
-      dispatch(fetchTransactionLineItems(domesticBookingData, listingId, false)),
-      dispatch(fetchTransactionLineItems(internationalBookingData, listingId, false)),
     ]);
   } else {
     return Promise.all([
       dispatch(showListing(listingId)),
       dispatch(fetchReviews(listingId)),
-      dispatch(fetchTransactionLineItems(domesticBookingData, listingId, false)),
-      dispatch(fetchTransactionLineItems(internationalBookingData, listingId, false)),
+      // dispatch(fetchTransactionLineItems(domesticBookingData, listingId, false)),
+      // dispatch(fetchTransactionLineItems(internationalBookingData, listingId, false)),
     ]);
   }
 };

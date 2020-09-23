@@ -229,7 +229,7 @@ CurrencyInputComponent.propTypes = {
   defaultValue: number,
   intl: intlShape.isRequired,
   input: shape({
-    value: oneOfType([string, propTypes.money, null]), // Added null in case shippingFee on EditListingPanel is null
+    value: oneOfType([string, propTypes.money] || null), // Added null in case shippingFee on EditListingPanel is null
     onBlur: func,
     onChange: func.isRequired,
     onFocus: func,
