@@ -33,6 +33,7 @@ export const FETCH_TIME_SLOTS_ERROR = 'app/ListingPage/FETCH_TIME_SLOTS_ERROR';
 
 export const FETCH_LINE_ITEMS_REQUEST = 'app/ListingPage/FETCH_LINE_ITEMS_REQUEST';
 export const FETCH_LINE_ITEMS_SUCCESS = 'app/ListingPage/FETCH_LINE_ITEMS_SUCCESS';
+export const FETCH_INTERNATIONAL_LINE_ITEMS_SUCCESS = 'app/ListingPage/FETCH_INTERNATIONAL_LINE_ITEMS_SUCCESS';
 export const FETCH_LINE_ITEMS_ERROR = 'app/ListingPage/FETCH_LINE_ITEMS_ERROR';
 
 export const SEND_ENQUIRY_REQUEST = 'app/ListingPage/SEND_ENQUIRY_REQUEST';
@@ -85,6 +86,8 @@ const listingPageReducer = (state = initialState, action = {}) => {
       return { ...state, fetchLineItemsInProgress: true, fetchLineItemsError: null };
     case FETCH_LINE_ITEMS_SUCCESS:
       return { ...state, fetchLineItemsInProgress: false, domesticLineItems: payload };
+    case FETCH_INTERNATIONAL_LINE_ITEMS_SUCCESS:
+      return { ...state, fetchLineItemsInProgress: false, internationalLineItems: payload };
     case FETCH_LINE_ITEMS_ERROR:
       return { ...state, fetchLineItemsInProgress: false, fetchLineItemsError: payload };
 
@@ -300,14 +303,13 @@ export const fetchTransactionLineItems = ({ bookingData, listingId, isOwnListing
   dispatch(fetchLineItemsRequest());
   transactionLineItems({ bookingData, listingId, isOwnListing })
     .then(response => {
-      console.log(response);
       const lineItems = response.data;
       dispatch(fetchLineItemsSuccess(lineItems));
     })
     .catch(e => {
       dispatch(fetchLineItemsError(storableError(e)));
       log.error(e, 'fetching-line-items-failed', {
-        // listingId: listingId.uuid,
+        listingId: listingId.uuid,
         bookingData: bookingData,
       });
     });
@@ -315,9 +317,6 @@ export const fetchTransactionLineItems = ({ bookingData, listingId, isOwnListing
 
 export const loadData = (params, search) => dispatch => {
   const listingId = new UUID(params.id);
-  const bookingData = {isDomesticOrder: false};
-  const isOwnListing = false;
-
   const ownListingVariants = [LISTING_PAGE_DRAFT_VARIANT, LISTING_PAGE_PENDING_APPROVAL_VARIANT];
   if (ownListingVariants.includes(params.variant)) {
     return dispatch(showListing(listingId, true));
@@ -328,7 +327,6 @@ export const loadData = (params, search) => dispatch => {
       dispatch(showListing(listingId)),
       // dispatch(fetchTimeSlots(listingId)),
       dispatch(fetchReviews(listingId)),
-      dispatch(fetchTransactionLineItems({bookingData, listingId, isOwnListing}))
     ]);
   } else {
     return Promise.all([

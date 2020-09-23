@@ -13,6 +13,7 @@ import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
 
 import css from './BookingDatesForm.css';
+const Decimal = require('decimal.js');
 
 const { Money } = sdkTypes;
 const identity = v => v;
@@ -46,11 +47,9 @@ export class BookingDatesFormComponent extends Component {
   // the values here to the bookingData object.
   // See https://www.sharetribe.com/docs/tutorial-transaction-process/customize-pricing-tutorial/
   handleOnChange(formValues) {
-    console.log("On change happening");
     const listingId = this.props.listingId;
     const isOwnListing = this.props.isOwnListing;
     const isDomesticOrder = this.props.isDomesticOrder;
-    console.log(listingId);
     if (!this.props.fetchLineItemsInProgress) {
       this.props.onFetchTransactionLineItems({
         bookingData: { isDomesticOrder },
@@ -97,7 +96,7 @@ export class BookingDatesFormComponent extends Component {
             submitButtonWrapperClassName,
             unitType,
             // values,
-            lineItems,
+            // lineItems,
             // fetchLineItemsInProgress,
             // fetchLineItemsError,
             shippingFee,
@@ -118,17 +117,21 @@ export class BookingDatesFormComponent extends Component {
           const shippingFeeItem = {
             code: 'line-item/shipping-fee',
             unitPrice: shippingFee,
-            quantity: 1,
+            quantity: new Decimal(1),
             includeFor: ['customer', 'provider'],
+            reversal: false,
+            lineTotal: shippingFee
           };
           const booking = {
             code: 'line-item/units',
             unitPrice: unitPrice,
-            quantity: 1,
+            quantity: new Decimal(1),
             includeFor: ['customer', 'provider'],
+            reversal: false,
+            lineTotal: unitPrice
           };
 
-          // const lineItems = [booking, shippingFeeItem];
+          const lineItems = [booking, shippingFeeItem];
 
           const showEstimatedBreakdown = bookingData && lineItems;
           // bookingData && lineItems && !fetchLineItemsInProgress && !fetchLineItemsError;
