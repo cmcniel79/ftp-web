@@ -349,7 +349,7 @@ export class ListingPageComponent extends Component {
       currentUser.attributes.profile.protectedData.shippingAddress.country : null;
     const isDomesticOrder = authorCountry && userCountry && authorCountry === userCountry ? true : false;
 
-    const lineItems = isDomesticOrder ? domesticLineItems : internationalLineItems;
+    const lineItems = !isPremium && isDomesticOrder ? domesticLineItems : internationalLineItems;
 
     const { formattedPrice, priceTitle } = priceData(price, intl);
 

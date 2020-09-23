@@ -86,8 +86,8 @@ const listingPageReducer = (state = initialState, action = {}) => {
       return { ...state, fetchLineItemsInProgress: true, fetchLineItemsError: null };
     case FETCH_LINE_ITEMS_SUCCESS:
       return { ...state, fetchLineItemsInProgress: false, domesticLineItems: payload };
-      case FETCH_INTERNATIONAL_LINE_ITEMS_SUCCESS:
-        return { ...state, fetchLineItemsInProgress: false, internationalLineItems: payload };
+    case FETCH_INTERNATIONAL_LINE_ITEMS_SUCCESS:
+      return { ...state, fetchLineItemsInProgress: false, internationalLineItems: payload };
     case FETCH_LINE_ITEMS_ERROR:
       return { ...state, fetchLineItemsInProgress: false, fetchLineItemsError: payload };
 
@@ -303,14 +303,16 @@ export const sendEnquiry = (listingId, message) => (dispatch, getState, sdk) => 
     });
 };
 
-export const fetchTransactionLineItems = ( bookingData, listingId, isOwnListing ) => dispatch => {
-const isDomesticOrder = bookingData.isDomesticOrder;
+export const fetchTransactionLineItems = (bookingData, listingId, isOwnListing) => dispatch => {
+  const isDomesticOrder = bookingData.isDomesticOrder;
+  console.log("FETCHED");
   dispatch(fetchLineItemsRequest());
   transactionLineItems({ bookingData, listingId, isOwnListing })
     .then(response => {
       const lineItems = response.data;
-      if(isDomesticOrder){
-      dispatch(fetchLineItemsSuccess(lineItems));
+      console.log(lineItems);
+      if (isDomesticOrder) {
+        dispatch(fetchLineItemsSuccess(lineItems));
       } else {
         dispatch(fetchInternationalLineItemsSuccess(lineItems));
       }
@@ -326,8 +328,8 @@ const isDomesticOrder = bookingData.isDomesticOrder;
 
 export const loadData = (params, search) => dispatch => {
   const listingId = new UUID(params.id);
-  const domesticBookingData = { isDomesticOrder: true};
-  const internationalBookingData = { isDomesticOrder: false};
+  const domesticBookingData = { isDomesticOrder: true };
+  const internationalBookingData = { isDomesticOrder: false };
 
   // console.log(listingId);
 
@@ -341,15 +343,15 @@ export const loadData = (params, search) => dispatch => {
       dispatch(showListing(listingId)),
       // dispatch(fetchTimeSlots(listingId)),
       dispatch(fetchReviews(listingId)),
-      // dispatch(fetchTransactionLineItems( domesticBookingData, listingId, false)),
-      // dispatch(fetchTransactionLineItems( internationalBookingData, listingId, false)),
+      dispatch(fetchTransactionLineItems(domesticBookingData, listingId, false)),
+      dispatch(fetchTransactionLineItems(internationalBookingData, listingId, false)),
     ]);
   } else {
     return Promise.all([
       dispatch(showListing(listingId)),
       dispatch(fetchReviews(listingId)),
-      // dispatch(fetchTransactionLineItems( domesticBookingData, listingId, false)),
-      // dispatch(fetchTransactionLineItems( internationalBookingData, listingId, false)),
+      dispatch(fetchTransactionLineItems(domesticBookingData, listingId, false)),
+      dispatch(fetchTransactionLineItems(internationalBookingData, listingId, false)),
     ]);
   }
 };
