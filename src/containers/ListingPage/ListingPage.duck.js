@@ -333,8 +333,8 @@ export const loadData = (params, search) => dispatch => {
   const internationalBookingData = { isDomesticOrder: false };
 
   // console.log(listingId);
-  dispatch(fetchTransactionLineItems(domesticBookingData, listingId, false));
-  dispatch(fetchTransactionLineItems(internationalBookingData, listingId, false));
+  // dispatch(fetchTransactionLineItems(domesticBookingData, listingId, false));
+  // dispatch(fetchTransactionLineItems(internationalBookingData, listingId, false));
 
   const ownListingVariants = [LISTING_PAGE_DRAFT_VARIANT, LISTING_PAGE_PENDING_APPROVAL_VARIANT];
   if (ownListingVariants.includes(params.variant)) {
