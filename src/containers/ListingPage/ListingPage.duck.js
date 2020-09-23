@@ -345,6 +345,11 @@ export const loadData = (params, search) => dispatch => {
       dispatch(fetchTransactionLineItems( internationalBookingData, listingId, false)),
     ]);
   } else {
-    return Promise.all([dispatch(showListing(listingId)), dispatch(fetchReviews(listingId))]);
+    return Promise.all([
+      dispatch(showListing(listingId)),
+      dispatch(fetchReviews(listingId)),
+      dispatch(fetchTransactionLineItems( domesticBookingData, listingId, false)),
+      dispatch(fetchTransactionLineItems( internationalBookingData, listingId, false)),
+    ]);
   }
 };
