@@ -341,15 +341,15 @@ export const loadData = (params, search) => dispatch => {
       dispatch(showListing(listingId)),
       // dispatch(fetchTimeSlots(listingId)),
       dispatch(fetchReviews(listingId)),
-      dispatch(fetchTransactionLineItems( domesticBookingData, listingId, false)),
-      dispatch(fetchTransactionLineItems( internationalBookingData, listingId, false)),
+      // dispatch(fetchTransactionLineItems( domesticBookingData, listingId, false)),
+      // dispatch(fetchTransactionLineItems( internationalBookingData, listingId, false)),
     ]);
   } else {
     return Promise.all([
       dispatch(showListing(listingId)),
       dispatch(fetchReviews(listingId)),
-      dispatch(fetchTransactionLineItems( domesticBookingData, listingId, false)),
-      dispatch(fetchTransactionLineItems( internationalBookingData, listingId, false)),
+      // dispatch(fetchTransactionLineItems( domesticBookingData, listingId, false)),
+      // dispatch(fetchTransactionLineItems( internationalBookingData, listingId, false)),
     ]);
   }
 };
