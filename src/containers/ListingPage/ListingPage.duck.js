@@ -337,7 +337,7 @@ export const loadData = (params, search) => dispatch => {
   if (ownListingVariants.includes(params.variant)) {
     return dispatch(showListing(listingId, true));
   }
-
+  console.log("got to here");
   if (config.enableAvailability) {
     return Promise.all([
       dispatch(showListing(listingId)),
