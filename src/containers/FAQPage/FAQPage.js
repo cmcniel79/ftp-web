@@ -1,5 +1,6 @@
 import React from 'react';
 import { StaticPage, TopbarContainer } from '../../containers';
+import { FormattedMessage } from '../../util/reactIntl';
 import {
   Accordion,
   AccordionButton,
@@ -8,6 +9,7 @@ import {
   LayoutWrapperMain,
   LayoutWrapperFooter,
   Footer,
+  ExternalLink
 } from '../../components';
 
 import css from './FAQPage.css';
@@ -20,7 +22,6 @@ const FAQPage = () => {
       schema={{
         '@context': 'http://schema.org',
         '@type': 'FAQPage',
-        description: 'Description of this page',
         name: 'FAQ page',
       }}
     >
@@ -29,11 +30,15 @@ const FAQPage = () => {
           <TopbarContainer />
         </LayoutWrapperTopbar>
         <LayoutWrapperMain className={css.faq}>
-          <h1 className={css.faqTitle}>Frequently Asked Questions</h1>
+          <h1 className={css.faqTitle}>
+            <FormattedMessage id="FAQPage.title" />
+          </h1>
 
           <div className={css.accordion}>
-            <h2>Creating an Account</h2>
-            <Accordion className={css.accordion} atomic={true}>
+            <h2 className={css.sectionTitle}>
+              <FormattedMessage id="FAQPage.createAccount" />
+            </h2>
+            <Accordion atomic={true}>
               <AccordionButton title="Can I Still Create An Account If I'm Not Native American or Indigenous?">
                 <p>
                   Yes! From The People encourages both Natives and non-Natives alike to sign up for an account with us.
@@ -55,8 +60,10 @@ const FAQPage = () => {
           </div>
 
           <div className={css.accordion}>
-            <h2>How To Become a Seller</h2>
-            <Accordion className={css.accordion} atomic={true}>
+            <h2 className={css.sectionTitle}>
+              <FormattedMessage id="FAQPage.becomeSeller" />
+            </h2>
+            <Accordion atomic={true}>
               <AccordionButton title="Can I become a seller if I am not part of a federally or state recognized tribe?">
                 <p>
                   Yes of course! But there are requirements for your postings that you must meet in order to sell.
@@ -111,8 +118,30 @@ const FAQPage = () => {
           </div>
 
           <div className={css.accordion}>
-            <h2>Indigenous Allyship</h2>
-            <Accordion className={css.accordion} atomic={true}>
+            <h2 className={css.sectionTitle}>
+              <FormattedMessage id="FAQPage.accountTypes" />
+            </h2>
+            <Accordion atomic={true}>
+              <AccordionButton title="What types of accounts are available?">
+                <DummyContent />
+              </AccordionButton>
+              <AccordionButton title="How do I get a Verified Account?">
+                <DummyContent />
+              </AccordionButton>
+              <AccordionButton title="How do I get a Premium Account?">
+                <DummyContent />
+              </AccordionButton>
+              <AccordionButton title="How do I get an Ad account?">
+                <DummyContent />
+              </AccordionButton>
+            </Accordion>
+          </div>
+
+          <div className={css.accordion}>
+            <h2 className={css.sectionTitle}>
+              <FormattedMessage id="FAQPage.allyship" />
+            </h2>
+            <Accordion atomic={true}>
               <AccordionButton title="What is cultural appropriation vs cultural appreciation?">
                 <DummyContent />
               </AccordionButton>
@@ -124,8 +153,10 @@ const FAQPage = () => {
 
 
           <div className={css.accordion}>
-            <h2>Marketplace Rules</h2>
-            <Accordion className={css.accordion} atomic={true}>
+            <h2 className={css.sectionTitle}>
+              <FormattedMessage id="FAQPage.rules" />
+            </h2>
+            <Accordion atomic={true}>
               <AccordionButton title="Compliance with the Indian Arts and Crafts Act of 1990">
                 <p>
                   If you suspect a seller has misrepresented themselves in regards to Native American heritage or falsely suggests their product is Indian produced,
@@ -150,8 +181,10 @@ const FAQPage = () => {
 
 
           <div className={css.accordion}>
-            <h2>Payment Process</h2>
-            <Accordion className={css.accordion} atomic={true}>
+            <h2 className={css.sectionTitle}>
+              <FormattedMessage id="FAQPage.payment" />
+            </h2>
+            <Accordion atomic={true}>
               <AccordionButton title="What is the payment process like?">
                 <p>
                   Buyers can use either PayPal or their credit card to make a purchase. After payment, the seller needs to accept the transaction for the payment
@@ -183,9 +216,13 @@ const FAQPage = () => {
                   </p>
               </AccordionButton>
             </Accordion>
-            <h2 className={css.faqTitle}>Questions Not Covered Here?</h2>
           </div>
-
+           <h2 className={css.linkTitle}>
+            <FormattedMessage id="FAQPage.notAnswered" />
+          </h2>
+          <ExternalLink className={css.link} href='mailto:customersupport@fromthepeopl.co'>
+            <FormattedMessage id="FAQPage.email" />
+          </ExternalLink>
         </LayoutWrapperMain>
         <LayoutWrapperFooter>
           <Footer />

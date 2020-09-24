@@ -157,7 +157,6 @@ export const setActiveListing = listingId => ({
 });
 
 export const updateLikedListings = actionPayload => {
-  console.log(actionPayload);
   return (dispatch, getState, sdk) => {
     dispatch(updateProfileRequest());
 

@@ -112,6 +112,7 @@ export class LikedListingsPageComponent extends Component {
       `${panelWidth / 3}vw`,
     ].join(', ');
 
+    console.log(listings);
     return (
       <Page title={title} scrollingDisabled={scrollingDisabled}>
         <LayoutSingleColumn>
@@ -124,7 +125,7 @@ export class LikedListingsPageComponent extends Component {
             {queryListingsError ? queryError : null}
             <div className={css.listingPanel}>
               {heading}
-              {listings && <div className={css.listingCards}>
+              <div className={css.listingCards}>
                 {listings.map(l => (
                   <ListingCard
                     className={css.listingCard}
@@ -134,7 +135,6 @@ export class LikedListingsPageComponent extends Component {
                   />
                 ))}
               </div>
-              }
               {paginationLinks}
             </div>
           </LayoutWrapperMain>

@@ -90,6 +90,33 @@ export const queryListingsError = e => ({
     payload: e,
 });
 
+export const updateLikedListings = actionPayload => {
+    return (dispatch, getState, sdk) => {
+    //   dispatch(updateProfileRequest());
+  
+      const queryParams = {
+        expand: true,
+      };
+  
+      return sdk.currentUser
+        .updateProfile(actionPayload, queryParams)
+        // .then(response => {
+        //   dispatch(updateProfileSuccess(response));
+  
+        //   const entities = denormalisedResponseEntities(response);
+        //   if (entities.length !== 1) {
+        //     throw new Error('Expected a resource in the sdk.currentUser.updateProfile response');
+        //   }
+        //   const currentUser = entities[0];
+  
+          // Update current user in state.user.currentUser through user.duck.js
+        //   dispatch(currentUserShowSuccess(currentUser));
+        // })
+        // .catch(e => dispatch(updateProfileError(storableError(e))));
+    };
+  };
+
+
 // Throwing error for new (loadData may need that info)
 export const queryLikedListings = queryParams => (dispatch, getState, sdk) => {
     dispatch(queryListingsRequest(queryParams));
@@ -106,15 +133,19 @@ export const queryLikedListings = queryParams => (dispatch, getState, sdk) => {
                 : null;
             if (likedListingIds) {
                 dispatch(queryListingsSuccess(likedListingIds));
-                return (likedListingIds.map(like => sdk.listings.show({
+                return (likedListingIds.map(like => 
+                    sdk.listings.show({
                     id: like.uuid,
                     include: ['images'],
                     'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
                 })
                     .then(response => {
-                        console.log(response);
                         dispatch(addMarketplaceEntities(response));
-                    })))
+                    })
+                    .catch(e => {
+                        dispatch(queryListingsError(storableError(e)));
+                    })
+                ))
             }
         })
         .catch(e => {
