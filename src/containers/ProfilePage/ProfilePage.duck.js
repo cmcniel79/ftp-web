@@ -159,7 +159,7 @@ export const showUser = userId => (dispatch, getState, sdk) => {
   return sdk.users
     .show({
       id: userId,
-      include: ['profileImage'],
+      include: ['profileImage', 'publicData'],
       'fields.image': ['variants.square-small', 'variants.square-small2x'],
     })
     .then(response => {

@@ -84,25 +84,29 @@ export const LandingPageComponent = props => {
                     {
                       imageUrl: jewelryImage,
                       imageAltText: 'Jewelry',
-                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=jewelry' } },
+                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { 
+                        search: '?pub_subCategory=necklaces&pub_subCategory=earrings&pub_subCategory=rings&pub_subCategory=bracelets&pub_subCategory=anklets' } },
                       text: 'Jewelry',
                     },
                     {
                       imageUrl: artImage,
                       imageAltText: 'Art',
-                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=art' } },
+                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: {
+                         search: '?pub_subCategory=paintings&pub_subCategory=beadwork&pub_subCategory=photo&pub_subCategory=prints&pub_subCategory=stickers&pub_subCategory=carvings&pub_subCategory=baskets&pub_subCategory=rugs' } },
                       text: 'Art',
                     },
                     {
                       imageUrl: traditionalImage,
                       imageAltText: 'Traditional',
-                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=traditional' } },
+                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: {
+                         search: '?pub_subCategory=botanicals&pub_subCategory=regalia'  } },
                       text: 'Traditional Assortments',
                     },
                     {
                       imageUrl: apparelImage,
                       imageAltText: 'Apparel',
-                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { search: '?pub_category=apparel' } },
+                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: {
+                         search: '?pub_subCategory=tops&pub_subCategory=bottoms&pub_subCategory=dresses&pub_subCategory=shoes' } },
                       text: 'Apparel',
                     },
                   ]}

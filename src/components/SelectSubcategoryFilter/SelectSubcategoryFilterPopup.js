@@ -4,6 +4,8 @@ import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 
 import { Menu, MenuContent, MenuItem, MenuLabel } from '..';
+import forward from './Images/chevron-forward-outline.svg';
+import back from './Images/chevron-back-outline.svg';
 import css from './SelectSubcategoryFilterPopup.css';
 
 const optionLabel = (options, key) => {
@@ -29,7 +31,6 @@ class SelectSubcategoryFilterPopup extends Component {
   }
 
   selectOption(queryParamName, option) {
-    console.log(option);
     this.setState({ isOpen: false });
     this.props.onSelect({ [queryParamName]: option });
   }
@@ -40,6 +41,19 @@ class SelectSubcategoryFilterPopup extends Component {
       this.setState({ subCategory: sub });
       this.setState({ categorySelected: true });
     }
+  }
+
+  getCategory(options, value) {
+    var x;
+    var sub;
+    for (x in options) {
+      for (sub in options[x].subCategories) {
+        if (options[x].subCategories[sub].key === value) {
+          return options[x].label;
+        }
+      }
+    }
+    return null;
   }
 
   render() {
@@ -57,8 +71,10 @@ class SelectSubcategoryFilterPopup extends Component {
     const initialValue =
       initialValues && initialValues[queryParamName] ? initialValues[queryParamName] : null;
 
+    const initialCategory = initialValue && initialValue.length > 1 ? this.getCategory(options, initialValue[0]) : null;
+
     // resolve menu label text and class
-    const menuLabel = initialValue ? optionLabel(options, initialValue) : label;
+    const menuLabel = initialCategory ? initialCategory : initialValue ? optionLabel(options, initialValue) : label;
     const menuLabelClass = initialValue ? css.menuLabelSelected : css.menuLabel;
 
     const classes = classNames(rootClassName || css.root, className);
@@ -68,6 +84,7 @@ class SelectSubcategoryFilterPopup extends Component {
         {options.map(option => {
           // check if this option is selected
           const selected = initialValue === option.key;
+          // console.log(initialValue);
           // menu item border class
           const menuItemBorderClass = selected ? css.menuItemBorderSelected : css.menuItemBorder;
           return (
@@ -78,7 +95,7 @@ class SelectSubcategoryFilterPopup extends Component {
               >
                 <span className={menuItemBorderClass} />
                 {option.label}
-                <span style={{color: "#D40000", float: "right"}}>˃</span>
+                <img className={css.forward} src={forward} alt="forward" />
               </button>
             </MenuItem>
           );
@@ -91,21 +108,24 @@ class SelectSubcategoryFilterPopup extends Component {
             className={css.backButton}
             onClick={() => this.setState({ categorySelected: false })}
           >
-            ˂ Back to Main Categories
+            <img className={css.back} src={back} alt="back" />
+            <FormattedMessage id={'SelectSubcategoryFilter.popupBack'} />
           </button>
         </MenuItem>
         {this.state.subCategory.map(sub => {
           // check if this option is selected
-          // const selected = initialValue === option.key;
+          const selected = initialValue === sub.key;
+          console.log(initialValue);
+          // console.log(sub.key);
           // menu item border class
-          // const menuItemBorderClass = selected ? css.menuItemBorderSelected : css.menuItemBorder;
+          const menuItemBorderClass = selected ? css.menuItemBorderSelected : css.menuItemBorder;
           return (
             <MenuItem key={sub.key}>
               <button
                 className={css.menuItem}
                 onClick={() => this.selectOption(queryParamName, sub.key)}
               >
-                <span className={css.menuItemBorder} />
+                <span className={menuItemBorderClass} />
                 {sub.label}
               </button>
             </MenuItem>
@@ -116,13 +136,13 @@ class SelectSubcategoryFilterPopup extends Component {
             className={css.searchAllMenuItem}
             onClick={() => this.selectOption(queryParamName, this.state.subCategory.map(s => s.key))}
           >
-            Search All
+            <FormattedMessage id={'SelectSubcategoryFilter.popupSearchAll'} />
           </button>
           <button
             className={css.clearMenuItem}
             onClick={() => this.selectOption(queryParamName, null)}
           >
-            <FormattedMessage id={'SelectSingleFilter.popupClear'} />
+            <FormattedMessage id={'SelectSubcategoryFilter.popupClear'} />
           </button>
         </MenuItem>
       </MenuContent>

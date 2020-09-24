@@ -134,7 +134,7 @@ const TopbarDesktop = props => {
     </NamedLink>;
 
   const shopLink =
-    <NamedLink className={css.customLink} name="SearchPage">
+    <NamedLink className={css.customLink} name="SearchPage" to={{ search: '' }}>
       <span className={css.custom}>
         <FormattedMessage id="TopbarDesktop.searchPage" />
       </span>

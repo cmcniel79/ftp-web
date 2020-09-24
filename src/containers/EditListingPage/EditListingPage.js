@@ -104,7 +104,18 @@ export const EditListingPageComponent = props => {
   const hasStripeOnboardingDataIfNeeded = returnURLType ? !!(currentUser && currentUser.id) : true;
   const showForm = hasStripeOnboardingDataIfNeeded && (isNewURI || currentListing.id);
 
-  console.log(allOwnListings);
+  const accountType = currentUser && currentUser.attributes.profile.publicData.account ? 
+    currentUser.attributes.profile.publicData.account : null;
+  const accountLimit = currentUser && currentUser.attributes.profile.publicData.accountLimit ? 
+    currentUser.attributes.profile.publicData.accountLimit : null;
+
+  const listingsLimit = accountLimit ? accountLimit : 
+    accountType && accountType === "p" ? 3 :
+    accountType && accountType === "a" ? 1 :
+    accountType && accountType === "e" ? 15 : 0;
+  
+  const isUnderLimit = listingsLimit && allOwnListings && 
+    allOwnListings.data.data.length > 0 && listingsLimit > allOwnListings.data.data.length;
 
   if (shouldRedirect) {
     const isPendingApproval =
@@ -131,6 +142,11 @@ export const EditListingPageComponent = props => {
           },
         };
 
+    return <NamedRedirect {...redirectProps} />;
+  } else if(currentListingState && currentListingState !== "published" && isUnderLimit === false) {
+    const redirectProps =  {
+          name: 'ProfileSettingsPage',
+        };
     return <NamedRedirect {...redirectProps} />;
   } else if (showForm) {
     const {

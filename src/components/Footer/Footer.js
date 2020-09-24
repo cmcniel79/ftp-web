@@ -126,7 +126,7 @@ const Footer = props => {
                 <li className={css.listItem}>
                   <NamedLink
                     name="SearchPage"
-                    to={{ search: '?', }}
+                    to={{ search: '?pub_subCategory=necklaces&pub_subCategory=earrings&pub_subCategory=rings&pub_subCategory=bracelets&pub_subCategory=anklets' }}
                     className={css.link}>
                     <FormattedMessage id="Footer.searchJewelry" />
                   </NamedLink>
@@ -134,7 +134,7 @@ const Footer = props => {
                 <li className={css.listItem}>
                   <NamedLink
                     name="SearchPage"
-                    to={{ search: '?', }}
+                    to={{ search: '?pub_subCategory=paintings&pub_subCategory=beadwork&pub_subCategory=photo&pub_subCategory=prints&pub_subCategory=stickers&pub_subCategory=carvings&pub_subCategory=baskets&pub_subCategory=rugs' }}
                     className={css.link}>
                     <FormattedMessage id="Footer.searchArt" />
                   </NamedLink>
@@ -142,7 +142,7 @@ const Footer = props => {
                 <li className={css.listItem}>
                   <NamedLink
                     name="SearchPage"
-                    to={{ search: '?', }}
+                    to={{ search: '?pub_subCategory=tops&pub_subCategory=bottoms&pub_subCategory=dresses&pub_subCategory=shoes' }}
                     className={css.link}>
                     <FormattedMessage id="Footer.searchApparel" />
                   </NamedLink>
@@ -150,7 +150,7 @@ const Footer = props => {
                 <li className={css.listItem}>
                   <NamedLink
                     name="SearchPage"
-                    to={{ search: '?', }}
+                    to={{ search: '?pub_subCategory=botanicals&pub_subCategory=regalia' }}
                     className={css.link}>
                     <FormattedMessage id="Footer.searchTraditional" />
                   </NamedLink>

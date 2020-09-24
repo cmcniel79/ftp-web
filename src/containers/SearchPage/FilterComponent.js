@@ -102,7 +102,7 @@ const FilterComponent = props => {
           id={componentId}
           label={label}
           queryParamNames={queryParamNames}
-          initialValues={initialValues(queryParamNames)}
+          initialValues={initialValues(["pub_subCategory"])}
           onSelect={getHandleChangedValueFn(useHistoryPush)}
           {...config}
           {...rest}

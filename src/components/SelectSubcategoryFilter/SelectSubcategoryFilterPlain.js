@@ -67,17 +67,17 @@ class SelectSubcategoryFilterPlain extends Component {
     const bottomLinks = !this.state.categorySelected ?
       <div className={css.bottomLinks}>
         <button className={css.clearButton} onClick={e => this.selectOption(null, e)}>
-          <FormattedMessage id={'SelectSingleFilter.plainClear'} />
+        <FormattedMessage id={'SelectSubcategoryFilter.plainClear'} />
         </button>
       </div>
       :
       <div className={css.bottomLinks}>
         <button className={css.searchAllButton} onClick={() => this.selectOption(queryParamName, this.state.subCategory.map(s => s.key))}
         >
-          Search All
+        <FormattedMessage id={'SelectSubcategoryFilter.plainSearchAll'} />
   </button>
         <button className={css.clearButton} onClick={e => this.selectOption(null, e)}>
-          <FormattedMessage id={'SelectSingleFilter.plainClear'} />
+        <FormattedMessage id={'SelectSubcategoryFilter.plainClear'} />
         </button>
       </div>
 
@@ -116,7 +116,7 @@ class SelectSubcategoryFilterPlain extends Component {
           className={css.option}
           onClick={() => this.setState({ categorySelected: false })}
         >
-          ˂ Back to Main Categories
+          <FormattedMessage id={'SelectSubcategoryFilter.plainBack'} />
           </button>
         {this.state.subCategory.map(sub => {
           // check if this option is selected

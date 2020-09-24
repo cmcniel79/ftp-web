@@ -321,7 +321,11 @@ class ProfileSettingsFormComponent extends Component {
                   }}
                 </Field>
                 <div className={css.tip}>
-                  <FormattedMessage id="ProfileSettingsForm.tip" />
+                  {accountType === "p" || accountType === "a" || accountType === "n" ?
+                    <FormattedMessage id="ProfileSettingsForm.tipLogo" />
+                    :
+                    <FormattedMessage id="ProfileSettingsForm.tip" />
+                  }
                 </div>
                 <div className={css.fileInfo}>
                   <FormattedMessage id="ProfileSettingsForm.fileInfo" />
@@ -356,7 +360,11 @@ class ProfileSettingsFormComponent extends Component {
               }
               <div className={css.sectionContainer}>
                 <h3 className={css.sectionTitle}>
-                  <FormattedMessage id="ProfileSettingsForm.yourName" />
+                  {accountType === "p" || accountType === "a" || accountType === "n" ?
+                    <FormattedMessage id="ProfileSettingsForm.yourRepresentative" />
+                    :
+                    <FormattedMessage id="ProfileSettingsForm.yourName" />
+                  }
                 </h3>
                 <div className={css.nameContainer}>
                   <FieldTextInput
@@ -391,7 +399,10 @@ class ProfileSettingsFormComponent extends Component {
                   placeholder={bioPlaceholder}
                 />
                 <p className={css.bioInfo}>
-                  <FormattedMessage id="ProfileSettingsForm.bioInfo" />
+                  {accountType === "p" || accountType === "a" || accountType === "n" ?
+                    null :
+                    <FormattedMessage id="ProfileSettingsForm.bioInfo" />
+                  }
                 </p>
               </div>
               {showSocialMediaFields &&

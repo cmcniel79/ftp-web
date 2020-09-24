@@ -87,44 +87,52 @@ export class ProfileSettingsPageComponent extends Component {
     const profileImageId = user.profileImage ? user.profileImage.id : null;
     const profileImage = image || { imageId: profileImageId };
     const tribe = user.attributes.profile.publicData ? user.attributes.profile.publicData.tribe : null;
-    const nativeLands =  user.attributes.profile.publicData ? user.attributes.profile.publicData.nativeLands : null;
+    const nativeLands = user.attributes.profile.publicData ? user.attributes.profile.publicData.nativeLands : null;
     const accountType = user.attributes.profile.publicData ? user.attributes.profile.publicData.account : null;
     const companyName = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyName : null;
     const companyWebsite = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyWebsite : null;
     const socialMedia = user.attributes.profile.publicData ? user.attributes.profile.publicData.socialMedia : null;
     const facebook = socialMedia && socialMedia.facebook ? socialMedia.facebook : null;
     const twitter = socialMedia && socialMedia.twitter ? socialMedia.twitter : null;
-    const insta = socialMedia && socialMedia.insta ? socialMedia.insta : null; 
+    const insta = socialMedia && socialMedia.insta ? socialMedia.insta : null;
 
     const faqLink = <NamedLink
       name="FAQPage"
     > FAQ Page
     </NamedLink>;
-
-    let accountHeading;
+    let verification;
+    let listingsLimit;
+    let profileHeading;
     switch (accountType) {
       case null:
-        accountHeading = null;
+        profileHeading = "Standard";
+        listingsLimit = 0;
+        verification = <FormattedMessage id="ProfileSettingsPage.unverifiedAccount" />;
         break;
       case "":
-        accountHeading =
-          <FormattedMessage id="ProfileSettingsPage.accountHeadingStandard" />;
+        profileHeading = "Standard";
+        listingsLimit = 0;
+        verification = <FormattedMessage id="ProfileSettingsPage.unverifiedAccount" />;
         break;
       case "e":
-        accountHeading =
-          <FormattedMessage id="ProfileSettingsPage.accountHeadingEnrolled" />;
+        profileHeading = "Standard";
+        listingsLimit = 15;
+        verification = <FormattedMessage id="ProfileSettingsPage.verifiedAccount" />;
         break;
       case "p":
-        accountHeading =
-          <FormattedMessage id="ProfileSettingsPage.accountHeadingPremium" />;
+        profileHeading = "Premium";
+        listingsLimit = 3;
+        verification = null;
         break;
       case "a":
-        accountHeading =
-          <FormattedMessage id="ProfileSettingsPage.accountHeadingAd" />;
+        profileHeading = "Ad"
+        listingsLimit = 1;
+        verification = null;
         break;
       case "n":
-        accountHeading =
-          <FormattedMessage id="ProfileSettingsPage.accountHeadingNonProfit" />;
+        profileHeading = "Non-Profit";
+        listingsLimit = 1;
+        verification = null;
         break;
     }
 
@@ -133,8 +141,10 @@ export class ProfileSettingsPageComponent extends Component {
         className={css.form}
         accountType={accountType}
         currentUser={currentUser}
-        initialValues={{ firstName, lastName, bio, profileImage: user.profileImage, tribe, nativeLands, 
-          companyName, companyWebsite, facebook, twitter, insta }}
+        initialValues={{
+          firstName, lastName, bio, profileImage: user.profileImage, tribe, nativeLands,
+          companyName, companyWebsite, facebook, twitter, insta
+        }}
         profileImage={profileImage}
         onImageUpload={e => onImageUploadHandler(e, onImageUpload)}
         uploadInProgress={uploadInProgress}
@@ -146,6 +156,11 @@ export class ProfileSettingsPageComponent extends Component {
     ) : null;
 
     const title = intl.formatMessage({ id: 'ProfileSettingsPage.title' });
+
+    const accountLimit = currentUser && currentUser.attributes.profile.publicData.accountLimit ?
+      currentUser.attributes.profile.publicData.accountLimit : null;
+
+    listingsLimit = accountLimit ? accountLimit : listingsLimit;
 
     return (
       <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
@@ -170,14 +185,31 @@ export class ProfileSettingsPageComponent extends Component {
                   </NamedLink>
                 ) : null}
               </div>
-              {accountHeading &&
-                <div className={css.accountInfo}>
-                  <h3 className={css.sectionTitle}>
-                    Account Type
-                  </h3>
+              {user.id &&
+                <div className={css.profileInfo}>
                   <h3>
-                    {accountHeading}
+                    <FormattedMessage id="ProfileSettingsPage.profileType" />
                   </h3>
+                  <div className={css.infoLine}>
+                    <h3 className={css.lineTitle}>
+                      <FormattedMessage id="ProfileSettingsPage.profileLine" />
+                    </h3>
+                    <FormattedMessage id="ProfileSettingsPage.profileHeading" values={{ profileHeading }} />
+                  </div>
+                  {verification &&
+                    <div className={css.infoLine}>
+                      <h3 className={css.lineTitle}>
+                        <FormattedMessage id="ProfileSettingsPage.verificationLine" />
+                      </h3>
+                     {verification}
+                    </div>
+                  }
+                  <div className={css.infoLine}>
+                    <h3 className={css.lineTitle}>
+                      <FormattedMessage id="ProfileSettingsPage.listingsLine" />
+                    </h3>
+                    <FormattedMessage id="ProfileSettingsPage.listingsLimit" values={{ listingsLimit }} />
+                  </div>
                   <p className={css.faqLink}>
                     <FormattedMessage id="ProfileSettingsPage.faqInfoLink" values={{ faqLink }} />
                   </p>

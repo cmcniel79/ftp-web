@@ -80,6 +80,7 @@ export class ProfilePageComponent extends Component {
     const hasBio = !!bio;
     const hasListings = listings.length > 0;
     const isMobileLayout = viewport.width < MAX_MOBILE_SCREEN_WIDTH;
+    const companyName = profileUser.attributes.profile.publicData ? profileUser.attributes.profile.publicData.companyName : null;
 
     const editLinkMobile = isCurrentUser ? (
       <NamedLink className={css.editLinkMobile} name="ProfileSettingsPage">
@@ -95,11 +96,14 @@ export class ProfilePageComponent extends Component {
     const asideContent = (
       <div className={css.asideContent}>
         <AvatarLarge className={css.avatar} user={user} disableProfileLink />
-        <h1 className={css.mobileHeading}>
-          {displayName ? (
-            <FormattedMessage id="ProfilePage.mobileHeading" values={{ name: displayName }} />
-          ) : null}
-        </h1>
+        <h2 className={css.mobileHeading}>
+          {companyName ? (
+            <FormattedMessage id="ProfilePage.mobileHeading" values={{ name: companyName }} />
+          ) :
+            displayName ? (
+              <FormattedMessage id="ProfilePage.mobileHeading" values={{ name: displayName }} />
+            ) : null}
+        </h2>
         {editLinkMobile}
         {editLinkDesktop}
       </div>
@@ -176,15 +180,19 @@ export class ProfilePageComponent extends Component {
         {this.state.showReviewsType === REVIEW_TYPE_OF_PROVIDER ? (
           <Reviews reviews={reviewsOfProvider} />
         ) : (
-          <Reviews reviews={reviewsOfCustomer} />
-        )}
+            <Reviews reviews={reviewsOfCustomer} />
+          )}
       </div>
     );
 
     const mainContent = (
       <div>
         <h1 className={css.desktopHeading}>
-          <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />
+          {companyName ?
+            <FormattedMessage id="ProfilePage.desktopHeadingCompany" values={{ name: companyName }} />
+            :
+            <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />
+          }
         </h1>
         {hasBio ? <p className={css.bio}>{bio}</p> : null}
         {hasListings ? (

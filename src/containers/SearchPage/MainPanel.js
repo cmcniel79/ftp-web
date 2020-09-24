@@ -241,6 +241,7 @@ class MainPanel extends Component {
             {...propsForSecondaryFiltersToggle}
           >
             {primaryFilters.map(config => {
+              // console.log(config)
               if (config.id !== 'keyword' && config.id !== 'nativeLands') {
                 return (
                   <FilterComponent
