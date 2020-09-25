@@ -11,6 +11,7 @@ import {
   LandingPage,
   LikedListingsPage,
   ListingPage,
+  MapPage,
   ManageListingsPage,
   NotFoundPage,
   PasswordChangePage,
@@ -146,6 +147,13 @@ const routeConfiguration = () => {
       path: '/faq',
       name: 'FAQPage',
       component: FAQPage,
+    },
+
+    {
+      path: '/map',
+      name: 'MapPage',
+      component: MapPage,
+      loadData: MapPage.loadData,
     },
 
     // Canonical path should be after the `/l/new` path since they

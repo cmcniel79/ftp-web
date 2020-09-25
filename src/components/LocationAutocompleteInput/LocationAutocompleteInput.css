@@ -49,7 +49,7 @@
 .input {
   flex-grow: 1;
   height: var(--LocationAutocompleteInput_inputHeight);
-  padding-left: 10px;
+  /* padding-left: 10px; */
   margin: 0;
   line-height: unset;
   border-bottom-width: 2px;

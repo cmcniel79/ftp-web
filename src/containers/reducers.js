@@ -10,6 +10,7 @@ import InboxPage from './InboxPage/InboxPage.duck';
 import LandingPage from './LandingPage/LandingPage.duck';
 import ListingPage from './ListingPage/ListingPage.duck';
 import LikedListingsPage from './LikedListingsPage/LikedListingsPage.duck';
+import MapPage from './MapPage/MapPage.duck';
 import ManageListingsPage from './ManageListingsPage/ManageListingsPage.duck';
 import PasswordChangePage from './PasswordChangePage/PasswordChangePage.duck';
 import PasswordRecoveryPage from './PasswordRecoveryPage/PasswordRecoveryPage.duck';
@@ -29,6 +30,7 @@ export {
   LandingPage,
   ListingPage,
   LikedListingsPage,
+  MapPage,
   ManageListingsPage,
   PasswordChangePage,
   PasswordRecoveryPage,

@@ -45,12 +45,12 @@ const TopbarDesktop = props => {
   const classes = classNames(rootClassName || css.root, className);
 
   const search = (
-      <TopbarSearchForm
-        className={css.searchLink}
-        desktopInputRoot={css.topbarSearchWithLeftPadding}
-        onSubmit={onSearchSubmit}
-        initialValues={initialSearchFormValues}
-      />
+    <TopbarSearchForm
+      className={css.searchLink}
+      desktopInputRoot={css.topbarSearchWithLeftPadding}
+      onSubmit={onSearchSubmit}
+      initialValues={initialSearchFormValues}
+    />
   );
 
   const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
@@ -147,14 +147,28 @@ const TopbarDesktop = props => {
       </span>
     </NamedLink>;
 
+  const mapLink =
+    <NamedLink className={css.customLink} name="MapPage">
+      <span className={css.custom}>
+        <FormattedMessage id="TopbarDesktop.mapPage" />
+      </span>
+    </NamedLink>;
+
   const blogLink =
     <ExternalLink className={css.customLink} key="linkToBlog"
       href="https://fromthepeople.blog/"
     >
       <span className={css.custom}>
-        Blog
-    </span>
+        <FormattedMessage id="TopbarDesktop.blogLink" />
+      </span>
     </ExternalLink>
+
+  const newListingLink =
+    <NamedLink className={css.createListingLink} name="NewListingPage">
+      <span className={css.createListing}>
+        <FormattedMessage id="TopbarDesktop.createListing" />
+      </span>
+    </NamedLink>
 
   const signupLink = isAuthenticatedOrJustHydrated ? null : (
     <NamedLink name="SignupPage" className={css.signupLink}>
@@ -172,6 +186,7 @@ const TopbarDesktop = props => {
     </NamedLink>
   );
 
+
   return (
     <nav className={classes}>
       <NamedLink className={css.logoLink} name="LandingPage">
@@ -185,12 +200,9 @@ const TopbarDesktop = props => {
       {aboutLink}
       {shopLink}
       {faqLink}
+      {mapLink}
       {blogLink}
-      <NamedLink className={css.createListingLink} name="NewListingPage">
-        <span className={css.createListing}>
-          <FormattedMessage id="TopbarDesktop.createListing" />
-        </span>
-      </NamedLink>
+      {newListingLink}
       {inboxLink}
       {profileMenu}
       {signupLink}

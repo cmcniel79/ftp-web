@@ -21,6 +21,7 @@ import {
   IconSocialMediaTwitter,
 } from '../../components';
 import TribeSelectFieldMaybe from './TribeSelectFieldMaybe';
+import CompanyAddressMaybe from './CompanyAddressMaybe';
 
 import css from './ProfileSettingsForm.css';
 
@@ -49,6 +50,12 @@ class ProfileSettingsFormComponent extends Component {
 
   componentWillUnmount() {
     window.clearTimeout(this.uploadDelayTimeoutId);
+  }
+
+  addressSubmit(values) {
+    const { lat, lng } = values.location.selectedPlace.origin;
+    console.log(lat);
+    console.log(lng);
   }
 
   render() {
@@ -354,6 +361,26 @@ class ProfileSettingsFormComponent extends Component {
                       label={companyWebsiteLabel}
                       placeholder={companyWebsitePlaceholder}
                       validate={companyWebsiteRequired}
+                    />
+                    <CompanyAddressMaybe
+                      className={css.form}
+                      initialValues={null}
+                      // onSubmit={values => {
+                      //   const { building = '', location } = values;
+                      //   const {
+                      //     selectedPlace: { address, origin },
+                      //   } = location;
+                      //   const updateValues = {
+                      //     geolocation: origin,
+                      //     publicData: {
+                      //       location: { address, building },
+                      //     },
+                      //   };
+                      // }}
+                      // updateInProgress={updateInProgress}
+                      // onSubmit={values => {
+                      //   console.log(values);
+                      // }}
                     />
                   </div>
                 </div>

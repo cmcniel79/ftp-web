@@ -45,8 +45,9 @@ export class ProfileSettingsPageComponent extends Component {
     } = this.props;
 
     const handleSubmit = values => {
-      const { firstName, lastName, bio: rawBio, tribe, nativeLands, companyName, companyWebsite,
+      const { firstName, lastName, bio: rawBio, tribe, nativeLands, companyName, companyWebsite, location, building,
         facebook, twitter, insta } = values;
+      console.log(values);
 
       // Ensure that the optional bio is a string
       const bio = rawBio || '';
@@ -60,6 +61,7 @@ export class ProfileSettingsPageComponent extends Component {
           nativeLands: nativeLands,
           companyName: companyName,
           companyWebsite: companyWebsite,
+          companyLocation: { location: location, building: building },
           socialMedia: { facebook: facebook, twitter: twitter, insta: insta }
         }
       } : {
@@ -86,11 +88,16 @@ export class ProfileSettingsPageComponent extends Component {
     const { firstName, lastName, bio } = user.attributes.profile;
     const profileImageId = user.profileImage ? user.profileImage.id : null;
     const profileImage = image || { imageId: profileImageId };
+
     const tribe = user.attributes.profile.publicData ? user.attributes.profile.publicData.tribe : null;
     const nativeLands = user.attributes.profile.publicData ? user.attributes.profile.publicData.nativeLands : null;
     const accountType = user.attributes.profile.publicData ? user.attributes.profile.publicData.account : null;
     const companyName = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyName : null;
     const companyWebsite = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyWebsite : null;
+    const location = user.attributes.profile.publicData && user.attributes.profile.publicData.companyLocation
+      ? user.attributes.profile.publicData.companyLocation.location : null;
+    const building = user.attributes.profile.publicData && user.attributes.profile.publicData.companyLocation &&
+      user.attributes.profile.publicData.companyLocation.building ? user.attributes.profile.publicData.companyLocation.building : null;
     const socialMedia = user.attributes.profile.publicData ? user.attributes.profile.publicData.socialMedia : null;
     const facebook = socialMedia && socialMedia.facebook ? socialMedia.facebook : null;
     const twitter = socialMedia && socialMedia.twitter ? socialMedia.twitter : null;
@@ -143,7 +150,7 @@ export class ProfileSettingsPageComponent extends Component {
         currentUser={currentUser}
         initialValues={{
           firstName, lastName, bio, profileImage: user.profileImage, tribe, nativeLands,
-          companyName, companyWebsite, facebook, twitter, insta
+          companyName, companyWebsite, location, building, facebook, twitter, insta
         }}
         profileImage={profileImage}
         onImageUpload={e => onImageUploadHandler(e, onImageUpload)}
@@ -201,7 +208,7 @@ export class ProfileSettingsPageComponent extends Component {
                       <h3 className={css.lineTitle}>
                         <FormattedMessage id="ProfileSettingsPage.verificationLine" />
                       </h3>
-                     {verification}
+                      {verification}
                     </div>
                   }
                   <div className={css.infoLine}>

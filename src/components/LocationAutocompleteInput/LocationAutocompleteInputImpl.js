@@ -93,8 +93,8 @@ const LocationPredictionsList = props => {
             <FormattedMessage id="LocationAutocompleteInput.currentLocation" />
           </span>
         ) : (
-          geocoder.getPredictionAddress(prediction)
-        )}
+            geocoder.getPredictionAddress(prediction)
+          )}
       </li>
     );
   };
@@ -481,13 +481,15 @@ class LocationAutocompleteInputImpl extends Component {
 
     return (
       <div className={rootClass}>
-        <div className={iconClass}>
-          {this.state.fetchingPlaceDetails ? (
-            <IconSpinner className={css.iconSpinner} />
-          ) : (
-            <IconHourGlass />
-          )}
-        </div>
+        {this.props.showImage &&
+          <div className={iconClass}>
+            {this.state.fetchingPlaceDetails ? (
+              <IconSpinner className={css.iconSpinner} />
+            ) : (
+                <IconHourGlass />
+              )}
+          </div>
+        }
         <input
           className={inputClass}
           type="search"

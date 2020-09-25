@@ -79,6 +79,7 @@ class NativeLandSearchFormComponent extends Component {
                       }}
                       input={searchInput}
                       meta={meta}
+                      showImage={true}
                     />
                   );
                 }}
