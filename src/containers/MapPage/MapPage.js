@@ -14,7 +14,17 @@ import { parse, stringify } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
 import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
-import { SearchMap, ModalInMobile, Page, LayoutWrapperFooter, Footer} from '../../components';
+import {
+  SearchMap,
+  ModalInMobile,
+  Page,
+  LayoutWrapperFooter,
+  Footer,
+  LayoutSingleColumn,
+  LayoutWrapperMain,
+  LayoutWrapperTopbar,
+  NamedLink
+} from '../../components';
 import { TopbarContainer } from '../../containers';
 
 import { searchListings, searchMapListings, setActiveListing } from './MapPage.duck';
@@ -107,12 +117,14 @@ export class MapPageComponent extends Component {
     var x;
     var profile;
     for (x in listings) {
-        profile = listings[x].author.attributes.profile;
-        if(profile.publicData && profile.publicData.account == 'p' && profile.publicData.companyLocation) {  
-            locations.add(JSON.stringify({id: listings[x].author.id,
-                 lat: profile.publicData.companyLocation.location.selectedPlace.origin.lat, 
-                 lng: profile.publicData.companyLocation.location.selectedPlace.origin.lng}));
-        }
+      profile = listings[x].author.attributes.profile;
+      if (profile.publicData && profile.publicData.account == 'p' && profile.publicData.companyLocation) {
+        locations.add(JSON.stringify({
+          id: listings[x].author.id,
+          lat: profile.publicData.companyLocation.location.selectedPlace.origin.lat,
+          lng: profile.publicData.companyLocation.location.selectedPlace.origin.lng
+        }));
+      }
     }
     return locations;
   }
@@ -179,6 +191,7 @@ export class MapPageComponent extends Component {
 
     const geoLocations = listings ? this.getGeoLocations(listings) : null;
     console.log(geoLocations);
+    const faqLink = <NamedLink name="FAQPage"> FAQ Page </NamedLink>;
     return (
       <Page
         scrollingDisabled={scrollingDisabled}
@@ -186,18 +199,25 @@ export class MapPageComponent extends Component {
         title={title}
         schema={schema}
       >
-        <TopbarContainer
-          className={topbarClasses}
-          currentPage="MapPage"
-          currentSearchParams={urlQueryParams}
-        />
-        <div className={css.container}>
-            <div className={css.pageHeading}>
+        <LayoutSingleColumn>
+          <LayoutWrapperTopbar>
+            <TopbarContainer
+              className={topbarClasses}
+              currentPage="MapPage"
+              currentSearchParams={urlQueryParams}
+            />
+          </LayoutWrapperTopbar>
+          <LayoutWrapperMain>
+            <div className={css.container}>
+              <div className={css.pageHeading}>
                 <h1>
-                <FormattedMessage id="MapPage.heading" />
+                  <FormattedMessage id="MapPage.heading" />
                 </h1>
-            </div>
-            <div className={css.mapWrapper}>
+                <h5 className={css.pageSubtitle}>
+                  <FormattedMessage id="MapPage.subtitle" values={{ faqLink }} />
+                </h5>
+              </div>
+              <div className={css.mapWrapper}>
                 <SearchMap
                   reusableContainerClassName={css.map}
                   activeListingId={activeListingId}
@@ -212,11 +232,13 @@ export class MapPageComponent extends Component {
                   }}
                   messages={intl.messages}
                 />
+              </div>
             </div>
-        </div>
-        <LayoutWrapperFooter>
+          </LayoutWrapperMain>
+          <LayoutWrapperFooter>
             <Footer />
           </LayoutWrapperFooter>
+        </LayoutSingleColumn>
       </Page>
     );
     /* eslint-enable jsx-a11y/no-static-element-interactions */

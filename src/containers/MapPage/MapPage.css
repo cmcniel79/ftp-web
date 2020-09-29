@@ -1,5 +1,4 @@
 @import '../../marketplace.css';
-
 :root {
   /*
     These variables are available in global scope through ":root"
@@ -9,12 +8,12 @@
     are left to CSS bundle. We are planning to enable it in the future
     since browsers support CSS Properties already.
  */
-
   --SearchPage_containerHeight: calc(100vh - var(--topbarHeightDesktop));
 }
 
 /* Can be given to Topbar when a modal is opened
  * so that the Topbar is not rendered on top of it.*/
+
 .topbarBehindModal {
   z-index: initial;
 }
@@ -35,9 +34,7 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-
   @media (--viewportMedium) {
-    position: relative;
     padding-top: var(--topbarHeightDesktop);
     min-height: var(--SearchPage_containerHeight);
     flex-direction: row;
@@ -45,7 +42,18 @@
 }
 
 .pageHeading {
-    width: 100%;
+  width: 90vw;
+  margin: 15px auto;
+  @media (--viewportMedium) {
+    margin: 50px auto;
+  }
+}
+
+.pageSubtitle {
+  @media (--viewportMedium) {
+    width: 50%;
+    max-width: 500px;
+  }
 }
 
 .searchResultContainer {
@@ -53,7 +61,6 @@
   display: flex;
   flex-direction: column;
   padding: 2px 0 0 0;
-
   @media (--viewportMedium) {
     padding: 18px 0 0 0;
     /**
@@ -62,7 +69,6 @@
      */
     flex-basis: 50%;
   }
-
   @media (--viewportLarge) {
     flex-basis: 62.5%;
     padding: 23px 0 0 0;
@@ -82,13 +88,11 @@
 
 .searchFiltersPrimary {
   display: none;
-
   @media (--viewportMedium) {
     display: flex;
     padding: 0 24px;
     margin-bottom: 21px;
   }
-
   @media (--viewportLarge) {
     padding: 0 36px;
   }
@@ -96,7 +100,6 @@
 
 .searchFiltersMobile {
   padding: 16px 24px;
-
   @media (--viewportMedium) {
     display: none;
   }
@@ -106,7 +109,6 @@
   flex-grow: 1;
   display: flex;
   padding: 0 24px 24px 24px;
-
   @media (--viewportLarge) {
     padding: 0 36px 36px 36px;
   }
@@ -134,12 +136,10 @@
      * This specifies that mapPanel is taking 34% from the viewport width
      */
     flex-basis: 50%;
-
     /* Own layout settings */
     display: flex;
     height: 100%;
   }
-
   @media (--viewportLarge) {
     flex-basis: 37.5%;
   }
@@ -153,7 +153,6 @@
   @apply --marketplaceButtonStylesSecondary;
   @apply --marketplaceTinyFontStyles;
   font-weight: var(--fontWeightMedium);
-
   height: 35px;
   min-height: 35px;
   padding: 0 18px;
@@ -170,17 +169,10 @@
 .map {
   width: 100vw;
   height: 100vh;
-
   @media (--viewportMedium) {
-    top: var(--topbarHeightDesktop);
-    right: 0;
-
+    margin: auto;
     /* Fixed content needs width relative to viewport */
-    width: 75vw;
+    width: 90vw;
     height: var(--SearchPage_containerHeight);
-  }
-
-  @media (--viewportLarge) {
-    width: 50vw;
   }
 }

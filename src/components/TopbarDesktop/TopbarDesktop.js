@@ -199,8 +199,8 @@ const TopbarDesktop = props => {
       {search}
       {aboutLink}
       {shopLink}
-      {faqLink}
       {mapLink}
+      {faqLink}
       {blogLink}
       {newListingLink}
       {inboxLink}
