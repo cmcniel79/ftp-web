@@ -235,7 +235,7 @@ export class ProfilePageComponent extends Component {
         id: 'ProfilePage.schemaTitle',
       },
       {
-        name: displayName,
+        name: companyName || displayName,
         siteTitle: config.siteTitle,
       }
     );

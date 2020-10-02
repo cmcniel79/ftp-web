@@ -74,10 +74,10 @@ export class SearchMapComponent extends Component {
     const routes = routeConfiguration();
 
     const id = listing.id.uuid;
-    const slug = createSlug(listing.attributes.title);
-    const pathParams = { id, slug };
+    // const slug = createSlug(listing.attributes.title);
+    const pathParams = { id, slug: null };
 
-    return createResourceLocatorString('ListingPage', routes, pathParams, {});
+    return createResourceLocatorString('ProfilePage', routes, pathParams, {});
   }
 
   onListingClicked(listings) {
@@ -129,7 +129,7 @@ export class SearchMapComponent extends Component {
     } = this.props;
     const classes = classNames(rootClassName || css.root, className);
 
-    const listingsWithLocation = originalListings.filter(l => !!l.attributes.geolocation);
+    const listingsWithLocation = originalListings.filter(l => !!l.attributes.profile.publicData.companyLocation.location.selectedPlace.origin);
     const listings = mapsConfig.fuzzy.enabled
       ? withCoordinatesObfuscated(listingsWithLocation)
       : listingsWithLocation;

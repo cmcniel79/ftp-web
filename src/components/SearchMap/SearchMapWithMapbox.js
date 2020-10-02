@@ -9,7 +9,7 @@ import { parse } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
 import { ensureListing } from '../../util/data';
 import { sdkBoundsToFixedCoordinates, hasSameSDKBounds } from '../../util/maps';
-import { SearchMapInfoCard, SearchMapPriceLabel, SearchMapGroupLabel } from '../../components';
+import { SearchMapSellerCard, SearchMapInfoCard, SearchMapPriceLabel, SearchMapSellerLabel, SearchMapGroupLabel } from '../../components';
 
 import { groupedByCoordinates, reducedToArray } from './SearchMap.helpers.js';
 import css from './SearchMapWithMapbox.css';
@@ -148,8 +148,8 @@ const priceLabelsInLocations = (
       const infoCardOpenIds = Array.isArray(infoCardOpen)
         ? infoCardOpen.map(l => l.id.uuid)
         : infoCardOpen
-        ? [infoCardOpen.id.uuid]
-        : [];
+          ? [infoCardOpen.id.uuid]
+          : [];
 
       // if the listing is open, don't print price label
       if (infoCardOpen != null && infoCardOpenIds.includes(listing.id.uuid)) {
@@ -157,43 +157,60 @@ const priceLabelsInLocations = (
       }
 
       // Explicit type change to object literal for Google OverlayViews (geolocation is SDK type)
-      const { geolocation } = listing.attributes;
-
+      const type = listing.type;
+      const geolocation = listing.attributes.profile.publicData.companyLocation.location.selectedPlace.origin;
       const key = listing.id.uuid;
+
+      if (type === 'user') {
+        return {
+          markerId: `user_${key}`,
+          location: geolocation,
+          type: 'user',
+          componentProps: {
+            key,
+            isActive,
+            className: LABEL_HANDLE,
+            listing,
+            onListingClicked,
+            mapComponentRefreshToken,
+          },
+        }
+       } else {
+          return {
+            markerId: `price_${key}`,
+            location: geolocation,
+            type: 'price',
+            componentProps: {
+              key,
+              isActive,
+              className: LABEL_HANDLE,
+              listing,
+              onListingClicked,
+              mapComponentRefreshToken,
+            },
+          }
+        };
+      }
+
+      // Explicit type change to object literal for Google OverlayViews (geolocation is SDK type)
+      const firstListing = ensureListing(listingArr[0]);
+      const geolocation = firstListing.attributes.geolocation;
+
+      const key = listingArr[0].id.uuid;
       return {
-        markerId: `price_${key}`,
+        markerId: `group_${key}`,
         location: geolocation,
-        type: 'price',
+        type: 'group',
         componentProps: {
           key,
           isActive,
           className: LABEL_HANDLE,
-          listing,
+          listings: listingArr,
           onListingClicked,
           mapComponentRefreshToken,
         },
       };
-    }
-
-    // Explicit type change to object literal for Google OverlayViews (geolocation is SDK type)
-    const firstListing = ensureListing(listingArr[0]);
-    const geolocation = firstListing.attributes.geolocation;
-
-    const key = listingArr[0].id.uuid;
-    return {
-      markerId: `group_${key}`,
-      location: geolocation,
-      type: 'group',
-      componentProps: {
-        key,
-        isActive,
-        className: LABEL_HANDLE,
-        listings: listingArr,
-        onListingClicked,
-        mapComponentRefreshToken,
-      },
-    };
-  });
+    });
   return priceLabels;
 };
 
@@ -214,7 +231,8 @@ const infoCardComponent = (
 
   const firstListing = ensureListing(listingsArray[0]);
   const key = firstListing.id.uuid;
-  const geolocation = firstListing.attributes.geolocation;
+  const geolocation = firstListing.attributes.profile.publicData.companyLocation.location.selectedPlace.origin;
+  const type = firstListing.type ? firstListing.type : null;
 
   return {
     markerId: `infoCard_${key}`,
@@ -226,6 +244,7 @@ const infoCardComponent = (
       listings: listingsArray,
       onListingInfoCardClicked,
       createURLToListing,
+      type: type,
     },
   };
 };
@@ -431,7 +450,6 @@ class SearchMapWithMapbox extends Component {
         infoCardContainer.setAttribute('id', infoCard.markerId);
         infoCardContainer.classList.add(css.infoCardContainer);
         infoCardContainer.addEventListener('dblclick', this.handleDoubleClickOnInfoCard, false);
-
         this.currentInfoCard = {
           ...infoCard,
           markerContainer: infoCardContainer,
@@ -474,6 +492,11 @@ class SearchMapWithMapbox extends Component {
               <SearchMapPriceLabel {...m.componentProps} />,
               portalDOMContainer
             );
+          } else if (isMapReadyForMarkers && m.type === 'user') {
+            return ReactDOM.createPortal(
+              <SearchMapSellerLabel {...m.componentProps} />,
+              portalDOMContainer
+            );
           } else if (isMapReadyForMarkers && m.type === 'group') {
             return ReactDOM.createPortal(
               <SearchMapGroupLabel {...m.componentProps} />,
@@ -482,11 +505,17 @@ class SearchMapWithMapbox extends Component {
           }
           return null;
         })}
-        {this.state.mapContainer && this.currentInfoCard
+        {this.state.mapContainer && this.currentInfoCard && 
+          this.currentInfoCard.componentProps && this.currentInfoCard.componentProps.type === 'user' 
           ? ReactDOM.createPortal(
-              <SearchMapInfoCard {...this.currentInfoCard.componentProps} />,
-              this.currentInfoCard.markerContainer
-            )
+            <SearchMapSellerCard {...this.currentInfoCard.componentProps} />,
+            this.currentInfoCard.markerContainer
+          )
+          : this.state.mapContainer && this.currentInfoCard 
+          ? ReactDOM.createPortal(
+            <SearchMapInfoCard {...this.currentInfoCard.componentProps} />,
+            this.currentInfoCard.markerContainer
+          )
           : null}
       </div>
     );

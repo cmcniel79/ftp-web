@@ -118,7 +118,7 @@ export const pickSearchParamsOnly = (params, filters, sortConfig) => {
   };
 };
 
-export const createSearchResultSchema = (listings, address, intl) => {
+export const createSearchResultSchema = (address, intl) => {
   // Schema for search engines (helps them to understand what this page is about)
   // http://schema.org
   // We are using JSON-LD format
@@ -130,25 +130,25 @@ export const createSearchResultSchema = (listings, address, intl) => {
     { searchAddress, siteTitle }
   );
 
-  const schemaListings = listings.map((l, i) => {
-    const title = l.attributes.title;
-    const pathToItem = createResourceLocatorString('ListingPage', routeConfiguration(), {
-      id: l.id.uuid,
-      slug: createSlug(title),
-    });
-    return {
-      '@type': 'ListItem',
-      position: i,
-      url: `${config.canonicalRootURL}${pathToItem}`,
-      name: title,
-    };
-  });
+  // const schemaListings = listings.map((l, i) => {
+  //   const title = l.attributes.title;
+  //   const pathToItem = createResourceLocatorString('ListingPage', routeConfiguration(), {
+  //     id: l.id.uuid,
+  //     slug: createSlug(title),
+  //   });
+  //   return {
+  //     '@type': 'ListItem',
+  //     position: i,
+  //     url: `${config.canonicalRootURL}${pathToItem}`,
+  //     name: title,
+  //   };
+  // });
 
   const schemaMainEntity = JSON.stringify({
     '@type': 'ItemList',
     name: searchAddress,
     itemListOrder: 'http://schema.org/ItemListOrderAscending',
-    itemListElement: schemaListings,
+    // itemListElement: schemaListings,
   });
   return {
     title: schemaTitle,

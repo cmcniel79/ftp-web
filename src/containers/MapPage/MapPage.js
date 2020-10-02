@@ -14,6 +14,7 @@ import { parse, stringify } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
 import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
+import { types as sdkTypes } from '../../util/sdkLoader';
 import {
   SearchMap,
   ModalInMobile,
@@ -23,11 +24,12 @@ import {
   LayoutSingleColumn,
   LayoutWrapperMain,
   LayoutWrapperTopbar,
-  NamedLink
+  NamedLink,
+  SelectSingleFilter
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
-import { searchListings, searchMapListings, setActiveListing } from './MapPage.duck';
+import { searchListings, searchMapListings, setActiveListing, loadUsers } from './MapPage.duck';
 import {
   pickSearchParamsOnly,
   validURLParamsForExtendedData,
@@ -35,6 +37,8 @@ import {
   createSearchResultSchema,
 } from './MapPage.helpers';
 import css from './MapPage.css';
+
+const { Money } = sdkTypes;
 
 // Pagination page size might need to be dynamic on responsive page layouts
 // Current design has max 3 columns 12 is divisible by 2 and 3
@@ -112,32 +116,40 @@ export class MapPageComponent extends Component {
     this.setState({ isMobileModalOpen: false });
   }
 
-  getGeoLocations(listings) {
-    let locations = new Set;
-    var x;
-    var profile;
-    for (x in listings) {
-      profile = listings[x].author.attributes.profile;
-      if (profile.publicData && profile.publicData.account == 'p' && profile.publicData.companyLocation) {
-        locations.add(JSON.stringify({
-          id: listings[x].author.id,
-          lat: profile.publicData.companyLocation.location.selectedPlace.origin.lat,
-          lng: profile.publicData.companyLocation.location.selectedPlace.origin.lng
-        }));
-      }
-    }
-    return locations;
-  }
+  // getGeoLocations(listings) {
+  //   let locations = new Set;
+  //   var x;
+  //   var profile;
+  //   for (x in listings) {
+  //     profile = listings[x].author.attributes.profile;
+  //     if (profile.publicData && profile.publicData.account == 'p' && profile.publicData.companyLocation) {
+  //       locations.add(JSON.stringify({
+  //         id: listings[x].author.id,
+  //         attributes: {
+  //           price: new Money(100, 'USD'),
+  //           geolocation: {
+  //             lat: profile.publicData.companyLocation.location.selectedPlace.origin.lat,
+  //             lng: profile.publicData.companyLocation.location.selectedPlace.origin.lng
+  //           },
+  //           type: "seller",
+  //         }
+  //       }));
+  //     }
+  //   }
+  //   let array = [];
+  //   locations.forEach(v => array.push(JSON.parse(v)));
+  //   return array;
+  // }
 
   render() {
     const {
       intl,
-      listings,
+      users,
       filterConfig,
       sortConfig,
       history,
       location,
-      mapListings,
+      // mapListings,
       onManageDisableScrolling,
       pagination,
       scrollingDisabled,
@@ -177,7 +189,7 @@ export class MapPageComponent extends Component {
     };
 
     const { address, bounds, origin } = searchInURL || {};
-    const { title, description, schema } = createSearchResultSchema(listings, address, intl);
+    const { title, description, schema } = createSearchResultSchema(address, intl);
 
     // Set topbar class based on if a modal is open in
     // a child component
@@ -189,9 +201,9 @@ export class MapPageComponent extends Component {
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
     /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-    const geoLocations = listings ? this.getGeoLocations(listings) : null;
-    console.log(geoLocations);
+    // const mapListings = listings ? this.getGeoLocations(listings) : null;
     const faqLink = <NamedLink name="FAQPage"> FAQ Page </NamedLink>;
+
     return (
       <Page
         scrollingDisabled={scrollingDisabled}
@@ -216,6 +228,13 @@ export class MapPageComponent extends Component {
                 <h5 className={css.pageSubtitle}>
                   <FormattedMessage id="MapPage.subtitle" values={{ faqLink }} />
                 </h5>
+                <SelectSingleFilter
+                  showAsPopup={true}
+                  queryParamNames={['Hello']}
+                  onSelect={() => console.log("hello")}
+                  label="Business Type"
+                  options={[{ key: 'professional', label: 'Professional Services' }]}
+                />
               </div>
               <div className={css.mapWrapper}>
                 <SearchMap
@@ -225,7 +244,7 @@ export class MapPageComponent extends Component {
                   center={origin}
                   isSearchMapOpenOnMobile={this.state.isSearchMapOpenOnMobile}
                   location={location}
-                  listings={mapListings || []}
+                  listings={users || []}
                   onMapMoveEnd={this.onMapMoveEnd}
                   onCloseAsModal={() => {
                     onManageDisableScrolling('MapPage.map', false);
@@ -293,16 +312,15 @@ const mapStateToProps = state => {
     searchParams,
     searchMapListingIds,
     activeListingId,
+    searchMapUsers
   } = state.MapPage;
-  const pageListings = getListingsById(state, currentPageResultIds);
-  const mapListings = getListingsById(
-    state,
-    unionWith(currentPageResultIds, searchMapListingIds, (id1, id2) => id1.uuid === id2.uuid)
-  );
+  // const mapListings = getListingsById(
+  //   state,
+  //   unionWith(currentPageResultIds, searchMapListingIds, (id1, id2) => id1.uuid === id2.uuid)
+  // );
 
   return {
-    listings: pageListings,
-    mapListings,
+    users: searchMapUsers,
     pagination,
     scrollingDisabled: isScrollingDisabled(state),
     searchInProgress,
@@ -341,16 +359,10 @@ MapPage.loadData = (params, search) => {
   });
   const { page = 1, address, origin, ...rest } = queryParams;
   const originMaybe = config.sortSearchByDistance && origin ? { origin } : {};
-  return searchListings({
+  return loadUsers({
+    ...queryParams,
     ...rest,
     ...originMaybe,
-    page,
-    perPage: RESULT_PAGE_SIZE,
-    include: ['author', 'images'],
-    'fields.listing': ['title', 'geolocation', 'price'],
-    'fields.user': ['profile.displayName', 'profile.abbreviatedName', 'profile.publicData.account', 'profile.publicData.companyLocation'],
-    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
-    'limit.images': 1,
   });
 };
 

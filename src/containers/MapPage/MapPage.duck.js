@@ -4,6 +4,9 @@ import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { convertUnitToSubUnit, unitDivisor } from '../../util/currency';
 import { formatDateStringToUTC, getExclusiveEndDate } from '../../util/dates';
 import config from '../../config';
+import { types as sdkTypes } from '../../util/sdkLoader';
+
+const { UUID } = sdkTypes;
 
 // ================ Action types ================ //
 
@@ -14,6 +17,10 @@ export const SEARCH_LISTINGS_ERROR = 'app/SearchPage/SEARCH_LISTINGS_ERROR';
 export const SEARCH_MAP_LISTINGS_REQUEST = 'app/SearchPage/SEARCH_MAP_LISTINGS_REQUEST';
 export const SEARCH_MAP_LISTINGS_SUCCESS = 'app/SearchPage/SEARCH_MAP_LISTINGS_SUCCESS';
 export const SEARCH_MAP_LISTINGS_ERROR = 'app/SearchPage/SEARCH_MAP_LISTINGS_ERROR';
+
+export const SEARCH_MAP_USERS_REQUEST = 'app/SearchPage/SEARCH_MAP_USERS_REQUEST';
+export const SEARCH_MAP_USERS_SUCCESS = 'app/SearchPage/SEARCH_MAP_USERS_SUCCESS';
+export const SEARCH_MAP_USERS_ERROR = 'app/SearchPage/SEARCH_MAP_USERS_ERROR';
 
 export const SEARCH_MAP_SET_ACTIVE_LISTING = 'app/SearchPage/SEARCH_MAP_SET_ACTIVE_LISTING';
 
@@ -27,6 +34,7 @@ const initialState = {
   currentPageResultIds: [],
   searchMapListingIds: [],
   searchMapListingsError: null,
+  searchMapUsers: [],
 };
 
 const resultIds = data => data.data.map(l => l.id);
@@ -75,6 +83,13 @@ const listingPageReducer = (state = initialState, action = {}) => {
       console.error(payload);
       return { ...state, searchMapListingsError: payload };
 
+    case SEARCH_MAP_USERS_SUCCESS: {
+      return {
+        ...state,
+        searchMapUsers: payload,
+      };
+    }
+
     case SEARCH_MAP_SET_ACTIVE_LISTING:
       return {
         ...state,
@@ -118,6 +133,12 @@ export const searchMapListingsError = e => ({
   payload: e,
 });
 
+
+export const searchMapUsersSuccess = response => ({
+  type: SEARCH_MAP_USERS_SUCCESS,
+  payload: [response.data.data],
+});
+
 export const searchListings = searchParams => (dispatch, getState, sdk) => {
   dispatch(searchListingsRequest(searchParams));
 
@@ -127,8 +148,8 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
     const values = priceParam ? priceParam.split(',') : [];
     return priceParam && values.length === 2
       ? {
-          price: [inSubunits(values[0]), inSubunits(values[1]) + 1].join(','),
-        }
+        price: [inSubunits(values[0]), inSubunits(values[1]) + 1].join(','),
+      }
       : {};
   };
 
@@ -142,11 +163,11 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
 
     return hasValues
       ? {
-          start: formatDateStringToUTC(startDate),
-          end: formatDateStringToUTC(endDate),
-          // Availability can be full or partial. Default value is full.
-          availability: 'full',
-        }
+        start: formatDateStringToUTC(startDate),
+        end: formatDateStringToUTC(endDate),
+        // Availability can be full or partial. Default value is full.
+        availability: 'full',
+      }
       : {};
   };
 
@@ -164,7 +185,7 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
   return sdk.listings
     .query(params)
     .then(response => {
-        console.log(response);
+      console.log(response);
       dispatch(addMarketplaceEntities(response));
       dispatch(searchListingsSuccess(response));
       return response;
@@ -201,3 +222,17 @@ export const searchMapListings = searchParams => (dispatch, getState, sdk) => {
       throw e;
     });
 };
+
+export const loadUsers = searchParams => (dispatch, getState, sdk) => {
+  let users = [];
+  let userIds = new UUID("5f52e761-e46d-4d51-b4f2-a8a4ef16f8b2");
+  return sdk.users
+    .show({ id: userIds,
+      include: ['profileImage'],
+      'fields.image': ['variants.square-small', 'variants.square-small2x'],
+     })
+    .then(response => {
+      dispatch(searchMapUsersSuccess(response));
+    });
+
+}

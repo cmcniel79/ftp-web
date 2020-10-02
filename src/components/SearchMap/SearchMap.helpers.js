@@ -19,7 +19,7 @@ export const hasParentWithClassName = (target, className) => {
  */
 export const groupedByCoordinates = mapListings => {
   return groupBy(mapListings, l => {
-    const g = l.attributes.geolocation;
+    const g = l.attributes.profile.publicData.companyLocation.location.selectedPlace.origin;
     return `${g.lat}-${g.lng}`;
   });
 };

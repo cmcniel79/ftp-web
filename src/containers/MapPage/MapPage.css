@@ -43,15 +43,14 @@
 
 .pageHeading {
   width: 90vw;
-  margin: 15px auto;
+  margin: 15px;
   @media (--viewportMedium) {
-    margin: 50px auto;
+    margin: 25px;
   }
 }
 
 .pageSubtitle {
   @media (--viewportMedium) {
-    width: 50%;
     max-width: 500px;
   }
 }
@@ -164,6 +163,9 @@
 .mapWrapper {
   width: 100%;
   height: 100%;
+  @media (--viewportMedium) {
+    width: 75%;
+  }
 }
 
 .map {
@@ -172,7 +174,7 @@
   @media (--viewportMedium) {
     margin: auto;
     /* Fixed content needs width relative to viewport */
-    width: 90vw;
+    width: 75vw;
     height: var(--SearchPage_containerHeight);
   }
 }
