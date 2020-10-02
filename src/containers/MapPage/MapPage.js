@@ -233,7 +233,14 @@ export class MapPageComponent extends Component {
                   queryParamNames={['Hello']}
                   onSelect={() => console.log("hello")}
                   label="Business Type"
-                  options={[{ key: 'professional', label: 'Professional Services' }]}
+                  options={[        
+                  { key: 'retail', label: "Retail" },
+                  { key: 'dining', label: "Dining" },  
+                  { key: 'professional', label: "Professional Services" },
+                  { key: 'hospitality', label: "Hospitality and Tourism" },
+                  { key: 'nonprofits', label: "Non-Profits" },
+                  { key: 'beauty', label: "Beauty and Personal Care" },
+                ]}
                 />
               </div>
               <div className={css.mapWrapper}>

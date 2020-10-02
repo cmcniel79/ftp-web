@@ -246,6 +246,28 @@ export const filters = [
       ]
     },
   },
+  {
+    id: 'industry',
+    label: 'Industry',
+    type: 'SelectSingleFilter',
+    group: 'primary',
+    queryParamNames: ['pub_industry'],
+    config: {
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for the UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [ 
+        { key: 'retail', label: "Retail" },
+        { key: 'dining', label: "Dining" },  
+        { key: 'professional', label: "Professional Services" },
+        { key: 'hospitality', label: "Hospitality and Tourism" },
+        { key: 'nonprofits', label: "Non-Profits" },
+        { key: 'beauty', label: "Beauty and Personal Services" },
+      ]
+    },
+
+  }
 ];
 
 export const sortConfig = {
