@@ -5,19 +5,16 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import debounce from 'lodash/debounce';
-import unionWith from 'lodash/unionWith';
 import classNames from 'classnames';
 import config from '../../config';
 import routeConfiguration from '../../routeConfiguration';
 import { createResourceLocatorString, pathByRouteName } from '../../util/routes';
-import { parse, stringify } from '../../util/urlHelpers';
+import { parse } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
-import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
-import { types as sdkTypes } from '../../util/sdkLoader';
+import { findOptionsForSelectFilter } from '../../util/search';
 import {
   SearchMap,
-  ModalInMobile,
   Page,
   LayoutWrapperFooter,
   Footer,
@@ -25,26 +22,19 @@ import {
   LayoutWrapperMain,
   LayoutWrapperTopbar,
   NamedLink,
-  SelectSingleFilter
+  NativeLand,
+  SelectSingleFilter,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
-import { searchListings, searchMapListings, setActiveListing, loadUsers } from './MapPage.duck';
+import { searchMapListings, setActiveListing, loadUsers } from './MapPage.duck';
 import {
   pickSearchParamsOnly,
-  validURLParamsForExtendedData,
   validFilterParams,
   createSearchResultSchema,
 } from './MapPage.helpers';
 import css from './MapPage.css';
 
-const { Money } = sdkTypes;
-
-// Pagination page size might need to be dynamic on responsive page layouts
-// Current design has max 3 columns 12 is divisible by 2 and 3
-// So, there's enough cards to fill all columns on full pagination pages
-const RESULT_PAGE_SIZE = 24;
-const MODAL_BREAKPOINT = 768; // Search is in modal on mobile layout
 const SEARCH_WITH_MAP_DEBOUNCE = 300; // Little bit of debounce before search is initiated.
 
 export class MapPageComponent extends Component {
@@ -54,13 +44,50 @@ export class MapPageComponent extends Component {
     this.state = {
       isSearchMapOpenOnMobile: props.tab === 'map',
       isMobileModalOpen: false,
+      industry: null,
+      tribe: null,
+      origin: { _sdkType: "LatLng", lat: 39.3812661305678, lng: -97.9222112121185 },
+      bounds: {
+        _sdkType: "LatLngBounds",
+        ne: { _sdkType: "LatLng", lat: 71.4202919997506, lng: -66.8847646185949 },
+        sw: { _sdkType: "LatLng", lat: 18.8163608007951, lng: -179.9 },
+      },
     };
 
     this.searchMapListingsInProgress = false;
-
+    this.tribe = null;
     this.onMapMoveEnd = debounce(this.onMapMoveEnd.bind(this), SEARCH_WITH_MAP_DEBOUNCE);
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
+    this.selectTribe = this.selectTribe.bind(this);
+    this.selectIndustry = this.selectIndustry.bind(this);
+    this.initialValues = this.initialValues.bind(this);
+    this.setGeolocation = this.setGeolocation.bind(this);
+  }
+
+  selectTribe(value) {
+    this.setState({ tribe: value['pub_nativeLands'] });
+  }
+
+  selectIndustry(value) {
+    this.setState({ industry: value['pub_industry'] });
+  }
+
+  initialValues(array) {
+    return { 'pub_nativeLands': this.state.tribe, 'pub_industry': this.state.industry };
+  }
+
+  setGeolocation(lat, lng) {
+    console.log(this.state.bounds);
+    this.setState({ origin: { _sdkType: "LatLng", lat: lat, lng: lng } });
+    this.setState({
+      bounds: {
+        _sdkType: "LatLngBounds",
+        ne: { _sdkType: "LatLng", lat: (lat + .5), lng: (lng + .5) },
+        sw: { _sdkType: "LatLng", lat: (lat - .5), lng: (lng - .5) }
+      }
+    });
+    console.log(this.state.bounds);
   }
 
   // Callback to determine if new search is needed
@@ -116,48 +143,16 @@ export class MapPageComponent extends Component {
     this.setState({ isMobileModalOpen: false });
   }
 
-  // getGeoLocations(listings) {
-  //   let locations = new Set;
-  //   var x;
-  //   var profile;
-  //   for (x in listings) {
-  //     profile = listings[x].author.attributes.profile;
-  //     if (profile.publicData && profile.publicData.account == 'p' && profile.publicData.companyLocation) {
-  //       locations.add(JSON.stringify({
-  //         id: listings[x].author.id,
-  //         attributes: {
-  //           price: new Money(100, 'USD'),
-  //           geolocation: {
-  //             lat: profile.publicData.companyLocation.location.selectedPlace.origin.lat,
-  //             lng: profile.publicData.companyLocation.location.selectedPlace.origin.lng
-  //           },
-  //           type: "seller",
-  //         }
-  //       }));
-  //     }
-  //   }
-  //   let array = [];
-  //   locations.forEach(v => array.push(JSON.parse(v)));
-  //   return array;
-  // }
-
   render() {
     const {
       intl,
       users,
       filterConfig,
       sortConfig,
-      history,
       location,
-      // mapListings,
       onManageDisableScrolling,
-      pagination,
       scrollingDisabled,
-      searchInProgress,
-      searchListingsError,
-      searchParams,
       activeListingId,
-      onActivateListing,
     } = this.props;
     // eslint-disable-next-line no-unused-vars
     const { mapSearch, page, ...searchInURL } = parse(location.search, {
@@ -169,26 +164,12 @@ export class MapPageComponent extends Component {
     // like mapSearch, page or origin (origin depends on config.sortSearchByDistance)
     const urlQueryParams = pickSearchParamsOnly(searchInURL, filterConfig, sortConfig);
 
-    // Page transition might initially use values from previous search
-    const urlQueryString = stringify(urlQueryParams);
-    const paramsQueryString = stringify(
-      pickSearchParamsOnly(searchParams, filterConfig, sortConfig)
-    );
-    const searchParamsAreInSync = urlQueryString === paramsQueryString;
-
-    const validQueryParams = validURLParamsForExtendedData(searchInURL, filterConfig);
-
-    const isWindowDefined = typeof window !== 'undefined';
-    const isMobileLayout = isWindowDefined && window.innerWidth < MODAL_BREAKPOINT;
-    const shouldShowSearchMap =
-      !isMobileLayout || (isMobileLayout && this.state.isSearchMapOpenOnMobile);
-
     const onMapIconClick = () => {
       this.useLocationSearchBounds = true;
       this.setState({ isSearchMapOpenOnMobile: true });
     };
 
-    const { address, bounds, origin } = searchInURL || {};
+    const address = searchInURL || {};
     const { title, description, schema } = createSearchResultSchema(address, intl);
 
     // Set topbar class based on if a modal is open in
@@ -201,8 +182,8 @@ export class MapPageComponent extends Component {
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
     /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-    // const mapListings = listings ? this.getGeoLocations(listings) : null;
-    const faqLink = <NamedLink name="FAQPage"> FAQ Page </NamedLink>;
+    const faqLink = <NamedLink name="FAQPage"> <FormattedMessage id="MapPage.faqLink" /> </NamedLink>;
+    const industryOptions = findOptionsForSelectFilter('industry', filterConfig);
 
     return (
       <Page
@@ -222,33 +203,33 @@ export class MapPageComponent extends Component {
           <LayoutWrapperMain>
             <div className={css.container}>
               <div className={css.pageHeading}>
-                <h1>
+                <h1 className={css.title}>
                   <FormattedMessage id="MapPage.heading" />
                 </h1>
                 <h5 className={css.pageSubtitle}>
                   <FormattedMessage id="MapPage.subtitle" values={{ faqLink }} />
                 </h5>
                 <SelectSingleFilter
+                  className={css.industryFilter}
+                  queryParamNames={['pub_industry']}
+                  initialValues={this.initialValues()}
                   showAsPopup={true}
-                  queryParamNames={['Hello']}
-                  onSelect={() => console.log("hello")}
+                  onSelect={this.selectIndustry}
                   label="Business Type"
-                  options={[        
-                  { key: 'retail', label: "Retail" },
-                  { key: 'dining', label: "Dining" },  
-                  { key: 'professional', label: "Professional Services" },
-                  { key: 'hospitality', label: "Hospitality and Tourism" },
-                  { key: 'nonprofits', label: "Non-Profits" },
-                  { key: 'beauty', label: "Beauty and Personal Care" },
-                ]}
+                  options={industryOptions}
+                />
+                <NativeLand
+                  onSelect={this.selectTribe}
+                  initialValues={this.initialValues}
+                  setGeolocation={this.setGeolocation}
                 />
               </div>
               <div className={css.mapWrapper}>
                 <SearchMap
                   reusableContainerClassName={css.map}
                   activeListingId={activeListingId}
-                  bounds={bounds}
-                  center={origin}
+                  bounds={this.state.bounds}
+                  center={this.state.origin}
                   isSearchMapOpenOnMobile={this.state.isSearchMapOpenOnMobile}
                   location={location}
                   listings={users || []}
@@ -312,19 +293,13 @@ MapPageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const {
-    currentPageResultIds,
     pagination,
     searchInProgress,
     searchListingsError,
     searchParams,
-    searchMapListingIds,
     activeListingId,
     searchMapUsers
   } = state.MapPage;
-  // const mapListings = getListingsById(
-  //   state,
-  //   unionWith(currentPageResultIds, searchMapListingIds, (id1, id2) => id1.uuid === id2.uuid)
-  // );
 
   return {
     users: searchMapUsers,
@@ -374,3 +349,28 @@ MapPage.loadData = (params, search) => {
 };
 
 export default MapPage;
+
+  // getGeoLocations(listings) {
+  //   let locations = new Set;
+  //   var x;
+  //   var profile;
+  //   for (x in listings) {
+  //     profile = listings[x].author.attributes.profile;
+  //     if (profile.publicData && profile.publicData.account == 'p' && profile.publicData.companyLocation) {
+  //       locations.add(JSON.stringify({
+  //         id: listings[x].author.id,
+  //         attributes: {
+  //           price: new Money(100, 'USD'),
+  //           geolocation: {
+  //             lat: profile.publicData.companyLocation.location.selectedPlace.origin.lat,
+  //             lng: profile.publicData.companyLocation.location.selectedPlace.origin.lng
+  //           },
+  //           type: "seller",
+  //         }
+  //       }));
+  //     }
+  //   }
+  //   let array = [];
+  //   locations.forEach(v => array.push(JSON.parse(v)));
+  //   return array;
+  // }

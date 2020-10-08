@@ -5,10 +5,6 @@ import { NativeLandSearchForm } from '../../forms';
 import { userLocation } from '../../util/maps';
 import { Modal } from '../../components';
 
-const getQueryParamName = queryParamNames => {
-  return Array.isArray(queryParamNames) ? queryParamNames[0] : queryParamNames;
-};
-
 class NativeLand extends Component {
   constructor(props) {
     super(props);
@@ -18,16 +14,14 @@ class NativeLand extends Component {
     this.state = {
       tribeSearchInProgress: false,
       isModalOpen: false,
-      tribes: this.props.tribes
+      tribes: []
     };
   }
 
   selectOption(option, e) {
-    const { queryParamNames } = this.props.filterConfig;
-    const onSelect = this.props.getHandleChangedValueFn(true);
-    const queryParamName = getQueryParamName(queryParamNames);
-    onSelect({ [queryParamName]: option });
-    this.props.saveTribes(this.state.tribes);
+    const queryParamName = 'pub_nativeLands';
+    this.props.onSelect({ [queryParamName]: option });
+    // this.props.saveTribes(this.state.tribes);
     // blur event target if event is passed
     if (e && e.currentTarget) {
       e.currentTarget.blur();
@@ -38,10 +32,11 @@ class NativeLand extends Component {
     const { lat, lng } = values.location.selectedPlace.origin;
     this.getTribes(lat, lng);
     this.setState({ isModalOpen: false });
-    this.setState({ tribeSearchInProgress: true })
+    this.setState({ tribeSearchInProgress: true });
   }
 
   getTribes(lat, lng) {
+    this.props.setGeolocation(lat, lng);
     const baseUrl = 'https://native-land.ca/api/index.php?maps=territories&position=';
     // Correct URL will look like 'https://native-land.ca/api/index.php?maps=territories&position=42.553080,-86.473389'
     // console.log(lat + " + " + lng);
@@ -61,16 +56,15 @@ class NativeLand extends Component {
 
   useCurrentLocation() {
     this.setState({ tribeSearchInProgress: true });
-    userLocation().then(location =>
+    userLocation().then(location => 
       this.getTribes(location.lat, location.lng)
     )
   }
 
   render() {
     const { initialValues } = this.props;
-    const { queryParamNames } = this.props.filterConfig;
-    const queryParamName = getQueryParamName(queryParamNames);
-    const initialValue = initialValues(queryParamNames);
+    const queryParamName = 'pub_nativeLands';
+    const initialValue = initialValues([queryParamName]);
     const modal =
       <Modal
         id="NativeLandLocationSearch"

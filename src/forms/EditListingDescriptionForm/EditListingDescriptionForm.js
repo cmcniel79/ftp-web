@@ -129,9 +129,9 @@ const EditListingDescriptionFormComponent = props => (
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
-      const style_options = findOptionsForSelectFilter('style', filterConfig);
-      const region_options = findOptionsForSelectFilter('region', filterConfig);
-      const material_options = findOptionsForSelectFilter('material', filterConfig);
+      const styleOptions = findOptionsForSelectFilter('style', filterConfig);
+      const regionOptions = findOptionsForSelectFilter('region', filterConfig);
+      const materialOptions = findOptionsForSelectFilter('material', filterConfig);
 
       // Logic used to change sub-category selections based on category. User needs to pick a category
       // before any sub-categories show up in the field.
@@ -209,7 +209,7 @@ const EditListingDescriptionFormComponent = props => (
             <div className={css.region}>
               <h2 className={css.checkTitle}>Region</h2>
               <h4>Please pick a region associated with your listing</h4>
-              {region_options.map(option => (
+              {regionOptions.map(option => (
                 <div key={option.key}>
                   <FieldRadioButton
                     id={option.key}
@@ -227,13 +227,13 @@ const EditListingDescriptionFormComponent = props => (
               <FieldCheckboxGroup
                 id="material"
                 name="material"
-                options={material_options}
+                options={materialOptions}
               />
             </div>
             <div className={css.style}>
               <h2 className={css.checkTitle}>Style</h2>
               <h4>Please pick a style for your listing</h4>
-              {style_options.map(option => (
+              {styleOptions.map(option => (
                 <div key={option.key}>
                   <FieldRadioButton
                     id={option.key}

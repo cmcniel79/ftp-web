@@ -52,12 +52,6 @@ class ProfileSettingsFormComponent extends Component {
     window.clearTimeout(this.uploadDelayTimeoutId);
   }
 
-  addressSubmit(values) {
-    const { lat, lng } = values.location.selectedPlace.origin;
-    console.log(lat);
-    console.log(lng);
-  }
-
   render() {
     return (
       <FinalForm

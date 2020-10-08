@@ -29,7 +29,6 @@ class SelectSingleFilterPopup extends Component {
   }
 
   selectOption(queryParamName, option) {
-    console.log(queryParamName);
     this.setState({ isOpen: false });
     this.props.onSelect({ [queryParamName]: option });
   }
@@ -48,7 +47,6 @@ class SelectSingleFilterPopup extends Component {
     const queryParamName = getQueryParamName(queryParamNames);
     const initialValue =
       initialValues && initialValues[queryParamNames] ? initialValues[queryParamNames] : null;
-
     // resolve menu label text and class
     const menuLabel = initialValue ? optionLabel(options, initialValue) : label;
     const menuLabelClass = initialValue ? css.menuLabelSelected : css.menuLabel;

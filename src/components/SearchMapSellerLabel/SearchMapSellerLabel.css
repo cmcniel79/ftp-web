@@ -1,17 +1,13 @@
 @import '../../marketplace.css';
-
 .root {
   position: relative;
   width: auto;
   height: auto;
   border: 0;
   padding: 0;
-
   &:hover {
-    & .priceLabel,
-    & .caret {
+    & .priceLabel, & .caret {
       cursor: pointer;
-
       /* Same as active */
       background-color: var(--marketplaceColor);
       border-color: var(--marketplaceColor);
@@ -27,28 +23,26 @@
    * label must have relative to be included to the same rendering layer
    */
   position: relative;
-
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   /* Font */
   @apply --marketplaceH5FontStyles;
   font-weight: var(--fontWeightSemiBold);
   color: var(--matterColor);
   letter-spacing: 0.1px;
-
   background-color: var(--matterColorLight);
-
   /* Borders */
   border-style: solid;
   border-color: var(--matterColorNegative);
   border-width: 1px;
   border-radius: 4px;
   box-shadow: var(--boxShadowPopupLight);
-
   /* Dimensions */
-  padding: 6px 10px;
+  padding: 6px;
   margin-top: 0;
   margin-bottom: 0;
-  transition: var(--transitionStyleButton);
-
+  transition: .3s;
   /* Overwrite dimensions from font styles */
   @media (--viewportMedium) {
     margin-top: 0;
@@ -56,12 +50,13 @@
   }
 }
 
-.priceLabelActive {
-  /* Same as hover */
-  background-color: var(--marketplaceColor);
-  border-color: var(--marketplaceColor);
-  color: var(--matterColorLight);
-  box-shadow: var(--boxShadowPopup);
+.image {
+  height: 25px;
+  /* display: block; */
+}
+
+.name {
+  margin-left: 5px;
 }
 
 .caretShadow {
@@ -73,7 +68,6 @@
   left: 50%;
   margin-left: -3px;
   transform: rotate(45deg);
-
   /* Caret should have same box-shadow as label */
   box-shadow: var(--boxShadowPopupLight);
 }
@@ -87,9 +81,7 @@
   left: 50%;
   margin-left: -3px;
   transform: rotate(45deg);
-
-  transition: var(--transitionStyleButton);
-
+  transition: .3s;
   /* Caret should have same bg-color and border as label */
   background-color: var(--matterColorLight);
   border-right-style: solid;
@@ -98,10 +90,4 @@
   border-bottom-style: solid;
   border-bottom-color: var(--matterColorNegative);
   border-bottom-width: 1px;
-}
-
-.caretActive {
-  /* Same as hover */
-  background-color: var(--marketplaceColor);
-  border-color: var(--marketplaceColor);
 }

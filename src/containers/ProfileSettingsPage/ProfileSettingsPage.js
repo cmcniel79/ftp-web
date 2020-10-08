@@ -51,7 +51,7 @@ export class ProfileSettingsPageComponent extends Component {
 
       // Ensure that the optional bio is a string
       const bio = rawBio || '';
-
+      console.log(location);
       const profile = companyName && companyWebsite ? {
         firstName: firstName.trim(),
         lastName: lastName.trim(),

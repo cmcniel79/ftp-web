@@ -8,7 +8,7 @@
     are left to CSS bundle. We are planning to enable it in the future
     since browsers support CSS Properties already.
  */
-  --SearchPage_containerHeight: calc(100vh - var(--topbarHeightDesktop));
+  --SearchPage_containerHeight: calc(95vh - var(--topbarHeightDesktop));
 }
 
 /* Can be given to Topbar when a modal is opened
@@ -47,6 +47,14 @@
   @media (--viewportMedium) {
     margin: 25px;
   }
+}
+
+.title {
+  margin-top: 0;
+}
+
+.industryFilter {
+  height: auto;
 }
 
 .pageSubtitle {

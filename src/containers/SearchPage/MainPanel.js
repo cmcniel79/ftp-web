@@ -199,7 +199,6 @@ class MainPanel extends Component {
     const hasPaginationInfo = !!pagination && pagination.totalItems != null;
     const totalItems = searchParamsAreInSync && hasPaginationInfo ? pagination.totalItems : 0;
     const listingsAreLoaded = !searchInProgress && searchParamsAreInSync && hasPaginationInfo;
-    let nativeLandsConfig;
 
     const sortBy = mode => {
       const conflictingFilterActive = isAnyFilterActive(
@@ -255,18 +254,12 @@ class MainPanel extends Component {
                     contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
                   />
                 );
-              } else if (config.id === 'nativeLands') {
-                nativeLandsConfig = config;
               }
             })}
           </SearchFiltersPrimary>
           <div className={css.nativeLandsSection}>
-            {nativeLandsConfig && !searchInProgress && 
+            {!searchInProgress && 
             <NativeLand
-              saveTribes={saveTribes}
-              tribes={tribes}
-              getHandleChangedValueFn={this.getHandleChangedValueFn}
-              filterConfig={nativeLandsConfig}
               onSelect={this.getHandleChangedValueFn(true)}
               initialValues={this.initialValues}
             />
@@ -303,19 +296,13 @@ class MainPanel extends Component {
                   showAsPopup={false}
                 />
               );
-            } else if (config.id === 'nativeLands') {
-              nativeLandsConfig = config;
             }
           })}
           <div className={css.nativeLandsMobile}>
-            {nativeLandsConfig && !searchInProgress && 
+            {!searchInProgress && 
             <NativeLand
-              tribes={tribes}
-              getHandleChangedValueFn={this.getHandleChangedValueFn}
-              filterConfig={nativeLandsConfig}
               onSelect={this.getHandleChangedValueFn(true)}
               initialValues={this.initialValues}
-              searchInProgress={searchInProgress}
             />
             }
           </div>
