@@ -9,7 +9,7 @@ import {
 
 const intlShape = shape({
   formatDate: func.isRequired,
-  formatHTMLMessage: func.isRequired,
+  // formatHTMLMessage: func.isRequired,
   formatMessage: func.isRequired,
   formatNumber: func.isRequired,
   formatPlural: func.isRequired,

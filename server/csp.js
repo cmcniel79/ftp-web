@@ -103,8 +103,8 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
   const customDirectives = {
     // Example: Add custom directive override
     // imgSrc: exampleImgSrc,
-    connectSrc: [nativeLandsSrc, amazonAPISrc], 
-    // connectSrc: amazonAPISrc, 
+    // connectSrc: [nativeLandsSrc, amazonAPISrc], 
+    connectSrc: nativeLandsSrc, 
   };
 
   // ================ END CUSTOM CSP URLs ================ //
