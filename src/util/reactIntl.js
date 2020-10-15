@@ -3,7 +3,7 @@ import {
   IntlProvider,
   FormattedMessage,
   FormattedDate,
-  FormattedHTMLMessage,
+  // FormattedHTMLMessage,
   injectIntl,
 } from 'react-intl';
 
@@ -20,7 +20,7 @@ export {
   IntlProvider,
   FormattedMessage,
   FormattedDate,
-  FormattedHTMLMessage,
+  // FormattedHTMLMessage,
   injectIntl,
   intlShape,
 };
