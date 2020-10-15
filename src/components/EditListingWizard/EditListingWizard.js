@@ -293,10 +293,14 @@ class EditListingWizard extends Component {
     const ensuredCurrentUser = ensureCurrentUser(currentUser);
     const currentUserLoaded = !!ensuredCurrentUser.id;
     const stripeConnected = currentUserLoaded && !!stripeAccount && !!stripeAccount.id;
-    const accountType =  currentUserLoaded ? 
+
+    // Getting custom data added to users publicData
+    const accountType = currentUserLoaded && ensuredCurrentUser.attributes.profile.publicData.account ?
       ensuredCurrentUser.attributes.profile.publicData.account : null;
-    const userCountry = currentUserLoaded ? 
+    const userCountry = currentUserLoaded && ensuredCurrentUser.attributes.profile.protectedData.shippingAddress.country ?
       ensuredCurrentUser.attributes.profile.protectedData.shippingAddress.country : null;
+    const allowsCustomOrders = currentUserLoaded && ensuredCurrentUser.attributes.profile.publicData.allowsCustomOrders ?
+      ensuredCurrentUser.attributes.profile.publicData.allowsCustomOrders : null;
 
     const rootURL = config.canonicalRootURL;
     const routes = routeConfiguration();
@@ -370,6 +374,7 @@ class EditListingWizard extends Component {
                 fetchInProgress={fetchInProgress}
                 accountType={accountType}
                 userCountry={userCountry}
+                allowsCustomOrders={allowsCustomOrders}
               />
             );
           })}

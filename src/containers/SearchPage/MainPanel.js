@@ -240,8 +240,10 @@ class MainPanel extends Component {
             {...propsForSecondaryFiltersToggle}
           >
             {primaryFilters.map(config => {
-              // console.log(config)
-              if (config.id !== 'keyword' && config.id !== 'nativeLands') {
+              // Do not want keyword, nativeLands or industry filters to be used here.
+              // Keyword filter is used in topbar, nativeLands has unique filter below and
+              // industry filter is only used on MapPage for Premium sellers.
+              if (config.id !== 'keyword' && config.id !== 'nativeLands' && config.id !== 'industry') {
                 return (
                   <FilterComponent
                     key={`SearchFiltersPrimary.${config.id}`}
@@ -258,11 +260,13 @@ class MainPanel extends Component {
             })}
           </SearchFiltersPrimary>
           <div className={css.nativeLandsSection}>
-            {!searchInProgress && 
-            <NativeLand
-              onSelect={this.getHandleChangedValueFn(true)}
-              initialValues={this.initialValues}
-            />
+            {!searchInProgress &&
+              <NativeLand
+                onSelect={this.getHandleChangedValueFn(true)}
+                initialValues={this.initialValues}
+                saveTribes={saveTribes}
+                tribes={tribes}
+              />
             }
           </div>
         </div>
@@ -283,7 +287,8 @@ class MainPanel extends Component {
           selectedFiltersCount={selectedFiltersCount}
         >
           {filterConfig.map(config => {
-            if (config.id !== 'keyword' && config.id !== 'nativeLands') {
+            // See comment about not using these filters above, where desktop filters are shown.
+            if (config.id !== 'keyword' && config.id !== 'nativeLands' && config.id !== 'industry') {
               return (
                 <FilterComponent
                   key={`SearchFiltersMobile.${config.id}`}
@@ -299,11 +304,13 @@ class MainPanel extends Component {
             }
           })}
           <div className={css.nativeLandsMobile}>
-            {!searchInProgress && 
-            <NativeLand
-              onSelect={this.getHandleChangedValueFn(true)}
-              initialValues={this.initialValues}
-            />
+            {!searchInProgress &&
+              <NativeLand
+                onSelect={this.getHandleChangedValueFn(true)}
+                initialValues={this.initialValues}
+                saveTribes={saveTribes}
+                tribes={tribes}
+              />
             }
           </div>
         </SearchFiltersMobile>
@@ -316,7 +323,7 @@ class MainPanel extends Component {
               isOpen={isSecondaryFiltersOpen}
             >
               <h2 className={css.modalHeading}>
-              <FormattedMessage id="SearchPage.secondaryFiltersHeading" />
+                <FormattedMessage id="SearchPage.secondaryFiltersHeading" />
               </h2>
               <SearchFiltersSecondary
                 urlQueryParams={urlQueryParams}

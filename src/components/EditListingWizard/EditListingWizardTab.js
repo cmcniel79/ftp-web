@@ -82,7 +82,8 @@ const EditListingWizardTab = props => {
     updateInProgress,
     intl,
     accountType,
-    userCountry
+    userCountry,
+    allowsCustomOrders,
   } = props;
 
   const { type } = params;
@@ -155,6 +156,7 @@ const EditListingWizardTab = props => {
           {...panelProps(DESCRIPTION)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           accountType={accountType}
+          allowsCustomOrders={allowsCustomOrders}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}

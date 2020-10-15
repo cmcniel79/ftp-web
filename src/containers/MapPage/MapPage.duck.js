@@ -224,13 +224,17 @@ export const searchMapListings = searchParams => (dispatch, getState, sdk) => {
 };
 
 export const loadUsers = searchParams => (dispatch, getState, sdk) => {
-  let users = [];
+  fetch("https://vmr5zmv3gg.execute-api.us-west-1.amazonaws.com/prd")
+    .then(response => console.log(response))
+    .catch("Could not reach amazon api");
+
   let userIds = new UUID("5f52e761-e46d-4d51-b4f2-a8a4ef16f8b2");
   return sdk.users
-    .show({ id: userIds,
+    .show({
+      id: userIds,
       include: ['profileImage'],
       'fields.image': ['variants.square-small', 'variants.square-small2x'],
-     })
+    })
     .then(response => {
       dispatch(searchMapUsersSuccess(response));
     });

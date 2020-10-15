@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import config from '../../config';
 import { propTypes } from '../../util/types';
 import { formatMoney } from '../../util/currency';
-import { ensureListing } from '../../util/data';
+import { ensureUser } from '../../util/data';
 import { ResponsiveImage, NamedLink } from '../../components';
 
 import css from './SearchMapSellerCard.css';
@@ -15,26 +15,26 @@ import css from './SearchMapSellerCard.css';
 const UserCard = props => {
   const { className, clickHandler, intl, isInCarousel, listing, urlToListing  } = props;
   const title = listing.attributes.profile.publicData.companyName;
-  const firstImage = listing.relationships.profileImage ?
-    {
-      attributes: {
-        variants: {
-          'square-small': {
-            height: 240,
-            name: "square-small",
-            url: "https://sharetribe.imgix.net/5ef92e97-6951-4449-b33b-4187c5f36313%2F5f690aac-cac9-42c0-b9b2-9af1943ba2ad?auto=format&crop=edges&fit=crop&h=240&ixlib=java-1.1.1&w=240&s=6d83aa826ad0c323d3d749b548507d26",
-            width: 240
-          }, 'square-small2x': {
-            height: 480,
-            name: "square-small2x",
-            url: "https://sharetribe.imgix.net/5ef92e97-6951-4449-b33b-4187c5f36313%2F5f690aac-cac9-42c0-b9b2-9af1943ba2ad?auto=format&crop=edges&fit=crop&h=480&ixlib=java-1.1.1&w=480&s=bfcead7bf9d013d05a235311bb2ac7d6",
-            width: 480
-          }
-        },
-      },
-      id: listing.relationships.profileImage.data.id,
-      type: 'image'
-    }
+  const firstImage = listing.relationships.profileImage.data ? listing.relationships.profileImage.data
+    // {
+    //   attributes: {
+    //     variants: {
+    //       'square-small': {
+    //         height: 240,
+    //         name: "square-small",
+    //         url: "https://sharetribe.imgix.net/5ef92e97-6951-4449-b33b-4187c5f36313%2F5f690aac-cac9-42c0-b9b2-9af1943ba2ad?auto=format&crop=edges&fit=crop&h=240&ixlib=java-1.1.1&w=240&s=6d83aa826ad0c323d3d749b548507d26",
+    //         width: 240
+    //       }, 'square-small2x': {
+    //         height: 480,
+    //         name: "square-small2x",
+    //         url: "https://sharetribe.imgix.net/5ef92e97-6951-4449-b33b-4187c5f36313%2F5f690aac-cac9-42c0-b9b2-9af1943ba2ad?auto=format&crop=edges&fit=crop&h=480&ixlib=java-1.1.1&w=480&s=bfcead7bf9d013d05a235311bb2ac7d6",
+    //         width: 480
+    //       }
+    //     },
+    //   },
+    //   id: listing.relationships.profileImage.data.id,
+    //   type: 'image'
+    // }
     : null;
   console.log(listing);
 
@@ -94,7 +94,7 @@ UserCard.defaultProps = {
 
 UserCard.propTypes = {
   className: string,
-  listing: propTypes.listing.isRequired,
+  listing: propTypes.user.isRequired,
   clickHandler: func.isRequired,
   intl: intlShape.isRequired,
   isInCarousel: bool.isRequired,
@@ -116,7 +116,7 @@ class SearchMapInfoCard extends Component {
       createURLToListing,
       onListingInfoCardClicked,
     } = this.props;
-    const currentListing = ensureListing(listings[this.state.currentListingIndex]);
+    const currentListing = ensureUser(listings[this.state.currentListingIndex]);
     const hasCarousel = listings.length > 1;
     const pagination = hasCarousel ? (
       <div className={classNames(css.paginationInfo, css.borderRadiusInheritBottom)}>
@@ -175,7 +175,7 @@ SearchMapInfoCard.defaultProps = {
 SearchMapInfoCard.propTypes = {
   className: string,
   rootClassName: string,
-  listings: arrayOf(propTypes.listing).isRequired,
+  listings: arrayOf(propTypes.user).isRequired,
   onListingInfoCardClicked: func.isRequired,
   createURLToListing: func.isRequired,
 

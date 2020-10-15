@@ -43,6 +43,7 @@ const EditListingDescriptionFormComponent = props => (
         fetchErrors,
         filterConfig,
         accountType,
+        allowsCustomOrders,
         initialValues
       } = formRenderProps;
 
@@ -129,18 +130,21 @@ const EditListingDescriptionFormComponent = props => (
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
+
       const styleOptions = findOptionsForSelectFilter('style', filterConfig);
       const regionOptions = findOptionsForSelectFilter('region', filterConfig);
       const materialOptions = findOptionsForSelectFilter('material', filterConfig);
 
       // Logic used to change sub-category selections based on category. User needs to pick a category
-      // before any sub-categories show up in the field.
+      // before any sub-categories show up in the field. I'm not sure why, but the hasInitalized variable is 
+      // needed for sub-categories to change when editing an already existing listing. 
       const category = initialValues && initialValues.category ? initialValues.category : null;
       if (category && !hasInitialized) {
         subCategories = getSubcategories(categories, category);
         hasInitialized = true;
       }
-
+      // Code below works when editing an existing listing but subcategories will not update without the hasInitalized 
+      // variable in the code above.
       const cat = document.getElementById('category');
       if (cat) {
         cat.addEventListener('change', () => {
@@ -150,7 +154,9 @@ const EditListingDescriptionFormComponent = props => (
 
       // Special account users need to provide a link for their items. These can be either ad accounts,
       // non-profit accounts, or premium account users. The link will be used in the ListingCard componenent.
-      // Use accountType prop to check which type of account they have.
+      // ListingCards for ad and non-profit accounts will link directly to this link and premium accounts will have a listing page.
+      // Use accountType prop to check which type of account they have. "p" for premium, "n" for non-profits and "a" for ad accounts.
+      // TODO: add accountType for authors here
       const websiteLink = accountType && (accountType === "p" || accountType === "a" || accountType === "n") ?
         <FieldTextInput
           id="websiteLink"
@@ -162,53 +168,57 @@ const EditListingDescriptionFormComponent = props => (
           validate={composeValidators(required(websiteRequiredMessage))}
           autoFocus
         /> : null;
-      
+
       // Ad account and non-profit account users are not selling physical products and do not need to 
       // fill in the optional fields category. They will not even have a listing page.
       // Use accountType prop to check which type of account they have. "n" for non-profits and "a" for ad accounts.
       const physicalItemFields = (accountType !== "a" && accountType !== "n") ?
         <div className={css.physicalItemFields}>
-          <div className={css.midSection}>
-            <div className={css.categories}>
-              <FieldSelect
-                className={css.category}
-                name="category"
-                id="category"
-                label={categoryLabel}
-                validate={categoryRequired}
-              >
-                {<option disabled value="">
-                  {categoryPlaceholder}
-                </option>}
-                {categories.map(c => (
-                  <option key={c.key} value={c.key}>
-                    {c.label}
-                  </option>
-                ))}
-              </FieldSelect>
-              <FieldSelect
-                className={css.category}
-                name="subCategory"
-                id="subCategory"
-                label={subCategoryLabel}
-                validate={subCategoryRequired}
-              >
-                {<option disabled value="">
-                  {subCategoryPlaceholder}
-                </option>}
-                {subCategories.map(s => (
-                  <option key={s.key} value={s.key}>
-                    {s.label}
-                  </option>
-                ))}
-              </FieldSelect>
-            </div>
+          <div className={css.categories}>
+            <FieldSelect
+              className={css.category}
+              name="category"
+              id="category"
+              label={categoryLabel}
+              validate={categoryRequired}
+            >
+              {<option disabled value="">
+                {categoryPlaceholder}
+              </option>}
+              {categories.map(c => (
+                <option key={c.key} value={c.key}>
+                  {c.label}
+                </option>
+              ))}
+            </FieldSelect>
+            <FieldSelect
+              className={css.category}
+              name="subCategory"
+              id="subCategory"
+              label={subCategoryLabel}
+              validate={subCategoryRequired}
+            >
+              {<option disabled value="">
+                {subCategoryPlaceholder}
+              </option>}
+              {subCategories.map(s => (
+                <option key={s.key} value={s.key}>
+                  {s.label}
+                </option>
+              ))}
+            </FieldSelect>
           </div>
-          <h2 className={css.optionalHeader}>Optional Fields</h2>
+          <h2 className={css.optionalHeader}>
+            <FormattedMessage id="EditListingDescriptionForm.optionalFields" />
+          </h2>
           <div className={css.checkBoxes}>
             <div className={css.region}>
-              <h2 className={css.checkTitle}>Region</h2>
-              <h4>Please pick a region associated with your listing</h4>
+              <h2 className={css.checkTitle}>
+                <FormattedMessage id="EditListingDescriptionForm.regionTitle" />
+              </h2>
+              <h4>
+                <FormattedMessage id="EditListingDescriptionForm.regionSubtitle" />
+              </h4>
               {regionOptions.map(option => (
                 <div key={option.key}>
                   <FieldRadioButton
@@ -222,8 +232,12 @@ const EditListingDescriptionFormComponent = props => (
               ))}
             </div>
             <div className={css.material}>
-              <h2 className={css.checkTitle}>Material</h2>
-              <h4>Please pick material(s) used in your listing</h4>
+              <h2 className={css.checkTitle}>
+                <FormattedMessage id="EditListingDescriptionForm.materialTitle" />
+              </h2>
+              <h4>
+                <FormattedMessage id="EditListingDescriptionForm.materialSubtitle" />
+              </h4>
               <FieldCheckboxGroup
                 id="material"
                 name="material"
@@ -231,8 +245,12 @@ const EditListingDescriptionFormComponent = props => (
               />
             </div>
             <div className={css.style}>
-              <h2 className={css.checkTitle}>Style</h2>
-              <h4>Please pick a style for your listing</h4>
+              <h2 className={css.checkTitle}>
+                <FormattedMessage id="EditListingDescriptionForm.styleTitle" />
+              </h2>
+              <h4>
+                <FormattedMessage id="EditListingDescriptionForm.styleSubtitle" />
+              </h4>
               {styleOptions.map(option => (
                 <div key={option.key}>
                   <FieldRadioButton
@@ -246,22 +264,33 @@ const EditListingDescriptionFormComponent = props => (
               ))}
             </div>
           </div>
-          <div className={css.custom}>
-          <h2 className={css.checkTitle}>Available Sizes</h2>
-          <FieldTextInput
-            id="sizes"
-            name="sizes"
-            type="text"
-            label="What sizes are available for purchase?"
-            placeholder="eg. S, M, L, XL..."
-            maxLength={TITLE_MAX_LENGTH}
-          />
-            <h2 className={css.checkTitle}>Custom Orders</h2>
-            <FieldBoolean
-              id="customOrders"
-              name="customOrders"
-              label="Are custom orders available for this listing?"
-            />
+          <div className={css.sizesAndCustom}>
+            <div className={css.lastRow} >
+              <h2 className={css.checkTitle}>
+                <FormattedMessage id="EditListingDescriptionForm.sizesTitle" />
+              </h2>
+              <FieldTextInput
+                id="sizes"
+                name="sizes"
+                type="text"
+                label="What sizes are available for purchase?"
+                placeholder="eg. S, M, L, XL..."
+                maxLength={TITLE_MAX_LENGTH}
+              />
+            </div>
+            {allowsCustomOrders &&
+              <div className={css.lastRow} >
+                <h2 className={css.checkTitle}>
+                  <FormattedMessage id="EditListingDescriptionForm.customOrdersTitle" />
+                </h2>
+                <FieldBoolean
+                  id="customOrders"
+                  name="customOrders"
+                  label="Can customers contact you about custom orders?"
+                  placeholder="Choose yes/no"
+                />
+              </div>
+            }
           </div>
         </div>
         : null;
@@ -282,7 +311,6 @@ const EditListingDescriptionFormComponent = props => (
             validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
             autoFocus
           />
-
           <FieldTextInput
             id="description"
             name="description"
@@ -292,10 +320,8 @@ const EditListingDescriptionFormComponent = props => (
             placeholder={descriptionPlaceholderMessage}
             validate={composeValidators(required(descriptionRequiredMessage))}
           />
-
           {websiteLink}
           {physicalItemFields}
-
           <Button
             className={css.submitButton}
             type="submit"

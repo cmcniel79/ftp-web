@@ -19,7 +19,6 @@ class SelectSingleFilterPlain extends Component {
 
   selectOption(option, e) {
     const { queryParamNames, onSelect } = this.props;
-    console.log(queryParamNames);
     const queryParamName = getQueryParamName(queryParamNames);
     onSelect({ [queryParamName]: option });
 

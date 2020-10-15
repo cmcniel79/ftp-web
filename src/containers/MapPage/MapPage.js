@@ -34,6 +34,9 @@ import {
   createSearchResultSchema,
 } from './MapPage.helpers';
 import css from './MapPage.css';
+import { types as sdkTypes } from '../../util/sdkLoader';
+
+const { LatLng, LatLngBounds } = sdkTypes;
 
 const SEARCH_WITH_MAP_DEBOUNCE = 300; // Little bit of debounce before search is initiated.
 
@@ -46,12 +49,8 @@ export class MapPageComponent extends Component {
       isMobileModalOpen: false,
       industry: null,
       tribe: null,
-      origin: { _sdkType: "LatLng", lat: 39.3812661305678, lng: -97.9222112121185 },
-      bounds: {
-        _sdkType: "LatLngBounds",
-        ne: { _sdkType: "LatLng", lat: 71.4202919997506, lng: -66.8847646185949 },
-        sw: { _sdkType: "LatLng", lat: 18.8163608007951, lng: -179.9 },
-      },
+      origin: new LatLng(39.3812661305678, -97.9222112121185),
+      bounds: new LatLngBounds(new LatLng(71.4202919997506, -66.8847646185949), new LatLng(18.8163608007951, -179.9)),
     };
 
     this.searchMapListingsInProgress = false;
@@ -78,16 +77,10 @@ export class MapPageComponent extends Component {
   }
 
   setGeolocation(lat, lng) {
-    console.log(this.state.bounds);
-    this.setState({ origin: { _sdkType: "LatLng", lat: lat, lng: lng } });
+    this.setState({ origin: new LatLng(lat, lng) });
     this.setState({
-      bounds: {
-        _sdkType: "LatLngBounds",
-        ne: { _sdkType: "LatLng", lat: (lat + .5), lng: (lng + .5) },
-        sw: { _sdkType: "LatLng", lat: (lat - .5), lng: (lng - .5) }
-      }
+      bounds: new LatLngBounds(new LatLng(lat + .5, lng + .5), new LatLng(lat - .5, lng - .5))
     });
-    console.log(this.state.bounds);
   }
 
   // Callback to determine if new search is needed
@@ -169,8 +162,12 @@ export class MapPageComponent extends Component {
       this.setState({ isSearchMapOpenOnMobile: true });
     };
 
-    const address = searchInURL || {};
-    const { title, description, schema } = createSearchResultSchema(address, intl);
+    const title = intl.formatMessage(
+      { id: 'MapPage.schemaTitle' },
+    );
+    const description = intl.formatMessage(
+      { id: 'MapPage.schemaDescription' },
+    );
 
     // Set topbar class based on if a modal is open in
     // a child component
@@ -190,7 +187,12 @@ export class MapPageComponent extends Component {
         scrollingDisabled={scrollingDisabled}
         description={description}
         title={title}
-        schema={schema}
+        schema={{
+          '@context': 'http://schema.org',
+          '@type': 'ItemPage',
+          description: description,
+          name: title,
+        }}
       >
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>

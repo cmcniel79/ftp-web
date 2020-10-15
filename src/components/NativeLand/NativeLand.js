@@ -14,14 +14,16 @@ class NativeLand extends Component {
     this.state = {
       tribeSearchInProgress: false,
       isModalOpen: false,
-      tribes: []
+      tribes: this.props.tribes ? this.props.tribes : [],
     };
   }
 
   selectOption(option, e) {
     const queryParamName = 'pub_nativeLands';
     this.props.onSelect({ [queryParamName]: option });
-    // this.props.saveTribes(this.state.tribes);
+    if (this.props.saveTribes) {
+      this.props.saveTribes(this.state.tribes);
+    }
     // blur event target if event is passed
     if (e && e.currentTarget) {
       e.currentTarget.blur();
@@ -36,7 +38,9 @@ class NativeLand extends Component {
   }
 
   getTribes(lat, lng) {
-    this.props.setGeolocation(lat, lng);
+    if (this.props.setGeolocation) {
+      this.props.setGeolocation(lat, lng);
+    }
     const baseUrl = 'https://native-land.ca/api/index.php?maps=territories&position=';
     // Correct URL will look like 'https://native-land.ca/api/index.php?maps=territories&position=42.553080,-86.473389'
     // console.log(lat + " + " + lng);
@@ -56,7 +60,7 @@ class NativeLand extends Component {
 
   useCurrentLocation() {
     this.setState({ tribeSearchInProgress: true });
-    userLocation().then(location => 
+    userLocation().then(location =>
       this.getTribes(location.lat, location.lng)
     )
   }
@@ -75,7 +79,7 @@ class NativeLand extends Component {
         onManageDisableScrolling={() => null}
       >
         <h2 className={css.modalHeading}>
-        <FormattedMessage id={'NativeLand.modalHeading'} />
+          <FormattedMessage id={'NativeLand.modalHeading'} />
         </h2>
         <NativeLandSearchForm
           onSubmit={this.handleSubmit}

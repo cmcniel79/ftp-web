@@ -9,12 +9,10 @@ import { propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
-import { Button, Form, FieldCurrencyInput } from '../../components';
+import { Button, Form, FieldCurrencyInput, FieldCheckbox } from '../../components';
 import css from './EditListingPricingForm.css';
 
 const { Money } = sdkTypes;
-
-var hasInternationalFee = false;
 
 export const EditListingPricingFormComponent = props => (
   <FinalForm
@@ -33,14 +31,15 @@ export const EditListingPricingFormComponent = props => (
         updateInProgress,
         fetchErrors,
         accountType,
-        userCountry
+        userCountry,
+        initialValues
       } = formRenderProps;
 
       const shippingFeeMessage = intl.formatMessage({
         id: 'EditListingPricingForm.shippingFeeInputMessage',
       });
 
-      const shippingFeePlaceholderMessage = intl.formatMessage({
+      const shippingFeePlaceholder = intl.formatMessage({
         id: 'EditListingPricingForm.shippingFeeInputPlaceholder',
       });
 
@@ -48,8 +47,12 @@ export const EditListingPricingFormComponent = props => (
         id: 'EditListingPricingForm.internationalFeeInputMessage',
       });
 
-      const internationalFeePlaceholderMessage = intl.formatMessage({
+      const internationalFeePlaceholder = intl.formatMessage({
         id: 'EditListingPricingForm.internationalFeeInputPlaceholder',
+      });
+
+      const internationalCheckboxMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.internationalCheckboxMessage',
       });
 
       const pricePerUnitMessage = intl.formatMessage({
@@ -86,34 +89,32 @@ export const EditListingPricingFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
+      var hasInternationalFee = initialValues.internationalFee ? true : false; 
 
+      const checkbox = document.getElementById('internationalFeeCheckbox');
       const internationalInput = document.getElementById('internationalFee');
-      if (internationalInput) {
-        internationalInput.addEventListener('input', () => {
+
+      if (checkbox) {
+        console.log(checkbox);
+        if (checkbox.checked) {
           hasInternationalFee = true;
-        })
-      }
+        } else {
+          hasInternationalFee = false;
+        }
+      };
 
-      const internationalInstructions = hasInternationalFee ?
-        <div className={css.instructions}>
-          <p className={css.instructionsText}>The international fee will be used automatically if a buyer is from a
-          different country from you. Currrently, your country of origin is listed as {userCountry}.
-            <br />
-            <br />
-             If this is the wrong country, you should go to your account settings and change your address before posting
-             this item.
-          </p>
-        </div>
-        : null;
+      if (internationalInput) {
+        console.log(internationalInput.value);
+      };
 
-      const specialAccountInfo = (accountType === "n" || accountType === "a") ?
+      // For ad and non-profit account types, no price is needed on their listing cards.
+      const noPriceNeededInfo = (accountType === "n" || accountType === "a") ?
         <div className={css.accountInfo}>
-          <p>You have either a Ad or Non-profit account and do not need to enter pricing information. Press the button below to
-          continue.
-        </p>
+          <p>
+            <FormattedMessage id="EditListingPricingForm.specialAccountInfo" />
+          </p>
         </div> : null;
 
-console.log(accountType);
       return (
         <Form onSubmit={handleSubmit} className={classes}>
           {updateListingError ? (
@@ -134,7 +135,7 @@ console.log(accountType);
                   id="price"
                   name="price"
                   className={css.priceInput}
-                  autoFocus
+                  // autoFocus
                   label={pricePerUnitMessage}
                   placeholder={pricePlaceholderMessage}
                   currencyConfig={config.currencyConfig}
@@ -147,23 +148,43 @@ console.log(accountType);
                       name="shippingFee"
                       className={css.priceInput}
                       label={shippingFeeMessage}
-                      placeholder={shippingFeePlaceholderMessage}
+                      placeholder={shippingFeePlaceholder}
                       currencyConfig={config.currencyConfig}
                     />
-                    <FieldCurrencyInput
-                      id="internationalFee"
-                      name="internationalFee"
-                      className={css.priceInput}
-                      label={internationalFeeMessage}
-                      placeholder={internationalFeePlaceholderMessage}
-                      currencyConfig={config.currencyConfig}
-                    />
+                    <div className={css.internationalFee}>
+                      <FieldCheckbox
+                        id="internationalFeeCheckbox"
+                        name="internationalFeeCheckbox"
+                        label={internationalCheckboxMessage}
+                        value="hasFee"
+                        defaultChecked={true}
+                      />
+                      {hasInternationalFee &&
+                      <div>
+                        <FieldCurrencyInput
+                          id="internationalFee"
+                          name="internationalFee"
+                          className={css.priceInput}
+                          label={internationalFeeMessage}
+                          placeholder={internationalFeePlaceholder}
+                          currencyConfig={config.currencyConfig}
+                        />
+                        <div className={css.instructions}>
+                        <p className={css.instructionsText}>
+                          <FormattedMessage id="EditListingPricingForm.instructionsLine1" values={{ userCountry }} />
+                          <br />
+                          <br />
+                          <FormattedMessage id="EditListingPricingForm.instructionsLine2" />
+                        </p>
+                      </div>
+                      </div>
+                      }
+                    </div>
                   </div>
-                : null}
+                  : null}
               </div>
             }
-            {specialAccountInfo}
-            {internationalInstructions}
+            {noPriceNeededInfo}
           </div>
           <Button
             className={css.submitButton}

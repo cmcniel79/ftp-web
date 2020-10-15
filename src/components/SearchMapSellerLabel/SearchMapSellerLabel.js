@@ -120,7 +120,7 @@ const { func, string } = PropTypes;
 SearchMapPriceLabel.propTypes = {
   className: string,
   rootClassName: string,
-  listing: propTypes.listing.isRequired,
+  listing: propTypes.user.isRequired,
   onListingClicked: func.isRequired,
 
   // from injectIntl

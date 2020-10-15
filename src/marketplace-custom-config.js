@@ -214,7 +214,7 @@ export const filters = [
     config: {
       options: [
         { key: 'available', label: "Show Listings Available for Custom Orders" },
-        { key: 'unavailable', label: "Show All Listings" }  
+        // { key: 'unavailable', label: "Show All Listings" }  
       ]
     }
   },
@@ -227,7 +227,7 @@ export const filters = [
     config: {
       options: [
         { key: 'verified', label: "Show Only Verified Sellers" },
-        { key: 'unverified', label: "Show All Sellers" }  
+        // { key: 'unverified', label: "Show All Sellers" }  
       ]
     }
   },

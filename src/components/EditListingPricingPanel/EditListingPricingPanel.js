@@ -43,7 +43,9 @@ const EditListingPricingPanel = props => {
     publicData && publicData.internationalFee ? 
       new Money(publicData.internationalFee.amount, publicData.internationalFee.currency) : null;
 
-  const initialValues = { price, shippingFee, internationalFee };
+  const internationalFeeCheckbox = internationalFee ? "checked" : null;
+
+  const initialValues = { price, shippingFee, internationalFee, internationalFeeCheckbox };
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (

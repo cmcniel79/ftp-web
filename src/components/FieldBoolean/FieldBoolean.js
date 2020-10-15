@@ -31,7 +31,7 @@ const FieldBoolean = props => {
   };
   return (
     <FieldSelect {...selectProps}>
-      <option value="">{placeholder}</option>
+      <option value="" disabled="disabled">{placeholder}</option>
       <option value="true">{trueLabel}</option>
       <option value="false">{falseLabel}</option>
     </FieldSelect>

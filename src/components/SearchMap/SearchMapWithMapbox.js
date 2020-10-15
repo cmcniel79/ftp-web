@@ -269,8 +269,6 @@ class SearchMapWithMapbox extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(prevProps);
-    console.log(this.props);
     if (!isEqual(prevProps.bounds, this.props.bounds)) {
       // If no mapSearch url parameter is given, this is original location search
       const { mapSearch } = parse(this.props.location.search, {

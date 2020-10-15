@@ -222,7 +222,7 @@ SearchMapComponent.propTypes = {
     search: string.isRequired,
   }).isRequired,
   activeListingId: propTypes.uuid,
-  listings: arrayOf(propTypes.listing),
+  listings: arrayOf(propTypes.user),
   onCloseAsModal: func,
   onMapMoveEnd: func.isRequired,
   zoom: number,

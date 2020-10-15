@@ -25,7 +25,7 @@ import css from './SearchPage.css';
 // Pagination page size might need to be dynamic on responsive page layouts
 // Current design has max 3 columns 12 is divisible by 2 and 3
 // So, there's enough cards to fill all columns on full pagination pages
-const RESULT_PAGE_SIZE = 24;
+const RESULT_PAGE_SIZE = 48;
 const MODAL_BREAKPOINT = 768; // Search is in modal on mobile layout
 
 export class SearchPageComponent extends Component {
@@ -152,8 +152,14 @@ export class SearchPageComponent extends Component {
       : css.topbar;
     // this.state.likedListings = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likedListings ?
     //   Object.values(currentUser.attributes.profile.privateData.likedListings) : [];
-
-
+    // if(searchInProgress) {
+    for (var i = listings.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = listings[i];
+      listings[i] = listings[j];
+      listings[j] = temp;
+  }
+// }
     // N.B. openMobileMap button is sticky.
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
     /* eslint-disable jsx-a11y/no-static-element-interactions */

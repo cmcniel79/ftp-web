@@ -49,7 +49,6 @@ exports.transactionLineItems = (listing, bookingData) => {
   const shippingFeePrice = isDomesticOrder
   ? resolveShippingFeePrice(listing.attributes.publicData.shippingFee)
   : resolveShippingFeePrice(listing.attributes.publicData.internationalFee);
-  console.log(shippingFeePrice);
 
   const shippingFee = {
         code: 'line-item/shipping-fee',

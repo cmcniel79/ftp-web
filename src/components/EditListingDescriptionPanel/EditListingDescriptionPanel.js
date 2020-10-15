@@ -25,9 +25,8 @@ const EditListingDescriptionPanel = props => {
     updateInProgress,
     errors,
     accountType,
-    enrolledStatus
+    allowsCustomOrders,
   } = props;
-  const verifiedSeller = enrolledStatus ? 'verified' : 'unverified';
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { description, title, publicData } = currentListing.attributes;
@@ -47,9 +46,12 @@ const EditListingDescriptionPanel = props => {
   const style = publicData && publicData.style;
   const region = publicData && publicData.region;
   const material = publicData && publicData.material;
-  const customOrders = publicData && publicData.customOrders === 'available' ? true : false;
+  const customOrders = publicData && publicData.customOrders === 'available' ? true :
+    publicData.customOrders === 'unavailable' ? false : null;
   const sizes = publicData && publicData.sizes;
   const websiteLink = publicData && publicData.websiteLink;
+  const verifiedSeller = accountType && (accountType === 'e' || accountType === 'p' || accountType === 'n')
+    ? 'verified' : 'unverified';
 
   const categoryOptions = findOptionsForSelectFilter('category', config.custom.filters);
   return (
@@ -61,12 +63,15 @@ const EditListingDescriptionPanel = props => {
         saveActionMsg={submitButtonText}
         onSubmit={values => {
           const { title, description, category, subCategory, style, region, material, customOrders, sizes, websiteLink } = values;
-          const customIsAvailable = customOrders ? 'available':'unavailable';
-          const updateValues = {title: title.trim(),
-          description,
-          publicData: {category, subCategory, style, region, material, customOrders: customIsAvailable, sizes,
-             verifiedSeller, websiteLink},
-        };
+          const customIsAvailable = customOrders ? 'available' : 'unavailable';
+          const updateValues = {
+            title: title.trim(),
+            description,
+            publicData: {
+              category, subCategory, style, region, material, customOrders: customIsAvailable, sizes,
+              verifiedSeller, websiteLink
+            },
+          };
           onSubmit(updateValues);
         }}
         onChange={onChange}
@@ -77,6 +82,7 @@ const EditListingDescriptionPanel = props => {
         fetchErrors={errors}
         categories={categoryOptions}
         accountType={accountType}
+        allowsCustomOrders={allowsCustomOrders}
       />
     </div>
   );
