@@ -97,14 +97,14 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
   // const exampleImgSrc = imgSrc.concat('my-custom-domain.example.com');
 
   const { connectSrc = [self] } = defaultDirectives;
-  const nativeLandsSrc = connectSrc.concat('https://native-land.ca/');
-  const amazonAPISrc = connectSrc.concat('https://vmr5zmv3gg.execute-api.us-west-1.amazonaws.com/');
+  const nativeLandsSrc = connectSrc.concat(['https://native-land.ca/', 'https://vmr5zmv3gg.execute-api.us-west-1.amazonaws.com/']);
+  // const amazonAPISrc = connectSrc.concat('https://vmr5zmv3gg.execute-api.us-west-1.amazonaws.com/');
   // console.log(connectSrc);
   const customDirectives = {
     // Example: Add custom directive override
     // imgSrc: exampleImgSrc,
     // connectSrc: [nativeLandsSrc, amazonAPISrc], 
-    connectSrc: amazonAPISrc, 
+    connectSrc: nativeLandsSrc, 
   };
 
   // ================ END CUSTOM CSP URLs ================ //
