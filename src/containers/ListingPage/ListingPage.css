@@ -368,11 +368,15 @@
   margin: 0;
 }
 
+.desktopPriceValue {
   /* Font */
-  margin-bottom: 35px;
+  /* @apply --marketplaceH1FontStyles; */
+  @apply --marketplaceModalTitleStyles;
+  color: var(--marketplaceColor);
   @media (--viewportMedium) {
-    padding: 0;
-    /* margin-bottom: 52px; */
+    margin-top: 0;
+    /* margin-bottom: 6px; */
+    margin-bottom: 1px;
   }
 }
 
