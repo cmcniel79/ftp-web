@@ -102,6 +102,10 @@
   font-weight: var(--fontWeightSemiBold);
 
   display: inline-block;
+<<<<<<< HEAD
+=======
+  padding: 9px 16px 9px 16px;
+>>>>>>> upstream/master
   width: auto;
   height: 100%;
   min-height: 0;

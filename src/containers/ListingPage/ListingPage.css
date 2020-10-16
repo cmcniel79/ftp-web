@@ -211,7 +211,7 @@
     position: sticky;
     top: 100px;
     display: block;
-    margin-top: 95px;
+    margin-top: 79px;
     margin-left: 60px;
     border-left-style: solid;
     border-left-width: 1px;
@@ -285,11 +285,11 @@
 
 .desktopPriceValue {
   /* Font */
-  @apply --marketplaceH1FontStyles;
+  @apply --marketplaceModalTitleStyles;
   color: var(--marketplaceColor);
   @media (--viewportMedium) {
     margin-top: 0;
-    margin-bottom: 6px;
+    margin-bottom: 1px;
   }
 }
 
@@ -323,7 +323,7 @@
 
 .title {
   /* Font */
-  @apply --marketplaceH1FontStyles;
+  @apply --marketplaceModalTitleStyles;
   color: var(--matterColor);
   /* Layout */
   width: 100%;
@@ -331,13 +331,13 @@
   margin-bottom: 0;
   @media (--viewportMedium) {
     margin-top: 0;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
   }
 }
 
 .author {
   width: 100%;
-  @apply --marketplaceH4FontStyles;
+  @apply --marketplaceH5FontStyles;
   margin-top: 7px;
   margin-bottom: 0;
   @media (--viewportMedium) {
@@ -364,25 +364,11 @@
 
 .contactLink {
   @apply --marketplaceLinkStyles;
-  @apply --marketplaceH4FontStyles;
+  @apply --marketplaceH5FontStyles;
   margin: 0;
 }
 
-.featuresTitle {
   /* Font */
-  @apply --marketplaceH3FontStyles;
-  color: var(--matterColorAnti);
-  margin-top: 0;
-  margin-bottom: 16px;
-  @media (--viewportMedium) {
-    margin-top: 0;
-    margin-bottom: 20px;
-  }
-}
-
-.sectionSeller {
-  position: relative;
-  padding: 0 24px;
   margin-bottom: 35px;
   @media (--viewportMedium) {
     padding: 0;

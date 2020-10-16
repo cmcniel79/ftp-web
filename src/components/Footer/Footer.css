@@ -180,7 +180,7 @@
 
 .link {
   /* Font */
-  @apply --marketplaceH4FontStyles;
+  @apply --marketplaceH5FontStyles;
   line-height: 20px;
   color: var(--matterColor);
   transition: var(--transitionStyleButton);
@@ -256,12 +256,19 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+<<<<<<< HEAD
   margin-bottom: 25px;
+=======
+>>>>>>> upstream/master
 }
 
 .tosAndPrivacy {
   margin-top: 0;
   margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-bottom: 10px;
+  }
 }
 
 .legalLink,

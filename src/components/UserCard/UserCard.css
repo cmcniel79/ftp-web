@@ -55,7 +55,7 @@
   letter-spacing: -0.1px;
   @apply --marketplaceH4FontStyles;
   @media (--viewportMedium) {
-    margin: 18px 0 0 0;
+    margin: 0;
   }
 }
 
@@ -78,7 +78,6 @@
 .desktopBio {
   display: none;
   @media (--viewportMedium) {
-    margin-top: 16px;
     display: block;
   }
 }

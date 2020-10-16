@@ -14,21 +14,96 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2020-XX-XX
 
+## [v6.4.0] 2020-10-14
+
+- [add] Add Facebook login as a first step towards supporting social logins and SSO in FTW. This PR
+  introduces new endpoints `createUserWithIdp` and `loginWithIdp` and strategy for logging in with
+  Facebook. See the PR for the more detailed view of the changes.
+  [#1364](https://github.com/sharetribe/ftw-daily/pull/1364)
+- [fix] Fix missing proptype warnings in `TransactionPage` and `TransactionPanel` tests.
+  [#1363](https://github.com/sharetribe/ftw-daily/pull/1363)
+- [fix] Improve error handling by passing error details forward instead of creating a new error that
+  hides the details when making API call to FTW server.
+  [#1361](https://github.com/sharetribe/ftw-daily/pull/1361)
+- [fix] Remove duplicate page schema from body.
+  [#1355](https://github.com/sharetribe/ftw-daily/pull/1355)
+
+  [v6.4.0]: https://github.com/sharetribe/ftw-daily/compare/v6.3.1...v6.4.0
+
+## [v6.3.1] 2020-08-19
+
+- [fix] Fix popup-button in SelectSingleFilterPopup.css and adjust Footer with correct baselines.
+  [#1353](https://github.com/sharetribe/ftw-daily/pull/1353)
+
+[v6.3.1]: https://github.com/sharetribe/ftw-daily/compare/v6.3.0...v6.3.1
+
+## [v6.3.0] 2020-08-19
+
+- [change] We decided to change the default font to Poppins.
+  [#1349](https://github.com/sharetribe/ftw-daily/pull/1349)
+- [change] Update path-to-regexp to v6.1.0
+  [#1348](https://github.com/sharetribe/ftw-daily/pull/1348)
+- [change] Update Helmet to v4.0.0. Show warning if environment variable REACT_APP_CSP is not set or
+  if it's set to 'report' mode in production environmet. Set REACT_APP_CSP to 'report' mode by
+  default in `.env-template` file. [#1347](https://github.com/sharetribe/ftw-daily/pull/1347)
+- [change] In `StripeConnectAccountForm` show error message from Stripe if there is one when
+  fetching account link. [#1346](https://github.com/sharetribe/ftw-daily/pull/1346)
+
+[v6.3.0]: https://github.com/sharetribe/ftw-daily/compare/v6.2.0...v6.3.0
+
+## [v6.2.0] 2020-08-12
+
+This change set was originally released as a patch update 6.1.2 but after reconsideration it's
+released as a minor update 6.2.0.
+
+- [fix] remove typo [#1343](https://github.com/sharetribe/ftw-daily/pull/1343)
+- [change] Request custom image variants for avatar
+  [#1342](https://github.com/sharetribe/ftw-daily/pull/1342)
+- [change] Some dependency updates [#1337](https://github.com/sharetribe/ftw-daily/pull/1337)
+- [fix] Use Stripe's `confirmCardPayment` function instead of deprecated `handleCardPayment` to
+  confirm PaymentIntent. In addition to the rename, the arguments passed to `handleCardPayment` are
+  sligthly different. Otherwise, these changes should not affect the behavior of the function.
+  [#1339](https://github.com/sharetribe/ftw-daily/pull/1339)
+
+[v6.2.0]: https://github.com/sharetribe/flex-template-web/compare/v6.1.1...v6.2.0
+
+## [v6.1.1] 2020-07-21
+
+- [fix] Fix config script for NodeJS v14.5.0
+  [#1327](https://github.com/sharetribe/ftw-daily/pull/1327)
+
+[v6.1.1]: https://github.com/sharetribe/flex-template-web/compare/v6.1.0...v6.1.1
+
+## [v6.1.0] 2020-07-01
+
+- [fix] MainPanel: search filter bug. Address and bounds are handled outside of MainPanel, URL
+  params should be trusted instead of values stored to state.
+  [#1320](https://github.com/sharetribe/ftw-daily/pull/1320)
+- [fix] small typo. [#1319](https://github.com/sharetribe/ftw-daily/pull/1319)
+- [fix] Fix typo (which is copy-pasted in 4 files).
+  [#1318](https://github.com/sharetribe/ftw-daily/pull/1318)
+- [add] Update French translation file (Spanish and German translations have still missing keys).
+  [#1316](https://github.com/sharetribe/ftw-daily/pull/1316)
+- [fix] Sync bookingUnitType variables and update comments. Client app's API (proxy) server needs to
+  know about unit type. [#1317](https://github.com/sharetribe/ftw-daily/pull/1317)
+
+[v6.1.0]: https://github.com/sharetribe/flex-template-web/compare/v6.0.0...v6.1.0
+
 ## [v6.0.0] 2020-06-25
 
-- [change] Use privileged transitions for price calculation by default and
-  update the process alias.
+- [change] Use privileged transitions for price calculation by default and update the process alias.
   [#1314](https://github.com/sharetribe/ftw-daily/pull/1314)
 - [add] Add client secret enquiry to 'yarn run config' script
   [#1313](https://github.com/sharetribe/ftw-daily/pull/1313)
-- [change] Add UI support for flexible pricing and privileged
-  transitions. Note that this requires updating the booking breakdown
-  estimation code that is now done in the backend.
+- [change] Add UI support for flexible pricing and privileged transitions. Note that this requires
+  updating the booking breakdown estimation code that is now done in the backend.
   [#1310](https://github.com/sharetribe/ftw-daily/pull/1310)
 - [add] Add local API endpoints for flexible pricing and privileged transitions
   [#1301](https://github.com/sharetribe/ftw-daily/pull/1301)
 - [fix] `yarn run dev-backend` was expecting NODE_ENV.
   [#1303](https://github.com/sharetribe/ftw-daily/pull/1303)
+
+[v6.0.0]: https://github.com/sharetribe/flex-template-web/compare/v5.0.0...v6.0.0
 
 ## [v5.0.0] 2020-06-04
 

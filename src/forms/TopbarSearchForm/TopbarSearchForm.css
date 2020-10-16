@@ -60,7 +60,7 @@
 
   /* Layout */
   margin: 0 24px 0 0;
-  padding: 1px 13px 13px 13px;
+  padding: 4px 13px 10px 13px;
   height: var(--TopbarSearchForm_inputHeight);
   line-height: unset;
 
@@ -104,11 +104,6 @@
   /* Search text gets ellipsis if it's too wide */
   text-overflow: ellipsis;
   overflow-x: hidden;
-
-  /* Safari bugfix: without this Safari will print placeholder to a wrong place */
-  &::-webkit-input-placeholder {
-    line-height: normal;
-  }
 
   &:hover,
   &:focus {
