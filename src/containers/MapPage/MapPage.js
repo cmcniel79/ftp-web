@@ -51,8 +51,8 @@ export class MapPageComponent extends Component {
       isMobileModalOpen: false,
       industry: null,
       tribe: null,
-      origin: new LatLng(39.3812661305678, -97.9222112121185),
-      bounds: new LatLngBounds(new LatLng(71.4202919997506, -66.8847646185949), new LatLng(18.8163608007951, -179.9)),
+      origin: null,
+      bounds: new LatLngBounds(new LatLng(71.4202919997506, -66.8847646185949), new LatLng(18.8163608007951, -150)),
     };
 
     this.searchMapListingsInProgress = false;
