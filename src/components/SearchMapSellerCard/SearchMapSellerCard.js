@@ -15,33 +15,12 @@ import css from './SearchMapSellerCard.css';
 const UserCard = props => {
   const { className, clickHandler, intl, isInCarousel, listing, urlToListing  } = props;
   const title = listing.attributes.profile.publicData.companyName;
-  const firstImage = listing.relationships.profileImage.data ? listing.relationships.profileImage.data
-    // {
-    //   attributes: {
-    //     variants: {
-    //       'square-small': {
-    //         height: 240,
-    //         name: "square-small",
-    //         url: "https://sharetribe.imgix.net/5ef92e97-6951-4449-b33b-4187c5f36313%2F5f690aac-cac9-42c0-b9b2-9af1943ba2ad?auto=format&crop=edges&fit=crop&h=240&ixlib=java-1.1.1&w=240&s=6d83aa826ad0c323d3d749b548507d26",
-    //         width: 240
-    //       }, 'square-small2x': {
-    //         height: 480,
-    //         name: "square-small2x",
-    //         url: "https://sharetribe.imgix.net/5ef92e97-6951-4449-b33b-4187c5f36313%2F5f690aac-cac9-42c0-b9b2-9af1943ba2ad?auto=format&crop=edges&fit=crop&h=480&ixlib=java-1.1.1&w=480&s=bfcead7bf9d013d05a235311bb2ac7d6",
-    //         width: 480
-    //       }
-    //     },
-    //   },
-    //   id: listing.relationships.profileImage.data.id,
-    //   type: 'image'
-    // }
-    : null;
-  console.log(listing);
+  const firstImage = listing.profileImage ? listing.profileImage : null;
 
   const profileLink = listing.id.uuid ?
     <NamedLink className={css.link} name="ProfilePage" params={{ id: listing.id.uuid }}>
-    </NamedLink> :
-    null;
+    </NamedLink> 
+    : null;
 
   // listing card anchor needs sometimes inherited border radius.
   const classes = classNames(

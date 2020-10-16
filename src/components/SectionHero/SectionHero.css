@@ -81,7 +81,7 @@
   @media (--viewportMedium) {
     max-width: 1000px;
   }
-  font-family: "sofiapro";
+  font-family: Josefin Sans; ;
   font-weight: normal;
   margin-bottom: 13px;
 }

@@ -4,25 +4,24 @@ import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { convertUnitToSubUnit, unitDivisor } from '../../util/currency';
 import { formatDateStringToUTC, getExclusiveEndDate } from '../../util/dates';
 import config from '../../config';
-import { types as sdkTypes } from '../../util/sdkLoader';
-
-const { UUID } = sdkTypes;
 
 // ================ Action types ================ //
 
-export const SEARCH_LISTINGS_REQUEST = 'app/SearchPage/SEARCH_LISTINGS_REQUEST';
-export const SEARCH_LISTINGS_SUCCESS = 'app/SearchPage/SEARCH_LISTINGS_SUCCESS';
-export const SEARCH_LISTINGS_ERROR = 'app/SearchPage/SEARCH_LISTINGS_ERROR';
+export const SET_INITIAL_STATE = 'app/MapPage/SET_INITIAL_STATE';
 
-export const SEARCH_MAP_LISTINGS_REQUEST = 'app/SearchPage/SEARCH_MAP_LISTINGS_REQUEST';
-export const SEARCH_MAP_LISTINGS_SUCCESS = 'app/SearchPage/SEARCH_MAP_LISTINGS_SUCCESS';
-export const SEARCH_MAP_LISTINGS_ERROR = 'app/SearchPage/SEARCH_MAP_LISTINGS_ERROR';
+export const SEARCH_LISTINGS_REQUEST = 'app/MapPage/SEARCH_LISTINGS_REQUEST';
+export const SEARCH_LISTINGS_SUCCESS = 'app/MapPage/SEARCH_LISTINGS_SUCCESS';
+export const SEARCH_LISTINGS_ERROR = 'app/MapPage/SEARCH_LISTINGS_ERROR';
 
-export const SEARCH_MAP_USERS_REQUEST = 'app/SearchPage/SEARCH_MAP_USERS_REQUEST';
-export const SEARCH_MAP_USERS_SUCCESS = 'app/SearchPage/SEARCH_MAP_USERS_SUCCESS';
-export const SEARCH_MAP_USERS_ERROR = 'app/SearchPage/SEARCH_MAP_USERS_ERROR';
+export const SEARCH_MAP_LISTINGS_REQUEST = 'app/MapPage/SEARCH_MAP_LISTINGS_REQUEST';
+export const SEARCH_MAP_LISTINGS_SUCCESS = 'app/MapPage/SEARCH_MAP_LISTINGS_SUCCESS';
+export const SEARCH_MAP_LISTINGS_ERROR = 'app/MapPage/SEARCH_MAP_LISTINGS_ERROR';
 
-export const SEARCH_MAP_SET_ACTIVE_LISTING = 'app/SearchPage/SEARCH_MAP_SET_ACTIVE_LISTING';
+export const SHOW_USER_REQUEST = 'app/MapPage/SHOW_USER_REQUEST';
+export const SHOW_USER_SUCCESS = 'app/MapPage/SHOW_USER_SUCCESS';
+export const SHOW_USER_ERROR = 'app/MapPage/SHOW_USER_ERROR';
+
+export const SEARCH_MAP_SET_ACTIVE_LISTING = 'app/MapPage/SEARCH_MAP_SET_ACTIVE_LISTING';
 
 // ================ Reducer ================ //
 
@@ -34,14 +33,22 @@ const initialState = {
   currentPageResultIds: [],
   searchMapListingIds: [],
   searchMapListingsError: null,
-  searchMapUsers: [],
+  userId: null,
 };
 
 const resultIds = data => data.data.map(l => l.id);
 
-const listingPageReducer = (state = initialState, action = {}) => {
+const mapPageReducer = (state = initialState, action = {}) => {
   const { type, payload } = action;
   switch (type) {
+    case SET_INITIAL_STATE:
+      return { ...initialState };
+    case SHOW_USER_REQUEST:
+      return { ...state, userShowError: null, userId: payload.userId };
+    case SHOW_USER_SUCCESS:
+      return state;
+    case SHOW_USER_ERROR:
+      return { ...state, userShowError: payload };
     case SEARCH_LISTINGS_REQUEST:
       return {
         ...state,
@@ -83,13 +90,6 @@ const listingPageReducer = (state = initialState, action = {}) => {
       console.error(payload);
       return { ...state, searchMapListingsError: payload };
 
-    case SEARCH_MAP_USERS_SUCCESS: {
-      return {
-        ...state,
-        searchMapUsers: payload,
-      };
-    }
-
     case SEARCH_MAP_SET_ACTIVE_LISTING:
       return {
         ...state,
@@ -100,9 +100,13 @@ const listingPageReducer = (state = initialState, action = {}) => {
   }
 };
 
-export default listingPageReducer;
+export default mapPageReducer;
 
 // ================ Action creators ================ //
+
+export const setInitialState = () => ({
+  type: SET_INITIAL_STATE,
+});
 
 export const searchListingsRequest = searchParams => ({
   type: SEARCH_LISTINGS_REQUEST,
@@ -133,10 +137,19 @@ export const searchMapListingsError = e => ({
   payload: e,
 });
 
+export const showUserRequest = userId => ({
+  type: SHOW_USER_REQUEST,
+  payload: { userId },
+});
 
-export const searchMapUsersSuccess = response => ({
-  type: SEARCH_MAP_USERS_SUCCESS,
-  payload: [response.data.data],
+export const showUserSuccess = () => ({
+  type: SHOW_USER_SUCCESS,
+});
+
+export const showUserError = e => ({
+  type: SHOW_USER_ERROR,
+  error: true,
+  payload: e,
 });
 
 export const searchListings = searchParams => (dispatch, getState, sdk) => {
@@ -185,7 +198,6 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
   return sdk.listings
     .query(params)
     .then(response => {
-      console.log(response);
       dispatch(addMarketplaceEntities(response));
       dispatch(searchListingsSuccess(response));
       return response;
@@ -223,20 +235,28 @@ export const searchMapListings = searchParams => (dispatch, getState, sdk) => {
     });
 };
 
-export const loadUsers = searchParams => (dispatch, getState, sdk) => {
-  fetch("https://vmr5zmv3gg.execute-api.us-west-1.amazonaws.com/prd")
-    .then(response => console.log(response))
-    .catch("Could not reach amazon api");
-
-  let userIds = new UUID("5f52e761-e46d-4d51-b4f2-a8a4ef16f8b2");
+export const loadUsers = userId => (dispatch, getState, sdk) => {
+  dispatch(showUserRequest(userId));
   return sdk.users
     .show({
-      id: userIds,
-      include: ['profileImage'],
+      id: userId,
+      include: ['profileImage', 'publicData'],
       'fields.image': ['variants.square-small', 'variants.square-small2x'],
     })
     .then(response => {
-      dispatch(searchMapUsersSuccess(response));
-    });
+      dispatch(addMarketplaceEntities(response));
+      dispatch(showUserSuccess());
+      return response;
+    })
+    .catch(e => dispatch(showUserError(storableError(e))));
+};
 
-}
+export const loadData = userId => (dispatch, getState, sdk) => {
+  // Clear state so that previously loaded data is not visible
+  // in case this page load fails.
+  dispatch(setInitialState());
+
+  return Promise.all([
+    dispatch(loadUsers(userId)),
+  ]);
+};

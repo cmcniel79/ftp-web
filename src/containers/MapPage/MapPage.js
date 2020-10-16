@@ -27,7 +27,7 @@ import {
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
-import { searchMapListings, setActiveListing, loadUsers } from './MapPage.duck';
+import { searchMapListings, setActiveListing, loadData } from './MapPage.duck';
 import {
   pickSearchParamsOnly,
   validFilterParams,
@@ -35,8 +35,10 @@ import {
 } from './MapPage.helpers';
 import css from './MapPage.css';
 import { types as sdkTypes } from '../../util/sdkLoader';
+import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 
-const { LatLng, LatLngBounds } = sdkTypes;
+
+const { LatLng, LatLngBounds, UUID } = sdkTypes;
 
 const SEARCH_WITH_MAP_DEBOUNCE = 300; // Little bit of debounce before search is initiated.
 
@@ -227,6 +229,7 @@ export class MapPageComponent extends Component {
                 />
               </div>
               <div className={css.mapWrapper}>
+                {users[0] !== null &&
                 <SearchMap
                   reusableContainerClassName={css.map}
                   activeListingId={activeListingId}
@@ -241,6 +244,7 @@ export class MapPageComponent extends Component {
                   }}
                   messages={intl.messages}
                 />
+  }
               </div>
             </div>
           </LayoutWrapperMain>
@@ -300,11 +304,14 @@ const mapStateToProps = state => {
     searchListingsError,
     searchParams,
     activeListingId,
-    searchMapUsers
+    userId,
   } = state.MapPage;
 
+  const userMatches = getMarketplaceEntities(state, [{ type: 'user', id: userId }]);
+  const user = userMatches.length === 1 ? userMatches[0] : null;
+
   return {
-    users: searchMapUsers,
+    users: [user],
     pagination,
     scrollingDisabled: isScrollingDisabled(state),
     searchInProgress,
@@ -336,18 +343,9 @@ const MapPage = compose(
   injectIntl
 )(MapPageComponent);
 
-MapPage.loadData = (params, search) => {
-  const queryParams = parse(search, {
-    latlng: ['origin'],
-    latlngBounds: ['bounds'],
-  });
-  const { page = 1, address, origin, ...rest } = queryParams;
-  const originMaybe = config.sortSearchByDistance && origin ? { origin } : {};
-  return loadUsers({
-    ...queryParams,
-    ...rest,
-    ...originMaybe,
-  });
+MapPage.loadData = params => {
+  const id = new UUID("5f52e761-e46d-4d51-b4f2-a8a4ef16f8b2");
+  return loadData(id);
 };
 
 export default MapPage;
