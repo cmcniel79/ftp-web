@@ -255,6 +255,16 @@ export const loadData = userId => (dispatch, getState, sdk) => {
   // Clear state so that previously loaded data is not visible
   // in case this page load fails.
   dispatch(setInitialState());
+  
+  fetch("https://vmr5zmv3gg.execute-api.us-west-1.amazonaws.com/prd")
+  .then(function(response) {
+    // The response is a Response instance.
+    // You parse the data into a useable format using `.json()`
+    return response.json();
+  }).then(function(data) {
+    // `data` is the parsed version of the JSON returned from the above endpoint.
+    console.log(data);  // { "userId": 1, "id": 1, "title": "...", "body": "..." }
+  });
 
   return Promise.all([
     dispatch(loadUsers(userId)),

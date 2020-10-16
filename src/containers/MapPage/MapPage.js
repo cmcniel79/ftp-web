@@ -230,21 +230,21 @@ export class MapPageComponent extends Component {
               </div>
               <div className={css.mapWrapper}>
                 {users[0] !== null &&
-                <SearchMap
-                  reusableContainerClassName={css.map}
-                  activeListingId={activeListingId}
-                  bounds={this.state.bounds}
-                  center={this.state.origin}
-                  isSearchMapOpenOnMobile={this.state.isSearchMapOpenOnMobile}
-                  location={location}
-                  listings={users || []}
-                  onMapMoveEnd={this.onMapMoveEnd}
-                  onCloseAsModal={() => {
-                    onManageDisableScrolling('MapPage.map', false);
-                  }}
-                  messages={intl.messages}
-                />
-  }
+                  <SearchMap
+                    reusableContainerClassName={css.map}
+                    activeListingId={activeListingId}
+                    bounds={this.state.bounds}
+                    center={this.state.origin}
+                    isSearchMapOpenOnMobile={this.state.isSearchMapOpenOnMobile}
+                    location={location}
+                    listings={users || []}
+                    onMapMoveEnd={this.onMapMoveEnd}
+                    onCloseAsModal={() => {
+                      onManageDisableScrolling('MapPage.map', false);
+                    }}
+                    messages={intl.messages}
+                  />
+                }
               </div>
             </div>
           </LayoutWrapperMain>
@@ -320,6 +320,7 @@ const mapStateToProps = state => {
     activeListingId,
   };
 };
+
 
 const mapDispatchToProps = dispatch => ({
   onManageDisableScrolling: (componentId, disableScrolling) =>
