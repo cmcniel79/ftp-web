@@ -4,8 +4,7 @@ import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { convertUnitToSubUnit, unitDivisor } from '../../util/currency';
 import { formatDateStringToUTC, getExclusiveEndDate } from '../../util/dates';
 import config from '../../config';
-
-import fetch from "node-fetch";
+import 'cross-fetch/polyfill';
 
 // ================ Action types ================ //
 
