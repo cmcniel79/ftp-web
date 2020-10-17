@@ -1,9 +1,6 @@
 import unionWith from 'lodash/unionWith';
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
-import { convertUnitToSubUnit, unitDivisor } from '../../util/currency';
-import { formatDateStringToUTC, getExclusiveEndDate } from '../../util/dates';
-import config from '../../config';
 import {
   FETCH_PRODUCTS_BEGIN,
   FETCH_PRODUCTS_SUCCESS,

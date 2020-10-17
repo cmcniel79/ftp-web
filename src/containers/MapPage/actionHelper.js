@@ -1,5 +1,6 @@
 import { types as sdkTypes } from '../../util/sdkLoader';
-import 'cross-fetch/polyfill';
+
+const fetch = require('cross-fetch');
 const { UUID } = sdkTypes;
 
 
