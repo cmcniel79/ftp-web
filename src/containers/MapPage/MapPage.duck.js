@@ -1,6 +1,7 @@
 import unionWith from 'lodash/unionWith';
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
+
 import {
   FETCH_PRODUCTS_BEGIN,
   FETCH_PRODUCTS_SUCCESS,
@@ -16,6 +17,10 @@ export const SET_INITIAL_STATE = 'app/MapPage/SET_INITIAL_STATE';
 export const SEARCH_MAP_LISTINGS_REQUEST = 'app/MapPage/SEARCH_MAP_LISTINGS_REQUEST';
 export const SEARCH_MAP_LISTINGS_SUCCESS = 'app/MapPage/SEARCH_MAP_LISTINGS_SUCCESS';
 export const SEARCH_MAP_LISTINGS_ERROR = 'app/MapPage/SEARCH_MAP_LISTINGS_ERROR';
+
+export const SHOW_USER_REQUEST = 'app/MapPage/SHOW_USER_REQUEST';
+export const SHOW_USER_SUCCESS = 'app/MapPage/SHOW_USER_SUCCESS';
+export const SHOW_USER_ERROR = 'app/MapPage/SHOW_USER_ERROR';
 
 export const SEARCH_MAP_SET_ACTIVE_LISTING = 'app/MapPage/SEARCH_MAP_SET_ACTIVE_LISTING';
 
@@ -39,25 +44,12 @@ const mapPageReducer = (state = initialState, action = {}) => {
   switch (type) {
     case SET_INITIAL_STATE:
       return { ...initialState };
-    case SEARCH_LISTINGS_REQUEST:
-      return {
-        ...state,
-        searchParams: payload.searchParams,
-        searchInProgress: true,
-        searchMapListingIds: [],
-        searchListingsError: null,
-      };
-    case SEARCH_LISTINGS_SUCCESS:
-      return {
-        ...state,
-        currentPageResultIds: resultIds(payload.data),
-        pagination: payload.data.meta,
-        searchInProgress: false,
-      };
-    case SEARCH_LISTINGS_ERROR:
-      // eslint-disable-next-line no-console
-      console.error(payload);
-      return { ...state, searchInProgress: false, searchListingsError: payload };
+    case SHOW_USER_REQUEST:
+      return { ...state, userShowError: null, userId: payload.userId };
+    case SHOW_USER_SUCCESS:
+      return state;
+    case SHOW_USER_ERROR:
+      return { ...state, userShowError: payload };
 
     case SEARCH_MAP_LISTINGS_REQUEST:
       return {
