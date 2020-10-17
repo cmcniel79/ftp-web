@@ -5,7 +5,7 @@ import { convertUnitToSubUnit, unitDivisor } from '../../util/currency';
 import { formatDateStringToUTC, getExclusiveEndDate } from '../../util/dates';
 import config from '../../config';
 
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
 // ================ Action types ================ //
 
