@@ -23,9 +23,9 @@ import css from './SearchMap.css';
 
 const REUSABLE_MAP_HIDDEN_HANDLE = 'reusableMapHidden';
 
-const withCoordinatesObfuscated = listings => {
-  return listings.map(listing => {
-    const { id, attributes, ...rest } = listing;
+const withCoordinatesObfuscated = users => {
+  return users.map(user => {
+    const { id, attributes, ...rest } = user;
     const origGeolocation = attributes.geolocation;
     const cacheKey = id ? `${id.uuid}_${origGeolocation.lat}_${origGeolocation.lng}` : null;
     const geolocation = obfuscatedCoordinates(origGeolocation, cacheKey);
@@ -40,11 +40,11 @@ const withCoordinatesObfuscated = listings => {
   });
 };
 
-export class SearchMapComponent extends Component {
+export class SearchMapUsersComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.listings = [];
+    this.users = [];
     this.mapRef = null;
 
     let mapReattachmentCount = 0;
@@ -59,39 +59,39 @@ export class SearchMapComponent extends Component {
 
     this.state = { infoCardOpen: null, mapReattachmentCount };
 
-    this.createURLToListing = this.createURLToListing.bind(this);
-    this.onListingInfoCardClicked = this.onListingInfoCardClicked.bind(this);
-    this.onListingClicked = this.onListingClicked.bind(this);
+    this.createURLToProfile = this.createURLToProfile.bind(this);
+    this.onUserInfoCardClicked = this.onUserInfoCardClicked.bind(this);
+    this.onUserClicked = this.onUserClicked.bind(this);
     this.onMapClicked = this.onMapClicked.bind(this);
     this.onMapLoadHandler = this.onMapLoadHandler.bind(this);
   }
 
   componentWillUnmount() {
-    this.listings = [];
+    this.users = [];
   }
 
-  createURLToListing(listing) {
+  createURLToProfile(user) {
+    console.log(user);
     const routes = routeConfiguration();
 
-    const id = listing.id.uuid;
-    // const slug = createSlug(listing.attributes.title);
+    const id = user.id.uuid;
     const pathParams = { id, slug: null };
 
     return createResourceLocatorString('ProfilePage', routes, pathParams, {});
   }
 
-  onListingClicked(listings) {
-    this.setState({ infoCardOpen: listings });
+  onUserClicked(users) {
+    this.setState({ infoCardOpen: users });
   }
 
-  onListingInfoCardClicked(listing) {
+  onUserInfoCardClicked(user) {
     if (this.props.onCloseAsModal) {
       this.props.onCloseAsModal();
     }
 
     // To avoid full page refresh we need to use internal router
     const history = this.props.history;
-    history.push(this.createURLToListing(listing));
+    history.push(this.createURLToProfile(user));
   }
 
   onMapClicked(e) {
@@ -120,7 +120,7 @@ export class SearchMapComponent extends Component {
       bounds,
       center,
       location,
-      listings: originalListings,
+      users,
       onMapMoveEnd,
       zoom,
       mapsConfig,
@@ -128,10 +128,9 @@ export class SearchMapComponent extends Component {
     } = this.props;
     const classes = classNames(rootClassName || css.root, className);
 
-    const listingsWithLocation = originalListings.filter(l => !!l.attributes.profile.publicData.companyLocation.location.selectedPlace.origin);
-    const listings = mapsConfig.fuzzy.enabled
-      ? withCoordinatesObfuscated(listingsWithLocation)
-      : listingsWithLocation;
+    // const users = mapsConfig.fuzzy.enabled
+    //   ? withCoordinatesObfuscated(usersWithLocation)
+    //   : usersWithLocation;
     const infoCardOpen = this.state.infoCardOpen;
 
     const forceUpdateHandler = () => {
@@ -141,27 +140,6 @@ export class SearchMapComponent extends Component {
       this.setState({ mapReattachmentCount: window.mapReattachmentCount });
     };
 
-    // When changing from default map provider to Google Maps, you should use the following
-    // component instead of SearchMapWithMapbox:
-    //
-    // <SearchMapWithGoogleMap
-    //   containerElement={
-    //     <div id="search-map-container" className={classes} onClick={this.onMapClicked} />
-    //   }
-    //   mapElement={<div className={mapRootClassName || css.mapRoot} />}
-    //   bounds={bounds}
-    //   center={center}
-    //   location={location}
-    //   infoCardOpen={infoCardOpen}
-    //   listings={listings}
-    //   mapComponentRefreshToken={this.state.mapReattachmentCount}
-    //   createURLToListing={this.createURLToListing}
-    //   onListingClicked={this.onListingClicked}
-    //   onListingInfoCardClicked={this.onListingInfoCardClicked}
-    //   onMapLoad={this.onMapLoadHandler}
-    //   onMapMoveEnd={onMapMoveEnd}
-    //   zoom={zoom}
-    // />
 
     return isMapsLibLoaded() ? (
       <ReusableMapContainer
@@ -176,11 +154,11 @@ export class SearchMapComponent extends Component {
           center={center}
           location={location}
           infoCardOpen={infoCardOpen}
-          listings={listings}
+          users={users}
           mapComponentRefreshToken={this.state.mapReattachmentCount}
-          createURLToListing={this.createURLToListing}
-          onListingClicked={this.onListingClicked}
-          onListingInfoCardClicked={this.onListingInfoCardClicked}
+          createURLToProfile={this.createURLToProfile}
+          onUserClicked={this.onUserClicked}
+          onUserInfoCardClicked={this.onUserInfoCardClicked}
           onMapLoad={this.onMapLoadHandler}
           onClick={this.onMapClicked}
           onMapMoveEnd={onMapMoveEnd}
@@ -194,20 +172,20 @@ export class SearchMapComponent extends Component {
   }
 }
 
-SearchMapComponent.defaultProps = {
+SearchMapUsersComponent.defaultProps = {
   className: null,
   rootClassName: null,
   mapRootClassName: null,
   reusableContainerClassName: null,
   bounds: null,
   center: null,
-  listings: [],
+  users: [],
   onCloseAsModal: null,
   zoom: 11,
   mapsConfig: config.maps,
 };
 
-SearchMapComponent.propTypes = {
+SearchMapUsersComponent.propTypes = {
   className: string,
   rootClassName: string,
   mapRootClassName: string,
@@ -217,7 +195,7 @@ SearchMapComponent.propTypes = {
   location: shape({
     search: string.isRequired,
   }).isRequired,
-  listings: arrayOf(propTypes.user),
+  users: arrayOf(propTypes.user),
   onCloseAsModal: func,
   onMapMoveEnd: func.isRequired,
   zoom: number,
@@ -230,9 +208,9 @@ SearchMapComponent.propTypes = {
   }).isRequired,
 };
 
-const SearchMap = withRouter(SearchMapComponent);
+const SearchMapUsers = withRouter(SearchMapUsersComponent);
 
-SearchMap.getMapBounds = getMapBounds;
-SearchMap.getMapCenter = getMapCenter;
+SearchMapUsers.getMapBounds = getMapBounds;
+SearchMapUsers.getMapCenter = getMapCenter;
 
-export default SearchMap;
+export default SearchMapUsers;

@@ -141,6 +141,7 @@ export { default as SearchFiltersMobile } from './SearchFiltersMobile/SearchFilt
 export { default as SearchFiltersPrimary } from './SearchFiltersPrimary/SearchFiltersPrimary';
 export { default as SearchFiltersSecondary } from './SearchFiltersSecondary/SearchFiltersSecondary';
 export { default as SearchMap } from './SearchMap/SearchMap';
+export { default as SearchMapUsers } from './SearchMapUsers/SearchMapUsers';
 export { default as SearchMapGroupLabel } from './SearchMapGroupLabel/SearchMapGroupLabel';
 export { default as SearchMapInfoCard } from './SearchMapInfoCard/SearchMapInfoCard';
 export { default as SearchMapSellerCard } from './SearchMapSellerCard/SearchMapSellerCard';

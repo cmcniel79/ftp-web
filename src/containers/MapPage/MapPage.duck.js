@@ -1,4 +1,3 @@
-import unionWith from 'lodash/unionWith';
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 
@@ -9,10 +8,6 @@ const { UUID } = sdkTypes;
 // ================ Action types ================ //
 
 export const SET_INITIAL_STATE = 'app/MapPage/SET_INITIAL_STATE';
-
-export const SEARCH_MAP_LISTINGS_REQUEST = 'app/MapPage/SEARCH_MAP_LISTINGS_REQUEST';
-export const SEARCH_MAP_LISTINGS_SUCCESS = 'app/MapPage/SEARCH_MAP_LISTINGS_SUCCESS';
-export const SEARCH_MAP_LISTINGS_ERROR = 'app/MapPage/SEARCH_MAP_LISTINGS_ERROR';
 
 export const SHOW_USER_REQUEST = 'app/MapPage/SHOW_USER_REQUEST';
 export const SHOW_USER_SUCCESS = 'app/MapPage/SHOW_USER_SUCCESS';
@@ -44,6 +39,7 @@ const mapPageReducer = (state = initialState, action = {}) => {
   switch (type) {
     case SET_INITIAL_STATE:
       return { ...initialState };
+
     case SHOW_USER_REQUEST:
       return { ...state, userShowError: null, userId: payload.userId };
     case SHOW_USER_SUCCESS:
@@ -51,32 +47,12 @@ const mapPageReducer = (state = initialState, action = {}) => {
     case SHOW_USER_ERROR:
       return { ...state, userShowError: payload };
 
-    case SEARCH_MAP_LISTINGS_REQUEST:
-      return {
-        ...state,
-        searchMapListingsError: null,
-      };
-    case SEARCH_MAP_LISTINGS_SUCCESS: {
-      const searchMapListingIds = unionWith(
-        state.searchMapListingIds,
-        resultIds(payload.data),
-        (id1, id2) => id1.uuid === id2.uuid
-      );
-      return {
-        ...state,
-        searchMapListingIds,
-      };
-    }
-    case SEARCH_MAP_LISTINGS_ERROR:
-      // eslint-disable-next-line no-console
-      console.error(payload);
-      return { ...state, searchMapListingsError: payload };
-
     case SEARCH_MAP_SET_ACTIVE_LISTING:
       return {
         ...state,
         activeListingId: payload,
       };
+
     case FETCH_PRODUCTS_BEGIN:
       // Mark the state as "loading" so we can show a spinner or something
       // Also, reset any errors. We're starting fresh.
@@ -120,21 +96,6 @@ export const setInitialState = () => ({
   type: SET_INITIAL_STATE,
 });
 
-export const searchMapListingsRequest = () => ({ 
-  type: SEARCH_MAP_LISTINGS_REQUEST 
-});
-
-export const searchMapListingsSuccess = response => ({
-  type: SEARCH_MAP_LISTINGS_SUCCESS,
-  payload: { data: response.data },
-});
-
-export const searchMapListingsError = e => ({
-  type: SEARCH_MAP_LISTINGS_ERROR,
-  error: true,
-  payload: e,
-});
-
 export const showUserRequest = userId => ({
   type: SHOW_USER_REQUEST,
   payload: { userId },
@@ -169,30 +130,8 @@ export const fetchProductsFailure = error => ({
   payload: { error }
 });
 
-export const searchMapListings = searchParams => (dispatch, getState, sdk) => {
-  dispatch(searchMapListingsRequest(searchParams));
-
-  const { perPage, ...rest } = searchParams;
-  const params = {
-    ...rest,
-    per_page: perPage,
-  };
-
-  return sdk.listings
-    .query(params)
-    .then(response => {
-      dispatch(addMarketplaceEntities(response));
-      dispatch(searchMapListingsSuccess(response));
-      return response;
-    })
-    .catch(e => {
-      dispatch(searchMapListingsError(storableError(e)));
-      throw e;
-    });
-};
 
 export const loadUsers = userId => (dispatch, getState, sdk) => {
-  console.log(userId);
   dispatch(showUserRequest(userId));
   return sdk.users
     .show({
@@ -206,19 +145,6 @@ export const loadUsers = userId => (dispatch, getState, sdk) => {
       return response;
     })
     .catch(e => dispatch(showUserError(storableError(e))));
-};
-
-export const loadData = userId => (dispatch, getState, sdk) => {
-  // Clear state so that previously loaded data is not visible
-  // in case this page load fails.
-  dispatch(setInitialState());
-
-  return Promise.all([
-    dispatch(fetchProducts())
-      .then(id => {
-        dispatch(loadUsers(id));
-      })
-  ]);
 };
 
 function getProducts() {
@@ -249,3 +175,16 @@ function handleErrors(response) {
   }
   return response;
 }
+
+export const loadData = () => (dispatch, getState, sdk) => {
+  // Clear state so that previously loaded data is not visible
+  // in case this page load fails.
+  dispatch(setInitialState());
+
+  return Promise.all([
+    dispatch(fetchProducts())
+      .then(id => {
+        dispatch(loadUsers(id));
+      })
+  ]);
+};

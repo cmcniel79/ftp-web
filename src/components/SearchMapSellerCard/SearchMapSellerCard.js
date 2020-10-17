@@ -13,12 +13,12 @@ import css from './SearchMapSellerCard.css';
 
 // UserCard is the listing info without overlayview or carousel controls
 const UserCard = props => {
-  const { className, clickHandler, intl, isInCarousel, listing, urlToListing  } = props;
-  const title = listing.attributes.profile.publicData.companyName;
-  const firstImage = listing.profileImage ? listing.profileImage : null;
+  const { className, clickHandler, intl, isInCarousel, user, urlToProfile  } = props;
+  const title = user.attributes.profile.publicData.companyName;
+  const profileImage = user.profileImage ? user.profileImage : null;
 
-  const profileLink = listing.id.uuid ?
-    <NamedLink className={css.link} name="ProfilePage" params={{ id: listing.id.uuid }}>
+  const profileLink = user.id.uuid ?
+    <NamedLink className={css.link} name="ProfilePage" params={{ id: user.id.uuid }}>
     </NamedLink> 
     : null;
 
@@ -38,7 +38,7 @@ const UserCard = props => {
       onClick={e => {
         e.preventDefault();
         // Use clickHandler from props to call internal router
-        clickHandler(listing);
+        clickHandler(user);
       }}
     >
       <div
@@ -52,7 +52,7 @@ const UserCard = props => {
               rootClassName={classNames(css.rootForImage, css.borderRadiusInheritTop)}
               alt={title}
               noImageMessage={intl.formatMessage({ id: 'SearchMapInfoCard.noImage' })}
-              image={firstImage}
+              image={profileImage}
               variants={['square-small', 'square-small2x']}
               sizes="250px"
             />
@@ -79,11 +79,11 @@ UserCard.propTypes = {
   isInCarousel: bool.isRequired,
 };
 
-class SearchMapInfoCard extends Component {
+class SearchMapSellerCard extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { currentListingIndex: 0 };
+    this.state = { currentUserIndex: 0 };
   }
 
   render() {
@@ -91,12 +91,13 @@ class SearchMapInfoCard extends Component {
       className,
       rootClassName,
       intl,
-      listings,
-      createURLToListing,
-      onListingInfoCardClicked,
+      users,
+      createURLToProfile,
+      onUserInfoCardClicked,
     } = this.props;
-    const currentListing = ensureUser(listings[this.state.currentListingIndex]);
-    const hasCarousel = listings.length > 1;
+    console.log(users[0]);
+    const currentSeller = ensureUser(users[this.state.currentUserIndex]);
+    const hasCarousel = users.length > 1;
     const pagination = hasCarousel ? (
       <div className={classNames(css.paginationInfo, css.borderRadiusInheritBottom)}>
         <button
@@ -105,13 +106,13 @@ class SearchMapInfoCard extends Component {
             e.preventDefault();
             e.stopPropagation();
             this.setState(prevState => ({
-              currentListingIndex:
-                (prevState.currentListingIndex + listings.length - 1) % listings.length,
+              currentUserIndex:
+                (prevState.currentUserIndex + users.length - 1) % users.length,
             }));
           }}
         />
         <div className={css.paginationPage}>
-          {`${this.state.currentListingIndex + 1}/${listings.length}`}
+          {`${this.state.currentUserIndex + 1}/${users.length}`}
         </div>
         <button
           className={css.paginationNext}
@@ -119,8 +120,8 @@ class SearchMapInfoCard extends Component {
             e.preventDefault();
             e.stopPropagation();
             this.setState(prevState => ({
-              currentListingIndex:
-                (prevState.currentListingIndex + listings.length + 1) % listings.length,
+              currentUserIndex:
+                (prevState.currentUserIndex + users.length + 1) % users.length,
             }));
           }}
         />
@@ -129,13 +130,14 @@ class SearchMapInfoCard extends Component {
 
     const classes = classNames(rootClassName || css.root, className);
     const caretClass = classNames(css.caret, { [css.caretWithCarousel]: hasCarousel });
+    console.log(currentSeller);
     return (
       <div className={classes}>
         <div className={css.caretShadow} />
         <UserCard
-          clickHandler={onListingInfoCardClicked}
-          urlToListing={createURLToListing(currentListing)}
-          listing={currentListing}
+          clickHandler={onUserInfoCardClicked}
+          urlToProfile={createURLToProfile(currentSeller)}
+          user={currentSeller}
           intl={intl}
           isInCarousel={hasCarousel}
         />
@@ -146,20 +148,20 @@ class SearchMapInfoCard extends Component {
   }
 }
 
-SearchMapInfoCard.defaultProps = {
+SearchMapSellerCard.defaultProps = {
   className: null,
   rootClassName: null,
 };
 
-SearchMapInfoCard.propTypes = {
+SearchMapSellerCard.propTypes = {
   className: string,
   rootClassName: string,
-  listings: arrayOf(propTypes.user).isRequired,
-  onListingInfoCardClicked: func.isRequired,
-  createURLToListing: func.isRequired,
+  users: arrayOf(propTypes.user).isRequired,
+  onUserInfoCardClicked: func.isRequired,
+  createURLToProfile: func.isRequired,
 
   // from injectIntl
   intl: intlShape.isRequired,
 };
 
-export default compose(injectIntl)(SearchMapInfoCard);
+export default compose(injectIntl)(SearchMapSellerCard);

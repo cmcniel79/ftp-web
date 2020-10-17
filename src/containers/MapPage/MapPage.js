@@ -14,7 +14,7 @@ import { propTypes } from '../../util/types';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
 import { findOptionsForSelectFilter } from '../../util/search';
 import {
-  SearchMap,
+  SearchMapUsers,
   Page,
   LayoutWrapperFooter,
   Footer,
@@ -27,18 +27,17 @@ import {
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
-import { searchMapListings, setActiveListing, loadData } from './MapPage.duck';
+import { loadData } from './MapPage.duck';
 import {
   pickSearchParamsOnly,
   validFilterParams,
-  createSearchResultSchema,
 } from './MapPage.helpers';
 import css from './MapPage.css';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 
 
-const { LatLng, LatLngBounds, UUID } = sdkTypes;
+const { LatLng, LatLngBounds } = sdkTypes;
 
 const SEARCH_WITH_MAP_DEBOUNCE = 300; // Little bit of debounce before search is initiated.
 
@@ -147,7 +146,6 @@ export class MapPageComponent extends Component {
       location,
       onManageDisableScrolling,
       scrollingDisabled,
-      activeListingId,
     } = this.props;
     // eslint-disable-next-line no-unused-vars
     const { mapSearch, page, ...searchInURL } = parse(location.search, {
@@ -230,14 +228,13 @@ export class MapPageComponent extends Component {
               </div>
               <div className={css.mapWrapper}>
                 {users[0] !== null &&
-                  <SearchMap
+                  <SearchMapUsers
                     reusableContainerClassName={css.map}
-                    activeListingId={activeListingId}
                     bounds={this.state.bounds}
                     center={this.state.origin}
                     isSearchMapOpenOnMobile={this.state.isSearchMapOpenOnMobile}
                     location={location}
-                    listings={users || []}
+                    users={users || []}
                     onMapMoveEnd={this.onMapMoveEnd}
                     onCloseAsModal={() => {
                       onManageDisableScrolling('MapPage.map', false);
@@ -267,15 +264,12 @@ MapPageComponent.defaultProps = {
   tab: 'listings',
   filterConfig: config.custom.filters,
   sortConfig: config.custom.sortConfig,
-  activeListingId: null,
 };
 
 MapPageComponent.propTypes = {
   listings: array,
   mapListings: array,
-  onActivateListing: func.isRequired,
   onManageDisableScrolling: func.isRequired,
-  onSearchMapListings: func.isRequired,
   pagination: propTypes.pagination,
   scrollingDisabled: bool.isRequired,
   searchInProgress: bool.isRequired,
@@ -303,7 +297,6 @@ const mapStateToProps = state => {
     searchInProgress,
     searchListingsError,
     searchParams,
-    activeListingId,
     userId,
   } = state.MapPage;
 
@@ -317,7 +310,6 @@ const mapStateToProps = state => {
     searchInProgress,
     searchListingsError,
     searchParams,
-    activeListingId,
   };
 };
 
@@ -325,8 +317,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
-  onSearchMapListings: searchParams => dispatch(searchMapListings(searchParams)),
-  onActivateListing: listingId => dispatch(setActiveListing(listingId)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

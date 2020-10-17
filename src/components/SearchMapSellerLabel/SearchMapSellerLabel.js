@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
-import { ensureListing } from '../../util/data';
+import { ensureUser } from '../../util/data';
 import bed from './Images/bed.svg';
 import bedFilled from './Images/bed-filled.svg';
 import dining from './Images/dining.svg';
@@ -23,18 +23,7 @@ import config from '../../config';
 
 import css from './SearchMapSellerLabel.css';
 
-class SearchMapPriceLabel extends Component {
-  // shouldComponentUpdate(nextProps) {
-  //   const currentListing = ensureListing(this.props.listing);
-  //   const nextListing = ensureListing(nextProps.listing);
-  //   const isSameListing = currentListing.id.uuid === nextListing.id.uuid;
-  //   const hasSamePrice = currentListing.attributes.price === nextListing.attributes.price;
-  //   const hasSameActiveStatus = this.props.isActive === nextProps.isActive;
-  //   const hasSameRefreshToken =
-  //     this.props.mapComponentRefreshToken === nextProps.mapComponentRefreshToken;
-
-  //   return !(isSameListing && hasSamePrice && hasSameActiveStatus && hasSameRefreshToken);
-  // }
+class SearchMapSellerLabel extends Component {
 
   constructor(props) {
     super(props);
@@ -48,12 +37,12 @@ class SearchMapPriceLabel extends Component {
   }
 
   render() {
-    const { className, rootClassName, intl, listing, onListingClicked } = this.props;
-    const currentListing = ensureListing(listing);
-    const formattedName = currentListing.attributes.profile.publicData && currentListing.attributes.profile.publicData.companyName ?
-      currentListing.attributes.profile.publicData.companyName : currentListing.attributes.profile.displayName;
-    const industry = currentListing.attributes.profile.publicData && currentListing.attributes.profile.publicData.industry ?
-      currentListing.attributes.profile.publicData.industry : null;
+    const { className, rootClassName, intl, user, onUserClicked } = this.props;
+    const currentSeller = ensureUser(user);
+    const formattedName = currentSeller.attributes.profile.publicData && currentSeller.attributes.profile.publicData.companyName ?
+      currentSeller.attributes.profile.publicData.companyName : currentSeller.attributes.profile.displayName;
+    const industry = currentSeller.attributes.profile.publicData && currentSeller.attributes.profile.publicData.industry ?
+      currentSeller.attributes.profile.publicData.industry : null;
     const classes = classNames(rootClassName || css.root, className);
 
     var imageOutline;
@@ -96,7 +85,7 @@ class SearchMapPriceLabel extends Component {
     return (
       <button
         className={classes}
-        onClick={() => onListingClicked(currentListing)}
+        onClick={() => onUserClicked(currentSeller)}
         onMouseEnter={() => this.setIsShown(true)}
         onMouseLeave={() => this.setIsShown(false)}>
         <div className={css.caretShadow} />
@@ -110,21 +99,21 @@ class SearchMapPriceLabel extends Component {
   }
 }
 
-SearchMapPriceLabel.defaultProps = {
+SearchMapSellerLabel.defaultProps = {
   className: null,
   rootClassName: null,
 };
 
 const { func, string } = PropTypes;
 
-SearchMapPriceLabel.propTypes = {
+SearchMapSellerLabel.propTypes = {
   className: string,
   rootClassName: string,
-  listing: propTypes.user.isRequired,
-  onListingClicked: func.isRequired,
+  user: propTypes.user.isRequired,
+  onUserClicked: func.isRequired,
 
   // from injectIntl
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(SearchMapPriceLabel);
+export default injectIntl(SearchMapSellerLabel);
