@@ -172,7 +172,7 @@
   width: 100%;
   height: 100%;
   @media (--viewportMedium) {
-    width: 75%;
+    min-width: 75%;
   }
 }
 

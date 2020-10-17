@@ -2,14 +2,10 @@ import unionWith from 'lodash/unionWith';
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 
-import {
-  FETCH_PRODUCTS_BEGIN,
-  FETCH_PRODUCTS_SUCCESS,
-  FETCH_PRODUCTS_FAILURE,
-  fetchProducts
-} from "./actionHelper";
-// import 'cross-fetch/polyfill';
+import { types as sdkTypes } from '../../util/sdkLoader';
 
+const fetch = require('cross-fetch');
+const { UUID } = sdkTypes;
 // ================ Action types ================ //
 
 export const SET_INITIAL_STATE = 'app/MapPage/SET_INITIAL_STATE';
@@ -21,6 +17,10 @@ export const SEARCH_MAP_LISTINGS_ERROR = 'app/MapPage/SEARCH_MAP_LISTINGS_ERROR'
 export const SHOW_USER_REQUEST = 'app/MapPage/SHOW_USER_REQUEST';
 export const SHOW_USER_SUCCESS = 'app/MapPage/SHOW_USER_SUCCESS';
 export const SHOW_USER_ERROR = 'app/MapPage/SHOW_USER_ERROR';
+
+export const FETCH_PRODUCTS_BEGIN = "FETCH_PRODUCTS_BEGIN";
+export const FETCH_PRODUCTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS";
+export const FETCH_PRODUCTS_FAILURE = "FETCH_PRODUCTS_FAILURE";
 
 export const SEARCH_MAP_SET_ACTIVE_LISTING = 'app/MapPage/SEARCH_MAP_SET_ACTIVE_LISTING';
 
@@ -155,6 +155,20 @@ export const setActiveListing = listingId => ({
   payload: listingId,
 });
 
+export const fetchProductsBegin = () => ({
+  type: FETCH_PRODUCTS_BEGIN
+});
+
+export const fetchProductsSuccess = products => ({
+  type: FETCH_PRODUCTS_SUCCESS,
+  payload: { products }
+});
+
+export const fetchProductsFailure = error => ({
+  type: FETCH_PRODUCTS_FAILURE,
+  payload: { error }
+});
+
 export const searchMapListings = searchParams => (dispatch, getState, sdk) => {
   dispatch(searchMapListingsRequest(searchParams));
 
@@ -206,3 +220,32 @@ export const loadData = userId => (dispatch, getState, sdk) => {
       })
   ]);
 };
+
+function getProducts() {
+  return fetch("https://vmr5zmv3gg.execute-api.us-west-1.amazonaws.com/prd")
+      .then(handleErrors)
+      .then(res => res.json())
+}
+
+export function fetchProducts() {
+  return dispatch => {
+      dispatch(fetchProductsBegin());
+      return getProducts()
+          .then(json => {
+              dispatch(fetchProductsSuccess(json));
+              let id = new UUID(json.body[0].uuid);
+              return id;
+          })
+          .catch(error =>
+              dispatch(fetchProductsFailure(error))
+          );
+  };
+}
+
+// Handle HTTP errors since fetch won't.
+function handleErrors(response) {
+  if (!response.ok) {
+      throw Error(response.statusText);
+  }
+  return response;
+}

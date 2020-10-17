@@ -52,7 +52,7 @@ export class MapPageComponent extends Component {
       industry: null,
       tribe: null,
       origin: null,
-      bounds: new LatLngBounds(new LatLng(71.4202919997506, -66.8847646185949), new LatLng(18.8163608007951, -150)),
+      bounds: new LatLngBounds(new LatLng(71.4202919997506, -66.8847646185949), new LatLng(10, -150)),
     };
 
     this.searchMapListingsInProgress = false;
@@ -84,10 +84,7 @@ export class MapPageComponent extends Component {
       bounds: new LatLngBounds(new LatLng(lat + .5, lng + .5), new LatLng(lat - .5, lng - .5))
     });
   }
-
-  // componentDidMount() {
-  // }
-
+  
   // Callback to determine if new search is needed
   // when map is moved by user or viewport has changed
   onMapMoveEnd(viewportBoundsChanged, data) {
