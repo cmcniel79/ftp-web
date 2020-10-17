@@ -4,7 +4,13 @@ import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { convertUnitToSubUnit, unitDivisor } from '../../util/currency';
 import { formatDateStringToUTC, getExclusiveEndDate } from '../../util/dates';
 import config from '../../config';
-import 'cross-fetch/polyfill';
+import {
+  FETCH_PRODUCTS_BEGIN,
+  FETCH_PRODUCTS_SUCCESS,
+  FETCH_PRODUCTS_FAILURE,
+  fetchProducts
+} from "./actionHelper";
+// import 'cross-fetch/polyfill';
 
 // ================ Action types ================ //
 
@@ -95,6 +101,36 @@ const mapPageReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         activeListingId: payload,
+      };
+    case FETCH_PRODUCTS_BEGIN:
+      // Mark the state as "loading" so we can show a spinner or something
+      // Also, reset any errors. We're starting fresh.
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+
+    case FETCH_PRODUCTS_SUCCESS:
+      // All done: set loading "false".
+      // Also, replace the items with the ones from the server
+      return {
+        ...state,
+        loading: false,
+        items: action.payload.products
+      };
+
+    case FETCH_PRODUCTS_FAILURE:
+      // The request failed, but it did stop, so set loading to "false".
+      // Save the error, and we can display it somewhere
+      // Since it failed, we don't have items to display anymore, so set it empty.
+      // This is up to you and your app though: maybe you want to keep the items
+      // around! Do whatever seems right.
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+        items: []
       };
     default:
       return state;
@@ -237,6 +273,7 @@ export const searchMapListings = searchParams => (dispatch, getState, sdk) => {
 };
 
 export const loadUsers = userId => (dispatch, getState, sdk) => {
+  console.log(userId);
   dispatch(showUserRequest(userId));
   return sdk.users
     .show({
@@ -257,18 +294,10 @@ export const loadData = userId => (dispatch, getState, sdk) => {
   // in case this page load fails.
   dispatch(setInitialState());
 
-  fetch("https://vmr5zmv3gg.execute-api.us-west-1.amazonaws.com/prd")
-    .then(function (response) {
-      // The response is a Response instance.
-      // You parse the data into a useable format using `.json()`
-      return response.json();
-    })
-    .then(function (data) {
-      // `data` is the parsed version of the JSON returned from the above endpoint.
-      console.log(data);  // { "userId": 1, "id": 1, "title": "...", "body": "..." }
-    });
-
   return Promise.all([
-    dispatch(loadUsers(userId)),
+    dispatch(fetchProducts())
+      .then(id => {
+        dispatch(loadUsers(id));
+      })
   ]);
 };

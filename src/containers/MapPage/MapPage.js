@@ -345,8 +345,8 @@ const MapPage = compose(
 )(MapPageComponent);
 
 MapPage.loadData = params => {
-  const id = new UUID("5f52e761-e46d-4d51-b4f2-a8a4ef16f8b2");
-  return loadData(id);
+  // const id = new UUID("5f52e761-e46d-4d51-b4f2-a8a4ef16f8b2");
+  return loadData();
 };
 
 export default MapPage;
