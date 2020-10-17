@@ -16,17 +16,9 @@ import {
 
 export const SET_INITIAL_STATE = 'app/MapPage/SET_INITIAL_STATE';
 
-export const SEARCH_LISTINGS_REQUEST = 'app/MapPage/SEARCH_LISTINGS_REQUEST';
-export const SEARCH_LISTINGS_SUCCESS = 'app/MapPage/SEARCH_LISTINGS_SUCCESS';
-export const SEARCH_LISTINGS_ERROR = 'app/MapPage/SEARCH_LISTINGS_ERROR';
-
 export const SEARCH_MAP_LISTINGS_REQUEST = 'app/MapPage/SEARCH_MAP_LISTINGS_REQUEST';
 export const SEARCH_MAP_LISTINGS_SUCCESS = 'app/MapPage/SEARCH_MAP_LISTINGS_SUCCESS';
 export const SEARCH_MAP_LISTINGS_ERROR = 'app/MapPage/SEARCH_MAP_LISTINGS_ERROR';
-
-export const SHOW_USER_REQUEST = 'app/MapPage/SHOW_USER_REQUEST';
-export const SHOW_USER_SUCCESS = 'app/MapPage/SHOW_USER_SUCCESS';
-export const SHOW_USER_ERROR = 'app/MapPage/SHOW_USER_ERROR';
 
 export const SEARCH_MAP_SET_ACTIVE_LISTING = 'app/MapPage/SEARCH_MAP_SET_ACTIVE_LISTING';
 
@@ -50,12 +42,6 @@ const mapPageReducer = (state = initialState, action = {}) => {
   switch (type) {
     case SET_INITIAL_STATE:
       return { ...initialState };
-    case SHOW_USER_REQUEST:
-      return { ...state, userShowError: null, userId: payload.userId };
-    case SHOW_USER_SUCCESS:
-      return state;
-    case SHOW_USER_ERROR:
-      return { ...state, userShowError: payload };
     case SEARCH_LISTINGS_REQUEST:
       return {
         ...state,
@@ -145,23 +131,9 @@ export const setInitialState = () => ({
   type: SET_INITIAL_STATE,
 });
 
-export const searchListingsRequest = searchParams => ({
-  type: SEARCH_LISTINGS_REQUEST,
-  payload: { searchParams },
+export const searchMapListingsRequest = () => ({ 
+  type: SEARCH_MAP_LISTINGS_REQUEST 
 });
-
-export const searchListingsSuccess = response => ({
-  type: SEARCH_LISTINGS_SUCCESS,
-  payload: { data: response.data },
-});
-
-export const searchListingsError = e => ({
-  type: SEARCH_LISTINGS_ERROR,
-  error: true,
-  payload: e,
-});
-
-export const searchMapListingsRequest = () => ({ type: SEARCH_MAP_LISTINGS_REQUEST });
 
 export const searchMapListingsSuccess = response => ({
   type: SEARCH_MAP_LISTINGS_SUCCESS,
@@ -188,62 +160,6 @@ export const showUserError = e => ({
   error: true,
   payload: e,
 });
-
-export const searchListings = searchParams => (dispatch, getState, sdk) => {
-  dispatch(searchListingsRequest(searchParams));
-
-  const priceSearchParams = priceParam => {
-    const inSubunits = value =>
-      convertUnitToSubUnit(value, unitDivisor(config.currencyConfig.currency));
-    const values = priceParam ? priceParam.split(',') : [];
-    return priceParam && values.length === 2
-      ? {
-        price: [inSubunits(values[0]), inSubunits(values[1]) + 1].join(','),
-      }
-      : {};
-  };
-
-  const datesSearchParams = datesParam => {
-    const values = datesParam ? datesParam.split(',') : [];
-    const hasValues = datesParam && values.length === 2;
-    const startDate = hasValues ? values[0] : null;
-    const isNightlyBooking = config.bookingUnitType === 'line-item/night';
-    const endDate =
-      hasValues && isNightlyBooking ? values[1] : hasValues ? getExclusiveEndDate(values[1]) : null;
-
-    return hasValues
-      ? {
-        start: formatDateStringToUTC(startDate),
-        end: formatDateStringToUTC(endDate),
-        // Availability can be full or partial. Default value is full.
-        availability: 'full',
-      }
-      : {};
-  };
-
-  const { perPage, price, dates, ...rest } = searchParams;
-  const priceMaybe = priceSearchParams(price);
-  const datesMaybe = datesSearchParams(dates);
-
-  const params = {
-    ...rest,
-    ...priceMaybe,
-    ...datesMaybe,
-    per_page: perPage,
-  };
-
-  return sdk.listings
-    .query(params)
-    .then(response => {
-      dispatch(addMarketplaceEntities(response));
-      dispatch(searchListingsSuccess(response));
-      return response;
-    })
-    .catch(e => {
-      dispatch(searchListingsError(storableError(e)));
-      throw e;
-    });
-};
 
 export const setActiveListing = listingId => ({
   type: SEARCH_MAP_SET_ACTIVE_LISTING,

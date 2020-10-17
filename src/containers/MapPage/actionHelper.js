@@ -1,12 +1,9 @@
 import { types as sdkTypes } from '../../util/sdkLoader';
-
+import 'cross-fetch/polyfill';
 const { UUID } = sdkTypes;
 
 
 function getProducts() {
-    // return fetch("/products")
-    //     .then(handleErrors)
-    //     .then(res => res.json());
     return fetch("https://vmr5zmv3gg.execute-api.us-west-1.amazonaws.com/prd")
         .then(handleErrors)
         .then(res => res.json())

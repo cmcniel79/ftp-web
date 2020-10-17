@@ -85,6 +85,9 @@ export class MapPageComponent extends Component {
     });
   }
 
+  // componentDidMount() {
+  // }
+
   // Callback to determine if new search is needed
   // when map is moved by user or viewport has changed
   onMapMoveEnd(viewportBoundsChanged, data) {
