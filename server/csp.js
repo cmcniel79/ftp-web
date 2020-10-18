@@ -97,7 +97,7 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
   // const exampleImgSrc = imgSrc.concat('my-custom-domain.example.com');
 
   const { connectSrc = [self] } = defaultDirectives;
-  const customConnectSrc = connectSrc.concat(['https://native-land.ca/', 'https://vmr5zmv3gg.execute-api.us-west-1.amazonaws.com/']);
+  const customConnectSrc = connectSrc.concat(['https://native-land.ca/', '*.amazonaws.com/']);
   const customDirectives = {
     // Example: Add custom directive override
     // imgSrc: exampleImgSrc,
