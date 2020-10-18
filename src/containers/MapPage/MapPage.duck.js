@@ -148,7 +148,7 @@ export const loadUsers = userId => (dispatch, getState, sdk) => {
 };
 
 function getProducts() {
-  return fetch("https://st838py8yb.execute-api.us-west-1.amazonaws.com/prd")
+  return fetch("https://vyvhifh63b.execute-api.us-west-1.amazonaws.com/prd")
       .then(handleErrors)
       .then(res => res.json())
 }
