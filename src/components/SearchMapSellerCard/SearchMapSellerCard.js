@@ -11,8 +11,8 @@ import { ResponsiveImage, NamedLink } from '../../components';
 
 import css from './SearchMapSellerCard.css';
 
-// UserCard is the listing info without overlayview or carousel controls
-const UserCard = props => {
+// SellerCard is the listing info without overlayview or carousel controls
+const SellerCard = props => {
   const { className, clickHandler, intl, isInCarousel, user, urlToProfile  } = props;
   const title = user.attributes.profile.publicData.companyName;
   const profileImage = user.profileImage ? user.profileImage : null;
@@ -67,11 +67,11 @@ const UserCard = props => {
   );
 };
 
-UserCard.defaultProps = {
+SellerCard.defaultProps = {
   className: null,
 };
 
-UserCard.propTypes = {
+SellerCard.propTypes = {
   className: string,
   listing: propTypes.user.isRequired,
   clickHandler: func.isRequired,
@@ -134,7 +134,7 @@ class SearchMapSellerCard extends Component {
     return (
       <div className={classes}>
         <div className={css.caretShadow} />
-        <UserCard
+        <SellerCard
           clickHandler={onUserInfoCardClicked}
           urlToProfile={createURLToProfile(currentSeller)}
           user={currentSeller}

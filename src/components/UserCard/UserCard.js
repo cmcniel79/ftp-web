@@ -71,7 +71,7 @@ ExpandableBio.propTypes = {
 };
 
 const UserCard = props => {
-  const { rootClassName, className, user, currentUser, onContactUser, websiteLink, isVerified, isPremium } = props;
+  const { rootClassName, className, user, currentUser, onContactUser } = props;
 
   const userIsCurrentUser = user && user.type === 'currentUser';
   const ensuredUser = userIsCurrentUser ? ensureCurrentUser(user) : ensureUser(user);
@@ -80,10 +80,16 @@ const UserCard = props => {
   const isCurrentUser =
     ensuredUser.id && ensuredCurrentUser.id && ensuredUser.id.uuid === ensuredCurrentUser.id.uuid;
   const { displayName, bio } = ensuredUser.attributes.profile;
+
+  // Gather custom data fields from seller's account.
+  const accountType = ensuredUser.attributes.profile.publicData && ensuredUser.attributes.profile.publicData.account ? 
+    ensuredUser.attributes.profile.publicData.account : null;  
+  const isPremium = accountType && accountType === "p" ? true : false;
+  const isVerified = accountType && accountType === "e" ? true : false;
+  const companyWebsite = isPremium && ensuredUser.attributes.profile.publicData.companyWebsite ? 
+    ensuredUser.attributes.profile.publicData.companyWebsite : null;
   const companyName = isPremium && ensuredUser.attributes.profile.publicData.companyName ?
     ensuredUser.attributes.profile.publicData.companyName : null;
-  const companyWebsite = isPremium && ensuredUser.attributes.profile.publicData.companyWebsite ?
-    ensuredUser.attributes.profile.publicData.companyWebsite : null;
   const socialMedia = ensuredUser.attributes.profile.publicData.socialMedia ?
     ensuredUser.attributes.profile.publicData.socialMedia : null;
 
@@ -119,7 +125,7 @@ const UserCard = props => {
     <p className={linkClasses}>
       {isPremium && companyWebsite ?
         <ExternalLink className={css.link} href={companyWebsite}>
-          <FormattedMessage id="UserCard.websiteLink" />
+          <FormattedMessage id="UserCard.companyWebsite" />
         </ExternalLink>
         :
         <NamedLink className={css.link} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
@@ -136,7 +142,7 @@ const UserCard = props => {
   return (
     <div className={classes}>
       <div className={css.content}>
-        <AvatarLarge className={avatarClassNames} user={user} enrolled={isVerified} websiteLink={websiteLink}/>
+        <AvatarLarge className={avatarClassNames} user={user} enrolled={isVerified} companyWebsite={companyWebsite}/>
         <div className={css.info}>
           <div className={css.headingRow}>
             <h3 className={css.heading}>

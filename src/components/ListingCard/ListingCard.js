@@ -73,7 +73,7 @@ export const ListingCardComponent = props => {
     currentListing.attributes.publicData.category ? currentListing.attributes.publicData.category : null;
   const tribe = author.attributes.profile.publicData && author.attributes.profile.publicData.tribe ?
     author.attributes.profile.publicData.tribe : null;
-  const company = author.attributes.profile.publicData && author.attributes.profile.publicData.companyName ?
+  const companyName = author.attributes.profile.publicData && author.attributes.profile.publicData.companyName ?
     author.attributes.profile.publicData.companyName : null;
 
   // Text above the listing title will need to change based on the account type.
@@ -97,7 +97,7 @@ export const ListingCardComponent = props => {
     :
     <div className={css.optionalText}>
       <div className={css.categoryAndTribe}>
-        {company}
+        {companyName}
         {tribe ?
           " • " + tribe
           :

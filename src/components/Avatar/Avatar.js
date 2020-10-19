@@ -34,7 +34,7 @@ const AVATAR_IMAGE_VARIANTS = [
 ];
 
 export const AvatarComponent = props => {
-  const { rootClassName, className, user, renderSizes, disableProfileLink, intl, enrolled, websiteLink } = props;
+  const { rootClassName, className, user, renderSizes, disableProfileLink, intl, enrolled, companyWebsite } = props;
   const classes = classNames(rootClassName || css.root, className);
   const userIsCurrentUser = user && user.type === 'currentUser';
   const avatarUser = userIsCurrentUser ? ensureCurrentUser(user) : ensureUser(user);
@@ -74,9 +74,9 @@ export const AvatarComponent = props => {
         <IconBannedUser className={css.bannedUserIcon} />
       </div>
     );
-  } else if (hasProfileImage && websiteLink) {
+  } else if (hasProfileImage && companyWebsite) {
     return (
-      <ExternalLink {...rootProps} href={websiteLink}>
+      <ExternalLink {...rootProps} href={companyWebsite}>
         <ResponsiveImage
           rootClassName={css.avatarImage}
           alt="Logo"
@@ -86,10 +86,10 @@ export const AvatarComponent = props => {
         />
       </ExternalLink>
     );
-  } else if (websiteLink) {
+  } else if (companyWebsite) {
     // Placeholder avatar (initials)
     return (
-      <ExternalLink {...rootProps} href={websiteLink}>
+      <ExternalLink {...rootProps} href={companyWebsite}>
         <span className={css.initials}>{abbreviatedName}</span>
       </ExternalLink>
     );

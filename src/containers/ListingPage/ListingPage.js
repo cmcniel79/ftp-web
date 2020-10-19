@@ -350,7 +350,6 @@ export class ListingPageComponent extends Component {
     const accountType = ensuredAuthor.attributes.profile.publicData && ensuredAuthor.attributes.profile.publicData.account ?
       ensuredAuthor.attributes.profile.publicData.account : null;
     const isPremium = accountType && accountType === "p" ? true : false;
-    const isVerified = accountType && accountType === "e" ? true : false;
 
     const authorCountry = publicData && publicData.country ?
       publicData.country : null;
@@ -492,9 +491,7 @@ export class ListingPageComponent extends Component {
                     onSubmitEnquiry={this.onSubmitEnquiry}
                     currentUser={currentUser}
                     onManageDisableScrolling={onManageDisableScrolling}
-                    isVerified={isVerified}
                     isPremium={isPremium}
-                    websiteLink={websiteLink}
                   />
                   <SectionDescriptionMaybe description={description} />
                   <SectionCustomOrdersMaybe customOrders={customOrders} />

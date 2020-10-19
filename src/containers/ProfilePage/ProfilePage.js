@@ -211,7 +211,7 @@ export class ProfilePageComponent extends Component {
         {socialMedia ? <UserSocialMedia className={css.socialMediaLinks} socialMedia={socialMedia} /> : null}
         {hasBio ? <p className={css.bio}>{bio}</p> : null}
         {companyWebsite ?
-          <div className={css.websiteLink}>
+          <div className={css.companyWebsite}>
             <ExternalLink href={companyWebsite} useIcon={true}>
               <FormattedMessage id="ProfilePage.companyWebsite" />
               <img className={css.externalLink} src={exit} alt="External Link" />
