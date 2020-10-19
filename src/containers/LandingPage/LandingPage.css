@@ -1,5 +1,4 @@
 @import '../../marketplace.css';
-
 :root {
   /*
     These variables are available in global scope through ":root"
@@ -9,16 +8,17 @@
     are left to CSS bundle. We are planning to enable it in the future
     since browsers support CSS Properties already.
  */
-
   --LandingPage_sectionMarginTop: 40px;
   --LandingPage_sectionMarginTopMedium: 60px;
   --LandingPage_sectionMarginTopLarge: 94px;
 }
 
-
 /* heroContainer gives the height for SectionHero */
+
 /* Safari has a bug with vw padding inside flexbox. Therefore we need an extra div (container) */
+
 /* If you've lot of content for the hero, multiple lines of text, make sure to adjust min-heights for each media breakpoint accordingly */
+
 .heroContainer {
   display: flex;
   flex-direction: column;
@@ -26,13 +26,11 @@
   height: 67.5vh;
   max-height: 600px;
   padding: 0;
-
   @media (--viewportMedium) {
     min-height: 500px;
     height: 70vh;
     max-height: none;
   }
-
   @media (--viewportLarge) {
     max-height: 800px;
     min-height: 600px;
@@ -40,7 +38,7 @@
   }
 }
 
-.donateButton{
+.donateButton {
   @apply --marketplaceButtonStyles;
   width: auto;
   max-width: 300px;
@@ -52,7 +50,7 @@
   border-radius: 50px;
 }
 
-.donateSubText{
+.donateSubText {
   margin-top: 35px;
   display: flex;
   flex-direction: column;
@@ -65,40 +63,41 @@
   }
 }
 
-.donateSubText .thirdDonate{
+.donateSubText .thirdDonate {
   @media (--viewportLarge) {
-  width: 75%;
+    width: 75%;
   }
 }
 
-.donateTitle{
-  font-size: 48px;
-  line-height: 52px;
-}
-
-.donateText{
+.donateText {
   @media (--viewportLarge) {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  vertical-align: text-top;
-  align-items: flex-end;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    vertical-align: text-top;
+    align-items: flex-end;
   }
 }
 
-.sectionContentNarrow{
+.sectionContentNarrow {
   margin: 40px 24px 27px;
   padding: 0;
 }
 
-.featuredListingsTitle{
-  text-align: left;
-  font-size: 48px;
-  margin-bottom: 57px;
-  line-height: 52px;
+.customSectionTitle {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: -0.5px;
+  @media (--viewportMedium) {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 48px;
+    letter-spacing: -1px;
+  }
 }
 
-.featuredListings{
+.featuredListings {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -106,9 +105,10 @@
   justify-content: space-between;
   -webkit-box-align: start;
   align-items: flex-start;
+  margin-top: 50px;
 }
 
-.listingCard{
+.listingCard {
   width: 100%;
   margin-bottom: 35px;
   @media (--viewportMedium) {
@@ -120,11 +120,9 @@
   flex-grow: 1;
   justify-content: flex-end;
   padding-bottom: 32px;
-
   @media (--viewportMedium) {
     padding-bottom: 83px;
   }
-
   @media (--viewportLarge) {
     justify-content: center;
     padding-top: 60px;
@@ -141,6 +139,7 @@
 }
 
 /* Square corners for the last section if it's even */
+
 .section:nth-of-type(2n):last-of-type {
   @media (--viewportMedium) {
     border-radius: 4px 4px 0 0;
@@ -148,6 +147,7 @@
 }
 
 /* Every other section has a light background */
+
 .section:nth-of-type(2n) {
   background-color: var(--matterColorLight);
   @media (--viewportMedium) {
@@ -157,18 +157,15 @@
 
 .sectionContent {
   margin: var(--LandingPage_sectionMarginTop) 24px 51px 24px;
-
   @media (--viewportMedium) {
     max-width: 100%;
     margin: var(--LandingPage_sectionMarginTopMedium) 24px 60px 24px;
   }
-
   @media (--viewportLarge) {
     max-width: 1128px;
     padding: 0 36px 0 36px;
     margin: 60px auto 60px auto;
   }
-
   @media (--viewportXLarge) {
     max-width: 1056px;
     padding: 0;
@@ -181,23 +178,21 @@
 }
 
 /* A bar on top of light sections */
+
 .section:nth-of-type(2n) .sectionContent::before {
   background: var(--marketplaceColor);
   content: '';
   display: block;
   width: 109px;
   height: 6px;
-
   /* Place the bar on top of .sectionContent top margin */
   position: relative;
   top: calc(-1 * var(--LandingPage_sectionMarginTop));
-
   @media (--viewportMedium) {
     width: 192px;
     height: 8px;
     top: calc(-1 * var(--LandingPage_sectionMarginTopMedium));
   }
-
   @media (--viewportLarge) {
     top: calc(-1 * var(--LandingPage_sectionMarginTopLarge));
   }

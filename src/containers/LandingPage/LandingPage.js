@@ -15,6 +15,7 @@ import {
   LayoutWrapperTopbar,
   LayoutWrapperMain,
   LayoutWrapperFooter,
+  FeaturedPartners,
   Footer,
   SectionThumbnailLinks,
   ExternalLink,
@@ -27,6 +28,8 @@ import jewelryImage from './images/jewelry.png';
 import artImage from './images/art.png';
 import apparelImage from './images/apparel.png';
 import traditionalImage from './images/traditional.png';
+import uneImage from './images/une.png';
+import sweetImage from './images/sweet.png';
 
 import css from './LandingPage.css';
 import { getListingsById } from '../../ducks/marketplaceData.duck';
@@ -84,29 +87,41 @@ export const LandingPageComponent = props => {
                     {
                       imageUrl: jewelryImage,
                       imageAltText: 'Jewelry',
-                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: { 
-                        search: '?pub_subCategory=necklaces&pub_subCategory=earrings&pub_subCategory=rings&pub_subCategory=bracelets&pub_subCategory=anklets' } },
+                      linkProps: {
+                        type: 'NamedLink', name: 'SearchPage', to: {
+                          search: '?pub_subCategory=necklaces&pub_subCategory=earrings&pub_subCategory=rings&pub_subCategory=bracelets&pub_subCategory=anklets'
+                        }
+                      },
                       text: 'Jewelry',
                     },
                     {
                       imageUrl: artImage,
                       imageAltText: 'Art',
-                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: {
-                         search: '?pub_subCategory=paintings&pub_subCategory=beadwork&pub_subCategory=photo&pub_subCategory=prints&pub_subCategory=stickers&pub_subCategory=carvings&pub_subCategory=baskets&pub_subCategory=rugs' } },
+                      linkProps: {
+                        type: 'NamedLink', name: 'SearchPage', to: {
+                          search: '?pub_subCategory=paintings&pub_subCategory=beadwork&pub_subCategory=photo&pub_subCategory=prints&pub_subCategory=stickers&pub_subCategory=carvings&pub_subCategory=baskets&pub_subCategory=rugs'
+                        }
+                      },
                       text: 'Art',
                     },
                     {
                       imageUrl: traditionalImage,
                       imageAltText: 'Traditional',
-                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: {
-                         search: '?pub_subCategory=botanicals&pub_subCategory=regalia'  } },
+                      linkProps: {
+                        type: 'NamedLink', name: 'SearchPage', to: {
+                          search: '?pub_subCategory=botanicals&pub_subCategory=regalia'
+                        }
+                      },
                       text: 'Traditional Assortments',
                     },
                     {
                       imageUrl: apparelImage,
                       imageAltText: 'Apparel',
-                      linkProps: { type: 'NamedLink', name: 'SearchPage', to: {
-                         search: '?pub_subCategory=tops&pub_subCategory=bottoms&pub_subCategory=dresses&pub_subCategory=shoes' } },
+                      linkProps: {
+                        type: 'NamedLink', name: 'SearchPage', to: {
+                          search: '?pub_subCategory=tops&pub_subCategory=bottoms&pub_subCategory=dresses&pub_subCategory=shoes'
+                        }
+                      },
                       text: 'Apparel',
                     },
                   ]}
@@ -116,55 +131,83 @@ export const LandingPageComponent = props => {
               </div>
             </li>
 
-            {hasListings ? (
+            
             <li className={css.section}>
               <div className={css.sectionContent}>
-                <h2 className={css.featuredListingsTitle}>
-                  Featured Listings
-                </h2>
-                  <div className={css.featuredListings}>
-                    {listings.map(l => (
-                      <ListingCard className={css.listingCard} listing={l} key={l.id.uuid}/>
-                    ))}
-                  </div>
+                <FeaturedPartners
+                  linksPerRow={2}
+                  links={[
+                    {
+                      imageUrl: uneImage,
+                      imageAltText: 'Urban Native Era',
+                      linkProps: {
+                        type: 'ExternalLink', href: 'https://urbannativeera.com/',
+                      },
+                      text: 'Urban Native Era',
+                    },
+                    {
+                      imageUrl: sweetImage,
+                      imageAltText: 'SweetGrass Trading',
+                      linkProps: {
+                        type: 'NamedLink', name: 'ProfilePage', params: {
+                          id: '5f52e761-e46d-4d51-b4f2-a8a4ef16f8b2'
+                        }
+                      },
+                      text: 'SweetGrass Trading',
+                    },
+                  ]}
+                  heading='Featured Partners'
+                  subHeading=' '
+                />
               </div>
             </li>
+
+            {hasListings ? (
+              <li className={css.section}>
+                <div className={css.sectionContent}>
+                  <h2 className={css.customSectionTitle}>
+                    <FormattedMessage id="LandingPage.listingsTitle" />
+                  </h2>
+                  <div className={css.featuredListings}>
+                    {listings.map(l => (
+                      <ListingCard className={css.listingCard} listing={l} key={l.id.uuid} />
+                    ))}
+                  </div>
+                </div>
+              </li>
             ) : null}
 
             <li className={css.section}>
               <div className={css.sectionContent}>
-                <h2 className={css.donateTitle}>
-                  From The People is Committed to Representing Indigenous Peoples and Supporting Our Movements
-                  </h2>
+                <h2 className={css.customSectionTitle}>
+                  <FormattedMessage id="LandingPage.donationTitle" />
+                </h2>
                 <div className={css.donateText}>
                   <div className={css.donateSubText}>
                     <h2>
-                      Coronavirus Relief Efforts within Indian Country
-                      </h2>
+                      <FormattedMessage id="LandingPage.covidTitle" />
+                    </h2>
                     <p>
-                      For the next three months From The People will be donating all profits
-                      to help tribes fight COVID-19 in Indian Country
-                      </p>
-                      <ExternalLink
-                        href="https://www.firstnations.org/covid-19-emergency-response-fund/"
-                        className={css.donateButton}>
-                        <FormattedMessage id="LandingPage.covidButton" />
-                      </ExternalLink>
+                      <FormattedMessage id="LandingPage.covidText" />
+                    </p>
+                    <ExternalLink
+                      href="https://www.firstnations.org/covid-19-emergency-response-fund/"
+                      className={css.donateButton}>
+                      <FormattedMessage id="LandingPage.covidButton" />
+                    </ExternalLink>
                   </div>
                   <div className={css.donateSubText}>
                     <h2>
-                      Missing and Murdered Indigenous Womxn, Girls and Two Spirit
-                      </h2>
+                      <FormattedMessage id="LandingPage.mmiwTitle" />
+                    </h2>
                     <p>
-                      After providing COVID-19 relief to tribes, From The People will be
-                      donating a percentage of our profits to the Coalition to Stop
-                      Violence Against Native Women.
-                      </p>
-                      <ExternalLink
-                        href="https://www.csvanw.org/mmiw/"
-                        className={css.donateButton}>
-                        <FormattedMessage id="LandingPage.mmiwButton" />
-                      </ExternalLink>
+                      <FormattedMessage id="LandingPage.mmiwText" />
+                    </p>
+                    <ExternalLink
+                      href="https://www.csvanw.org/mmiw/"
+                      className={css.donateButton}>
+                      <FormattedMessage id="LandingPage.mmiwButton" />
+                    </ExternalLink>
                   </div>
                 </div>
 
@@ -172,18 +215,15 @@ export const LandingPageComponent = props => {
                   <div className={css.donateSubText}>
                     <div className={css.thirdDonate}>
                       <h2>
-                        Black Lives Matter
+                        <FormattedMessage id="LandingPage.blmTitle" />
                       </h2>
                       <p>
-                        With the unrest in many American cities, From The People would like
-                        to express our support for the protestors in their fight against police
-                        brutality. Your Indigenous allies are here to help! Please consider donating
-                        to the Black Visions Collective using the button below, and other organizations fighting for Black Lives.
+                        <FormattedMessage id="LandingPage.blmText" />
                       </p>
-                        <ExternalLink
-                          href="https://www.firstnations.org/covid-19-emergency-response-fund/"
-                          className={css.donateButton}>
-                          <FormattedMessage id="LandingPage.blmButton" />
+                      <ExternalLink
+                        href="https://www.firstnations.org/covid-19-emergency-response-fund/"
+                        className={css.donateButton}>
+                        <FormattedMessage id="LandingPage.blmButton" />
                       </ExternalLink>
                     </div>
                   </div>
