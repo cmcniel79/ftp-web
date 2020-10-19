@@ -731,6 +731,7 @@
   "PrivacyPolicyPage.tosTabTitle": "Terms of Service",
   "ProfilePage.desktopHeading": "{name}.",
   "ProfilePage.desktopHeadingCompany": "{name}",
+  "ProfilePage.companyWebsite": "Go To Company Website",
   "ProfilePage.editProfileLinkDesktop": "Edit profile",
   "ProfilePage.editProfileLinkMobile": "Edit",
   "ProfilePage.listingsTitle": "Listings ({count})",

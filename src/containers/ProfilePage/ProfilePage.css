@@ -85,16 +85,29 @@
   }
 }
 
+.socialMediaLinks {
+  margin: 0 0 25px 0;
+}
+
+.websiteLink { 
+  margin: 0 0 25px 0;
+}
+
+.externalLink {
+  height: 20px;
+  margin: 5px 5px 8px 5px;
+}
+
 .bio {
   /* Preserve newlines, but collapse other whitespace */
   white-space: pre-line;
   margin: 5px 0 24px 0;
 
   @media (--viewportMedium) {
-    margin: 4px 0 51px 0;
+    margin: 4px 0 25px 0;
   }
   @media (--viewportLarge) {
-    margin: 0 0 56px 0;
+    margin: 0 0 25px 0;
     max-width: 600px;
   }
 }

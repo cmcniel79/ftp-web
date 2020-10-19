@@ -107,7 +107,7 @@
 .text {
   position: relative;
   @apply --marketplaceH2FontStyles;
-  color: var(--matterColor);
+  /* color: var(--matterColor); */
   /* top: 45%;
   left: 50%; */
   /* transform: translate(-50%, -50%); */

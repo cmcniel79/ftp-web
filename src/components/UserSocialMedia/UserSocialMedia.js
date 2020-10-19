@@ -9,7 +9,7 @@ import {
 import css from './UserSocialMedia.css';
 
 const UserSocialMedia = props => {
-  const { socialMedia } = props;
+  const { socialMedia, className } = props;
 
   const fbLink = socialMedia && socialMedia.facebook ? (
     <ExternalLink key="linkToAuthorsFacebook"
@@ -52,8 +52,10 @@ const UserSocialMedia = props => {
     links.push(instaLink);
   }
 
+  const classNames = className ? className : css.authorSocialMedia;
+
   return socialMedia && links.length > 0 ? (
-    <div className={css.authorSocialMedia}>
+    <div className={classNames}>
       {/* <p className={css.text}>      
         <FormattedMessage id="UserSocialMedia.socialAccounts" />
       </p> */}

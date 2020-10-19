@@ -23,10 +23,13 @@ import {
   ListingCard,
   Reviews,
   ButtonTabNavHorizontal,
+  UserSocialMedia,
+  ExternalLink,
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '../../containers';
 import { loadData } from './ProfilePage.duck';
 import config from '../../config';
+import exit from '../../assets/exit.svg';
 
 import css from './ProfilePage.css';
 
@@ -80,7 +83,18 @@ export class ProfilePageComponent extends Component {
     const hasBio = !!bio;
     const hasListings = listings.length > 0;
     const isMobileLayout = viewport.width < MAX_MOBILE_SCREEN_WIDTH;
-    const companyName = profileUser.attributes.profile.publicData ? profileUser.attributes.profile.publicData.companyName : null;
+
+    // Get custom data fields from profileUser's account. Social media will go onto everyone's profile page if they fill it out.
+    // Company name and companyWebsite will only go onto profile page if user has a premium account.
+    const socialMedia = profileUser.attributes.profile.publicData && profileUser.attributes.profile.publicData.socialMedia ?
+      profileUser.attributes.profile.publicData.socialMedia : null;
+    const accountType = profileUser.attributes.profile.publicData && profileUser.attributes.profile.publicData.account ?
+      profileUser.attributes.profile.publicData.account : null;
+    const isPremium = accountType && accountType === "p" ? true : false;
+    const companyName = isPremium && profileUser.attributes.profile.publicData.companyName ?
+      profileUser.attributes.profile.publicData.companyName : null;
+    const companyWebsite = isPremium && profileUser.attributes.profile.publicData.companyWebsite ?
+      profileUser.attributes.profile.publicData.companyWebsite : null;
 
     const editLinkMobile = isCurrentUser ? (
       <NamedLink className={css.editLinkMobile} name="ProfileSettingsPage">
@@ -194,7 +208,17 @@ export class ProfilePageComponent extends Component {
             <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />
           }
         </h1>
+        {socialMedia ? <UserSocialMedia className={css.socialMediaLinks} socialMedia={socialMedia} /> : null}
         {hasBio ? <p className={css.bio}>{bio}</p> : null}
+        {companyWebsite ?
+          <div className={css.websiteLink}>
+            <ExternalLink href={companyWebsite} useIcon={true}>
+              <FormattedMessage id="ProfilePage.companyWebsite" />
+              <img className={css.externalLink} src={exit} alt="External Link" />
+            </ExternalLink>
+          </div>
+          : null
+        }
         {hasListings ? (
           <div className={listingsContainerClasses}>
             <h2 className={css.listingsTitle}>
