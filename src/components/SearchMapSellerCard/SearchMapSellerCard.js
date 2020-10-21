@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Clipboard } from 'react';
 import { arrayOf, bool, func, string } from 'prop-types';
 import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
@@ -9,12 +9,12 @@ import { formatMoney } from '../../util/currency';
 import { ensureUser } from '../../util/data';
 import { Button, ResponsiveImage, NamedLink, ExternalLink, UserCard, InlineTextButton, UserSocialMedia } from '../../components';
 import truncate from 'lodash/truncate';
+import navigateIcon from './Images/navigate.svg';
+import shareIcon from './Images/share.svg';
+import exitIcon from '../../assets/exit.svg';
 
 import css from './SearchMapSellerCard.css';
 
-// Approximated collapsed size so that there are ~three lines of text
-// in the desktop layout in the host section of the ListingPage.
-const BIO_COLLAPSED_LENGTH = 60;
 const AVATAR_IMAGE_VARIANTS = [
   // 40x40
   'square-xsmall',
@@ -29,129 +29,43 @@ const AVATAR_IMAGE_VARIANTS = [
   'square-small2x',
 ];
 
-const truncated = s => {
-  return truncate(s, {
-    length: BIO_COLLAPSED_LENGTH,
-
-    // Allow truncated text end only in specific characters. This will
-    // make the truncated text shorter than the length if the original
-    // text has to be shortened and the substring ends in a separator.
-    //
-    // This ensures that the final text doesn't get cut in the middle
-    // of a word.
-    separator: /\s|,|\.|:|;/,
-    omission: '',
-  });
-};
-
-class ExpandableBio extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { expand: false };
-  }
-  render() {
-    const { expand } = this.state;
-    const { className, bio } = this.props;
-    const truncatedBio = truncated(bio);
-
-    const handleShowMoreClick = () => {
-      this.setState({ expand: true });
-    };
-    const handleShowLessClick = () => {
-      this.setState({ expand: false });
-    };
-    const showMore = (
-      <InlineTextButton rootClassName={css.showMore} onClick={handleShowMoreClick}>
-        <FormattedMessage id="SellerCard.showFullBioLink" />
-      </InlineTextButton>
-    );
-    const showLess = (
-      <InlineTextButton rootClassName={css.showLess} onClick={handleShowLessClick}>
-        <FormattedMessage id="SellerCard.showLessBioLink" />
-      </InlineTextButton>
-    );
-    return (
-      <p className={className}>
-        {/* <FormattedMessage className={css.heading} id="SellerCard.companyBio" /> */}
-        {expand ? bio : truncatedBio}
-        {bio !== truncatedBio && !expand ? showMore : showLess}
-      </p>
-    );
-  }
-}
-
-ExpandableBio.defaultProps = { className: null };
-
-ExpandableBio.propTypes = {
-  className: string,
-  bio: string.isRequired,
-};
-
-function shareButtonClick(params) {
+function shareButtonClick(urlToProfile) {
   if (navigator.share) {
     navigator.share({
-      title: 'My awesome post!',
-      text: 'This post may or may not contain the answer to the universe',
-      url: 'https://www.google.com/'
-    }).then(() => {
-      console.log('Thanks for sharing!');
+      text: 'Check out this awesome profile on From The People!',
+      url: urlToProfile
     })
+      .then(() => {
+        console.log('Thanks for sharing!');
+      })
       .catch(err => {
         console.log(`Couldn't share because of`, err.message);
       });
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(urlToProfile)
+    .then(() => {
+        console.log("copy success");
+      })
+    .catch(err => {
+       console.log(`Couldn't copy because of`, err.message);
+      });
   } else {
-    console.log('web share not supported');
+    console.log("could not copy");
   }
+  // https://medium.com/@feargswalsh/copying-to-the-clipboard-in-react-81bb956963ec
 }
 
 const SellerCard = props => {
   const { urlToProfile, user } = props;
-  const { displayName, bio } = user.attributes.profile;
+  const { displayName, publicData } = user.attributes.profile;
 
   // Gather custom data fields from seller's account
-  const companyWebsite = user.attributes.profile.publicData.companyWebsite ?
-    user.attributes.profile.publicData.companyWebsite : null;
-  const companyName = user.attributes.profile.publicData.companyName ?
-    user.attributes.profile.publicData.companyName : null;
-  const companyAddress = user.attributes.profile.publicData.companyLocation ?
-    user.attributes.profile.publicData.companyLocation.location.selectedPlace.address : null;
-  const companyLatLng = user.attributes.profile.publicData.companyLocation ?
-    user.attributes.profile.publicData.companyLocation.location.selectedPlace.origin : null;
-  const companyBuilding = user.attributes.profile.publicData.companyLocation ?
-    user.attributes.profile.publicData.companyLocation.building : null;
-  const socialMedia = user.attributes.profile.publicData.socialMedia ?
-    user.attributes.profile.publicData.socialMedia : null;
-  const tribe = user.attributes.profile.publicData.tribe ?
-    user.attributes.profile.publicData.tribe : null;
-  const industry = user.attributes.profile.publicData.industry ?
-    user.attributes.profile.publicData.industry : "Other";
-
-  const hasBio = !!bio;
-
+  const companyWebsite = publicData.companyWebsite ? user.attributes.profile.publicData.companyWebsite : null;
+  const companyLatLng = publicData.companyLocation ? publicData.companyLocation.location.selectedPlace.origin : null;
+  const companyName = publicData.companyName ? publicData.companyName : null;
+  const tribe = publicData.tribe ? publicData.tribe : null;
   const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=" + companyLatLng.lat + "," + companyLatLng.lng;
-
-  const links = companyLatLng ? (
-    <p className={css.link}>
-      <ExternalLink className={css.link} href={googleMapsUrl}>
-        <FormattedMessage id="SellerCard.getDirections" />
-      </ExternalLink>
-      {companyWebsite &&
-        <span>
-          <span className={css.separator}>•</span>
-          <ExternalLink href={companyWebsite}>
-            <FormattedMessage id="SellerCard.companyWebsite" />
-          </ExternalLink>
-        </span>
-      }
-    </p>
-  ) : null;
-
-  const subHeading = tribe ? (
-    <p className={css.subHeading}>
-      {tribe}
-    </p>
-  ) : null;
-
+  
   return (
     <div className={css.card}>
       <div className={css.content}>
@@ -162,51 +76,76 @@ const SellerCard = props => {
           variants={AVATAR_IMAGE_VARIANTS}
         />
         <div className={css.info}>
-          <h3 className={css.heading}>
+          <h2 className={css.heading}>
             {companyName ?
               <FormattedMessage id="SellerCard.heading" values={{ name: companyName }} />
               :
               <FormattedMessage id="SellerCard.heading" values={{ name: displayName }} />
             }
-          </h3>
-          {subHeading}
-          <UserSocialMedia socialMedia={socialMedia} />
+          </h2>
+          {tribe &&
+            <p className={css.subHeading}>
+              {tribe}
+            </p>
+          }
+          <p className={css.subHeading}>
+            <a href={urlToProfile}>
+              <FormattedMessage id="SellerCard.visitProfile" />
+            </a>
+          </p>
         </div>
       </div>
-      {links}
-      <Button
-      onClick={shareButtonClick()}>
-        ShareButton
-      </Button>
-        {hasBio &&
-        <div className={css.addressSection}>
-          <ExpandableBio className={css.bio} bio={bio} />
-        </div>
+      <div className={css.buttonRow} >
+        {companyLatLng &&
+          <ExternalLink
+            className={css.linkButton}
+            href={googleMapsUrl}
+          >
+            <img className={css.linkIcon} src={navigateIcon} />
+            <FormattedMessage id="SellerCard.navigateButton" />
+          </ExternalLink>
         }
+        {companyWebsite &&
+          <ExternalLink
+            className={css.linkButton}
+            href={companyWebsite}
+          >
+            <img className={css.linkIcon} src={exitIcon} />
+            <FormattedMessage id="SellerCard.websiteButton" />
+          </ExternalLink>
+        }
+        <button
+          className={css.shareButton}
+          onClick={shareButtonClick(urlToProfile)}
+        >
+          <img className={css.shareIcon} src={shareIcon} />
+          <FormattedMessage id="SellerCard.shareButton" />
+        </button>
+      </div>
     </div>
   );
 };
 
 SellerCard.defaultProps = {
-        user: null,
+  user: null,
 };
 
 SellerCard.propTypes = {
-        user: propTypes.user.isRequired,
+  user: propTypes.user.isRequired,
 };
 
 class SearchMapSellerCard extends Component {
-        constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
     this.state = { currentUserIndex: 0 };
   }
 
   render() {
     const {
-        className,
-        rootClassName,
-        users,
-        createURLToProfile,
+      className,
+      rootClassName,
+      users,
+      createURLToProfile,
     } = this.props;
     console.log(users);
     const currentSeller = ensureUser(users[this.state.currentUserIndex]);
@@ -225,12 +164,12 @@ class SearchMapSellerCard extends Component {
 }
 
 SearchMapSellerCard.defaultProps = {
-        className: null,
+  className: null,
   rootClassName: null,
 };
 
 SearchMapSellerCard.propTypes = {
-        className: string,
+  className: string,
   rootClassName: string,
   users: arrayOf(propTypes.user).isRequired,
   onUserInfoCardClicked: func.isRequired,

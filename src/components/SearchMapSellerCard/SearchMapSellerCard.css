@@ -1,18 +1,14 @@
 @import '../../marketplace.css';
-
 .root {
   display: block;
   position: relative;
   height: auto;
   border: 0;
   padding: 0;
-
   /* Borders */
   border-radius: 4px;
   box-shadow: var(--boxShadowPopupLight);
-
   transition: var(--transitionStyleButton);
-
   &:hover {
     cursor: default;
     box-shadow: var(--boxShadowPopup);
@@ -22,7 +18,6 @@
 .anchor {
   display: block;
   overflow: hidden;
-
   &:hover {
     text-decoration: none;
   }
@@ -34,7 +29,6 @@
    * label must have relative to be included to the same rendering layer
    */
   position: relative;
-
   width: 325px;
   /* Font */
   @apply --marketplaceH5FontStyles;
@@ -42,12 +36,10 @@
   border-radius: 10px;
   border: 0;
   background-color: var(--matterColorLight);
-
   /* Dimensions */
   margin-top: 0;
   margin-bottom: 0;
   transition: var(--transitionStyleButton);
-
   /* Overwrite dimensions from font styles */
   @media (--viewportMedium) {
     margin-top: 0;
@@ -56,6 +48,7 @@
 }
 
 /* Overwrite Mapbox's specific font rules */
+
 .root .card {
   font-family: 'poppins', Helvetica, Arial, sans-serif;
   font-weight: var(--fontWeightSemiBold);
@@ -71,7 +64,6 @@
   margin: 10px 25px 10px 10px;
   width: 75px;
   height: 75px;
-
   @media (--viewportMedium) {
     width: 100px;
     height: 100px;
@@ -79,11 +71,15 @@
 }
 
 .info {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  margin: 0 auto 0 0;
+  justify-content: space-evenly;
 }
 
 .heading {
-  @apply --marketplaceH3FontStyles;
+  @apply --marketplaceH2FontStyles;
   margin: 5px 0 0 0;
   /* @media (--viewportMedium) {
     margin: 5px 0 0 0;
@@ -91,51 +87,54 @@
 }
 
 .subHeading {
-  margin: 3px 3px 3px 0;
+  margin: 0 3px 0 0;
   line-height: 24px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
-.addressTitle {
-  color: var(--matterColorAnti);
-  font-weight: var(--fontWeightSemiBold);
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 2px 0 10px 0;
 }
 
-.addressSection {
-  margin: 0 5px;
+.linkButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--marketplaceColor);
+  font-weight: normal;
+  &:hover {
+    text-decoration: none;
+    transform: scale(1.05);
+  }
 }
 
-.addressText {
-  @apply --marketplaceH4FontStyles;
+.linkIcon {
+  width: 40px;
+  border: none;
+}
+
+.shareIcon {
+  width: 40px;
+}
+
+.shareButton {
+  width: 40px;
+  padding: 0;
   margin: 0;
-}
-
-.link {
-  white-space: normal;
-  margin: 0 0 0 5px;
-}
-
-.separator {
-  margin: 0 5px 0 5px;
-}
-
-.bio {
-  /* Preserve newlines, but collapse other whitespace */
-  @apply --marketplaceH4FontStyles;
-  white-space: pre-line;
-  margin: 0 5px;
-  transition: all 1s ease-in;
-}
-
-.showMore {
-  @apply --marketplaceLinkStyles;
-  @apply --marketplaceH4FontStyles;
-  margin: 0 0 0 5px;
-}
-
-.showLess {
-  @apply --marketplaceLinkStyles;
-  @apply --marketplaceH4FontStyles;
-  margin: 0 0 0 5px;
+  background-color: var(--matterColorLight);
+  color: var(--marketplaceColor);
+  border: none;
+  font-weight: normal;
+  &:hover {
+    text-decoration: none;
+    cursor: pointer;
+    transform: scale(1.1);
+  }
 }
 
 .caretShadow {
@@ -147,7 +146,6 @@
   left: 50%;
   margin-left: -3px;
   transform: rotate(45deg);
-
   /* Caret should have same box-shadow as label */
   box-shadow: var(--boxShadowPopupLight);
 }
@@ -161,7 +159,6 @@
   left: 50%;
   margin-left: -3px;
   transform: rotate(45deg);
-
   /* Caret should have same bg-color and border as label */
   background-color: var(--matterColorLight);
   border-right-style: solid;
