@@ -29,7 +29,7 @@ const initialState = {
   currentPageResultIds: [],
   searchMapListingIds: [],
   searchMapListingsError: null,
-  userId: null,
+  userIds: [],
 };
 
 const resultIds = data => data.data.map(l => l.id);
@@ -41,7 +41,7 @@ const mapPageReducer = (state = initialState, action = {}) => {
       return { ...initialState };
 
     case SHOW_USER_REQUEST:
-      return { ...state, userShowError: null, userId: payload.userId };
+      return { ...state, userShowError: null, userIds: payload };
     case SHOW_USER_SUCCESS:
       return state;
     case SHOW_USER_ERROR:
@@ -96,9 +96,9 @@ export const setInitialState = () => ({
   type: SET_INITIAL_STATE,
 });
 
-export const showUserRequest = userId => ({
+export const showUserRequest = userIds => ({
   type: SHOW_USER_REQUEST,
-  payload: { userId },
+  payload: userIds,
 });
 
 export const showUserSuccess = () => ({
@@ -132,54 +132,49 @@ export const fetchProductsFailure = error => ({
 
 
 export const loadUsers = userIds => (dispatch, getState, sdk) => {
-  let users = [];
-  console.log(userIds);
-  users.push(userIds.map(userId => {
-  dispatch(showUserRequest(userId));
-  return sdk.users
-    .show({
-      id: userId,
-      include: ['profileImage', 'publicData'],
-      'fields.image': ['variants.square-small', 'variants.square-small2x'],
-    })
-    .then(response => {
-      dispatch(addMarketplaceEntities(response));
-      dispatch(showUserSuccess());
-      return response;
-    })
-    .catch(e => dispatch(showUserError(storableError(e))));
-  }));
-  return users;
+  dispatch(showUserRequest(userIds));
+  userIds.map(userId => {
+    return sdk.users
+      .show({
+        id: userId.id,
+        include: ['profileImage', 'publicData'],
+        'fields.image': ['variants.square-small', 'variants.square-small2x'],
+      })
+      .then(response => {
+        dispatch(addMarketplaceEntities(response));
+      })
+      .catch(e => dispatch(showUserError(storableError(e))));
+  });
+  dispatch(showUserSuccess());
 };
 
 function getProducts() {
   return fetch("https://vyvhifh63b.execute-api.us-west-1.amazonaws.com/prd")
-      .then(handleErrors)
-      .then(res => res.json())
+    .then(handleErrors)
+    .then(res => res.json())
 }
 
 export function fetchProducts() {
   return dispatch => {
-      dispatch(fetchProductsBegin());
-      return getProducts()
-          .then(json => {
-              dispatch(fetchProductsSuccess(json));
-              let ids = [];
-              ids.push(new UUID(json.body[0].uuid));
-              ids.push(new UUID("5f5f716a-e52e-4def-a264-a606f55bd49b"));
-              console.log(ids);
-              return ids;
-          })
-          .catch(error =>
-              dispatch(fetchProductsFailure(error))
-          );
+    dispatch(fetchProductsBegin());
+    return getProducts()
+      .then(json => {
+        dispatch(fetchProductsSuccess(json));
+        let ids = [];
+        ids.push({ type: 'user', id: new UUID(json.body[0].uuid) });
+        ids.push({ type: 'user', id: new UUID("5f5f716a-e52e-4def-a264-a606f55bd49b") });
+        return ids;
+      })
+      .catch(error =>
+        dispatch(fetchProductsFailure(error))
+      );
   };
 }
 
 // Handle HTTP errors since fetch won't.
 function handleErrors(response) {
   if (!response.ok) {
-      throw Error(response.statusText);
+    throw Error(response.statusText);
   }
   return response;
 }
@@ -188,11 +183,10 @@ export const loadData = () => (dispatch, getState, sdk) => {
   // Clear state so that previously loaded data is not visible
   // in case this page load fails.
   dispatch(setInitialState());
-
   return Promise.all([
     dispatch(fetchProducts())
-      .then(id => {
-        dispatch(loadUsers(id));
+      .then(ids => {
+        dispatch(loadUsers(ids));
       })
   ]);
 };

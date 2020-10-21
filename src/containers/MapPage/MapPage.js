@@ -181,7 +181,6 @@ export class MapPageComponent extends Component {
 
     const faqLink = <NamedLink name="FAQPage"> <FormattedMessage id="MapPage.faqLink" /> </NamedLink>;
     const industryOptions = findOptionsForSelectFilter('industry', filterConfig);
-
     return (
       <Page
         scrollingDisabled={scrollingDisabled}
@@ -227,14 +226,14 @@ export class MapPageComponent extends Component {
                 />
               </div>
               <div className={css.mapWrapper}>
-                {users[0] !== null &&
+                {users && users.length > 0 &&
                   <SearchMapUsers
                     reusableContainerClassName={css.map}
                     bounds={this.state.bounds}
                     center={this.state.origin}
                     isSearchMapOpenOnMobile={this.state.isSearchMapOpenOnMobile}
                     location={location}
-                    users={users || []}
+                    users={users}
                     onMapMoveEnd={this.onMapMoveEnd}
                     onCloseAsModal={() => {
                       onManageDisableScrolling('MapPage.map', false);
@@ -297,14 +296,12 @@ const mapStateToProps = state => {
     searchInProgress,
     searchListingsError,
     searchParams,
-    userId,
+    userIds,
   } = state.MapPage;
-
-  const userMatches = getMarketplaceEntities(state, [{ type: 'user', id: userId }]);
-  const user = userMatches.length === 1 ? userMatches[0] : null;
+  const users = userIds.length > 0 ? getMarketplaceEntities(state, userIds) : null;
 
   return {
-    users: [user],
+    users: users,
     pagination,
     scrollingDisabled: isScrollingDisabled(state),
     searchInProgress,

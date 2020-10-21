@@ -139,7 +139,6 @@ export class SearchMapUsersComponent extends Component {
       this.setState({ mapReattachmentCount: window.mapReattachmentCount });
     };
 
-
     return isMapsLibLoaded() ? (
       <ReusableMapContainer
         className={reusableContainerClassName}

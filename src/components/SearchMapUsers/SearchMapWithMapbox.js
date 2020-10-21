@@ -153,7 +153,6 @@ const priceLabelsInLocations = (
       }
 
       // Explicit type change to object literal for Google OverlayViews (geolocation is SDK type)
-      const type = user.type;
       const geolocation = user.attributes.profile.publicData.companyLocation.location.selectedPlace.origin;
       const key = user.id.uuid;
 
@@ -173,7 +172,7 @@ const priceLabelsInLocations = (
 
     // Explicit type change to object literal for Google OverlayViews (geolocation is SDK type)
     const firstUser = ensureUser(userArr[0]);
-    const geolocation = firstUser.attributes.geolocation;
+    const geolocation = firstUser.attributes.profile.publicData.companyLocation.location.selectedPlace.origin;
 
     const key = userArr[0].id.uuid;
     return {
