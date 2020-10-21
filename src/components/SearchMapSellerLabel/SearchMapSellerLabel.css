@@ -6,7 +6,7 @@
   border: 0;
   padding: 0;
   &:hover {
-    & .priceLabel, & .caret {
+    & .sellerLabel, & .caret {
       cursor: pointer;
       /* Same as active */
       background-color: var(--marketplaceColor);
@@ -17,7 +17,7 @@
   }
 }
 
-.priceLabel {
+.sellerLabel {
   /**
    * Since caret is absolutely positioned,
    * label must have relative to be included to the same rendering layer
@@ -26,6 +26,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   /* Font */
   @apply --marketplaceH5FontStyles;
   font-weight: var(--fontWeightSemiBold);
@@ -42,7 +43,7 @@
   padding: 6px;
   margin-top: 0;
   margin-bottom: 0;
-  transition: .3s;
+  transition: .1s;
   /* Overwrite dimensions from font styles */
   @media (--viewportMedium) {
     margin-top: 0;
@@ -81,7 +82,7 @@
   left: 50%;
   margin-left: -3px;
   transform: rotate(45deg);
-  transition: .3s;
+  transition: .1s;
   /* Caret should have same bg-color and border as label */
   background-color: var(--matterColorLight);
   border-right-style: solid;

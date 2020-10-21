@@ -89,7 +89,7 @@ class SearchMapSellerLabel extends Component {
         onMouseEnter={() => this.setIsShown(true)}
         onMouseLeave={() => this.setIsShown(false)}>
         <div className={css.caretShadow} />
-        <div className={css.priceLabel}>
+        <div className={css.sellerLabel}>
           {image}
           {name}
         </div>

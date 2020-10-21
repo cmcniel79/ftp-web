@@ -71,7 +71,6 @@ export class SearchMapUsersComponent extends Component {
   }
 
   createURLToProfile(user) {
-    console.log(user);
     const routes = routeConfiguration();
 
     const id = user.id.uuid;

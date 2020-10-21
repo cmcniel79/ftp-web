@@ -131,7 +131,10 @@ export const fetchProductsFailure = error => ({
 });
 
 
-export const loadUsers = userId => (dispatch, getState, sdk) => {
+export const loadUsers = userIds => (dispatch, getState, sdk) => {
+  let users = [];
+  console.log(userIds);
+  users.push(userIds.map(userId => {
   dispatch(showUserRequest(userId));
   return sdk.users
     .show({
@@ -145,6 +148,8 @@ export const loadUsers = userId => (dispatch, getState, sdk) => {
       return response;
     })
     .catch(e => dispatch(showUserError(storableError(e))));
+  }));
+  return users;
 };
 
 function getProducts() {
@@ -159,8 +164,11 @@ export function fetchProducts() {
       return getProducts()
           .then(json => {
               dispatch(fetchProductsSuccess(json));
-              let id = new UUID(json.body[0].uuid);
-              return id;
+              let ids = [];
+              ids.push(new UUID(json.body[0].uuid));
+              ids.push(new UUID("5f5f716a-e52e-4def-a264-a606f55bd49b"));
+              console.log(ids);
+              return ids;
           })
           .catch(error =>
               dispatch(fetchProductsFailure(error))

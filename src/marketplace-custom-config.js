@@ -264,6 +264,7 @@ export const filters = [
         { key: 'hospitality', label: "Hospitality and Tourism" },
         { key: 'nonprofits', label: "Non-Profits" },
         { key: 'beauty', label: "Beauty and Personal Services" },
+        { key: 'other', label: "Other"},
       ]
     },
 
