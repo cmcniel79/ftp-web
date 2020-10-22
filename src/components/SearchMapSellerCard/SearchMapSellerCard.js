@@ -1,19 +1,17 @@
-import React, { Component, Clipboard } from 'react';
-import { arrayOf, bool, func, string } from 'prop-types';
+import React, { Component } from 'react';
+import { arrayOf, func, string } from 'prop-types';
 import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
-import config from '../../config';
 import { propTypes } from '../../util/types';
-import { formatMoney } from '../../util/currency';
 import { ensureUser } from '../../util/data';
-import { Button, ResponsiveImage, NamedLink, ExternalLink, UserCard, InlineTextButton, UserSocialMedia } from '../../components';
-import truncate from 'lodash/truncate';
+import { ResponsiveImage, ExternalLink, Button } from '../../components';
 import navigateIcon from './Images/navigate.svg';
 import shareIcon from './Images/share.svg';
 import exitIcon from '../../assets/exit.svg';
 
 import css from './SearchMapSellerCard.css';
+import { txHasBeenDelivered } from '../../util/transaction';
 
 const AVATAR_IMAGE_VARIANTS = [
   // 40x40
@@ -29,34 +27,8 @@ const AVATAR_IMAGE_VARIANTS = [
   'square-small2x',
 ];
 
-function shareButtonClick(urlToProfile) {
-  if (navigator.share) {
-    navigator.share({
-      text: 'Check out this awesome profile on From The People!',
-      url: urlToProfile
-    })
-      .then(() => {
-        console.log('Thanks for sharing!');
-      })
-      .catch(err => {
-        console.log(`Couldn't share because of`, err.message);
-      });
-  } else if (navigator.clipboard) {
-    navigator.clipboard.writeText(urlToProfile)
-    .then(() => {
-        console.log("copy success");
-      })
-    .catch(err => {
-       console.log(`Couldn't copy because of`, err.message);
-      });
-  } else {
-    console.log("could not copy");
-  }
-  // https://medium.com/@feargswalsh/copying-to-the-clipboard-in-react-81bb956963ec
-}
-
 const SellerCard = props => {
-  const { urlToProfile, user } = props;
+  const { urlToProfile, user, shareButtonClick, wasCopySuccessful} = props;
   const { displayName, publicData } = user.attributes.profile;
 
   // Gather custom data fields from seller's account
@@ -65,7 +37,7 @@ const SellerCard = props => {
   const companyName = publicData.companyName ? publicData.companyName : null;
   const tribe = publicData.tribe ? publicData.tribe : null;
   const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=" + companyLatLng.lat + "," + companyLatLng.lng;
-  
+  const profileTitle = companyName ? companyName : displayName;
   return (
     <div className={css.card}>
       <div className={css.content}>
@@ -77,11 +49,7 @@ const SellerCard = props => {
         />
         <div className={css.info}>
           <h2 className={css.heading}>
-            {companyName ?
-              <FormattedMessage id="SellerCard.heading" values={{ name: companyName }} />
-              :
-              <FormattedMessage id="SellerCard.heading" values={{ name: displayName }} />
-            }
+              <FormattedMessage id="SellerCard.heading" values={{ name: profileTitle }} />
           </h2>
           {tribe &&
             <p className={css.subHeading}>
@@ -89,9 +57,9 @@ const SellerCard = props => {
             </p>
           }
           <p className={css.subHeading}>
-            <a href={urlToProfile}>
+            <ExternalLink href={urlToProfile}>
               <FormattedMessage id="SellerCard.visitProfile" />
-            </a>
+            </ExternalLink>
           </p>
         </div>
       </div>
@@ -116,12 +84,21 @@ const SellerCard = props => {
         }
         <button
           className={css.shareButton}
-          onClick={shareButtonClick(urlToProfile)}
+          onClick={() => shareButtonClick(urlToProfile)}
         >
           <img className={css.shareIcon} src={shareIcon} />
           <FormattedMessage id="SellerCard.shareButton" />
         </button>
       </div>
+      {wasCopySuccessful === true ?
+        <p className={css.copyStatus}>
+          <FormattedMessage id="SellerCard.copySuccess" values={{ profileTitle }}/>
+          </p>
+          : wasCopySuccessful === false ?
+        <p className={css.copyStatus}>
+          <FormattedMessage id="SellerCard.copyFailure" values={{ profileTitle }}/>
+          </p> : null
+      }
     </div>
   );
 };
@@ -137,7 +114,31 @@ SellerCard.propTypes = {
 class SearchMapSellerCard extends Component {
   constructor(props) {
     super(props);
-    this.state = { currentUserIndex: 0 };
+    this.state = { currentUserIndex: 0, wasCopySuccessful: null };
+    this.shareButtonClick = this.shareButtonClick.bind(this);
+  }
+
+  shareButtonClick(urlToProfile) {
+    console.log("Clicked!");
+    if (navigator.share) {
+      navigator.share({
+        text: 'Check out this awesome profile on From The People!',
+        url: urlToProfile
+      })
+        .catch(() => {
+          console.log('Could not share link');
+        });
+    } else if (navigator.clipboard) {
+      console.log("Copied to clipboard!");
+      navigator.clipboard.writeText(urlToProfile)
+        .then(() => {
+          this.setState({ wasCopySuccessful: true })
+        })
+        .catch(() => {
+          console.log('Could not share link');
+        });
+    }
+    // https://medium.com/@feargswalsh/copying-to-the-clipboard-in-react-81bb956963ec
   }
 
   render() {
@@ -147,15 +148,18 @@ class SearchMapSellerCard extends Component {
       users,
       createURLToProfile,
     } = this.props;
-    console.log(users);
     const currentSeller = ensureUser(users[this.state.currentUserIndex]);
     const classes = classNames(rootClassName || css.root, className);
+    const urlToProfile = createURLToProfile(currentSeller);
+
     return (
       <div className={classes}>
         <div className={css.caretShadow} />
         <SellerCard
-          urlToProfile={createURLToProfile(currentSeller)}
+          urlToProfile={urlToProfile}
+          shareButtonClick={this.shareButtonClick}
           user={currentSeller}
+          wasCopySuccessful={this.state.wasCopySuccessful}
         />
         <div className={css.caret} />
       </div>

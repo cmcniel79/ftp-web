@@ -137,6 +137,14 @@
   }
 }
 
+.copyStatus {
+  font-size: 14px;
+  line-height: 17px;
+  margin: 0 25px 0 25px;
+  padding-bottom: 10px;
+  font-weight: 500;
+}
+
 .caretShadow {
   /* Caret / arrow dimensions and position */
   width: 6px;
