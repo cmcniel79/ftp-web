@@ -107,9 +107,13 @@ class NativeLand extends Component {
           <button className={css.greySearchButton} onClick={() => this.setState({ isModalOpen: true })}>
             <FormattedMessage id={'NativeLand.enterLocation'} />
           </button>
+          {!this.props.onMapPage ?
           <h5 className={css.tribeInfo}>
             <FormattedMessage id={'NativeLand.tribeInfo'} />
-          </h5>
+          </h5> : 
+            <h5 className={css.tribeInfo}>
+            <FormattedMessage id={'NativeLand.tribeInfoMapPage'} />
+          </h5> }
         </div> : null;
 
     const locationButtons =
@@ -121,9 +125,11 @@ class NativeLand extends Component {
           <button className={css.menuLabel} onClick={() => this.setState({ isModalOpen: true })}>
             <FormattedMessage id={'NativeLand.enterLocation'} />
           </button>
-          <h5>
-            <FormattedMessage id={'NativeLand.nativeLandInfo'} />
-          </h5>
+          {!this.props.onMapPage ?
+            <h5>
+              <FormattedMessage id={'NativeLand.nativeLandInfo'} />
+            </h5> 
+            : null }
         </div>
         : null;
 
@@ -138,15 +144,19 @@ class NativeLand extends Component {
 
     return (
       <div className={css.nativeLandInfo}>
-        <div className={css.half}></div>
-        { this.state.tribes.length === 0 ?
-          <h2 className={css.nativeLandHeader}>
-            <FormattedMessage id={'NativeLand.defaultHeading'} />
-          </h2>
-          :
-          <h2 className={css.nativeLandHeader}>
-            <FormattedMessage id={'NativeLand.nativeLandHeading'} />
-          </h2>
+        {!this.props.onMapPage &&
+          <div>
+            <div className={css.half}></div>
+            {this.state.tribes.length === 0 ?
+              <h2 className={css.nativeLandHeader}>
+                <FormattedMessage id={'NativeLand.defaultHeading'} />
+              </h2>
+              :
+              <h2 className={css.nativeLandHeader}>
+                <FormattedMessage id={'NativeLand.nativeLandHeading'} />
+              </h2>
+            }
+          </div>
         }
         {modal}
         {tribes}

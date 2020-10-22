@@ -58,8 +58,10 @@
 }
 
 .pageSubtitle {
+  font-weight: 425;
   @media (--viewportMedium) {
     max-width: 500px;
+    margin: 30px 0;
   }
 }
 
@@ -185,4 +187,34 @@
     width: 75vw;
     height: var(--SearchPage_containerHeight);
   }
+}
+
+.half {
+  border: none;
+  @media (--viewportMedium) {
+  margin-top: 10px;
+  width: 20%;
+  height: 0;
+  border-top-style: solid;
+  border-top-color: var(--marketplaceColor);
+  border-top-width: 10px;
+  }
+}
+
+.legendTitle {
+  margin: 10px 0 10px 0;
+}
+
+.legendBlock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.image {
+  width: 25px;
+}
+
+.legendLabel {
+  margin-left: 10px;
 }

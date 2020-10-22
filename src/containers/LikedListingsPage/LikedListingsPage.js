@@ -73,14 +73,14 @@ export class LikedListingsPageComponent extends Component {
     );
 
     const noResults =
-      listingsAreLoaded && pagination.totalItems === 0 ? (
+      listingsAreLoaded && listings.length === 0 ? (
         <h1 className={css.title}>
           <FormattedMessage id="LikedListingsPage.noResults" />
         </h1>
       ) : null;
 
     const heading =
-      listingsAreLoaded && pagination.totalItems > 0 ? (
+      listingsAreLoaded && listings.length > 0 ? (
         <h1 className={css.title}>
           <FormattedMessage
             id="LikedListingsPage.youHaveListings"

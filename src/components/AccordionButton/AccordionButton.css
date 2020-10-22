@@ -4,6 +4,8 @@
     border-radius: 5px;
     border-color: gray;
     margin-bottom: 8px;
+    font-size: 18px;
+    line-height: 24px;
 }
 
 .title {
@@ -16,7 +18,7 @@
     font-weight: 550;
     padding: 18px 5px 18px 5px;
     @media (--viewportMedium) {
-        padding: 18px;
+        padding: 15px;
       }
 }
 

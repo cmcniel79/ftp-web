@@ -21,7 +21,7 @@ import {
   LayoutSingleColumn,
   LayoutWrapperMain,
   LayoutWrapperTopbar,
-  NamedLink,
+  ExternalLink,
   NativeLand,
   SelectSingleFilter,
 } from '../../components';
@@ -33,6 +33,7 @@ import {
   validFilterParams,
 } from './MapPage.helpers';
 import css from './MapPage.css';
+import { MapLegend } from './MapLegend';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 
@@ -83,7 +84,7 @@ export class MapPageComponent extends Component {
       bounds: new LatLngBounds(new LatLng(lat + .5, lng + .5), new LatLng(lat - .5, lng - .5))
     });
   }
-  
+
   // Callback to determine if new search is needed
   // when map is moved by user or viewport has changed
   onMapMoveEnd(viewportBoundsChanged, data) {
@@ -179,7 +180,7 @@ export class MapPageComponent extends Component {
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
     /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-    const faqLink = <NamedLink name="FAQPage"> <FormattedMessage id="MapPage.faqLink" /> </NamedLink>;
+    const faqLink = <ExternalLink href={'http://localhost:3000/faq#accountTypes'}> <FormattedMessage id="MapPage.faqLink" /> </ExternalLink>;
     const industryOptions = findOptionsForSelectFilter('industry', filterConfig);
     return (
       <Page
@@ -204,26 +205,28 @@ export class MapPageComponent extends Component {
           <LayoutWrapperMain>
             <div className={css.container}>
               <div className={css.pageHeading}>
-                <h1 className={css.title}>
-                  <FormattedMessage id="MapPage.heading" />
-                </h1>
-                <h5 className={css.pageSubtitle}>
-                  <FormattedMessage id="MapPage.subtitle" values={{ faqLink }} />
-                </h5>
+               <h2 className={css.title}>
+                  <FormattedMessage id="MapPage.filtersTitle" />
+                </h2>
                 <SelectSingleFilter
                   className={css.industryFilter}
                   queryParamNames={['pub_industry']}
                   initialValues={this.initialValues()}
                   showAsPopup={true}
                   onSelect={this.selectIndustry}
-                  label="Business Type"
+                  label="Industry"
                   options={industryOptions}
                 />
                 <NativeLand
                   onSelect={this.selectTribe}
                   initialValues={this.initialValues}
                   setGeolocation={this.setGeolocation}
+                  onMapPage={true}
                 />
+                <MapLegend options={industryOptions} />
+                <h5 className={css.pageSubtitle}>
+                  <FormattedMessage id="MapPage.subtitle" values={{ faqLink }} />
+                </h5>
               </div>
               <div className={css.mapWrapper}>
                 {users && users.length > 0 &&
@@ -337,28 +340,3 @@ MapPage.loadData = params => {
 };
 
 export default MapPage;
-
-  // getGeoLocations(listings) {
-  //   let locations = new Set;
-  //   var x;
-  //   var profile;
-  //   for (x in listings) {
-  //     profile = listings[x].author.attributes.profile;
-  //     if (profile.publicData && profile.publicData.account == 'p' && profile.publicData.companyLocation) {
-  //       locations.add(JSON.stringify({
-  //         id: listings[x].author.id,
-  //         attributes: {
-  //           price: new Money(100, 'USD'),
-  //           geolocation: {
-  //             lat: profile.publicData.companyLocation.location.selectedPlace.origin.lat,
-  //             lng: profile.publicData.companyLocation.location.selectedPlace.origin.lng
-  //           },
-  //           type: "seller",
-  //         }
-  //       }));
-  //     }
-  //   }
-  //   let array = [];
-  //   locations.forEach(v => array.push(JSON.parse(v)));
-  //   return array;
-  // }

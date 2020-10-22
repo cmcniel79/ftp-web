@@ -9,9 +9,10 @@ import {
   LayoutWrapperMain,
   LayoutWrapperFooter,
   Footer,
-  ExternalLink
+  ExternalLink,
+  NamedLink
 } from '../../components';
-
+import verifiedImage from '../../assets/checkmark-circle.svg';
 import css from './FAQPage.css';
 
 const FAQPage = () => {
@@ -34,78 +35,56 @@ const FAQPage = () => {
             <FormattedMessage id="FAQPage.title" />
           </h1>
 
-          <div className={css.accordion}>
+          <div className={css.accordionSection} id="createAccount">
             <h2 className={css.sectionTitle}>
               <FormattedMessage id="FAQPage.createAccount" />
             </h2>
-            <Accordion atomic={true}>
+            <Accordion atomic={true} >
+              <AccordionButton title="How do I set up an account?" name="Account Setup">
+                <p>
+                  Sign up for an account on our&nbsp;
+                  <NamedLink name="SignupPage">
+                    <FormattedMessage id="FAQPage.signupPage" />
+                  </NamedLink>
+                &nbsp;You can sign up with your Facebook or email address.
+                  You will then be able to personalize your account by uploading a profile picture and filling in any information you
+                  would like other From The People users to know about you. After signing up, you will not immediately have the ability
+                  to post items to sell. To begin selling items you will need to follow the steps of our verification process, which is
+                  outlined in the FAQ section below.
+                </p>
+              </AccordionButton>
               <AccordionButton title="Can I Still Create An Account If I'm Not Native American or Indigenous?">
                 <p>
                   Yes! From The People encourages both Natives and non-Natives alike to sign up for an account with us.
-                  Non-Natives are able to buy and sell on our site. If you are a non-Native trader of Native American
-                  products and you plan on selling items that are marketed as Native American and/or American Indian
-                  Made on our site, you will need to provide us with verification that your products were created by a
-                  Tribal Member or Certified Indian Artisan.
+                  Non-Natives can directly support Indigenous artists and businesses by buying their goods. This is a form of allyship with Indigenous peoples.
+                  <br />
+                  <br />
+                  We do ask that our non-Native customers refrain from buying or requesting to buy items like ceremonial plants (sage, sweetgrass, etc.) or traditional clothing
+                  (ribbon skirts, Powwow Regalia, etc). These types of items have special purposes within our communities.
                   </p>
-              </AccordionButton>
-              <AccordionButton title="How do I set up an account?">
-                <p>
-                  Sign up for an account on our Sign Up Page. You can sign up with your Facebook or Google account or email address.
-                  You will then be able to personalize your account by uploading a profile picture and filling in any information you
-                  would like other From The People users to know about you. After signing up you will not immediately have the ability
-                  to post items to sell. To begin selling items you will need to follow the steps of our verification process, outlined here.
-                </p>
               </AccordionButton>
             </Accordion>
           </div>
 
-          <div className={css.accordion}>
+          <div className={css.accordionSection} id="becomeSeller">
             <h2 className={css.sectionTitle}>
               <FormattedMessage id="FAQPage.becomeSeller" />
             </h2>
             <Accordion atomic={true}>
-              <AccordionButton title="Can I become a seller if I am not part of a federally or state recognized tribe?">
-                <p>
-                  Yes of course! But there are requirements for your postings that you must meet in order to sell.
-                  You may not describe any of your items as being “Indian Made”, “Native American Made” or affiliated with any federally or
-                  state recognized tribe. You must list your tribal affiliation as “Unaffiliated”. If you are First Nations or part of a
-                  Indigenous group outside of the U.S., then you can list your tribal or group affiliation but please include your country of origin.
-                  For example, if you are enrolled in a Canadian Cree tribe, you would list your tribal affiliation as “Cree (Canada)”.
-                  </p>
-              </AccordionButton>
-              <AccordionButton title="How do I post my items to sell?">
-                <p>
-                  Press the “Post a new listing button” at the top of the website to begin listing your items. If you are not verified yet,
-                  you need to contact the From The People Admin team. Once you’re verified, the process is simple. Fill out the information
-                  about your item. Some information, like Tribal Affiliation, is mandatory. Make sure to post great pics!
-                </p>
-              </AccordionButton>
-              <AccordionButton title="Why does From The People verify tribal enrollment for sellers?">
-                <p>
-                  From The People requires all vendors to be compliant with the Indian Arts and Crafts Act of 1990 (P.L. 101-644),
-                  a truth-in-advertising law which prohibits misrepresentation in marketing American Indian or Alaska Native arts and
-                  crafts products within the United States.It is illegal to offer or display for sale, or sell any art or craft product
-                  in a manner that falsely suggests it is Indian produced, an Indian product, or the product of a particular Indian or
-                  Indian Tribe or Indian arts and crafts organization, resident within the United States.To ensure our vendors are compliant
-                  with the Indian Arts and Crafts Act (P.L. 101-644), From The People must verify our vendors tribal enrollment status.
-                  If any vendor on our site is found to have falsified their credentials or falsely claim their products are “American Indian made,”
-                  From The People is obligated to report them to the Indian Arts and Crafts Board. For a first time violation of the Act, an
-                  individual can face civil or criminal penalties up to a $250,000 fine or a 5-year prison term, or both. To learn more about
-                  the Indian Arts and Crafts Act and compliance, visit here and here.
-
-                  </p>
-              </AccordionButton>
               <AccordionButton title="How do I become a seller?">
                 <p>
                   Before you can begin selling you will first need to create an account with From The People and complete the following
-                  steps to become a verified seller.
+                  steps to become a seller.
                   <br />
-                  1. After creating an account, go to our Contact Us page and please send us a message
-                  about yourself, your tribal affiliation and the types of products you plan on selling.
+                  1. After creating an account, email us at&nbsp;
+                <ExternalLink href="mailto:customersupport@fromthepeople.co">
+                    <FormattedMessage id="FAQPage.emailAddress" />
+                  </ExternalLink>
+                &nbsp;with a message about yourself, your tribal affiliation and the types of products you plan on selling.
                   <br />
                   2. You will receive an email shortly after applying for Seller status. If you do not see our reply email, be sure to check your spam or junk folders!
                   <br />
-                  3. This email will be accompanied by a standard vendor contract about the Indian Arts and Crafts Act for you to agree to. From The People requires all vendors be compliant with the Act.
+                  3. This email will be accompanied by a standard vendor contract about the Indian Arts and Crafts Act for you to agree to. From The People requires all vendors to be compliant with the Act.
                   More information regarding the importance of the Indian Arts and Crafts Act can be found in this brochure.
                   <br />
                   4. If you plan on selling items that are marketed as Native American and/or American Indian, made you will need to provide us with
@@ -114,30 +93,126 @@ const FAQPage = () => {
                   through our secure file transfer service. We will provide a link for you to upload your files to.
                 </p>
               </AccordionButton>
+              <AccordionButton title="Why does From The People verify tribal enrollment for sellers?">
+                <p>
+                  From The People requires all vendors to be compliant with the Indian Arts and Crafts Act of 1990 (P.L. 101-644),
+                  a truth-in-advertising law which prohibits misrepresentation in marketing American Indian or Alaska Native arts and
+                  crafts products within the United States. It is illegal to offer or display for sale, or sell any art or craft product
+                  in a manner that falsely suggests it is Indian produced, an Indian product, or the product of a particular Indian or
+                  Indian Tribe or Indian arts and crafts organization, resident within the United States. To ensure our vendors are compliant
+                  with the Indian Arts and Crafts Act (P.L. 101-644), From The People must verify our vendors tribal enrollment status.
+                  If any vendor on our site is found to have falsified their credentials or falsely claim their products are “American Indian made,”
+                  From The People is obligated to report them to the Indian Arts and Crafts Board. For a first time violation of the Act, an
+                  individual can face civil or criminal penalties up to a $250,000 fine or a 5-year prison term, or both. To learn more about
+                  the Indian Arts and Crafts Act and compliance, visit here and here.
+                  </p>
+              </AccordionButton>
+              <AccordionButton title="Can I become a seller if I am not part of a federally or state recognized tribe?">
+                <p>
+                  Yes of course! But there are requirements for your postings that you must meet in order to sell.
+                  You may not describe any of your items as being “Indian Made”, “Native American Made” or affiliated with any federally or
+                  state recognized tribe. You may not have the names of any federally or state recognized tribe in your item descriptions or account Bio.
+                  If you are First Nations or part of a Indigenous group outside of the U.S., then you can list your tribal or group affiliation but please include your country of origin.
+                  For example, if you are enrolled in a Canadian Cree tribe, you would list your tribal affiliation as “Cree (Canada)”.
+                  </p>
+              </AccordionButton>
+              <AccordionButton title="How do I post my items to sell?">
+                <p>
+                  Press the “Post A New Listing" link at the top of the website to begin listing your items. If you are not verified yet,
+                  you need to contact the From The People Admin team&nbsp;
+                  <ExternalLink href="mailto:customersupport@fromthepeople.co">
+                    <FormattedMessage id="FAQPage.emailHere" />
+                  </ExternalLink>
+                  &nbsp;Once you’re verified, posting a listings is super quick and easy and you can always conact us if you run into problems. Make sure to post great pics!
+                </p>
+              </AccordionButton>
             </Accordion>
           </div>
 
-          <div className={css.accordion}>
+          <div className={css.accordionSection} id="accountTypes">
             <h2 className={css.sectionTitle}>
               <FormattedMessage id="FAQPage.accountTypes" />
             </h2>
-            <Accordion atomic={true}>
+            <Accordion atomic={true} >
               <AccordionButton title="What types of accounts are available?">
-                <DummyContent />
+                <p>
+                  From The People now offers a range of accounts for our users. We have Verified Seller Accounts, Premium Accounts, Non-Profit Accounts,
+                  and Ad Accounts.
+                <br />
+                  <br />
+                Verified Seller Accounts are sellers that have had their tribal enrollment verified by the From The People Team.
+                Verified Sellers can post up to 30 listings for free.
+                Verified Accounts have this symbol on all of their listings and profile images to denote their verified status:
+                <img className={css.verifiedImage} src={verifiedImage} alt="verified tag" />
+                  <br />
+                  <br />
+                  Premium Accounts are used by Native/Indigenous owned businesses that have their own websites but would still like to post their
+                  items on our Marketplace. All transactions for their items would take place on their website. Premium Accounts
+                  also gain access to our Map and may post their physical location if they would like. Premium Accounts
+                  are denoted with this tag on their listings:&nbsp;
+                  <span className={css.premiumTag}>
+                    <FormattedMessage id="ListingCard.premiumTag" />
+                  </span>
+                  <br />
+                  <br />
+                  Non-Profit Accounts are used by Indigenous Non-Profits that would like to post about their causes on our Marketplace. From The People 
+                  believes in raising awareness and support for issues facing Indigenous People's and giving Non-Profits space on our platform is one 
+                  way we can facillitate that mission. Non-Profit Accounts can post their physical location on our Map and are denoted with this tag on their listings:&nbsp;
+                  <span className={css.nonProfitTag}>
+                    <FormattedMessage id="ListingCard.nonProfitTag" />
+                  </span>
+                  <br />
+                  <br />
+                  Ad Accounts are used by businesses and groups that would like to advertise on our Marketplace. 
+                  Listings and posts made by ad accounts are denoted with this tag:&nbsp;
+                  <span className={css.adTag}>
+                    <FormattedMessage id="ListingCard.adTag" />
+                  </span>
+                </p>
               </AccordionButton>
               <AccordionButton title="How do I get a Verified Account?">
-                <DummyContent />
+                <p>
+                  Email us at&nbsp;  
+                  <ExternalLink href="mailto:customersupport@fromthepeople.co">
+                    <FormattedMessage id="FAQPage.emailAddress" />
+                  </ExternalLink>
+                  &nbsp;to get the verification process started. 
+                  You will need to provide us with verification that your products were made by Tribal Members or by a Certified Indian Artisan.
+                  This can be accomplished by sending us any document proving your tribal enrollment status, such as your tribal ID or certificate of Indian blood (C.I.B),
+                  through our secure file transfer service. We will provide a link for you to upload your files to.
+                </p>
               </AccordionButton>
               <AccordionButton title="How do I get a Premium Account?">
-                <DummyContent />
+                <p>
+                  To get a Premium Account, you will either need a physical business location or a website that users can buy your items from. Email us at&nbsp; 
+                  <ExternalLink href="mailto:customersupport@fromthepeople.co">
+                    <FormattedMessage id="FAQPage.emailAddress" />
+                  </ExternalLink>
+                  &nbsp;with information about your business and why you would like to have a Premium Account. Inclue either your physical business address or your website.
+                </p>
+              </AccordionButton>
+              <AccordionButton title="How do I get a Non-Profit Account?">
+                <p>
+                For a Non-Profit Account, you simply need a Non-Profit! Email us at&nbsp; 
+                  <ExternalLink href="mailto:customersupport@fromthepeople.co">
+                    <FormattedMessage id="FAQPage.emailAddress" />
+                  </ExternalLink>
+                  &nbsp;with information about your Non-Profit and how you are helping Indigenous peoples.
+                </p>
               </AccordionButton>
               <AccordionButton title="How do I get an Ad account?">
-                <DummyContent />
+                <p>
+                There are no specific requirements for an Ad Account. Email us at&nbsp; 
+                  <ExternalLink href="mailto:customersupport@fromthepeople.co">
+                    <FormattedMessage id="FAQPage.emailAddress" />
+                  </ExternalLink>
+                  &nbsp; to inquire about our rates. Please include some information on your company, and what you would like to advertise on our site.
+                </p>
               </AccordionButton>
             </Accordion>
           </div>
 
-          <div className={css.accordion}>
+          <div className={css.accordionSection} id="allyship">
             <h2 className={css.sectionTitle}>
               <FormattedMessage id="FAQPage.allyship" />
             </h2>
@@ -152,7 +227,7 @@ const FAQPage = () => {
           </div>
 
 
-          <div className={css.accordion}>
+          <div className={css.accordionSection} id="rules">
             <h2 className={css.sectionTitle}>
               <FormattedMessage id="FAQPage.rules" />
             </h2>
@@ -160,11 +235,13 @@ const FAQPage = () => {
               <AccordionButton title="Compliance with the Indian Arts and Crafts Act of 1990">
                 <p>
                   If you suspect a seller has misrepresented themselves in regards to Native American heritage or falsely suggests their product is Indian produced,
-                  an Indian product, or the product of a particular Indian or Indian tribe or Indian arts and crafts organization, please email us at
-                  customersupport@fromthepeople.co or through our site Contact Page. We will investigate all allegations and contact the appropriate authorities.
+                  an Indian product, or the product of a particular Indian or Indian tribe or Indian arts and crafts organization, please email us at&nbsp; 
+                  <ExternalLink href="mailto:customersupport@fromthepeople.co">
+                    <FormattedMessage id="FAQPage.emailAddress" />
+                  </ExternalLink>
+                  &nbsp;. We will investigate all allegations and contact the appropriate authorities.
                   For a first time violation of the Act, an individual can face civil or criminal penalties up to a $250,000 fine or a 5-year prison term, or both.
                   To learn more about the Indian Arts and Crafts Act and compliance, visit here and here.
-
                   </p>
               </AccordionButton>
               <AccordionButton title="Prohibited Items">
@@ -173,21 +250,20 @@ const FAQPage = () => {
                   the U.S. or elsewhere, Meat Products, Eagle Feathers, Products with Hate Speech and/or Indigenous Slurs. This list is not exhaustive, and
                   From The People reserves the right to add any product category to the Prohibited Items list in the future. If your account is found to be selling
                   any prohibited items, we will immediately close your account with us and contact the appropriate authorities.
-
                 </p>
               </AccordionButton>
             </Accordion>
           </div>
 
 
-          <div className={css.accordion}>
+          <div className={css.accordionSection} id="paymentProcess">
             <h2 className={css.sectionTitle}>
               <FormattedMessage id="FAQPage.payment" />
             </h2>
             <Accordion atomic={true}>
               <AccordionButton title="What is the payment process like?">
                 <p>
-                  Buyers can use either PayPal or their credit card to make a purchase. After payment, the seller needs to accept the transaction for the payment
+                  Buyers must use a credit/debit card to make a purchase. After payment, the seller needs to accept the transaction for the payment
                   to be transferred. If the seller does not accept the transaction within 3 days or before the end date (whatever comes first), the transaction is
                   canceled and no money is transferred. Once the transaction is accepted, both users can then discuss freely to agree on details. When the order
                   is completed (seller has provided shipping confirmation, product is delivered…), they can mark the order as completed. Both users can then review
@@ -201,27 +277,24 @@ const FAQPage = () => {
                   has been marked as completed. Once a transaction has been marked as completed, there is a risk that we may not be able to refund you. Buyers
                   can mark a paid transaction as disputed after the transaction request has been approved and before it is marked as “completed”. The Dispute
                   feature is a way for buyers to clearly communicate to providers that they are not happy with the way the transaction is handled. To resolve
-                  a dispute, involvement from admins is required. The admins will investigate the matter and determine if a refund is required. Read more about
-                  the Sharetribe dispute process here. If you used PayPal for the transaction, you benefit from PayPals buyer protection program, summarized here:
-                  PayPal Protection Program
-
+                  a dispute, involvement from admins is required. The admins will investigate the matter and determine if a refund is required. 
                 </p>
               </AccordionButton>
               <AccordionButton title="What payment service do you use?">
                 <p>
-                  Users have two payment options when buying items on From The People. Buyers can enter their credit card details (protected with Stripe) or use
-                  PayPal for the purchase. For transactions made through Stripe, we charge a 9% transaction fee, and the minimum transaction fee is $0.65. To use
+                  Currently users only have one payment option when buying items on From The People. Buyers can enter their credit card details (protected with Stripe)
+                  for the purchase. We charge a 5% transaction fee, and the minimum transaction fee is $0.65. To use
                   Stripe, all you need to do is add your bank account details in the payments section of your user account. Stripe secures and encrypts your
                   sensitive information. For more information on the Stripe payment flow, see here:  Stripe Payment Flow
                   </p>
               </AccordionButton>
             </Accordion>
           </div>
-           <h2 className={css.linkTitle}>
+          <h2 className={css.linkTitle}>
             <FormattedMessage id="FAQPage.notAnswered" />
           </h2>
-          <ExternalLink className={css.link} href='mailto:customersupport@fromthepeopl.co'>
-            <FormattedMessage id="FAQPage.email" />
+          <ExternalLink className={css.link} href='mailto:customersupport@fromthepeople.co'>
+            <FormattedMessage id="FAQPage.emailUs" />
           </ExternalLink>
         </LayoutWrapperMain>
         <LayoutWrapperFooter>

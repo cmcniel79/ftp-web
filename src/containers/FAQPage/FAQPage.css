@@ -19,11 +19,14 @@
   padding-left: 15px;
   border-left: solid 5px;
   border-left-color: var(--marketplaceColor);
+  font-size: 24px;
+  font-weight: 550;
 }
 
-.accordion {
+.accordionSection {
   width: 100%;
   margin-bottom: 15px;
+  scroll-margin-top: 150px;
   @media (--viewportMedium) {
     margin-bottom: 50px;
   }
@@ -35,4 +38,45 @@
 
 .link {
   margin-bottom: 25px;
+}
+
+.verifiedImage {
+  width: 30px;
+}
+
+.premiumTag {
+  top: 10px;
+  right: 10px;
+  width: auto;
+  color: white;
+  font-weight: 600;
+  background-color: var(--marketplaceColor);
+  border-radius: 5px;
+  padding: 0 5px 0 5px;
+  font-size: 13px;
+}
+
+.adTag {
+  top: 10px;
+  right: 10px;
+  width: auto;
+  color: white;
+  font-weight: 600;
+  background-color: #c4a03e;
+  border-radius: 5px;
+  border: 3px solid white;
+  padding: 0 4px 0 4px;
+  font-size: 13px;
+}
+
+.nonProfitTag {
+  top: 10px;
+  right: 10px;
+  width: auto;
+  color: white;
+  font-weight: 600;
+  background-color: var(--marketplaceColor);
+  border-radius: 5px;
+  padding: 0 5px 0 5px;
+  font-size: 13px;
 }

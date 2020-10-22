@@ -91,9 +91,10 @@ const AboutPage = () => {
               through our site Contact Page. We will investigate all allegations and contact the appropriate authorities.
 
               For a first time violation of the Act, an individual can face civil or criminal penalties up to a $250,000 fine or a 
-              5-year prison term, or both. To learn more about the Indian Arts and Crafts Act and compliance, visit 
-              <ExternalLink href="https://www.doi.gov/iacb/act"> here</ExternalLink> and 
-              <ExternalLink href="https://www.doi.gov/sites/doi.gov/files/uploads/iacb_know_the_law_brochure_2019_final_web.pdf"> here.</ExternalLink>
+              5-year prison term, or both. To learn more about the Indian Arts and Crafts Act and compliance, visit{' '} 
+              <ExternalLink href="https://www.doi.gov/iacb/act">here</ExternalLink> and 
+              {' '} 
+              <ExternalLink href="https://www.doi.gov/sites/doi.gov/files/uploads/iacb_know_the_law_brochure_2019_final_web.pdf">here.</ExternalLink>
               </p>
               <p>
                 <br/>

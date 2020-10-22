@@ -15,7 +15,7 @@ class Accordion extends Component {
   }
 
   render() {
-    return <div className="accordion">{this.renderChildren()}</div>;
+    return <div className="accordion" id={this.props.id}>{this.renderChildren()}</div>;
   }
 }
 
