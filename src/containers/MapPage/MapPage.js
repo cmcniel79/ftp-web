@@ -24,6 +24,7 @@ import {
   ExternalLink,
   NativeLand,
   SelectSingleFilter,
+  Modal
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
@@ -36,6 +37,7 @@ import css from './MapPage.css';
 import { MapLegend } from './MapLegend';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
+
 
 
 const { LatLng, LatLngBounds } = sdkTypes;
@@ -182,6 +184,30 @@ export class MapPageComponent extends Component {
 
     const faqLink = <ExternalLink href={'http://localhost:3000/faq#accountTypes'}> <FormattedMessage id="MapPage.faqLink" /> </ExternalLink>;
     const industryOptions = findOptionsForSelectFilter('industry', filterConfig);
+    const modal =
+      <Modal
+        id="MapPageFilters"
+        containerClassName={css.modalContainer}
+        isOpen={this.state.isMobileModalOpen}
+        onClose={() => this.setState({ isMobileModalOpen: false })}
+        usePortal
+        onManageDisableScrolling={() => null}
+      >
+        <h2 className={css.modalHeading}>
+          <FormattedMessage id="MapPage.modalTitle" />
+        </h2>
+        <SelectSingleFilter
+          className={css.industryFilter}
+          queryParamNames={['pub_industry']}
+          initialValues={this.initialValues()}
+          showAsPopup={false}
+          onSelect={this.selectIndustry}
+          label="Industry"
+          options={industryOptions}
+        />
+        <MapLegend options={industryOptions} />
+      </Modal>;
+
     return (
       <Page
         scrollingDisabled={scrollingDisabled}
@@ -205,28 +231,45 @@ export class MapPageComponent extends Component {
           <LayoutWrapperMain>
             <div className={css.container}>
               <div className={css.pageHeading}>
-               <h2 className={css.title}>
-                  <FormattedMessage id="MapPage.filtersTitle" />
-                </h2>
-                <SelectSingleFilter
-                  className={css.industryFilter}
-                  queryParamNames={['pub_industry']}
-                  initialValues={this.initialValues()}
-                  showAsPopup={true}
-                  onSelect={this.selectIndustry}
-                  label="Industry"
-                  options={industryOptions}
-                />
-                <NativeLand
-                  onSelect={this.selectTribe}
-                  initialValues={this.initialValues}
-                  setGeolocation={this.setGeolocation}
-                  onMapPage={true}
-                />
-                <MapLegend options={industryOptions} />
+                <div className={css.desktopPanel}>
+                  <h2 className={css.title}>
+                    <FormattedMessage id="MapPage.filtersTitle" />
+                  </h2>
+                  <SelectSingleFilter
+                    className={css.industryFilter}
+                    queryParamNames={['pub_industry']}
+                    initialValues={this.initialValues()}
+                    showAsPopup={true}
+                    onSelect={this.selectIndustry}
+                    label="Industry"
+                    options={industryOptions}
+                  />
+                  <NativeLand
+                    onSelect={this.selectTribe}
+                    initialValues={this.initialValues}
+                    setGeolocation={this.setGeolocation}
+                    onMapPage={true}
+                  />
+                  <MapLegend options={industryOptions} />
+                </div>
                 <h5 className={css.pageSubtitle}>
                   <FormattedMessage id="MapPage.subtitle" values={{ faqLink }} />
                 </h5>
+                <div className={css.mobileButtons}>
+                  <button
+                    className={css.filtersButton}
+                    onClick={() => this.setState({ isMobileModalOpen: true })}
+                  >
+                    Filters
+                </button>
+                  <NativeLand
+                    onSelect={this.selectTribe}
+                    initialValues={this.initialValues}
+                    setGeolocation={this.setGeolocation}
+                    onMapPage={true}
+                  />
+                  {modal}
+                </div>
               </div>
               <div className={css.mapWrapper}>
                 {users && users.length > 0 &&

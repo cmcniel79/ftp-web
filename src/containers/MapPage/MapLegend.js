@@ -22,8 +22,9 @@ export class MapLegend extends Component {
             <div className={css.legendBox}>
                 <div className={css.half}></div>
                 <h2 className={css.legendTitle}>
-                    <FormattedMessage id="MapPage.legendTitle"/>
-            </h2>
+                    <FormattedMessage id="MapPage.legendTitle" />
+                </h2>
+                {/* <div className={css.firstColumn}> */}
                     <div className={css.legendBlock}>
                         <img className={css.image} src={retail} alt="icon" />
                         <span className={css.legendLabel}>Retail</span>
@@ -52,7 +53,8 @@ export class MapLegend extends Component {
                         <img className={css.image} src={other} alt="icon" />
                         <span className={css.legendLabel}>Other</span>
                     </div>
-            </div>
+                </div>
+            // </div>
         );
     }
 }

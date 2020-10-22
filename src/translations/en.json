@@ -475,6 +475,7 @@
   "MapPage.faqLink": "FAQ Page",
   "MapPage.subtitle": "Want to be featured on the map? See our {faqLink} to learn more about Premium Accounts.",
   "MapPage.filtersTitle": "Filters",
+  "MapPage.modalTitle": "Filter Accounts",
   "MapPage.legendTitle": "Map Legend",
   "Modal.close": "CLOSE",
   "Modal.closeModal": "Close modal",
