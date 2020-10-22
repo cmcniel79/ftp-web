@@ -2,8 +2,8 @@ import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 
 import { types as sdkTypes } from '../../util/sdkLoader';
+import fetch from 'cross-fetch';
 
-const fetch = require('cross-fetch');
 const { UUID } = sdkTypes;
 // ================ Action types ================ //
 
@@ -180,6 +180,7 @@ function handleErrors(response) {
 }
 
 export const loadData = () => (dispatch, getState, sdk) => {
+  console.log('Hello');
   // Clear state so that previously loaded data is not visible
   // in case this page load fails.
   dispatch(setInitialState());
