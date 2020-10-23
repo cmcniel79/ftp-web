@@ -9,6 +9,10 @@ const SectionHowItWorks = props => {
   const { rootClassName, className } = props;
 
   const classes = classNames(rootClassName || css.root, className);
+  const aboutPageLink = 
+  <NamedLink name="AboutPage">
+        <FormattedMessage id="SectionHowItWorks.aboutPageLink" />
+     </NamedLink>;
   return (
     <div className={classes}>
       <div className={css.title}>
@@ -19,7 +23,7 @@ const SectionHowItWorks = props => {
       <div className={css.steps}>
         <div className={css.step}>
           <p>
-            <FormattedMessage id="SectionHowItWorks.part1Text" />
+            <FormattedMessage id="SectionHowItWorks.part1Text" values={{ aboutPageLink }}/>
           </p>
         </div>
       </div>

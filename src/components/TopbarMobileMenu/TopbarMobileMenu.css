@@ -1,5 +1,4 @@
 @import '../../marketplace.css';
-
 :root {
   /*
     These variables are available in global scope through ":root"
@@ -9,8 +8,7 @@
     are left to CSS bundle. We are planning to enable it in the future
     since browsers support CSS Properties already.
  */
-
-  --TopbarMobileMenu_topMargin: 96px;
+  --TopbarMobileMenu_topMargin: 10px;
 }
 
 .root {
@@ -41,17 +39,58 @@
   box-shadow: var(--boxShadowTop);
 }
 
-.avatar {
-  /* Layout */
-  flex-shrink: 0;
-  margin: var(--TopbarMobileMenu_topMargin) 0 0 0;
+.icon {
+  margin: 0 15px 0 0;
 }
 
-.greeting {
-  /* Font */
-  @apply --marketplaceH1FontStyles;
-  margin-bottom: 1px;
-  margin-top: 16px;
+.socialMedia {
+  margin: 10px 0 0 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.avatar {
+  margin: 15px 20px 20px 0;
+}
+
+.regularLinks {
+  margin: 15px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  color: var(--marketplaceColor);
+}
+
+.regularLink {
+    /* Font */
+    @apply --marketplaceH3FontStyles;
+    /* Layout */
+    margin-top: 0;
+    margin-bottom: 11px;
+}
+
+.accountSection {
+  margin: 20px 0 0 0;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid var(--matterColorAnti);
+  padding-bottom: 10px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.accountLinks {
+  display: flex;
+  flex-direction: column;
+}
+
+.accountLink {
+  /* Logout font is smaller and gray since the action is not recommended. */
+  @apply --marketplaceH3FontStyles;
+  color: var(--matterColorAnti);
+  /* Position component */
+  width: initial;
+  margin: 4px 0 6px 0;
+  padding: 0;
 }
 
 .logoutButton {
@@ -59,11 +98,11 @@
   /* Logout font is smaller and gray since the action is not recommended. */
   @apply --marketplaceH3FontStyles;
   color: var(--matterColorAnti);
-
   /* Position component */
   width: initial;
   margin: 4px 0 6px 0;
   padding: 0;
+  text-align: left;
 }
 
 .inbox {
@@ -71,7 +110,6 @@
   @apply --marketplaceH2FontStyles;
   color: var(--marketplaceColor);
   position: relative;
-
   margin-top: auto;
   margin-bottom: 13px;
 }
@@ -80,11 +118,11 @@
   /* Font */
   @apply --marketplaceH2FontStyles;
   color: var(--marketplaceColor);
-
   /* Layout */
   margin-top: 0;
   margin-bottom: 11px;
 }
+
 .currentPageLink {
   color: var(--marketplaceColorDark);
 }
@@ -93,7 +131,6 @@
   position: absolute;
   top: 4px;
   right: -26px;
-
   /* This is inside a link - remove underline */
   &:hover {
     text-decoration: none;
@@ -107,10 +144,10 @@
 .authenticationGreeting {
   /* Font */
   @apply --marketplaceH1FontStyles;
-
   margin-bottom: 24px;
   margin-top: var(--TopbarMobileMenu_topMargin);
 }
+
 .authenticationLinks {
   white-space: nowrap;
 }
@@ -120,6 +157,7 @@
   white-space: nowrap;
   color: var(--marketplaceColor);
 }
+
 .loginLink {
   text-decoration: none;
   white-space: nowrap;
@@ -128,7 +166,6 @@
 
 .currentPage {
   color: var(--matterColorDark);
-
   /* black left border */
   border-left: 5px solid black;
   margin-left: -24px;

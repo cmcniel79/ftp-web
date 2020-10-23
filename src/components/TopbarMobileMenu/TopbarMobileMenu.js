@@ -9,9 +9,60 @@ import classNames from 'classnames';
 import { ACCOUNT_SETTINGS_PAGES } from '../../routeConfiguration';
 import { propTypes } from '../../util/types';
 import { ensureCurrentUser } from '../../util/data';
-import { AvatarLarge, InlineTextButton, NamedLink, NotificationBadge } from '../../components';
+import { twitterPageURL } from '../../util/urlHelpers';
+import config from '../../config';
+
+import {
+  AvatarLarge,
+  InlineTextButton,
+  NamedLink,
+  NotificationBadge,
+  IconSocialMediaFacebook,
+  IconSocialMediaInstagram,
+  IconSocialMediaTwitter,
+  ExternalLink,
+} from '../../components';
 
 import css from './TopbarMobileMenu.css';
+
+const renderSocialMediaLinks = () => {
+  const { siteFacebookPage, siteInstagramPage, siteTwitterHandle } = config;
+  const siteTwitterPage = twitterPageURL(siteTwitterHandle);
+
+  const fbLink = siteFacebookPage ? (
+    <ExternalLink key="linkToFacebook"
+      href={siteFacebookPage}
+      className={css.icon}
+      title={"Go to Facebook"}
+    >
+      <IconSocialMediaFacebook />
+    </ExternalLink>
+  ) : null;
+
+  const twitterLink = siteTwitterPage ? (
+    <ExternalLink
+      key="linkToTwitter"
+      href={siteTwitterPage}
+      className={css.icon}
+      title={"Go to Facebook"}
+    >
+      <IconSocialMediaTwitter />
+    </ExternalLink>
+  ) : null;
+
+  const instragramLink = siteInstagramPage ? (
+    <ExternalLink
+      key="linkToInstagram"
+      href={siteInstagramPage}
+      className={css.icon}
+      title={"Go to Facebook"}
+    >
+      <IconSocialMediaInstagram />
+    </ExternalLink>
+  ) : null;
+
+  return [fbLink, twitterLink, instragramLink].filter(v => v != null);
+};
 
 const TopbarMobileMenu = props => {
   const {
@@ -24,6 +75,28 @@ const TopbarMobileMenu = props => {
   } = props;
 
   const user = ensureCurrentUser(currentUser);
+  const socialMediaLinks = renderSocialMediaLinks();
+
+  const regularLinks = <div className={css.regularLinks}>
+    <NamedLink name="AboutPage" className={css.regularLink}>
+      <FormattedMessage id="TopbarMobileMenu.aboutLink" />
+    </NamedLink>
+    <NamedLink name="SearchPage" className={css.regularLink}>
+      <FormattedMessage id="TopbarMobileMenu.shopLink" />
+    </NamedLink>
+    <NamedLink name="MapPage" className={css.regularLink}>
+      <FormattedMessage id="TopbarMobileMenu.mapLink" />
+    </NamedLink>
+    <NamedLink name="FAQPage" className={css.regularLink}>
+      <FormattedMessage id="TopbarMobileMenu.faqLink" />
+    </NamedLink>
+    <ExternalLink
+      className={css.regularLink}
+      href="https://fromthepeople.blog/"
+    >
+      <FormattedMessage id="TopbarMobileMenu.blogLink" />
+    </ExternalLink>
+  </div>
 
   if (!isAuthenticated) {
     const signup = (
@@ -53,11 +126,7 @@ const TopbarMobileMenu = props => {
             />
           </div>
         </div>
-        <div className={css.footer}>
-          <NamedLink className={css.createNewListingLink} name="NewListingPage">
-            <FormattedMessage id="TopbarMobileMenu.newListingLink" />
-          </NamedLink>
-        </div>
+        {regularLinks}
       </div>
     );
   }
@@ -76,45 +145,50 @@ const TopbarMobileMenu = props => {
 
   return (
     <div className={css.root}>
-      <AvatarLarge className={css.avatar} user={currentUser} />
       <div className={css.content}>
-        <span className={css.greeting}>
-          <FormattedMessage id="TopbarMobileMenu.greeting" values={{ displayName }} />
-        </span>
-        <InlineTextButton rootClassName={css.logoutButton} onClick={onLogout}>
-          <FormattedMessage id="TopbarMobileMenu.logoutLink" />
-        </InlineTextButton>
+        <div className={css.socialMedia}>
+          {socialMediaLinks}
+        </div>
+        <div className={css.accountSection}>
+          <div className={css.accountLinks}>
+            <NamedLink
+              className={css.accountLink}
+              name="InboxPage"
+              params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
+            >
+              <FormattedMessage id="TopbarMobileMenu.inboxLink" />
+              {notificationCountBadge}
+            </NamedLink>
+            <NamedLink
+              className={css.accountLink}
+              name="ProfileSettingsPage"
+            >
+              <FormattedMessage id="TopbarMobileMenu.profileSettingsLink" />
+            </NamedLink>
+            <NamedLink
+              className={css.accountLink}
+              name="AccountSettingsPage"
+            >
+              <FormattedMessage id="TopbarMobileMenu.accountSettingsLink" />
+            </NamedLink>
+            <InlineTextButton rootClassName={css.logoutButton} onClick={onLogout}>
+              <FormattedMessage id="TopbarMobileMenu.logoutLink" />
+            </InlineTextButton>
+          </div>
+          <AvatarLarge className={css.avatar} user={currentUser} />
+        </div>
+        {regularLinks}
         <NamedLink
-          className={classNames(css.inbox, currentPageClass('InboxPage'))}
-          name="InboxPage"
-          params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
-        >
-          <FormattedMessage id="TopbarMobileMenu.inboxLink" />
-          {notificationCountBadge}
-        </NamedLink>
-        <NamedLink
-          className={classNames(css.navigationLink, currentPageClass('ManageListingsPage'))}
-          name="ManageListingsPage"
-        >
-          <FormattedMessage id="TopbarMobileMenu.yourListingsLink" />
-        </NamedLink>
-        <NamedLink
-          className={classNames(css.navigationLink, currentPageClass('LikedListingsPage'))}
+          className={css.regularLink}
           name="LikedListingsPage"
         >
           <FormattedMessage id="TopbarMobileMenu.yourLikedListingsLink" />
         </NamedLink>
         <NamedLink
-          className={classNames(css.navigationLink, currentPageClass('ProfileSettingsPage'))}
-          name="ProfileSettingsPage"
+          className={css.regularLink}
+          name="ManageListingsPage"
         >
-          <FormattedMessage id="TopbarMobileMenu.profileSettingsLink" />
-        </NamedLink>
-        <NamedLink
-          className={classNames(css.navigationLink, currentPageClass('AccountSettingsPage'))}
-          name="AccountSettingsPage"
-        >
-          <FormattedMessage id="TopbarMobileMenu.accountSettingsLink" />
+          <FormattedMessage id="TopbarMobileMenu.yourListingsLink" />
         </NamedLink>
       </div>
       <div className={css.footer}>
