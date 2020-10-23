@@ -120,7 +120,7 @@ const Footer = props => {
               <ul className={css.list}>
                 <li>
                   <h2 className={css.title}>
-                    Shop
+                  <FormattedMessage id="Footer.shopTitle" />
                   </h2>
                 </li>
                 <li className={css.listItem}>

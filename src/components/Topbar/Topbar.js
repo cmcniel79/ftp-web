@@ -94,8 +94,8 @@ class TopbarComponent extends Component {
   handleMobileSearchClose() {
     redirectToURLWithoutModalState(this.props, 'mobilesearch');
   }
-   //Replaced location autocomplete code for this function
-   //with code taken from here: https://www.sharetribe.com/docs/cookbook-search/use-keyword-search-in-topbar/#gatsby-focus-wrapper
+  //Replaced location autocomplete code for this function
+  //with code taken from here: https://www.sharetribe.com/docs/cookbook-search/use-keyword-search-in-topbar/#gatsby-focus-wrapper
   handleSubmit(values) {
     const { currentSearchParams } = this.props;
     const keywords = values.keywords;
@@ -178,9 +178,9 @@ class TopbarComponent extends Component {
     const initialSearchFormValues = {
       location: locationFieldsPresent
         ? {
-            search: address,
-            selectedPlace: { address, origin, bounds },
-          }
+          search: address,
+          selectedPlace: { address, origin, bounds },
+        }
         : null,
     };
 
@@ -259,6 +259,35 @@ class TopbarComponent extends Component {
             <p className={css.mobileHelp}>
               <FormattedMessage id="Topbar.mobileSearchHelp" />
             </p>
+            <h2 className={css.shoppingLinksTitle}>
+              <FormattedMessage id="Topbar.mobileSearchTitle" />
+              </h2>
+            <div className={css.shoppingLinks}>
+              <NamedLink
+                name="SearchPage"
+                to={{ search: '?pub_subCategory=necklaces&pub_subCategory=earrings&pub_subCategory=rings&pub_subCategory=bracelets&pub_subCategory=anklets' }}
+              >
+                <FormattedMessage id="Footer.searchJewelry" />
+              </NamedLink>
+              <NamedLink
+                name="SearchPage"
+                to={{ search: '?pub_subCategory=paintings&pub_subCategory=beadwork&pub_subCategory=photo&pub_subCategory=prints&pub_subCategory=stickers&pub_subCategory=carvings&pub_subCategory=baskets&pub_subCategory=rugs' }}
+                >
+                <FormattedMessage id="Footer.searchArt" />
+              </NamedLink>
+              <NamedLink
+                name="SearchPage"
+                to={{ search: '?pub_subCategory=tops&pub_subCategory=bottoms&pub_subCategory=dresses&pub_subCategory=shoes' }}
+                >
+                <FormattedMessage id="Footer.searchApparel" />
+              </NamedLink>
+              <NamedLink
+                name="SearchPage"
+                to={{ search: '?pub_subCategory=botanicals&pub_subCategory=regalia' }}
+                >
+                <FormattedMessage id="Footer.searchTraditional" />
+              </NamedLink>
+            </div>
           </div>
         </Modal>
         <ModalMissingInformation

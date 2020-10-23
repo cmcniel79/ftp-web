@@ -154,12 +154,18 @@
 
 .mobileHelp {
   color: var(--matterColorAnti);
-  margin: 0 24px;
+  margin: 10px 30px;
+}
 
-  /* Absolute position to avoid affecting the layout of the autocomplete
-   predictions list */
-  position: absolute;
-  top: 73px;
+.shoppingLinks {
+  @apply --marketplaceH3FontStyles;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 0 30px;
+}
+
+.shoppingLinksTitle {
+  margin: 20px 0 20px 30px;
 }
 
 /* ================ Modal ================ */
