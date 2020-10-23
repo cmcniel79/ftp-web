@@ -4,6 +4,7 @@ import {
   IconSocialMediaFacebook,
   IconSocialMediaInstagram,
   IconSocialMediaTwitter,
+  IconSocialMediaTikTok,
   ExternalLink 
 } from '..';
 import css from './UserSocialMedia.css';
@@ -40,6 +41,16 @@ const UserSocialMedia = props => {
     </ExternalLink>
   ) : null;
 
+  const tikTokLink = socialMedia && socialMedia.tiktok ? (
+    <ExternalLink
+      key="linkToAuthorsTikTok"
+      href={socialMedia.tiktok}
+      title={"Go To Author's TikTok"}
+    >
+      <IconSocialMediaTikTok />
+    </ExternalLink>
+  ) : null;
+
   var links = [];
 
   if(fbLink){
@@ -51,14 +62,14 @@ const UserSocialMedia = props => {
   if(instaLink){
     links.push(instaLink);
   }
+  if(tikTokLink){
+    links.push(tikTokLink);
+  }
 
   const classNames = className ? className : css.authorSocialMedia;
 
   return socialMedia && links.length > 0 ? (
     <div className={classNames}>
-      {/* <p className={css.text}>      
-        <FormattedMessage id="UserSocialMedia.socialAccounts" />
-      </p> */}
          {links.map(l => (
            <span key={l.key} className={css.socialMediaIcons}>
              {l}

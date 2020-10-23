@@ -10,7 +10,6 @@ class LocationAutocompleteInputComponent extends Component {
     const { rootClassName, labelClassName, showImage, ...restProps } = this.props;
     const { input, label, meta, valueFromForm, ...otherProps } = restProps;
     /* eslint-enable no-unused-vars */
-
     const value = typeof valueFromForm !== 'undefined' ? valueFromForm : input.value;
     const locationAutocompleteProps = { label, meta, ...otherProps, input: { ...input, value }, showImage };
     const labelInfo = label ? (

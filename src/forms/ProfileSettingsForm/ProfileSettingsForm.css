@@ -304,13 +304,9 @@
   }
 }
 
-.companyName {
+.companyField {
   width: 100%;
-  margin-bottom: 12px;
-}
-
-.companyWebsite {
-  width: 100%;
+  margin-bottom: 20px;
 }
 
 .nameContainer {
@@ -365,4 +361,13 @@
 
 .submitButton {
   margin-top: 24px;
+}
+
+.validLocation {
+  border-bottom-color: var(--successColor);
+}
+
+
+.invalidLocation {
+  border-bottom-color: var(--failColor);
 }

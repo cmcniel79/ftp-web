@@ -73,12 +73,9 @@ const CompanyAddressMaybeComponent = props => {
     return (
         <div>
             <LocationAutocompleteInputField
-                className={css.locationAddress}
-                inputClassName={css.locationAutocompleteInput}
-                iconClassName={css.locationAutocompleteInputIcon}
-                predictionsClassName={css.predictionsRoot}
+                className={css.companyField}
                 validClassName={css.validLocation}
-                autoFocus
+                invalidClassName={css.invalidLocation}
                 name="location"
                 label={titleRequiredMessage}
                 placeholder={addressPlaceholderMessage}
@@ -92,7 +89,7 @@ const CompanyAddressMaybeComponent = props => {
             />
 
             <FieldTextInput
-                className={css.building}
+                className={css.companyField}
                 type="text"
                 name="building"
                 id="building"

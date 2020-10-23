@@ -113,7 +113,7 @@ export const ListingCardComponent = props => {
   // tags onto listing image based on the account type.
   let imagesAndLinks;
   switch (validAccountType) {
-    case "" || null:
+    default:
       imagesAndLinks =
         <NamedLink name="ListingPage" params={{ id, slug }}>
           <LazyImage

@@ -5,10 +5,11 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { ensureUser } from '../../util/data';
-import { ResponsiveImage, ExternalLink, Button } from '../../components';
+import { AvatarLarge, ResponsiveImage, ExternalLink, Button } from '../../components';
 import navigateIcon from './Images/navigate.svg';
 import shareIcon from './Images/share.svg';
 import exitIcon from '../../assets/exit.svg';
+import { userAbbreviatedName } from '../../util/data';
 
 import css from './SearchMapSellerCard.css';
 import { txHasBeenDelivered } from '../../util/transaction';
@@ -28,9 +29,10 @@ const AVATAR_IMAGE_VARIANTS = [
 ];
 
 const SellerCard = props => {
-  const { urlToProfile, user, shareButtonClick, wasCopySuccessful} = props;
+  const { urlToProfile, user, shareButtonClick, wasCopySuccessful } = props;
   const { displayName, publicData } = user.attributes.profile;
 
+  const abbreviatedName = userAbbreviatedName(user, "");
   // Gather custom data fields from seller's account
   const companyWebsite = publicData.companyWebsite ? user.attributes.profile.publicData.companyWebsite : null;
   const companyLatLng = publicData.companyLocation ? publicData.companyLocation.location.selectedPlace.origin : null;
@@ -41,15 +43,19 @@ const SellerCard = props => {
   return (
     <div className={css.card}>
       <div className={css.content}>
-        <ResponsiveImage
-          rootClassName={css.premiumAvatar}
-          alt="Logo"
-          image={user.profileImage}
-          variants={AVATAR_IMAGE_VARIANTS}
-        />
+        {user.profileImage && user.profileImage.id ?
+          <ResponsiveImage
+            rootClassName={css.premiumAvatar}
+            alt="Logo"
+            image={user.profileImage}
+            variants={AVATAR_IMAGE_VARIANTS}
+          />
+          :
+          <span className={css.initials}>{abbreviatedName}</span>
+        }
         <div className={css.info}>
           <h2 className={css.heading}>
-              <FormattedMessage id="SellerCard.heading" values={{ name: profileTitle }} />
+            <FormattedMessage id="SellerCard.heading" values={{ name: profileTitle }} />
           </h2>
           {tribe &&
             <p className={css.subHeading}>
@@ -92,11 +98,11 @@ const SellerCard = props => {
       </div>
       {wasCopySuccessful === true ?
         <p className={css.copyStatus}>
-          <FormattedMessage id="SellerCard.copySuccess" values={{ profileTitle }}/>
-          </p>
-          : wasCopySuccessful === false ?
-        <p className={css.copyStatus}>
-          <FormattedMessage id="SellerCard.copyFailure" values={{ profileTitle }}/>
+          <FormattedMessage id="SellerCard.copySuccess" values={{ profileTitle }} />
+        </p>
+        : wasCopySuccessful === false ?
+          <p className={css.copyStatus}>
+            <FormattedMessage id="SellerCard.copyFailure" values={{ profileTitle }} />
           </p> : null
       }
     </div>

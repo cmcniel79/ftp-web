@@ -97,6 +97,8 @@ const siteInstagramPage = 'https://www.instagram.com/fromthepeople.co/';
 // Facebook page is used in SEO schema (http://schema.org/Organization)
 const siteFacebookPage = 'https://www.facebook.com/fromthepeople.co/';
 
+const siteTikTokPage = null;
+
 // Social logins & SSO
 
 // Note: Facebook app id is also used for tracking:
@@ -218,6 +220,7 @@ const config = {
   siteFacebookPage,
   siteInstagramPage,
   siteTwitterHandle,
+  siteTikTokPage,
   facebookAppId,
   sentryDsn,
   usingSSL,

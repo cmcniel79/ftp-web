@@ -41,8 +41,8 @@ class SearchMapSellerLabel extends Component {
     const currentSeller = ensureUser(user);
     const formattedName = currentSeller.attributes.profile.publicData && currentSeller.attributes.profile.publicData.companyName ?
       currentSeller.attributes.profile.publicData.companyName : currentSeller.attributes.profile.displayName;
-    const industry = currentSeller.attributes.profile.publicData && currentSeller.attributes.profile.publicData.industry ?
-      currentSeller.attributes.profile.publicData.industry : null;
+    const industry = currentSeller.attributes.profile.publicData && currentSeller.attributes.profile.publicData.companyIndustry ?
+      currentSeller.attributes.profile.publicData.companyIndustry : null;
     const classes = classNames(rootClassName || css.root, className);
 
     var imageOutline;

@@ -16,9 +16,11 @@ import {
   ImageFromFile,
   IconSpinner,
   FieldTextInput,
+  FieldSelect,
   IconSocialMediaFacebook,
   IconSocialMediaInstagram,
   IconSocialMediaTwitter,
+  IconSocialMediaTikTok,
 } from '../../components';
 import TribeSelectFieldMaybe from './TribeSelectFieldMaybe';
 import CompanyAddressMaybe from './CompanyAddressMaybe';
@@ -102,6 +104,15 @@ class ProfileSettingsFormComponent extends Component {
           });
           const companyWebsiteRequired = validators.required(companyWebsiteRequiredMessage);
 
+          
+          // Company Industry
+          const companyIndustryLabel = intl.formatMessage({
+            id: 'ProfileSettingsForm.companyIndustryLabel',
+          });
+          const companyIndustryPlaceholder = intl.formatMessage({
+            id: 'ProfileSettingsForm.companyIndustryPlaceholder',
+          });
+
           // First name
           const firstNameLabel = intl.formatMessage({
             id: 'ProfileSettingsForm.firstNameLabel',
@@ -159,6 +170,14 @@ class ProfileSettingsFormComponent extends Component {
             id: 'ProfileSettingsForm.instaPlaceholder',
           });
 
+          // TikTok
+          const tikTokLabel = intl.formatMessage({
+            id: 'ProfileSettingsForm.tikTokLabel',
+          });
+          const tikTokPlaceholder = intl.formatMessage({
+            id: 'ProfileSettingsForm.tikTokPlaceholder',
+          });
+
           // Tribe
           const tribeLabel = intl.formatMessage({
             id: 'ProfileSettingsForm.tribeLabel',
@@ -184,6 +203,16 @@ class ProfileSettingsFormComponent extends Component {
             true : false;
           const showSocialMediaFields = accountType !== "a" || accountType !== "n" ?
             true : false;
+          // Whenever industry filter in marketplace-custom-config is changed then this needs to be updated
+          const industryOptions = [ 
+            { key: 'retail', label: "Retail" },
+            { key: 'dining', label: "Dining" },  
+            { key: 'professional', label: "Professional Services" },
+            { key: 'hospitality', label: "Hospitality and Tourism" },
+            { key: 'nonprofits', label: "Non-Profits" },
+            { key: 'beauty', label: "Beauty and Personal Services" },
+            { key: 'other', label: "Other"},
+          ];
 
           // Ensure that file exists if imageFromFile is used
           const fileExists = !!profileImage.file;
@@ -339,7 +368,7 @@ class ProfileSettingsFormComponent extends Component {
                   </h3>
                   <div className={css.companyContainer}>
                     <FieldTextInput
-                      className={css.companyName}
+                      className={css.companyField}
                       type="text"
                       id="companyName"
                       name="companyName"
@@ -348,7 +377,7 @@ class ProfileSettingsFormComponent extends Component {
                       validate={companyNameRequired}
                     />
                     <FieldTextInput
-                      className={css.companyWebsite}
+                      className={css.companyField}
                       type="text"
                       id="companyWebsite"
                       name="companyWebsite"
@@ -356,25 +385,24 @@ class ProfileSettingsFormComponent extends Component {
                       placeholder={companyWebsitePlaceholder}
                       validate={companyWebsiteRequired}
                     />
+                    <FieldSelect
+                      className={css.companyField}
+                      name="companyIndustry"
+                      id="companyIndustry"
+                      label={companyIndustryLabel}
+                    >
+                      {<option disabled value="">
+                      {companyIndustryPlaceholder}
+                      </option>}
+                      {industryOptions.map(i => (
+                        <option key={i.key} value={i.key}>
+                          {i.label}
+                        </option>
+                      ))}
+                    </FieldSelect>
                     <CompanyAddressMaybe
-                      className={css.form}
-                      initialValues={null}
-                      // onSubmit={values => {
-                      //   const { building = '', location } = values;
-                      //   const {
-                      //     selectedPlace: { address, origin },
-                      //   } = location;
-                      //   const updateValues = {
-                      //     geolocation: origin,
-                      //     publicData: {
-                      //       location: { address, building },
-                      //     },
-                      //   };
-                      // }}
-                      // updateInProgress={updateInProgress}
-                      // onSubmit={values => {
-                      //   console.log(values);
-                      // }}
+                      className={css.companyAddress}
+                      initialValues={this.props.initialValues}
                     />
                   </div>
                 </div>
@@ -463,6 +491,17 @@ class ProfileSettingsFormComponent extends Component {
                         name="insta"
                         label={instaLabel}
                         placeholder={instaPlaceholder}
+                      />
+                    </div>
+                    <div className={css.socialMediaField}>
+                      <IconSocialMediaTikTok />
+                      <FieldTextInput
+                        className={css.socialMediaInput}
+                        type="text"
+                        id="tiktok"
+                        name="tiktok"
+                        label={tikTokLabel}
+                        placeholder={tikTokPlaceholder}
                       />
                     </div>
                   </div>

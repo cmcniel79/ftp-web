@@ -45,13 +45,11 @@ export class ProfileSettingsPageComponent extends Component {
     } = this.props;
 
     const handleSubmit = values => {
-      const { firstName, lastName, bio: rawBio, tribe, nativeLands, companyName, companyWebsite, location, building,
-        facebook, twitter, insta } = values;
-      console.log(values);
+      const { firstName, lastName, bio: rawBio, tribe, nativeLands, companyName, companyWebsite, companyIndustry,
+        location, building, facebook, twitter, insta, tiktok } = values;
 
       // Ensure that the optional bio is a string
       const bio = rawBio || '';
-      console.log(location);
       const profile = companyName && companyWebsite ? {
         firstName: firstName.trim(),
         lastName: lastName.trim(),
@@ -61,8 +59,9 @@ export class ProfileSettingsPageComponent extends Component {
           nativeLands: nativeLands,
           companyName: companyName,
           companyWebsite: companyWebsite,
+          companyIndustry: companyIndustry,
           companyLocation: { location: location, building: building },
-          socialMedia: { facebook: facebook, twitter: twitter, insta: insta }
+          socialMedia: { facebook: facebook, twitter: twitter, insta: insta, tiktok: tiktok }
         }
       } : {
           firstName: firstName.trim(),
@@ -71,7 +70,7 @@ export class ProfileSettingsPageComponent extends Component {
           publicData: {
             tribe: tribe,
             nativeLands: nativeLands,
-            socialMedia: { facebook: facebook, twitter: twitter, insta: insta }
+            socialMedia: { facebook: facebook, twitter: twitter, insta: insta, tiktok: tiktok }
           },
         };
       const uploadedImage = this.props.image;
@@ -94,6 +93,7 @@ export class ProfileSettingsPageComponent extends Component {
     const accountType = user.attributes.profile.publicData ? user.attributes.profile.publicData.account : null;
     const companyName = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyName : null;
     const companyWebsite = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyWebsite : null;
+    const companyIndustry = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyIndustry : null;
     const location = user.attributes.profile.publicData && user.attributes.profile.publicData.companyLocation
       ? user.attributes.profile.publicData.companyLocation.location : null;
     const building = user.attributes.profile.publicData && user.attributes.profile.publicData.companyLocation &&
@@ -102,33 +102,33 @@ export class ProfileSettingsPageComponent extends Component {
     const facebook = socialMedia && socialMedia.facebook ? socialMedia.facebook : null;
     const twitter = socialMedia && socialMedia.twitter ? socialMedia.twitter : null;
     const insta = socialMedia && socialMedia.insta ? socialMedia.insta : null;
+    const tiktok = socialMedia && socialMedia.tiktok ? socialMedia.tiktok : null;
 
-    const faqLink = <NamedLink
-      name="FAQPage"
-    > FAQ Page
+    const faqLink = <NamedLink name="FAQPage">
+      <FormattedMessage id="ProfileSettingsPage.faqLink" />
     </NamedLink>;
     let verification;
     let listingsLimit;
     let profileHeading;
     switch (accountType) {
-      case null:
+      default:
         profileHeading = "Standard";
         listingsLimit = 0;
         verification = <FormattedMessage id="ProfileSettingsPage.unverifiedAccount" />;
         break;
-      case "":
+      case "u":
         profileHeading = "Standard";
-        listingsLimit = 0;
+        listingsLimit = 5;
         verification = <FormattedMessage id="ProfileSettingsPage.unverifiedAccount" />;
         break;
       case "e":
         profileHeading = "Standard";
-        listingsLimit = 15;
+        listingsLimit = 30;
         verification = <FormattedMessage id="ProfileSettingsPage.verifiedAccount" />;
         break;
       case "p":
         profileHeading = "Premium";
-        listingsLimit = 3;
+        listingsLimit = 5;
         verification = null;
         break;
       case "a":
@@ -150,7 +150,7 @@ export class ProfileSettingsPageComponent extends Component {
         currentUser={currentUser}
         initialValues={{
           firstName, lastName, bio, profileImage: user.profileImage, tribe, nativeLands,
-          companyName, companyWebsite, location, building, facebook, twitter, insta
+          companyName, companyWebsite, companyIndustry, location, building, facebook, twitter, insta, tiktok
         }}
         profileImage={profileImage}
         onImageUpload={e => onImageUploadHandler(e, onImageUpload)}
@@ -182,7 +182,7 @@ export class ProfileSettingsPageComponent extends Component {
                 <h1 className={css.heading}>
                   <FormattedMessage id="ProfileSettingsPage.heading" />
                 </h1>
-                {user.id ? (
+                {user.id &&
                   <NamedLink
                     className={css.profileLink}
                     name="ProfilePage"
@@ -190,7 +190,7 @@ export class ProfileSettingsPageComponent extends Component {
                   >
                     <FormattedMessage id="ProfileSettingsPage.viewProfileLink" />
                   </NamedLink>
-                ) : null}
+                }
               </div>
               {user.id &&
                 <div className={css.profileInfo}>

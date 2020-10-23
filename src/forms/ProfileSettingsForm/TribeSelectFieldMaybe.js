@@ -24,8 +24,8 @@ const TribeSelectFieldMaybe = props => {
   //     id: 'ProfileSettingsForm.nativeLandsRequired',
   //   })
   // );
-  const contactEmail = <ExternalLink name="ContactEmail" href="mailto:customersupport@fromthepeople.co">
-    here
+  const faqLink = <ExternalLink href="http://localhost:3000/faq#nativeLands">
+    FAQ
   </ExternalLink>;
 
   const nativeLandsLink = <ExternalLink href="https://native-land.ca/">
@@ -35,7 +35,7 @@ const TribeSelectFieldMaybe = props => {
   const nativeLandsInfoLine2 =
     <FormattedMessage
       id='ProfileSettingsForm.nativeLandsInfoLine2'
-      values={{ email: contactEmail, link: nativeLandsLink }}
+      values={{ faqLink: faqLink, nativeLandsLink: nativeLandsLink }}
     />
 
 

@@ -8,6 +8,7 @@ import {
   IconSocialMediaFacebook,
   IconSocialMediaInstagram,
   IconSocialMediaTwitter,
+  IconSocialMediaTikTok,
   Logo,
   ExternalLink,
   NamedLink,
@@ -16,12 +17,13 @@ import {
 import css from './Footer.css';
 
 const renderSocialMediaLinks = intl => {
-  const { siteFacebookPage, siteInstagramPage, siteTwitterHandle } = config;
+  const { siteFacebookPage, siteInstagramPage, siteTwitterHandle, siteTikTokPage } = config;
   const siteTwitterPage = twitterPageURL(siteTwitterHandle);
 
   const goToFb = intl.formatMessage({ id: 'Footer.goToFacebook' });
   const goToInsta = intl.formatMessage({ id: 'Footer.goToInstagram' });
   const goToTwitter = intl.formatMessage({ id: 'Footer.goToTwitter' });
+  const goToTikTok = intl.formatMessage({ id: 'Footer.goToTikTok' });
 
   const fbLink = siteFacebookPage ? (
     <ExternalLink key="linkToFacebook"
@@ -55,7 +57,18 @@ const renderSocialMediaLinks = intl => {
     </ExternalLink>
   ) : null;
 
-  return [fbLink, twitterLink, instragramLink].filter(v => v != null);
+  const tikTokLink = siteTikTokPage ? (
+    <ExternalLink
+      key="linkToTikTok"
+      href={siteTikTokPage}
+      className={css.icon}
+      title={goToTikTok}
+    >
+      <IconSocialMediaTikTok />
+    </ExternalLink>
+  ) : null;
+
+  return [fbLink, twitterLink, instragramLink, tikTokLink].filter(v => v != null);
 };
 
 const Footer = props => {

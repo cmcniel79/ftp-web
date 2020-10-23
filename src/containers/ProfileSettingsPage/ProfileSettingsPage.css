@@ -11,6 +11,10 @@
     max-width: 565px;
     margin: 55px auto 56px auto;
   }
+  /* @media (--viewportLarge) {
+    max-width: 750px;
+    margin: 55px auto 56px auto;
+  } */
 }
 
 .headingContainer {

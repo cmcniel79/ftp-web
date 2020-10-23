@@ -80,7 +80,8 @@ export const autocompletePlaceSelected = message => value => {
     value &&
     value.selectedPlace &&
     value.selectedPlace.address &&
-    value.selectedPlace.origin instanceof LatLng;
+    value.selectedPlace.origin;
+  console.log(selectedPlaceIsValid);
   return selectedPlaceIsValid ? VALID : message;
 };
 
