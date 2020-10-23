@@ -32,13 +32,12 @@ import uneImage from './images/une.png';
 import sweetImage from './images/sweet.png';
 
 import css from './LandingPage.css';
-import { getListingsById } from '../../ducks/marketplaceData.duck';
+import { getListingsById, getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { loadData } from './LandingPage.duck';
 
 export const LandingPageComponent = props => {
 
-  const { history, intl, location, scrollingDisabled, listings } = props;
-
+  const { history, intl, location, scrollingDisabled, listings, user } = props;
   // Schema for search engines (helps them to understand what this page is about)
   // http://schema.org
   // We are using JSON-LD format
@@ -125,43 +124,20 @@ export const LandingPageComponent = props => {
                       text: 'Apparel',
                     },
                   ]}
-                  heading='Featured Categories'
+                  heading='Popular Categories'
                   subHeading=' '
                 />
               </div>
             </li>
-
-            
-            <li className={css.section}>
-              <div className={css.sectionContent}>
-                <FeaturedPartners
-                  linksPerRow={2}
-                  links={[
-                    {
-                      imageUrl: uneImage,
-                      imageAltText: 'Urban Native Era',
-                      linkProps: {
-                        type: 'ExternalLink', href: 'https://urbannativeera.com/',
-                      },
-                      text: 'Urban Native Era',
-                    },
-                    {
-                      imageUrl: sweetImage,
-                      imageAltText: 'SweetGrass Trading',
-                      linkProps: {
-                        type: 'NamedLink', name: 'ProfilePage', params: {
-                          id: '5f52e761-e46d-4d51-b4f2-a8a4ef16f8b2'
-                        }
-                      },
-                      text: 'SweetGrass Trading',
-                    },
-                  ]}
-                  heading='Featured Partners'
-                  subHeading=' '
-                />
-              </div>
-            </li>
-
+            {user &&
+              <li className={css.section}>
+                <div className={css.sectionContent}>
+                  <FeaturedPartners
+                    user={user}
+                  />
+                </div>
+              </li>
+            }
             {hasListings ? (
               <li className={css.section}>
                 <div className={css.sectionContent}>
@@ -176,7 +152,6 @@ export const LandingPageComponent = props => {
                 </div>
               </li>
             ) : null}
-
             <li className={css.section}>
               <div className={css.sectionContent}>
                 <h2 className={css.customSectionTitle}>
@@ -210,7 +185,6 @@ export const LandingPageComponent = props => {
                     </ExternalLink>
                   </div>
                 </div>
-
                 <div className={css.donateText}>
                   <div className={css.donateSubText}>
                     <div className={css.thirdDonate}>
@@ -262,10 +236,14 @@ LandingPageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const {
+    userId,
     promotedListingRefs,
   } = state.LandingPage;
   const listings = getListingsById(state, promotedListingRefs);
+  const userMatches = getMarketplaceEntities(state, [{ type: 'user', id: userId }]);
+  const user = userMatches.length === 1 ? userMatches[0] : null;
   return {
+    user: user,
     scrollingDisabled: isScrollingDisabled(state),
     listings,
   };

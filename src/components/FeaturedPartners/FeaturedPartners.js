@@ -1,130 +1,65 @@
 import React from 'react';
 import { string, arrayOf, shape, node, object, oneOf, oneOfType } from 'prop-types';
 import classNames from 'classnames';
-import { ExternalLink, NamedLink } from '..';
-
+import { ResponsiveImage, ExternalLink, NamedLink } from '..';
+import { ensureUser } from '../../util/data';
 import css from './FeaturedPartners.css';
+import { propTypes } from '../../util/types';
+import { FormattedMessage } from '../../util/reactIntl';
 
-const ThumbnailLink = props => {
-  const {
-    className,
-    rootClassName,
-    imageWrapperClassName,
-    linksPerRow,
-    imageUrl,
-    imageAltText,
-    linkProps,
-    text,
-  } = props;
-  const { type, name, params, to, href } = linkProps;
-  const classes = classNames(rootClassName || css.link, className, {
-    [css.link2Columns]: linksPerRow === 2,
-    [css.link3Columns]: linksPerRow === 3,
-  });
-  const imageWrapperClasses = classNames(imageWrapperClassName || css.imageWrapper);
-
-  const LinkComponentProps = type === 'NamedLink' ? { name, params, to } : { href };
-  const LinkComponent = type === 'NamedLink' ? NamedLink : ExternalLink;
-
-  return (
-    <LinkComponent {...LinkComponentProps} className={classes}>
-      <div className={imageWrapperClasses}>
-        <div className={css.aspectWrapper}>
-          <img src={imageUrl} alt={imageAltText} className={css.image} />
-        </div>
-      </div>
-      <div className={css.text}>{text}</div>
-    </LinkComponent>
-  );
-};
+const AVATAR_IMAGE_VARIANTS = [
+  // 480x480
+  'square-small2x',
+];
 
 const FeaturedPartners = props => {
-  const {
-    rootClassName,
-    className,
-    linksPerRow,
-    links,
-    heading,
-    subHeading,
-    headingRootClassName,
-    subHeadingRootClassName,
-    linkClassName,
-    linkRootClassName,
-    imageWrapperClassName,
-  } = props;
-  const classes = classNames(rootClassName || css.root, className);
-  const headingClasses = headingRootClassName || css.heading;
-  const subHeadingClasses = subHeadingRootClassName || css.subHeading;
+  const user = props;
+  const ensuredUser = ensureUser(user.user);
+  const { displayName, publicData, bio } = ensuredUser.attributes.profile;
+  const companyName = publicData.companyName ? publicData.companyName : null;
+  const cardTitle = companyName ? companyName : displayName;
+  const image =
+      <NamedLink name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
+        <ResponsiveImage
+          rootClassName={css.image}
+          alt="Logo"
+          image={ensuredUser.profileImage}
+          variants={AVATAR_IMAGE_VARIANTS}
+        />
+      </NamedLink>;
+
   return (
-    <div className={classes}>
-      {heading ? <h2 className={headingClasses}>{heading}</h2> : null}
-      {subHeading ? <p className={subHeadingClasses}>{subHeading}</p> : null}
-      <div className={css.links}>
-        {links.map((link, i) => (
-          <ThumbnailLink
-            key={i}
-            linksPerRow={linksPerRow}
-            linkRootClassName={linkRootClassName}
-            className={linkClassName}
-            imageWrapperClassName={imageWrapperClassName}
-            {...link}
-          />
-        ))}
+    <div>
+      <h2 className={css.heading}>
+        <FormattedMessage id={"FeaturedPartners.header"} />
+      </h2>
+      <div className={css.partnerCard}>
+        <div className={css.mobileImageWrapper}>
+          {image}
+        </div>
+        <div className={css.partnerText}>
+          <h3 className={css.subHeading}>
+            {cardTitle}
+          </h3>
+          <div className={css.text}>{bio}</div>
+          <NamedLink name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
+            <FormattedMessage id={"FeaturedPartners.viewProfile"} values={{ cardTitle }} />
+          </NamedLink>
+        </div>
+        <div className={css.imageWrapper}>
+          {image}
+        </div>
       </div>
     </div>
   );
 };
 
 FeaturedPartners.defaultProps = {
-  rootClassName: null,
-  className: null,
-  heading: null,
-  subHeading: null,
-  headingRootClassName: null,
-  subHeadingRootClassName: null,
-  imageWrapperClassName: null,
+  user: null,
 };
 
-const namedLinkShape = shape({
-  type: oneOf(['NamedLink']).isRequired,
-  name: string.isRequired,
-  params: object,
-  to: shape({
-    search: string,
-    hash: string,
-  }),
-});
-
-const externalLinkShape = shape({
-  type: oneOf(['ExternalLink']).isRequired,
-  href: string.isRequired,
-});
-
 FeaturedPartners.propTypes = {
-  rootClassName: string,
-  className: string,
-
-  linksPerRow: oneOf([2, 3]).isRequired,
-  links: arrayOf(
-    shape({
-      imageUrl: string.isRequired,
-      imageAltText: string.isRequired,
-      linkProps: oneOfType([namedLinkShape, externalLinkShape]).isRequired,
-      text: node.isRequired,
-    })
-  ).isRequired,
-
-  // Styles are defined with the assumption that either both the
-  // heading and the subHeading are given, or neither of them are. If
-  // only one of them is given, the margins most likely won't make
-  // sense.
-  heading: node,
-  subHeading: node,
-  headingRootClassName: string,
-  subHeadingRootClassName: string,
-  linkClassName: string,
-  linkRootClassName: string,
-  imageWrapperClassName: string,
+  user: propTypes.user.isRequired,
 };
 
 export default FeaturedPartners;

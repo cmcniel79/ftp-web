@@ -180,7 +180,6 @@ function handleErrors(response) {
 }
 
 export const loadData = () => (dispatch, getState, sdk) => {
-  console.log('Hello');
   // Clear state so that previously loaded data is not visible
   // in case this page load fails.
   dispatch(setInitialState());

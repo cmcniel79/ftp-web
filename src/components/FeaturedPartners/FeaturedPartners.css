@@ -2,90 +2,66 @@
 .root {}
 
 .heading {
+  margin: 0 0 20px 0;
   @apply --marketplaceH1FontStyles;
-  margin: 0 0 18px 0;
-  @media (--viewportMedium) {
-    margin: 0 0 23px 0;
-  }
 }
 
 .subHeading {
-  margin: 0 0 57px 0;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0 0 20px 0;
   @media (--viewportMedium) {
-    margin: 0 0 57px 0;
+    font-size: 25px;
+    line-height: 30px;
   }
 }
 
-.links {
+.partnerCard {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  flex-wrap: wrap;
   @media (--viewportMedium) {
     flex-direction: row;
   }
 }
 
-.link {
-  position: relative;
-  width: 100%;
-  margin-top: 25px;
-  &:hover {
-    text-decoration: none;
-  }
-  /* First link should not have top margin */
-  &:nth-of-type(1) {
-    margin-top: 0;
-  }
-}
-
-.link2Columns {
+.partnerText {
+  margin: 50px 0;
   @media (--viewportMedium) {
-    width: calc(50% - 20px);
-    /* First row should not have top margin */
-    &:nth-of-type(1), &:nth-of-type(2) {
-      margin-top: 0;
-    }
-  }
-}
-
-.link3Columns {
-  @media (--viewportMedium) {
-    width: calc(33.333% - 20px);
-    /* First row should not have top margin */
-    &:nth-of-type(1), &:nth-of-type(2), &:nth-of-type(3) {
-      margin-top: 0;
-    }
+    margin: 50px 100px 0 0;
   }
 }
 
 .imageWrapper {
-  width: 100%;
-  border-radius: 4px;
-  transition: var(--transitionStyleButton);
+  display: none;
+  @media (--viewportMedium) {
+    display: initial;
+    width: 33%;
+    height: 33%;
+    margin: 10px 25px 10px 10px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    transition: var(--transitionStyleButton);
+  }
   &:hover {
     transform: scale(1.02);
     box-shadow: var(--boxShadowSectionLocationHover);
   }
 }
 
-.aspectWrapper {
-  position: relative;
-  padding-bottom: calc(1 / 1 * 100%);
-  /* 13:6 Aspect Ratio */
+.mobileImageWrapper {
+  display: initial;
+  flex-shrink: 0;
+  margin: 10px auto 10px auto;
+  width: 75%;
+  height: 75%;
+  transition: var(--transitionStyleButton);
   @media (--viewportMedium) {
-    padding-bottom: calc(1 / 1 * 100%);
-    /* 3:2 Aspect Ratio */
+    display: none;
   }
 }
 
 .image {
   /* Layout - image will take space defined by aspect ratio wrapper */
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   width: 100%;
   height: 100%;
   border-radius: 4px;
@@ -93,22 +69,6 @@
 }
 
 .text {
-  @apply --marketplaceH2FontStyles;
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: white;
-  font-size: 0;
-  /* background-color: rgba(0,0,0,.2); */
-  transition: .2s ease-in-out;
-  &:hover {
-    background-color: rgba(0,0,0,.8);
-    font-size: 30px;
-  }
+  @apply --marketplaceH4FontStyles;
+  margin: 0 0 30px 0;
 }
