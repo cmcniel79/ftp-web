@@ -505,7 +505,7 @@
   "NativeLand.currentLocation": "Search my location",
   "NativeLand.plainClear": "Clear",
   "NativeLand.tribeInfo": "Select a Tribe to show artists and listings from that tribe",
-  "NativeLand.tribeInfoMapPage": "Select a Tribe to show Premium Sellers from that tribe",
+  "NativeLand.tribeInfoMapPage": "Select a Tribe to show Premium Sellers specifically from that tribe",
   "NativeLandSearchForm.placeholder": "Enter an address to find tribes",
   "NativeLand.nativeLandInProgress": "Tribes loading...",
   "NativeLand.modalHeading": "Native Land Location Search",

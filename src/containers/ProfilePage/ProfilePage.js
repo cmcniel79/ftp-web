@@ -78,23 +78,22 @@ export class ProfilePageComponent extends Component {
     const profileUser = ensureUser(user);
     const isCurrentUser =
       ensuredCurrentUser.id && profileUser.id && ensuredCurrentUser.id.uuid === profileUser.id.uuid;
-    const displayName = profileUser.attributes.profile.displayName;
-    const bio = profileUser.attributes.profile.bio;
+    const { displayName, bio } = profileUser.attributes.profile;
     const hasBio = !!bio;
     const hasListings = listings.length > 0;
     const isMobileLayout = viewport.width < MAX_MOBILE_SCREEN_WIDTH;
 
     // Get custom data fields from profileUser's account. Social media will go onto everyone's profile page if they fill it out.
     // Company name and companyWebsite will only go onto profile page if user has a premium account.
-    const socialMedia = profileUser.attributes.profile.publicData && profileUser.attributes.profile.publicData.socialMedia ?
-      profileUser.attributes.profile.publicData.socialMedia : null;
-    const accountType = profileUser.attributes.profile.publicData && profileUser.attributes.profile.publicData.account ?
-      profileUser.attributes.profile.publicData.account : null;
-    const isPremium = accountType && accountType === "p" ? true : false;
-    const companyName = isPremium && profileUser.attributes.profile.publicData.companyName ?
-      profileUser.attributes.profile.publicData.companyName : null;
-    const companyWebsite = isPremium && profileUser.attributes.profile.publicData.companyWebsite ?
-      profileUser.attributes.profile.publicData.companyWebsite : null;
+    const publicData = profileUser.attributes.profile.publicData ? profileUser.attributes.profile.publicData : null;
+    const socialMedia = publicData && publicData.socialMedia ? publicData.socialMedia : null;
+    // const accountType = publicData && publicData.account ? publicData.account : null;
+    const companyName = publicData && publicData.companyName ? publicData.companyName : null;
+    const companyWebsite = publicData && publicData.companyWebsite ? publicData.companyWebsite : null;
+    const companyLocation = publicData && publicData.companyLocation && publicData.companyLocation.location ?
+      publicData.companyLocation.location : null;
+    const companyLatLng = companyLocation ? companyLocation.selectedPlace.origin : null;
+    const googleMapsUrl = companyLatLng ? "https://www.google.com/maps/search/?api=1&query=" + companyLatLng.lat + "," + companyLatLng.lng : null;
 
     const editLinkMobile = isCurrentUser ? (
       <NamedLink className={css.editLinkMobile} name="ProfileSettingsPage">
@@ -208,9 +207,13 @@ export class ProfilePageComponent extends Component {
             <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />
           }
         </h1>
-        {socialMedia ? <UserSocialMedia className={css.socialMediaLinks} socialMedia={socialMedia} /> : null}
-        {hasBio ? <p className={css.bio}>{bio}</p> : null}
-        {companyWebsite ?
+        {socialMedia && <UserSocialMedia className={css.socialMediaLinks} socialMedia={socialMedia} />}
+        {googleMapsUrl &&
+          <ExternalLink className={css.companyAddress} href={googleMapsUrl} >
+            {companyLocation.selectedPlace.address}
+          </ExternalLink>}
+        {hasBio && <p className={css.bio}>{bio}</p>}
+        {googleMapsUrl ?
           <div className={css.companyWebsite}>
             <ExternalLink href={companyWebsite} useIcon={true}>
               <FormattedMessage id="ProfilePage.companyWebsite" />

@@ -155,15 +155,15 @@ const FAQPage = () => {
                   </span>
                   <br />
                   <br />
-                  Non-Profit Accounts are used by Indigenous Non-Profits that would like to post about their causes on our Marketplace. From The People 
-                  believes in raising awareness and support for issues facing Indigenous People's and giving Non-Profits space on our platform is one 
+                  Non-Profit Accounts are used by Indigenous Non-Profits that would like to post about their causes on our Marketplace. From The People
+                  believes in raising awareness and support for issues facing Indigenous People's and giving Non-Profits space on our platform is one
                   way we can facillitate that mission. Non-Profit Accounts can post their physical location on our Map and are denoted with this tag on their listings:&nbsp;
                   <span className={css.nonProfitTag}>
                     <FormattedMessage id="ListingCard.nonProfitTag" />
                   </span>
                   <br />
                   <br />
-                  Ad Accounts are used by businesses and groups that would like to advertise on our Marketplace. 
+                  Ad Accounts are used by businesses and groups that would like to advertise on our Marketplace.
                   Listings and posts made by ad accounts are denoted with this tag:&nbsp;
                   <span className={css.adTag}>
                     <FormattedMessage id="ListingCard.adTag" />
@@ -172,11 +172,11 @@ const FAQPage = () => {
               </AccordionButton>
               <AccordionButton title="How do I get a Verified Account?">
                 <p>
-                  Email us at&nbsp;  
+                  Email us at&nbsp;
                   <ExternalLink href="mailto:customersupport@fromthepeople.co">
                     <FormattedMessage id="FAQPage.emailAddress" />
                   </ExternalLink>
-                  &nbsp;to get the verification process started. 
+                  &nbsp;to get the verification process started.
                   You will need to provide us with verification that your products were made by Tribal Members or by a Certified Indian Artisan.
                   This can be accomplished by sending us any document proving your tribal enrollment status, such as your tribal ID or certificate of Indian blood (C.I.B),
                   through our secure file transfer service. We will provide a link for you to upload your files to.
@@ -184,16 +184,39 @@ const FAQPage = () => {
               </AccordionButton>
               <AccordionButton title="How do I get a Premium Account?">
                 <p>
-                  To get a Premium Account, you will either need a physical business location or a website that users can buy your items from. Email us at&nbsp; 
+                  To get a Premium Account, you will either need a physical business location or a website that users can buy your items from. Email us at&nbsp;
                   <ExternalLink href="mailto:customersupport@fromthepeople.co">
                     <FormattedMessage id="FAQPage.emailAddress" />
                   </ExternalLink>
-                  &nbsp;with information about your business and why you would like to have a Premium Account. Inclue either your physical business address or your website.
+                  &nbsp;with information about your business and why you would like to have a Premium Account, and include either your physical business address or your website.
+                  <br />
+                  <br />
+                  We do charge a subscription fee for Premium Accounts and we have 3 subscription plans users can choose from:
+                    <br />
+                  <br />
+                  <u><b>Map Only Plan - $4.99/month</b></u>
+                  <br />
+                    Gain access to post to our Native Businesses Map. You can show the physical location of
+                    your business and gain new customers from our Indigenous Marketplace and Community. Your listing on our Map will have links to your website and directions
+                    to your business address. This plan is perfect for Native/Indigenous Owned businesses that perform services and do not sell physical goods.
+                    <br />
+                  <br />
+                  <b>Artisan Plan - $19.99/month</b>
+                  <br />
+                    Post up to 5 listings on our Indigenous Marketplace and gain access to our Native Businesses Map. You will have the Premium Sellers badge on all your listings
+                    and can add links to your website to showcase your products. All transactions for your products will take place on your website.
+                    <br />
+                  <br />
+                  <b>Trader Plan - $29.99/month</b>
+                  <br />
+                    Post up to 10 listings on our Indigenous Marketplace and gain access to our Native Businesses Map. You will have the Premium Sellers badge on all your listings
+                    and can add links to your website to showcase your products. All transactions for your products will take place on your website. You can also purchase additional 
+                    listings at $10/month per 10 listings, up to 30 total listings. 
                 </p>
               </AccordionButton>
               <AccordionButton title="How do I get a Non-Profit Account?">
                 <p>
-                For a Non-Profit Account, you simply need a Non-Profit! Email us at&nbsp; 
+                  For a Non-Profit Account, you simply need a Non-Profit! Email us at&nbsp;
                   <ExternalLink href="mailto:customersupport@fromthepeople.co">
                     <FormattedMessage id="FAQPage.emailAddress" />
                   </ExternalLink>
@@ -202,7 +225,7 @@ const FAQPage = () => {
               </AccordionButton>
               <AccordionButton title="How do I get an Ad account?">
                 <p>
-                There are no specific requirements for an Ad Account. Email us at&nbsp; 
+                  There are no specific requirements for an Ad Account. Email us at&nbsp;
                   <ExternalLink href="mailto:customersupport@fromthepeople.co">
                     <FormattedMessage id="FAQPage.emailAddress" />
                   </ExternalLink>
@@ -235,14 +258,21 @@ const FAQPage = () => {
               <AccordionButton title="Compliance with the Indian Arts and Crafts Act of 1990">
                 <p>
                   If you suspect a seller has misrepresented themselves in regards to Native American heritage or falsely suggests their product is Indian produced,
-                  an Indian product, or the product of a particular Indian or Indian tribe or Indian arts and crafts organization, please email us at&nbsp; 
+                  an Indian product, or the product of a particular Indian or Indian tribe or Indian arts and crafts organization, please email us at&nbsp;
                   <ExternalLink href="mailto:customersupport@fromthepeople.co">
                     <FormattedMessage id="FAQPage.emailAddress" />
                   </ExternalLink>
                   &nbsp;. We will investigate all allegations and contact the appropriate authorities.
                   For a first time violation of the Act, an individual can face civil or criminal penalties up to a $250,000 fine or a 5-year prison term, or both.
-                  To learn more about the Indian Arts and Crafts Act and compliance, visit here and here.
-                  </p>
+                  To learn more about the Indian Arts and Crafts Act and compliance, visit
+                  <ExternalLink href="https://www.doi.gov/iacb/act">
+                    &nbsp;here
+                    </ExternalLink>
+                  &nbsp;and
+                    <ExternalLink href="https://www.doi.gov/sites/doi.gov/files/uploads/iacb_know_the_law_brochure_2019_final_web.pdf">
+                    &nbsp;here.
+                    </ExternalLink>
+                </p>
               </AccordionButton>
               <AccordionButton title="Prohibited Items">
                 <p>
@@ -277,7 +307,7 @@ const FAQPage = () => {
                   has been marked as completed. Once a transaction has been marked as completed, there is a risk that we may not be able to refund you. Buyers
                   can mark a paid transaction as disputed after the transaction request has been approved and before it is marked as “completed”. The Dispute
                   feature is a way for buyers to clearly communicate to providers that they are not happy with the way the transaction is handled. To resolve
-                  a dispute, involvement from admins is required. The admins will investigate the matter and determine if a refund is required. 
+                  a dispute, involvement from admins is required. The admins will investigate the matter and determine if a refund is required.
                 </p>
               </AccordionButton>
               <AccordionButton title="What payment service do you use?">
