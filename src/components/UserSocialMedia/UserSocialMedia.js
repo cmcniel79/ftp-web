@@ -12,9 +12,11 @@ import css from './UserSocialMedia.css';
 const UserSocialMedia = props => {
   const { socialMedia, className } = props;
 
+  // Need to add https:// protocol to all social media links. Values come in as
+  // www.facebook.com (www.domain.com) for all links
   const fbLink = socialMedia && socialMedia.facebook ? (
     <ExternalLink key="linkToAuthorsFacebook"
-      href={socialMedia.facebook}
+      href={'https://' + socialMedia.facebook}
       title={"Go To Author's Facebook"}
     >
       <IconSocialMediaFacebook />
@@ -24,7 +26,7 @@ const UserSocialMedia = props => {
   const twitterLink = socialMedia && socialMedia.twitter ? (
     <ExternalLink
       key="linkToAuthorsTwitter"
-      href={socialMedia.twitter}
+      href={'https://' + socialMedia.twitter}
       title={"Go To Author's Twitter"}
     >
       <IconSocialMediaTwitter />
@@ -34,7 +36,7 @@ const UserSocialMedia = props => {
   const instaLink = socialMedia && socialMedia.insta ? (
     <ExternalLink
       key="linkToAuthorsInstagram"
-      href={socialMedia.insta}
+      href={'https://' + socialMedia.insta}
       title={"Go To Author's Insta"}
     >
       <IconSocialMediaInstagram />
@@ -44,7 +46,7 @@ const UserSocialMedia = props => {
   const tikTokLink = socialMedia && socialMedia.tiktok ? (
     <ExternalLink
       key="linkToAuthorsTikTok"
-      href={socialMedia.tiktok}
+      href={'https://' + socialMedia.tiktok}
       title={"Go To Author's TikTok"}
     >
       <IconSocialMediaTikTok />

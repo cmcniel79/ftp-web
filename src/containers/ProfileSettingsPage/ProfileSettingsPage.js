@@ -47,7 +47,6 @@ export class ProfileSettingsPageComponent extends Component {
     const handleSubmit = values => {
       const { firstName, lastName, bio: rawBio, tribe, nativeLands, companyName, companyWebsite, companyIndustry,
         location, building, facebook, twitter, insta, tiktok } = values;
-
       // Ensure that the optional bio is a string
       const bio = rawBio || '';
       const profile = companyName && companyWebsite ? {

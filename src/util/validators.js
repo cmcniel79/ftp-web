@@ -81,7 +81,6 @@ export const autocompletePlaceSelected = message => value => {
     value.selectedPlace &&
     value.selectedPlace.address &&
     value.selectedPlace.origin;
-  console.log(selectedPlaceIsValid);
   return selectedPlaceIsValid ? VALID : message;
 };
 
@@ -222,6 +221,24 @@ export const validHKID = message => value => {
 
 export const validSGID = message => value => {
   return value.length === 9 ? VALID : message;
+};
+
+export const validSocialMediaURL = (message, domain) => value => {
+  if (typeof value === 'undefined' || value === null) {
+    return VALID;
+  }
+  const regExpDomain = new RegExp(domain, "g");
+  const disallowedChars = /[^-A-Za-z0-9+&@#/%?=~_|!:,.;()]/;
+  const domainTokens = value.split('/');
+  const includesDomain = domainTokens.length > 1;
+  const usesSpecifiedDomain = includesDomain && !!domainTokens[0].match(regExpDomain);
+  const invalidCharacters = !!value.match(disallowedChars);
+  // const invalidProtocol = !(usesHttpProtocol || !includesProtocol);
+
+  // Stripe checks against example.com
+  const isExampleDotCom = !!value.match(/^(https?:\/\/example\.com|example\.com)/);
+  const isLocalhost = !!value.match(/^(https?:\/\/localhost($|:|\/)|localhost($|:|\/))/);
+  return !usesSpecifiedDomain || invalidCharacters || isExampleDotCom || isLocalhost ? message : VALID;
 };
 
 export const composeValidators = (...validators) => value =>

@@ -153,6 +153,9 @@ class ProfileSettingsFormComponent extends Component {
           const facebookPlaceholder = intl.formatMessage({
             id: 'ProfileSettingsForm.facebookPlaceholder',
           });
+          const facebookMessage = intl.formatMessage({
+            id: 'ProfileSettingsForm.facebookRequiredMessage',
+          });
 
           // Twitter
           const twitterLabel = intl.formatMessage({
@@ -160,6 +163,9 @@ class ProfileSettingsFormComponent extends Component {
           });
           const twitterPlaceholder = intl.formatMessage({
             id: 'ProfileSettingsForm.twitterPlaceholder',
+          });
+          const twitterMessage = intl.formatMessage({
+            id: 'ProfileSettingsForm.twitterRequiredMessage',
           });
 
           // Insta
@@ -169,6 +175,9 @@ class ProfileSettingsFormComponent extends Component {
           const instaPlaceholder = intl.formatMessage({
             id: 'ProfileSettingsForm.instaPlaceholder',
           });
+          const instaMessage = intl.formatMessage({
+            id: 'ProfileSettingsForm.instaRequiredMessage',
+          });
 
           // TikTok
           const tikTokLabel = intl.formatMessage({
@@ -176,6 +185,9 @@ class ProfileSettingsFormComponent extends Component {
           });
           const tikTokPlaceholder = intl.formatMessage({
             id: 'ProfileSettingsForm.tikTokPlaceholder',
+          });
+          const tikTokMessage = intl.formatMessage({
+            id: 'ProfileSettingsForm.tikTokRequiredMessage',
           });
 
           // Tribe
@@ -469,6 +481,7 @@ class ProfileSettingsFormComponent extends Component {
                         name="facebook"
                         label={facebookLabel}
                         placeholder={facebookPlaceholder}
+                        validate={validators.validSocialMediaURL(facebookMessage, "www.facebook.com")}
                       />
                     </div>
                     <div className={css.socialMediaField}>
@@ -480,6 +493,7 @@ class ProfileSettingsFormComponent extends Component {
                         name="twitter"
                         label={twitterLabel}
                         placeholder={twitterPlaceholder}
+                        validate={validators.validSocialMediaURL(twitterMessage, "www.twitter.com")}
                       />
                     </div>
                     <div className={css.socialMediaField}>
@@ -491,6 +505,7 @@ class ProfileSettingsFormComponent extends Component {
                         name="insta"
                         label={instaLabel}
                         placeholder={instaPlaceholder}
+                        validate={validators.validSocialMediaURL(instaMessage, "www.instagram.com")}
                       />
                     </div>
                     <div className={css.socialMediaField}>
@@ -502,6 +517,7 @@ class ProfileSettingsFormComponent extends Component {
                         name="tiktok"
                         label={tikTokLabel}
                         placeholder={tikTokPlaceholder}
+                        validate={validators.validSocialMediaURL(tikTokMessage, "www.tiktok.com")}
                       />
                     </div>
                   </div>
