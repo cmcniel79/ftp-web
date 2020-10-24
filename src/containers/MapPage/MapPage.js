@@ -269,27 +269,22 @@ export class MapPageComponent extends Component {
                 </div>
               </div>
               <div className={css.mapWrapper}>
-                  <SearchMapUsers
-                    reusableContainerClassName={css.map}
-                    bounds={this.state.bounds}
-                    center={this.state.origin}
-                    isSearchMapOpenOnMobile={this.state.isSearchMapOpenOnMobile}
-                    location={location}
-                    users={users}
-                    onMapMoveEnd={this.onMapMoveEnd}
-                    onCloseAsModal={() => {
-                      onManageDisableScrolling('MapPage.map', false);
-                    }}
-                    messages={intl.messages}
-                    selectedIndustry={this.state.industry}
-                    selectedTribe={this.state.tribe}
-                  />
+                <SearchMapUsers
+                  reusableContainerClassName={css.map}
+                  bounds={this.state.bounds}
+                  center={this.state.origin}
+                  isSearchMapOpenOnMobile={this.state.isSearchMapOpenOnMobile}
+                  location={location}
+                  users={users}
+                  onMapMoveEnd={this.onMapMoveEnd}
+                  onCloseAsModal={() => {
+                    onManageDisableScrolling('MapPage.map', false);
+                  }}
+                  messages={intl.messages}
+                  selectedIndustry={this.state.industry}
+                  selectedTribe={this.state.tribe}
+                />
               </div>
-              <a href="http://localhost:3000/map#header">
-                  <button className={css.topButton}>
-                    Go back to top
-                  </button>
-                  </a>
             </div>
           </LayoutWrapperMain>
           <LayoutWrapperFooter>

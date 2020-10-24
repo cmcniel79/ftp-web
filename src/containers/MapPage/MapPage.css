@@ -234,15 +234,6 @@
   }
 }
 
-.topButton {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  @media (--viewportMedium) {
-    display: none;
-  }
-}
-
 .half {
   border: none;
   @media (--viewportMedium) {

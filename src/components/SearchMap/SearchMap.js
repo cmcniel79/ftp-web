@@ -189,8 +189,8 @@ export class SearchMapComponent extends Component {
         />
       </ReusableMapContainer>
     ) : (
-      <div className={classes} />
-    );
+        <div className={classes} />
+      );
   }
 }
 

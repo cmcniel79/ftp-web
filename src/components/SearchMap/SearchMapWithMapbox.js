@@ -175,42 +175,42 @@ const priceLabelsInLocations = (
             mapComponentRefreshToken,
           },
         }
-       } else {
-          return {
-            markerId: `price_${key}`,
-            location: geolocation,
-            type: 'price',
-            componentProps: {
-              key,
-              isActive,
-              className: LABEL_HANDLE,
-              listing,
-              onListingClicked,
-              mapComponentRefreshToken,
-            },
-          }
-        };
-      }
-
-      // Explicit type change to object literal for Google OverlayViews (geolocation is SDK type)
-      const firstListing = ensureListing(listingArr[0]);
-      const geolocation = firstListing.attributes.geolocation;
-
-      const key = listingArr[0].id.uuid;
-      return {
-        markerId: `group_${key}`,
-        location: geolocation,
-        type: 'group',
-        componentProps: {
-          key,
-          isActive,
-          className: LABEL_HANDLE,
-          listings: listingArr,
-          onListingClicked,
-          mapComponentRefreshToken,
-        },
+      } else {
+        return {
+          markerId: `price_${key}`,
+          location: geolocation,
+          type: 'price',
+          componentProps: {
+            key,
+            isActive,
+            className: LABEL_HANDLE,
+            listing,
+            onListingClicked,
+            mapComponentRefreshToken,
+          },
+        }
       };
-    });
+    }
+
+    // Explicit type change to object literal for Google OverlayViews (geolocation is SDK type)
+    const firstListing = ensureListing(listingArr[0]);
+    const geolocation = firstListing.attributes.geolocation;
+
+    const key = listingArr[0].id.uuid;
+    return {
+      markerId: `group_${key}`,
+      location: geolocation,
+      type: 'group',
+      componentProps: {
+        key,
+        isActive,
+        className: LABEL_HANDLE,
+        listings: listingArr,
+        onListingClicked,
+        mapComponentRefreshToken,
+      },
+    };
+  });
   return priceLabels;
 };
 
@@ -505,18 +505,18 @@ class SearchMapWithMapbox extends Component {
           }
           return null;
         })}
-        {this.state.mapContainer && this.currentInfoCard && 
-          this.currentInfoCard.componentProps && this.currentInfoCard.componentProps.type === 'user' 
+        {this.state.mapContainer && this.currentInfoCard &&
+          this.currentInfoCard.componentProps && this.currentInfoCard.componentProps.type === 'user'
           ? ReactDOM.createPortal(
             <SearchMapSellerCard {...this.currentInfoCard.componentProps} />,
             this.currentInfoCard.markerContainer
           )
-          : this.state.mapContainer && this.currentInfoCard 
-          ? ReactDOM.createPortal(
-            <SearchMapInfoCard {...this.currentInfoCard.componentProps} />,
-            this.currentInfoCard.markerContainer
-          )
-          : null}
+          : this.state.mapContainer && this.currentInfoCard
+            ? ReactDOM.createPortal(
+              <SearchMapInfoCard {...this.currentInfoCard.componentProps} />,
+              this.currentInfoCard.markerContainer
+            )
+            : null}
       </div>
     );
   }

@@ -13,6 +13,7 @@ import { SearchMapSellerCard, SearchMapInfoCard, SearchMapSellerLabel, SearchMap
 
 import { groupedByCoordinates, reducedToArray } from './SearchMap.helpers.js';
 import css from './SearchMapWithMapbox.css';
+import arrowIcon from './Images/arrow.svg'
 
 export const LABEL_HANDLE = 'SearchMapLabel';
 export const INFO_CARD_HANDLE = 'SearchMapInfoCard';
@@ -154,9 +155,9 @@ const priceLabelsInLocations = (
 
       // Explicit type change to object literal for Google OverlayViews (geolocation is SDK type)
       const geolocation = user.attributes.profile.publicData.companyLocation.location.selectedPlace.origin;
-      const tribe = user.attributes.profile.publicData && user.attributes.profile.publicData.nativeLands ? 
+      const tribe = user.attributes.profile.publicData && user.attributes.profile.publicData.nativeLands ?
         user.attributes.profile.publicData.nativeLands : null;
-      const industry = user.attributes.profile.publicData &&  user.attributes.profile.publicData.companyIndustry ? 
+      const industry = user.attributes.profile.publicData && user.attributes.profile.publicData.companyIndustry ?
         user.attributes.profile.publicData.companyIndustry : 'other';
       const key = user.id.uuid;
       console.log(industry);
@@ -494,6 +495,9 @@ class SearchMapWithMapbox extends Component {
               this.currentInfoCard.markerContainer
             )
             : null}
+        <a href={window.location.href + "#header"} className={css.topButton}>
+          <img className={css.icon} src={arrowIcon} alt="arrowIcon" />
+        </a>
       </div>
     );
   }

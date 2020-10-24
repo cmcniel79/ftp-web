@@ -47,6 +47,10 @@ class NativeLand extends Component {
     const apiURL = baseUrl + lat + "," + lng;
     // const apiURL = 'https://native-land.ca/api/index.php?maps=territories&position='; //for testing
     fetch(apiURL)
+      .catch(error => {
+        this.setState({ tribeSearchInProgress: false });
+        console.log(error);
+      })
       .then(response =>
         response.ok
           ? response.json()
@@ -60,9 +64,14 @@ class NativeLand extends Component {
 
   useCurrentLocation() {
     this.setState({ tribeSearchInProgress: true });
-    userLocation().then(location =>
-      this.getTribes(location.lat, location.lng)
-    )
+    userLocation()
+      .then(location =>
+        this.getTribes(location.lat, location.lng)
+      )
+      .catch(error => {
+        this.setState({ tribeSearchInProgress: false });
+        console.log(error);
+      })
   }
 
   render() {
