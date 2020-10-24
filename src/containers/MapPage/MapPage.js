@@ -230,11 +230,8 @@ export class MapPageComponent extends Component {
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
             <div className={css.container}>
-              <div className={css.pageHeading}>
+              <div className={css.pageHeading} id='header'>
                 <div className={css.desktopPanel}>
-                  <h2 className={css.title}>
-                    <FormattedMessage id="MapPage.filtersTitle" />
-                  </h2>
                   <SelectSingleFilter
                     className={css.industryFilter}
                     queryParamNames={['pub_industry']}
@@ -288,6 +285,11 @@ export class MapPageComponent extends Component {
                     selectedTribe={this.state.tribe}
                   />
               </div>
+              <a href="http://localhost:3000/map#header">
+                  <button className={css.topButton}>
+                    Go back to top
+                  </button>
+                  </a>
             </div>
           </LayoutWrapperMain>
           <LayoutWrapperFooter>

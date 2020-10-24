@@ -81,7 +81,7 @@
   @media (--viewportMedium) {
     max-width: 1000px;
   }
-  font-family: Josefin Sans; ;
+  font-family: "Josefin Sans", poppins;
   font-weight: normal;
   margin-bottom: 13px;
 }

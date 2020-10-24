@@ -108,12 +108,12 @@ class NativeLand extends Component {
             <FormattedMessage id={'NativeLand.enterLocation'} />
           </button>
           {!this.props.onMapPage ?
-          <h5 className={css.tribeInfo}>
-            <FormattedMessage id={'NativeLand.tribeInfo'} />
-          </h5> : 
             <h5 className={css.tribeInfo}>
-            <FormattedMessage id={'NativeLand.tribeInfoMapPage'} />
-          </h5> }
+              <FormattedMessage id={'NativeLand.tribeInfo'} />
+            </h5> :
+            <h5 className={css.tribeInfo}>
+              <FormattedMessage id={'NativeLand.tribeInfoMapPage'} />
+            </h5>}
         </div> : null;
 
     const locationButtons =
@@ -128,8 +128,8 @@ class NativeLand extends Component {
           {!this.props.onMapPage ?
             <h5>
               <FormattedMessage id={'NativeLand.nativeLandInfo'} />
-            </h5> 
-            : null }
+            </h5>
+            : null}
         </div>
         : null;
 
@@ -144,7 +144,7 @@ class NativeLand extends Component {
 
     return (
       <div className={css.nativeLandInfo}>
-        {!this.props.onMapPage &&
+        {!this.props.onMapPage ?
           <div>
             <div className={css.half}></div>
             {this.state.tribes.length === 0 ?
@@ -157,6 +157,12 @@ class NativeLand extends Component {
               </h2>
             }
           </div>
+          :
+          this.state.tribes.length > 0 ?
+            <h2 className={css.nativeLandHeader}>
+              <FormattedMessage id={'NativeLand.nativeLandHeading'} />
+            </h2>
+            : null
         }
         {modal}
         {tribes}
