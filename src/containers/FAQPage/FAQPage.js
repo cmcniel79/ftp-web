@@ -210,8 +210,7 @@ const FAQPage = () => {
                   <b>Trader Plan - $29.99/month</b>
                   <br />
                     Post up to 10 listings on our Indigenous Marketplace and gain access to our Native Businesses Map. You will have the Premium Sellers badge on all your listings
-                    and can add links to your website to showcase your products. All transactions for your products will take place on your website. You can also purchase additional 
-                    listings at $10/month per 10 listings, up to 30 total listings. 
+                    and can add links to your website to showcase your products. All transactions for your products will take place on your website.  
                 </p>
               </AccordionButton>
               <AccordionButton title="How do I get a Non-Profit Account?">
