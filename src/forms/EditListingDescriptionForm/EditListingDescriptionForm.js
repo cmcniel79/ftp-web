@@ -278,7 +278,6 @@ const EditListingDescriptionFormComponent = props => (
                 maxLength={TITLE_MAX_LENGTH}
               />
             </div>
-            {allowsCustomOrders &&
               <div className={css.lastRow} >
                 <h2 className={css.checkTitle}>
                   <FormattedMessage id="EditListingDescriptionForm.customOrdersTitle" />
@@ -290,7 +289,6 @@ const EditListingDescriptionFormComponent = props => (
                   placeholder="Choose yes/no"
                 />
               </div>
-            }
           </div>
         </div>
         : null;

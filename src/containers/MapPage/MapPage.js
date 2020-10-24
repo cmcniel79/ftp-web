@@ -272,7 +272,6 @@ export class MapPageComponent extends Component {
                 </div>
               </div>
               <div className={css.mapWrapper}>
-                {users && users.length > 0 &&
                   <SearchMapUsers
                     reusableContainerClassName={css.map}
                     bounds={this.state.bounds}
@@ -285,8 +284,9 @@ export class MapPageComponent extends Component {
                       onManageDisableScrolling('MapPage.map', false);
                     }}
                     messages={intl.messages}
+                    selectedIndustry={this.state.industry}
+                    selectedTribe={this.state.tribe}
                   />
-                }
               </div>
             </div>
           </LayoutWrapperMain>

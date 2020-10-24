@@ -154,12 +154,18 @@ const priceLabelsInLocations = (
 
       // Explicit type change to object literal for Google OverlayViews (geolocation is SDK type)
       const geolocation = user.attributes.profile.publicData.companyLocation.location.selectedPlace.origin;
+      const tribe = user.attributes.profile.publicData && user.attributes.profile.publicData.nativeLands ? 
+        user.attributes.profile.publicData.nativeLands : null;
+      const industry = user.attributes.profile.publicData &&  user.attributes.profile.publicData.companyIndustry ? 
+        user.attributes.profile.publicData.companyIndustry : 'other';
       const key = user.id.uuid;
-
+      console.log(industry);
       return {
         markerId: `user_${key}`,
         location: geolocation,
         type: 'user',
+        tribe: tribe,
+        industry: industry,
         componentProps: {
           key,
           className: LABEL_HANDLE,
@@ -369,6 +375,8 @@ class SearchMapWithMapbox extends Component {
       onUserInfoCardClicked,
       createURLToProfile,
       mapComponentRefreshToken,
+      selectedIndustry,
+      selectedTribe,
     } = this.props;
 
     if (this.map) {
@@ -394,6 +402,8 @@ class SearchMapWithMapbox extends Component {
       // create a new marker or use existing one if markerId is among previously rendered markers
       this.currentMarkers = labels
         .filter(v => v != null)
+        .filter(l => selectedIndustry === null || l.industry === selectedIndustry)
+        .filter(l => selectedTribe === null || l.tribe === selectedTribe)
         .map(m => {
           const existingMarkerId = this.currentMarkers.findIndex(
             marker => m.markerId === marker.markerId && marker.marker

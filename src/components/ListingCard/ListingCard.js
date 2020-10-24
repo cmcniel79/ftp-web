@@ -98,10 +98,10 @@ export const ListingCardComponent = props => {
     <div className={css.optionalText}>
       <div className={css.categoryAndTribe}>
         {companyName}
-        {tribe ?
+        {tribe && companyName ?
           " • " + tribe
-          :
-          null
+          : tribe ? tribe 
+          : null
         }
       </div>
     </div>;

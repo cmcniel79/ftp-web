@@ -124,8 +124,12 @@ export class SearchMapUsersComponent extends Component {
       zoom,
       mapsConfig,
       messages,
+      selectedIndustry,
+      selectedTribe,
     } = this.props;
     const classes = classNames(rootClassName || css.root, className);
+    const usersWithLocation = users ? users.filter(u => !!(u.attributes.profile.publicData.companyLocation && u.attributes.profile.publicData.companyLocation.location
+      && u.attributes.profile.publicData.companyLocation.location.selectedPlace && u.attributes.profile.publicData.companyLocation.location.selectedPlace.origin)) : null;
 
     // const users = mapsConfig.fuzzy.enabled
     //   ? withCoordinatesObfuscated(usersWithLocation)
@@ -152,7 +156,7 @@ export class SearchMapUsersComponent extends Component {
           center={center}
           location={location}
           infoCardOpen={infoCardOpen}
-          users={users}
+          users={usersWithLocation}
           mapComponentRefreshToken={this.state.mapReattachmentCount}
           createURLToProfile={this.createURLToProfile}
           onUserClicked={this.onUserClicked}
@@ -162,6 +166,8 @@ export class SearchMapUsersComponent extends Component {
           onMapMoveEnd={onMapMoveEnd}
           zoom={zoom}
           reusableMapHiddenHandle={REUSABLE_MAP_HIDDEN_HANDLE}
+          selectedIndustry={selectedIndustry}
+          selectedTribe={selectedTribe}
         />
       </ReusableMapContainer>
     ) : (
