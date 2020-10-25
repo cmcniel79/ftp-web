@@ -76,27 +76,45 @@ const TopbarMobileMenu = props => {
 
   const user = ensureCurrentUser(currentUser);
   const socialMediaLinks = renderSocialMediaLinks();
+  const regularLinksClasses = isAuthenticated ? css.regularLinks : css.regularLinksLarge;
 
-  const regularLinks = <div className={css.regularLinks}>
-    <NamedLink name="AboutPage" className={css.regularLink}>
-      <FormattedMessage id="TopbarMobileMenu.aboutLink" />
-    </NamedLink>
-    <NamedLink name="SearchPage" className={css.regularLink}>
-      <FormattedMessage id="TopbarMobileMenu.shopLink" />
-    </NamedLink>
-    <NamedLink name="MapPage" className={css.regularLink}>
-      <FormattedMessage id="TopbarMobileMenu.mapLink" />
-    </NamedLink>
-    <NamedLink name="FAQPage" className={css.regularLink}>
-      <FormattedMessage id="TopbarMobileMenu.faqLink" />
-    </NamedLink>
-    <ExternalLink
-      className={css.regularLink}
-      href="https://fromthepeople.blog/"
-    >
-      <FormattedMessage id="TopbarMobileMenu.blogLink" />
-    </ExternalLink>
-  </div>
+  const regularLinks =
+    <div className={regularLinksClasses}>
+      <NamedLink name="AboutPage" className={css.regularLink}>
+        <FormattedMessage id="TopbarMobileMenu.aboutLink" />
+      </NamedLink>
+      <NamedLink name="SearchPage" className={css.regularLink}>
+        <FormattedMessage id="TopbarMobileMenu.shopLink" />
+      </NamedLink>
+      <NamedLink name="MapPage" className={css.regularLink}>
+        <FormattedMessage id="TopbarMobileMenu.mapLink" />
+      </NamedLink>
+      <NamedLink name="FAQPage" className={css.regularLink}>
+        <FormattedMessage id="TopbarMobileMenu.faqLink" />
+      </NamedLink>
+      <ExternalLink
+        className={css.regularLink}
+        href="https://fromthepeople.blog/"
+      >
+        <FormattedMessage id="TopbarMobileMenu.blogLink" />
+      </ExternalLink>
+      {isAuthenticated &&
+        <NamedLink
+          className={css.regularLink}
+          name="LikedListingsPage"
+        >
+          <FormattedMessage id="TopbarMobileMenu.yourLikedListingsLink" />
+        </NamedLink>
+      }
+      {isAuthenticated &&
+        <NamedLink
+          className={css.regularLink}
+          name="ManageListingsPage"
+        >
+          <FormattedMessage id="TopbarMobileMenu.yourListingsLink" />
+        </NamedLink>
+      }
+    </div>
 
   if (!isAuthenticated) {
     const signup = (
@@ -119,6 +137,9 @@ const TopbarMobileMenu = props => {
     return (
       <div className={css.root}>
         <div className={css.content}>
+          <div className={css.socialMedia}>
+            {socialMediaLinks}
+          </div>
           <div className={css.authenticationGreeting}>
             <FormattedMessage
               id="TopbarMobileMenu.unauthorizedGreeting"
@@ -178,18 +199,6 @@ const TopbarMobileMenu = props => {
           <AvatarLarge className={css.avatar} user={currentUser} />
         </div>
         {regularLinks}
-        <NamedLink
-          className={css.regularLink}
-          name="LikedListingsPage"
-        >
-          <FormattedMessage id="TopbarMobileMenu.yourLikedListingsLink" />
-        </NamedLink>
-        <NamedLink
-          className={css.regularLink}
-          name="ManageListingsPage"
-        >
-          <FormattedMessage id="TopbarMobileMenu.yourListingsLink" />
-        </NamedLink>
       </div>
       <div className={css.footer}>
         <NamedLink className={css.createNewListingLink} name="NewListingPage">
