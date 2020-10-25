@@ -178,6 +178,12 @@ export class MapPageComponent extends Component {
       ? classNames(css.topbarBehindModal, css.topbar)
       : css.topbar;
 
+    // Set topbar class based on if a modal is open in
+    // a child component
+    const mobileFilterButtonClasses = this.state.industry
+      ? css.filtersButtonSelected
+      : css.filtersButton;
+
     // N.B. openMobileMap button is sticky.
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
     /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -254,10 +260,10 @@ export class MapPageComponent extends Component {
                 </h5>
                 <div className={css.mobileButtons}>
                   <button
-                    className={css.filtersButton}
+                    className={mobileFilterButtonClasses}
                     onClick={() => this.setState({ isMobileModalOpen: true })}
                   >
-                    Filters
+                    {this.state.industry ? this.state.industry : "Filter"}
                 </button>
                   <NativeLand
                     onSelect={this.selectTribe}
