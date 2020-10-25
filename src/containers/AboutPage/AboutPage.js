@@ -36,11 +36,11 @@ const AboutPage = () => {
 
         <LayoutWrapperMain className={css.staticPageWrapper}>
           <h1 className={css.pageTitle}>Your Indigenous Marketplace and Community.</h1>
-          <img className={css.coverImage} src={image} alt="My first ice cream." />
+          <img className={css.coverImage} src={image} alt="Chase and Isabella" />
 
           <div className={css.contentWrapper}>
             <div className={css.contentSide}>
-              <p>Did you know that Finland has 3.2 million saunas - almost one sauna per person!</p>
+              <p>From The People was founded in April of 2020, as a response to help Indigenous Peoples during the COVID-19 Pandemic</p>
             </div>
 
             <div className={css.contentMain}>

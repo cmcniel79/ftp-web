@@ -128,7 +128,7 @@ export class ProfileSettingsPageComponent extends Component {
         break;
       case "p":
         profileHeading = "Premium";
-        listingsLimit = 5;
+        listingsLimit = 0;
         verification = null;
         break;
       case "a":

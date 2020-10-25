@@ -166,7 +166,6 @@ const EditListingDescriptionFormComponent = props => (
           label={websiteMessage}
           placeholder={websitePlaceholderMessage}
           validate={composeValidators(required(websiteRequiredMessage))}
-          autoFocus
         /> : null;
 
       // Ad account and non-profit account users are not selling physical products and do not need to 

@@ -184,7 +184,7 @@ class EditListingWizard extends Component {
     this.hasScrolledToTab = shouldScroll;
   }
 
-  handlePublishListing(id) {
+  handlePublishListing(id, accountType) {
     const { onPublishListingDraft, currentUser, stripeAccount } = this.props;
 
     const stripeConnected =
@@ -197,7 +197,9 @@ class EditListingWizard extends Component {
       (hasRequirements(stripeAccountData, 'past_due') ||
         hasRequirements(stripeAccountData, 'currently_due'));
 
-    if (stripeConnected && !requirementsMissing) {
+    if(accountType === 'p' || accountType === 'a' || accountType === 'n'){
+      onPublishListingDraft(id);
+    } else if(stripeConnected && !requirementsMissing) {
       onPublishListingDraft(id);
     } else {
       this.setState({
@@ -301,7 +303,7 @@ class EditListingWizard extends Component {
       ensuredCurrentUser.attributes.profile.protectedData.shippingAddress.country : null;
     const allowsCustomOrders = currentUserLoaded && ensuredCurrentUser.attributes.profile.publicData.allowsCustomOrders ?
       ensuredCurrentUser.attributes.profile.publicData.allowsCustomOrders : null;
-
+    
     const rootURL = config.canonicalRootURL;
     const routes = routeConfiguration();
     const { returnURLType, ...pathParams } = params;
@@ -402,10 +404,6 @@ class EditListingWizard extends Component {
               </p>
             ) : (
                   <>
-                    {/* Moved this to the stripe connect account form
-                    <p className={css.modalMessage}>
-                      <FormattedMessage id="EditListingWizard.payoutModalInfo" /> 
-                    </p> */}
                     <StripeConnectAccountForm
                       disabled={formDisabled}
                       inProgress={payoutDetailsSaveInProgress}

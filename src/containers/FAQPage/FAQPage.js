@@ -60,7 +60,7 @@ const FAQPage = () => {
                   <br />
                   <br />
                   We do ask that our non-Native customers refrain from buying or requesting to buy items like ceremonial plants (sage, sweetgrass, etc.) or traditional clothing
-                  (ribbon skirts, Powwow Regalia, etc). These types of items have special purposes within our communities.
+                  (ribbon skirts, Powwow regalia, etc). These types of items have special purposes within our communities.
                   </p>
               </AccordionButton>
             </Accordion>
@@ -75,6 +75,7 @@ const FAQPage = () => {
                 <p>
                   Before you can begin selling you will first need to create an account with From The People and complete the following
                   steps to become a seller.
+                  <br />
                   <br />
                   1. After creating an account, email us at&nbsp;
                 <ExternalLink href="mailto:customersupport@fromthepeople.co">
@@ -104,8 +105,11 @@ const FAQPage = () => {
                   If any vendor on our site is found to have falsified their credentials or falsely claim their products are “American Indian made,”
                   From The People is obligated to report them to the Indian Arts and Crafts Board. For a first time violation of the Act, an
                   individual can face civil or criminal penalties up to a $250,000 fine or a 5-year prison term, or both. To learn more about
-                  the Indian Arts and Crafts Act and compliance, visit here and here.
-                  </p>
+                  the Indian Arts and Crafts Act and compliance, visit&nbsp;
+                  <ExternalLink href="https://www.doi.gov/iacb/act">here</ExternalLink>
+                  &nbsp;and&nbsp;
+              <ExternalLink href="https://www.doi.gov/sites/doi.gov/files/uploads/iacb_know_the_law_brochure_2019_final_web.pdf">here.</ExternalLink>
+                </p>
               </AccordionButton>
               <AccordionButton title="Can I become a seller if I am not part of a federally or state recognized tribe?">
                 <p>
@@ -193,24 +197,23 @@ const FAQPage = () => {
                   <br />
                   We do charge a subscription fee for Premium Accounts and we have 3 subscription plans users can choose from:
                     <br />
-                  <br />
-                  <u><b>Map Only Plan - $4.99/month</b></u>
+                  <b>Map Only Plan - $9.99/month</b>
                   <br />
                     Gain access to post to our Native Businesses Map. You can show the physical location of
                     your business and gain new customers from our Indigenous Marketplace and Community. Your listing on our Map will have links to your website and directions
                     to your business address. This plan is perfect for Native/Indigenous Owned businesses that perform services and do not sell physical goods.
                     <br />
                   <br />
-                  <b>Artisan Plan - $14.99/month</b>
+                  <b>Artisan Plan - $19.99/month</b>
                   <br />
                     Post up to 7 listings on our Indigenous Marketplace and gain access to our Native Businesses Map. You will have the Premium Sellers badge on all your listings
                     and can add links to your website to showcase your products. All transactions for your products will take place on your website.
                     <br />
                   <br />
-                  <b>Trader Plan - $24.99/month</b>
+                  <b>Trader Plan - $29.99/month</b>
                   <br />
                     Post up to 15 listings on our Indigenous Marketplace and gain access to our Native Businesses Map. You will have the Premium Sellers badge on all your listings
-                    and can add links to your website to showcase your products. All transactions for your products will take place on your website.  
+                    and can add links to your website to showcase your products. All transactions for your products will take place on your website.
                 </p>
               </AccordionButton>
               <AccordionButton title="How do I get a Non-Profit Account?">

@@ -793,7 +793,7 @@
   "ProfileSettingsPage.listingsLimit": "{listingsLimit} listings",
   "ProfileSettingsPage.listingsHeader": "Listings Limit",
   "ProfileSettingsPage.noListings": "You cannot post listings. See our FAQ to learn how you can post listings.",
-  "ProfileSettingsPage.chargebeeText": "We use ChargeBee to manage subscriptions. You can manage your subscription by following this link: ",
+  "ProfileSettingsPage.chargebeeText": "We use Chargebee to manage subscriptions. You can manage your subscription by following this link: ",
   "ProfileSettingsPage.chargebeeLink": "Manage Subscription",
   "ProfileSettingsForm.socialMedia": "Social Media accounts",
   "ProfileSettingsForm.facebookLabel": "Facebook Account",

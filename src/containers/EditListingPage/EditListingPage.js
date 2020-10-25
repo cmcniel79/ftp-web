@@ -116,7 +116,11 @@ export const EditListingPageComponent = props => {
   
   const isUnderLimit = listingsLimit && allOwnListings && 
     allOwnListings.data.data.length > 0 && listingsLimit > allOwnListings.data.data.length;
-
+  console.log(isUnderLimit);
+  console.log(accountLimit);
+  console.log(listingsLimit);
+  console.log(allOwnListings);
+  console.log(currentListingState);
   if (shouldRedirect) {
     const isPendingApproval =
       currentListing && currentListingState === LISTING_STATE_PENDING_APPROVAL;
@@ -124,7 +128,6 @@ export const EditListingPageComponent = props => {
     // If page has already listingId (after submit) and current listings exist
     // redirect to listing page
     const listingSlug = currentListing ? createSlug(currentListing.attributes.title) : null;
-
     const redirectProps = isPendingApproval
       ? {
           name: 'ListingPageVariant',
