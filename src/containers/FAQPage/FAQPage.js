@@ -201,15 +201,15 @@ const FAQPage = () => {
                     to your business address. This plan is perfect for Native/Indigenous Owned businesses that perform services and do not sell physical goods.
                     <br />
                   <br />
-                  <b>Artisan Plan - $19.99/month</b>
+                  <b>Artisan Plan - $14.99/month</b>
                   <br />
-                    Post up to 5 listings on our Indigenous Marketplace and gain access to our Native Businesses Map. You will have the Premium Sellers badge on all your listings
+                    Post up to 7 listings on our Indigenous Marketplace and gain access to our Native Businesses Map. You will have the Premium Sellers badge on all your listings
                     and can add links to your website to showcase your products. All transactions for your products will take place on your website.
                     <br />
                   <br />
-                  <b>Trader Plan - $29.99/month</b>
+                  <b>Trader Plan - $24.99/month</b>
                   <br />
-                    Post up to 10 listings on our Indigenous Marketplace and gain access to our Native Businesses Map. You will have the Premium Sellers badge on all your listings
+                    Post up to 15 listings on our Indigenous Marketplace and gain access to our Native Businesses Map. You will have the Premium Sellers badge on all your listings
                     and can add links to your website to showcase your products. All transactions for your products will take place on your website.  
                 </p>
               </AccordionButton>

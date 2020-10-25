@@ -51,6 +51,11 @@ export const ContactDetailsPageComponent = props => {
   const protectedData = user.attributes.profile.protectedData || {};
   const currentPhoneNumber = protectedData.phoneNumber || '';
   const currentShippingAddress = protectedData.shippingAddress || null;
+
+  // Pass in account type to Payment Methods tab to make sure Premium Users 
+  // do not get confused about payments and subscriptions
+  const accountType = user.attributes.profile.publicData && user.attributes.profile.publicData.account ? 
+    user.attributes.profile.publicData : null; 
  
   const contactInfoForm = user.id ? (
     <ContactDetailsForm
@@ -86,7 +91,7 @@ export const ContactDetailsPageComponent = props => {
           />
           <UserNav selectedPageName="ContactDetailsPage" />
         </LayoutWrapperTopbar>
-        <LayoutWrapperAccountSettingsSideNav currentTab="ContactDetailsPage" />
+        <LayoutWrapperAccountSettingsSideNav currentTab="ContactDetailsPage" accountType={accountType}/>
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.title}>

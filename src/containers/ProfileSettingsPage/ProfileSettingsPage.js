@@ -15,6 +15,7 @@ import {
   LayoutWrapperFooter,
   Footer,
   NamedLink,
+  ExternalLink,
 } from '../../components';
 import { ProfileSettingsForm } from '../../forms';
 import { TopbarContainer } from '../../containers';
@@ -216,9 +217,18 @@ export class ProfileSettingsPageComponent extends Component {
                     </h3>
                     <FormattedMessage id="ProfileSettingsPage.listingsLimit" values={{ listingsLimit }} />
                   </div>
-                  <p className={css.faqLink}>
-                    <FormattedMessage id="ProfileSettingsPage.faqInfoLink" values={{ faqLink }} />
-                  </p>
+                  {accountType === 'p' || accountType === 'a' ?
+                    <p>
+                      <FormattedMessage id="ProfileSettingsPage.chargebeeText" />
+                      <ExternalLink href="https://fromthepeople.chargebeeportal.com/portal/v2/login?forward=portal_main">
+                        <FormattedMessage id="ProfileSettingsPage.chargebeeLink" />
+                      </ExternalLink>
+                    </p>
+                    :
+                    <p className={css.faqLink}>
+                      <FormattedMessage id="ProfileSettingsPage.faqInfoLink" values={{ faqLink }} />
+                    </p>
+                  }
                 </div>
               }
               {profileSettingsForm}
