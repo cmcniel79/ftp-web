@@ -40,6 +40,18 @@
 .adLink {
   @apply --marketplaceH4FontStyles;
   color: var(--matterColor);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  -webkit-line-clamp: 1;
+  -moz-box-orient: vertical;
+  /* fallback option */
+  word-break: break-all;
+  /* use break-word if available */
+  word-break: break-word;
+  hyphens: auto;
+  /* Remove default margins from font */
   margin-top: 0;
   margin-bottom: 0;
   font-size: 16px;
@@ -108,6 +120,7 @@
   border-radius: 5px;
   padding: 0 5px 0 5px;
   font-size: 13px;
+  line-height: 25px;
 }
 
 .adTag {
@@ -122,6 +135,7 @@
   border: 3px solid white;
   padding: 0 4px 0 4px;
   font-size: 13px;
+  line-height: 25px;
 }
 
 .nonProfitTag {
@@ -135,6 +149,7 @@
   border-radius: 5px;
   padding: 0 5px 0 5px;
   font-size: 13px;
+  line-height: 25px;
 }
 
 .verifiedImage {

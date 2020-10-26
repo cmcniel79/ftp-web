@@ -47,7 +47,7 @@ class ListingImage extends Component {
 const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export const ListingCardComponent = props => {
-  const { className, rootClassName, intl, listing, renderSizes, currentUser, 
+  const { className, rootClassName, intl, listing, renderSizes, currentUser,
     onUpdateLikedListings, isListingLiked, removeListing } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
@@ -75,6 +75,8 @@ export const ListingCardComponent = props => {
     author.attributes.profile.publicData.tribe : null;
   const companyName = author.attributes.profile.publicData && author.attributes.profile.publicData.companyName ?
     author.attributes.profile.publicData.companyName : null;
+  const companyIndustry = author.attributes.profile.publicData && author.attributes.profile.publicData.companyIndustry ?
+    author.attributes.profile.publicData.companyIndustry : null;
 
   // Text above the listing title will need to change based on the account type.
   // Standard, enrolled and premium accounts will have listing price and the listing category and the tribe associated
@@ -86,7 +88,7 @@ export const ListingCardComponent = props => {
         {formattedPrice}
       </div>
       <div className={css.categoryAndTribe}>
-        {category} 
+        {category}
         {tribe ?
           " • " + tribe
           :
@@ -96,12 +98,15 @@ export const ListingCardComponent = props => {
     </div>
     :
     <div className={css.optionalText}>
-      <div className={css.categoryAndTribe}>
+      <div className={css.priceValue}>
         {companyName}
-        {tribe && companyName ?
+      </div>
+      <div className={css.categoryAndTribe}>
+        {companyIndustry}
+        {tribe && companyIndustry ?
           " • " + tribe
-          : tribe ? tribe 
-          : null
+          : tribe ? tribe
+            : null
         }
       </div>
     </div>;
@@ -204,15 +209,15 @@ export const ListingCardComponent = props => {
         </div>
       </div>
       <div className={css.cardText}>
-        { accountType === "a" || accountType === "n" ? (
+        {accountType === "a" || accountType === "n" ? (
           <ExternalLink className={css.adLink} href={externalLink}>
             {optionalText}
             {title}
           </ExternalLink>
         ) : <NamedLink className={css.link} name="ListingPage" params={{ id, slug }}>
-              {optionalText}
-              {title}
-            </NamedLink>
+            {optionalText}
+            {title}
+          </NamedLink>
         }
       </div>
     </div>
