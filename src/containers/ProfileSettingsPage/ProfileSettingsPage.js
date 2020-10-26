@@ -169,6 +169,11 @@ export class ProfileSettingsPageComponent extends Component {
 
     listingsLimit = accountLimit ? accountLimit : listingsLimit;
 
+    const premiumPlan = 
+    accountType === 'p' && accountLimit > 7 ? "Trader Plan" : 
+      accountType === 'p' && accountLimit > 0 ? "Artist Plan" : 
+        accountType === 'p' ? "Map Only Plan" : null
+
     return (
       <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
         <LayoutSingleColumn>
@@ -203,6 +208,14 @@ export class ProfileSettingsPageComponent extends Component {
                     </h3>
                     <FormattedMessage id="ProfileSettingsPage.profileHeading" values={{ profileHeading }} />
                   </div>
+                  {premiumPlan &&
+                        <div className={css.infoLine}>
+                        <h3 className={css.lineTitle}>
+                          <FormattedMessage id="ProfileSettingsPage.planLine" />
+                        </h3>
+                        {premiumPlan}
+                      </div>
+                      }
                   {verification &&
                     <div className={css.infoLine}>
                       <h3 className={css.lineTitle}>

@@ -110,9 +110,11 @@ export const EditListingPageComponent = props => {
     currentUser.attributes.profile.publicData.accountLimit : null;
 
   const listingsLimit = accountLimit ? accountLimit : 
-    accountType && accountType === "p" ? 3 :
+    accountType && accountType === "u" ? 5 :
+    accountType && accountType === "e" ? 30 :
+    accountType && accountType === "p" ? 0 :
     accountType && accountType === "a" ? 1 :
-    accountType && accountType === "e" ? 15 : 0;
+    accountType && accountType === "n" ? 1 : 0;
   
   const isUnderLimit = listingsLimit && allOwnListings && 
     allOwnListings.data.data.length > 0 && listingsLimit > allOwnListings.data.data.length;

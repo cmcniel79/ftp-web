@@ -788,6 +788,7 @@
   "ProfileSettingsPage.unverifiedAccount": "Unverified",
   "ProfileSettingsPage.profileType": "Profile Information",
   "ProfileSettingsPage.profileLine": "Account Type",
+  "ProfileSettingsPage.planLine": "Premium Plan",
   "ProfileSettingsPage.verificationLine": "Enrollment Verification",
   "ProfileSettingsPage.listingsLine": "Listings Limit",
   "ProfileSettingsPage.listingsLimit": "{listingsLimit} listings",
