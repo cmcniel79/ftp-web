@@ -205,6 +205,10 @@
     /* Hightlight the username when the whole item is hovered */
     color: var(--marketplaceColor);
   }
+  &:hover .itemListing {
+    /* Hightlight the username when the whole item is hovered */
+    color: var(--marketplaceColor);
+  }
 }
 
 .itemAvatar {
@@ -246,7 +250,7 @@
   flex: 1;
   flex-direction: column;
 
-  margin-top: 5px;
+  margin-top: 0;
   margin-bottom: 0;
 
   @media (--viewportMedium) {
@@ -271,6 +275,22 @@
     margin-bottom: 0;
   }
 }
+
+.itemListing {
+  /* Font */
+  font-size: 13px;
+  color: var(--matterColor);
+  line-height: 15px;
+
+  margin-top: 5px;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+}
+
 
 .bookingInfoWrapper {
   @apply --marketplaceTinyFontStyles;

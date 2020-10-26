@@ -213,7 +213,7 @@ class ProfileSettingsFormComponent extends Component {
             true : false;
           const showCompanyInfo = accountType === "p" || accountType === "a" || accountType === "n" ?
             true : false;
-          const showSocialMediaFields = accountType !== "a" || accountType !== "n" ?
+          const showSocialMediaFields = accountType !== "a" ?
             true : false;
           // Whenever industry filter in marketplace-custom-config is changed then this needs to be updated
           const industryOptions = [ 
