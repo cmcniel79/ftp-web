@@ -155,6 +155,7 @@ export { default as SelectSubcategoryFilter } from './SelectSubcategoryFilter/Se
 export { default as SortBy } from './SortBy/SortBy';
 export { default as StripeConnectAccountStatusBox } from './StripeConnectAccountStatusBox/StripeConnectAccountStatusBox';
 export { default as StripePaymentAddress } from './StripePaymentAddress/StripePaymentAddress';
+export { default as ShippingAddress } from './ShippingAddress/ShippingAddress';
 export { default as UserCard } from './UserCard/UserCard';
 export { default as UserSocialMedia } from './UserSocialMedia/UserSocialMedia';
 

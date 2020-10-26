@@ -724,6 +724,10 @@ export class CheckoutPageComponent extends Component {
       currentUser && currentUser.attributes
         ? `${currentUser.attributes.profile.firstName} ${currentUser.attributes.profile.lastName}`
         : null;
+    const shippingAddress =      
+     currentUser && currentUser.attributes
+    ? currentUser.attributes.profile.protectedData.shippingAddress
+    : null;
 
     // If paymentIntent status is not waiting user action,
     // confirmCardPayment has been called previously.
@@ -733,7 +737,7 @@ export class CheckoutPageComponent extends Component {
     // If your marketplace works mostly in one country you can use initial values to select country automatically
     // e.g. {country: 'FI'}
 
-    const initalValuesForStripePayment = { name: userName };
+    const initalValuesForStripePayment = { name: userName, shippingAddress };
 
     return (
       <Page {...pageProps}>
@@ -798,6 +802,7 @@ export class CheckoutPageComponent extends Component {
                   }
                   paymentIntent={paymentIntent}
                   onStripeInitialized={this.onStripeInitialized}
+                  shippingAddress={shippingAddress}
                 />
               ) : null}
               {isPaymentExpired ? (

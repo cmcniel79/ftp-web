@@ -150,7 +150,7 @@
 
 .heading {
   margin-top: 29px;
-  margin-bottom: 34px;
+  margin-bottom: 0;
   padding: 0 24px;
 
   @media (--viewportMedium) {
