@@ -247,7 +247,7 @@
 
 .map {
   width: 100vw;
-  height: 100vh;
+  height: 80vh;
   @media (--viewportMedium) {
     margin: auto;
     /* Fixed content needs width relative to viewport */

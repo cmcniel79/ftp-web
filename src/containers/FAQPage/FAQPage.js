@@ -195,7 +195,8 @@ const FAQPage = () => {
                   &nbsp;with information about your business and why you would like to have a Premium Account, and include either your physical business address or your website.
                   <br />
                   <br />
-                  We do charge a subscription fee for Premium Accounts and we have 3 subscription plans users can choose from:
+                  We charge a subscription fee for Premium Accounts and have 3 subscription plans users can choose from:
+                    <br />
                     <br />
                   <b>Map Only Plan - $9.99/month</b>
                   <br />

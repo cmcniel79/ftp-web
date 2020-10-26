@@ -197,6 +197,8 @@ class EditListingWizard extends Component {
       (hasRequirements(stripeAccountData, 'past_due') ||
         hasRequirements(stripeAccountData, 'currently_due'));
 
+    // Added for Premium, Ad and non-profit accounts. They should not add payout info before being
+    // allowed to post their items.
     if(accountType === 'p' || accountType === 'a' || accountType === 'n'){
       onPublishListingDraft(id);
     } else if(stripeConnected && !requirementsMissing) {
