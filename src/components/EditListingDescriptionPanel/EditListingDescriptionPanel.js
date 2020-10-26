@@ -68,8 +68,7 @@ const EditListingDescriptionPanel = props => {
             title: title.trim(),
             description,
             publicData: {
-              category, subCategory, style, region, material, customOrders: customIsAvailable, sizes,
-              verifiedSeller, websiteLink
+              category, subCategory, style, region, material, customOrders: customIsAvailable, sizes, websiteLink, verifiedSeller
             },
           };
           onSubmit(updateValues);

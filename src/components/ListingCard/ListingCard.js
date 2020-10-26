@@ -86,7 +86,7 @@ export const ListingCardComponent = props => {
         {formattedPrice}
       </div>
       <div className={css.categoryAndTribe}>
-        {category}
+        {category} 
         {tribe ?
           " • " + tribe
           :
@@ -113,6 +113,8 @@ export const ListingCardComponent = props => {
   // tags onto listing image based on the account type.
   let imagesAndLinks;
   switch (validAccountType) {
+    // Default case used for sellers without any accountType. This should not happen as they should have 'u' 
+    // for their accountType as they are unverified. Default will still pick them up however.
     default:
       imagesAndLinks =
         <NamedLink name="ListingPage" params={{ id, slug }}>

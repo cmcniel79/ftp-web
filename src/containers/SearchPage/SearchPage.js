@@ -153,12 +153,12 @@ export class SearchPageComponent extends Component {
     // this.state.likedListings = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likedListings ?
     //   Object.values(currentUser.attributes.profile.privateData.likedListings) : [];
     // if(searchInProgress) {
-    for (var i = listings.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var temp = listings[i];
-      listings[i] = listings[j];
-      listings[j] = temp;
-  }
+  //   for (var i = listings.length - 1; i > 0; i--) {
+  //     var j = Math.floor(Math.random() * (i + 1));
+  //     var temp = listings[i];
+  //     listings[i] = listings[j];
+  //     listings[j] = temp;
+  // }
 // }
     // N.B. openMobileMap button is sticky.
     // For some reason, stickyness doesn't work on Safari, if the element is <button>

@@ -40,7 +40,7 @@ const AboutPage = () => {
 
           <div className={css.contentWrapper}>
             <div className={css.contentSide}>
-              <p>From The People was founded in April of 2020, as a response to help Indigenous Peoples during the COVID-19 Pandemic</p>
+              <p>From The People was founded in May of 2020, as a way to help Indigenous Peoples during the COVID-19 Pandemic</p>
             </div>
 
             <div className={css.contentMain}>
