@@ -139,7 +139,6 @@ const ShippingAddress = props => {
 
 };
 ShippingAddress.defaultProps = {
-    country: null,
     disabled: false,
     fieldId: null,
 };
@@ -147,9 +146,7 @@ ShippingAddress.defaultProps = {
 ShippingAddress.propTypes = {
     country: string,
     disabled: bool,
-    form: object.isRequired,
     fieldId: string,
-
     // from injectIntl
     intl: intlShape.isRequired,
 };

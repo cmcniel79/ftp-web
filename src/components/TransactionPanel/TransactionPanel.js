@@ -217,8 +217,8 @@ export class TransactionPanelComponent extends Component {
       if (txIsEnquired(tx)) {
         const transitions = Array.isArray(nextTransitions)
           ? nextTransitions.map(transition => {
-              return transition.attributes.name;
-            })
+            return transition.attributes.name;
+          })
           : [];
         const hasCorrectNextTransition =
           transitions.length > 0 && transitions.includes(TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY);
@@ -294,8 +294,8 @@ export class TransactionPanelComponent extends Component {
     const unitTranslationKey = isNightly
       ? 'TransactionPanel.perNight'
       : isDaily
-      ? 'TransactionPanel.perDay'
-      : 'TransactionPanel.perUnit';
+        ? 'TransactionPanel.perDay'
+        : 'TransactionPanel.perUnit';
 
     const price = currentListing.attributes.price;
     const bookingSubTitle = price
@@ -337,6 +337,40 @@ export class TransactionPanelComponent extends Component {
 
     const classes = classNames(rootClassName || css.root, className);
 
+    const shippingDetails = transaction.attributes.protectedData ? transaction.attributes.protectedData :
+      null;
+
+    const shippingDetailsSection = shippingDetails ? (
+      <div>
+        <div className={css.addressRow}>
+          <FormattedMessage id="TransactionPanel.name" /> {shippingDetails.name}
+        </div>
+        <div className={css.addressRow}>
+          <FormattedMessage id="TransactionPanel.addressLine1" /> {shippingDetails.addressLine1}
+        </div>
+        {shippingDetails.addressLine2 &&
+          <div className={css.addressRow}>
+            <FormattedMessage id="TransactionPanel.addressLine2" /> {shippingDetails.addressLine2}
+          </div>}
+        <div className={css.addressRow}>
+          <FormattedMessage id="TransactionPanel.postal" /> {shippingDetails.postal}
+        </div>
+        <div className={css.addressRow}>
+          <FormattedMessage id="TransactionPanel.city" /> {shippingDetails.city}
+        </div>
+        <div className={css.addressRow}>
+          <FormattedMessage id="TransactionPanel.state" />  {shippingDetails.state}
+        </div>
+        <div className={css.addressRow}>
+          <FormattedMessage id="TransactionPanel.country" />  {shippingDetails.country}
+        </div>
+      </div>
+    ) : (
+        <div>
+          <FormattedMessage id="TransactionPanel.noAddress" />
+        </div>
+      );
+
     return (
       <div className={classes}>
         <div className={css.container}>
@@ -349,17 +383,13 @@ export class TransactionPanelComponent extends Component {
               provider={currentProvider}
               isCustomer={isCustomer}
             />
-            {isProvider ? (
-              <div className={css.avatarWrapperProviderDesktop}>
-                <AvatarLarge user={currentCustomer} className={css.avatarDesktop} />
-              </div>
-            ) : null}
 
             <PanelHeading
               panelHeadingState={stateData.headingState}
               transactionRole={transactionRole}
               providerName={authorDisplayName}
               customerName={customerDisplayName}
+              customerId={currentCustomer.id}
               isCustomerBanned={isCustomerBanned}
               listingId={currentListing.id && currentListing.id.uuid}
               listingTitle={listingTitle}
@@ -367,13 +397,14 @@ export class TransactionPanelComponent extends Component {
             />
 
             <div className={css.bookingDetailsMobile}>
-              <AddressLinkMaybe
-                rootClassName={css.addressMobile}
-                location={location}
-                geolocation={geolocation}
-                showAddress={stateData.showAddress}
-              />
               <BreakdownMaybe transaction={currentTransaction} transactionRole={transactionRole} />
+            </div>
+
+            <div className={css.addressSection}>
+              <h3 className={css.addressHeading}>
+                <FormattedMessage id="TransactionPanel.customerAddress" />
+              </h3>
+              {shippingDetailsSection}
             </div>
 
             {savePaymentMethodFailed ? (
@@ -409,8 +440,8 @@ export class TransactionPanelComponent extends Component {
                 onSubmit={this.onMessageSubmit}
               />
             ) : (
-              <div className={css.sendingMessageNotAllowed}>{sendingMessageNotAllowed}</div>
-            )}
+                <div className={css.sendingMessageNotAllowed}>{sendingMessageNotAllowed}</div>
+              )}
 
             {stateData.showSaleButtons ? (
               <div className={css.mobileActionButtons}>{saleButtons}</div>

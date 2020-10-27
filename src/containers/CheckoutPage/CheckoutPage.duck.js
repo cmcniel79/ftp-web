@@ -239,12 +239,14 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
 };
 
 export const confirmPayment = orderParams => (dispatch, getState, sdk) => {
+  // Changed orderParams to include fnParams. Only way I could get shippingAddress to be passed in
+  // orderparams = { fnParams: { transactionId, paymentIntents } shippingAddress}
+  console.log(orderParams);
   dispatch(confirmPaymentRequest());
-
   const bodyParams = {
-    id: orderParams.transactionId,
+    id: orderParams.fnParams.transactionId,
     transition: TRANSITION_CONFIRM_PAYMENT,
-    params: {},
+    params: { protectedData: orderParams.shippingDetails },
   };
 
   return sdk.transactions
@@ -256,8 +258,8 @@ export const confirmPayment = orderParams => (dispatch, getState, sdk) => {
     })
     .catch(e => {
       dispatch(confirmPaymentError(storableError(e)));
-      const transactionIdMaybe = orderParams.transactionId
-        ? { transactionId: orderParams.transactionId.uuid }
+      const transactionIdMaybe = orderParams.fnParams.transactionId
+        ? { transactionId: orderParams.fnParams.transactionId.uuid }
         : {};
       log.error(e, 'initiate-order-failed', {
         ...transactionIdMaybe,

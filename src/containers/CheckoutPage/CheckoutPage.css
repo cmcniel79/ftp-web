@@ -97,7 +97,7 @@
   @media (--viewportLarge) {
     flex-grow: 0;
     flex-basis: 519px;
-    margin-top: 121px;
+    margin-top: 30px;
     margin-right: 132px;
   }
 }
@@ -155,12 +155,12 @@
 
   @media (--viewportMedium) {
     margin-top: 27px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 
   @media (--viewportLarge) {
     margin-top: 0px;
-    margin-bottom: 54px;
+    margin-bottom: 24px;
     padding: 0;
   }
 }
@@ -282,7 +282,7 @@
     padding-bottom: 55px;
 
     /* Position */
-    margin: 120px 0 24px 0;
+    margin: 50px 0 24px 0;
 
     /* Coloring */
     background-color: var(--matterColorLight);

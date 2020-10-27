@@ -57,7 +57,7 @@ import { storeData, storedData, clearData } from './CheckoutPageSessionHelpers';
 import css from './CheckoutPage.css';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import Decimal from 'decimal.js';
-const { UUID, Money} = sdkTypes;
+const { UUID, Money } = sdkTypes;
 
 const STORAGE_KEY = 'CheckoutPage';
 
@@ -76,8 +76,8 @@ const paymentFlow = (selectedPaymentMethod, saveAfterOnetimePayment) => {
   return selectedPaymentMethod === 'defaultCard'
     ? USE_SAVED_CARD
     : saveAfterOnetimePayment
-    ? PAY_AND_SAVE_FOR_LATER_USE
-    : ONETIME_PAYMENT;
+      ? PAY_AND_SAVE_FOR_LATER_USE
+      : ONETIME_PAYMENT;
 };
 
 const initializeOrderPage = (initialValues, routes, dispatch) => {
@@ -92,8 +92,8 @@ const checkIsPaymentExpired = existingTransaction => {
   return txIsPaymentExpired(existingTransaction)
     ? true
     : txIsPaymentPending(existingTransaction)
-    ? minutesBetween(existingTransaction.attributes.lastTransitionedAt, new Date()) >= 15
-    : false;
+      ? minutesBetween(existingTransaction.attributes.lastTransitionedAt, new Date()) >= 15
+      : false;
 };
 
 export class CheckoutPageComponent extends Component {
@@ -144,7 +144,6 @@ export class CheckoutPageComponent extends Component {
       fetchStripeCustomer,
       history,
     } = this.props;
-    console.log(bookingData);
 
     // Fetch currentUser with stripeCustomer entity
     // Note: since there's need for data loading in "componentWillMount" function,
@@ -216,6 +215,7 @@ export class CheckoutPageComponent extends Component {
       paymentIntent,
       selectedPaymentMethod,
       saveAfterOnetimePayment,
+      shippingDetails
     } = handlePaymentParams;
     const storedTx = ensureTransaction(pageData.transaction);
 
@@ -282,11 +282,11 @@ export class CheckoutPageComponent extends Component {
       const paymentParams =
         selectedPaymentFlow !== USE_SAVED_CARD
           ? {
-              payment_method: {
-                billing_details: billingDetails,
-                card: card,
-              },
-            }
+            payment_method: {
+              billing_details: billingDetails,
+              card: card,
+            },
+          }
           : {};
 
       const params = {
@@ -308,9 +308,10 @@ export class CheckoutPageComponent extends Component {
 
     // Step 3: complete order by confirming payment to Marketplace API
     // Parameter should contain { paymentIntent, transactionId } returned in step 2
+    // Modified how parameters are passed in to include shippingAddress
     const fnConfirmPayment = fnParams => {
       createdPaymentIntent = fnParams.paymentIntent;
-      return onConfirmPayment(fnParams);
+      return onConfirmPayment({ fnParams, shippingDetails });
     };
 
     // Step 4: send initial message
@@ -366,8 +367,8 @@ export class CheckoutPageComponent extends Component {
       selectedPaymentFlow === USE_SAVED_CARD && hasDefaultPaymentMethod
         ? { paymentMethod: stripePaymentMethodId }
         : selectedPaymentFlow === PAY_AND_SAVE_FOR_LATER_USE
-        ? { setupPaymentMethodForSaving: true }
-        : {};
+          ? { setupPaymentMethodForSaving: true }
+          : {};
 
     const orderParams = {
       listingId: pageData.listing.id,
@@ -395,6 +396,7 @@ export class CheckoutPageComponent extends Component {
       state,
       country,
       saveAfterOnetimePayment,
+      shippingAddress
     } = formValues;
 
     // Billing address is recommended.
@@ -404,15 +406,15 @@ export class CheckoutPageComponent extends Component {
     const addressMaybe =
       addressLine1 && postal
         ? {
-            address: {
-              city: city,
-              country: country,
-              line1: addressLine1,
-              line2: addressLine2,
-              postal_code: postal,
-              state: state,
-            },
-          }
+          address: {
+            city: city,
+            country: country,
+            line1: addressLine1,
+            line2: addressLine2,
+            postal_code: postal,
+            state: state,
+          },
+        }
         : {};
     const billingDetails = {
       name,
@@ -420,6 +422,10 @@ export class CheckoutPageComponent extends Component {
       ...addressMaybe,
     };
 
+    const shippingDetails = {
+      name,
+      ...shippingAddress
+    }
     const requestPaymentParams = {
       pageData: this.state.pageData,
       speculatedTransaction,
@@ -430,6 +436,7 @@ export class CheckoutPageComponent extends Component {
       paymentIntent,
       selectedPaymentMethod: paymentMethod,
       saveAfterOnetimePayment: !!saveAfterOnetimePayment,
+      shippingDetails
     };
 
     this.handlePaymentIntent(requestPaymentParams)
@@ -571,7 +578,7 @@ export class CheckoutPageComponent extends Component {
     const tx = existingTransaction.booking ? existingTransaction : speculatedTransaction;
     const txBooking = ensureBooking(tx.booking);
     const breakdown =
-      tx.id && txBooking.id ? (
+      tx.id ? (
         <BookingBreakdown
           className={css.bookingBreakdown}
           userRole="customer"
@@ -600,7 +607,7 @@ export class CheckoutPageComponent extends Component {
       !retrievePaymentIntentError &&
       !isPaymentExpired
     );
- 
+
     const firstImage =
       currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
 
@@ -708,8 +715,8 @@ export class CheckoutPageComponent extends Component {
     const unitTranslationKey = isNightly
       ? 'CheckoutPage.perNight'
       : isDaily
-      ? 'CheckoutPage.perDay'
-      : 'CheckoutPage.perUnit';
+        ? 'CheckoutPage.perDay'
+        : 'CheckoutPage.perUnit';
 
     const price = currentListing.attributes.price;
     const formattedPrice = formatMoney(intl, price);
@@ -724,10 +731,10 @@ export class CheckoutPageComponent extends Component {
       currentUser && currentUser.attributes
         ? `${currentUser.attributes.profile.firstName} ${currentUser.attributes.profile.lastName}`
         : null;
-    const shippingAddress =      
-     currentUser && currentUser.attributes
-    ? currentUser.attributes.profile.protectedData.shippingAddress
-    : null;
+    const shippingAddress =
+      currentUser && currentUser.attributes
+        ? currentUser.attributes.profile.protectedData.shippingAddress
+        : null;
 
     // If paymentIntent status is not waiting user action,
     // confirmCardPayment has been called previously.
@@ -830,7 +837,7 @@ export class CheckoutPageComponent extends Component {
             </div>
             <div className={css.detailsHeadings}>
               <h2 className={css.detailsTitle}>{listingTitle}</h2>
-              <p className={css.detailsSubtitle}>{detailsSubTitle}</p>
+              {/* <p className={css.detailsSubtitle}>{detailsSubTitle}</p> */}
             </div>
             {speculateTransactionErrorMessage}
             {breakdown}
