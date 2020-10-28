@@ -159,6 +159,7 @@ export function fetchProducts() {
     dispatch(fetchProductsBegin());
     return getProducts()
       .then(json => {
+        console.log(json);
         dispatch(fetchProductsSuccess(json));
         let ids = [];
         ids.push({ type: 'user', id: new UUID(json.body[0].uuid) });
@@ -186,6 +187,7 @@ export const loadData = () => (dispatch, getState, sdk) => {
   return Promise.all([
     dispatch(fetchProducts())
       .then(ids => {
+        console.log(ids);
         dispatch(loadUsers(ids));
       })
   ]);

@@ -72,7 +72,7 @@ export class MapPageComponent extends Component {
 
   componentDidMount() {
     if (window) {
-      loadData();
+      this.props.onLoadData();
       // this.loadInitialData();
     }
   }
@@ -360,6 +360,7 @@ const mapStateToProps = state => {
     searchParams,
     userIds,
   } = state.MapPage;
+  console.log(userIds);
   const users = userIds.length > 0 ? getMarketplaceEntities(state, userIds) : null;
 
   return {
@@ -374,6 +375,7 @@ const mapStateToProps = state => {
 
 
 const mapDispatchToProps = dispatch => ({
+  onLoadData: () => dispatch(loadData()),
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
 });
