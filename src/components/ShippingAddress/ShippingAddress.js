@@ -121,6 +121,7 @@ const ShippingAddress = props => {
                     className={css.field}
                     label={countryLabel}
                     validate={countryRequired}
+                    disabled={true}
                 >
                     <option disabled value="">
                         {countryPlaceholder}

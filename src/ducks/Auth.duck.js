@@ -209,12 +209,12 @@ export const signup = params => (dispatch, getState, sdk) => {
     ? {
       email, password, firstName, lastName, protectedData: {
         isAdult: isAdult, shippingAddress: { country: country } },
-      publicData: { account: "" }
+      publicData: { account: "", country: country }
     }
     : {
       email, password, firstName, lastName, protectedData: {
         isAdult: isAdult, shippingAddress: { country: country }, ...rest}, 
-      publicData: { account: "" }
+      publicData: { account: "" , country: country}
     };
 
   // We must login the user if signup succeeds since the API doesn't

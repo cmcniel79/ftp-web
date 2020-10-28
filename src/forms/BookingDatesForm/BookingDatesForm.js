@@ -38,7 +38,7 @@ export class BookingDatesFormComponent extends Component {
   // focus on that input, otherwise continue with the
   // default handleSubmit function.
   handleFormSubmit(e) {
-    this.props.onSubmit(e);
+    this.props.onSubmit(this.props.isDomesticOrder);
   }
 
   // When the values of the form are updated we need to fetch
@@ -81,7 +81,6 @@ export class BookingDatesFormComponent extends Component {
         </div>
       );
     }
-
     return (
       <FinalForm
         {...rest}

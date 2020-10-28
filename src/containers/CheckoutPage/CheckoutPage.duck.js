@@ -241,7 +241,6 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
 export const confirmPayment = orderParams => (dispatch, getState, sdk) => {
   // Changed orderParams to include fnParams. Only way I could get shippingAddress to be passed in
   // orderparams = { fnParams: { transactionId, paymentIntents } shippingAddress}
-  console.log(orderParams);
   dispatch(confirmPaymentRequest());
   const bodyParams = {
     id: orderParams.fnParams.transactionId,
@@ -312,6 +311,7 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
   const isPrivilegedTransition = isPrivileged(transition);
 
   const bookingData = orderParams.bookingData;
+  console.log(bookingData);
   // {
   //   // startDate: orderParams.bookingStart,
   //   // endDate: orderParams.bookingEnd,

@@ -103,8 +103,14 @@ const requestSaveShippingAddress = params => (dispatch, getState, sdk) => {
   const shippingAddress = params.shippingAddress;
 
   return sdk.currentUser
-    .updateProfile(
-      { protectedData: { shippingAddress } },
+    .updateProfile({
+      publicData: {
+        country: shippingAddress.country
+      },
+      protectedData: { 
+        shippingAddress 
+      }, 
+    },
       {
         expand: true,
         include: ['profileImage'],

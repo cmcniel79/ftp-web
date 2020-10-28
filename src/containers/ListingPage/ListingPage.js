@@ -117,14 +117,12 @@ export class ListingPageComponent extends Component {
       params,
       callSetInitialValues,
       onInitializeCardPaymentData,
-      isDomesticOrder
     } = this.props;
     const listingId = new UUID(params.id);
     const listing = getListing(listingId);
-
     const initialValues = {
       listing,
-      bookingData: { isDomesticOrder },
+      bookingData: { isDomesticOrder: values },
       confirmPaymentError: null,
     };
 
@@ -134,6 +132,7 @@ export class ListingPageComponent extends Component {
     // Customize checkout page state with current listing and selected bookingDates
     const { setInitialValues } = findRouteByRouteName('CheckoutPage', routes);
 
+    console.log(initialValues);
     callSetInitialValues(setInitialValues, initialValues, saveToSessionStorage);
 
     // Clear previous Stripe errors from store if there is any
@@ -351,13 +350,11 @@ export class ListingPageComponent extends Component {
       ensuredAuthor.attributes.profile.publicData.account : null;
     const isPremium = accountType && (accountType === "p" || accountType === "a" || accountType === "n") ? true : false;
 
-    const authorCountry = publicData && publicData.country ?
-      publicData.country : null;
+    const authorCountry = publicData && publicData.country ? publicData.country : null;
     const userCountry = currentUser && currentUser.attributes.profile.protectedData &&
       currentUser.attributes.profile.protectedData.shippingAddress ?
       currentUser.attributes.profile.protectedData.shippingAddress.country : null;
     const isDomesticOrder = authorCountry && userCountry && authorCountry === userCountry ? true : false;
-
     const lineItems = !isPremium && isDomesticOrder ? domesticLineItems : internationalLineItems;
 
     const { formattedPrice, priceTitle } = priceData(price, intl);

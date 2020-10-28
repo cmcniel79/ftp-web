@@ -33,7 +33,6 @@ export const BookingBreakdownComponent = props => {
     intl,
   } = props;
 
-  console.log("Hello");
   const isCustomer = userRole === 'customer';
   const isProvider = userRole === 'provider';
 
@@ -42,8 +41,6 @@ export const BookingBreakdownComponent = props => {
     const hasProviderCommission = isProvider && item.code === LINE_ITEM_PROVIDER_COMMISSION;
     return (hasCustomerCommission || hasProviderCommission) && !item.reversal;
   });
-
-  console.log(transaction.attributes.lineItems);
 
   const classes = classNames(rootClassName || css.root, className);
 
