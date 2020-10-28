@@ -11,8 +11,8 @@ const SectionCustomOrdersMaybe = props => {
   }
   return (
     <div className={css.sectionCustomOrders}>
-      <h2 className={css.featuresTitle}>
-      <FormattedMessage id="ListingPage.customOrdersTitle" />
+      <h2 className={css.featuresHeading}>
+      <FormattedMessage id="ListingPage.customOrdersHeading" />
       </h2>
       <p>
       <FormattedMessage id="ListingPage.customOrdersSubTitle" />

@@ -55,7 +55,7 @@ export const ContactDetailsPageComponent = props => {
   // Pass in account type to Payment Methods tab to make sure Premium Users 
   // do not get confused about payments and subscriptions
   const accountType = user.attributes.profile.publicData && user.attributes.profile.publicData.account ? 
-    user.attributes.profile.publicData : null; 
+    user.attributes.profile.publicData.account : null; 
  
   const contactInfoForm = user.id ? (
     <ContactDetailsForm

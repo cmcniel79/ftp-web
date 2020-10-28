@@ -8,8 +8,8 @@ const SectionSizesMaybe = props => {
   const { sizes } = props;
   return sizes ? (
       <div className={css.sectionSizes}>
-      <h2 className={css.featuresTitle}>
-        <FormattedMessage id="ListingPage.styleTitle" />
+      <h2 className={css.featuresHeading}>
+        <FormattedMessage id="ListingPage.styleHeading" />
       </h2>
       <p className={css.sizesText}>{sizes}</p>
       </div>

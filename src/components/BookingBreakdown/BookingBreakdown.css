@@ -134,3 +134,15 @@
     padding-bottom: 21px;
   }
 }
+
+.priceBreakdownTitle {
+  /* Font */
+  color: var(--matterColorAnti);
+
+  margin-top: 5px;
+  margin-bottom: 14px;
+  @media (--viewportMedium) {
+    margin-top: 5px;
+    margin-bottom: 26px;
+  }
+}

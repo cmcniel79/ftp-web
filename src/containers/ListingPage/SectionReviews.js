@@ -15,7 +15,7 @@ const SectionReviews = props => {
 
   return (
     <div className={css.sectionReviews}>
-      <h2 className={css.reviewsHeading}>
+      <h2 className={css.featuresHeading}>
         <FormattedMessage id="ListingPage.reviewsHeading" values={{ count: reviews.length }} />
       </h2>
       {fetchReviewsError ? reviewsError : null}

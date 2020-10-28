@@ -11,8 +11,15 @@ import { parse, stringify } from '../../util/urlHelpers';
 import config from '../../config';
 import { ModalInMobile, Button } from '../../components';
 import { BookingDatesForm } from '../../forms';
+import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
+import { types as sdkTypes } from '../../util/sdkLoader';
 
 import css from './BookingPanel.css';
+
+const Decimal = require('decimal.js');
+
+const { Money } = sdkTypes;
+const identity = v => v;
 
 // This defines when ModalInMobile shows content as Modal
 const MODAL_BREAKPOINT = 1023;
@@ -47,6 +54,10 @@ const closeBookModal = (history, location) => {
   history.push(`${pathname}${searchString}`, state);
 };
 
+// const handleFormSubmit = () => {
+//   this.props.onSubmit(this.props.isDomesticOrder);
+// }
+
 const BookingPanel = props => {
   const {
     rootClassName,
@@ -64,7 +75,7 @@ const BookingPanel = props => {
     location,
     intl,
     onFetchTransactionLineItems,
-    lineItems,
+    // lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
     isDomesticOrder,
@@ -80,6 +91,41 @@ const BookingPanel = props => {
   const { formattedPrice, priceTitle } = priceData(price, intl);
   const isBook = !!parse(location.search).book;
   const classes = classNames(rootClassName || css.root, className);
+
+  const bookingData = { unitType, isDomesticOrder };
+  const shippingFeeItem = isDomesticOrder ? {
+    code: 'line-item/shipping-fee',
+    unitPrice: shippingFee,
+    quantity: new Decimal(1),
+    includeFor: ['customer', 'provider'],
+    reversal: false,
+    lineTotal: shippingFee
+  } : {
+      code: 'line-item/international-shipping-fee',
+      unitPrice: shippingFee,
+      quantity: new Decimal(1),
+      includeFor: ['customer', 'provider'],
+      reversal: false,
+      lineTotal: shippingFee
+    };
+  const booking = {
+    code: 'line-item/units',
+    unitPrice: price,
+    quantity: new Decimal(1),
+    includeFor: ['customer', 'provider'],
+    reversal: false,
+    lineTotal: price
+  };
+
+  const lineItems = [booking, shippingFeeItem];
+  const showEstimatedBreakdown = bookingData && lineItems;
+
+  const bookingInfoMaybe = showEstimatedBreakdown ? (
+    <div className={css.priceBreakdownContainer}>
+      <EstimatedBreakdownMaybe bookingData={bookingData} lineItems={lineItems} />
+    </div>
+  ) : null;
+
 
   return (
     <div className={classes}>
@@ -97,42 +143,33 @@ const BookingPanel = props => {
             <FormattedMessage id="BookingPanel.hostedBy" values={{ name: authorDisplayName }} />
           </div>
         </div>
-{/* 
-        <div className={css.bookingHeading}>
-          <h2 className={titleClasses}>{title}</h2>
-          {subTitleText ? <div className={css.bookingHelp}>{subTitleText}</div> : null}
-        </div> */}
         {showBookingDatesForm ? (
-          <BookingDatesForm
-            className={css.bookingForm}
-            formId="BookingPanel"
-            submitButtonWrapperClassName={css.bookingDatesSubmitButtonWrapper}
-            unitType={unitType}
-            onSubmit={onSubmit}
-            price={price}
-            listingId={listing.id}
-            isOwnListing={isOwnListing}
-            // timeSlots={timeSlots}
-            // fetchTimeSlotsError={fetchTimeSlotsError}
-            onFetchTransactionLineItems={onFetchTransactionLineItems}
-            lineItems={lineItems}
-            fetchLineItemsInProgress={fetchLineItemsInProgress}
-            fetchLineItemsError={fetchLineItemsError}
-            isDomesticOrder={isDomesticOrder}
-            shippingFee={shippingFee}
-          />
+          <div>
+            <div className={css.modalBookingInfo}>
+              {bookingInfoMaybe}
+            </div>
+            <p className={css.smallPrint}>
+              <FormattedMessage
+                id={
+                  isOwnListing
+                    ? 'BookingDatesForm.ownListing'
+                    : 'BookingDatesForm.youWontBeChargedInfo'
+                }
+              />
+            </p>
+            <div className={css.bookingDatesSubmitButtonWrapper}>
+              <Button className={css.bookButton} onClick={() => { onSubmit(isDomesticOrder) }}>
+                <FormattedMessage id="BookingDatesForm.requestToBook" />
+              </Button>
+            </div>
+          </div>
         ) : null}
       </ModalInMobile>
       <div className={css.openBookingForm}>
-        <div className={css.priceContainer}>
-          <div className={css.priceValue} title={priceTitle}>
+          <div className={css.priceContainer} title={priceTitle}>
+          <FormattedMessage id="BookingPanel.basePrice" />
             {formattedPrice}
-          </div>
-          {/* <div className={css.perUnit}>
-            <FormattedMessage id={unitTranslationKey} />
-          </div> */}
         </div>
-
         {showBookingDatesForm ? (
           <Button
             rootClassName={css.bookButton}

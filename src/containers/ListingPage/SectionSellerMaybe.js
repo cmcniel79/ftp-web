@@ -30,7 +30,7 @@ const SectionSellerMaybe = props => {
       <FormattedMessage id="ListingPage.premiumPartnerHeading" />
     </h2>
     :
-    <h2 className={css.yourSellerHeading}>
+    <h2 className={css.featuresHeading}>
       <FormattedMessage id="ListingPage.yourSellerHeading" />
     </h2>;
 

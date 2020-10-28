@@ -77,7 +77,7 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
     },
   ];
 
-  if(accountType !== 'u' || accountType !== 'e') {
+  if(accountType === 'p' || accountType === 'a' || accountType === 'n') {
     tabs.splice(2,1);
   }
 

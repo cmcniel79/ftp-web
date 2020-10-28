@@ -165,7 +165,7 @@ export class CheckoutPageComponent extends Component {
     const pageData = hasDataInProps
       ? { bookingData, listing, transaction }
       : storedData(STORAGE_KEY);
-      console.log(bookingData);
+    console.log(bookingData);
 
     // Check if a booking is already created according to stored data.
     const tx = pageData ? pageData.transaction : null;

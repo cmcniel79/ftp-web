@@ -11,8 +11,8 @@ const SectionMaterialsMaybe = props => {
   }
   return (
     <div className={css.sectionMaterial}>
-      <h2 className={css.featuresTitle}>
-        <FormattedMessage id="ListingPage.materialsTitle" />
+      <h2 className={css.featuresHeading}>
+        <FormattedMessage id="ListingPage.materialsHeading" />
       </h2>
       <PropertyGroup
         id="ListingPage.material"

@@ -472,8 +472,9 @@ export class ListingPageComponent extends Component {
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
                   {!isPremium &&
-                    <SectionReviews className={css.sectionImages} reviews={reviews} fetchReviewsError={fetchReviewsError} />
-                  }
+                    <div className={css.reviewsContainerDesktop}>
+                      <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
+                    </div>}
                 </div>
                 <div className={css.bookingPanel}>
                   <SectionSellerMaybe
@@ -494,29 +495,44 @@ export class ListingPageComponent extends Component {
                   <SectionCustomOrdersMaybe customOrders={customOrders} />
                   <SectionMaterialsMaybe options={materialOptions} material={material} />
                   <SectionSizesMaybe sizes={sizes} />
-                  {!isPremium ?
-                    <BookingPanel
-                      className={css.bookingBreakdown}
-                      listing={currentListing}
-                      isOwnListing={isOwnListing}
-                      unitType={unitType}
-                      onSubmit={handleBookingSubmit}
-                      title={bookingTitle}
-                      subTitle={bookingSubTitle}
-                      authorDisplayName={authorDisplayName}
-                      onManageDisableScrolling={onManageDisableScrolling}
-                      timeSlots={timeSlots}
-                      fetchTimeSlotsError={fetchTimeSlotsError}
-                      onFetchTransactionLineItems={onFetchTransactionLineItems}
-                      lineItems={lineItems}
-                      fetchLineItemsInProgress={fetchLineItemsInProgress}
-                      fetchLineItemsError={fetchLineItemsError}
-                      isDomesticOrder={isDomesticOrder}
-                      shippingFee={shippingFee}
-                    />
-                    :
+                  {isPremium ?
                     <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
-                  }
+                    : userCountry && authorCountry || !currentUser ?
+                      <BookingPanel
+                        className={css.bookingBreakdown}
+                        listing={currentListing}
+                        isOwnListing={isOwnListing}
+                        unitType={unitType}
+                        onSubmit={handleBookingSubmit}
+                        title={bookingTitle}
+                        subTitle={bookingSubTitle}
+                        authorDisplayName={authorDisplayName}
+                        onManageDisableScrolling={onManageDisableScrolling}
+                        timeSlots={timeSlots}
+                        fetchTimeSlotsError={fetchTimeSlotsError}
+                        onFetchTransactionLineItems={onFetchTransactionLineItems}
+                        lineItems={lineItems}
+                        fetchLineItemsInProgress={fetchLineItemsInProgress}
+                        fetchLineItemsError={fetchLineItemsError}
+                        isDomesticOrder={isDomesticOrder}
+                        shippingFee={shippingFee}
+                      />
+                      : userCountry === null ?
+                        <span className={css.purchaseWarning} >
+                          <FormattedMessage id="ListingPage.noUserCountry" />
+                        </span>
+                        : authorCountry === null ?
+                          <span className={css.purchaseWarning} >
+                            <FormattedMessage id="ListingPage.noAuthorCountry" />
+                          </span>
+                          :
+                          <span className={css.purchaseWarning} >
+                            <FormattedMessage id="ListingPage.listingMissingInfo" />
+                          </span>}
+                  {!isPremium &&
+                    <div className={css.reviewsContainerMobile}>
+                      <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
+                    </div>}
                 </div>
               </div>
             </div>

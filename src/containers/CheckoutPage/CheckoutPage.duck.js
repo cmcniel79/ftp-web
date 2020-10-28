@@ -311,7 +311,6 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
   const isPrivilegedTransition = isPrivileged(transition);
 
   const bookingData = orderParams.bookingData;
-  console.log(bookingData);
   // {
   //   // startDate: orderParams.bookingStart,
   //   // endDate: orderParams.bookingEnd,
