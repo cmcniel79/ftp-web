@@ -66,7 +66,20 @@ export class MapPageComponent extends Component {
     this.selectIndustry = this.selectIndustry.bind(this);
     this.initialValues = this.initialValues.bind(this);
     this.setGeolocation = this.setGeolocation.bind(this);
+    // this.loadInitialData = this.loadInitialData.bind(this);
+
   }
+
+  componentDidMount() {
+    if (window) {
+      loadData();
+      // this.loadInitialData();
+    }
+  }
+
+  // loadInitialData() {
+
+  // }
 
   selectTribe(value) {
     this.setState({ tribe: value['pub_nativeLands'] });
@@ -380,9 +393,9 @@ const MapPage = compose(
   injectIntl
 )(MapPageComponent);
 
-MapPage.loadData = params => {
-  // const id = new UUID("5f52e761-e46d-4d51-b4f2-a8a4ef16f8b2");
-  return loadData();
-};
+// MapPage.loadData = params => {
+//   // const id = new UUID("5f52e761-e46d-4d51-b4f2-a8a4ef16f8b2");
+//   return loadData();
+// };
 
 export default MapPage;
