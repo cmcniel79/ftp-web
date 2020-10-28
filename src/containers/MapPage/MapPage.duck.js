@@ -162,7 +162,7 @@ export function fetchProducts() {
         dispatch(fetchProductsSuccess(json));
         let ids = [];
         ids.push({ type: 'user', id: new UUID(json.body[0].uuid) });
-        ids.push({ type: 'user', id: new UUID("5f9357ac-6df8-4b86-a965-9e53c2562cce") });
+        ids.push({ type: 'user', id: new UUID("5f99bfd4-f237-4d5d-afea-445aacef888f") });
         return ids;
       })
       .catch(error =>
