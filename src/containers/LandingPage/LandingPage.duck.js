@@ -1,6 +1,7 @@
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { storableError } from '../../util/errors';
 import { types as sdkTypes } from '../../util/sdkLoader';
+import fetch from 'cross-fetch';
 
 const { UUID } = sdkTypes;
 
@@ -15,6 +16,10 @@ export const QUERY_LISTINGS_ERROR = 'app/LandingPage/QUERY_LISTINGS_ERROR';
 export const SHOW_USER_REQUEST = 'app/ProfilePage/SHOW_USER_REQUEST';
 export const SHOW_USER_SUCCESS = 'app/ProfilePage/SHOW_USER_SUCCESS';
 export const SHOW_USER_ERROR = 'app/ProfilePage/SHOW_USER_ERROR';
+
+export const FETCH_UUIDS_BEGIN = "FETCH_UUIDS_BEGIN";
+export const FETCH_UUIDS_SUCCESS = "FETCH_UUIDS_SUCCESS";
+export const FETCH_UUIDS_FAILURE = "FETCH_UUIDS_FAILURE";
 
 // ================ Reducer ================ //
 
@@ -48,6 +53,37 @@ export default function landingPageReducer(state = initialState, action = {}) {
       return state;
     case SHOW_USER_ERROR:
       return { ...state, userShowError: payload };
+
+    case FETCH_UUIDS_BEGIN:
+      // Mark the state as "loading" so we can show a spinner or something
+      // Also, reset any errors. We're starting fresh.
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+
+    case FETCH_UUIDS_SUCCESS:
+      // All done: set loading "false".
+      // Also, replace the items with the ones from the server
+      return {
+        ...state,
+        loading: false,
+        items: action.payload.uuids
+      };
+
+    case FETCH_UUIDS_FAILURE:
+      // The request failed, but it did stop, so set loading to "false".
+      // Save the error, and we can display it somewhere
+      // Since it failed, we don't have items to display anymore, so set it empty.
+      // This is up to you and your app though: maybe you want to keep the items
+      // around! Do whatever seems right.
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+        items: []
+      };
 
     default:
       return state;
@@ -91,6 +127,20 @@ export const showUserError = e => ({
   payload: e,
 });
 
+export const fetchUUIDsBegin = () => ({
+  type: FETCH_UUIDS_BEGIN
+});
+
+export const fetchUUIDsSuccess = uuids => ({
+  type: FETCH_UUIDS_SUCCESS,
+  payload: { uuids }
+});
+
+export const fetchUUIDsFailure = error => ({
+  type: FETCH_UUIDS_FAILURE,
+  payload: { error }
+});
+
 // ================ Thunks ================ //
 
 export const queryPromotedListings = queryParams => (dispatch, getState, sdk) => {
@@ -111,12 +161,12 @@ export const queryPromotedListings = queryParams => (dispatch, getState, sdk) =>
     .catch(e => dispatch(queryListingsError(storableError(e))));
 };
 
-export const queryFeaturedPartners = queryParams => (dispatch, getState, sdk) => {
-  const userId = new UUID("5f99bfd4-f237-4d5d-afea-445aacef888f");
-  dispatch(showUserRequest(userId));
+export const loadFeaturedPartners = ids => (dispatch, getState, sdk) => {
+  dispatch(showUserRequest(ids[0].id));
+  if(ids.length > 0){
   return sdk.users
     .show({
-      id: userId,
+      id: ids[0].id.uuid,
       include: ['profileImage', 'publicData'],
       'fields.image': ['variants.square-small', 'variants.square-small2x'],
     })
@@ -126,7 +176,37 @@ export const queryFeaturedPartners = queryParams => (dispatch, getState, sdk) =>
       return response;
     })
     .catch(e => dispatch(showUserError(storableError(e))));
+  }
 };
+
+function callAPI() {
+  return fetch("https://vyvhifh63b.execute-api.us-west-1.amazonaws.com/prd?type=featured")
+    .then(handleErrors)
+    .then(res => res.json())
+    .then(data => {
+      return data.body.map(userId => {
+        return { type: 'user', id: new UUID(userId.uuid) }
+      })
+    })
+}
+
+function fetchFeaturedUUIDs() {
+  return dispatch => {
+    dispatch(fetchUUIDsBegin());
+    return callAPI()
+      .catch(error =>
+        dispatch(fetchUUIDsFailure(error))
+      );
+  };
+}
+
+// Handle HTTP errors since fetch won't.
+function handleErrors(response) {
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+  return response;
+}
 
 
 export const loadData = userId => (dispatch, getState, sdk) => {
@@ -135,7 +215,10 @@ export const loadData = userId => (dispatch, getState, sdk) => {
   dispatch(setInitialState());
 
   return Promise.all([
-    dispatch(queryPromotedListings()),
-    dispatch(queryFeaturedPartners())
+    dispatch(fetchFeaturedUUIDs())
+      .then(ids => {
+        dispatch(loadFeaturedPartners(ids));
+      }),
+    dispatch(queryPromotedListings())
   ]);
 };

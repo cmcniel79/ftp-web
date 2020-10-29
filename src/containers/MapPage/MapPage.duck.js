@@ -13,9 +13,9 @@ export const SHOW_USER_REQUEST = 'app/MapPage/SHOW_USER_REQUEST';
 export const SHOW_USER_SUCCESS = 'app/MapPage/SHOW_USER_SUCCESS';
 export const SHOW_USER_ERROR = 'app/MapPage/SHOW_USER_ERROR';
 
-export const FETCH_PRODUCTS_BEGIN = "FETCH_PRODUCTS_BEGIN";
-export const FETCH_PRODUCTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS";
-export const FETCH_PRODUCTS_FAILURE = "FETCH_PRODUCTS_FAILURE";
+export const FETCH_UUIDS_BEGIN = "FETCH_UUIDS_BEGIN";
+export const FETCH_UUIDS_SUCCESS = "FETCH_UUIDS_SUCCESS";
+export const FETCH_UUIDS_FAILURE = "FETCH_UUIDS_FAILURE";
 
 export const SEARCH_MAP_SET_ACTIVE_LISTING = 'app/MapPage/SEARCH_MAP_SET_ACTIVE_LISTING';
 
@@ -53,7 +53,7 @@ const mapPageReducer = (state = initialState, action = {}) => {
         activeListingId: payload,
       };
 
-    case FETCH_PRODUCTS_BEGIN:
+    case FETCH_UUIDS_BEGIN:
       // Mark the state as "loading" so we can show a spinner or something
       // Also, reset any errors. We're starting fresh.
       return {
@@ -62,16 +62,16 @@ const mapPageReducer = (state = initialState, action = {}) => {
         error: null
       };
 
-    case FETCH_PRODUCTS_SUCCESS:
+    case FETCH_UUIDS_SUCCESS:
       // All done: set loading "false".
       // Also, replace the items with the ones from the server
       return {
         ...state,
         loading: false,
-        items: action.payload.products
+        items: action.payload.uuids
       };
 
-    case FETCH_PRODUCTS_FAILURE:
+    case FETCH_UUIDS_FAILURE:
       // The request failed, but it did stop, so set loading to "false".
       // Save the error, and we can display it somewhere
       // Since it failed, we don't have items to display anymore, so set it empty.
@@ -116,61 +116,60 @@ export const setActiveListing = listingId => ({
   payload: listingId,
 });
 
-export const fetchProductsBegin = () => ({
-  type: FETCH_PRODUCTS_BEGIN
+export const fetchUUIDsBegin = () => ({
+  type: FETCH_UUIDS_BEGIN
 });
 
-export const fetchProductsSuccess = products => ({
-  type: FETCH_PRODUCTS_SUCCESS,
-  payload: { products }
+export const fetchUUIDsSuccess = uuids => ({
+  type: FETCH_UUIDS_SUCCESS,
+  payload: { uuids }
 });
 
-export const fetchProductsFailure = error => ({
-  type: FETCH_PRODUCTS_FAILURE,
+export const fetchUUIDsFailure = error => ({
+  type: FETCH_UUIDS_FAILURE,
   payload: { error }
 });
 
 
 export const loadUsers = userIds => (dispatch, getState, sdk) => {
   dispatch(showUserRequest(userIds));
-  console.log(userIds);
   if (userIds) {
     userIds.map(userId => {
       return sdk.users
         .show({
-          id: userId.id,
+          id: userId.id.uuid,
           include: ['profileImage', 'publicData'],
           'fields.image': ['variants.square-small', 'variants.square-small2x'],
         })
         .then(response => {
           dispatch(addMarketplaceEntities(response));
         })
-        .catch(e => dispatch(showUserError(storableError(e))));
+        .catch(e => {
+          dispatch(showUserError(storableError(e)
+          ))
+        });
     });
   }
   dispatch(showUserSuccess());
 };
 
-function getProducts() {
-  return fetch("https://vyvhifh63b.execute-api.us-west-1.amazonaws.com/prd")
+function callAPI() {
+  return fetch("https://vyvhifh63b.execute-api.us-west-1.amazonaws.com/prd?type=map")
     .then(handleErrors)
     .then(res => res.json())
+    .then(data => {
+      return data.body.map(userId => {
+        return { type: 'user', id: new UUID(userId.uuid) }
+      })
+    })
 }
 
-export function fetchProducts() {
+function fetchUUIDs() {
   return dispatch => {
-    dispatch(fetchProductsBegin());
-    return getProducts()
-      .then(json => {
-        console.log(json);
-        dispatch(fetchProductsSuccess(json));
-        let ids = [];
-        ids.push({ type: 'user', id: new UUID(json.body[0].uuid) });
-        ids.push({ type: 'user', id: new UUID("5f99bfd4-f237-4d5d-afea-445aacef888f") });
-        return ids;
-      })
+    dispatch(fetchUUIDsBegin());
+    return callAPI()
       .catch(error =>
-        dispatch(fetchProductsFailure(error))
+        dispatch(fetchUUIDsFailure(error))
       );
   };
 }
@@ -188,7 +187,7 @@ export const loadData = () => (dispatch, getState, sdk) => {
   // in case this page load fails.
   dispatch(setInitialState());
   return Promise.all([
-    dispatch(fetchProducts())
+    dispatch(fetchUUIDs())
       .then(ids => {
         console.log(ids);
         dispatch(loadUsers(ids));

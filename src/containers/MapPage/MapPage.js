@@ -360,9 +360,7 @@ const mapStateToProps = state => {
     searchParams,
     userIds,
   } = state.MapPage;
-  console.log(userIds);
   const users = userIds && userIds.length > 0 ? getMarketplaceEntities(state, userIds) : null;
-
   return {
     users: users,
     pagination,
