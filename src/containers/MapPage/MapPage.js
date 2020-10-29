@@ -361,7 +361,7 @@ const mapStateToProps = state => {
     userIds,
   } = state.MapPage;
   console.log(userIds);
-  const users = userIds.length > 0 ? getMarketplaceEntities(state, userIds) : null;
+  const users = userIds && userIds.length > 0 ? getMarketplaceEntities(state, userIds) : null;
 
   return {
     users: users,

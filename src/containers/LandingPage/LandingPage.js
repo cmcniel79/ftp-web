@@ -130,7 +130,7 @@ export const LandingPageComponent = props => {
               </div>
             </li>
             {user &&
-              <li className={css.section}>
+              <li className={css.section} id="featured-partners">
                 <div className={css.sectionContent}>
                   <FeaturedPartners
                     user={user}

@@ -112,7 +112,7 @@ export const queryPromotedListings = queryParams => (dispatch, getState, sdk) =>
 };
 
 export const queryFeaturedPartners = queryParams => (dispatch, getState, sdk) => {
-  const userId = new UUID("5f5f716a-e52e-4def-a264-a606f55bd49b");
+  const userId = new UUID("5f99bfd4-f237-4d5d-afea-445aacef888f");
   dispatch(showUserRequest(userId));
   return sdk.users
     .show({

@@ -133,18 +133,21 @@ export const fetchProductsFailure = error => ({
 
 export const loadUsers = userIds => (dispatch, getState, sdk) => {
   dispatch(showUserRequest(userIds));
-  userIds.map(userId => {
-    return sdk.users
-      .show({
-        id: userId.id,
-        include: ['profileImage', 'publicData'],
-        'fields.image': ['variants.square-small', 'variants.square-small2x'],
-      })
-      .then(response => {
-        dispatch(addMarketplaceEntities(response));
-      })
-      .catch(e => dispatch(showUserError(storableError(e))));
-  });
+  console.log(userIds);
+  if (userIds) {
+    userIds.map(userId => {
+      return sdk.users
+        .show({
+          id: userId.id,
+          include: ['profileImage', 'publicData'],
+          'fields.image': ['variants.square-small', 'variants.square-small2x'],
+        })
+        .then(response => {
+          dispatch(addMarketplaceEntities(response));
+        })
+        .catch(e => dispatch(showUserError(storableError(e))));
+    });
+  }
   dispatch(showUserSuccess());
 };
 
