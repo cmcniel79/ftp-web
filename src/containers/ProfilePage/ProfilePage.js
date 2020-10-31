@@ -87,7 +87,7 @@ export class ProfilePageComponent extends Component {
     // Company name and companyWebsite will only go onto profile page if user has a premium account.
     const publicData = profileUser.attributes.profile.publicData ? profileUser.attributes.profile.publicData : null;
     const socialMedia = publicData && publicData.socialMedia ? publicData.socialMedia : null;
-    // const accountType = publicData && publicData.account ? publicData.account : null;
+    const tribe = publicData && publicData.tribe ? publicData.tribe : null;
     const companyName = publicData && publicData.companyName ? publicData.companyName : null;
     const companyWebsite = publicData && publicData.companyWebsite ? publicData.companyWebsite : null;
     const companyLocation = publicData && publicData.companyLocation && publicData.companyLocation.location ?
@@ -109,16 +109,23 @@ export class ProfilePageComponent extends Component {
     const asideContent = (
       <div className={css.asideContent}>
         <AvatarLarge className={css.avatar} user={user} disableProfileLink />
-        <h2 className={css.mobileHeading}>
-          {companyName ? (
-            <FormattedMessage id="ProfilePage.mobileHeading" values={{ name: companyName }} />
-          ) :
-            displayName ? (
-              <FormattedMessage id="ProfilePage.mobileHeading" values={{ name: displayName }} />
-            ) : null}
-        </h2>
-        {editLinkMobile}
-        {editLinkDesktop}
+        <div className={css.asideHeading}>
+          <h2 className={css.mobileHeading}>
+            {companyName ? (
+              <FormattedMessage id="ProfilePage.mobileHeading" values={{ name: companyName }} />
+            ) :
+              displayName ? (
+                <FormattedMessage id="ProfilePage.mobileHeading" values={{ name: displayName }} />
+              ) : null}
+          </h2>
+          {tribe &&
+          <p className={css.mobileSubheading}>
+            {tribe}
+          </p>}
+          {editLinkMobile}
+          {socialMedia && <UserSocialMedia className={css.socialMediaMobile} socialMedia={socialMedia} />}
+          {editLinkDesktop}
+        </div>
       </div>
     );
 
@@ -204,24 +211,25 @@ export class ProfilePageComponent extends Component {
           {companyName ?
             <FormattedMessage id="ProfilePage.desktopHeadingCompany" values={{ name: companyName }} />
             :
-            <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />
-          }
+            <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />}
         </h1>
-        {socialMedia && <UserSocialMedia className={css.socialMediaLinks} socialMedia={socialMedia} />}
+        {tribe &&
+          <h3 className={css.desktopSubheading}>
+            {tribe}
+          </h3>}
         {googleMapsUrl &&
           <ExternalLink className={css.companyAddress} href={googleMapsUrl} >
             {companyLocation.selectedPlace.address}
           </ExternalLink>}
         {hasBio && <p className={css.bio}>{bio}</p>}
-        {googleMapsUrl ?
+        {/* {companyWebsite ? */}
           <div className={css.companyWebsite}>
             <ExternalLink href={companyWebsite} useIcon={true}>
               <FormattedMessage id="ProfilePage.companyWebsite" />
               <img className={css.externalLink} src={exit} alt="External Link" />
             </ExternalLink>
           </div>
-          : null
-        }
+           {/* : null} */}
         {hasListings ? (
           <div className={listingsContainerClasses}>
             <h2 className={css.listingsTitle}>

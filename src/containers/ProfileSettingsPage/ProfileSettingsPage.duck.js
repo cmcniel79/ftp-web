@@ -160,3 +160,25 @@ export const updateProfile = actionPayload => {
       .catch(e => dispatch(updateProfileError(storableError(e))));
   };
 };
+
+export const updateDatabase = actionPayload => {
+  console.log(actionPayload);
+
+  const url = "https://vyvhifh63b.execute-api.us-west-1.amazonaws.com/prd";
+  const options = {
+    method: 'POST',
+    withCredentials: false,
+    body: JSON.stringify(actionPayload),
+    headers: {
+      "Content-Type": "application/json",
+      // "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+      // "Access-Control-Allow-Methods": "OPTIONS,POST",
+      "X-Api-Key": "dShKIr3xlkgXBtiwSeSN7jaYIjmIwnnnN4rLDN00",
+      // "Access-Control-Allow-Origin": "*"
+    }
+  }
+
+  fetch(url, options)
+    .then(response => response.json())
+    .then(json => console.log(json));
+};

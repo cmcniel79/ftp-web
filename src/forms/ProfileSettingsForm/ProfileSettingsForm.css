@@ -1,5 +1,4 @@
 @import '../../marketplace.css';
-
 :root {
   /*
     These variables are available in global scope through ":root"
@@ -9,14 +8,12 @@
     are left to CSS bundle. We are planning to enable it in the future
     since browsers support CSS Properties already.
  */
-
   --ProfileSettingsForm_avatarSize: 96px;
   --ProfileSettingsForm_avatarSizeDesktop: 240px;
 }
 
 .root {
   margin-top: 24px;
-
   @media (--viewportMedium) {
     margin-top: 32px;
   }
@@ -34,7 +31,6 @@
 .sectionContainer {
   padding: 0;
   margin-bottom: 36px;
-
   @media (--viewportMedium) {
     padding: 0;
     margin-bottom: 56px;
@@ -44,12 +40,10 @@
 .sectionTitle {
   /* Font */
   color: var(--matterColorAnti);
-
   margin-top: 0;
   margin-bottom: 12px;
   padding-top: 3px;
   padding-bottom: 3px;
-
   @media (--viewportMedium) {
     margin-top: 0;
     margin-bottom: 24px;
@@ -60,10 +54,8 @@
 
 .lastSection {
   margin-bottom: 69px;
-
   @media (--viewportMedium) {
     margin-bottom: 111px;
-
     & .sectionTitle {
       margin-bottom: 16px;
     }
@@ -77,7 +69,6 @@
 .uploadAvatarWrapper {
   margin-top: 18px;
   margin-bottom: 18px;
-
   @media (--viewportMedium) {
     margin-top: 44px;
     margin-bottom: 20px;
@@ -91,23 +82,19 @@
   }
 }
 
-.avatarPlaceholder,
-.avatarContainer {
+.avatarPlaceholder, .avatarContainer {
   /* Dimension */
   position: relative;
   width: var(--ProfileSettingsForm_avatarSize);
   height: var(--ProfileSettingsForm_avatarSize);
-
   /* Center content */
   display: flex;
   align-items: center;
   justify-content: center;
-
   /* Initial coloring */
   background-color: var(--matterColorBright);
   border-radius: calc(var(--ProfileSettingsForm_avatarSize) / 2);
   cursor: pointer;
-
   @media (--viewportMedium) {
     width: var(--ProfileSettingsForm_avatarSizeDesktop);
     height: var(--ProfileSettingsForm_avatarSizeDesktop);
@@ -120,9 +107,7 @@
   border-style: dashed;
   border-color: var(--matterColorNegative);
   border-width: 2px;
-
   transition: var(--transitionStyleButton);
-
   &:hover {
     border-color: var(--matterColorAnti);
   }
@@ -133,9 +118,9 @@
     display: none;
   }
 }
+
 .avatarPlaceholderText {
   display: none;
-
   @media (--viewportMedium) {
     display: block;
     max-width: 130px;
@@ -156,7 +141,6 @@
   color: var(--failColor);
   margin-top: 18px;
   margin-bottom: 0;
-
   @media (--viewportMedium) {
     margin-top: 22px;
     margin-bottom: 2px;
@@ -171,9 +155,7 @@
 .changeAvatar {
   /* Font */
   @apply --marketplaceH5FontStyles;
-
   font-weight: var(--fontWeightMedium);
-
   /* Positioning: right */
   position: absolute;
   bottom: 27px;
@@ -182,7 +164,6 @@
   width: 105px;
   height: 41px;
   padding: 11px 10px 7px 35px;
-
   /* Look and feel (buttonish) */
   background-color: var(--matterColorLight);
   background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><g stroke="%234A4A4A" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"><path d="M5.307 11.155L1 13l1.846-4.308L10.54 1 13 3.46zM11 5L9 3M5 11L3 9"/></g></svg>');
@@ -190,10 +171,8 @@
   background-position: 15px 12px;
   border: solid 1px var(--matterColorNegative);
   border-radius: 2px;
-
   margin-top: 0;
   margin-bottom: 0;
-
   @media (--viewportMedium) {
     /* Position: under */
     bottom: -10px;
@@ -203,7 +182,6 @@
     transition: var(--transitionStyleButton);
     padding: 11px 10px 7px 35px;
   }
-
   &:hover {
     border: solid 1px var(--matterColorAnti);
   }
@@ -213,17 +191,15 @@
   /* Dimensions */
   width: var(--ProfileSettingsForm_avatarSize);
   height: var(--ProfileSettingsForm_avatarSize);
-
   /* Image fitted to container */
   object-fit: cover;
-  background-color: var(--matterColorNegative); /* Loading BG color */
+  background-color: var(--matterColorNegative);
+  /* Loading BG color */
   border-radius: calc(var(--ProfileSettingsForm_avatarSize) / 2);
   overflow: hidden;
-
   display: block;
   position: relative;
   margin: 0;
-
   @media (--viewportMedium) {
     width: var(--ProfileSettingsForm_avatarSizeDesktop);
     height: var(--ProfileSettingsForm_avatarSizeDesktop);
@@ -238,11 +214,9 @@
   right: 0;
   bottom: 0;
   left: 0;
-
   /* Overlay style */
   background-color: var(--matterColorLight);
   opacity: 0.8;
-
   /* Center content */
   display: flex;
   justify-content: center;
@@ -250,7 +224,9 @@
 }
 
 /* Avatar has square aspect ratio */
+
 /* Default is 3:2 */
+
 .squareAspectRatio {
   padding-bottom: 100%;
 }
@@ -269,7 +245,6 @@
   margin-bottom: 12px;
   padding-top: 5px;
   padding-bottom: 1px;
-
   @media (--viewportMedium) {
     margin-top: 0;
     margin-bottom: 8px;
@@ -285,7 +260,6 @@
   margin-bottom: 0;
   padding-top: 5px;
   padding-bottom: 1px;
-
   @media (--viewportMedium) {
     margin-top: 0;
     margin-bottom: 0;
@@ -298,10 +272,38 @@
   display: flex;
   flex-direction: column;
   margin-top: 12px;
-
   @media (--viewportMedium) {
     margin-top: 24px;
   }
+}
+
+.websiteTitle {
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 6px;
+  padding-bottom: 2px;
+  line-height: 16px;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+.websiteValue {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 5px 0 5px 0;
+  border-bottom: 2px solid var(--successColor);
+  border-radius: 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.websiteSubtitle {
+  color: var(--matterColorAnti);
+  font-size: 14px;
+  margin: 8px 0 10px 0;
+  line-height: 18px;
 }
 
 .companyField {
@@ -313,7 +315,6 @@
   display: flex;
   justify-content: space-between;
   margin-top: 12px;
-
   @media (--viewportMedium) {
     margin-top: 24px;
   }
@@ -330,7 +331,6 @@
 .bioInfo {
   color: var(--matterColorAnti);
   margin-top: 11px;
-
   @media (--viewportMedium) {
     margin-top: 16px;
   }
@@ -341,7 +341,6 @@
   flex-direction: column;
   justify-content: space-between;
   margin-top: 12px;
-
   @media (--viewportMedium) {
     margin-top: 24px;
   }
@@ -366,7 +365,6 @@
 .validLocation {
   border-bottom-color: var(--successColor);
 }
-
 
 .invalidLocation {
   border-bottom-color: var(--failColor);

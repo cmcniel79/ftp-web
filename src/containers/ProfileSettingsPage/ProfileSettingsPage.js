@@ -20,7 +20,7 @@ import {
 import { ProfileSettingsForm } from '../../forms';
 import { TopbarContainer } from '../../containers';
 
-import { updateProfile, uploadImage } from './ProfileSettingsPage.duck';
+import { updateProfile, uploadImage, updateDatabase } from './ProfileSettingsPage.duck';
 import css from './ProfileSettingsPage.css';
 
 const onImageUploadHandler = (values, fn) => {
@@ -45,12 +45,17 @@ export class ProfileSettingsPageComponent extends Component {
       intl,
     } = this.props;
 
-    const handleSubmit = values => {
-      const { firstName, lastName, bio: rawBio, tribe, nativeLands, companyName, companyWebsite, companyIndustry,
+    function checkAddress(location) {
+      return location && location.selectedPlace && location.selectedPlace.origin && 
+        location.selectedPlace.origin.lat && location.selectedPlace.origin.lng ? true : false;
+    }
+
+    const handleSubmit = (values) => {
+      const { firstName, lastName, bio: rawBio, tribe, nativeLands, companyName, companyIndustry,
         location, building, facebook, twitter, insta, tiktok } = values;
       // Ensure that the optional bio is a string
       const bio = rawBio || '';
-      const profile = companyName && companyWebsite ? {
+      const profile = companyName || location || companyIndustry ? {
         firstName: firstName.trim(),
         lastName: lastName.trim(),
         bio,
@@ -58,7 +63,6 @@ export class ProfileSettingsPageComponent extends Component {
           tribe: tribe,
           nativeLands: nativeLands,
           companyName: companyName,
-          companyWebsite: companyWebsite,
           companyIndustry: companyIndustry,
           companyLocation: { location: location, building: building },
           socialMedia: { facebook: facebook, twitter: twitter, insta: insta, tiktok: tiktok }
@@ -81,6 +85,18 @@ export class ProfileSettingsPageComponent extends Component {
           ? { ...profile, profileImageId: uploadedImage.imageId }
           : profile;
       onUpdateProfile(updatedValues);
+
+      const accountValue = user && user.attributes.profile.publicData ? user.attributes.profile.publicData.account : null;
+      if (accountValue === 'p' || accountValue === 'a' || accountValue === 'n') {
+        const uuid = user && user.id ? user.id.uuid : null;
+        const requestBody = {
+            ownerName: firstName + " " + lastName,
+            companyName: companyName ? companyName : null,
+            uuid: uuid,
+            hasAddress: checkAddress(location)
+          };
+        updateDatabase(requestBody);
+      }
     };
 
     const user = ensureCurrentUser(currentUser);
@@ -103,8 +119,8 @@ export class ProfileSettingsPageComponent extends Component {
     const twitter = socialMedia && socialMedia.twitter ? socialMedia.twitter : null;
     const insta = socialMedia && socialMedia.insta ? socialMedia.insta : null;
     const tiktok = socialMedia && socialMedia.tiktok ? socialMedia.tiktok : null;
-
-    const faqLink = <NamedLink name="FAQPage">
+    const faqLink = 
+    <NamedLink name="FAQPage">
       <FormattedMessage id="ProfileSettingsPage.faqLink" />
     </NamedLink>;
     let verification;
@@ -147,10 +163,11 @@ export class ProfileSettingsPageComponent extends Component {
       <ProfileSettingsForm
         className={css.form}
         accountType={accountType}
+        companyWebsite={companyWebsite}
         currentUser={currentUser}
         initialValues={{
           firstName, lastName, bio, profileImage: user.profileImage, tribe, nativeLands,
-          companyName, companyWebsite, companyIndustry, location, building, facebook, twitter, insta, tiktok
+          companyName, companyIndustry, location, building, facebook, twitter, insta, tiktok
         }}
         profileImage={profileImage}
         onImageUpload={e => onImageUploadHandler(e, onImageUpload)}
@@ -169,10 +186,10 @@ export class ProfileSettingsPageComponent extends Component {
 
     listingsLimit = accountLimit ? accountLimit : listingsLimit;
 
-    const premiumPlan = 
-    accountType === 'p' && accountLimit > 7 ? "Trader Plan" : 
-      accountType === 'p' && accountLimit > 0 ? "Artist Plan" : 
-        accountType === 'p' ? "Map Only Plan" : null
+    const premiumPlan =
+      accountType === 'p' && accountLimit > 7 ? "Trader Plan" :
+        accountType === 'p' && accountLimit > 0 ? "Artist Plan" :
+          accountType === 'p' ? "Map Only Plan" : null
 
     return (
       <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
@@ -209,13 +226,13 @@ export class ProfileSettingsPageComponent extends Component {
                     <FormattedMessage id="ProfileSettingsPage.profileHeading" values={{ profileHeading }} />
                   </div>
                   {premiumPlan &&
-                        <div className={css.infoLine}>
-                        <h3 className={css.lineTitle}>
-                          <FormattedMessage id="ProfileSettingsPage.planLine" />
-                        </h3>
-                        {premiumPlan}
-                      </div>
-                      }
+                    <div className={css.infoLine}>
+                      <h3 className={css.lineTitle}>
+                        <FormattedMessage id="ProfileSettingsPage.planLine" />
+                      </h3>
+                      {premiumPlan}
+                    </div>
+                  }
                   {verification &&
                     <div className={css.infoLine}>
                       <h3 className={css.lineTitle}>
@@ -280,6 +297,7 @@ ProfileSettingsPageComponent.propTypes = {
   updateProfileError: propTypes.error,
   uploadImageError: propTypes.error,
   uploadInProgress: bool.isRequired,
+  onUpdateDatabase: func.isRequired,
 
   // from injectIntl
   intl: intlShape.isRequired,
@@ -308,6 +326,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   onImageUpload: data => dispatch(uploadImage(data)),
   onUpdateProfile: data => dispatch(updateProfile(data)),
+  onUpdateDatabase: data => dispatch(updateDatabase(data)),
 });
 
 const ProfileSettingsPage = compose(

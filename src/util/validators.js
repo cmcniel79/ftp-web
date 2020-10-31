@@ -140,12 +140,10 @@ export const validBusinessURL = message => value => {
   if (typeof value === 'undefined' || value === null) {
     return message;
   }
-
   const disallowedChars = /[^-A-Za-z0-9+&@#/%?=~_|!:,.;()]/;
   const protocolTokens = value.split(':');
   const includesProtocol = protocolTokens.length > 1;
   const usesHttpProtocol = includesProtocol && !!protocolTokens[0].match(/^(https?)/);
-
   const invalidCharacters = !!value.match(disallowedChars);
   const invalidProtocol = !(usesHttpProtocol || !includesProtocol);
   // Stripe checks against example.com

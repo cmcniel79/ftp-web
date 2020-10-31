@@ -7,7 +7,7 @@ import isEqual from 'lodash/isEqual';
 import classNames from 'classnames';
 import { ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
-import * as validators from '../../util/validators';
+import { required, validSocialMediaURL } from '../../util/validators';
 import { isUploadImageOverLimitError } from '../../util/errors';
 import {
   Form,
@@ -21,6 +21,7 @@ import {
   IconSocialMediaInstagram,
   IconSocialMediaTwitter,
   IconSocialMediaTikTok,
+  ExternalLink,
 } from '../../components';
 import TribeSelectFieldMaybe from './TribeSelectFieldMaybe';
 import CompanyAddressMaybe from './CompanyAddressMaybe';
@@ -75,128 +76,62 @@ class ProfileSettingsFormComponent extends Component {
             uploadInProgress,
             form,
             values,
-            accountType
+            accountType,
+            companyWebsite
           } = fieldRenderProps;
 
           const user = ensureCurrentUser(currentUser);
 
           // Company Name
-          const companyNameLabel = intl.formatMessage({
-            id: 'ProfileSettingsForm.companyNameLabel',
-          });
-          const companyNamePlaceholder = intl.formatMessage({
-            id: 'ProfileSettingsForm.companyNamePlaceholder',
-          });
-          const companyNameRequiredMessage = intl.formatMessage({
-            id: 'ProfileSettingsForm.companyNameRequired',
-          });
-          const companyNameRequired = validators.required(companyNameRequiredMessage);
+          const companyNameLabel = intl.formatMessage({ id: 'ProfileSettingsForm.companyNameLabel' });
+          const companyNamePlaceholder = intl.formatMessage({ id: 'ProfileSettingsForm.companyNamePlaceholder' });
+          const companyNameRequiredMessage = intl.formatMessage({ id: 'ProfileSettingsForm.companyNameRequired' });
+          const companyNameRequired = required(companyNameRequiredMessage);
 
-          // Company Website
-          const companyWebsiteLabel = intl.formatMessage({
-            id: 'ProfileSettingsForm.companyWebsiteLabel',
-          });
-          const companyWebsitePlaceholder = intl.formatMessage({
-            id: 'ProfileSettingsForm.companyWebsitePlaceholder',
-          });
-          const companyWebsiteRequiredMessage = intl.formatMessage({
-            id: 'ProfileSettingsForm.companyWebsiteRequired',
-          });
-          const companyWebsiteRequired = validators.required(companyWebsiteRequiredMessage);
-
-          
           // Company Industry
-          const companyIndustryLabel = intl.formatMessage({
-            id: 'ProfileSettingsForm.companyIndustryLabel',
-          });
-          const companyIndustryPlaceholder = intl.formatMessage({
-            id: 'ProfileSettingsForm.companyIndustryPlaceholder',
-          });
+          const companyIndustryLabel = intl.formatMessage({ id: 'ProfileSettingsForm.companyIndustryLabel' });
+          const companyIndustryPlaceholder = intl.formatMessage({ id: 'ProfileSettingsForm.companyIndustryPlaceholder' });
 
           // First name
-          const firstNameLabel = intl.formatMessage({
-            id: 'ProfileSettingsForm.firstNameLabel',
-          });
-          const firstNamePlaceholder = intl.formatMessage({
-            id: 'ProfileSettingsForm.firstNamePlaceholder',
-          });
-          const firstNameRequiredMessage = intl.formatMessage({
-            id: 'ProfileSettingsForm.firstNameRequired',
-          });
-          const firstNameRequired = validators.required(firstNameRequiredMessage);
+          const firstNameLabel = intl.formatMessage({ id: 'ProfileSettingsForm.firstNameLabel' });
+          const firstNamePlaceholder = intl.formatMessage({ id: 'ProfileSettingsForm.firstNamePlaceholder' });
+          const firstNameRequiredMessage = intl.formatMessage({ id: 'ProfileSettingsForm.firstNameRequired' });
+          const firstNameRequired = required(firstNameRequiredMessage);
 
           // Last name
-          const lastNameLabel = intl.formatMessage({
-            id: 'ProfileSettingsForm.lastNameLabel',
-          });
-          const lastNamePlaceholder = intl.formatMessage({
-            id: 'ProfileSettingsForm.lastNamePlaceholder',
-          });
-          const lastNameRequiredMessage = intl.formatMessage({
-            id: 'ProfileSettingsForm.lastNameRequired',
-          });
-          const lastNameRequired = validators.required(lastNameRequiredMessage);
+          const lastNameLabel = intl.formatMessage({ id: 'ProfileSettingsForm.lastNameLabel' });
+          const lastNamePlaceholder = intl.formatMessage({ id: 'ProfileSettingsForm.lastNamePlaceholder' });
+          const lastNameRequiredMessage = intl.formatMessage({ id: 'ProfileSettingsForm.lastNameRequired' });
+          const lastNameRequired = required(lastNameRequiredMessage);
 
           // Bio
-          const bioLabel = intl.formatMessage({
-            id: 'ProfileSettingsForm.bioLabel',
-          });
-          const bioPlaceholder = intl.formatMessage({
-            id: 'ProfileSettingsForm.bioPlaceholder',
-          });
+          const bioLabel = intl.formatMessage({ id: 'ProfileSettingsForm.bioLabel' });
+          const bioPlaceholder = intl.formatMessage({ id: 'ProfileSettingsForm.bioPlaceholder' });
 
           // Social Media Fields
           // Facebook
-          const facebookLabel = intl.formatMessage({
-            id: 'ProfileSettingsForm.facebookLabel',
-          });
-          const facebookPlaceholder = intl.formatMessage({
-            id: 'ProfileSettingsForm.facebookPlaceholder',
-          });
-          const facebookMessage = intl.formatMessage({
-            id: 'ProfileSettingsForm.facebookRequiredMessage',
-          });
+          const facebookLabel = intl.formatMessage({ id: 'ProfileSettingsForm.facebookLabel' });
+          const facebookPlaceholder = intl.formatMessage({ id: 'ProfileSettingsForm.facebookPlaceholder' });
+          const facebookMessage = intl.formatMessage({ id: 'ProfileSettingsForm.facebookRequiredMessage' });
 
           // Twitter
-          const twitterLabel = intl.formatMessage({
-            id: 'ProfileSettingsForm.twitterLabel',
-          });
-          const twitterPlaceholder = intl.formatMessage({
-            id: 'ProfileSettingsForm.twitterPlaceholder',
-          });
-          const twitterMessage = intl.formatMessage({
-            id: 'ProfileSettingsForm.twitterRequiredMessage',
-          });
+          const twitterLabel = intl.formatMessage({ id: 'ProfileSettingsForm.twitterLabel' });
+          const twitterPlaceholder = intl.formatMessage({ id: 'ProfileSettingsForm.twitterPlaceholder' });
+          const twitterMessage = intl.formatMessage({ id: 'ProfileSettingsForm.twitterRequiredMessage' });
 
           // Insta
-          const instaLabel = intl.formatMessage({
-            id: 'ProfileSettingsForm.instaLabel',
-          });
-          const instaPlaceholder = intl.formatMessage({
-            id: 'ProfileSettingsForm.instaPlaceholder',
-          });
-          const instaMessage = intl.formatMessage({
-            id: 'ProfileSettingsForm.instaRequiredMessage',
-          });
+          const instaLabel = intl.formatMessage({ id: 'ProfileSettingsForm.instaLabel' });
+          const instaPlaceholder = intl.formatMessage({ id: 'ProfileSettingsForm.instaPlaceholder' });
+          const instaMessage = intl.formatMessage({ id: 'ProfileSettingsForm.instaRequiredMessage' });
 
           // TikTok
-          const tikTokLabel = intl.formatMessage({
-            id: 'ProfileSettingsForm.tikTokLabel',
-          });
-          const tikTokPlaceholder = intl.formatMessage({
-            id: 'ProfileSettingsForm.tikTokPlaceholder',
-          });
-          const tikTokMessage = intl.formatMessage({
-            id: 'ProfileSettingsForm.tikTokRequiredMessage',
-          });
+          const tikTokLabel = intl.formatMessage({ id: 'ProfileSettingsForm.tikTokLabel' });
+          const tikTokPlaceholder = intl.formatMessage({ id: 'ProfileSettingsForm.tikTokPlaceholder' });
+          const tikTokMessage = intl.formatMessage({ id: 'ProfileSettingsForm.tikTokRequiredMessage' });
 
           // Tribe
-          const tribeLabel = intl.formatMessage({
-            id: 'ProfileSettingsForm.tribeLabel',
-          });
-          const tribePlaceholder = intl.formatMessage({
-            id: 'ProfileSettingsForm.tribePlaceholder',
-          });
+          const tribeLabel = intl.formatMessage({ id: 'ProfileSettingsForm.tribeLabel' });
+          const tribePlaceholder = intl.formatMessage({ id: 'ProfileSettingsForm.tribePlaceholder' });
 
           const uploadingOverlay =
             uploadInProgress || this.state.uploadDelay ? (
@@ -216,14 +151,14 @@ class ProfileSettingsFormComponent extends Component {
           const showSocialMediaFields = accountType === "e" || accountType === "p" || accountType === "n" ?
             true : false;
           // Whenever industry filter in marketplace-custom-config is changed then this needs to be updated
-          const industryOptions = [ 
+          const industryOptions = [
             { key: 'retail', label: "Retail" },
-            { key: 'dining', label: "Dining" },  
+            { key: 'dining', label: "Dining" },
             { key: 'professional', label: "Professional Services" },
             { key: 'hospitality', label: "Hospitality and Tourism" },
             { key: 'nonprofits', label: "Non-Profits" },
             { key: 'beauty', label: "Beauty and Personal Services" },
-            { key: 'other', label: "Other"},
+            { key: 'other', label: "Other" },
           ];
 
           // Ensure that file exists if imageFromFile is used
@@ -291,7 +226,10 @@ class ProfileSettingsFormComponent extends Component {
           const pristineSinceLastSubmit = submittedOnce && isEqual(values, this.submittedValues);
           const submitDisabled =
             invalid || pristine || pristineSinceLastSubmit || uploadInProgress || submitInProgress;
-
+          const emailLink =(
+            <ExternalLink href="mailto:customersupport@fromthepeople.co">
+              <FormattedMessage id="ProfileSettingsForm.contactEmail" />
+            </ExternalLink>);
           return (
             <Form
               className={classes}
@@ -379,6 +317,16 @@ class ProfileSettingsFormComponent extends Component {
                     <FormattedMessage id="ProfileSettingsForm.companyInfo" />
                   </h3>
                   <div className={css.companyContainer}>
+                    <p className={css.websiteTitle}>
+                      <FormattedMessage id="ProfileSettingsForm.yourHomepage" />
+                    </p>
+                    <p className={css.websiteValue}>
+                      {companyWebsite ? companyWebsite :
+                        <FormattedMessage id="ProfileSettingsForm.noHomepage" />}
+                    </p>
+                    <p className={css.websiteSubtitle}>
+                    <FormattedMessage id="ProfileSettingsForm.changeSettings" values={{ emailLink }} />
+                  </p>
                     <FieldTextInput
                       className={css.companyField}
                       type="text"
@@ -386,16 +334,7 @@ class ProfileSettingsFormComponent extends Component {
                       name="companyName"
                       label={companyNameLabel}
                       placeholder={companyNamePlaceholder}
-                      validate={companyNameRequired}
-                    />
-                    <FieldTextInput
-                      className={css.companyField}
-                      type="text"
-                      id="companyWebsite"
-                      name="companyWebsite"
-                      label={companyWebsiteLabel}
-                      placeholder={companyWebsitePlaceholder}
-                      validate={companyWebsiteRequired}
+                      maxLength={30}
                     />
                     <FieldSelect
                       className={css.companyField}
@@ -404,7 +343,7 @@ class ProfileSettingsFormComponent extends Component {
                       label={companyIndustryLabel}
                     >
                       {<option disabled value="">
-                      {companyIndustryPlaceholder}
+                        {companyIndustryPlaceholder}
                       </option>}
                       {industryOptions.map(i => (
                         <option key={i.key} value={i.key}>
@@ -414,7 +353,7 @@ class ProfileSettingsFormComponent extends Component {
                     </FieldSelect>
                     <CompanyAddressMaybe
                       className={css.companyAddress}
-                      initialValues={this.props.initialValues}
+                      initialValue={this.props.initialValues.location}
                     />
                   </div>
                 </div>
@@ -436,6 +375,7 @@ class ProfileSettingsFormComponent extends Component {
                     label={firstNameLabel}
                     placeholder={firstNamePlaceholder}
                     validate={firstNameRequired}
+                    maxLength={30}
                   />
                   <FieldTextInput
                     className={css.lastName}
@@ -445,6 +385,7 @@ class ProfileSettingsFormComponent extends Component {
                     label={lastNameLabel}
                     placeholder={lastNamePlaceholder}
                     validate={lastNameRequired}
+                    maxLength={30}
                   />
                 </div>
               </div>
@@ -458,6 +399,7 @@ class ProfileSettingsFormComponent extends Component {
                   name="bio"
                   label={bioLabel}
                   placeholder={bioPlaceholder}
+                  maxLength={450}
                 />
                 <p className={css.bioInfo}>
                   {accountType === "p" || accountType === "a" || accountType === "n" ?
@@ -481,7 +423,7 @@ class ProfileSettingsFormComponent extends Component {
                         name="facebook"
                         label={facebookLabel}
                         placeholder={facebookPlaceholder}
-                        validate={validators.validSocialMediaURL(facebookMessage, "www.facebook.com")}
+                        validate={validSocialMediaURL(facebookMessage, "www.facebook.com")}
                       />
                     </div>
                     <div className={css.socialMediaField}>
@@ -493,7 +435,7 @@ class ProfileSettingsFormComponent extends Component {
                         name="twitter"
                         label={twitterLabel}
                         placeholder={twitterPlaceholder}
-                        validate={validators.validSocialMediaURL(twitterMessage, "www.twitter.com")}
+                        validate={validSocialMediaURL(twitterMessage, "www.twitter.com")}
                       />
                     </div>
                     <div className={css.socialMediaField}>
@@ -505,7 +447,7 @@ class ProfileSettingsFormComponent extends Component {
                         name="insta"
                         label={instaLabel}
                         placeholder={instaPlaceholder}
-                        validate={validators.validSocialMediaURL(instaMessage, "www.instagram.com")}
+                        validate={validSocialMediaURL(instaMessage, "www.instagram.com")}
                       />
                     </div>
                     <div className={css.socialMediaField}>
@@ -517,7 +459,7 @@ class ProfileSettingsFormComponent extends Component {
                         name="tiktok"
                         label={tikTokLabel}
                         placeholder={tikTokPlaceholder}
-                        validate={validators.validSocialMediaURL(tikTokMessage, "www.tiktok.com")}
+                        validate={validSocialMediaURL(tikTokMessage, "www.tiktok.com")}
                       />
                     </div>
                   </div>
@@ -534,6 +476,7 @@ class ProfileSettingsFormComponent extends Component {
                     name="tribe"
                     label={tribeLabel}
                     placeholder={tribePlaceholder}
+                    maxLength={60}
                   />
                   <p className={css.bioInfo}>
                     <FormattedMessage id="ProfileSettingsForm.tribeInfo" />

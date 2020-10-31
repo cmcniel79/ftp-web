@@ -36,14 +36,19 @@
   flex-shrink: 0;
 
   @media (--viewportLarge) {
-    margin: 0 96px 44px 0;
+    margin: 0 96px 10px 0;
   }
+}
+
+.asideHeading {
+  display: flex;
+  flex-direction: column;
 }
 
 .mobileHeading {
   flex-shrink: 0;
-  margin: 47px 0 0 0;
-  width: 70%;
+  margin: 30px 0 0 0;
+  width: 100%;
   word-wrap: normal;
 
   @media (--viewportMedium) {
@@ -54,14 +59,27 @@
   }
 }
 
+.mobileSubheading {
+    flex-shrink: 0;
+    margin: 5px 0;
+    width: 100%;
+    word-wrap: normal;
+    @media (--viewportLarge) {
+      display: none;
+    }
+}
+
+.socialMediaMobile {
+  margin: 10px 0 5px 0;
+  @media (--viewportLarge) {
+    /* display: none; */
+  }
+}
+
 .editLinkMobile {
-  margin-top: 17px;
-
-  /* Pull the link to the end of the container */
-  margin-left: auto;
-
+  margin: 0;
   @media (--viewportMedium) {
-    margin-top: 20px;
+  margin-left: auto;
   }
   @media (--viewportLarge) {
     display: none;
@@ -70,9 +88,9 @@
 
 .editLinkDesktop {
   display: none;
-
   @media (--viewportLarge) {
-    display: inline;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -81,17 +99,22 @@
 
   @media (--viewportLarge) {
     display: block;
-    margin: 2px 0 24px 0;
+    margin: 2px 0 5px 0;
+  }
+}
+
+.desktopSubheading {
+  display: none;
+  @media (--viewportLarge) {
+    display: block;
+    margin: 2px 0 30px 0;
   }
 }
 
 .companyAddress {
-  margin: 0 0 20px 0;
+  margin: 20px 0 20px 0;
 }
 
-.socialMediaLinks {
-  margin: 0 0 25px 0;
-}
 
 .companyWebsite { 
   margin: 0 0 25px 0;
