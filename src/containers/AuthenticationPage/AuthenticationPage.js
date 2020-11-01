@@ -246,6 +246,7 @@ export class AuthenticationPageComponent extends Component {
 
     // Social login buttons
     const showSocialLogins = !!process.env.REACT_APP_FACEBOOK_APP_ID;
+    console.log(showSocialLogins);
     const facebookButtonText = isLogin ? (
       <FormattedMessage id="AuthenticationPage.loginWithFacebook" />
     ) : (
