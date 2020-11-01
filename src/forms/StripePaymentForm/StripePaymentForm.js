@@ -390,7 +390,7 @@ class StripePaymentForm extends Component {
     );
 
     const shippingAddressFields = shippingAddress ? (
-      <ShippingAddress shippingAddress={shippingAddress} intl={intl} formId={formId} />
+      <ShippingAddress shippingAddress={shippingAddress} intl={intl} formId={formId} country={shippingAddress.country} isCheckoutPage={true} />
     ) : null;
 
 
@@ -470,8 +470,11 @@ class StripePaymentForm extends Component {
               <FormattedMessage id="StripePaymentForm.shippingHeading" />
             </h3>
             {shippingAddressFields}
+            <p className={css.shippingSubheading}>
+              <FormattedMessage id="StripePaymentForm.shippingSubheading" />
+            </p>
           </div>
-        ) : null }
+        ) : null}
         {showInitialMessageInput ? (
           <div>
             <h3 className={css.messageHeading}>

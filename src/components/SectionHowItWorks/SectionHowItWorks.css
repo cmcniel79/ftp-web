@@ -38,8 +38,8 @@
 }
 
 .signUpLink {
-  margin-top: 36px;
-  font-size: 25px;
+  margin-top: 25px;
+  font-size: 20px;
 
   @media (--viewportMedium) {
     margin-top: 24px;

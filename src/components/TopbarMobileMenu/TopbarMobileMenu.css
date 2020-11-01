@@ -97,6 +97,7 @@
   width: initial;
   margin: 4px 0 6px 0;
   padding: 0;
+  position: relative;
 }
 
 .logoutButton {
@@ -136,7 +137,6 @@
 .notificationBadge {
   position: absolute;
   top: 4px;
-  right: -26px;
   /* This is inside a link - remove underline */
   &:hover {
     text-decoration: none;

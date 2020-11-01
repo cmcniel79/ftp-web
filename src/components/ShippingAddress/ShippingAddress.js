@@ -1,5 +1,5 @@
 import React from 'react';
-import { intlShape } from '../../util/reactIntl';
+import { FormattedMessage, intlShape } from '../../util/reactIntl';
 import { bool, object, string } from 'prop-types';
 import config from '../../config';
 import * as validators from '../../util/validators';
@@ -9,7 +9,7 @@ import { FieldTextInput, FieldSelect } from '../../components';
 import css from './ShippingAddress.css';
 
 const ShippingAddress = props => {
-    const { className, intl, formId } = props;
+    const { className, intl, formId, isCheckoutPage, country } = props;
 
     const addressLine1Label = intl.formatMessage({ id: 'ContactDetailsForm.addressLine1Label' });
     const addressLine1Placeholder = intl.formatMessage({ id: 'ContactDetailsForm.addressLine1Placeholder' });
@@ -56,6 +56,37 @@ const ShippingAddress = props => {
 
     // Use tha language set in config.locale to get the correct translations of the country names
     const countryCodes = getCountryCodes(config.locale);
+
+    const countrySection = isCheckoutPage && isCheckoutPage === true ?
+        <div className={css.field}>
+            <p className={css.countryLabel}>
+            {intl.formatMessage({ id: "ShippingAddressComponent.countryHardCodedLabel" })}
+
+    </p>
+            <p className={css.countryValue}>
+                {country}
+            </p>
+        </div>
+        :
+        <FieldSelect
+            id={`${formId}.country`}
+            name="shippingAddress.country"
+            className={css.field}
+            label={countryLabel}
+            validate={countryRequired}
+            disabled={true}
+        >
+            <option disabled value="">
+                {countryPlaceholder}
+            </option>
+            {countryCodes.map(country => {
+                return (
+                    <option key={country.code} value={country.name}>
+                        {country.name}
+                    </option>
+                );
+            })}
+        </FieldSelect>;
 
     return (
         <div className={className ? className : css.address}>
@@ -114,26 +145,7 @@ const ShippingAddress = props => {
                     placeholder={statePlaceholder}
                     validate={stateRequired}
                 />
-
-                <FieldSelect
-                    id={`${formId}.country`}
-                    name="shippingAddress.country"
-                    className={css.field}
-                    label={countryLabel}
-                    validate={countryRequired}
-                    disabled={true}
-                >
-                    <option disabled value="">
-                        {countryPlaceholder}
-                    </option>
-                    {countryCodes.map(country => {
-                        return (
-                            <option key={country.code} value={country.name}>
-                                {country.name}
-                            </option>
-                        );
-                    })}
-                </FieldSelect>
+                {countrySection}
             </div>
         </div>
     );

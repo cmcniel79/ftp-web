@@ -40,3 +40,27 @@
         width: calc(50% - 12px);
     }
 }
+
+.countryLabel {
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 6px;
+    padding-bottom: 2px;
+    line-height: 16px;
+    font-size: 14px;
+}
+
+.countryValue {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 4px 0 2px 0;
+    border: none;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--successColor);
+    border-radius: 0;
+    line-height: 24px;
+    font-size: 16px;
+}
