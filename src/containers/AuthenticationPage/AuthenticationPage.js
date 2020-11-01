@@ -215,7 +215,7 @@ export class AuthenticationPageComponent extends Component {
       const defaultConfirm = pathByRouteName('ConfirmPage', routes);
       const defaultConfirmParam = defaultConfirm ? `&defaultConfirm=${defaultConfirm}` : '';
       console.log(defaultConfirmParam);
-      window.location.href = `${baseUrl}/api/auth/facebook?${fromParam}${defaultReturnParam}${defaultConfirmParam}`;
+      // window.location.href = `${baseUrl}/api/auth/facebook?${fromParam}${defaultReturnParam}${defaultConfirmParam}`;
     };
 
     const idp = this.state.authInfo
