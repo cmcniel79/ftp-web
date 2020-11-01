@@ -35,7 +35,7 @@ const FAQPage = () => {
             <FormattedMessage id="FAQPage.title" />
           </h1>
 
-          <div className={css.accordionSection} id="createAccount">
+          <div className={css.accordionSection} id="create-an-account">
             <h2 className={css.sectionTitle}>
               <FormattedMessage id="FAQPage.createAccount" />
             </h2>
@@ -66,7 +66,7 @@ const FAQPage = () => {
             </Accordion>
           </div>
 
-          <div className={css.accordionSection} id="becomeSeller">
+          <div className={css.accordionSection} id="become-a-seller">
             <h2 className={css.sectionTitle}>
               <FormattedMessage id="FAQPage.becomeSeller" />
             </h2>
@@ -133,7 +133,7 @@ const FAQPage = () => {
             </Accordion>
           </div>
 
-          <div className={css.accordionSection} id="accountTypes">
+          <div className={css.accordionSection} id="account-types">
             <h2 className={css.sectionTitle}>
               <FormattedMessage id="FAQPage.accountTypes" />
             </h2>
@@ -197,7 +197,7 @@ const FAQPage = () => {
                   <br />
                   We charge a subscription fee for Premium Accounts and have 3 subscription plans users can choose from:
                     <br />
-                    <br />
+                  <br />
                   <b>Map Only Plan - $9.99/month</b>
                   <br />
                     Gain access to post to our Native Businesses Map. You can show the physical location of
@@ -252,6 +252,53 @@ const FAQPage = () => {
             </Accordion>
           </div>
 
+          <div className={css.accordionSection} id="native-lands">
+            <h2 className={css.sectionTitle}>
+              <FormattedMessage id="FAQPage.nativeLands" />
+            </h2>
+            <Accordion atomic={true}>
+              <AccordionButton title="How does the Native Lands filter work?">
+                <p>
+                  The Native Land filter is used on our&nbsp;
+                  <NamedLink name="MapPage">
+                  <FormattedMessage id="FAQPage.nativeLandsMap" />
+                  </NamedLink>
+                  &nbsp;and&nbsp;
+                  <NamedLink name="SearchPage">
+                  <FormattedMessage id="FAQPage.nativeLandsSearch" />
+                  </NamedLink>
+                  &nbsp;The filter takes the user's location (or any given location) and finds which Indigenous lands the 
+                  user is on. The Indigenous groups connected to that specific location are returned to the user 
+                  and may be used to filter Map and Search listings. Users are then able to support the Indigenous artists and businesses 
+                  that are from the land that they are currently occupying.
+                  <br/>
+                  <br/>
+                  The results that the filter returns to the user are not exhaustive and may have some errors. Perfectly catagloging the 
+                  territories of all Indigenous groups is impossible. We rely on the work done by&nbsp;
+                  <ExternalLink href="https://native-land.ca/">
+                    <FormattedMessage id="FAQPage.nativeLandsUrl" />
+                  </ExternalLink>
+                  &nbsp;We encourage all of our users to visit their website and learn more about their work. Territories may be mislabeld,
+                  or Indigenous groups may be excluded, and in those cases we are deeply sorry and ask that you let us know or 
+                  contact Native Lands Digital to rectify the situation.
+                </p>
+              </AccordionButton>
+              <AccordionButton title="Where does the Native Lands data come from?">
+                <p>
+                  Tribal land data comes from&nbsp;
+                  <ExternalLink href="https://native-land.ca/">
+                    <FormattedMessage id="FAQPage.nativeLandsUrl" />
+                  </ExternalLink>
+                  <br />
+                  <br />
+                  Native Land Digital is an Indigenous led Canadian not-for-profit organization. We encourage
+                  all of our users and customers to check out their website and contribute if possible. 
+                  We think their work is an innovative way to highlight the effects of colonialism while increasing
+                  the representation of Indigenous people's through technology.
+                </p>
+              </AccordionButton>
+            </Accordion>
+          </div>
 
           <div className={css.accordionSection} id="rules">
             <h2 className={css.sectionTitle}>
@@ -288,8 +335,7 @@ const FAQPage = () => {
             </Accordion>
           </div>
 
-
-          <div className={css.accordionSection} id="paymentProcess">
+          <div className={css.accordionSection} id="payment-process">
             <h2 className={css.sectionTitle}>
               <FormattedMessage id="FAQPage.payment" />
             </h2>
