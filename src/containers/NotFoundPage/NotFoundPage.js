@@ -28,7 +28,7 @@ export class NotFoundPageComponent extends Component {
   }
 
   render() {
-    const { history, intl, scrollingDisabled } = this.props;
+    const { intl, scrollingDisabled } = this.props;
 
     const title = intl.formatMessage({
       id: 'NotFoundPage.title',
