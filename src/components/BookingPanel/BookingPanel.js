@@ -2,7 +2,7 @@ import React from 'react';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
-import { arrayOf, array, bool, func, node, oneOfType, shape, string } from 'prop-types';
+import { array, bool, func, node, oneOfType, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import { propTypes, LISTING_STATE_CLOSED } from '../../util/types';
@@ -10,16 +10,11 @@ import { formatMoney } from '../../util/currency';
 import { parse, stringify } from '../../util/urlHelpers';
 import config from '../../config';
 import { ModalInMobile, Button } from '../../components';
-import { BookingDatesForm } from '../../forms';
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
-import { types as sdkTypes } from '../../util/sdkLoader';
 
 import css from './BookingPanel.css';
 
 const Decimal = require('decimal.js');
-
-const { Money } = sdkTypes;
-const identity = v => v;
 
 // This defines when ModalInMobile shows content as Modal
 const MODAL_BREAKPOINT = 1023;
@@ -74,10 +69,10 @@ const BookingPanel = props => {
     history,
     location,
     intl,
-    onFetchTransactionLineItems,
+    // onFetchTransactionLineItems,
     // lineItems,
-    fetchLineItemsInProgress,
-    fetchLineItemsError,
+    // fetchLineItemsInProgress,
+    // fetchLineItemsError,
     isDomesticOrder,
     shippingFee
   } = props;

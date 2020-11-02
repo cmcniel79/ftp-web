@@ -4,9 +4,8 @@ import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 import routeConfiguration from '../../routeConfiguration';
 import { createResourceLocatorString } from '../../util/routes';
-import { createSlug } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
-import { obfuscatedCoordinates } from '../../util/maps';
+// import { obfuscatedCoordinates } from '../../util/maps';
 import config from '../../config';
 
 import { hasParentWithClassName } from './SearchMap.helpers.js';
@@ -23,22 +22,22 @@ import css from './SearchMap.css';
 
 const REUSABLE_MAP_HIDDEN_HANDLE = 'reusableMapHidden';
 
-const withCoordinatesObfuscated = users => {
-  return users.map(user => {
-    const { id, attributes, ...rest } = user;
-    const origGeolocation = attributes.geolocation;
-    const cacheKey = id ? `${id.uuid}_${origGeolocation.lat}_${origGeolocation.lng}` : null;
-    const geolocation = obfuscatedCoordinates(origGeolocation, cacheKey);
-    return {
-      id,
-      ...rest,
-      attributes: {
-        ...attributes,
-        geolocation,
-      },
-    };
-  });
-};
+// const withCoordinatesObfuscated = users => {
+//   return users.map(user => {
+//     const { id, attributes, ...rest } = user;
+//     const origGeolocation = attributes.geolocation;
+//     const cacheKey = id ? `${id.uuid}_${origGeolocation.lat}_${origGeolocation.lng}` : null;
+//     const geolocation = obfuscatedCoordinates(origGeolocation, cacheKey);
+//     return {
+//       id,
+//       ...rest,
+//       attributes: {
+//         ...attributes,
+//         geolocation,
+//       },
+//     };
+//   });
+// };
 
 export class SearchMapUsersComponent extends Component {
   constructor(props) {
@@ -122,7 +121,7 @@ export class SearchMapUsersComponent extends Component {
       users,
       onMapMoveEnd,
       zoom,
-      mapsConfig,
+      // mapsConfig,
       messages,
       selectedIndustry,
       selectedTribe,

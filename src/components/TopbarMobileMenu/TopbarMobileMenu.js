@@ -5,8 +5,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
-import classNames from 'classnames';
-import { ACCOUNT_SETTINGS_PAGES } from '../../routeConfiguration';
+// import { ACCOUNT_SETTINGS_PAGES } from '../../routeConfiguration';
 import { propTypes } from '../../util/types';
 import { ensureCurrentUser } from '../../util/data';
 import { twitterPageURL } from '../../util/urlHelpers';
@@ -67,14 +66,14 @@ const renderSocialMediaLinks = () => {
 const TopbarMobileMenu = props => {
   const {
     isAuthenticated,
-    currentPage,
+    // currentPage,
     currentUserHasListings,
     currentUser,
     notificationCount,
     onLogout,
   } = props;
 
-  const user = ensureCurrentUser(currentUser);
+  // const user = ensureCurrentUser(currentUser);
   const socialMediaLinks = renderSocialMediaLinks();
   const regularLinksClasses = isAuthenticated ? css.regularLinks : css.regularLinksLarge;
 
@@ -157,12 +156,12 @@ const TopbarMobileMenu = props => {
       <NotificationBadge className={css.notificationBadge} count={notificationCount} />
     ) : null;
 
-  const displayName = user.attributes.profile.firstName;
-  const currentPageClass = page => {
-    const isAccountSettingsPage =
-      page === 'AccountSettingsPage' && ACCOUNT_SETTINGS_PAGES.includes(currentPage);
-    return currentPage === page || isAccountSettingsPage ? css.currentPage : null;
-  };
+  // No idea where below code was supposed to go but I like how it looks now
+  // const currentPageClass = page => {
+  //   const isAccountSettingsPage =
+  //     page === 'AccountSettingsPage' && ACCOUNT_SETTINGS_PAGES.includes(currentPage);
+  //   return currentPage === page || isAccountSettingsPage ? css.currentPage : null;
+  // };
 
   return (
     <div className={css.root}>

@@ -28,8 +28,6 @@ import jewelryImage from './images/jewelry.png';
 import artImage from './images/art.png';
 import apparelImage from './images/apparel.png';
 import traditionalImage from './images/traditional.png';
-import uneImage from './images/une.png';
-import sweetImage from './images/sweet.png';
 
 import css from './LandingPage.css';
 import { getListingsById, getMarketplaceEntities } from '../../ducks/marketplaceData.duck';

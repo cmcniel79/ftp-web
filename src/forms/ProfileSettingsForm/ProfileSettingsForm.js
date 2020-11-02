@@ -85,8 +85,6 @@ class ProfileSettingsFormComponent extends Component {
           // Company Name
           const companyNameLabel = intl.formatMessage({ id: 'ProfileSettingsForm.companyNameLabel' });
           const companyNamePlaceholder = intl.formatMessage({ id: 'ProfileSettingsForm.companyNamePlaceholder' });
-          const companyNameRequiredMessage = intl.formatMessage({ id: 'ProfileSettingsForm.companyNameRequired' });
-          const companyNameRequired = required(companyNameRequiredMessage);
 
           // Company Industry
           const companyIndustryLabel = intl.formatMessage({ id: 'ProfileSettingsForm.companyIndustryLabel' });

@@ -64,7 +64,7 @@ const { UUID, Money } = sdkTypes;
 
 const resolveShippingFeePrice = shippingFee => {
   const { amount, currency } = shippingFee;
-  if (amount && currency || amount == 0 && currency) {
+  if ((amount && currency) || (amount === 0 && currency)) {
     return new Money(amount, currency);
   }
   return null;
@@ -497,7 +497,7 @@ export class ListingPageComponent extends Component {
                   <SectionSizesMaybe sizes={sizes} />
                   {isPremium ?
                     <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
-                    : userCountry && authorCountry || !currentUser ?
+                    : (userCountry && authorCountry) || !currentUser ?
                       <BookingPanel
                         className={css.bookingBreakdown}
                         listing={currentListing}

@@ -1,6 +1,6 @@
 import React from 'react';
-import { FormattedMessage, intlShape } from '../../util/reactIntl';
-import { bool, object, string } from 'prop-types';
+import { intlShape } from '../../util/reactIntl';
+import { bool, string } from 'prop-types';
 import config from '../../config';
 import * as validators from '../../util/validators';
 import getCountryCodes from '../../translations/countryCodes';

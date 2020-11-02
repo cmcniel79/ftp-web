@@ -2,7 +2,7 @@ import moment from 'moment';
 import { types as sdkTypes } from './sdkLoader';
 import toPairs from 'lodash/toPairs';
 
-const { LatLng, Money } = sdkTypes;
+const { Money } = sdkTypes;
 
 export const PASSWORD_MIN_LENGTH = 8;
 export const PASSWORD_MAX_LENGTH = 256;

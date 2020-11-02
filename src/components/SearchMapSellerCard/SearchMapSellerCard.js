@@ -5,14 +5,14 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { ensureUser } from '../../util/data';
-import { AvatarLarge, ResponsiveImage, ExternalLink, Button } from '../../components';
+import { ResponsiveImage, ExternalLink } from '../../components';
 import navigateIcon from './Images/navigate.svg';
 import shareIcon from './Images/share.svg';
 import exitIcon from '../../assets/exit.svg';
 import { userAbbreviatedName } from '../../util/data';
 
 import css from './SearchMapSellerCard.css';
-import { txHasBeenDelivered } from '../../util/transaction';
+// import { txHasBeenDelivered } from '../../util/transaction';
 
 const AVATAR_IMAGE_VARIANTS = [
   // 40x40
@@ -75,7 +75,7 @@ const SellerCard = props => {
             className={css.linkButton}
             href={googleMapsUrl}
           >
-            <img className={css.linkIcon} src={navigateIcon} />
+            <img className={css.linkIcon} src={navigateIcon} alt="Navigate"/>
             <FormattedMessage id="SellerCard.navigateButton" />
           </ExternalLink>
         }
@@ -84,7 +84,7 @@ const SellerCard = props => {
             className={css.linkButton}
             href={companyWebsite}
           >
-            <img className={css.linkIcon} src={exitIcon} />
+            <img className={css.linkIcon} src={exitIcon} alt="Link"/>
             <FormattedMessage id="SellerCard.websiteButton" />
           </ExternalLink>
         }
@@ -92,7 +92,7 @@ const SellerCard = props => {
           className={css.shareButton}
           onClick={() => shareButtonClick(urlToProfile)}
         >
-          <img className={css.shareIcon} src={shareIcon} />
+          <img className={css.shareIcon} src={shareIcon} alt="Share"/>
           <FormattedMessage id="SellerCard.shareButton" />
         </button>
       </div>

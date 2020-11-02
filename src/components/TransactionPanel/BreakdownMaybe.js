@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import config from '../../config';
 import { DATE_TYPE_DATE } from '../../util/types';
 import { BookingBreakdown } from '../../components';
-import { FormattedMessage } from '../../util/reactIntl';
 
 import css from './TransactionPanel.css';
 

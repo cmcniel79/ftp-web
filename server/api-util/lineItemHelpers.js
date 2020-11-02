@@ -22,7 +22,7 @@ const LINE_ITEM_DAY = 'line-item/day';
  */
 exports.resolveShippingFeePrice = shippingFee => {
   const { amount, currency } = shippingFee;
-  if (amount && currency || amount == 0 && currency) {
+  if ((amount && currency) || (amount === 0 && currency)) {
     return new Money(amount, currency);
   }
 

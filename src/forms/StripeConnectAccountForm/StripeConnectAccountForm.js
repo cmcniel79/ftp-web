@@ -58,8 +58,6 @@ const CreateStripeAccountFields = props => {
 
   const companyAccountLabel = intl.formatMessage({ id: 'StripeConnectAccountForm.companyAccount' });
 
-  const contractAgreementLabel = intl.formatMessage({ id: 'StripeConnectAccountForm.contractAgreement' });
-
   const hasBusinessURL = values && values.businessProfileURL;
   // Use user profile page as business_url on this marketplace
   // or just fake it if it's dev environment using Stripe test endpoints
@@ -90,9 +88,6 @@ const CreateStripeAccountFields = props => {
     })
   );
   
-  //Added for agreement to the sellers contract
-  const checkRequired = validators.required('This field is required');
-
   return (
     <div className={css.sectionContainer}>
       <h3 className={css.subTitle}>

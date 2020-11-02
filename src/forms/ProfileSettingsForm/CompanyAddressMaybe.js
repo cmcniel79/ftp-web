@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { intlShape, injectIntl } from '../../util/reactIntl';
 import { propTypes } from '../../util/types';
 import { autocompletePlaceSelected } from '../../util/validators';
-import { Form, LocationAutocompleteInputField, FieldTextInput, FieldCheckbox } from '../../components';
+import { LocationAutocompleteInputField, FieldTextInput, FieldCheckbox } from '../../components';
 
 import css from './ProfileSettingsForm.css';
 

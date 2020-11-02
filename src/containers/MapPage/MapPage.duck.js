@@ -32,7 +32,6 @@ const initialState = {
   userIds: [],
 };
 
-const resultIds = data => data.data.map(l => l.id);
 
 const mapPageReducer = (state = initialState, action = {}) => {
   const { type, payload } = action;

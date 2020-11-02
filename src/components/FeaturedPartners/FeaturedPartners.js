@@ -1,7 +1,5 @@
 import React from 'react';
-import { string, arrayOf, shape, node, object, oneOf, oneOfType } from 'prop-types';
-import classNames from 'classnames';
-import { ResponsiveImage, ExternalLink, NamedLink } from '..';
+import { ResponsiveImage, NamedLink } from '..';
 import { ensureUser } from '../../util/data';
 import css from './FeaturedPartners.css';
 import { propTypes } from '../../util/types';

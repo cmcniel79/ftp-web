@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
-import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
+import { FormattedMessage } from '../../util/reactIntl';
 import bed from '../../assets/bed.svg';
 import dining from '../../assets/dining.svg';
 import other from '../../assets/other.svg';
@@ -17,44 +16,55 @@ export class MapLegend extends Component {
     }
 
     render() {
-        const options = this.props.options;
         return (
             <div className={css.legendBox}>
                 <div className={css.half}></div>
                 <h2 className={css.legendTitle}>
                     <FormattedMessage id="MapPage.legendTitle" />
                 </h2>
-                {/* <div className={css.firstColumn}> */}
-                    <div className={css.legendBlock}>
-                        <img className={css.image} src={retail} alt="icon" />
-                        <span className={css.legendLabel}>Retail</span>
-                    </div>
-                    <div className={css.legendBlock}>
-                        <img className={css.image} src={dining} alt="icon" />
-                        <span className={css.legendLabel}>Dining</span>
-                    </div>
-                    <div className={css.legendBlock}>
-                        <img className={css.image} src={work} alt="icon" />
-                        <span className={css.legendLabel}>Professional Services</span>
-                    </div>
-                    <div className={css.legendBlock}>
-                        <img className={css.image} src={bed} alt="icon" />
-                        <span className={css.legendLabel}>Hospitality and Tourism</span>
-                    </div>
-                    <div className={css.legendBlock}>
-                        <img className={css.image} src={people} alt="icon" />
-                        <span className={css.legendLabel}>Non-Profits</span>
-                    </div>
-                    <div className={css.legendBlock}>
-                        <img className={css.image} src={fitness} alt="icon" />
-                        <span className={css.legendLabel}>Beauty and Personal Services</span>
-                    </div>
-                    <div className={css.legendBlock}>
-                        <img className={css.image} src={other} alt="icon" />
-                        <span className={css.legendLabel}>Other</span>
-                    </div>
+                <div className={css.legendBlock}>
+                    <img className={css.image} src={retail} alt="icon" />
+                    <span className={css.legendLabel}>
+                        <FormattedMessage id="MapPage.legendRetail" />
+                    </span>
                 </div>
-            // </div>
+                <div className={css.legendBlock}>
+                    <img className={css.image} src={dining} alt="icon" />
+                    <span className={css.legendLabel}>
+                        <FormattedMessage id="MapPage.legendDining" />
+                    </span>
+                </div>
+                <div className={css.legendBlock}>
+                    <img className={css.image} src={work} alt="icon" />
+                    <span className={css.legendLabel}>
+                        <FormattedMessage id="MapPage.legendProfessional" />
+                    </span>
+                </div>
+                <div className={css.legendBlock}>
+                    <img className={css.image} src={bed} alt="icon" />
+                    <span className={css.legendLabel}>
+                        <FormattedMessage id="MapPage.legendTourism" />
+                    </span>
+                </div>
+                <div className={css.legendBlock}>
+                    <img className={css.image} src={people} alt="icon" />
+                    <span className={css.legendLabel}>
+                        <FormattedMessage id="MapPage.legendNonprofits" />
+                    </span>
+                </div>
+                <div className={css.legendBlock}>
+                    <img className={css.image} src={fitness} alt="icon" />
+                    <span className={css.legendLabel}>
+                        <FormattedMessage id="MapPage.legendBeauty" />
+                    </span>
+                </div>
+                <div className={css.legendBlock}>
+                    <img className={css.image} src={other} alt="icon" />
+                    <span className={css.legendLabel}>
+                        <FormattedMessage id="MapPage.legendOther" />
+                    </span>
+                </div>
+            </div>
         );
     }
 }

@@ -4,7 +4,6 @@ import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import debounce from 'lodash/debounce';
 import { IconSpinner } from '../../components';
-import { propTypes } from '../../util/types';
 import config from '../../config';
 
 import IconHourGlass from './IconHourGlass';

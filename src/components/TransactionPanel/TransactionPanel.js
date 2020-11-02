@@ -23,7 +23,6 @@ import {
 import { isMobileSafari } from '../../util/userAgent';
 import { formatMoney } from '../../util/currency';
 import {
-  AvatarLarge,
   BookingPanel,
   NamedLink,
   ReviewModal,
@@ -33,7 +32,7 @@ import { SendMessageForm } from '../../forms';
 import config from '../../config';
 
 // These are internal components that make this file more readable.
-import AddressLinkMaybe from './AddressLinkMaybe';
+// import AddressLinkMaybe from './AddressLinkMaybe';
 import BreakdownMaybe from './BreakdownMaybe';
 import DetailCardHeadingsMaybe from './DetailCardHeadingsMaybe';
 import DetailCardImage from './DetailCardImage';
