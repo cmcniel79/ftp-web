@@ -252,14 +252,14 @@ const routeConfiguration = () => {
       component: props => <TransactionPage {...props} transactionRole="provider" />,
       loadData: params => TransactionPage.loadData({ ...params, transactionRole: 'provider' }),
     },
-    {
-      path: '/liked',
-      name: 'LikedListingsPage',
-      auth: true,
-      authPage: 'LoginPage',
-      component: props => <LikedListingsPage {...props} />,
-      loadData: LikedListingsPage.loadData,
-    },
+    // {
+    //   path: '/liked',
+    //   name: 'LikedListingsPage',
+    //   auth: true,
+    //   authPage: 'LoginPage',
+    //   component: props => <LikedListingsPage {...props} />,
+    //   loadData: LikedListingsPage.loadData,
+    // },
     {
       path: '/listings',
       name: 'ManageListingsPage',

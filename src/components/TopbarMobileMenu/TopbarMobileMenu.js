@@ -97,14 +97,14 @@ const TopbarMobileMenu = props => {
       >
         <FormattedMessage id="TopbarMobileMenu.blogLink" />
       </ExternalLink>
-      {isAuthenticated &&
+      {/* {isAuthenticated &&
         <NamedLink
           className={css.regularLink}
           name="LikedListingsPage"
         >
           <FormattedMessage id="TopbarMobileMenu.yourLikedListingsLink" />
         </NamedLink>
-      }
+      } */}
       {isAuthenticated &&
         <NamedLink
           className={css.regularLink}

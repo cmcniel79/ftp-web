@@ -197,7 +197,7 @@ export const ListingCardComponent = props => {
       <div className={css.threeToTwoWrapper}>
         <div className={css.aspectWrapper}>
           {imagesAndLinks}
-          {currentUser &&
+          {/* {currentUser &&
             <LikeButton
               onUpdateLikedListings={onUpdateLikedListings}
               currentListingID={id}
@@ -205,7 +205,7 @@ export const ListingCardComponent = props => {
               isListingLiked={isListingLiked}
               removeListing={removeListing}
             />
-          }
+          } */}
         </div>
       </div>
       <div className={css.cardText}>
