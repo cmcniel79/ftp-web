@@ -108,13 +108,13 @@ const SignupFormComponent = props => (
         id: 'SignupForm.lastNameRequired',
       });
 
-      const isAdultLabel = intl.formatMessage({ id: 'SignupForm.isAdultLabel' });
-      const isAdultPlaceholder = intl.formatMessage({ id: 'SignupForm.isAdultPlaceholder' });
-      const isAdultRequired = validators.required(
-        intl.formatMessage({
-          id: 'SignupForm.isAdultRequired',
-        })
-      );
+      // const isAdultLabel = intl.formatMessage({ id: 'SignupForm.isAdultLabel' });
+      // const isAdultPlaceholder = intl.formatMessage({ id: 'SignupForm.isAdultPlaceholder' });
+      // const isAdultRequired = validators.required(
+      //   intl.formatMessage({
+      //     id: 'SignupForm.isAdultRequired',
+      //   })
+      // );
 
       const countryLabel = intl.formatMessage({ id: 'SignupForm.countryLabel' });
       const countryPlaceholder = intl.formatMessage({ id: 'SignupForm.countryPlaceholder' });
@@ -130,22 +130,22 @@ const SignupFormComponent = props => (
       const submitDisabled = invalid || submitInProgress;
       const countryCodes = getCountryCodes(config.locale);
 
-      const adultBool = document.getElementById("isAdult");
-      const minorsInfo = adultBool != null && adultBool.value === 'false' ?
-        <div>
-          <p className={css.minorsInfo}>
-            From The People's Terms of Use require all account owners to be at least 18 years of age. Individuals under 
-            the age of 18 are considered minors on From The People. Minors under age 13 are not allowed on From The People.
-            <br/>
-            <br/>
-            Minors under 18 and at least 13 years of age are permitted to use From The People's services only if 
-            they have the appropriate permission and direct supervision of their parent or legal guardian 
-            who is the owner of the account.
-            <br/>
-            <br/>
-            You are responsible for any and all account activity conducted by a minor on your account.
-          </p>
-        </div> : null;
+      // const adultBool = document.getElementById("isAdult");
+      // const minorsInfo = adultBool != null && adultBool.value === 'false' ?
+      //   <div>
+      //     <p className={css.minorsInfo}>
+      //       From The People's Terms of Use require all account owners to be at least 18 years of age. Individuals under 
+      //       the age of 18 are considered minors on From The People. Minors under age 13 are not allowed on From The People.
+      //       <br/>
+      //       <br/>
+      //       Minors under 18 and at least 13 years of age are permitted to use From The People's services only if 
+      //       they have the appropriate permission and direct supervision of their parent or legal guardian 
+      //       who is the owner of the account.
+      //       <br/>
+      //       <br/>
+      //       You are responsible for any and all account activity conducted by a minor on your account.
+      //     </p>
+      //   </div> : null;
 
       const handleTermsKeyUp = e => {
         // Allow click action with keyboard like with normal links
@@ -199,7 +199,7 @@ const SignupFormComponent = props => (
               />
             </div>
 
-            <FieldBoolean
+            {/* <FieldBoolean
               className={css.adultBool}
               id={formId ? `${formId}.isAdult` : 'isAdult'}
               name="isAdult"
@@ -208,7 +208,7 @@ const SignupFormComponent = props => (
               validate={isAdultRequired}
             // onChange={adultInputChange}
             />
-            {minorsInfo}
+            {minorsInfo} */}
             <FieldSelect
               className={css.country}
               id={formId ? `${formId}.country` : 'country'}

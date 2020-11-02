@@ -199,21 +199,19 @@ export const signup = params => (dispatch, getState, sdk) => {
     return Promise.reject(new Error('Login or logout already in progress'));
   }
   dispatch(signupRequest());
-  const { email, password, firstName, lastName, country, isAdult, ...rest } = params;
+  const { email, password, firstName, lastName, country, ...rest } = params;
 
   // Account, shippingAddress and isAdult gets set for each user at signup. It makes it easier to change
   // user's account types later on in console if account type is already initialized. Country is also used
   // in figuring out the correct shipping amount (domestic vs international shipping fee). isAdult is just a 
-  // boolean used to figure out if a user should be shown casino ads.
+  // boolean used to figure out if a user should be shown casino ads. Took out isAdult
   const createUserParams = isEmpty(rest)
     ? {
-      email, password, firstName, lastName, protectedData: {
-        isAdult: isAdult, shippingAddress: { country: country } },
+      email, password, firstName, lastName, protectedData: { shippingAddress: { country: country } },
       publicData: { account: "", country: country }
     }
     : {
-      email, password, firstName, lastName, protectedData: {
-        isAdult: isAdult, shippingAddress: { country: country }, ...rest}, 
+      email, password, firstName, lastName, protectedData: { shippingAddress: { country: country }, ...rest}, 
       publicData: { account: "" , country: country}
     };
 

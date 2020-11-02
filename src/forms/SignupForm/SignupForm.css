@@ -45,6 +45,7 @@
 
 .bottomWrapper {
   @apply --marketplaceModalBottomWrapper;
+  margin-top: 50px;
 }
 
 .bottomWrapperText {
