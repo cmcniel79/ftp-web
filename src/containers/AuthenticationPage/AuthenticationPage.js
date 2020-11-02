@@ -210,13 +210,13 @@ export class AuthenticationPageComponent extends Component {
       console.log(fromParam);
       // Default route where user is returned after successfull authentication
       const defaultReturn = pathByRouteName('LandingPage', routes);
-      const defaultReturnParam = defaultReturn ? `&defaultReturn=${defaultReturn}` : '';
+      const defaultReturnParam = defaultReturn ? `&defaultReturn=` : '';
       console.log(defaultReturnParam);
       // Route for confirming user data before creating a new user
       const defaultConfirm = pathByRouteName('ConfirmPage', routes);
       const defaultConfirmParam = defaultConfirm ? `&defaultConfirm=${defaultConfirm}` : '';
       console.log(defaultConfirmParam);
-      // window.location.href = `${baseUrl}/api/auth/facebook?${fromParam}${defaultReturnParam}${defaultConfirmParam}`;
+      window.location.href = `${baseUrl}/api/auth/facebook?${fromParam}${defaultReturnParam}${defaultConfirmParam}`;
     };
 
     const idp = this.state.authInfo
