@@ -210,7 +210,7 @@ export class AuthenticationPageComponent extends Component {
       console.log(fromParam);
       // Default route where user is returned after successfull authentication
       const defaultReturn = pathByRouteName('LandingPage', routes);
-      const defaultReturnParam = defaultReturn ? `&defaultReturn=` : '';
+      const defaultReturnParam = defaultReturn ? `&defaultReturn=${defaultReturn}` : '';
       console.log(defaultReturnParam);
       // Route for confirming user data before creating a new user
       const defaultConfirm = pathByRouteName('ConfirmPage', routes);
