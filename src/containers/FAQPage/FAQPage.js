@@ -202,19 +202,20 @@ const FAQPage = () => {
                   <br />
                     Gain access to post to our Native Businesses Map. You can show the physical location of
                     your business and gain new customers from our Indigenous Marketplace and Community. Your listing on our Map will have links to your website and directions
-                    to your business address. This plan is perfect for Native/Indigenous Owned businesses that perform services and do not sell physical goods.
+                    to your business address. This plan is perfect for Native/Indigenous Owned businesses that provide services and do not sell physical goods.
                     <br />
                   <br />
                   <b>Artisan Plan - $19.99/month</b>
                   <br />
-                    Post up to 7 listings on our Indigenous Marketplace and gain access to our Native Businesses Map. You will have the Premium Sellers badge on all your listings
+                    Post up to 10 listings on our Indigenous Marketplace and gain access to our Native Businesses Map. You will have the Premium Sellers badge on all your listings
                     and can add links to your website to showcase your products. All transactions for your products will take place on your website.
                     <br />
                   <br />
                   <b>Trader Plan - $29.99/month</b>
                   <br />
-                    Post up to 15 listings on our Indigenous Marketplace and gain access to our Native Businesses Map. You will have the Premium Sellers badge on all your listings
-                    and can add links to your website to showcase your products. All transactions for your products will take place on your website.
+                    Post up to 20 listings on our Indigenous Marketplace, gain access to our Native Businesses Map and also be featured on our Landing page
+                    in our "Featured Partners" Section. You will have the Premium Sellers badge on all your listings and can add links to your own website.
+                    All transactions for your products will take place on your website.
                 </p>
               </AccordionButton>
               <AccordionButton title="How do I get a Non-Profit Account?">
@@ -261,25 +262,25 @@ const FAQPage = () => {
                 <p>
                   The Native Land filter is used on our&nbsp;
                   <NamedLink name="MapPage">
-                  <FormattedMessage id="FAQPage.nativeLandsMap" />
+                    <FormattedMessage id="FAQPage.nativeLandsMap" />
                   </NamedLink>
                   &nbsp;and&nbsp;
                   <NamedLink name="SearchPage">
-                  <FormattedMessage id="FAQPage.nativeLandsSearch" />
+                    <FormattedMessage id="FAQPage.nativeLandsSearch" />
                   </NamedLink>
-                  &nbsp;The filter takes the user's location (or any given location) and finds which Indigenous lands the 
-                  user is on. The Indigenous groups connected to that specific location are returned to the user 
-                  and may be used to filter Map and Search listings. Users are then able to support the Indigenous artists and businesses 
+                  &nbsp;The filter takes the user's location (or any given location) and finds which Indigenous lands the
+                  user is on. The Indigenous groups connected to that specific location are returned to the user
+                  and may be used to filter Map and Search listings. Users are then able to support the Indigenous artists and businesses
                   that are from the land that they are currently occupying.
-                  <br/>
-                  <br/>
-                  The results that the filter returns to the user are not exhaustive and may have some errors. Perfectly catagloging the 
+                  <br />
+                  <br />
+                  The results that the filter returns to the user are not exhaustive and may have some errors. Perfectly catagloging the
                   territories of all Indigenous groups is impossible. We rely on the work done by&nbsp;
                   <ExternalLink href="https://native-land.ca/">
                     <FormattedMessage id="FAQPage.nativeLandsUrl" />
                   </ExternalLink>
                   &nbsp;We encourage all of our users to visit their website and learn more about their work. Territories may be mislabeld,
-                  or Indigenous groups may be excluded, and in those cases we are deeply sorry and ask that you let us know or 
+                  or Indigenous groups may be excluded, and in those cases we are deeply sorry and ask that you let us know or
                   contact Native Lands Digital to rectify the situation.
                 </p>
               </AccordionButton>
@@ -292,7 +293,7 @@ const FAQPage = () => {
                   <br />
                   <br />
                   Native Land Digital is an Indigenous led Canadian not-for-profit organization. We encourage
-                  all of our users and customers to check out their website and contribute if possible. 
+                  all of our users and customers to check out their website and contribute if possible.
                   We think their work is an innovative way to highlight the effects of colonialism while increasing
                   the representation of Indigenous people's through technology.
                 </p>
@@ -305,6 +306,32 @@ const FAQPage = () => {
               <FormattedMessage id="FAQPage.rules" />
             </h2>
             <Accordion atomic={true}>
+            <AccordionButton title="What fees does From The people charge?">
+                <p>
+                  From The People only charges a one time payment processing fee when a transaction is made.
+                  This goes to supporting the website and the services we offer.
+                  The payment processing fee is 6% of the total cost of the transaction (base price + shipping fee)
+                  and comes out of the payment the seller receives from the transaction.
+                  <br/>
+                  <br/>
+                  <b><u>Transaction Example</u></b>
+                  <br/>
+                  Item base price: $25.00. 
+                  <br/>
+                  Shipping fee: $4.99. 
+                  <br/>
+                  Total charged to buyer: $29.99.
+                  <br/> 
+                  Our 6% fee on the total cost: $29.99 * 6% = $1.80.
+                  <br/>
+                  The seller's payment: $29.99 - $1.80 = $28.19. 
+                  <br/>
+                  <br/>
+                  We do charge a monthly subscription for Premium Accounts and you can find more information on
+                  Premium Accounts above. Premium Account users gain access to our exclusive website features and
+                  do not go through our transaction process.
+                </p>
+              </AccordionButton>
               <AccordionButton title="Compliance with the Indian Arts and Crafts Act of 1990">
                 <p>
                   If you suspect a seller has misrepresented themselves in regards to Native American heritage or falsely suggests their product is Indian produced,
@@ -343,28 +370,29 @@ const FAQPage = () => {
               <AccordionButton title="What is the payment process like?">
                 <p>
                   Buyers must use a credit/debit card to make a purchase. After payment, the seller needs to accept the transaction for the payment
-                  to be transferred. If the seller does not accept the transaction within 3 days or before the end date (whatever comes first), the transaction is
-                  canceled and no money is transferred. Once the transaction is accepted, both users can then discuss freely to agree on details. When the order
-                  is completed (seller has provided shipping confirmation, product is delivered…), they can mark the order as completed. Both users can then review
-                  each other! Discussions between buyers and sellers can be found in the Inbox section of your account! The payment process also differs slightly
-                  based on which payment service you use, either Stripe or Paypal. For more information on the Stripe payment flow, see here:  Stripe Payment Flow.
+                  to be transferred. If the seller does not accept the transaction within 24 hours, the transaction is
+                  canceled and no money is transferred. Once the transaction is accepted by the seller, the money begins transferring to the seller's bank account.
+                  During the entire process, both users can message each other through the website to agree on details, including shipping.
+                  The review process begins three days after the seller accepts the transaction. Both users can then review
+                  each other! Discussions between buyers and sellers can be found in the Inbox section of your account.
                   </p>
               </AccordionButton>
               <AccordionButton title="How do I get a refund?">
                 <p>
-                  In case you need a refund for any reason, please mark the transaction as disputed. A refund request should only be made before a transaction
-                  has been marked as completed. Once a transaction has been marked as completed, there is a risk that we may not be able to refund you. Buyers
-                  can mark a paid transaction as disputed after the transaction request has been approved and before it is marked as “completed”. The Dispute
-                  feature is a way for buyers to clearly communicate to providers that they are not happy with the way the transaction is handled. To resolve
-                  a dispute, involvement from admins is required. The admins will investigate the matter and determine if a refund is required.
+                  In case you need a refund for any reason, please send us an email at&nbsp;
+                  <ExternalLink className={css.link} href='mailto:customersupport@fromthepeople.co'>
+                    <FormattedMessage id="FAQPage.emailAddress" />
+                  </ExternalLink>
+                  and describe the situation. The refund request needs to be made within 72 hours from the 
+                  item being received by the buyer. To resolve a refund dispute, involvement from admins is required. 
+                  The admins will investigate the matter and be in contact with both parties to determine if a refund is required.
                 </p>
               </AccordionButton>
               <AccordionButton title="What payment service do you use?">
                 <p>
-                  Currently users only have one payment option when buying items on From The People. Buyers can enter their credit card details (protected with Stripe)
-                  for the purchase. We charge a 5% transaction fee, and the minimum transaction fee is $0.65. To use
-                  Stripe, all you need to do is add your bank account details in the payments section of your user account. Stripe secures and encrypts your
-                  sensitive information. For more information on the Stripe payment flow, see here:  Stripe Payment Flow
+                  Currently users only have one payment option (Stripe) when buying items on From The People, but we are looking into adding more options.
+                  Buyers simply need to enter their credit card details to begin a purchase.   
+                  Stripe secures and encrypts your sensitive information and processes the transaction.
                   </p>
               </AccordionButton>
             </Accordion>
