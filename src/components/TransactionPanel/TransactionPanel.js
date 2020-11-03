@@ -369,6 +369,10 @@ export class TransactionPanelComponent extends Component {
           <FormattedMessage id="TransactionPanel.noAddress" />
         </div>
       );
+    const refundInfo = isCustomer ? (
+      <div className={css.refundInfo}>
+        <FormattedMessage id="TransactionPanel.refundInfo" />
+      </div>) : null;
 
     return (
       <div className={classes}>
@@ -397,6 +401,7 @@ export class TransactionPanelComponent extends Component {
 
             <div className={css.bookingDetailsMobile}>
               <BreakdownMaybe transaction={currentTransaction} transactionRole={transactionRole} />
+              {refundInfo}
             </div>
 
             <div className={css.addressSection}>
@@ -489,7 +494,7 @@ export class TransactionPanelComponent extends Component {
                 transaction={currentTransaction}
                 transactionRole={transactionRole}
               />
-
+              {refundInfo}
               {stateData.showSaleButtons ? (
                 <div className={css.desktopActionButtons}>{saleButtons}</div>
               ) : null}

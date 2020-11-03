@@ -281,7 +281,7 @@ const FAQPage = () => {
                   </ExternalLink>
                   &nbsp;We encourage all of our users to visit their website and learn more about their work. Territories may be mislabeld,
                   or Indigenous groups may be excluded, and in those cases we are deeply sorry and ask that you let us know or
-                  contact Native Lands Digital to rectify the situation.
+                  contact Native Lands Digital to try to rectify the situation.
                 </p>
               </AccordionButton>
               <AccordionButton title="Where does the Native Lands data come from?">

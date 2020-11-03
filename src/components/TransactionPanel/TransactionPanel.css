@@ -142,8 +142,6 @@
     max-width: 80%;
     margin: 24px 24px 0 24px;
     padding: 1px 0 7px 0;
-    font-size: 30px;
-    line-height: 35px;
   }
   @media (--viewportLarge) {
     max-width: 100%;
@@ -298,7 +296,6 @@
   color: var(--matterColorAnti);
   margin: 0 24px 0 24px;
   @media (--viewportLarge) {
-    margin: 37px 48px 26px 48px;
     margin: 32px 48px 24px 48px;
     padding: 4px 0 4px 0;
   }
@@ -476,4 +473,18 @@
   color: var(--matterColor);
   margin-top: 0;
   margin-bottom: 1px;
+}
+
+.refundInfo {
+  font-size: 14px;
+  line-height: 16px;
+  margin: 14px 24px 0 24px;
+  color: var(--matterColorAnti);
+  @media (--viewportMedium) {
+    margin: 14px 25px 0 24px;
+  }
+  @media (--viewportLarge) {
+    margin: 14px 25px 47px 48px;
+    padding: 6px 0 2px 0;
+  }
 }

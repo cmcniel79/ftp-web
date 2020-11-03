@@ -1222,6 +1222,7 @@
   "TransactionPanel.perDay": "per day",
   "TransactionPanel.perNight": "per night",
   "TransactionPanel.perUnit": "per unit",
+  "TransactionPanel.refundInfo": "*If you need to request a refund, please email us at customersupport@fromthepeople.co with information about what went wrong",
   "TransactionPanel.requestToBook": "Buy",
   "TransactionPanel.saleAcceptedTitle": "You accepted a request from {customerName} to buy {listingLink}.",
   "TransactionPanel.saleCancelledTitle": "The purchase request from {customerName} for {listingLink} has been cancelled.",
