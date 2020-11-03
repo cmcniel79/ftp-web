@@ -14,7 +14,7 @@ import {
   isTooManyEmailVerificationRequestsError,
 } from '../../util/errors';
 import getCountryCodes from '../../translations/countryCodes';
-import { Form, PrimaryButton, FieldTextInput, FieldSelect } from '../../components';
+import { Form, PrimaryButton, FieldTextInput, FieldSelect, ShippingAddress } from '../../components';
 import config from '../../config';
 
 import css from './ContactDetailsForm.css';
@@ -235,38 +235,6 @@ class ContactDetailsFormComponent extends Component {
 
           const shippingAddressChanged = currentShippingAddress !== shippingAddress;
 
-          const addressLine1Label = intl.formatMessage({
-            id: 'ContactDetailsForm.addressLine1Label',
-          });
-          const addressLine1Placeholder = intl.formatMessage({
-            id: 'ContactDetailsForm.addressLine1Placeholder',
-          });
-
-          const addressLine2Label = intl.formatMessage(
-            { id: 'ContactDetailsForm.addressLine2Label' },
-          );
-
-          const addressLine2Placeholder = intl.formatMessage({
-            id: 'ContactDetailsForm.addressLine2Placeholder',
-          });
-
-          const postalCodeLabel = intl.formatMessage({ id: 'ContactDetailsForm.postalCodeLabel' });
-          const postalCodePlaceholder = intl.formatMessage({
-            id: 'ContactDetailsForm.postalCodePlaceholder',
-          });
-
-          const cityLabel = intl.formatMessage({ id: 'ContactDetailsForm.cityLabel' });
-          const cityPlaceholder = intl.formatMessage({ id: 'ContactDetailsForm.cityPlaceholder' });
-
-          const stateLabel = intl.formatMessage({ id: 'ContactDetailsForm.stateLabel' },);
-          const statePlaceholder = intl.formatMessage({ id: 'ContactDetailsForm.statePlaceholder' });
-
-          const countryLabel = intl.formatMessage({ id: 'ContactDetailsForm.countryLabel' });
-          const countryPlaceholder = intl.formatMessage({ id: 'ContactDetailsForm.countryPlaceholder' });
-
-          // Use tha language set in config.locale to get the correct translations of the country names
-          const countryCodes = getCountryCodes(config.locale);
-
           // generic error
           const isGenericEmailError = saveEmailError && !(emailTakenErrorText || passwordErrorText);
 
@@ -287,7 +255,7 @@ class ContactDetailsFormComponent extends Component {
           } else if (savePhoneNumberError) {
             genericError = (
               <span className={css.error}>
-                <FormattedMessage id="ContactDetailsForm.genericPhoneNumberFailure" />
+                <FormattedMessage id="ContactDetailsForm.genericFailure" />
               </span>
             );
           }
@@ -329,10 +297,6 @@ class ContactDetailsFormComponent extends Component {
             pristineSinceLastSubmit ||
             inProgress ||
             !((emailChanged || shippingAddressChanged) && isCompleteShippingAddress);
-          
-            console.log(emailChanged);
-            console.log(isCompleteShippingAddress);
-            console.log(submitDisabled);
 
           return (
             <Form
@@ -344,81 +308,11 @@ class ContactDetailsFormComponent extends Component {
             >
               <div className={css.contactDetailsSection}>
                 <div className={className ? className : css.address}>
-                  <h3>Default Shipping Address </h3>
+                  <h3>
+                  <FormattedMessage id="ContactDetailsForm.defaultAddressHeading"/>
+                  </h3>
                   <div className={css.formRow}>
-                    <FieldTextInput
-                      id={`${formId}.addressLine1`}
-                      name="shippingAddress.addressLine1"
-                      className={css.field}
-                      type="text"
-                      autoComplete="billing address-line1"
-                      label={addressLine1Label}
-                      placeholder={addressLine1Placeholder}
-                      // validate={addressLine1Required}
-                    />
-                    <FieldTextInput
-                      id={`${formId}.addressLine2`}
-                      name="shippingAddress.addressLine2"
-                      className={css.field}
-                      type="text"
-                      autoComplete="billing address-line2"
-                      label={addressLine2Label}
-                      placeholder={addressLine2Placeholder}
-                    />
-                  </div>
-                  <div className={css.formRow}>
-                    <FieldTextInput
-                      id={`${formId}.postalCode`}
-                      name="shippingAddress.postal"
-                      className={css.field}
-                      type="text"
-                      autoComplete="billing postal-code"
-                      label={postalCodeLabel}
-                      placeholder={postalCodePlaceholder}
-                      // validate={postalCodeRequired}
-                    />
-
-                    <FieldTextInput
-                      id={`${formId}.city`}
-                      name="shippingAddress.city"
-                      className={css.field}
-                      type="text"
-                      autoComplete="billing address-level2"
-                      label={cityLabel}
-                      placeholder={cityPlaceholder}
-                      // validate={cityRequired}
-                    />
-                  </div>
-                  <div className={css.formRow}>
-                    <FieldTextInput
-                      id={`${formId}.state`}
-                      name="shippingAddress.state"
-                      className={css.field}
-                      type="text"
-                      autoComplete="billing address-level1"
-                      label={stateLabel}
-                      placeholder={statePlaceholder}
-                      // validate={stateRequired}
-                    />
-
-                    <FieldSelect
-                      id={`${formId}.country`}
-                      name="shippingAddress.country"
-                      className={css.field}
-                      label={countryLabel}
-                      // validate={countryRequired}
-                    >
-                      <option disabled value="">
-                        {countryPlaceholder}
-                      </option>
-                      {countryCodes.map(country => {
-                        return (
-                          <option key={country.code} value={country.name}>
-                            {country.name}
-                          </option>
-                        );
-                      })}
-                    </FieldSelect>
+                  <ShippingAddress shippingAddress={shippingAddress} intl={intl} formId={formId} isCheckoutPage={false} />
                   </div>
                 </div>
                 <FieldTextInput

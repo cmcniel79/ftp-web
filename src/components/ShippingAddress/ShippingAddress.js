@@ -11,47 +11,37 @@ import css from './ShippingAddress.css';
 const ShippingAddress = props => {
     const { className, intl, formId, isCheckoutPage, country } = props;
 
-    const addressLine1Label = intl.formatMessage({ id: 'ContactDetailsForm.addressLine1Label' });
-    const addressLine1Placeholder = intl.formatMessage({ id: 'ContactDetailsForm.addressLine1Placeholder' });
+    const addressLine1Label = intl.formatMessage({ id: 'ShippingAddress.addressLine1Label' });
+    const addressLine1Placeholder = intl.formatMessage({ id: 'ShippingAddress.addressLine1Placeholder' });
     const addressLine1Required = validators.required(
-        intl.formatMessage({
-            id: 'ContactDetailsForm.addressLine1Required',
-        })
+        intl.formatMessage({ id: 'ShippingAddress.addressLine1Required' })
     );
 
-    const addressLine2Label = intl.formatMessage({ id: 'ContactDetailsForm.addressLine2Label' });
-    const addressLine2Placeholder = intl.formatMessage({ id: 'ContactDetailsForm.addressLine2Placeholder' });
+    const addressLine2Label = intl.formatMessage({ id: 'ShippingAddress.addressLine2Label' });
+    const addressLine2Placeholder = intl.formatMessage({ id: 'ShippingAddress.addressLine2Placeholder' });
 
-    const postalCodeLabel = intl.formatMessage({ id: 'ContactDetailsForm.postalCodeLabel' });
-    const postalCodePlaceholder = intl.formatMessage({ id: 'ContactDetailsForm.postalCodePlaceholder' });
+    const postalCodeLabel = intl.formatMessage({ id: 'ShippingAddress.postalCodeLabel' });
+    const postalCodePlaceholder = intl.formatMessage({ id: 'ShippingAddress.postalCodePlaceholder' });
     const postalCodeRequired = validators.required(
-        intl.formatMessage({
-            id: 'ContactDetailsForm.postalCodeRequired',
-        })
+        intl.formatMessage({ id: 'ShippingAddress.postalCodeRequired' })
     );
 
-    const cityLabel = intl.formatMessage({ id: 'ContactDetailsForm.cityLabel' });
-    const cityPlaceholder = intl.formatMessage({ id: 'ContactDetailsForm.cityPlaceholder' });
+    const cityLabel = intl.formatMessage({ id: 'ShippingAddress.cityLabel' });
+    const cityPlaceholder = intl.formatMessage({ id: 'ShippingAddress.cityPlaceholder' });
     const cityRequired = validators.required(
-        intl.formatMessage({
-            id: 'ContactDetailsForm.cityRequired',
-        })
+        intl.formatMessage({ id: 'ShippingAddress.cityRequired' })
     );
 
-    const stateLabel = intl.formatMessage({ id: 'ContactDetailsForm.stateLabel' },);
-    const statePlaceholder = intl.formatMessage({ id: 'ContactDetailsForm.statePlaceholder' });
+    const stateLabel = intl.formatMessage({ id: 'ShippingAddress.stateLabel' },);
+    const statePlaceholder = intl.formatMessage({ id: 'ShippingAddress.statePlaceholder' });
     const stateRequired = validators.required(
-        intl.formatMessage({
-            id: 'ContactDetailsForm.stateRequired',
-        })
+        intl.formatMessage({ id: 'ShippingAddress.stateRequired' })
     );
 
-    const countryLabel = intl.formatMessage({ id: 'ContactDetailsForm.countryLabel' });
-    const countryPlaceholder = intl.formatMessage({ id: 'ContactDetailsForm.countryPlaceholder' });
+    const countryLabel = intl.formatMessage({ id: 'ShippingAddress.countryLabel' });
+    const countryPlaceholder = intl.formatMessage({ id: 'ShippingAddress.countryPlaceholder' });
     const countryRequired = validators.required(
-        intl.formatMessage({
-            id: 'ContactDetailsForm.countryRequired',
-        })
+        intl.formatMessage({ id: 'ShippingAddress.countryRequired' })
     );
 
     // Use tha language set in config.locale to get the correct translations of the country names
@@ -60,21 +50,18 @@ const ShippingAddress = props => {
     const countrySection = isCheckoutPage && isCheckoutPage === true ?
         <div className={css.field}>
             <p className={css.countryLabel}>
-            {intl.formatMessage({ id: "ShippingAddressComponent.countryHardCodedLabel" })}
-
-    </p>
+                {intl.formatMessage({ id: "ShippingAddress.countryHardCodedLabel" })}
+            </p>
             <p className={css.countryValue}>
                 {country}
             </p>
-        </div>
-        :
+        </div> :
         <FieldSelect
             id={`${formId}.country`}
             name="shippingAddress.country"
             className={css.field}
             label={countryLabel}
             validate={countryRequired}
-            disabled={true}
         >
             <option disabled value="">
                 {countryPlaceholder}
