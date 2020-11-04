@@ -136,7 +136,11 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
     ...priceMaybe,
     ...datesMaybe,
     per_page: perPage,
+    meta_ranking: "0,",
+    sort: "-meta_ranking"
   };
+
+  console.log(params);
 
   return sdk.listings
     .query(params)

@@ -86,11 +86,11 @@ const UserCard = props => {
     ensuredUser.attributes.profile.publicData.account : null;  
   const isPremium = accountType && accountType === "p" ? true : false;
   const isVerified = accountType && accountType === "e" ? true : false;
-  const companyWebsite = isPremium && ensuredUser.attributes.profile.publicData.companyWebsite ? 
+  const companyWebsite = isPremium && ensuredUser.attributes.profile.publicData && ensuredUser.attributes.profile.publicData.companyWebsite ? 
     ensuredUser.attributes.profile.publicData.companyWebsite : null;
-  const companyName = isPremium && ensuredUser.attributes.profile.publicData.companyName ?
+  const companyName = isPremium && ensuredUser.attributes.profile.publicData && ensuredUser.attributes.profile.publicData.companyName ?
     ensuredUser.attributes.profile.publicData.companyName : null;
-  const socialMedia = ensuredUser.attributes.profile.publicData.socialMedia ?
+  const socialMedia = ensuredUser.attributes.profile.publicData && ensuredUser.attributes.profile.publicData.socialMedia ?
     ensuredUser.attributes.profile.publicData.socialMedia : null;
 
   const handleContactUserClick = () => {

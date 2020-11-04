@@ -301,8 +301,9 @@ SearchPage.loadData = (params, search) => {
     page,
     perPage: RESULT_PAGE_SIZE,
     include: ['author', 'images'],
-    'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink', 'publicData.category', 'publicData.companyName'],
-    'fields.user': ['profile.displayName', 'profile.abbreviatedName', 'profile.publicData'], //added metadata for verify badge
+    'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink', 'publicData.category'],
+    'fields.user': ['profile.displayName', 'profile.abbreviatedName', 
+                      'profile.publicData.account', 'profile.publicData.tribe', 'profile.publicData.companyName', 'profile.publicData.companyIndustry'], //added metadata for verify badge
     'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
     'limit.images': 1,
   });
