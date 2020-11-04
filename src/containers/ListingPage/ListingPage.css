@@ -255,6 +255,10 @@
   }
 }
 
+.noInternational {
+  color: var(--matterColorAnti);
+}
+
 .purchaseWarning {
   color: var(--failColor);
 }

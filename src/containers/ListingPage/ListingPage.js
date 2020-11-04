@@ -132,7 +132,6 @@ export class ListingPageComponent extends Component {
     // Customize checkout page state with current listing and selected bookingDates
     const { setInitialValues } = findRouteByRouteName('CheckoutPage', routes);
 
-    console.log(initialValues);
     callSetInitialValues(setInitialValues, initialValues, saveToSessionStorage);
 
     // Clear previous Stripe errors from store if there is any
@@ -355,10 +354,8 @@ export class ListingPageComponent extends Component {
       currentUser.attributes.profile.protectedData.shippingAddress.country : null;
     const isDomesticOrder = authorCountry && userCountry && authorCountry === userCountry ? true : false;
     const lineItems = !isPremium && isDomesticOrder ? domesticLineItems : internationalLineItems;
-    const allowsInternationalOrders = !isPremium && publicData.allowsInternationalOrders ? true : false;
+    const allowsInternationalOrders = !isPremium && publicData && publicData.allowsInternationalOrders ? true : false;
     const { formattedPrice, priceTitle } = priceData(price, intl);
-    console.log(isDomesticOrder);
-    console.log(allowsInternationalOrders);
     const handleBookingSubmit = values => {
       const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;
       if (isOwnListing || isCurrentlyClosed) {
@@ -417,7 +414,6 @@ export class ListingPageComponent extends Component {
     const shippingFee = isDomesticOrder && domesticFee ? resolveShippingFeePrice(publicData.shippingFee) :
       !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
         resolveShippingFeePrice({ amount: 0, currency: config.currency });
-    console.log(shippingFee);
     return (
       <Page
         title={schemaTitle}
@@ -487,8 +483,8 @@ export class ListingPageComponent extends Component {
                   <SectionCustomOrdersMaybe customOrders={customOrders} />
                   <SectionMaterialsMaybe options={materialOptions} material={material} />
                   <SectionSizesMaybe sizes={sizes} />
-                  {isPremium ?
-                    <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
+                  {publicData ? (
+                   isPremium ? <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
                     : (isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders) || (!currentUser)?
                       <BookingPanel
                         className={css.bookingBreakdown}
@@ -510,7 +506,7 @@ export class ListingPageComponent extends Component {
                         shippingFee={shippingFee}
                       />
                       : !isDomesticOrder && !allowsInternationalOrders ?
-                        <span className={css.purchaseWarning} >
+                        <span className={css.noInternational} >
                           <FormattedMessage id="ListingPage.noInternationalOrders" />
                         </span>
                         : userCountry === null ?
@@ -523,7 +519,7 @@ export class ListingPageComponent extends Component {
                             </span>
                             : <span className={css.purchaseWarning} >
                               <FormattedMessage id="ListingPage.listingMissingInfo" />
-                            </span>}
+                            </span>) : null}
                   {!isPremium &&
                     <div className={css.reviewsContainerMobile}>
                       <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
