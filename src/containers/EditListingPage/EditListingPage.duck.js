@@ -782,3 +782,22 @@ export const loadData = params => (dispatch, getState, sdk) => {
       throw e;
     });
 };
+
+export const updateRanking = actionPayload => {
+  console.log(actionPayload);
+
+  const url = "https://92rutchmtc.execute-api.us-west-1.amazonaws.com/prd";
+  const options = {
+    method: 'POST',
+    withCredentials: false,
+    body: JSON.stringify(actionPayload),
+    headers: {
+      "Content-Type": "application/json",
+      "X-Api-Key": "OB9atXvkqR4NV0bVL3MKO4PWrHpVoZye8z2uR7Yf",
+    }
+  }
+
+  fetch(url, options)
+    .then(response => response.json())
+    .then(json => console.log(json));
+};

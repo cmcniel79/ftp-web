@@ -39,7 +39,8 @@ import {
   loadData,
   clearUpdatedTab,
   savePayoutDetails,
-  queryOwnListings
+  queryOwnListings,
+  updateRanking,
 } from './EditListingPage.duck';
 
 import css from './EditListingPage.css';
@@ -97,7 +98,6 @@ export const EditListingPageComponent = props => {
   const listingId = page.submittedListingId || (id ? new UUID(id) : null);
   const currentListing = ensureOwnListing(getOwnListing(listingId));
   const { state: currentListingState } = currentListing.attributes;
-
   const isPastDraft = currentListingState && currentListingState !== LISTING_STATE_DRAFT;
   const shouldRedirect = isNewListingFlow && listingId && isPastDraft;
 
@@ -244,6 +244,7 @@ export const EditListingPageComponent = props => {
             createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
           }
           stripeAccountLinkError={getAccountLinkError}
+          updateRanking={updateRanking}
         />
       </Page>
     );

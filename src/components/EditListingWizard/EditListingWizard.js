@@ -185,7 +185,7 @@ class EditListingWizard extends Component {
   }
 
   handlePublishListing(id, accountType) {
-    const { onPublishListingDraft, currentUser, stripeAccount } = this.props;
+    const { onPublishListingDraft, currentUser, stripeAccount, updateRanking } = this.props;
 
     const stripeConnected =
       currentUser && currentUser.stripeAccount && !!currentUser.stripeAccount.id;
@@ -197,12 +197,20 @@ class EditListingWizard extends Component {
       (hasRequirements(stripeAccountData, 'past_due') ||
         hasRequirements(stripeAccountData, 'currently_due'));
 
+    const uuid = id.uuid;
+    const requestBody = {
+      uuid: uuid,
+      ranking: null
+    }
+
     // Added for Premium, Ad and non-profit accounts. They should not add payout info before being
     // allowed to post their items.
-    if(accountType === 'p' || accountType === 'a' || accountType === 'n'){
+    if (accountType === 'p' || accountType === 'a' || accountType === 'n') {
       onPublishListingDraft(id);
-    } else if(stripeConnected && !requirementsMissing) {
+      updateRanking(requestBody);
+    } else if (stripeConnected && !requirementsMissing) {
       onPublishListingDraft(id);
+      updateRanking(requestBody);
     } else {
       this.setState({
         draftId: id,
@@ -305,7 +313,7 @@ class EditListingWizard extends Component {
       ensuredCurrentUser.attributes.profile.protectedData.shippingAddress.country : null;
     const allowsCustomOrders = currentUserLoaded && ensuredCurrentUser.attributes.profile.publicData.allowsCustomOrders ?
       ensuredCurrentUser.attributes.profile.publicData.allowsCustomOrders : null;
-    
+
     const rootURL = config.canonicalRootURL;
     const routes = routeConfiguration();
     const { returnURLType, ...pathParams } = params;
