@@ -260,7 +260,10 @@ const FAQPage = () => {
                protecting and preserving. It is easy to see something so beautiful like our traditional regalia and headdresses and want it for
                 yourself (cultural appropriation), but as a non-Native ally it is imperative you support your local and national Indigenous
                  movements that help us continue our way of life. We encourage you to spotlight and uplift Native voices. If you would like
-                  some help getting started here are some additional materials
+                  some help getting started here are some additional materials:&nbsp;
+                  <ExternalLink href="https://350.org/protect-mauna-kea-stand-in-solidarity-with-kanaka-oiwi/">Stand With Mauna Kea</ExternalLink>,&nbsp;
+                  <ExternalLink href="https://www.protectjuristac.org/how-to-help/">Help Tribes Gain Federal Recognition</ExternalLink>,&nbsp;
+                  <ExternalLink href="https://www.csvanw.org/donate/">Missing and Murdered Indigenous Women (MMIW)</ExternalLink>.
                   <br />
                   <br />
                   <b>Cultural appropriation</b> takes place when a person learns of an aspect of another culture and then exploits that knowledge for
