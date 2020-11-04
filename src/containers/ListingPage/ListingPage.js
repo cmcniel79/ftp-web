@@ -351,14 +351,14 @@ export class ListingPageComponent extends Component {
     const isPremium = accountType && (accountType === "p" || accountType === "a" || accountType === "n") ? true : false;
 
     const authorCountry = publicData && publicData.country ? publicData.country : null;
-    const userCountry = currentUser && currentUser.attributes.profile.protectedData &&
-      currentUser.attributes.profile.protectedData.shippingAddress ?
+    const userCountry = currentUser && currentUser.attributes.profile.protectedData && currentUser.attributes.profile.protectedData.shippingAddress ?
       currentUser.attributes.profile.protectedData.shippingAddress.country : null;
     const isDomesticOrder = authorCountry && userCountry && authorCountry === userCountry ? true : false;
     const lineItems = !isPremium && isDomesticOrder ? domesticLineItems : internationalLineItems;
-
+    const allowsInternationalOrders = !isPremium && publicData.allowsInternational ? true : false;
     const { formattedPrice, priceTitle } = priceData(price, intl);
-
+    console.log(isDomesticOrder);
+    console.log(allowsInternationalOrders);
     const handleBookingSubmit = values => {
       const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;
       if (isOwnListing || isCurrentlyClosed) {
@@ -401,31 +401,23 @@ export class ListingPageComponent extends Component {
           <span className={css.separator}>•</span>
           {subCategoryLabel(categoryOptions, publicData.category, publicData.subCategory)}
           {authorTribe &&
-            <span className={css.separator}>•</span>
-          }
-          {authorTribe &&
-            authorTribe
-          }
+            <div className={css.authorTribe}>
+              <span className={css.separator}>•</span>
+              {authorTribe}
+            </div>}
         </span>
       ) : null;
 
-    const material =
-      publicData && publicData.material ? publicData.material : null;
-    const sizes =
-      publicData && publicData.sizes ? publicData.sizes : null;
-    const customOrders =
-      publicData && publicData.customOrders ? publicData.customOrders : null;
-    const websiteLink =
-      isPremium && publicData && publicData.websiteLink ? publicData.websiteLink : null;
-    const domesticFee =
-      publicData && publicData.shippingFee ? publicData.shippingFee : null;
-    const internationalFee =
-      publicData && publicData.internationalFee ? publicData.internationalFee : null;
-    const shippingFee =
-      isDomesticOrder && domesticFee ? resolveShippingFeePrice(publicData.shippingFee) :
-        !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
-          resolveShippingFeePrice({ amount: 0, currency: config.currency });
-
+    const material = publicData && publicData.material ? publicData.material : null;
+    const sizes = publicData && publicData.sizes ? publicData.sizes : null;
+    const customOrders = publicData && publicData.customOrders ? publicData.customOrders : null;
+    const websiteLink = isPremium && publicData && publicData.websiteLink ? publicData.websiteLink : null;
+    const domesticFee = publicData && publicData.shippingFee ? publicData.shippingFee : null;
+    const internationalFee = publicData && publicData.internationalFee ? publicData.internationalFee : null;
+    const shippingFee = isDomesticOrder && domesticFee ? resolveShippingFeePrice(publicData.shippingFee) :
+      !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
+        resolveShippingFeePrice({ amount: 0, currency: config.currency });
+    console.log(shippingFee);
     return (
       <Page
         title={schemaTitle}
@@ -497,7 +489,7 @@ export class ListingPageComponent extends Component {
                   <SectionSizesMaybe sizes={sizes} />
                   {isPremium ?
                     <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
-                    : (userCountry && authorCountry) || !currentUser ?
+                    : (isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders) ?
                       <BookingPanel
                         className={css.bookingBreakdown}
                         listing={currentListing}
@@ -517,18 +509,22 @@ export class ListingPageComponent extends Component {
                         isDomesticOrder={isDomesticOrder}
                         shippingFee={shippingFee}
                       />
-                      : userCountry === null ?
+                      : !isDomesticOrder && !allowsInternationalOrders ?
                         <span className={css.purchaseWarning} >
-                          <FormattedMessage id="ListingPage.noUserCountry" />
+                          <FormattedMessage id="ListingPage.noInternationalOrders" />
                         </span>
-                        : authorCountry === null ?
+                        : userCountry === null ?
                           <span className={css.purchaseWarning} >
-                            <FormattedMessage id="ListingPage.noAuthorCountry" />
+                            <FormattedMessage id="ListingPage.noUserCountry" />
                           </span>
-                          :
-                          <span className={css.purchaseWarning} >
-                            <FormattedMessage id="ListingPage.listingMissingInfo" />
-                          </span>}
+                          : authorCountry === null ?
+                            <span className={css.purchaseWarning} >
+                              <FormattedMessage id="ListingPage.noAuthorCountry" />
+                            </span>
+                            :
+                            <span className={css.purchaseWarning} >
+                              <FormattedMessage id="ListingPage.listingMissingInfo" />
+                            </span>}
                   {!isPremium &&
                     <div className={css.reviewsContainerMobile}>
                       <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />

@@ -36,8 +36,8 @@
   width: 100%;
   margin: 0 auto;
   @media (--viewportMedium) {
-    width: 35%;
-    margin: 0 0 35px 35px;
+    width: 100%;
+    margin: 0;
   }
 }
 
@@ -57,7 +57,7 @@
 
 .priceInputs {
   @media (--viewportMedium) {
-    width: 50%;
+    width: 75%;
   }
 }
 

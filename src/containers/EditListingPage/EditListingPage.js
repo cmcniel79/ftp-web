@@ -118,11 +118,11 @@ export const EditListingPageComponent = props => {
   
   const isUnderLimit = listingsLimit && allOwnListings && 
     allOwnListings.data.data.length > 0 && listingsLimit > allOwnListings.data.data.length;
-  console.log(isUnderLimit);
-  console.log(accountLimit);
-  console.log(listingsLimit);
-  console.log(allOwnListings);
-  console.log(currentListingState);
+  // console.log(isUnderLimit);
+  // console.log(accountLimit);
+  // console.log(listingsLimit);
+  // console.log(allOwnListings);
+  // console.log(currentListingState);
   if (shouldRedirect) {
     const isPendingApproval =
       currentListing && currentListingState === LISTING_STATE_PENDING_APPROVAL;

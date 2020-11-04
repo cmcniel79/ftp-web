@@ -399,6 +399,10 @@
   margin: 0 6px;
 }
 
+.authorTribe {
+  display: inline !important;
+}
+
 .contactLink {
   @apply --marketplaceLinkStyles;
   @apply --marketplaceH5FontStyles;

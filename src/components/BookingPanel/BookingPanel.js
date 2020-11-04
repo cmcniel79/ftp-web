@@ -145,11 +145,9 @@ const BookingPanel = props => {
             </div>
             <p className={css.smallPrint}>
               <FormattedMessage
-                id={
-                  isOwnListing
+                id={isOwnListing
                     ? 'BookingDatesForm.ownListing'
-                    : 'BookingDatesForm.youWontBeChargedInfo'
-                }
+                    : 'BookingDatesForm.youWontBeChargedInfo'}
               />
             </p>
             <div className={css.bookingDatesSubmitButtonWrapper}>

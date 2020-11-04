@@ -423,6 +423,7 @@
   "ListingPage.yourSellerHeading": "Seller",
   "ListingPage.buyButtonMessage": "Buy Now",
   "ListingPage.premiumPartnerHeading": "Premium Partner",
+  "ListingPage.noInternationalOrders": "Unfortunately, the listing Author does not ship internationally, and a purchase request cannot be made.",
   "ListingPage.noUserCountry": "You do not have a home country set in your profile settings. You need to select a home country before purchasing items",
   "ListingPage.noAuthorCountry": "The author does not have a home country set. They need to select a home country before making sales. Contact the From The People team if this continues.",
   "ListingPage.listingMissingInfo": "This listing is missing information. Please contact the From The People team if this error continues.",

@@ -89,24 +89,17 @@ export const EditListingPricingFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
-      var hasInternationalFee = initialValues.internationalFee ? true : false; 
+      let showInternational; 
 
-      const checkbox = document.getElementById('internationalFeeCheckbox');
-      const internationalInput = document.getElementById('internationalFee');
+      const checkbox = document.getElementById('allowsInternational');
 
       if (checkbox) {
-        console.log(checkbox);
         if (checkbox.checked) {
-          hasInternationalFee = true;
+          showInternational = true;
         } else {
-          hasInternationalFee = false;
+          showInternational = false;
         }
       };
-
-      if (internationalInput) {
-        console.log(internationalInput.value);
-      };
-
       // For ad and non-profit account types, no price is needed on their listing cards.
       const noPriceNeededInfo = (accountType === "n" || accountType === "a") ?
         <div className={css.accountInfo}>
@@ -153,13 +146,12 @@ export const EditListingPricingFormComponent = props => (
                     />
                     <div className={css.internationalFee}>
                       <FieldCheckbox
-                        id="internationalFeeCheckbox"
-                        name="internationalFeeCheckbox"
+                        id="allowsInternational"
+                        name="allowsInternational"
                         label={internationalCheckboxMessage}
                         value="hasFee"
-                        defaultChecked={true}
                       />
-                      {hasInternationalFee &&
+                      {showInternational &&
                       <div>
                         <FieldCurrencyInput
                           id="internationalFee"

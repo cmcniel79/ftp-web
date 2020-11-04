@@ -245,10 +245,48 @@ const FAQPage = () => {
             </h2>
             <Accordion atomic={true}>
               <AccordionButton title="What is cultural appropriation vs cultural appreciation?">
-                <DummyContent />
+                <p>
+                  <b>Cultural appreciation</b> takes place when a person genuinely seeks to gain a deeper understanding of a culture by actively listening and
+              learning from the people of that culture, but it does not stop there. There are many ways to interact with Indigenous cultures that
+              honor their people and traditions. Cultural appreciation often places non-Natives in the role of a student as there is so much to
+              learn about Indigenous cultures. In the U.S. alone there are 573 federally recognized tribes; a fact you may have learned about the
+              Tlingit tribe in Alaska will not apply to the Juristac tribe (who are still seeking federal recognition) in California and so on.
+              Especially, as the American and Canadian education systems have purposefully excluded Native histories and perspectives, it is best
+              to approach Indigenous cultures as an eager learner and avid listener. It is important to remember that cultural appreciation begins
+              with education!
+              <br />
+                  <br />
+                  <b>ACTIVISM is the main form of cultural appreciation!</b> Native peoples have a rich history of culture, heritage, and tradition that needs
+               protecting and preserving. It is easy to see something so beautiful like our traditional regalia and headdresses and want it for
+                yourself (cultural appropriation), but as a non-Native ally it is imperative you support your local and national Indigenous
+                 movements that help us continue our way of life. We encourage you to spotlight and uplift Native voices. If you would like
+                  some help getting started here are some additional materials
+                  <br />
+                  <br />
+                  <b>Cultural appropriation</b> takes place when a person learns of an aspect of another culture and then exploits that knowledge for
+               their own benefit. Our traditional Native art, regalia, and jewelry are extremely beautiful, but are not to be replicated by
+               non-Natives seeking to profit off of them. In doing so, non-Natives often recreate or use sacred religious objects like
+               dream-catchers and sage with little to no knowledge of their significance. Even when non-Natives take the time to learn the
+               cultural significance of these objects, they must also remember to educate themselves on the recent historical contexts surrounding
+               these items and practices. Quick History: Native Americans were prohibited from practicing their traditional religions until
+               1978 with the passage of the Indian Freedom of Religion Act. For the many Natives who lived through this time and were denied
+               the right to practice their religion under penalty of death, it is understandably difficult for them to now watch large
+               non-Native-owned corporations profit off of commoditized versions of their spiritual practices. It is a blatant double standard
+               rooted in racism, colonialism, and oppression. The only reason companies like Urban Outfitters face backlash for selling
+               dream-catchers is thanks to Native activism and allyship! Please keep up the good work.
+                  </p>
               </AccordionButton>
               <AccordionButton title="I am a non-Native ally, how can I support?">
-                <DummyContent />
+                <p>
+                  From The People makes cultural appreciation accessible to non-Native allies by providing a platform where they can
+                  directly support Native artists and contribute to their livelihood. By purchasing Native-made art, you are partaking in cultural
+                  appreciation by promoting the continued practice of traditional Native crafts.
+                  <br/>
+                  <br/>
+                  We try to create innovative ways to support Indigenous Peoples with our Map and Native Lands filter.
+                  By using these features on our website, users can support the Indigenous artists and businesses
+                   that are from the land that they are currently occupying.
+               </p>
               </AccordionButton>
             </Accordion>
           </div>
@@ -306,27 +344,27 @@ const FAQPage = () => {
               <FormattedMessage id="FAQPage.rules" />
             </h2>
             <Accordion atomic={true}>
-            <AccordionButton title="What fees does From The people charge?">
+              <AccordionButton title="What fees does From The people charge?">
                 <p>
                   From The People only charges a one time payment processing fee when a transaction is made.
                   This goes to supporting the website and the services we offer.
                   The payment processing fee is 6% of the total cost of the transaction (base price + shipping fee)
                   and comes out of the payment the seller receives from the transaction.
-                  <br/>
-                  <br/>
+                  <br />
+                  <br />
                   <b><u>Transaction Example</u></b>
-                  <br/>
-                  Item base price: $25.00. 
-                  <br/>
-                  Shipping fee: $4.99. 
-                  <br/>
+                  <br />
+                  Item base price: $25.00.
+                  <br />
+                  Shipping fee: $4.99.
+                  <br />
                   Total charged to buyer: $29.99.
-                  <br/> 
+                  <br />
                   Our 6% fee on the total cost: $29.99 * 6% = $1.80.
-                  <br/>
-                  The seller's payment: $29.99 - $1.80 = $28.19. 
-                  <br/>
-                  <br/>
+                  <br />
+                  The seller's payment: $29.99 - $1.80 = $28.19.
+                  <br />
+                  <br />
                   We do charge a monthly subscription for Premium Accounts and you can find more information on
                   Premium Accounts above. Premium Account users gain access to our exclusive website features and
                   do not go through our transaction process.
@@ -383,15 +421,15 @@ const FAQPage = () => {
                   <ExternalLink className={css.link} href='mailto:customersupport@fromthepeople.co'>
                     <FormattedMessage id="FAQPage.emailAddress" />
                   </ExternalLink>
-                  and describe the situation. The refund request needs to be made within 72 hours from the 
-                  item being received by the buyer. To resolve a refund dispute, involvement from admins is required. 
+                  and describe the situation. The refund request needs to be made within 72 hours from the
+                  item being received by the buyer. To resolve a refund dispute, involvement from admins is required.
                   The admins will investigate the matter and be in contact with both parties to determine if a refund is required.
                 </p>
               </AccordionButton>
               <AccordionButton title="What payment service do you use?">
                 <p>
                   Currently users only have one payment option (Stripe) when buying items on From The People, but we are looking into adding more options.
-                  Buyers simply need to enter their credit card details to begin a purchase.   
+                  Buyers simply need to enter their credit card details to begin a purchase.
                   Stripe secures and encrypts your sensitive information and processes the transaction.
                   </p>
               </AccordionButton>
@@ -411,16 +449,5 @@ const FAQPage = () => {
     </StaticPage>
   );
 };
-
-const DummyContent = () => (
-  <p style={{ padding: '18px' }}>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  </p>
-);
 
 export default FAQPage;
