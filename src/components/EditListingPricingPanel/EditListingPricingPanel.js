@@ -44,9 +44,9 @@ const EditListingPricingPanel = props => {
     publicData && publicData.internationalFee ? 
       new Money(publicData.internationalFee.amount, publicData.internationalFee.currency) : null;
 
-  const allowsInternational = publicData && publicData.allowsInternational ? publicData.allowsInternational : null;
+  const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders ? publicData.allowsInternationalOrders : null;
 
-  const initialValues = { price, shippingFee, internationalFee, allowsInternational };
+  const initialValues = { price, shippingFee, internationalFee, allowsInternationalOrders };
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -66,25 +66,25 @@ const EditListingPricingPanel = props => {
       // Code for onSubmit function was taken from here: 
       // https://www.sharetribe.com/docs/tutorial-transaction-process/customize-pricing-tutorial/
       onSubmit={values => {
-        const { price, shippingFee, internationalFee, allowsInternational } = values;
+        const { price, shippingFee, internationalFee, allowsInternationalOrders } = values;
         const domesticData = shippingFee ? { amount: shippingFee.amount, currency: shippingFee.currency } : 
           { amount: 0, currency: config.currency };
         const internationalData = internationalFee ? { amount: internationalFee.amount, currency: internationalFee.currency } : 
           { amount: 0, currency: config.currency };
 
         const publicData = (accountType === 'e' || accountType === 'u') && domesticData && 
-          allowsInternational && allowsInternational[0] ===  "hasFee" ? {
+          allowsInternationalOrders && allowsInternationalOrders[0] ===  "hasFee" ? {
           // Allows domestic shipping and international shipping
           shippingFee: domesticData,
           internationalFee: internationalData,
           country: userCountry,
-          allowsInternational
+          allowsInternationalOrders
         } : (accountType === 'e' || accountType === 'u') && domesticData ? {
           // Allows only domestic shipping
           shippingFee: domesticData,
           internationalFee: domesticData,
           country: userCountry,
-          allowsInternational 
+          allowsInternationalOrders
         } : { 
           // Empty public data for premium, ad and non-profit listings. Those do not have shipping data show up.
         };

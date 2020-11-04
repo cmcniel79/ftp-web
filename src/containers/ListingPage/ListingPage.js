@@ -355,7 +355,7 @@ export class ListingPageComponent extends Component {
       currentUser.attributes.profile.protectedData.shippingAddress.country : null;
     const isDomesticOrder = authorCountry && userCountry && authorCountry === userCountry ? true : false;
     const lineItems = !isPremium && isDomesticOrder ? domesticLineItems : internationalLineItems;
-    const allowsInternationalOrders = !isPremium && publicData.allowsInternational ? true : false;
+    const allowsInternationalOrders = !isPremium && publicData.allowsInternationalOrders ? true : false;
     const { formattedPrice, priceTitle } = priceData(price, intl);
     console.log(isDomesticOrder);
     console.log(allowsInternationalOrders);
@@ -489,7 +489,7 @@ export class ListingPageComponent extends Component {
                   <SectionSizesMaybe sizes={sizes} />
                   {isPremium ?
                     <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
-                    : (isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders) ?
+                    : (isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders) || (!currentUser)?
                       <BookingPanel
                         className={css.bookingBreakdown}
                         listing={currentListing}
@@ -521,8 +521,7 @@ export class ListingPageComponent extends Component {
                             <span className={css.purchaseWarning} >
                               <FormattedMessage id="ListingPage.noAuthorCountry" />
                             </span>
-                            :
-                            <span className={css.purchaseWarning} >
+                            : <span className={css.purchaseWarning} >
                               <FormattedMessage id="ListingPage.listingMissingInfo" />
                             </span>}
                   {!isPremium &&

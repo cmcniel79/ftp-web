@@ -91,7 +91,7 @@ export const EditListingPricingFormComponent = props => (
       const { updateListingError, showListingsError } = fetchErrors || {};
       let showInternational; 
 
-      const checkbox = document.getElementById('allowsInternational');
+      const checkbox = document.getElementById('allowsInternationalOrders');
 
       if (checkbox) {
         if (checkbox.checked) {
@@ -146,8 +146,8 @@ export const EditListingPricingFormComponent = props => (
                     />
                     <div className={css.internationalFee}>
                       <FieldCheckbox
-                        id="allowsInternational"
-                        name="allowsInternational"
+                        id="allowsInternationalOrders"
+                        name="allowsInternationalOrders"
                         label={internationalCheckboxMessage}
                         value="hasFee"
                       />

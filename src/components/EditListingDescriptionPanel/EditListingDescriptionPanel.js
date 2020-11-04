@@ -50,7 +50,7 @@ const EditListingDescriptionPanel = props => {
     publicData.customOrders === 'unavailable' ? false : null;
   const sizes = publicData && publicData.sizes;
   const websiteLink = publicData && publicData.websiteLink;
-  const verifiedSeller = accountType && (accountType === 'e' || accountType === 'p' || accountType === 'n')
+  const verifiedSellers = accountType && (accountType === 'e' || accountType === 'p' || accountType === 'n')
     ? 'verified' : 'unverified';
 
   const categoryOptions = findOptionsForSelectFilter('category', config.custom.filters);
@@ -68,7 +68,7 @@ const EditListingDescriptionPanel = props => {
             title: title.trim(),
             description,
             publicData: {
-              category, subCategory, style, region, material, customOrders: customIsAvailable, sizes, websiteLink, verifiedSeller
+              category, subCategory, style, region, material, customOrders: customIsAvailable, sizes, websiteLink, verifiedSellers
             },
           };
           onSubmit(updateValues);
