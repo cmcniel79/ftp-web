@@ -1,4 +1,7 @@
-import { updatedEntities, denormalisedEntities } from '../../util/data';
+import { 
+    updatedEntities, 
+    // denormalisedEntities 
+} from '../../util/data';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { storableError } from '../../util/errors';
 
@@ -21,7 +24,7 @@ const initialState = {
     ownEntities: {},
 };
 
-const resultIds = data => data.data.map(l => l.id);
+// const resultIds = data => data.data.map(l => l.id);
 
 const merge = (state, sdkResponse) => {
     const apiResponse = sdkResponse.data;
@@ -121,8 +124,8 @@ export const updateLikedListings = actionPayload => {
 export const queryLikedListings = queryParams => (dispatch, getState, sdk) => {
     dispatch(queryListingsRequest(queryParams));
 
-    const { perPage, ...rest } = queryParams;
-    const params = { ...rest, per_page: perPage };
+    // const { perPage, ...rest } = queryParams;
+    // const params = { ...rest, per_page: perPage };
 
     return sdk.currentUser.show()
         .then(response => {

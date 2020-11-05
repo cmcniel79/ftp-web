@@ -14,13 +14,13 @@ import {
   txIsPaymentExpired,
   txIsPaymentPending,
 } from '../../util/transaction';
-import { propTypes, DATE_TYPE_DATE } from '../../util/types';
+import { propTypes } from '../../util/types';
 import { ensureCurrentUser } from '../../util/data';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import {
   Avatar,
-  BookingTimeInfo,
+  // BookingTimeInfo,
   NamedLink,
   NotificationBadge,
   Page,
@@ -154,7 +154,13 @@ export const txState = (intl, tx, type) => {
 };
 
 export const InboxItem = props => {
-  const { unitType, type, tx, intl, stateData } = props;
+  const {
+    // unitType,
+    type,
+    tx,
+    intl,
+    stateData
+  } = props;
   const { customer, provider, listing } = tx;
   const isOrder = type === 'order';
   const listingTitle =

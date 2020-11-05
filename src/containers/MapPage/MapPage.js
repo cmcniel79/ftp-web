@@ -173,10 +173,10 @@ export class MapPageComponent extends Component {
     // like mapSearch, page or origin (origin depends on config.sortSearchByDistance)
     const urlQueryParams = pickSearchParamsOnly(searchInURL, filterConfig, sortConfig);
 
-    const onMapIconClick = () => {
-      this.useLocationSearchBounds = true;
-      this.setState({ isSearchMapOpenOnMobile: true });
-    };
+    // const onMapIconClick = () => {
+    //   this.useLocationSearchBounds = true;
+    //   this.setState({ isSearchMapOpenOnMobile: true });
+    // };
 
     const title = intl.formatMessage(
       { id: 'MapPage.schemaTitle' },

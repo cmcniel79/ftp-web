@@ -13,9 +13,9 @@ const optionLabel = (options, key) => {
   return option ? option.label : key;
 };
 
-const getQueryParamName = queryParamNames => {
-  return Array.isArray(queryParamNames) ? queryParamNames[0] : queryParamNames;
-};
+// const getQueryParamName = queryParamNames => {
+//   return Array.isArray(queryParamNames) ? queryParamNames[0] : queryParamNames;
+// };
 
 class SelectSubcategoryFilterPopup extends Component {
   constructor(props) {

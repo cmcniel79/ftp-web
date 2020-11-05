@@ -10,7 +10,6 @@ import { types as sdkTypes } from '../../util/sdkLoader';
 import config from '../../config';
 
 import css from './EditListingPricingPanel.css';
-import { updateDatabase } from '../../containers/ProfileSettingsPage/ProfileSettingsPage.duck';
 
 const { Money } = sdkTypes;
 

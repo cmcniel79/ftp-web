@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import config from '../../config';
 import routeConfiguration from '../../routeConfiguration';
 import { pathByRouteName, findRouteByRouteName } from '../../util/routes';
-import { propTypes, LINE_ITEM_NIGHT, LINE_ITEM_DAY, DATE_TYPE_DATE } from '../../util/types';
+import { propTypes, DATE_TYPE_DATE } from '../../util/types';
 import {
   ensureListing,
   ensureCurrentUser,
@@ -18,7 +18,7 @@ import {
   ensureStripeCustomer,
   ensurePaymentMethodCard,
 } from '../../util/data';
-import { dateFromLocalToAPI, minutesBetween } from '../../util/dates';
+import { minutesBetween } from '../../util/dates';
 import { createSlug } from '../../util/urlHelpers';
 import {
   isTransactionInitiateAmountTooLowError,
@@ -29,7 +29,7 @@ import {
   isTransactionZeroPaymentError,
   transactionInitiateOrderStripeErrors,
 } from '../../util/errors';
-import { formatMoney } from '../../util/currency';
+// import { formatMoney } from '../../util/currency';
 import { TRANSITION_ENQUIRE, txIsPaymentPending, txIsPaymentExpired } from '../../util/transaction';
 import {
   AvatarMedium,
@@ -55,9 +55,7 @@ import {
 } from './CheckoutPage.duck';
 import { storeData, storedData, clearData } from './CheckoutPageSessionHelpers';
 import css from './CheckoutPage.css';
-import { types as sdkTypes } from '../../util/sdkLoader';
-import Decimal from 'decimal.js';
-const { UUID, Money } = sdkTypes;
+
 
 const STORAGE_KEY = 'CheckoutPage';
 
@@ -209,7 +207,7 @@ export class CheckoutPageComponent extends Component {
     } = this.props;
     const {
       pageData,
-      speculatedTransaction,
+      // speculatedTransaction,
       message,
       paymentIntent,
       selectedPaymentMethod,
@@ -356,7 +354,7 @@ export class CheckoutPageComponent extends Component {
     // Create order aka transaction
     // NOTE: if unit type is line-item/units, quantity needs to be added.
     // The way to pass it to checkout page is through pageData.bookingData
-    const tx = speculatedTransaction ? speculatedTransaction : storedTx;
+    // const tx = speculatedTransaction ? speculatedTransaction : storedTx;
 
     // Note: optionalPaymentParams contains Stripe paymentMethod,
     // but that can also be passed on Step 2
@@ -705,19 +703,19 @@ export class CheckoutPageComponent extends Component {
       );
     }
 
-    const unitType = config.bookingUnitType;
-    const isNightly = unitType === LINE_ITEM_NIGHT;
-    const isDaily = unitType === LINE_ITEM_DAY;
+    // const unitType = config.bookingUnitType;
+    // const isNightly = unitType === LINE_ITEM_NIGHT;
+    // const isDaily = unitType === LINE_ITEM_DAY;
 
-    const unitTranslationKey = isNightly
-      ? 'CheckoutPage.perNight'
-      : isDaily
-        ? 'CheckoutPage.perDay'
-        : 'CheckoutPage.perUnit';
+    // const unitTranslationKey = isNightly
+    //   ? 'CheckoutPage.perNight'
+    //   : isDaily
+    //     ? 'CheckoutPage.perDay'
+    //     : 'CheckoutPage.perUnit';
 
-    const price = currentListing.attributes.price;
-    const formattedPrice = formatMoney(intl, price);
-    const detailsSubTitle = `${formattedPrice} ${intl.formatMessage({ id: unitTranslationKey })}`;
+    // const price = currentListing.attributes.price;
+    // const formattedPrice = formatMoney(intl, price);
+    // const detailsSubTitle = `${formattedPrice} ${intl.formatMessage({ id: unitTranslationKey })}`;
 
     const showInitialMessageInput = !(
       existingTransaction && existingTransaction.attributes.lastTransition === TRANSITION_ENQUIRE

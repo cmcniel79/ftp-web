@@ -207,7 +207,7 @@ const TopbarMobileMenu = props => {
             <FormattedMessage id="TopbarMobileMenu.newListingLink" />
           </NamedLink>
         ) : (
-            <ExternalLink className={css.createNewListingLink} href="https://from-the-people-testing.herokuapp.com/faq#become-a-seller">
+            <ExternalLink className={css.createNewListingLink} href="https://www.fromthepeople.co/faq#become-a-seller">
               <span className={css.createListing}>
                 <FormattedMessage id="TopbarDesktop.becomeSeller" />
               </span>

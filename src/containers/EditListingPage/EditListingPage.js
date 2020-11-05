@@ -39,7 +39,7 @@ import {
   loadData,
   clearUpdatedTab,
   savePayoutDetails,
-  queryOwnListings,
+  // queryOwnListings,
   updateRanking,
 } from './EditListingPage.duck';
 

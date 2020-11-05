@@ -19,8 +19,6 @@ import retailFilled from '../../assets/shopping-filled.svg';
 import work from '../../assets/work.svg';
 import workFilled from '../../assets/work-filled.svg';
 
-import config from '../../config';
-
 import css from './SearchMapSellerLabel.css';
 
 class SearchMapSellerLabel extends Component {
@@ -37,7 +35,7 @@ class SearchMapSellerLabel extends Component {
   }
 
   render() {
-    const { className, rootClassName, intl, user, onUserClicked } = this.props;
+    const { className, rootClassName, user, onUserClicked } = this.props;
     const currentSeller = ensureUser(user);
     const formattedName = currentSeller.attributes.profile.publicData && currentSeller.attributes.profile.publicData.companyName ?
       currentSeller.attributes.profile.publicData.companyName : currentSeller.attributes.profile.displayName;

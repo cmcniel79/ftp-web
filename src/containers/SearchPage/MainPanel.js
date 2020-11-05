@@ -263,6 +263,8 @@ class MainPanel extends Component {
                     contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
                   />
                 );
+              } else {
+                return null;
               }
             })}
           </SearchFiltersPrimary>
@@ -308,6 +310,8 @@ class MainPanel extends Component {
                   showAsPopup={false}
                 />
               );
+            } else {
+              return null;
             }
           })}
           <div className={css.nativeLandsMobile}>

@@ -8,7 +8,11 @@ import { formatMoney } from '../../util/currency';
 import { ensureListing, ensureUser } from '../../util/data';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
-import { LikeButton, NamedLink, ResponsiveImage } from '../../components';
+import { 
+  // LikeButton, 
+  NamedLink, 
+  ResponsiveImage 
+} from '../../components';
 import verifiedImage from '../../assets/checkmark-circle.svg';
 import css from './ListingCard.css';
 import ExternalLink from '../ExternalLink/ExternalLink';
@@ -47,8 +51,16 @@ class ListingImage extends Component {
 const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export const ListingCardComponent = props => {
-  const { className, rootClassName, intl, listing, renderSizes, currentUser,
-    onUpdateLikedListings, isListingLiked, removeListing } = props;
+  const { className, 
+    rootClassName, 
+    intl, 
+    listing, 
+    renderSizes, 
+    // currentUser,
+    // onUpdateLikedListings, 
+    // isListingLiked, 
+    // removeListing 
+  } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
@@ -60,8 +72,8 @@ export const ListingCardComponent = props => {
     currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
   const { formattedPrice } = priceData(price, intl); // Took out priceTitle, might be used in the future
 
-  const likedListings = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likedListings ?
-    Object.values(currentUser.attributes.profile.privateData.likedListings) : [];
+  // const likedListings = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likedListings ?
+  //   Object.values(currentUser.attributes.profile.privateData.likedListings) : [];
 
   const accountType = author && author.attributes.profile.publicData &&
     author.attributes.profile.publicData.accountType ? author.attributes.profile.publicData.accountType : null;

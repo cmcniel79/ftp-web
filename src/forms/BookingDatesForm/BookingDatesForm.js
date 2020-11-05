@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import { string, bool, arrayOf, array, func } from 'prop-types';
 import { compose } from 'redux';
-import { Form as FinalForm, FormSpy } from 'react-final-form';
+import { Form as FinalForm } from 'react-final-form';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import classNames from 'classnames';
-import { required, composeValidators } from '../../util/validators';
+// import { required, composeValidators } from '../../util/validators';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Form, IconSpinner, Button, FieldTextInput } from '../../components';
+import { Form, Button } from '../../components';
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
-import { formatMoney } from '../../util/currency';
-import { types as sdkTypes } from '../../util/sdkLoader';
+// import { formatMoney } from '../../util/currency';
+// import { types as sdkTypes } from '../../util/sdkLoader';
 
 import css from './BookingDatesForm.css';
 const Decimal = require('decimal.js');
 
-const { Money } = sdkTypes;
-const identity = v => v;
+// const { Money } = sdkTypes;
+// const identity = v => v;
 
 export class BookingDatesFormComponent extends Component {
   constructor(props) {

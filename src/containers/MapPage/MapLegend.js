@@ -11,9 +11,6 @@ import fitness from '../../assets/fitness.svg';
 import css from './MapPage.css';
 
 export class MapLegend extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (

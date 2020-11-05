@@ -32,7 +32,7 @@ export const EditListingPricingFormComponent = props => (
         fetchErrors,
         accountType,
         userCountry,
-        initialValues
+        // initialValues
       } = formRenderProps;
 
       const shippingFeeMessage = intl.formatMessage({

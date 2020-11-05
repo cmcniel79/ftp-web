@@ -13,9 +13,9 @@ import {
   isChangeEmailWrongPassword,
   isTooManyEmailVerificationRequestsError,
 } from '../../util/errors';
-import getCountryCodes from '../../translations/countryCodes';
-import { Form, PrimaryButton, FieldTextInput, FieldSelect, ShippingAddress } from '../../components';
-import config from '../../config';
+// import getCountryCodes from '../../translations/countryCodes';
+import { Form, PrimaryButton, FieldTextInput, ShippingAddress } from '../../components';
+// import config from '../../config';
 
 import css from './ContactDetailsForm.css';
 

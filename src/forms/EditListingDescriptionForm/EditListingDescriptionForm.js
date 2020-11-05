@@ -43,7 +43,7 @@ const EditListingDescriptionFormComponent = props => (
         fetchErrors,
         filterConfig,
         accountType,
-        allowsCustomOrders,
+        // allowsCustomOrders,
         initialValues
       } = formRenderProps;
 

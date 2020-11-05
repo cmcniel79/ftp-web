@@ -24,7 +24,7 @@ const TribeSelectFieldMaybe = props => {
   //     id: 'ProfileSettingsForm.nativeLandsRequired',
   //   })
   // );
-  const faqLink = <ExternalLink href="http://localhost:3000/faq#nativeLands">
+  const faqLink = <ExternalLink href="https://www.fromthepeople.co/faq#nativeLands">
     FAQ
   </ExternalLink>;
 

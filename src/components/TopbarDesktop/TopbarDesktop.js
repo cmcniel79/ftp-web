@@ -171,7 +171,7 @@ const TopbarDesktop = props => {
       </span>
     </NamedLink>
   ) : (
-      <ExternalLink className={css.createListingLink} href="https://from-the-people-testing.herokuapp.com/faq#become-a-seller">
+      <ExternalLink className={css.createListingLink} href="https://www.fromthepeople.co/faq#become-a-seller">
         <span className={css.createListing}>
           <FormattedMessage id="TopbarDesktop.becomeSeller" />
         </span>
