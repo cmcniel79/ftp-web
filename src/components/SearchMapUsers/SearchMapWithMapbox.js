@@ -160,7 +160,7 @@ const priceLabelsInLocations = (
       const industry = user.attributes.profile.publicData && user.attributes.profile.publicData.companyIndustry ?
         user.attributes.profile.publicData.companyIndustry : 'other';
       const key = user.id.uuid;
-      console.log(industry);
+
       return {
         markerId: `user_${key}`,
         location: geolocation,

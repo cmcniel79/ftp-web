@@ -784,8 +784,6 @@ export const loadData = params => (dispatch, getState, sdk) => {
 };
 
 export const updateRanking = actionPayload => {
-  console.log(actionPayload);
-
   const url = "https://92rutchmtc.execute-api.us-west-1.amazonaws.com/prd";
   const options = {
     method: 'POST',
@@ -799,5 +797,5 @@ export const updateRanking = actionPayload => {
 
   fetch(url, options)
     .then(response => response.json())
-    .then(json => console.log(json));
+    .catch(() => console.log("Could not update ranking"))
 };

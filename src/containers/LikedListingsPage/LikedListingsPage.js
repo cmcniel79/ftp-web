@@ -112,7 +112,6 @@ export class LikedListingsPageComponent extends Component {
       `${panelWidth / 3}vw`,
     ].join(', ');
 
-    console.log(listings);
     return (
       <Page title={title} scrollingDisabled={scrollingDisabled}>
         <LayoutSingleColumn>

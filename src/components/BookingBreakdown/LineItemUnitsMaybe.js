@@ -20,7 +20,6 @@ const LineItemUnitsMaybe = props => {
   }
 
   const quantity = unitPurchase.quantity;
-  console.log(quantity);
 
   return (
     <div className={css.lineItem}>

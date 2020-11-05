@@ -115,8 +115,6 @@ class SelectSubcategoryFilterPopup extends Component {
         {this.state.subCategory.map(sub => {
           // check if this option is selected
           const selected = initialValue === sub.key;
-          console.log(initialValue);
-          // console.log(sub.key);
           // menu item border class
           const menuItemBorderClass = selected ? css.menuItemBorderSelected : css.menuItemBorder;
           return (

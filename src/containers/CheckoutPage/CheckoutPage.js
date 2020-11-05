@@ -165,7 +165,6 @@ export class CheckoutPageComponent extends Component {
     const pageData = hasDataInProps
       ? { bookingData, listing, transaction }
       : storedData(STORAGE_KEY);
-    console.log(bookingData);
 
     // Check if a booking is already created according to stored data.
     const tx = pageData ? pageData.transaction : null;
@@ -526,7 +525,6 @@ export class CheckoutPageComponent extends Component {
 
     const listingTitle = currentListing.attributes.title;
     const title = intl.formatMessage({ id: 'CheckoutPage.title' }, { listingTitle });
-    console.log(speculatedTransaction);
     const pageProps = { title, scrollingDisabled };
     const topbar = (
       <div className={css.topbar}>
@@ -576,7 +574,6 @@ export class CheckoutPageComponent extends Component {
     // (i.e. have an id)
     const tx = existingTransaction.booking ? existingTransaction : speculatedTransaction;
     const txBooking = ensureBooking(tx.booking);
-    console.log(tx.id);
     const breakdown =
       tx.id ? (
         <BookingBreakdown
@@ -965,7 +962,6 @@ const CheckoutPage = compose(
 CheckoutPage.setInitialValues = (initialValues, saveToSessionStorage = false) => {
   if (saveToSessionStorage) {
     const { listing, bookingData } = initialValues;
-    console.log(initialValues);
     storeData(bookingData, listing, null, STORAGE_KEY);
   }
 

@@ -164,7 +164,6 @@ exports.calculateTotalFromLineItems = lineItems => {
   // Get total price as Number (and validate that the conversion is safe)
   const numericTotalPrice = convertDecimalJSToNumber(totalPrice);
   const unitPrice = lineItems[0].unitPrice;
-  console.log(numericTotalPrice);
   return new Money(numericTotalPrice, unitPrice.currency);
 };
 

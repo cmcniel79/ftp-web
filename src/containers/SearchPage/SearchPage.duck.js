@@ -140,8 +140,6 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
     sort: "-meta_ranking"
   };
 
-  console.log(params);
-
   return sdk.listings
     .query(params)
     .then(response => {

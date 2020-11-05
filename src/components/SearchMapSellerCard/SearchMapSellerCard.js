@@ -125,7 +125,6 @@ class SearchMapSellerCard extends Component {
   }
 
   shareButtonClick(urlToProfile) {
-    console.log("Clicked!");
     if (navigator.share) {
       navigator.share({
         text: 'Check out this awesome profile on From The People!',
@@ -135,7 +134,6 @@ class SearchMapSellerCard extends Component {
           console.log('Could not share link');
         });
     } else if (navigator.clipboard) {
-      console.log("Copied to clipboard!");
       navigator.clipboard.writeText(urlToProfile)
         .then(() => {
           this.setState({ wasCopySuccessful: true })

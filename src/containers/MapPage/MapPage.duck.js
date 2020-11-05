@@ -188,7 +188,6 @@ export const loadData = () => (dispatch, getState, sdk) => {
   return Promise.all([
     dispatch(fetchUUIDs())
       .then(ids => {
-        console.log(ids);
         dispatch(loadUsers(ids));
       })
   ]);

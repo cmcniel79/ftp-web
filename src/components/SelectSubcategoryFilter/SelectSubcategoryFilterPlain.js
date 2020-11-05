@@ -48,7 +48,6 @@ class SelectSubcategoryFilterPlain extends Component {
       useBullets,
     } = this.props;
 
-    console.log(options);
     const queryParamName = "pub_subCategory";
     const initialValue =
       initialValues && initialValues[queryParamName] ? initialValues[queryParamName] : null;

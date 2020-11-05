@@ -162,8 +162,6 @@ export const updateProfile = actionPayload => {
 };
 
 export const updateDatabase = actionPayload => {
-  console.log(actionPayload);
-
   const url = "https://vyvhifh63b.execute-api.us-west-1.amazonaws.com/prd";
   const options = {
     method: 'POST',
@@ -180,5 +178,5 @@ export const updateDatabase = actionPayload => {
 
   fetch(url, options)
     .then(response => response.json())
-    .then(json => console.log(json));
+    .catch(() => console.log("Could not update database");
 };

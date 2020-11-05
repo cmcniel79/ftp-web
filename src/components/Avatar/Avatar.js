@@ -66,7 +66,6 @@ export const AvatarComponent = props => {
     : { name: 'ProfileBasePage' };
   const hasProfileImage = avatarUser.profileImage && avatarUser.profileImage.id;
   const profileLinkEnabled = !disableProfileLink;
-  // console.log(avatarUser);
 
   if (isBannedUser || isDeletedUser) {
     return (
