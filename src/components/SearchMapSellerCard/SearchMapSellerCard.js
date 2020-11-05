@@ -35,10 +35,10 @@ const SellerCard = props => {
   const abbreviatedName = userAbbreviatedName(user, "");
   // Gather custom data fields from seller's account
   const companyWebsite = publicData.companyWebsite ? user.attributes.profile.publicData.companyWebsite : null;
-  const companyLatLng = publicData.companyLocation ? publicData.companyLocation.location.selectedPlace.origin : null;
+  const companyAddress = publicData.companyLocation ? publicData.companyLocation.location.selectedPlace.address : null;
   const companyName = publicData.companyName ? publicData.companyName : null;
   const tribe = publicData.tribe ? publicData.tribe : null;
-  const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=" + companyLatLng.lat + "," + companyLatLng.lng;
+  const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURI(companyAddress);
   const profileTitle = companyName ? companyName : displayName;
   return (
     <div className={css.card}>
@@ -70,7 +70,7 @@ const SellerCard = props => {
         </div>
       </div>
       <div className={css.buttonRow} >
-        {companyLatLng &&
+        {companyAddress &&
           <ExternalLink
             className={css.linkButton}
             href={googleMapsUrl}

@@ -92,8 +92,8 @@ export class ProfilePageComponent extends Component {
     const companyWebsite = publicData && publicData.companyWebsite ? publicData.companyWebsite : null;
     const companyLocation = publicData && publicData.companyLocation && publicData.companyLocation.location ?
       publicData.companyLocation.location : null;
-    const companyLatLng = companyLocation ? companyLocation.selectedPlace.origin : null;
-    const googleMapsUrl = companyLatLng ? "https://www.google.com/maps/search/?api=1&query=" + companyLatLng.lat + "," + companyLatLng.lng : null;
+    const companyAddress = companyLocation ? companyLocation.selectedPlace.address : null;
+    const googleMapsUrl = companyAddress ? "https://www.google.com/maps/search/?api=1&query=" + encodeURI(companyAddress) : null;
 
     const editLinkMobile = isCurrentUser ? (
       <NamedLink className={css.editLinkMobile} name="ProfileSettingsPage">

@@ -178,5 +178,5 @@ export const updateDatabase = actionPayload => {
 
   fetch(url, options)
     .then(response => response.json())
-    .catch(() => console.log("Could not update database");
+    .catch(() => console.log("Could not update database"));
 };
