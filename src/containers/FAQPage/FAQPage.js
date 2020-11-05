@@ -200,22 +200,22 @@ const FAQPage = () => {
                   <br />
                   <b>Map Only Plan - $9.99/month</b>
                   <br />
-                    Gain access to post to our Native Businesses Map. You can show the physical location of
+                    Gain access to our Native Businesses Map. You can show the physical location of
                     your business and gain new customers from our Indigenous Marketplace and Community. Your listing on our Map will have links to your website and directions
-                    to your business address. This plan is perfect for Native/Indigenous Owned businesses that provide services and do not sell physical goods.
+                    to your business address. This plan is perfect for those Native/Indigenous Owned businesses that provide services instead of physical goods.
                     <br />
                   <br />
                   <b>Artisan Plan - $19.99/month</b>
                   <br />
-                    Post up to 10 listings on our Indigenous Marketplace and gain access to our Native Businesses Map. You will have the Premium Sellers badge on all your listings
+                    Post up to 10 listings on our Indigenous Marketplace and also get all of the other features included in the Map Only Plan. You will have the Premium Sellers badge on all your listings
                     and can add links to your website to showcase your products. All transactions for your products will take place on your website.
                     <br />
                   <br />
                   <b>Trader Plan - $29.99/month</b>
                   <br />
-                    Post up to 20 listings on our Indigenous Marketplace, gain access to our Native Businesses Map and also be featured on our Landing page
-                    in our "Featured Partners" Section. You will have the Premium Sellers badge on all your listings and can add links to your own website.
-                    All transactions for your products will take place on your website.
+                    Post up to 20 listings on our Indigenous Marketplace, get placed on the&nbsp;
+                    <ExternalLink href="https://www.fromthepeople.co/#featured-partners">"Featured Partners" Section</ExternalLink>&nbsp;
+                    of our Landing Page and also get all of the other features included in the Artisan Plan. 
                 </p>
               </AccordionButton>
               <AccordionButton title="How do I get a Non-Profit Account?">
@@ -337,6 +337,20 @@ const FAQPage = () => {
                   all of our users and customers to check out their website and contribute if possible.
                   We think their work is an innovative way to highlight the effects of colonialism while increasing
                   the representation of Indigenous people's through technology.
+                </p>
+              </AccordionButton>
+              <AccordionButton title="What's the difference between the 'Your Tribe' field and 'Native Lands' field in my Profile settings?">
+                <p>
+                If you have a Verified or Premium account then you will see these in your profile settings.
+                The information you enter into these two fields is used differently. The 'Your Tribe' field is used to display what you'd like 
+                your tribal affiliation to be displayed as to other users. The 'Native Lands' field is used in our Native Lands filter on our Map 
+                and Search pages.
+                <br/>
+                <br/>
+                The reason we split these up is because the data we use in the Native Lands filter is not perfect. 
+                For example, Pueblos are treated as one group in the Native Lands data but if you're from Acoma Pueblo, 
+                you may like to display that on your profile instead. So you would enter "Acoma Pueblo" in the 
+                "Your tribe" field and select "Pueblos" in the Native Land Integration field.
                 </p>
               </AccordionButton>
             </Accordion>
