@@ -106,12 +106,12 @@ const UserCard = props => {
   const separator = isCurrentUser ? null : <span className={css.linkSeparator}>•</span>;
 
   const contact = !isPremium ? (
-    <div className={css.contactLink}>
+    <span className={css.contactLink}>
     {separator}
     <InlineTextButton rootClassName={css.contact} onClick={handleContactUserClick}>
       <FormattedMessage id="UserCard.contactUser" />
     </InlineTextButton>
-    </div>
+    </span>
   )
     : null;
 
