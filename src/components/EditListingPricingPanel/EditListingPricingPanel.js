@@ -37,11 +37,11 @@ const EditListingPricingPanel = props => {
   const { price, publicData } = currentListing.attributes;
 
   const shippingFee =
-    publicData && publicData.shippingFee ? 
+    publicData && publicData.shippingFee ?
       new Money(publicData.shippingFee.amount, publicData.shippingFee.currency) : null;
-  
+
   const internationalFee =
-    publicData && publicData.internationalFee ? 
+    publicData && publicData.internationalFee ?
       new Money(publicData.internationalFee.amount, publicData.internationalFee.currency) : null;
 
   const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders ? publicData.allowsInternationalOrders : null;
@@ -67,32 +67,36 @@ const EditListingPricingPanel = props => {
       // https://www.sharetribe.com/docs/tutorial-transaction-process/customize-pricing-tutorial/
       onSubmit={values => {
         const { price, shippingFee, internationalFee, allowsInternationalOrders } = values;
-        const domesticData = shippingFee ? { amount: shippingFee.amount, currency: shippingFee.currency } : 
+        const domesticData = shippingFee ? { amount: shippingFee.amount, currency: shippingFee.currency } :
           { amount: 0, currency: config.currency };
-        const internationalData = internationalFee ? { amount: internationalFee.amount, currency: internationalFee.currency } : 
+        const internationalData = internationalFee ? { amount: internationalFee.amount, currency: internationalFee.currency } :
           { amount: 0, currency: config.currency };
 
-        const publicData = (accountType === 'e' || accountType === 'u') && domesticData && 
-          allowsInternationalOrders && allowsInternationalOrders[0] ===  "hasFee" ? {
-          // Allows domestic shipping and international shipping
-          shippingFee: domesticData,
-          internationalFee: internationalData,
-          country: userCountry,
-          allowsInternationalOrders
-        } : (accountType === 'e' || accountType === 'u') && domesticData ? {
-          // Allows only domestic shipping
-          shippingFee: domesticData,
-          internationalFee: domesticData,
-          country: userCountry,
-          allowsInternationalOrders
-        } : { 
-          // Empty public data for premium, ad and non-profit listings. Those do not have shipping data show up.
-        };
+        const publicData = (accountType === 'e' || accountType === 'u') && domesticData &&
+          allowsInternationalOrders && allowsInternationalOrders[0] === "hasFee" ? {
+            // Allows domestic shipping and international shipping
+            shippingFee: domesticData,
+            internationalFee: internationalData,
+            country: userCountry,
+            allowsInternationalOrders
+          } : (accountType === 'e' || accountType === 'u') && domesticData ? {
+            // Allows only domestic shipping
+            shippingFee: domesticData,
+            internationalFee: domesticData,
+            country: userCountry,
+            allowsInternationalOrders
+          } : {
+              // Empty public data for premium, ad and non-profit listings. Those do not have shipping data show up.
+            };
 
-        const updatedValues = {
-          price,
+        const updatedValues = (accountType === 'a' || accountType === 'n') ? {
+          price: new Money(0, config.currency),
           publicData: publicData
-        };
+        } : {
+            price,
+            publicData: publicData
+          };
+        console.log(updatedValues);
 
         onSubmit(updatedValues);
       }}

@@ -201,7 +201,7 @@ export class MapPageComponent extends Component {
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
     /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-    const faqLink = <ExternalLink href={'http://localhost:3000/faq#accountTypes'}> <FormattedMessage id="MapPage.faqLink" /> </ExternalLink>;
+    const faqLink = <ExternalLink href={'https://www.fromthepeople.co/faq#account-types'}> <FormattedMessage id="MapPage.faqLink" /> </ExternalLink>;
     const industryOptions = findOptionsForSelectFilter('industry', filterConfig);
     const modal =
       <Modal

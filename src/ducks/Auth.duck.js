@@ -208,11 +208,11 @@ export const signup = params => (dispatch, getState, sdk) => {
   const createUserParams = isEmpty(rest)
     ? {
       email, password, firstName, lastName, protectedData: { shippingAddress: { country: country } },
-      publicData: { account: "", country: country }
+      publicData: { accountType: "", country: country }
     }
     : {
       email, password, firstName, lastName, protectedData: { shippingAddress: { country: country }, ...rest}, 
-      publicData: { account: "" , country: country}
+      publicData: { accountType: "" , country: country}
     };
 
   // We must login the user if signup succeeds since the API doesn't

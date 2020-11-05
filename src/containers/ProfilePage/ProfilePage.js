@@ -222,14 +222,14 @@ export class ProfilePageComponent extends Component {
             {companyLocation.selectedPlace.address}
           </ExternalLink>}
         {hasBio && <p className={css.bio}>{bio}</p>}
-        {/* {companyWebsite ? */}
+        {companyWebsite ?
           <div className={css.companyWebsite}>
             <ExternalLink href={companyWebsite} useIcon={true}>
               <FormattedMessage id="ProfilePage.companyWebsite" />
               <img className={css.externalLink} src={exit} alt="External Link" />
             </ExternalLink>
           </div>
-           {/* : null} */}
+           : null}
         {hasListings ? (
           <div className={listingsContainerClasses}>
             <h2 className={css.listingsTitle}>

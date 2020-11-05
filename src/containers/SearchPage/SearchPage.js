@@ -303,7 +303,7 @@ SearchPage.loadData = (params, search) => {
     include: ['author', 'images'],
     'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink', 'publicData.category'],
     'fields.user': ['profile.displayName', 'profile.abbreviatedName', 
-                      'profile.publicData.account', 'profile.publicData.tribe', 'profile.publicData.companyName', 'profile.publicData.companyIndustry'], //added metadata for verify badge
+                      'profile.publicData.accountType', 'profile.publicData.tribe', 'profile.publicData.companyName', 'profile.publicData.companyIndustry'], //added metadata for verify badge
     'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
     'limit.images': 1,
   });

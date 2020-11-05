@@ -104,25 +104,27 @@ export const EditListingPageComponent = props => {
   const hasStripeOnboardingDataIfNeeded = returnURLType ? !!(currentUser && currentUser.id) : true;
   const showForm = hasStripeOnboardingDataIfNeeded && (isNewURI || currentListing.id);
 
-  const accountType = currentUser && currentUser.attributes.profile.publicData.account ? 
-    currentUser.attributes.profile.publicData.account : null;
-  const accountLimit = currentUser && currentUser.attributes.profile.publicData.accountLimit ? 
+  const accountType = currentUser && currentUser.attributes.profile.publicData.accountType ?
+    currentUser.attributes.profile.publicData.accountType : null;
+  const accountLimit = currentUser && currentUser.attributes.profile.publicData.accountLimit ?
     currentUser.attributes.profile.publicData.accountLimit : null;
 
-  const listingsLimit = accountLimit ? accountLimit : 
+  // Default limits for different account types
+  const listingsLimit = accountLimit ? accountLimit :
     accountType && accountType === "u" ? 5 :
-    accountType && accountType === "e" ? 30 :
-    accountType && accountType === "p" ? 0 :
-    accountType && accountType === "a" ? 1 :
-    accountType && accountType === "n" ? 1 : 0;
+      accountType && accountType === "e" ? 30 :
+        accountType && accountType === "p" ? 0 :
+          accountType && accountType === "a" ? 1 :
+            accountType && accountType === "n" ? 1 : 0;
+
+  // Get number of current listings that are published. API doesn't allow query of listing state           
+  const publishedNumber = allOwnListings && allOwnListings.data.data.length > 0 ?
+    allOwnListings.data.data.filter(l => l.attributes.state === 'published').length : 0;
+
+  // Test to see if user has a listings limit and if they are
+  // currently under their limit of published listings.
+  const isUnderLimit = listingsLimit && (publishedNumber < listingsLimit) ? true : false;
   
-  const isUnderLimit = listingsLimit && allOwnListings && 
-    allOwnListings.data.data.length > 0 && listingsLimit > allOwnListings.data.data.length;
-  // console.log(isUnderLimit);
-  // console.log(accountLimit);
-  // console.log(listingsLimit);
-  // console.log(allOwnListings);
-  // console.log(currentListingState);
   if (shouldRedirect) {
     const isPendingApproval =
       currentListing && currentListingState === LISTING_STATE_PENDING_APPROVAL;
@@ -132,26 +134,26 @@ export const EditListingPageComponent = props => {
     const listingSlug = currentListing ? createSlug(currentListing.attributes.title) : null;
     const redirectProps = isPendingApproval
       ? {
-          name: 'ListingPageVariant',
-          params: {
-            id: listingId.uuid,
-            slug: listingSlug,
-            variant: LISTING_PAGE_PENDING_APPROVAL_VARIANT,
-          },
-        }
+        name: 'ListingPageVariant',
+        params: {
+          id: listingId.uuid,
+          slug: listingSlug,
+          variant: LISTING_PAGE_PENDING_APPROVAL_VARIANT,
+        },
+      }
       : {
-          name: 'ListingPage',
-          params: {
-            id: listingId.uuid,
-            slug: listingSlug,
-          },
-        };
+        name: 'ListingPage',
+        params: {
+          id: listingId.uuid,
+          slug: listingSlug,
+        },
+      };
 
     return <NamedRedirect {...redirectProps} />;
-  } else if(currentListingState && currentListingState !== "published" && isUnderLimit === false) {
-    const redirectProps =  {
-          name: 'ProfileSettingsPage',
-        };
+  } else if (currentListingState && currentListingState !== "published" && isUnderLimit === false) {
+    const redirectProps = {
+      name: 'ProfileSettingsPage',
+    };
     return <NamedRedirect {...redirectProps} />;
   } else if (showForm) {
     const {

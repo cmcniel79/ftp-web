@@ -107,8 +107,8 @@ class ModalMissingInformation extends Component {
 
     let content = null;
     const currentUserLoaded = user && user.id;
-    const accountType = currentUserLoaded && user.attributes.profile.publicData.account ?
-    user.attributes.profile.publicData.account : null;
+    const accountType = currentUserLoaded && user.attributes.profile.publicData.accountType ?
+    user.attributes.profile.publicData.accountType : null;
     if (currentUserLoaded) {
       if (this.state.showMissingInformationReminder === EMAIL_VERIFICATION) {
         content = (

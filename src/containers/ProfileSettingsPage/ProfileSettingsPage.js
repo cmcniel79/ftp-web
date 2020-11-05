@@ -86,7 +86,7 @@ export class ProfileSettingsPageComponent extends Component {
           : profile;
       onUpdateProfile(updatedValues);
 
-      const accountValue = user && user.attributes.profile.publicData ? user.attributes.profile.publicData.account : null;
+      const accountValue = user && user.attributes.profile.publicData ? user.attributes.profile.publicData.accountType : null;
       if (accountValue === 'p' || accountValue === 'a' || accountValue === 'n') {
         const uuid = user && user.id ? user.id.uuid : null;
         const requestBody = {
@@ -106,7 +106,7 @@ export class ProfileSettingsPageComponent extends Component {
 
     const tribe = user.attributes.profile.publicData ? user.attributes.profile.publicData.tribe : null;
     const nativeLands = user.attributes.profile.publicData ? user.attributes.profile.publicData.nativeLands : null;
-    const accountType = user.attributes.profile.publicData ? user.attributes.profile.publicData.account : null;
+    const accountType = user.attributes.profile.publicData ? user.attributes.profile.publicData.accountType : null;
     const companyName = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyName : null;
     const companyWebsite = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyWebsite : null;
     const companyIndustry = user.attributes.profile.publicData ? user.attributes.profile.publicData.companyIndustry : null;

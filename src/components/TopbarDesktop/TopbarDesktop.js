@@ -43,7 +43,8 @@ const TopbarDesktop = props => {
   const isAuthenticatedOrJustHydrated = isAuthenticated || !mounted;
 
   const classes = classNames(rootClassName || css.root, className);
-
+  const accountType = currentUser && currentUser.attributes.profile.publicData && currentUser.attributes.profile.publicData.accountType ? 
+    currentUser.attributes.profile.publicData.accountType : null;
   const search = (
     <TopbarSearchForm
       className={css.searchLink}
@@ -163,12 +164,18 @@ const TopbarDesktop = props => {
       </span>
     </ExternalLink>
 
-  const newListingLink =
+  const newListingLink = accountType && accountType !== '' ? (
     <NamedLink className={css.createListingLink} name="NewListingPage">
       <span className={css.createListing}>
         <FormattedMessage id="TopbarDesktop.createListing" />
       </span>
     </NamedLink>
+  ) : (
+      <ExternalLink className={css.createListingLink} href="https://from-the-people-testing.herokuapp.com/faq#become-a-seller">
+        <span className={css.createListing}>
+          <FormattedMessage id="TopbarDesktop.becomeSeller" />
+        </span>
+      </ExternalLink>);
 
   const signupLink = isAuthenticatedOrJustHydrated ? null : (
     <NamedLink name="SignupPage" className={css.signupLink}>

@@ -82,8 +82,8 @@ const UserCard = props => {
   const { displayName, bio } = ensuredUser.attributes.profile;
 
   // Gather custom data fields from seller's account.
-  const accountType = ensuredUser.attributes.profile.publicData && ensuredUser.attributes.profile.publicData.account ? 
-    ensuredUser.attributes.profile.publicData.account : null;  
+  const accountType = ensuredUser.attributes.profile.publicData && ensuredUser.attributes.profile.publicData.accountType ? 
+    ensuredUser.attributes.profile.publicData.accountType : null;  
   const isPremium = accountType && accountType === "p" ? true : false;
   const isVerified = accountType && accountType === "e" ? true : false;
   const companyWebsite = isPremium && ensuredUser.attributes.profile.publicData && ensuredUser.attributes.profile.publicData.companyWebsite ? 
@@ -106,9 +106,12 @@ const UserCard = props => {
   const separator = isCurrentUser ? null : <span className={css.linkSeparator}>•</span>;
 
   const contact = !isPremium ? (
+    <div className={css.contactLink}>
+    {separator}
     <InlineTextButton rootClassName={css.contact} onClick={handleContactUserClick}>
       <FormattedMessage id="UserCard.contactUser" />
     </InlineTextButton>
+    </div>
   )
     : null;
 
@@ -130,7 +133,6 @@ const UserCard = props => {
         :
         <NamedLink className={css.link} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
           <FormattedMessage id="UserCard.viewProfileLink" />
-          {separator}
         </NamedLink>
       }
       {isCurrentUser ? editProfile : contact}

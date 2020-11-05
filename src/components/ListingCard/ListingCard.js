@@ -64,7 +64,7 @@ export const ListingCardComponent = props => {
     Object.values(currentUser.attributes.profile.privateData.likedListings) : [];
 
   const accountType = author && author.attributes.profile.publicData &&
-    author.attributes.profile.publicData.account ? author.attributes.profile.publicData.account : null;
+    author.attributes.profile.publicData.accountType ? author.attributes.profile.publicData.accountType : null;
   const validAccountType = checkAccountCode(accountType);
 
   const externalLink = currentListing && currentListing.attributes.publicData &&

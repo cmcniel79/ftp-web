@@ -138,3 +138,7 @@
   @apply --marketplaceH4FontStyles;
   margin: 0;
 }
+
+.contactLink {
+  display: inline;
+}

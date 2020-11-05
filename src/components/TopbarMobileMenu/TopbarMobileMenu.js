@@ -73,9 +73,11 @@ const TopbarMobileMenu = props => {
     onLogout,
   } = props;
 
-  // const user = ensureCurrentUser(currentUser);
+  const user = ensureCurrentUser(currentUser);
   const socialMediaLinks = renderSocialMediaLinks();
   const regularLinksClasses = isAuthenticated ? css.regularLinks : css.regularLinksLarge;
+  const accountType = user && user.attributes.profile.publicData && user.attributes.profile.publicData.accountType ?
+    user.attributes.profile.publicData.accountType : null;
 
   const regularLinks =
     <div className={regularLinksClasses}>
@@ -200,9 +202,16 @@ const TopbarMobileMenu = props => {
         {regularLinks}
       </div>
       <div className={css.footer}>
-        <NamedLink className={css.createNewListingLink} name="NewListingPage">
-          <FormattedMessage id="TopbarMobileMenu.newListingLink" />
-        </NamedLink>
+        {accountType && accountType !== '' ? (
+          <NamedLink className={css.createNewListingLink} name="NewListingPage">
+            <FormattedMessage id="TopbarMobileMenu.newListingLink" />
+          </NamedLink>
+        ) : (
+            <ExternalLink className={css.createNewListingLink} href="https://from-the-people-testing.herokuapp.com/faq#become-a-seller">
+              <span className={css.createListing}>
+                <FormattedMessage id="TopbarDesktop.becomeSeller" />
+              </span>
+            </ExternalLink>)}
       </div>
     </div>
   );

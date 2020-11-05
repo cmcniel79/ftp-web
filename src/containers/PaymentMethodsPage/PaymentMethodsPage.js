@@ -138,8 +138,8 @@ const PaymentMethodsPageComponent = props => {
     : null;
 
   // Get account type from user public data to show Chargebee info
-  const accountType = ensuredCurrentUser.attributes.profile.publicData && ensuredCurrentUser.attributes.profile.publicData.account ?
-    ensuredCurrentUser.attributes.profile.publicData.account : null;
+  const accountType = ensuredCurrentUser.attributes.profile.publicData && ensuredCurrentUser.attributes.profile.publicData.accountType ?
+    ensuredCurrentUser.attributes.profile.publicData.accountType : null;
 
   const chargeBeeSection = accountType === 'p' || accountType === 'a' ?
     <div>

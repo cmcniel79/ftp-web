@@ -307,8 +307,8 @@ class EditListingWizard extends Component {
     const stripeConnected = currentUserLoaded && !!stripeAccount && !!stripeAccount.id;
 
     // Getting custom data added to users publicData
-    const accountType = currentUserLoaded && ensuredCurrentUser.attributes.profile.publicData.account ?
-      ensuredCurrentUser.attributes.profile.publicData.account : null;
+    const accountType = currentUserLoaded && ensuredCurrentUser.attributes.profile.publicData.accountType ?
+      ensuredCurrentUser.attributes.profile.publicData.accountType : null;
     const userCountry = currentUserLoaded && ensuredCurrentUser.attributes.profile.protectedData.shippingAddress.country ?
       ensuredCurrentUser.attributes.profile.protectedData.shippingAddress.country : null;
     const allowsCustomOrders = currentUserLoaded && ensuredCurrentUser.attributes.profile.publicData.allowsCustomOrders ?

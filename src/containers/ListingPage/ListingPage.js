@@ -345,8 +345,8 @@ export class ListingPageComponent extends Component {
 
     const authorTribe = ensuredAuthor.attributes.profile.publicData && ensuredAuthor.attributes.profile.publicData.tribe ?
       ensuredAuthor.attributes.profile.publicData.tribe : null;
-    const accountType = ensuredAuthor.attributes.profile.publicData && ensuredAuthor.attributes.profile.publicData.account ?
-      ensuredAuthor.attributes.profile.publicData.account : null;
+    const accountType = ensuredAuthor.attributes.profile.publicData && ensuredAuthor.attributes.profile.publicData.accountType ?
+      ensuredAuthor.attributes.profile.publicData.accountType : null;
     const isPremium = accountType && (accountType === "p" || accountType === "a" || accountType === "n") ? true : false;
 
     const authorCountry = publicData && publicData.country ? publicData.country : null;
