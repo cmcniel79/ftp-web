@@ -21,8 +21,17 @@ const sanitizeText = str =>
   str == null
     ? str
     : typeof str === 'string'
-    ? str.replace(ESCAPE_TEXT_REGEXP, ch => ESCAPE_TEXT_REPLACEMENTS[ch])
-    : '';
+      ? str.replace(ESCAPE_TEXT_REGEXP, ch => ESCAPE_TEXT_REPLACEMENTS[ch])
+      : '';
+
+const sanitizeNumber = nbr => {
+  return (
+    nbr == null
+      ? nbr
+      : typeof nbr === 'number'
+        ? nbr
+        : 0);
+};
 
 /**
  * Sanitize user entity.
@@ -34,22 +43,88 @@ const sanitizeText = str =>
 export const sanitizeUser = entity => {
   const { attributes, ...restEntity } = entity || {};
   const { profile, ...restAttributes } = attributes || {};
-  const { bio, displayName, abbreviatedName, publicData } = profile || {};
+  const { bio, displayName, abbreviatedName, publicData, protectedData } = profile || {};
+
+  const sanitizeLocation = companyLocation => {
+    const { building, location } = companyLocation || {};
+    const selectedPlace = location && location.selectedPlace ? location.selectedPlace : {};
+
+    const buildingMaybe = building ? { building: sanitizeText(building) } : {};
+    const locationMaybe = location ? {
+      location: {
+        selectedPlace: {
+          address: sanitizeText(selectedPlace.address),
+          origin: {
+            lat: sanitizeNumber(selectedPlace.origin.lat),
+            lng: sanitizeNumber(selectedPlace.origin.lng),
+          }
+        }
+      }
+    } : {};
+
+    return { ...buildingMaybe, ...locationMaybe };
+  };
 
   const sanitizePublicData = publicData => {
-    // TODO: If you add public data, you should probably sanitize it here.
-    return publicData ? { publicData } : {};
+    const { country, accountType, accountLimit, companyIndustry, companyLocation, companyName, companyWebsite, nativeLands, tribe,
+      socialMedia } = publicData || {};
+
+    const countryMaybe = country ? { country: sanitizeText(country) } : {};
+    const accoutTypeMaybe = accountType ? { accountType: sanitizeText(accountType) } : {};
+    const accountLimitMaybe = accountLimit ? { accountType: sanitizeNumber(accountLimit) } : {};
+
+    const companyIndustryMaybe = companyIndustry ? { companyIndustry: sanitizeText(companyIndustry) } : {};
+    const companyLocationMaybe = companyLocation ? { companyLocation: sanitizeLocation(companyLocation) } : {};
+    const companyNameMaybe = companyName ? { companyName: sanitizeText(companyName) } : {};
+    const companyWebsiteMaybe = companyWebsite ? { companyWebsite: sanitizeText(companyWebsite) } : {};
+
+    const nativeLandsMaybe = nativeLands ? { nativeLands: sanitizeText(nativeLands) } : {};
+    const tribeMaybe = tribe ? { tribe: sanitizeText(tribe) } : {};
+
+    const { facebook, twitter, insta, tiktok } = socialMedia || {};
+    const facebookMaybe = facebook ? { facebook: sanitizeText(facebook) } : {};
+    const twitterMaybe = twitter ? { twitter: sanitizeText(twitter) } : {};
+    const instaMaybe = insta ? { insta: sanitizeText(insta) } : {};
+    const tiktokMaybe = tiktok ? { tiktok: sanitizeText(tiktok) } : {};
+    const socialMediaMaybe = { socialMedia: { ...facebookMaybe, ...twitterMaybe, ...instaMaybe, ...tiktokMaybe } };
+
+    return publicData ? {
+      publicData: {
+        ...countryMaybe, ...accoutTypeMaybe, ...accountLimitMaybe,
+        ...companyIndustryMaybe, ...companyLocationMaybe, ...companyNameMaybe, ...companyWebsiteMaybe,
+        ...nativeLandsMaybe, ...tribeMaybe, ...socialMediaMaybe
+      }
+    } : {};
   };
+
+  const sanitizeProtectedData = protectedData => {
+    const shippingAddress = protectedData.shippingAddress || {};
+    const { addressLine1, addressLine2, country, city, state, postal } = shippingAddress || {};
+
+    const addressLine1Maybe = addressLine1 ? { addressLine1: sanitizeText(addressLine1) } : {};
+    const addressLine2Maybe = addressLine2 ? { addressLine2: sanitizeText(addressLine2) } : {};
+    const countryMaybe = country ? { addressLine1: sanitizeText(country) } : {};
+    const cityMaybe = city ? { addressLine1: sanitizeText(city) } : {};
+    const stateMaybe = state ? { addressLine1: sanitizeText(state) } : {};
+    const postalMaybe = postal ? { addressLine1: sanitizeText(postal) } : {};
+    
+
+    return protectedData ? {
+      protectedData: { ...addressLine1Maybe, ...addressLine2Maybe, ...countryMaybe, ...cityMaybe, ...stateMaybe, ...postalMaybe }
+    } : {};
+  };
+
 
   const profileMaybe = profile
     ? {
-        profile: {
-          abbreviatedName: sanitizeText(abbreviatedName),
-          displayName: sanitizeText(displayName),
-          bio: sanitizeText(bio),
-          ...sanitizePublicData(publicData),
-        },
-      }
+      profile: {
+        abbreviatedName: sanitizeText(abbreviatedName),
+        displayName: sanitizeText(displayName),
+        bio: sanitizeText(bio),
+        ...sanitizePublicData(publicData),
+        ...sanitizeProtectedData(protectedData ? protectedData : {}),
+      },
+    }
     : {};
   const attributesMaybe = attributes ? { attributes: { ...profileMaybe, ...restAttributes } } : {};
 
@@ -67,30 +142,61 @@ export const sanitizeListing = entity => {
   const { attributes, ...restEntity } = entity;
   const { title, description, publicData, ...restAttributes } = attributes || {};
 
-  const sanitizeLocation = location => {
-    const { address, building } = location || {};
-    return { address: sanitizeText(address), building: sanitizeText(building) };
-  };
+  // const sanitizeLocation = material => {
+  //   const { address, building } = location || {};
+  //   return { address: sanitizeText(address), building: sanitizeText(building) };
+  // };
 
   const sanitizePublicData = publicData => {
     // Here's an example how you could sanitize location and rules from publicData:
     // TODO: If you add public data, you should probably sanitize it here.
-    const { location, rules, ...restPublicData } = publicData || {};
-    const locationMaybe = location ? { location: sanitizeLocation(location) } : {};
-    const rulesMaybe = rules ? { rules: sanitizeText(rules) } : {};
+    const { country, category, subCategory, verifiedSellers, customOrders, websiteLink, region, sizes, style, material,
+      shippingFee, internationalFee, allowsInternationalOrders } = publicData || {};
 
-    return publicData ? { publicData: { ...locationMaybe, ...rulesMaybe, ...restPublicData } } : {};
+    const countryMaybe = country ? { country: sanitizeText(country) } : {};
+
+    const categoryMaybe = category ? { category: sanitizeText(category) } : {};
+    const subCategoryMaybe = subCategory ? { subCategory: sanitizeText(subCategory) } : {};
+
+    const verifiedSellersMaybe = verifiedSellers ? { verifiedSellers: sanitizeText(verifiedSellers) } : {};
+    const customOrdersMaybe = customOrders ? { customOrders: sanitizeText(customOrders) } : {};
+    const websiteLinkMaybe = websiteLink ? { websiteLink: sanitizeText(websiteLink) } : {};
+
+    const regionMaybe = region ? { region: sanitizeText(region) } : {};
+    const sizesMaybe = sizes ? { sizes: sanitizeText(sizes) } : {};
+    const styleMaybe = style ? { style: sanitizeText(style) } : {};
+    const materialMaybe = material ? { material: material } : {};
+
+    const shippingFeeMaybe = shippingFee ? {
+      shippingFee:
+        { amount: sanitizeNumber(shippingFee.amount), currency: sanitizeText(shippingFee.currency) }
+    } : {};
+    const internationalFeeMaybe = internationalFee ? {
+      internationalFee:
+        { amount: sanitizeNumber(internationalFee.amount), currency: sanitizeText(internationalFee.currency) }
+    } : {};
+
+    const allowsInternationalOrdersMaybe = allowsInternationalOrders ? { allowsInternationalOrders: allowsInternationalOrders } : {}
+
+
+    return publicData ? {
+      publicData: {
+        ...countryMaybe, ...categoryMaybe, ...subCategoryMaybe, ...verifiedSellersMaybe,
+        ...customOrdersMaybe, ...websiteLinkMaybe, ...regionMaybe, ...sizesMaybe, ...styleMaybe, ...materialMaybe,
+        ...shippingFeeMaybe, ...internationalFeeMaybe, ...allowsInternationalOrdersMaybe,
+      }
+    } : {};
   };
 
   const attributesMaybe = attributes
     ? {
-        attributes: {
-          title: sanitizeText(title),
-          description: sanitizeText(description),
-          ...sanitizePublicData(publicData),
-          ...restAttributes,
-        },
-      }
+      attributes: {
+        title: sanitizeText(title),
+        description: sanitizeText(description),
+        ...sanitizePublicData(publicData),
+        ...restAttributes,
+      },
+    }
     : {};
 
   return { ...attributesMaybe, ...restEntity };
