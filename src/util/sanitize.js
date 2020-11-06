@@ -33,6 +33,26 @@ const sanitizeNumber = nbr => {
         : 0);
 };
 
+export const sanitizeProtectedData = protectedData => {
+  const shippingAddress = protectedData && protectedData.shippingAddress ? protectedData.shippingAddress : {};
+  const { addressLine1, addressLine2, country, city, state, postal } = shippingAddress || {};
+
+  const addressLine1Maybe = addressLine1 ? { addressLine1: sanitizeText(addressLine1) } : {};
+  const addressLine2Maybe = addressLine2 ? { addressLine2: sanitizeText(addressLine2) } : {};
+  const countryMaybe = country ? { country: sanitizeText(country) } : {};
+  const cityMaybe = city ? { city: sanitizeText(city) } : {};
+  const stateMaybe = state ? { state: sanitizeText(state) } : {};
+  const postalMaybe = postal ? { postal: sanitizeText(postal) } : {};
+
+  return protectedData ? {
+    protectedData: {
+      shippingAddress: {
+        ...addressLine1Maybe, ...addressLine2Maybe, ...countryMaybe, ...cityMaybe, ...stateMaybe, ...postalMaybe
+      }
+    }
+  } : {};
+};
+
 /**
  * Sanitize user entity.
  * If you add public data, you should probably sanitize it here.
@@ -71,7 +91,7 @@ export const sanitizeUser = entity => {
 
     const countryMaybe = country ? { country: sanitizeText(country) } : {};
     const accoutTypeMaybe = accountType ? { accountType: sanitizeText(accountType) } : {};
-    const accountLimitMaybe = accountLimit ? { accountType: sanitizeNumber(accountLimit) } : {};
+    const accountLimitMaybe = accountLimit ? { accountLimit: sanitizeNumber(accountLimit) } : {};
 
     const companyIndustryMaybe = companyIndustry ? { companyIndustry: sanitizeText(companyIndustry) } : {};
     const companyLocationMaybe = companyLocation ? { companyLocation: sanitizeLocation(companyLocation) } : {};
@@ -97,24 +117,6 @@ export const sanitizeUser = entity => {
     } : {};
   };
 
-  const sanitizeProtectedData = protectedData => {
-    const shippingAddress = protectedData.shippingAddress || {};
-    const { addressLine1, addressLine2, country, city, state, postal } = shippingAddress || {};
-
-    const addressLine1Maybe = addressLine1 ? { addressLine1: sanitizeText(addressLine1) } : {};
-    const addressLine2Maybe = addressLine2 ? { addressLine2: sanitizeText(addressLine2) } : {};
-    const countryMaybe = country ? { addressLine1: sanitizeText(country) } : {};
-    const cityMaybe = city ? { addressLine1: sanitizeText(city) } : {};
-    const stateMaybe = state ? { addressLine1: sanitizeText(state) } : {};
-    const postalMaybe = postal ? { addressLine1: sanitizeText(postal) } : {};
-    
-
-    return protectedData ? {
-      protectedData: { ...addressLine1Maybe, ...addressLine2Maybe, ...countryMaybe, ...cityMaybe, ...stateMaybe, ...postalMaybe }
-    } : {};
-  };
-
-
   const profileMaybe = profile
     ? {
       profile: {
@@ -122,7 +124,6 @@ export const sanitizeUser = entity => {
         displayName: sanitizeText(displayName),
         bio: sanitizeText(bio),
         ...sanitizePublicData(publicData),
-        ...sanitizeProtectedData(protectedData ? protectedData : {}),
       },
     }
     : {};

@@ -389,9 +389,11 @@ class StripePaymentForm extends Component {
       <StripePaymentAddress intl={intl} form={form} fieldId={formId} card={this.card} />
     );
 
-    const shippingAddressFields = shippingAddress ? (
-      <ShippingAddress shippingAddress={shippingAddress} intl={intl} formId={formId} country={shippingAddress.country} isCheckoutPage={true} />
-    ) : null;
+    const shippingAddressFields = shippingAddress && shippingAddress.country ? (
+      <ShippingAddress intl={intl} formId={formId} country={shippingAddress.country} isCheckoutPage={true} />
+    ) : (
+      <ShippingAddress intl={intl} formId={formId} country={null} isCheckoutPage={false} />
+    );
 
 
     const hasStripeKey = config.stripe.publishableKey;

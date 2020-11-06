@@ -56,6 +56,8 @@ import SectionSellerMaybe from './SectionSellerMaybe';
 import SectionSizesMaybe from './SectionSizesMaybe';
 import SectionCustomOrdersMaybe from './SectionCustomOrdersMaybe';
 import SectionPremiumPriceMaybe from './SectionPremiumPriceMaybe';
+import { sanitizeProtectedData } from '../../util/sanitize';
+
 import css from './ListingPage.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -350,8 +352,12 @@ export class ListingPageComponent extends Component {
     const isPremium = accountType && (accountType === "p" || accountType === "a" || accountType === "n") ? true : false;
 
     const authorCountry = publicData && publicData.country ? publicData.country : null;
-    const userCountry = currentUser && currentUser.attributes.profile.protectedData && currentUser.attributes.profile.protectedData.shippingAddress ?
-      currentUser.attributes.profile.protectedData.shippingAddress.country : null;
+
+    const protectedData = currentUser && currentUser.attributes.profile.protectedData ?
+      sanitizeProtectedData(currentUser.attributes.profile.protectedData) : {};
+    const userCountry = protectedData && protectedData.protectedData && protectedData.protectedData.shippingAddress ?
+      protectedData.protectedData.shippingAddress.country : null;
+
     const isDomesticOrder = authorCountry && userCountry && authorCountry === userCountry ? true : false;
     const lineItems = !isPremium && isDomesticOrder ? domesticLineItems : internationalLineItems;
     const allowsInternationalOrders = !isPremium && publicData && publicData.allowsInternationalOrders ? true : false;
@@ -484,42 +490,42 @@ export class ListingPageComponent extends Component {
                   <SectionMaterialsMaybe options={materialOptions} material={material} />
                   <SectionSizesMaybe sizes={sizes} />
                   {publicData ? (
-                   isPremium ? <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
-                    : (isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders) || (!currentUser)?
-                      <BookingPanel
-                        className={css.bookingBreakdown}
-                        listing={currentListing}
-                        isOwnListing={isOwnListing}
-                        unitType={unitType}
-                        onSubmit={handleBookingSubmit}
-                        title={bookingTitle}
-                        subTitle={bookingSubTitle}
-                        authorDisplayName={authorDisplayName}
-                        onManageDisableScrolling={onManageDisableScrolling}
-                        timeSlots={timeSlots}
-                        fetchTimeSlotsError={fetchTimeSlotsError}
-                        onFetchTransactionLineItems={onFetchTransactionLineItems}
-                        lineItems={lineItems}
-                        fetchLineItemsInProgress={fetchLineItemsInProgress}
-                        fetchLineItemsError={fetchLineItemsError}
-                        isDomesticOrder={isDomesticOrder}
-                        shippingFee={shippingFee}
-                      />
-                      : !isDomesticOrder && !allowsInternationalOrders ?
-                        <span className={css.noInternational} >
-                          <FormattedMessage id="ListingPage.noInternationalOrders" />
-                        </span>
-                        : userCountry === null ?
-                          <span className={css.purchaseWarning} >
-                            <FormattedMessage id="ListingPage.noUserCountry" />
+                    isPremium ? <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
+                      : (isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders) || (!currentUser) ?
+                        <BookingPanel
+                          className={css.bookingBreakdown}
+                          listing={currentListing}
+                          isOwnListing={isOwnListing}
+                          unitType={unitType}
+                          onSubmit={handleBookingSubmit}
+                          title={bookingTitle}
+                          subTitle={bookingSubTitle}
+                          authorDisplayName={authorDisplayName}
+                          onManageDisableScrolling={onManageDisableScrolling}
+                          timeSlots={timeSlots}
+                          fetchTimeSlotsError={fetchTimeSlotsError}
+                          onFetchTransactionLineItems={onFetchTransactionLineItems}
+                          lineItems={lineItems}
+                          fetchLineItemsInProgress={fetchLineItemsInProgress}
+                          fetchLineItemsError={fetchLineItemsError}
+                          isDomesticOrder={isDomesticOrder}
+                          shippingFee={shippingFee}
+                        />
+                        : !isDomesticOrder && !allowsInternationalOrders ?
+                          <span className={css.noInternational} >
+                            <FormattedMessage id="ListingPage.noInternationalOrders" />
                           </span>
-                          : authorCountry === null ?
+                          : userCountry === null ?
                             <span className={css.purchaseWarning} >
-                              <FormattedMessage id="ListingPage.noAuthorCountry" />
+                              <FormattedMessage id="ListingPage.noUserCountry" />
                             </span>
-                            : <span className={css.purchaseWarning} >
-                              <FormattedMessage id="ListingPage.listingMissingInfo" />
-                            </span>) : null}
+                            : authorCountry === null ?
+                              <span className={css.purchaseWarning} >
+                                <FormattedMessage id="ListingPage.noAuthorCountry" />
+                              </span>
+                              : <span className={css.purchaseWarning} >
+                                <FormattedMessage id="ListingPage.listingMissingInfo" />
+                              </span>) : null}
                   {!isPremium &&
                     <div className={css.reviewsContainerMobile}>
                       <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />

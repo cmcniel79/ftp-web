@@ -55,7 +55,7 @@ import {
 } from './CheckoutPage.duck';
 import { storeData, storedData, clearData } from './CheckoutPageSessionHelpers';
 import css from './CheckoutPage.css';
-
+import { sanitizeProtectedData } from '../../util/sanitize';
 
 const STORAGE_KEY = 'CheckoutPage';
 
@@ -726,11 +726,12 @@ export class CheckoutPageComponent extends Component {
       currentUser && currentUser.attributes
         ? `${currentUser.attributes.profile.firstName} ${currentUser.attributes.profile.lastName}`
         : null;
-    const shippingAddress =
-      currentUser && currentUser.attributes
-        ? currentUser.attributes.profile.protectedData.shippingAddress
-        : null;
 
+    const protectedData = currentUser && currentUser.attributes.profile.protectedData ? 
+      sanitizeProtectedData(currentUser.attributes.profile.protectedData) : null;
+    const shippingAddress = protectedData && protectedData.protectedData && protectedData.protectedData.shippingAddress ? 
+      protectedData.protectedData.shippingAddress : {};
+      
     // If paymentIntent status is not waiting user action,
     // confirmCardPayment has been called previously.
     const hasPaymentIntentUserActionsDone =

@@ -25,6 +25,8 @@ import {
   saveContactDetailsClear,
   resetPassword,
 } from './ContactDetailsPage.duck';
+import { sanitizeProtectedData } from '../../util/sanitize';
+
 import css from './ContactDetailsPage.css';
 
 export const ContactDetailsPageComponent = props => {
@@ -48,9 +50,9 @@ export const ContactDetailsPageComponent = props => {
 
   const user = ensureCurrentUser(currentUser);
   const currentEmail = user.attributes.email || '';
-  const protectedData = user.attributes.profile.protectedData || {};
+  const protectedData = user.attributes.profile.protectedData ? sanitizeProtectedData(user.attributes.profile.protectedData) : {}; 
   const currentPhoneNumber = protectedData.phoneNumber || '';
-  const currentShippingAddress = protectedData.shippingAddress || null;
+  const currentShippingAddress = protectedData.protectedData.shippingAddress || null;
 
   // Pass in account type to Payment Methods tab to make sure Premium Users 
   // do not get confused about payments and subscriptions

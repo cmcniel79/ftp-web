@@ -16,6 +16,7 @@ import {
 // import getCountryCodes from '../../translations/countryCodes';
 import { Form, PrimaryButton, FieldTextInput, ShippingAddress } from '../../components';
 // import config from '../../config';
+import { sanitizeProtectedData } from '../../util/sanitize';
 
 import css from './ContactDetailsForm.css';
 
@@ -230,9 +231,9 @@ class ContactDetailsFormComponent extends Component {
           });
 
           //shipping address, get from protected data
-          const protectedData = profile.protectedData || {};
-          const currentShippingAddress = protectedData.shippingAddress;
-
+          const protectedData = profile && profile.protectedData ? sanitizeProtectedData(profile.protectedData) : {};
+          const currentShippingAddress = protectedData && protectedData.protectedData && protectedData.protectedData.shippingAddress ?
+            protectedData.protectedData.shippingAddress : null;
           const shippingAddressChanged = currentShippingAddress !== shippingAddress;
 
           // generic error
@@ -286,8 +287,8 @@ class ContactDetailsFormComponent extends Component {
                 {resendPasswordLink}
               </>
             ) : (
-              sendPasswordLink
-            );
+                sendPasswordLink
+              );
 
           const classes = classNames(rootClassName || css.root, className);
           const submittedOnce = Object.keys(this.submittedValues).length > 0;
@@ -309,10 +310,10 @@ class ContactDetailsFormComponent extends Component {
               <div className={css.contactDetailsSection}>
                 <div className={className ? className : css.address}>
                   <h3>
-                  <FormattedMessage id="ContactDetailsForm.defaultAddressHeading"/>
+                    <FormattedMessage id="ContactDetailsForm.defaultAddressHeading" />
                   </h3>
                   <div className={css.formRow}>
-                  <ShippingAddress shippingAddress={shippingAddress} intl={intl} formId={formId} isCheckoutPage={false} />
+                    <ShippingAddress shippingAddress={shippingAddress} intl={intl} formId={formId} isCheckoutPage={false} />
                   </div>
                 </div>
                 <FieldTextInput
