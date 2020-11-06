@@ -257,10 +257,20 @@
 
 .noInternational {
   color: var(--matterColorAnti);
+  padding: 0 24px;
+  display: block;
+  @media (--viewportMedium) {
+    padding: 0;
+  }
 }
 
 .purchaseWarning {
+  padding: 0 24px;
   color: var(--failColor);
+  display: block;
+  @media (--viewportMedium) {
+    padding: 0;
+  }
 }
 
 .sectionSeller {
@@ -427,13 +437,13 @@
 
 .featuresHeading {
   @apply --marketplaceH3FontStyles;
-  color: var(--matterColorAnti);
-  margin: 54px 0 23px 0;
+  font-weight: 550;
+  font-size: 22px;
+  line-height: 24px;
+
+  margin: 0 0 15px 0;
   @media (--viewportMedium) {
-    margin: 0 0 27px 0;
-  }
-  @media (--viewportLarge) {
-    margin: 0 0 27px 0;
+    margin: 0 0 15px 0;
   }
 }
 
@@ -518,15 +528,14 @@
   background-color: var(--matterColorLight);
   box-shadow: var(--boxShadowTop);
   display: flex;
-
   /* Contain repainting to this component only */
   /* 3D painting container helps scrolling */
   transform: translate3d(0, 0, 0);
-
   @media (--viewportMedium) {
     background-color: var(--matterColorBright);
+    margin-top: 50px;
     position: relative;
-    padding: 10px;
+    padding: 0;
     width: 100%;
     display: flex;
     box-shadow: none;
@@ -534,7 +543,10 @@
 }
 
 .price {
-  margin: 0;
+  margin: 0 auto 15px 30px;
+  @media (--viewportMedium) {
+    margin: 0 auto 15px 0;
+  }
 }
 
 .partnerLink {

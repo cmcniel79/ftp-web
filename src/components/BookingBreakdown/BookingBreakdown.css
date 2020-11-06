@@ -137,7 +137,10 @@
 
 .priceBreakdownTitle {
   /* Font */
-  color: var(--matterColorAnti);
+  @apply --marketplaceH3FontStyles;
+  font-weight: 550;
+  font-size: 22px;
+  line-height: 24px;
 
   margin-top: 5px;
   margin-bottom: 14px;
