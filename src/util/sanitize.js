@@ -63,7 +63,7 @@ export const sanitizeProtectedData = protectedData => {
 export const sanitizeUser = entity => {
   const { attributes, ...restEntity } = entity || {};
   const { profile, ...restAttributes } = attributes || {};
-  const { bio, displayName, abbreviatedName, publicData, protectedData } = profile || {};
+  const { bio, displayName, abbreviatedName, publicData } = profile || {};
 
   const sanitizeLocation = companyLocation => {
     const { building, location } = companyLocation || {};

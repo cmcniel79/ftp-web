@@ -195,23 +195,24 @@ const FAQPage = () => {
                   &nbsp;with information about your business and why you would like to have a Premium Account, and include either your physical business address or your website.
                   <br />
                   <br />
-                  We charge a subscription fee for Premium Accounts and have 3 subscription plans users can choose from:
+                  Premium Accounts are only accessible through a paid subscription, but we do offer a 1 week free trial for all new subscriptions.
+                  Users can choose from three plans:
                     <br />
                   <br />
-                  <b>Map Only Plan - $9.99/month</b>
+                  <b>Map Only Plan - $5.99/month</b>
                   <br />
                     Gain access to our Native Businesses Map. You can show the physical location of
                     your business and gain new customers from our Indigenous Marketplace and Community. Your listing on our Map will have links to your website and directions
                     to your business address. This plan is perfect for those Native/Indigenous Owned businesses that provide services instead of physical goods.
                     <br />
                   <br />
-                  <b>Artisan Plan - $19.99/month</b>
+                  <b>Artisan Plan - $14.99/month</b>
                   <br />
                     Post up to 10 listings on our Indigenous Marketplace and also get all of the other features included in the Map Only Plan. You will have the Premium Sellers badge on all your listings
                     and can add links to your website to showcase your products. All transactions for your products will take place on your website.
                     <br />
                   <br />
-                  <b>Trader Plan - $29.99/month</b>
+                  <b>Trader Plan - $24.99/month</b>
                   <br />
                     Post up to 20 listings on our Indigenous Marketplace, get placed on the&nbsp;
                     <ExternalLink href="https://www.fromthepeople.co/#featured-partners">"Featured Partners" Section</ExternalLink>&nbsp;
