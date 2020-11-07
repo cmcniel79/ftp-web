@@ -46,7 +46,6 @@ export const LandingPageComponent = props => {
 
   // Only want to show featured listings if we have 6
   const hasListings = props.listings && props.listings.length === 6;
-
   return (
     <Page
       className={css.root}
@@ -127,7 +126,8 @@ export const LandingPageComponent = props => {
                 />
               </div>
             </li>
-            {user &&
+            {user && user.profileImage && user.profileImage.id && !user.attributes.banned && !user.attributes.deleted &&
+              user.attributes.profile.bio && user.attributes.profile.bio.length > 150 &&
               <li className={css.section} id="featured-partners">
                 <div className={css.sectionContent}>
                   <FeaturedPartners

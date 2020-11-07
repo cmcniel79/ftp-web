@@ -127,17 +127,16 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
       : {};
   };
 
-  const { perPage, price, dates, ...rest } = searchParams;
+  const { perPage, price, dates, sort, ...rest } = searchParams;
   const priceMaybe = priceSearchParams(price);
   const datesMaybe = datesSearchParams(dates);
-
   const params = {
     ...rest,
     ...priceMaybe,
     ...datesMaybe,
     per_page: perPage,
     meta_ranking: "0,",
-    sort: "-meta_ranking"
+    sort: (sort ? sort : "-meta_ranking")
   };
 
   return sdk.listings

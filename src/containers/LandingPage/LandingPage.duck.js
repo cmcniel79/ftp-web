@@ -148,6 +148,8 @@ export const queryPromotedListings = queryParams => (dispatch, getState, sdk) =>
   return sdk.listings
     .query({
       meta_promoted: true,
+      meta_ranking: "0,",
+      sort: "-meta_ranking",
       include: ['author', 'images'],
       'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
     })
@@ -162,20 +164,20 @@ export const queryPromotedListings = queryParams => (dispatch, getState, sdk) =>
 };
 
 export const loadFeaturedPartners = ids => (dispatch, getState, sdk) => {
-  dispatch(showUserRequest(ids[0].id));
-  if(ids.length > 0){
-  return sdk.users
-    .show({
-      id: ids[0].id.uuid,
-      include: ['profileImage', 'publicData'],
-      'fields.image': ['variants.square-small', 'variants.square-small2x'],
-    })
-    .then(response => {
-      dispatch(addMarketplaceEntities(response));
-      dispatch(showUserSuccess());
-      return response;
-    })
-    .catch(e => dispatch(showUserError(storableError(e))));
+  if (ids.length > 0) {
+    dispatch(showUserRequest(ids[0].id));
+    return sdk.users
+      .show({
+        id: ids[0].id.uuid,
+        include: ['profileImage', 'publicData'],
+        'fields.image': ['variants.square-small', 'variants.square-small2x'],
+      })
+      .then(response => {
+        dispatch(addMarketplaceEntities(response));
+        dispatch(showUserSuccess());
+        return response;
+      })
+      .catch(e => dispatch(showUserError(storableError(e))));
   }
 };
 
