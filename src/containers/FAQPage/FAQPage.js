@@ -362,32 +362,6 @@ const FAQPage = () => {
               <FormattedMessage id="FAQPage.rules" />
             </h2>
             <Accordion atomic={true}>
-              <AccordionButton title="What fees does From The people charge?">
-                <p>
-                  From The People only charges a one time payment processing fee when a transaction is made.
-                  This goes to supporting the website and the services we offer.
-                  The payment processing fee is 6% of the total cost of the transaction (base price + shipping fee)
-                  and comes out of the payment the seller receives from the transaction.
-                  <br />
-                  <br />
-                  <b><u>Transaction Example</u></b>
-                  <br />
-                  Item base price: $25.00.
-                  <br />
-                  Shipping fee: $4.99.
-                  <br />
-                  Total charged to buyer: $29.99.
-                  <br />
-                  Our 6% fee on the total cost: $29.99 * 6% = $1.80.
-                  <br />
-                  The seller's payment: $29.99 - $1.80 = $28.19.
-                  <br />
-                  <br />
-                  We do charge a monthly subscription for Premium Accounts and you can find more information on
-                  Premium Accounts above. Premium Account users gain access to our exclusive website features and
-                  do not go through our transaction process.
-                </p>
-              </AccordionButton>
               <AccordionButton title="Compliance with the Indian Arts and Crafts Act of 1990">
                 <p>
                   If you suspect a seller has misrepresented themselves in regards to Native American heritage or falsely suggests their product is Indian produced,
@@ -423,6 +397,32 @@ const FAQPage = () => {
               <FormattedMessage id="FAQPage.payment" />
             </h2>
             <Accordion atomic={true}>
+            <AccordionButton title="What fees does From The people charge?">
+                <p>
+                  From The People only charges a one time payment processing fee when a transaction is made.
+                  This goes to supporting the website and the services we offer.
+                  The payment processing fee is 6% of the total cost of the transaction (base price + shipping fee)
+                  and comes out of the payment the seller receives from the transaction.
+                  <br />
+                  <br />
+                  <b><u>Transaction Example</u></b>
+                  <br />
+                  Item base price: $25.00.
+                  <br />
+                  Shipping fee: $4.99.
+                  <br />
+                  Total charged to buyer: $29.99.
+                  <br />
+                  Our 6% fee on the total cost: $29.99 * 6% = $1.80.
+                  <br />
+                  The seller's payment: $29.99 - $1.80 = $28.19.
+                  <br />
+                  <br />
+                  We do charge a monthly subscription for Premium Accounts and you can find more information on
+                  Premium Accounts above. Premium Account users gain access to our exclusive website features and
+                  do not go through our transaction process.
+                </p>
+              </AccordionButton>
               <AccordionButton title="What is the payment process like?">
                 <p>
                   Buyers must use a credit/debit card to make a purchase. After payment, the seller needs to accept the transaction for the payment

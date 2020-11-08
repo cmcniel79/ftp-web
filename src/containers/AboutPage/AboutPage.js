@@ -12,7 +12,7 @@ import {
 } from '../../components';
 
 import css from './AboutPage.css';
-import image from './about-us.jpg';
+import desktopImage from './about-us.jpg';
 
 const AboutPage = () => {
   const { siteTwitterHandle, siteFacebookPage, siteInstagramPage } = config;
@@ -35,8 +35,8 @@ const AboutPage = () => {
         </LayoutWrapperTopbar>
 
         <LayoutWrapperMain className={css.staticPageWrapper}>
-          <h1 className={css.pageTitle}>Your Indigenous Marketplace and Community.</h1>
-          <img className={css.coverImage} src={image} alt="Chase and Isabella" />
+          <h1 className={css.pageTitle}>Your Indigenous Marketplace and Community</h1>
+          <img className={css.coverImage} src={desktopImage} alt="Chase and Isabella" />
 
           <div className={css.contentWrapper}>
             <div className={css.contentSide}>

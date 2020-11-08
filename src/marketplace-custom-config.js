@@ -151,7 +151,7 @@ export const filters = [
       { key: 'west', label: 'West Coast' },
       { key: 'east', label: 'Eastern U.S.' },
       { key: 'pacific', label: 'Pacific Islands' },
-      { key: 'alaska', label: 'Alaska and Arctic' },
+      { key: 'arctic', label: 'Alaska and Arctic' },
       { key: 'central', label: 'Central and South America' },
       { key: 'africa', label: 'Africa' },
       { key: 'asia', label: 'Asia' },
