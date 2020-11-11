@@ -13,6 +13,7 @@ import {
 import { fetchCurrentUser } from '../../ducks/user.duck';
 
 const { UUID } = sdkTypes;
+const RANKING_KEY = process.env.REACT_APP_API_KEY_RANKING;
 
 // A helper function to filter away exception that matches start and end timestamps
 const removeException = (exception, calendar) => {
@@ -791,7 +792,7 @@ export const updateRanking = actionPayload => {
     body: JSON.stringify(actionPayload),
     headers: {
       "Content-Type": "application/json",
-      "X-Api-Key": "OB9atXvkqR4NV0bVL3MKO4PWrHpVoZye8z2uR7Yf",
+      "X-Api-Key": RANKING_KEY,
     }
   }
 

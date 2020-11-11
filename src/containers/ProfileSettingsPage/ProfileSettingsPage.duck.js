@@ -2,6 +2,8 @@ import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
 
+const LOCATION_KEY = process.env.REACT_APP_API_KEY_LOCATION;
+
 // ================ Action types ================ //
 
 export const CLEAR_UPDATED_FORM = 'app/ProfileSettingsPage/CLEAR_UPDATED_FORM';
@@ -169,10 +171,7 @@ export const updateDatabase = actionPayload => {
     body: JSON.stringify(actionPayload),
     headers: {
       "Content-Type": "application/json",
-      // "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-      // "Access-Control-Allow-Methods": "OPTIONS,POST",
-      "X-Api-Key": "dShKIr3xlkgXBtiwSeSN7jaYIjmIwnnnN4rLDN00",
-      // "Access-Control-Allow-Origin": "*"
+      "X-Api-Key": LOCATION_KEY,
     }
   }
 
