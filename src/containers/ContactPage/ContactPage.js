@@ -25,7 +25,7 @@ export class ContactPageComponent extends Component {
 
   render() {
     const {
-      // currentUser,
+      currentUser,
       sendingInProgress,
       sendingEmailError,
       onSendEmail,
@@ -33,7 +33,11 @@ export class ContactPageComponent extends Component {
     } = this.props;
 
     const handleSubmit = (values) => {
-      onSendEmail(values);
+      const payload = {
+        isCurrentUser: currentUser ? true : false,
+        ...values
+      };
+      onSendEmail(payload);
     }
 
     return (

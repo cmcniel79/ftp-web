@@ -4,6 +4,7 @@ import { currentUserShowSuccess } from '../../ducks/user.duck';
 
 const KEY = process.env.REACT_APP_API_KEY;
 const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
+const BASE_URL = process.env.REACT_APP_API_RANKING;
 
 // ================ Action types ================ //
 
@@ -165,7 +166,7 @@ export const updateProfile = actionPayload => {
 };
 
 export const updateDatabase = actionPayload => {
-  const url = "https://vyvhifh63b.execute-api.us-west-1.amazonaws.com/" + ENV;
+  const url = BASE_URL + ENV;
   const options = {
     method: 'POST',
     withCredentials: false,

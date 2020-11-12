@@ -15,6 +15,7 @@ import { fetchCurrentUser } from '../../ducks/user.duck';
 const { UUID } = sdkTypes;
 const KEY = process.env.REACT_APP_API_KEY;
 const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
+const BASE_URL = process.env.REACT_APP_API_DATABASE;
 
 // A helper function to filter away exception that matches start and end timestamps
 const removeException = (exception, calendar) => {
@@ -786,7 +787,7 @@ export const loadData = params => (dispatch, getState, sdk) => {
 };
 
 export const updateRanking = actionPayload => {
-  const url = "https://92rutchmtc.execute-api.us-west-1.amazonaws.com/prd" + ENV;
+  const url = BASE_URL + ENV;
   const options = {
     method: 'POST',
     withCredentials: false,

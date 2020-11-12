@@ -1,5 +1,6 @@
 const KEY = process.env.REACT_APP_API_KEY;
 const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
+const BASE_URL = process.env.REACT_APP_API_EMAIL;
 // ================ Action types ================ //
 
 export const CLEAR_UPDATED_FORM = 'app/ContactPage/CLEAR_UPDATED_FORM';
@@ -78,13 +79,14 @@ export const sendEmailError = error => ({
 
 export const sendEmail = (values) => {
     return (dispatch, getState, sdk) => {
-        const url = " https://sgckr9uzo2.execute-api.us-west-1.amazonaws.com/" + ENV;
+        const url = BASE_URL + ENV;
         const bodyRequest = {
             email: values.email,
             first: values.firstName,
             last: values.lastName,
             subject: values.subject,
-            message: values.message
+            message: values.message,
+            isCurrentUser: values.isCurrentUser
         }
         const options = {
           method: 'POST',
