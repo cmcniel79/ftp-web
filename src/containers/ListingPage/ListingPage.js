@@ -358,7 +358,7 @@ export class ListingPageComponent extends Component {
     const userCountry = protectedData && protectedData.protectedData && protectedData.protectedData.shippingAddress ?
       protectedData.protectedData.shippingAddress.country : null;
 
-    const isDomesticOrder = authorCountry && userCountry && authorCountry === userCountry ? true : false;
+    const isDomesticOrder = !currentUser ? true : authorCountry && userCountry && authorCountry === userCountry ? true : false;
     const lineItems = !isPremium && isDomesticOrder ? domesticLineItems : internationalLineItems;
     const allowsInternationalOrders = !isPremium && publicData && publicData.allowsInternationalOrders ? true : false;
     const { formattedPrice, priceTitle } = priceData(price, intl);
@@ -415,7 +415,7 @@ export class ListingPageComponent extends Component {
     const sizes = publicData && publicData.sizes ? publicData.sizes : null;
     const customOrders = publicData && publicData.customOrders ? publicData.customOrders : null;
     const websiteLink = isPremium && publicData && publicData.websiteLink ? publicData.websiteLink : null;
-    const domesticFee = !currentUser ? true : publicData && publicData.shippingFee ? publicData.shippingFee : null;
+    const domesticFee = publicData && publicData.shippingFee ? publicData.shippingFee : null;
     const internationalFee = publicData && publicData.internationalFee ? publicData.internationalFee : null;
     const shippingFee = isDomesticOrder && domesticFee ? resolveShippingFeePrice(publicData.shippingFee) :
       !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
