@@ -99,6 +99,9 @@ const TopbarMobileMenu = props => {
       >
         <FormattedMessage id="TopbarMobileMenu.blogLink" />
       </ExternalLink>
+      <NamedLink name="ContactPage" className={css.regularLink}>
+        <FormattedMessage id="TopbarMobileMenu.contactLink" />
+      </NamedLink>
       {/* {isAuthenticated &&
         <NamedLink
           className={css.regularLink}

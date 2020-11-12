@@ -2,6 +2,10 @@ import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
 
+const KEY = process.env.REACT_APP_API_KEY;
+const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
+const BASE_URL = process.env.REACT_APP_API_RANKING;
+
 // ================ Action types ================ //
 
 export const CLEAR_UPDATED_FORM = 'app/ProfileSettingsPage/CLEAR_UPDATED_FORM';
@@ -162,17 +166,14 @@ export const updateProfile = actionPayload => {
 };
 
 export const updateDatabase = actionPayload => {
-  const url = "https://vyvhifh63b.execute-api.us-west-1.amazonaws.com/prd";
+  const url = BASE_URL + ENV;
   const options = {
     method: 'POST',
     withCredentials: false,
     body: JSON.stringify(actionPayload),
     headers: {
       "Content-Type": "application/json",
-      // "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-      // "Access-Control-Allow-Methods": "OPTIONS,POST",
-      "X-Api-Key": "dShKIr3xlkgXBtiwSeSN7jaYIjmIwnnnN4rLDN00",
-      // "Access-Control-Allow-Origin": "*"
+      "X-Api-Key": KEY,
     }
   }
 

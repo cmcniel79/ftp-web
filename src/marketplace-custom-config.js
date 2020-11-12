@@ -54,73 +54,93 @@ export const filters = [
     group: 'primary',
     queryParamNames: ['pub_category'],
     config: {
-    options: [
-      { key: 'jewelry', label: 'Jewelry',
-        subCategories: [
-          { key: 'necklaces', label: 'Necklaces'},
-          { key: 'earrings', label: 'Earrings'},
-          { key: 'rings', label: 'Rings'},
-          { key: 'bracelets', label: 'Bracelets'},
-          { key: 'anklets', label: 'Anklets'},
-        ]
-      },
-      { key: 'accessories', label: 'Accessories',
-        subCategories: [
-          { key: 'bags', label: 'Bags'},
-          { key: 'belts', label: 'Belts'},
-          { key: 'hair', label: 'Hair Accessories'},
-          { key: 'hats', label: 'Hats'},
-          { key: 'scarves', label: 'Scarves'},
-          { key: 'sunglasses', label: 'Sunglasses'},
-          { key: 'ties', label: 'Ties'},
-          { key: 'lanyards', label: 'Lanyards'},
-        ] 
-      },
-      { key: 'apparel', label: 'Apparel',
-        subCategories: [
-          { key: 'tops', label: 'Tops'},
-          { key: 'bottoms', label: 'Bottoms'},
-          { key: 'dresses', label: 'Dresses'},
-          { key: 'shoes', label: 'Shoes'},
-        ] 
-      },
-      { key: 'traditional', label: 'Traditional Assortments',
-        subCategories: [
-          { key: 'botanicals', label: 'Botanicals'},
-          { key: 'regalia', label: 'Regalia'},
-        ] 
-      },
-      { key: 'art', label: 'Art',
-        subCategories: [
-          { key: 'paintings', label: 'Paintings'},
-          { key: 'beadwork', label: 'Beadwork'},
-          { key: 'photo', label: 'Photography'},
-          { key: 'prints', label: 'Prints'},
-          { key: 'stickers', label: 'Stickers & Patches'},
-          { key: 'carvings', label: 'Carvings'},
-          { key: 'baskets', label: 'Baskets & Pottery'},
-          { key: 'rugs', label: 'Rugs & Weaving'},
-        ] },
-      { key: 'beauty', label: 'Beauty Products',
-        subCategories: [
-          { key: 'skincare', label: 'Skincare'},
-          { key: 'makeup', label: 'Makeup'},
-        ]
-       },
-      { key: 'crafting', label: 'Crafting Supplies',
-        subCategories: [
-          { key: 'beading', label: 'Beading Supplies'},
-          { key: 'jewelry', label: 'Jewelry Making'},
-        ]
-       },
-      { key: 'other', label: 'Other',
-      subCategories: [
-        { key: 'other', label: 'No Subcategory'},
-      ] 
-    },  
-    ],
+      options: [
+        {
+          key: 'jewelry', label: 'Jewelry',
+          subCategories: [
+            { key: 'necklaces', label: 'Necklaces' },
+            { key: 'earrings', label: 'Earrings' },
+            { key: 'rings', label: 'Rings' },
+            { key: 'bracelets', label: 'Bracelets' },
+            { key: 'anklets', label: 'Anklets' },
+          ]
+        },
+        {
+          key: 'accessories', label: 'Accessories',
+          subCategories: [
+            { key: 'bags', label: 'Bags' },
+            { key: 'belts', label: 'Belts' },
+            { key: 'hair', label: 'Hair Accessories' },
+            { key: 'hats', label: 'Hats' },
+            { key: 'scarves', label: 'Scarves' },
+            { key: 'sunglasses', label: 'Sunglasses' },
+            { key: 'ties', label: 'Ties' },
+            { key: 'lanyards', label: 'Lanyards' },
+          ]
+        },
+        {
+          key: 'apparel', label: 'Apparel',
+          subCategories: [
+            { key: 'tops', label: 'Tops' },
+            { key: 'bottoms', label: 'Bottoms' },
+            { key: 'dresses', label: 'Dresses' },
+            { key: 'shoes', label: 'Shoes' },
+          ]
+        },
+        {
+          key: 'traditional', label: 'Traditional Assortments',
+          subCategories: [
+            { key: 'botanicals', label: 'Botanicals' },
+            { key: 'regalia', label: 'Regalia' },
+          ]
+        },
+        {
+          key: 'art', label: 'Art',
+          subCategories: [
+            { key: 'paintings', label: 'Paintings' },
+            { key: 'beadwork', label: 'Beadwork' },
+            { key: 'photo', label: 'Photography' },
+            { key: 'prints', label: 'Prints' },
+            { key: 'stickers', label: 'Stickers & Patches' },
+            { key: 'carvings', label: 'Carvings' },
+            { key: 'baskets', label: 'Baskets & Pottery' },
+            { key: 'rugs', label: 'Rugs & Weaving' },
+          ]
+        },
+        {
+          key: 'beauty', label: 'Beauty Products',
+          subCategories: [
+            { key: 'skincare', label: 'Skincare' },
+            { key: 'makeup', label: 'Makeup' },
+          ]
+        },
+        {
+          key: 'crafting', label: 'Crafting Supplies',
+          subCategories: [
+            { key: 'beading', label: 'Beading Supplies' },
+            { key: 'jewelry', label: 'Jewelry Making' },
+          ]
+        },
+        {
+          key: 'books', label: 'Books',
+          subCategories: [
+            { key: 'studies', label: 'Native Studies' },
+            { key: 'language', label: 'Native Language' },
+            { key: 'bio', label: 'Memoir and Biography' },
+            { key: 'fiction', label: 'Fiction and Poetry' },
+            { key: 'comics', label: 'Comics and Graphic Novels' },
+            { key: 'children', label: "Children's Books" },
+          ]
+        },
+        {
+          key: 'other', label: 'Other',
+          subCategories: [
+            { key: 'other', label: 'No Subcategory' },
+          ]
+        },
+      ],
+    },
   },
-},
   {
     id: 'price',
     label: 'Price',
@@ -144,20 +164,20 @@ export const filters = [
     group: 'primary',
     queryParamNames: ['pub_region'],
     config: {
-    options: [
-      { key: 'plains', label: 'Plains' },
-      { key: 'southwest', label: 'Southwest' },
-      { key: 'northwest', label: 'Pacific Northwest' },
-      { key: 'west', label: 'West Coast' },
-      { key: 'east', label: 'Eastern U.S.' },
-      { key: 'pacific', label: 'Pacific Islands' },
-      { key: 'arctic', label: 'Alaska and Arctic' },
-      { key: 'central', label: 'Central and South America' },
-      { key: 'africa', label: 'Africa' },
-      { key: 'asia', label: 'Asia' },
-    ],
+      options: [
+        { key: 'plains', label: 'Plains' },
+        { key: 'southwest', label: 'Southwest' },
+        { key: 'northwest', label: 'Pacific Northwest' },
+        { key: 'west', label: 'West Coast' },
+        { key: 'east', label: 'Eastern U.S.' },
+        { key: 'pacific', label: 'Pacific Islands' },
+        { key: 'arctic', label: 'Alaska and Arctic' },
+        { key: 'central', label: 'Central and South America' },
+        { key: 'africa', label: 'Africa' },
+        { key: 'asia', label: 'Asia' },
+      ],
+    },
   },
-},
   {
     id: 'style',
     label: 'Style',
@@ -193,10 +213,10 @@ export const filters = [
       options: [
         { key: 'turquoise', label: 'Turquoise', },
 
-        { key: 'coral', label: 'Coral',},
-        
-        { key: 'silver', label: 'Silver',},
-        
+        { key: 'coral', label: 'Coral', },
+
+        { key: 'silver', label: 'Silver', },
+
         { key: 'copper', label: 'Copper', },
 
         { key: 'beaded', label: 'Beaded', },
@@ -242,7 +262,7 @@ export const filters = [
       // "label" is set here for the UI only.
       // Note: label is not added through the translation files
       // to make filter customizations a bit easier.
-      options: [ 
+      options: [
       ]
     },
   },
@@ -256,14 +276,14 @@ export const filters = [
       // Whenever industry filter is changed then ProfileSettingsForm
       // needs to be updated. Didn't want to go through the trouble of 
       // figuring out how to use the filter update function in that form.
-      options: [ 
+      options: [
         { key: 'retail', label: "Retail" },
-        { key: 'dining', label: "Dining" },  
+        { key: 'dining', label: "Dining" },
         { key: 'professional', label: "Professional Services" },
         { key: 'hospitality', label: "Hospitality and Tourism" },
         { key: 'nonprofits', label: "Non-Profits" },
         { key: 'beauty', label: "Beauty and Personal Services" },
-        { key: 'other', label: "Other"},
+        { key: 'other', label: "Other" },
       ]
     },
 

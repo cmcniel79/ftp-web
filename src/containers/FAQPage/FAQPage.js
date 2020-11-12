@@ -77,10 +77,10 @@ const FAQPage = () => {
                   steps to become a seller.
                   <br />
                   <br />
-                  1. After creating an account, email us at&nbsp;
-                <ExternalLink href="mailto:customersupport@fromthepeople.co">
-                    <FormattedMessage id="FAQPage.emailAddress" />
-                  </ExternalLink>
+                  1. After creating an account, send us an email through our&nbsp;
+                <NamedLink name="ContactPage">
+                    <FormattedMessage id="FAQPage.contactPage" />.
+                  </NamedLink>
                 &nbsp;with a message about yourself, your tribal affiliation and the types of products you plan on selling.
                   <br />
                   2. You will receive an email shortly after applying for Seller status. If you do not see our reply email, be sure to check your spam or junk folders!
@@ -123,10 +123,10 @@ const FAQPage = () => {
               <AccordionButton title="How do I post my items to sell?">
                 <p>
                   Press the “Post A New Listing" link at the top of the website to begin listing your items. If you are not verified yet,
-                  you need to contact the From The People Admin team&nbsp;
-                  <ExternalLink href="mailto:customersupport@fromthepeople.co">
-                    <FormattedMessage id="FAQPage.emailHere" />
-                  </ExternalLink>
+                  you need to contact the From The People Admin team through our&nbsp;
+                  <NamedLink name="ContactPage">
+                    <FormattedMessage id="FAQPage.contactPage" />
+                  </NamedLink>
                   &nbsp;Once you’re verified, posting a listings is super quick and easy and you can always conact us if you run into problems. Make sure to post great pics!
                 </p>
               </AccordionButton>
@@ -176,10 +176,10 @@ const FAQPage = () => {
               </AccordionButton>
               <AccordionButton title="How do I get a Verified Account?">
                 <p>
-                  Email us at&nbsp;
-                  <ExternalLink href="mailto:customersupport@fromthepeople.co">
-                    <FormattedMessage id="FAQPage.emailAddress" />
-                  </ExternalLink>
+                  Send us an email through our&nbsp;
+                  <NamedLink name="ContactPage">
+                    <FormattedMessage id="FAQPage.contactPage" />
+                  </NamedLink>
                   &nbsp;to get the verification process started.
                   You will need to provide us with verification that your products were made by Tribal Members or by a Certified Indian Artisan.
                   This can be accomplished by sending us any document proving your tribal enrollment status, such as your tribal ID or certificate of Indian blood (C.I.B),
@@ -188,10 +188,10 @@ const FAQPage = () => {
               </AccordionButton>
               <AccordionButton title="How do I get a Premium Account?">
                 <p>
-                  To get a Premium Account, you will either need a physical business location or a website that users can buy your items from. Email us at&nbsp;
-                  <ExternalLink href="mailto:customersupport@fromthepeople.co">
-                    <FormattedMessage id="FAQPage.emailAddress" />
-                  </ExternalLink>
+                  To get a Premium Account, you will either need a physical business location or a website that users can buy your items from. Email us an email through our&nbsp;
+                  <NamedLink name="ContactPage">
+                    <FormattedMessage id="FAQPage.contactPage" />
+                  </NamedLink>
                   &nbsp;with information about your business and why you would like to have a Premium Account, and include either your physical business address or your website.
                   <br />
                   <br />
@@ -221,19 +221,19 @@ const FAQPage = () => {
               </AccordionButton>
               <AccordionButton title="How do I get a Non-Profit Account?">
                 <p>
-                  For a Non-Profit Account, you simply need a Non-Profit! Email us at&nbsp;
-                  <ExternalLink href="mailto:customersupport@fromthepeople.co">
-                    <FormattedMessage id="FAQPage.emailAddress" />
-                  </ExternalLink>
+                  For a Non-Profit Account, you simply need a Non-Profit! Send us an email through our&nbsp;
+                  <NamedLink name="ContactPage">
+                    <FormattedMessage id="FAQPage.contactPage" />
+                  </NamedLink>
                   &nbsp;with information about your Non-Profit and how you are helping Indigenous peoples.
                 </p>
               </AccordionButton>
               <AccordionButton title="How do I get an Ad account?">
                 <p>
-                  There are no specific requirements for an Ad Account. Email us at&nbsp;
-                  <ExternalLink href="mailto:customersupport@fromthepeople.co">
-                    <FormattedMessage id="FAQPage.emailAddress" />
-                  </ExternalLink>
+                  There are no specific requirements for an Ad Account. Send us an email through our&nbsp;
+                  <NamedLink name="ContactPage">
+                    <FormattedMessage id="FAQPage.contactPage" />
+                  </NamedLink>
                   &nbsp; to inquire about our rates. Please include some information on your company, and what you would like to advertise on our site.
                 </p>
               </AccordionButton>
@@ -365,10 +365,10 @@ const FAQPage = () => {
               <AccordionButton title="Compliance with the Indian Arts and Crafts Act of 1990">
                 <p>
                   If you suspect a seller has misrepresented themselves in regards to Native American heritage or falsely suggests their product is Indian produced,
-                  an Indian product, or the product of a particular Indian or Indian tribe or Indian arts and crafts organization, please email us at&nbsp;
-                  <ExternalLink href="mailto:customersupport@fromthepeople.co">
-                    <FormattedMessage id="FAQPage.emailAddress" />
-                  </ExternalLink>
+                  an Indian product, or the product of a particular Indian or Indian tribe or Indian arts and crafts organization, please send us an email through our&nbsp;
+                  <NamedLink name="ContactPage">
+                    <FormattedMessage id="FAQPage.contactPage" />
+                  </NamedLink>
                   &nbsp;. We will investigate all allegations and contact the appropriate authorities.
                   For a first time violation of the Act, an individual can face civil or criminal penalties up to a $250,000 fine or a 5-year prison term, or both.
                   To learn more about the Indian Arts and Crafts Act and compliance, visit
@@ -435,11 +435,11 @@ const FAQPage = () => {
               </AccordionButton>
               <AccordionButton title="How do I get a refund?">
                 <p>
-                  In case you need a refund for any reason, please send us an email at&nbsp;
-                  <ExternalLink className={css.link} href='mailto:customersupport@fromthepeople.co'>
-                    <FormattedMessage id="FAQPage.emailAddress" />
-                  </ExternalLink>
-                  and describe the situation. The refund request needs to be made within 72 hours from the
+                  In case you need a refund for any reason, please send us an email through our&nbsp;
+                  <NamedLink name="ContactPage">
+                    <FormattedMessage id="FAQPage.contactPage" />
+                  </NamedLink>
+                  &nbsp;and describe the situation. The refund request needs to be made within 72 hours from the
                   item being received by the buyer. To resolve a refund dispute, involvement from admins is required.
                   The admins will investigate the matter and be in contact with both parties to determine if a refund is required.
                 </p>

@@ -163,6 +163,13 @@ const TopbarDesktop = props => {
         <FormattedMessage id="TopbarDesktop.blogLink" />
       </span>
     </ExternalLink>
+  
+  const contactLink = 
+  <NamedLink className={css.customLink} name="ContactPage">
+  <span className={css.custom}>
+    <FormattedMessage id="TopbarDesktop.contactPage" />
+  </span>
+</NamedLink>;
 
   const newListingLink = accountType && accountType !== '' ? (
     <NamedLink className={css.createListingLink} name="NewListingPage">
@@ -209,6 +216,7 @@ const TopbarDesktop = props => {
       {mapLink}
       {faqLink}
       {blogLink}
+      {contactLink}
       {newListingLink}
       {inboxLink}
       {profileMenu}

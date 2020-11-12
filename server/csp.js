@@ -10,6 +10,11 @@ const blob = 'blob:';
 const devImagesMaybe = dev ? ['*.localhost:8000'] : [];
 const baseUrl = process.env.REACT_APP_SHARETRIBE_SDK_BASE_URL || 'https://flex-api.sharetribe.com';
 
+const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
+const emailURL = process.env.REACT_APP_API_EMAIL + ENV;
+const rankingURL = process.env.REACT_APP_API_RANKING + ENV;
+const databaseURL = process.env.REACT_APP_API_DATABASE + ENV;
+
 // Default CSP whitelist.
 //
 // NOTE: Do not change these in the customizations, make custom
@@ -97,7 +102,12 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
   // const exampleImgSrc = imgSrc.concat('my-custom-domain.example.com');
 
   const { connectSrc = [self] } = defaultDirectives;
-  const customConnectSrc = connectSrc.concat(['https://native-land.ca/', 'https://vyvhifh63b.execute-api.us-west-1.amazonaws.com/prd', 'https://92rutchmtc.execute-api.us-west-1.amazonaws.com/prd' ]);
+  const customConnectSrc = connectSrc.concat([
+   'https://native-land.ca/',
+   emailURL,
+   rankingURL,
+   databaseURL,
+   ]);
   const customDirectives = {
     // Example: Add custom directive override
     // imgSrc: exampleImgSrc,
