@@ -15,7 +15,7 @@ import { fetchCurrentUser } from '../../ducks/user.duck';
 const { UUID } = sdkTypes;
 const KEY = process.env.REACT_APP_API_KEY;
 const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
-const BASE_URL = process.env.REACT_APP_API_DATABASE;
+const BASE_URL = process.env.REACT_APP_API_RANKING;
 
 // A helper function to filter away exception that matches start and end timestamps
 const removeException = (exception, calendar) => {

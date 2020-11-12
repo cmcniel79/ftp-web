@@ -4,7 +4,7 @@ import { currentUserShowSuccess } from '../../ducks/user.duck';
 
 const KEY = process.env.REACT_APP_API_KEY;
 const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
-const BASE_URL = process.env.REACT_APP_API_RANKING;
+const BASE_URL = process.env.REACT_APP_API_DATABASE;
 
 // ================ Action types ================ //
 
