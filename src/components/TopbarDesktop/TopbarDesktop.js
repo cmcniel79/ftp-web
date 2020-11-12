@@ -215,8 +215,8 @@ const TopbarDesktop = props => {
       {shopLink}
       {mapLink}
       {faqLink}
-      {contactLink}
       {blogLink}
+      {contactLink}
       {newListingLink}
       {inboxLink}
       {profileMenu}

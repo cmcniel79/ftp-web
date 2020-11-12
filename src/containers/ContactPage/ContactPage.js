@@ -1,51 +1,116 @@
-import React from 'react';
-import { StaticPage, TopbarContainer } from '..';
+import React, { Component } from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { TopbarContainer } from '..';
 import {
   LayoutSingleColumn,
   LayoutWrapperTopbar,
   LayoutWrapperMain,
   LayoutWrapperFooter,
   Footer,
-  ExternalLink,
+  // ExternalLink,
+  Page
 } from '../../components';
 import { ContactUsForm } from '../../forms';
-import { FormattedMessage } from '../../util/reactIntl';
-
+import { 
+  FormattedMessage, 
+  injectIntl, 
+  // intlShape 
+} from '../../util/reactIntl';
+import { sendEmail } from './ContactPage.duck';
 
 import css from './ContactPage.css';
 
-const ContactPage = () => {
-  // prettier-ignore
-  return (
-    <StaticPage
-      title="Contact Us"
-      schema={{
-        '@context': 'http://schema.org',
-        '@type': 'About',
-        description: 'Contact From The People',
-        name: 'Contact page',
-      }}
-    >
-      <LayoutSingleColumn>
-        <LayoutWrapperTopbar>
-          <TopbarContainer />
-        </LayoutWrapperTopbar>
+export class ContactPageComponent extends Component {
 
-        <LayoutWrapperMain className={css.staticPageWrapper}>
-          <h1 className={css.pageTitle}>
-            <FormattedMessage id="ContactPage.heading"/>
-          </h1>
-      <ContactUsForm
-      onSubmit={() => {console.log("hello")}}
-      />
-        </LayoutWrapperMain>
+  render() {
+    const {
+      // currentUser,
+      sendingInProgress,
+      sendingEmailError,
+      onSendEmail,
+      sendingSuccess
+    } = this.props;
 
-        <LayoutWrapperFooter>
-          <Footer />
-        </LayoutWrapperFooter>
-      </LayoutSingleColumn>
-    </StaticPage>
-  );
+    const handleSubmit = (values) => {
+      onSendEmail(values);
+    }
+
+    return (
+      <Page className={css.root} title="Contact Page" scrollingDisabled={false}>
+        <LayoutSingleColumn>
+          <LayoutWrapperTopbar>
+            <TopbarContainer />
+          </LayoutWrapperTopbar>
+
+          <LayoutWrapperMain className={css.staticPageWrapper}>
+            <div className={css.formSection}>
+              <h1 className={css.pageTitle}>
+                <FormattedMessage id="ContactPage.heading" />
+              </h1>
+              {!sendingSuccess && !sendingEmailError ?
+                <div>
+                  <h3>
+                    <FormattedMessage id="ContactPage.subheading" />
+                  </h3>
+                  <ContactUsForm
+                    onSubmit={handleSubmit}
+                    sendingInProgress={sendingInProgress}
+                  />
+                </div>
+                : sendingSuccess && !sendingEmailError ?
+                  <div>
+                    <h3>
+                      <FormattedMessage id="ContactPage.submitSuccess" />
+                    </h3>
+                  </div>
+                  : !sendingSuccess && sendingEmailError ?
+                    <div>
+                      <h3>
+                        <FormattedMessage id="ContactPage.submitFail" />
+                      </h3>
+                    </div>
+                    : <div>
+                      <h3>
+                        <FormattedMessage id="ContactPage.submitFail" />
+                      </h3>
+                    </div>}
+            </div>
+          </LayoutWrapperMain>
+          <LayoutWrapperFooter>
+            <Footer />
+          </LayoutWrapperFooter>
+        </LayoutSingleColumn>
+      </Page>
+    );
+  }
 };
+
+const mapStateToProps = state => {
+  const { currentUser } = state.user;
+  const {
+    sendingInProgress,
+    sendingEmailError,
+    sendingSuccess
+  } = state.ContactPage;
+  return {
+    currentUser,
+    sendingInProgress,
+    sendingEmailError,
+    sendingSuccess,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  onSendEmail: data => dispatch(sendEmail(data)),
+});
+
+const ContactPage = compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  injectIntl
+)(ContactPageComponent);
 
 export default ContactPage;

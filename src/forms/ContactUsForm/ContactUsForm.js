@@ -21,10 +21,10 @@ class ContactUsFormComponent extends Component {
                 {...this.props}
                 render={fieldRenderProps => {
                     const {
-                        className,
-                        formId,
-                        // handleSubmit,
-                        inProgress,
+                        // className,
+                        // formId,
+                        handleSubmit,
+                        // inProgress,
                         intl,
                         disabled,
                         ready,
@@ -32,6 +32,7 @@ class ContactUsFormComponent extends Component {
                         invalid,
                         pristine,
                         updated,
+                        sendingInProgress
                     } = fieldRenderProps;
 
                     // email
@@ -66,25 +67,26 @@ class ContactUsFormComponent extends Component {
                     const subjectRequiredMessage = intl.formatMessage({ id: 'ContactUsForm.subjectRequired' });
                     const subjectRequired = required(subjectRequiredMessage);
                     const subjectOptions = [
-                        { key: "seller", label: "Apply for a Seller account" },
-                        { key: "premium", label: "Apply for a Premium, Non-Profit or Ad account" },
-                        { key: "verify", label: "Begin tribal enrollment verification" },
-                        { key: "question", label: "General Questions" },
-                        { key: "feedback", label: "Website Feedback" },
+                        { key: "selling", label: "Apply for a Seller account" },
+                        { key: "premium accounts", label: "Apply for a Premium, Non-Profit or Ad account" },
+                        { key: "verification", label: "Begin tribal enrollment verification" },
+                        { key: "refunds", label: "Request a refund" },
+                        { key: "reporting", label: "Report an Indian Arts and Crafts Act Violation" },
+                        { key: "general questions", label: "General Questions" },
+                        { key: "website feedback", label: "Website Feedback" },
                     ];
 
-                    const submitDisabled = invalid || disabled;
+                    const submitDisabled = invalid || disabled || sendingInProgress;
                     const submitReady = (updated && pristine) || ready;
 
                     return (
                         <Form
                             onSubmit={e => {
                                 this.submittedValues = values;
-                                console.log(e);
-                                // handleSubmit(e);
+                                handleSubmit(e);
                             }}
                         >
-                            <div className={css.inputSection}>
+                            <div className={css.inputs}>
                                 <div className={css.formRow}>
                                     <FieldTextInput
                                         id="firstName"
@@ -145,9 +147,9 @@ class ContactUsFormComponent extends Component {
                                 <PrimaryButton
                                     type="submit"
                                     className={css.submitButton}
-            disabled={submitDisabled}
-            ready={submitReady}
-
+                                    disabled={submitDisabled}
+                                    ready={submitReady}
+                                    inProgress={sendingInProgress}
                                 >
                                     <FormattedMessage id="ContactUsForm.sendMessage" />
                                 </PrimaryButton>
@@ -166,7 +168,11 @@ ContactUsFormComponent.defaultProps = {
     formId: null,
 };
 
-const { bool, func, string } = PropTypes;
+const { 
+    // bool, 
+    // func, 
+    string 
+} = PropTypes;
 
 ContactUsFormComponent.propTypes = {
     rootClassName: string,

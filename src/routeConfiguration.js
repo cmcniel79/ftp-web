@@ -71,7 +71,8 @@ const routeConfiguration = () => {
     {
       path: '/contact',
       name: 'ContactPage',
-      component: ContactPage,
+      component: props => <ContactPage {...props} />,
+      loadData: ContactPage.loadData,
     },
     {
       path: '/s',

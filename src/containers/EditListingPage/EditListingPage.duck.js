@@ -13,7 +13,8 @@ import {
 import { fetchCurrentUser } from '../../ducks/user.duck';
 
 const { UUID } = sdkTypes;
-const RANKING_KEY = process.env.REACT_APP_API_KEY_RANKING;
+const KEY = process.env.REACT_APP_API_KEY;
+const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
 
 // A helper function to filter away exception that matches start and end timestamps
 const removeException = (exception, calendar) => {
@@ -785,14 +786,14 @@ export const loadData = params => (dispatch, getState, sdk) => {
 };
 
 export const updateRanking = actionPayload => {
-  const url = "https://92rutchmtc.execute-api.us-west-1.amazonaws.com/prd";
+  const url = "https://92rutchmtc.execute-api.us-west-1.amazonaws.com/prd" + ENV;
   const options = {
     method: 'POST',
     withCredentials: false,
     body: JSON.stringify(actionPayload),
     headers: {
       "Content-Type": "application/json",
-      "X-Api-Key": RANKING_KEY,
+      "X-Api-Key": KEY,
     }
   }
 

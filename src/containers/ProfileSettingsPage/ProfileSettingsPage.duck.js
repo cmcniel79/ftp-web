@@ -2,7 +2,8 @@ import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
 
-const LOCATION_KEY = process.env.REACT_APP_API_KEY_LOCATION;
+const KEY = process.env.REACT_APP_API_KEY;
+const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
 
 // ================ Action types ================ //
 
@@ -164,14 +165,14 @@ export const updateProfile = actionPayload => {
 };
 
 export const updateDatabase = actionPayload => {
-  const url = "https://vyvhifh63b.execute-api.us-west-1.amazonaws.com/prd";
+  const url = "https://vyvhifh63b.execute-api.us-west-1.amazonaws.com/" + ENV;
   const options = {
     method: 'POST',
     withCredentials: false,
     body: JSON.stringify(actionPayload),
     headers: {
       "Content-Type": "application/json",
-      "X-Api-Key": LOCATION_KEY,
+      "X-Api-Key": KEY,
     }
   }
 

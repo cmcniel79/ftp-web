@@ -1,6 +1,6 @@
 @import '../../marketplace.css';
 .pageTitle {
-  text-align: center;
+  text-align: left;
 }
 
 .staticPageWrapper {
@@ -10,5 +10,15 @@
   @media (--viewportMedium) {
     width: calc(100% - 72px);
     margin: 72px auto;
+  }
+}
+
+.formSection {
+  padding-top: 6px;
+  width: 100%;
+  margin: 16px auto 30px auto;
+  @media (--viewportMedium) {
+      padding-top: 0;
+      width: 70%;
   }
 }

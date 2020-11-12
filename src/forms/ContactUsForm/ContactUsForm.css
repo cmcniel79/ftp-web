@@ -56,16 +56,6 @@
     margin-top: 24px;
 }
 
-.inputSection {
-    padding-top: 6px;
-    width: 100%;
-    margin: 16px auto 30px auto;
-    @media (--viewportMedium) {
-        padding-top: 0;
-        width: 70%;
-    }
-}
-
 .error {
     @apply --marketplaceH4FontStyles;
     color: var(--failColor);
@@ -86,4 +76,8 @@
         padding-top: 0;
         width: 70%;
     }
+}
+
+.inputs {
+    margin-bottom: 60px;
 }

@@ -117,9 +117,9 @@ const Footer = props => {
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
-                  <ExternalLink name="ContactEmail" className={css.link} href="mailto:customersupport@fromthepeople.co">
+                  <NamedLink name="ContactPage" className={css.link}>
                     <FormattedMessage id="Footer.toContactPage" />
-                  </ExternalLink>
+                  </NamedLink>
                 </li>
               </ul>
             </div>
