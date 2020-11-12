@@ -135,7 +135,7 @@ const UserCard = props => {
           <FormattedMessage id="UserCard.viewProfileLink" />
         </NamedLink>
       }
-      {isCurrentUser ? editProfile : contact}
+      {isCurrentUser ? editProfile : null}
     </p>
   ) : null;
 

@@ -193,7 +193,7 @@
 }
 
 .sectionContentFirstChild {
-  composes: sectionContent;
+  /* composes: sectionContent; */
   margin-top: 3vh;
 }
 
