@@ -157,7 +157,7 @@ export const LandingPageComponent = props => {
                 </h2>
                 <div className={css.donateText}>
                   <div className={css.donateSubText}>
-                    <h2>
+                  <h2 className={css.donateTitle}>
                       <FormattedMessage id="LandingPage.covidTitle" />
                     </h2>
                     <p>
@@ -170,7 +170,7 @@ export const LandingPageComponent = props => {
                     </ExternalLink>
                   </div>
                   <div className={css.donateSubText}>
-                    <h2>
+                    <h2 className={css.donateTitle}>
                       <FormattedMessage id="LandingPage.mmiwTitle" />
                     </h2>
                     <p>
@@ -186,7 +186,7 @@ export const LandingPageComponent = props => {
                 <div className={css.donateText}>
                   <div className={css.donateSubText}>
                     <div className={css.thirdDonate}>
-                      <h2>
+                    <h2 className={css.donateTitleBLM}>
                         <FormattedMessage id="LandingPage.blmTitle" />
                       </h2>
                       <p>
