@@ -10,14 +10,17 @@ import dining from '../../assets/dining.svg';
 import diningFilled from '../../assets/dining-filled.svg';
 import fitness from '../../assets/fitness.svg';
 import fitnessFilled from '../../assets/fitness-filled.svg';
-import other from '../../assets/other.svg';
-import otherFilled from '../../assets/other-filled.svg';
+import other from '../../assets/location.svg';
+import otherFilled from '../../assets/location-filled.svg';
 import people from '../../assets/people.svg';
 import peopleFilled from '../../assets/people-filled.svg';
 import retail from '../../assets/shopping.svg';
 import retailFilled from '../../assets/shopping-filled.svg';
 import work from '../../assets/work.svg';
 import workFilled from '../../assets/work-filled.svg';
+import art from '../../assets/art.svg';
+import artFilled from '../../assets/art-filled.svg';
+
 
 import css from './SearchMapSellerLabel.css';
 
@@ -53,6 +56,10 @@ class SearchMapSellerLabel extends Component {
       case ("dining"):
         imageOutline = <img className={css.image} src={dining} alt="icon" />;
         imageFilled = <img className={css.image} src={diningFilled} alt="iconFilled" />;
+        break;
+      case ("art"):
+        imageOutline = <img className={css.image} src={art} alt="icon" />;
+        imageFilled = <img className={css.image} src={artFilled} alt="iconFilled" />;
         break;
       case ("professional"):
         imageOutline = <img className={css.image} src={work} alt="icon" />;

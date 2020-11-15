@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import bed from '../../assets/bed.svg';
 import dining from '../../assets/dining.svg';
-import other from '../../assets/other.svg';
+import other from '../../assets/location.svg';
 import people from '../../assets/people.svg';
 import retail from '../../assets/shopping.svg';
 import work from '../../assets/work.svg';
 import fitness from '../../assets/fitness.svg';
+import art from '../../assets/art.svg';
 
 import css from './MapPage.css';
 
@@ -29,6 +30,12 @@ export class MapLegend extends Component {
                     <img className={css.image} src={dining} alt="icon" />
                     <span className={css.legendLabel}>
                         <FormattedMessage id="MapPage.legendDining" />
+                    </span>
+                </div>
+                <div className={css.legendBlock}>
+                    <img className={css.image} src={art} alt="icon" />
+                    <span className={css.legendLabel}>
+                        <FormattedMessage id="MapPage.legendArt" />
                     </span>
                 </div>
                 <div className={css.legendBlock}>

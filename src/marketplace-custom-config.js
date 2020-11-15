@@ -108,10 +108,11 @@ export const filters = [
           ]
         },
         {
-          key: 'beauty', label: 'Beauty Products',
+          key: 'beauty', label: 'Personal Care Products',
           subCategories: [
             { key: 'skincare', label: 'Skincare' },
             { key: 'makeup', label: 'Makeup' },
+            { key: 'hair', label: 'Hair Care' },
           ]
         },
         {
@@ -279,6 +280,7 @@ export const filters = [
       options: [
         { key: 'retail', label: "Retail" },
         { key: 'dining', label: "Dining" },
+        { key: 'art', label: "Art and Photography" },
         { key: 'professional', label: "Professional Services" },
         { key: 'hospitality', label: "Hospitality and Tourism" },
         { key: 'nonprofits', label: "Non-Profits" },
