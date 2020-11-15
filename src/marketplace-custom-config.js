@@ -279,6 +279,7 @@ export const filters = [
       options: [
         { key: 'retail', label: "Retail" },
         { key: 'dining', label: "Dining" },
+        { key: 'art', label: "Art and Photography" },
         { key: 'professional', label: "Professional Services" },
         { key: 'hospitality', label: "Hospitality and Tourism" },
         { key: 'nonprofits', label: "Non-Profits" },
