@@ -27,15 +27,15 @@ export class MapLegend extends Component {
                     </span>
                 </div>
                 <div className={css.legendBlock}>
-                    <img className={css.image} src={art} alt="icon" />
-                    <span className={css.legendLabel}>
-                        <FormattedMessage id="MapPage.legendArt" />
-                    </span>
-                </div>
-                <div className={css.legendBlock}>
                     <img className={css.image} src={dining} alt="icon" />
                     <span className={css.legendLabel}>
                         <FormattedMessage id="MapPage.legendDining" />
+                    </span>
+                </div>
+                <div className={css.legendBlock}>
+                    <img className={css.image} src={art} alt="icon" />
+                    <span className={css.legendLabel}>
+                        <FormattedMessage id="MapPage.legendArt" />
                     </span>
                 </div>
                 <div className={css.legendBlock}>
