@@ -108,10 +108,11 @@ export const filters = [
           ]
         },
         {
-          key: 'beauty', label: 'Beauty Products',
+          key: 'beauty', label: 'Personal Care Products',
           subCategories: [
             { key: 'skincare', label: 'Skincare' },
             { key: 'makeup', label: 'Makeup' },
+            { key: 'hair', label: 'Hair Care' },
           ]
         },
         {
