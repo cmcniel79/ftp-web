@@ -30,6 +30,7 @@ import {
 } from '../../components';
 import { SendMessageForm } from '../../forms';
 import config from '../../config';
+import { sanitizeProtectedData } from '../../util/sanitize';
 
 // These are internal components that make this file more readable.
 // import AddressLinkMaybe from './AddressLinkMaybe';
@@ -48,8 +49,11 @@ import PanelHeading, {
   HEADING_CANCELED,
   HEADING_DELIVERED,
 } from './PanelHeading';
+import { types as sdkTypes } from '../../util/sdkLoader';
 
 import css from './TransactionPanel.css';
+
+const { Money } = sdkTypes;
 
 // Helper function to get display names for different roles
 const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
@@ -77,6 +81,15 @@ const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
     otherUserDisplayName,
     otherUserDisplayNameString,
   };
+};
+
+
+const resolveShippingFeePrice = shippingFee => {
+  const { amount, currency } = shippingFee;
+  if ((amount && currency) || (amount === 0 && currency)) {
+    return new Money(amount, currency);
+  }
+  return null;
 };
 
 export class TransactionPanelComponent extends Component {
@@ -374,6 +387,20 @@ export class TransactionPanelComponent extends Component {
         <FormattedMessage id="TransactionPanel.refundInfo" />
       </div>) : null;
 
+
+    const protectedData = currentUser && currentUser.attributes.profile.protectedData ?
+      sanitizeProtectedData(currentUser.attributes.profile.protectedData) : {};
+    const authorCountry = publicData && publicData.country ? publicData.country : null;
+    const userCountry = protectedData && protectedData.protectedData && protectedData.protectedData.shippingAddress ?
+      protectedData.protectedData.shippingAddress.country : null;
+
+    const isDomesticOrder = !currentUser ? true : authorCountry && userCountry && authorCountry === userCountry ? true : false;
+    const domesticFee = publicData && publicData.shippingFee ? publicData.shippingFee : null;
+    const internationalFee = publicData && publicData.internationalFee ? publicData.internationalFee : null;
+    const shippingFee = isDomesticOrder && domesticFee ? resolveShippingFeePrice(publicData.shippingFee) :
+      !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
+        resolveShippingFeePrice({ amount: 0, currency: config.currency });
+
     return (
       <div className={classes}>
         <div className={css.container}>
@@ -400,7 +427,8 @@ export class TransactionPanelComponent extends Component {
             />
 
             <div className={css.bookingDetailsMobile}>
-              <BreakdownMaybe transaction={currentTransaction} transactionRole={transactionRole} />
+              {stateData.showBookingPanel ? (null) :
+                <BreakdownMaybe transaction={currentTransaction} transactionRole={transactionRole} />}
               {refundInfo}
             </div>
 
@@ -471,29 +499,31 @@ export class TransactionPanelComponent extends Component {
                 showAddress={stateData.showAddress}
               />
               {stateData.showBookingPanel ? (
-                <BookingPanel
-                  className={css.bookingPanel}
-                  titleClassName={css.bookingTitle}
-                  isOwnListing={false}
-                  listing={currentListing}
-                  title={listingTitle}
-                  subTitle={bookingSubTitle}
-                  authorDisplayName={authorDisplayName}
-                  onSubmit={onSubmitBookingRequest}
-                  onManageDisableScrolling={onManageDisableScrolling}
-                  timeSlots={timeSlots}
-                  fetchTimeSlotsError={fetchTimeSlotsError}
-                  onFetchTransactionLineItems={onFetchTransactionLineItems}
-                  lineItems={lineItems}
-                  fetchLineItemsInProgress={fetchLineItemsInProgress}
-                  fetchLineItemsError={fetchLineItemsError}
-                />
-              ) : null}
-              <BreakdownMaybe
-                className={css.breakdownContainer}
-                transaction={currentTransaction}
-                transactionRole={transactionRole}
-              />
+                  <BookingPanel
+                    className={css.bookingPanel}
+                    isOwnListing={false}
+                    listing={currentListing}
+                    title={listingTitle}
+                    subTitle={bookingSubTitle}
+                    unitType={unitType}
+                    authorDisplayName={authorDisplayName}
+                    onSubmit={onSubmitBookingRequest}
+                    onManageDisableScrolling={onManageDisableScrolling}
+                    timeSlots={timeSlots}
+                    fetchTimeSlotsError={fetchTimeSlotsError}
+                    onFetchTransactionLineItems={onFetchTransactionLineItems}
+                    lineItems={lineItems}
+                    fetchLineItemsInProgress={fetchLineItemsInProgress}
+                    fetchLineItemsError={fetchLineItemsError}
+                    isDomesticOrder={isDomesticOrder}
+                    shippingFee={shippingFee}
+                  />
+                  ) :
+                <BreakdownMaybe
+                  className={css.breakdownContainer}
+                  transaction={currentTransaction}
+                  transactionRole={transactionRole}
+                />}
               {refundInfo}
               {stateData.showSaleButtons ? (
                 <div className={css.desktopActionButtons}>{saleButtons}</div>

@@ -113,6 +113,7 @@ export class ListingPageComponent extends Component {
   }
 
   handleSubmit(values) {
+    console.log(values);
     const {
       history,
       getListing,
