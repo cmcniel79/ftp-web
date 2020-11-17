@@ -30,6 +30,7 @@ import {
 } from '../../components';
 import { SendMessageForm } from '../../forms';
 import config from '../../config';
+import { sanitizeProtectedData } from '../../util/sanitize';
 
 // These are internal components that make this file more readable.
 // import AddressLinkMaybe from './AddressLinkMaybe';
@@ -48,8 +49,11 @@ import PanelHeading, {
   HEADING_CANCELED,
   HEADING_DELIVERED,
 } from './PanelHeading';
+import { types as sdkTypes } from '../../util/sdkLoader';
 
 import css from './TransactionPanel.css';
+
+const { Money } = sdkTypes;
 
 // Helper function to get display names for different roles
 const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
@@ -77,6 +81,15 @@ const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
     otherUserDisplayName,
     otherUserDisplayNameString,
   };
+};
+
+
+const resolveShippingFeePrice = shippingFee => {
+  const { amount, currency } = shippingFee;
+  if ((amount && currency) || (amount === 0 && currency)) {
+    return new Money(amount, currency);
+  }
+  return null;
 };
 
 export class TransactionPanelComponent extends Component {
@@ -369,10 +382,25 @@ export class TransactionPanelComponent extends Component {
           <FormattedMessage id="TransactionPanel.noAddress" />
         </div>
       );
-    const refundInfo = isCustomer ? (
+    const refundInfo = isCustomer && !stateData.showBookingPanel ? (
       <div className={css.refundInfo}>
         <FormattedMessage id="TransactionPanel.refundInfo" />
       </div>) : null;
+
+
+    const protectedData = currentUser && currentUser.attributes.profile.protectedData ?
+      sanitizeProtectedData(currentUser.attributes.profile.protectedData) : {};
+    const authorCountry = publicData && publicData.country ? publicData.country : null;
+    const userCountry = protectedData && protectedData.protectedData && protectedData.protectedData.shippingAddress ?
+      protectedData.protectedData.shippingAddress.country : null;
+
+    const isDomesticOrder = !currentUser ? true : authorCountry && userCountry && authorCountry === userCountry ? true : false;
+    const domesticFee = publicData && publicData.shippingFee ? publicData.shippingFee : null;
+    const internationalFee = publicData && publicData.internationalFee ? publicData.internationalFee : null;
+    const shippingFee = isDomesticOrder && domesticFee ? resolveShippingFeePrice(publicData.shippingFee) :
+      !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
+        resolveShippingFeePrice({ amount: 0, currency: config.currency });
+    const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders && publicData.allowsInternationalOrders[0] === 'hasFee' ? true : false;
 
     return (
       <div className={classes}>
@@ -400,16 +428,18 @@ export class TransactionPanelComponent extends Component {
             />
 
             <div className={css.bookingDetailsMobile}>
-              <BreakdownMaybe transaction={currentTransaction} transactionRole={transactionRole} />
+              {stateData.showBookingPanel ? (null) :
+                <BreakdownMaybe transaction={currentTransaction} transactionRole={transactionRole} />}
               {refundInfo}
             </div>
 
-            <div className={css.addressSection}>
-              <h3 className={css.addressHeading}>
-                <FormattedMessage id="TransactionPanel.customerAddress" />
-              </h3>
-              {shippingDetailsSection}
-            </div>
+            {!stateData.showBookingPanel ? (
+              <div className={css.addressSection}>
+                <h3 className={css.addressHeading}>
+                  <FormattedMessage id="TransactionPanel.customerAddress" />
+                </h3>
+                {shippingDetailsSection}
+              </div>) : null}
 
             {savePaymentMethodFailed ? (
               <p className={css.genericError}>
@@ -470,14 +500,14 @@ export class TransactionPanelComponent extends Component {
                 geolocation={geolocation}
                 showAddress={stateData.showAddress}
               />
-              {stateData.showBookingPanel ? (
+              {stateData.showBookingPanel && ((isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders)) ? (
                 <BookingPanel
                   className={css.bookingPanel}
-                  titleClassName={css.bookingTitle}
                   isOwnListing={false}
                   listing={currentListing}
                   title={listingTitle}
                   subTitle={bookingSubTitle}
+                  unitType={unitType}
                   authorDisplayName={authorDisplayName}
                   onSubmit={onSubmitBookingRequest}
                   onManageDisableScrolling={onManageDisableScrolling}
@@ -487,13 +517,31 @@ export class TransactionPanelComponent extends Component {
                   lineItems={lineItems}
                   fetchLineItemsInProgress={fetchLineItemsInProgress}
                   fetchLineItemsError={fetchLineItemsError}
+                  isDomesticOrder={isDomesticOrder}
+                  shippingFee={shippingFee}
                 />
-              ) : null}
-              <BreakdownMaybe
-                className={css.breakdownContainer}
-                transaction={currentTransaction}
-                transactionRole={transactionRole}
-              />
+              ) : stateData.showBookingPanel && (!isDomesticOrder && !allowsInternationalOrders) ? (
+                <span className={css.noInternational} >
+                  <FormattedMessage id="ListingPage.noInternationalOrders" />
+                </span>
+              ) : stateData.showBookingPanel && userCountry === null ? (
+                <span className={css.purchaseWarning} >
+                  <FormattedMessage id="ListingPage.noUserCountry" />
+                </span>
+              ) : stateData.showBookingPanel && authorCountry === null ? (
+                <span className={css.purchaseWarning} >
+                  <FormattedMessage id="ListingPage.noAuthorCountry" />
+                </span>
+              ) : stateData.showBookingPanel ? (
+                <span className={css.purchaseWarning} >
+                  <FormattedMessage id="ListingPage.listingMissingInfo" />
+                </span>
+              ) : (
+                          <BreakdownMaybe
+                            className={css.breakdownContainer}
+                            transaction={currentTransaction}
+                            transactionRole={transactionRole}
+                          />)}
               {refundInfo}
               {stateData.showSaleButtons ? (
                 <div className={css.desktopActionButtons}>{saleButtons}</div>

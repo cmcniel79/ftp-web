@@ -24,7 +24,7 @@ export const FETCH_UUIDS_FAILURE = "FETCH_UUIDS_FAILURE";
 // ================ Reducer ================ //
 
 const initialState = {
-  userId: null,
+  userIds: null,
   promotedListingRefs: [],
   queryListingsError: null,
 };
@@ -48,7 +48,7 @@ export default function landingPageReducer(state = initialState, action = {}) {
     case QUERY_LISTINGS_ERROR:
       return { ...state, promotedListingRefs: [], queryListingsError: payload };
     case SHOW_USER_REQUEST:
-      return { ...state, userShowError: null, userId: payload.userId };
+      return { ...state, userShowError: null, userIds: payload.userIds };
     case SHOW_USER_SUCCESS:
       return state;
     case SHOW_USER_ERROR:
@@ -112,9 +112,9 @@ export const queryListingsError = e => ({
   payload: e,
 });
 
-export const showUserRequest = userId => ({
+export const showUserRequest = userIds => ({
   type: SHOW_USER_REQUEST,
-  payload: { userId },
+  payload: { userIds },
 });
 
 export const showUserSuccess = () => ({
@@ -164,20 +164,27 @@ export const queryPromotedListings = queryParams => (dispatch, getState, sdk) =>
 };
 
 export const loadFeaturedPartners = ids => (dispatch, getState, sdk) => {
+  console.log(ids);
+  dispatch(showUserRequest(ids));
   if (ids.length > 0) {
-    dispatch(showUserRequest(ids[0].id));
-    return sdk.users
-      .show({
-        id: ids[0].id.uuid,
-        include: ['profileImage', 'publicData'],
-        'fields.image': ['variants.square-small', 'variants.square-small2x'],
-      })
-      .then(response => {
-        dispatch(addMarketplaceEntities(response));
-        dispatch(showUserSuccess());
-        return response;
-      })
-      .catch(e => dispatch(showUserError(storableError(e))));
+    ids.map(id => {
+      return sdk.users
+        .show({
+          id: id.id,
+          include: ['profileImage', 'publicData'],
+          'fields.image': ['variants.square-small', 'variants.square-small2x'],
+        })
+        .then(response => {
+          console.log(response);
+          dispatch(addMarketplaceEntities(response));
+        })
+        .catch(e => {
+          console.log(e);
+          dispatch(showUserError(storableError(e)
+          ))
+        });
+    });
+    dispatch(showUserSuccess());
   }
 };
 
@@ -211,7 +218,7 @@ function handleErrors(response) {
 }
 
 
-export const loadData = userId => (dispatch, getState, sdk) => {
+export const loadData = () => (dispatch, getState, sdk) => {
   // Clear state so that previously loaded data is not visible
   // in case this page load fails.
   dispatch(setInitialState());

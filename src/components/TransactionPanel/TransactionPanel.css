@@ -488,3 +488,17 @@
     padding: 6px 0 2px 0;
   }
 }
+
+.noInternational {
+  color: var(--matterColorAnti);
+  padding: 0 24px;
+  display: block;
+  margin: 20px 0 20px 0;
+}
+
+.purchaseWarning {
+  padding: 0 24px;
+  color: var(--failColor);
+  display: block;
+  margin: 20px 0 20px 0;
+}

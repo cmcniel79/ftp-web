@@ -12,7 +12,8 @@ const identity = v => v;
 const CompanyAddressMaybeComponent = props => {
     const {
         intl,
-        initialValue
+        initialValue,
+        accountType
     } = props;
 
     const addressLabel = intl.formatMessage({ id: 'ProfileSettingsForm.address' });
@@ -20,7 +21,9 @@ const CompanyAddressMaybeComponent = props => {
     const addressNotRecognizedMessage = intl.formatMessage({ id: 'ProfileSettingsForm.addressNotRecognized' });
     const buildingMessage = intl.formatMessage({ id: 'ProfileSettingsForm.building' });
     const buildingPlaceholderMessage = intl.formatMessage({ id: 'ProfileSettingsForm.buildingPlaceholder' });
-
+    const checkboxLabel = accountType === 'p' ? intl.formatMessage({ id: 'ProfileSettingsForm.locationLabelPremium' }) :
+        intl.formatMessage({ id: 'ProfileSettingsForm.locationLabelDefault' })
+    const warningLabel = intl.formatMessage({ id: 'ProfileSettingsForm.warningLabel' });
     let showLocationInput;
     const checkbox = document.getElementById('locationCheckbox');
 
@@ -43,7 +46,7 @@ const CompanyAddressMaybeComponent = props => {
                     <FieldCheckbox
                         id="locationCheckbox"
                         name="locationCheckbox"
-                        label="Would you like to display your location on our Map?"
+                        label={checkboxLabel}
                         value="true"
                     />
                 </div>}
@@ -70,6 +73,9 @@ const CompanyAddressMaybeComponent = props => {
                         placeholder={buildingPlaceholderMessage}
                         maxLength={30}
                     />
+                    <p className={css.websiteSubtitle}>
+                        {warningLabel}
+                    </p>
                 </div> : null}
         </div>
     );

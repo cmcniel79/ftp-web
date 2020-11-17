@@ -13,6 +13,7 @@ import {
   txHasBeenDelivered,
   txIsPaymentExpired,
   txIsPaymentPending,
+  txIsReviewStage,
 } from '../../util/transaction';
 import { propTypes } from '../../util/types';
 import { ensureCurrentUser } from '../../util/data';
@@ -147,6 +148,16 @@ export const txState = (intl, tx, type) => {
         id: 'InboxPage.stateDelivered',
       }),
     };
+  } else if (txIsReviewStage(tx)) {
+    return {
+    nameClassName: css.nameNotEmphasized,
+    bookingClassName: css.bookingNoActionNeeded,
+    lastTransitionedAtClassName: css.lastTransitionedAtNotEmphasized,
+    stateClassName: css.stateNoActionNeeded,
+    state: intl.formatMessage({
+      id: 'InboxPage.stateBeginReviews',
+    }),
+  };
   } else {
     console.warn('This transition is unknown:', tx.attributes.lastTransition);
     return null;
@@ -249,7 +260,6 @@ export const InboxPageComponent = props => {
   const toTxItem = tx => {
     const type = isOrders ? 'order' : 'sale';
     const stateData = txState(intl, tx, type);
-
     // Render InboxItem only if the latest transition of the transaction is handled in the `txState` function.
     return stateData ? (
       <li key={tx.id.uuid} className={css.listItem}>

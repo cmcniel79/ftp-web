@@ -49,7 +49,7 @@ class NativeLand extends Component {
     fetch(apiURL)
       .catch(error => {
         this.setState({ tribeSearchInProgress: false });
-        console.log(error);
+        // console.log(error);
       })
       .then(response =>
         response.ok
@@ -70,7 +70,7 @@ class NativeLand extends Component {
       )
       .catch(error => {
         this.setState({ tribeSearchInProgress: false });
-        console.log(error);
+        // console.log(error);
       })
   }
 
