@@ -62,12 +62,20 @@ class FeaturedPartners extends Component {
           <FormattedMessage id={"FeaturedPartners.header"} />
         </h2>
         <div className={css.partnerCard}>
-          {this.props.users && this.props.users.length > 1 ? 
-          <button className={css.backButton} onClick={() => this.changeUser(false)}>
-            <img className={css.chevron} src={back} alt="chevron" />
-          </button> : null}
+          {this.props.users && this.props.users.length > 1 ?
+            <button className={css.backButtonDesktop} onClick={() => this.changeUser(false)}>
+              <img className={css.chevron} src={back} alt="chevron" />
+            </button> : null}
           <div className={css.mobileImageWrapper}>
+            {this.props.users && this.props.users.length > 1 ?
+              <button className={css.backButton} onClick={() => this.changeUser(false)}>
+                <img className={css.chevron} src={back} alt="chevron" />
+              </button> : null}
             {image}
+            {this.props.users && this.props.users.length > 1 ?
+            <button className={css.forwardButton} onClick={() => this.changeUser(true)}>
+              <img className={css.chevron} src={forward} alt="chevron" />
+            </button> : null}
           </div>
           <div className={css.partnerText}>
             <h3 className={css.subHeading}>
@@ -82,10 +90,10 @@ class FeaturedPartners extends Component {
           <div className={css.imageWrapper}>
             {image}
           </div>
-          {this.props.users && this.props.users.length > 1 ? 
-          <button className={css.forwardButton} onClick={() => this.changeUser(true)}>
-            <img className={css.chevron} src={forward} alt="chevron" />
-          </button> : null}
+          {this.props.users && this.props.users.length > 1 ?
+            <button className={css.forwardButtonDesktop} onClick={() => this.changeUser(true)}>
+              <img className={css.chevron} src={forward} alt="chevron" />
+            </button> : null}
         </div>
       </div>
     );
