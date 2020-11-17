@@ -71,6 +71,20 @@
   margin-bottom: 25px;
 }
 
+.barterSection {
+  margin: 15px 0 20px 0;
+}
+
+.barterCheckbox {
+  padding: 0 0 20px 0;
+}
+
+.barter {
+  @apply --EditListingDescriptionForm_formMargins;
+  flex-shrink: 0;
+  margin-top: 20px;
+}
+
 .error {
   color: var(--failColor);
 }
@@ -90,7 +104,7 @@
 
 .optionalHeader {
   border-left: 5px solid;
-  border-left-color: var(--marketplaceColor); 
+  border-left-color: var(--marketplaceColor);
   padding-left: 5px;
   margin-top: 60px;
   margin-bottom: 0;

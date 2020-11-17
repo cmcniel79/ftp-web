@@ -6,7 +6,7 @@ import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput, FieldRadioButton, FieldCheckboxGroup, FieldBoolean, FieldSelect } from '../../components';
+import { Form, Button, FieldTextInput, FieldRadioButton, FieldCheckboxGroup, FieldBoolean, FieldSelect, FieldCheckbox } from '../../components';
 import { findOptionsForSelectFilter } from '../../util/search';
 import config from '../../config';
 import arrayMutators from 'final-form-arrays';
@@ -106,6 +106,21 @@ const EditListingDescriptionFormComponent = props => (
         })
       );
 
+      const barterCheckboxLabel = intl.formatMessage({
+        id: 'EditListingDescriptionForm.barterCheckboxLabel',
+      });
+      const barterMessage = intl.formatMessage({
+        id: 'EditListingDescriptionForm.barterInputMessage',
+      });
+      const barterPlaceholderMessage = intl.formatMessage({
+        id: 'EditListingDescriptionForm.barterPlaceholder',
+      });
+      const barterRequiredMessage = required(
+        intl.formatMessage({
+          id: 'EditListingDescriptionForm.barterRequired',
+        })
+      );
+
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
         <p className={css.error}>
@@ -151,6 +166,17 @@ const EditListingDescriptionFormComponent = props => (
           subCategories = getSubcategories(categories, cat.value);
         })
       }
+
+      let showBarterBox;
+      const checkbox = document.getElementById('allowsBarter');
+
+      if (checkbox) {
+        if (checkbox.checked) {
+          showBarterBox = true;
+        } else {
+          showBarterBox = false;
+        }
+      };
 
       // Special account users need to provide a link for their items. These can be either ad accounts,
       // non-profit accounts, or premium account users. The link will be used in the ListingCard componenent.
@@ -277,18 +303,41 @@ const EditListingDescriptionFormComponent = props => (
                 maxLength={TITLE_MAX_LENGTH}
               />
             </div>
-              <div className={css.lastRow} >
-                <h2 className={css.checkTitle}>
-                  <FormattedMessage id="EditListingDescriptionForm.customOrdersTitle" />
-                </h2>
-                <FieldBoolean
-                  id="customOrders"
-                  name="customOrders"
-                  label="Can customers contact you about custom orders?"
-                  placeholder="Choose yes/no"
-                />
-              </div>
+            <div className={css.lastRow} >
+              <h2 className={css.checkTitle}>
+                <FormattedMessage id="EditListingDescriptionForm.customOrdersTitle" />
+              </h2>
+              <FieldBoolean
+                id="customOrders"
+                name="customOrders"
+                label="Can customers contact you about custom orders?"
+                placeholder="Choose yes/no"
+              />
+            </div>
           </div>
+          {(accountType === 'p' || accountType === 'e') ? (
+            <div className={css.barterSection}>
+              <h2 className={css.checkTitle}>
+                <FormattedMessage id="EditListingDescriptionForm.barterTitle" />
+              </h2>
+              <FieldCheckbox
+                id="allowsBarter"
+                name="allowsBarter"
+                label={barterCheckboxLabel}
+                value="hasBarter"
+                className={css.barterCheckbox}
+              />
+              {showBarterBox ?
+                <FieldTextInput
+                  id="barter"
+                  name="barter"
+                  className={css.barter}
+                  type="textarea"
+                  label={barterMessage}
+                  placeholder={barterPlaceholderMessage}
+                  validate={barterRequiredMessage}
+                /> : null}
+            </div>) : null}
         </div>
         : null;
 
