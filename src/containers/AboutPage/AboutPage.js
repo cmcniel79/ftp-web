@@ -50,9 +50,9 @@ const AboutPage = () => {
               </h2>
 
               <p>
-              Isabella is a member of the Coquille (Kō’ Kwel) Indian Tribe and is currently an undergraduate 
+              Isabella (she/her) is a member of the Coquille (Kō’ Kwel) Indian Tribe and is currently an undergraduate 
               at Stanford University. After completing her bachelor’s degree, she hopes to continue her 
-              education in law school and specialize in Federal Indian Law. Chase is a member of the Navajo Nation 
+              education in law school and specialize in Federal Indian Law. Chase (he/him) is a member of the Navajo Nation 
               and a recent Stanford University graduate with a bachelor’s in mechanical engineering. 
               Chase has worked in the aerospace industry for the past several years.
               <br/>

@@ -283,7 +283,7 @@ export const filters = [
         { key: 'art', label: "Art and Photography" },
         { key: 'professional', label: "Professional Services" },
         { key: 'hospitality', label: "Hospitality and Tourism" },
-        { key: 'nonprofits', label: "Non-Profits" },
+        { key: 'nonprofit', label: "Non-Profit" },
         { key: 'beauty', label: "Beauty and Personal Services" },
         { key: 'other', label: "Other" },
       ]

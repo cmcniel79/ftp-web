@@ -35,7 +35,7 @@ import { loadData } from './LandingPage.duck';
 
 export const LandingPageComponent = props => {
 
-  const { history, intl, location, scrollingDisabled, listings, user } = props;
+  const { history, intl, location, scrollingDisabled, listings, users } = props;
   // Schema for search engines (helps them to understand what this page is about)
   // http://schema.org
   // We are using JSON-LD format
@@ -46,6 +46,12 @@ export const LandingPageComponent = props => {
 
   // Only want to show featured listings if we have 6
   const hasListings = props.listings && props.listings.length === 6;
+
+  // Only want Featured Users with full profiles
+  const completeUsers = users && users.length > 0 ? 
+    users.filter(user => user.profileImage && user.profileImage.id && !user.attributes.banned && !user.attributes.deleted &&
+    user.attributes.profile.bio && user.attributes.profile.bio.length > 150) : null;
+
   return (
     <Page
       className={css.root}
@@ -126,16 +132,14 @@ export const LandingPageComponent = props => {
                 />
               </div>
             </li>
-            {user && user.profileImage && user.profileImage.id && !user.attributes.banned && !user.attributes.deleted &&
-              user.attributes.profile.bio && user.attributes.profile.bio.length > 150 &&
+            {completeUsers && completeUsers.length > 0 ?
               <li className={css.section} id="featured-partners">
                 <div className={css.sectionContent}>
                   <FeaturedPartners
-                    user={user}
+                    users={completeUsers}
                   />
                 </div>
-              </li>
-            }
+              </li> : null}
             {hasListings ? (
               <li className={css.section}>
                 <div className={css.sectionContent}>
@@ -234,14 +238,13 @@ LandingPageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const {
-    userId,
+    userIds,
     promotedListingRefs,
   } = state.LandingPage;
   const listings = getListingsById(state, promotedListingRefs);
-  const userMatches = getMarketplaceEntities(state, [{ type: 'user', id: userId }]);
-  const user = userMatches.length === 1 ? userMatches[0] : null;
+  const userMatches = userIds && userIds.length > 0 ? getMarketplaceEntities(state, userIds) : null
   return {
-    user: user,
+    users: userMatches,
     scrollingDisabled: isScrollingDisabled(state),
     listings,
   };

@@ -137,7 +137,6 @@ export const TransactionPageComponent = props => {
 
   // Customer can create a booking, if the tx is in "enquiry" state.
   const handleSubmitBookingRequest = values => {
-    console.log(values);
     const initialValues = {
       listing: currentListing,
       // enquired transaction should be passed to CheckoutPage

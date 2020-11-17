@@ -113,7 +113,6 @@ export class ListingPageComponent extends Component {
   }
 
   handleSubmit(values) {
-    console.log(values);
     const {
       history,
       getListing,
@@ -361,7 +360,7 @@ export class ListingPageComponent extends Component {
 
     const isDomesticOrder = !currentUser ? true : authorCountry && userCountry && authorCountry === userCountry ? true : false;
     const lineItems = !isPremium && isDomesticOrder ? domesticLineItems : internationalLineItems;
-    const allowsInternationalOrders = !isPremium && publicData && publicData.allowsInternationalOrders ? true : false;
+    const allowsInternationalOrders = !isPremium && publicData && publicData.allowsInternationalOrders && publicData.allowsInternationalOrders[0] === 'hasFee' ? true : false;
     const { formattedPrice, priceTitle } = priceData(price, intl);
     const handleBookingSubmit = values => {
       const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;

@@ -72,3 +72,20 @@
   @apply --marketplaceH4FontStyles;
   margin: 0 0 30px 0;
 }
+
+.chevron {
+  width: 50px;
+  cursor: pointer;
+  transform: scale(1.02);
+}
+
+
+.forwardButton {
+  border: none;
+  margin: 0 0 0 15px;
+}
+
+.backButton {
+  border: none;
+  margin: 0 15px 0 0;
+}

@@ -152,9 +152,10 @@ class ProfileSettingsFormComponent extends Component {
           const industryOptions = [
             { key: 'retail', label: "Retail" },
             { key: 'dining', label: "Dining" },
+            { key: 'art', label: "Art and Photography" },
             { key: 'professional', label: "Professional Services" },
             { key: 'hospitality', label: "Hospitality and Tourism" },
-            { key: 'nonprofits', label: "Non-Profits" },
+            { key: 'nonprofit', label: "Non-Profit" },
             { key: 'beauty', label: "Beauty and Personal Services" },
             { key: 'other', label: "Other" },
           ];
@@ -224,7 +225,7 @@ class ProfileSettingsFormComponent extends Component {
           const pristineSinceLastSubmit = submittedOnce && isEqual(values, this.submittedValues);
           const submitDisabled =
             invalid || pristine || pristineSinceLastSubmit || uploadInProgress || submitInProgress;
-          const emailLink =(
+          const emailLink = (
             <ExternalLink href="mailto:customersupport@fromthepeople.co">
               <FormattedMessage id="ProfileSettingsForm.contactEmail" />
             </ExternalLink>);
@@ -301,9 +302,7 @@ class ProfileSettingsFormComponent extends Component {
                 <div className={css.tip}>
                   {accountType === "p" || accountType === "a" || accountType === "n" ?
                     <FormattedMessage id="ProfileSettingsForm.tipLogo" />
-                    :
-                    <FormattedMessage id="ProfileSettingsForm.tip" />
-                  }
+                    : <FormattedMessage id="ProfileSettingsForm.tip" />}
                 </div>
                 <div className={css.fileInfo}>
                   <FormattedMessage id="ProfileSettingsForm.fileInfo" />
@@ -323,8 +322,8 @@ class ProfileSettingsFormComponent extends Component {
                         <FormattedMessage id="ProfileSettingsForm.noHomepage" />}
                     </p>
                     <p className={css.websiteSubtitle}>
-                    <FormattedMessage id="ProfileSettingsForm.changeSettings" values={{ emailLink }} />
-                  </p>
+                      <FormattedMessage id="ProfileSettingsForm.changeSettings" values={{ emailLink }} />
+                    </p>
                     <FieldTextInput
                       className={css.companyField}
                       type="text"
@@ -354,15 +353,12 @@ class ProfileSettingsFormComponent extends Component {
                       initialValue={this.props.initialValues.location}
                     />
                   </div>
-                </div>
-              }
+                </div>}
               <div className={css.sectionContainer}>
                 <h3 className={css.sectionTitle}>
                   {accountType === "p" || accountType === "a" || accountType === "n" ?
                     <FormattedMessage id="ProfileSettingsForm.yourRepresentative" />
-                    :
-                    <FormattedMessage id="ProfileSettingsForm.yourName" />
-                  }
+                    : <FormattedMessage id="ProfileSettingsForm.yourName" />}
                 </h3>
                 <div className={css.nameContainer}>
                   <FieldTextInput
@@ -401,11 +397,20 @@ class ProfileSettingsFormComponent extends Component {
                 />
                 <p className={css.bioInfo}>
                   {accountType === "p" || accountType === "a" || accountType === "n" ?
-                    null :
-                    <FormattedMessage id="ProfileSettingsForm.bioInfo" />
-                  }
+                    null : <FormattedMessage id="ProfileSettingsForm.bioInfo" />}
                 </p>
               </div>
+              {/* {accountType === 'e' ?
+                <div className={css.sectionContainer}>
+                  <h3 className={css.sectionTitle}>
+                    <FormattedMessage id="ProfileSettingsForm.enrolledLocation" />
+                  </h3>
+                  <CompanyAddressMaybe
+                    className={css.companyAddress}
+                    initialValue={this.props.initialValues.location}
+                    accountType={accountType}
+                  />
+                </div> : null} */}
               {showSocialMediaFields &&
                 <div className={css.sectionContainer}>
                   <h3 className={css.sectionTitle}>

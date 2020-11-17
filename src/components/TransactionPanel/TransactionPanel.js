@@ -382,7 +382,7 @@ export class TransactionPanelComponent extends Component {
           <FormattedMessage id="TransactionPanel.noAddress" />
         </div>
       );
-    const refundInfo = isCustomer ? (
+    const refundInfo = isCustomer && !stateData.showBookingPanel ? (
       <div className={css.refundInfo}>
         <FormattedMessage id="TransactionPanel.refundInfo" />
       </div>) : null;
@@ -400,6 +400,7 @@ export class TransactionPanelComponent extends Component {
     const shippingFee = isDomesticOrder && domesticFee ? resolveShippingFeePrice(publicData.shippingFee) :
       !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
         resolveShippingFeePrice({ amount: 0, currency: config.currency });
+    const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders && publicData.allowsInternationalOrders[0] === 'hasFee' ? true : false;
 
     return (
       <div className={classes}>
@@ -432,12 +433,13 @@ export class TransactionPanelComponent extends Component {
               {refundInfo}
             </div>
 
-            <div className={css.addressSection}>
-              <h3 className={css.addressHeading}>
-                <FormattedMessage id="TransactionPanel.customerAddress" />
-              </h3>
-              {shippingDetailsSection}
-            </div>
+            {!stateData.showBookingPanel ? (
+              <div className={css.addressSection}>
+                <h3 className={css.addressHeading}>
+                  <FormattedMessage id="TransactionPanel.customerAddress" />
+                </h3>
+                {shippingDetailsSection}
+              </div>) : null}
 
             {savePaymentMethodFailed ? (
               <p className={css.genericError}>
@@ -498,32 +500,48 @@ export class TransactionPanelComponent extends Component {
                 geolocation={geolocation}
                 showAddress={stateData.showAddress}
               />
-              {stateData.showBookingPanel ? (
-                  <BookingPanel
-                    className={css.bookingPanel}
-                    isOwnListing={false}
-                    listing={currentListing}
-                    title={listingTitle}
-                    subTitle={bookingSubTitle}
-                    unitType={unitType}
-                    authorDisplayName={authorDisplayName}
-                    onSubmit={onSubmitBookingRequest}
-                    onManageDisableScrolling={onManageDisableScrolling}
-                    timeSlots={timeSlots}
-                    fetchTimeSlotsError={fetchTimeSlotsError}
-                    onFetchTransactionLineItems={onFetchTransactionLineItems}
-                    lineItems={lineItems}
-                    fetchLineItemsInProgress={fetchLineItemsInProgress}
-                    fetchLineItemsError={fetchLineItemsError}
-                    isDomesticOrder={isDomesticOrder}
-                    shippingFee={shippingFee}
-                  />
-                  ) :
-                <BreakdownMaybe
-                  className={css.breakdownContainer}
-                  transaction={currentTransaction}
-                  transactionRole={transactionRole}
-                />}
+              {stateData.showBookingPanel && ((isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders)) ? (
+                <BookingPanel
+                  className={css.bookingPanel}
+                  isOwnListing={false}
+                  listing={currentListing}
+                  title={listingTitle}
+                  subTitle={bookingSubTitle}
+                  unitType={unitType}
+                  authorDisplayName={authorDisplayName}
+                  onSubmit={onSubmitBookingRequest}
+                  onManageDisableScrolling={onManageDisableScrolling}
+                  timeSlots={timeSlots}
+                  fetchTimeSlotsError={fetchTimeSlotsError}
+                  onFetchTransactionLineItems={onFetchTransactionLineItems}
+                  lineItems={lineItems}
+                  fetchLineItemsInProgress={fetchLineItemsInProgress}
+                  fetchLineItemsError={fetchLineItemsError}
+                  isDomesticOrder={isDomesticOrder}
+                  shippingFee={shippingFee}
+                />
+              ) : stateData.showBookingPanel && (!isDomesticOrder && !allowsInternationalOrders) ? (
+                <span className={css.noInternational} >
+                  <FormattedMessage id="ListingPage.noInternationalOrders" />
+                </span>
+              ) : stateData.showBookingPanel && userCountry === null ? (
+                <span className={css.purchaseWarning} >
+                  <FormattedMessage id="ListingPage.noUserCountry" />
+                </span>
+              ) : stateData.showBookingPanel && authorCountry === null ? (
+                <span className={css.purchaseWarning} >
+                  <FormattedMessage id="ListingPage.noAuthorCountry" />
+                </span>
+              ) : stateData.showBookingPanel ? (
+                <span className={css.purchaseWarning} >
+                  <FormattedMessage id="ListingPage.listingMissingInfo" />
+                </span>
+              ) : (
+                          <BreakdownMaybe
+                            className={css.breakdownContainer}
+                            transaction={currentTransaction}
+                            transactionRole={transactionRole}
+                          />)}
               {refundInfo}
               {stateData.showSaleButtons ? (
                 <div className={css.desktopActionButtons}>{saleButtons}</div>
