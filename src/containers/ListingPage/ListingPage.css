@@ -38,6 +38,7 @@
 }
 
 .reviewsContainerMobile {
+  margin-top: 30px;
   @media (--viewportMedium) {
     display: none;
   }
