@@ -358,7 +358,7 @@ export class ListingPageComponent extends Component {
     const userCountry = protectedData && protectedData.protectedData && protectedData.protectedData.shippingAddress ?
       protectedData.protectedData.shippingAddress.country : null;
 
-    const isDomesticOrder = !currentUser ? true : authorCountry && userCountry && authorCountry === userCountry ? true : false;
+    const isDomesticOrder = authorCountry && userCountry && authorCountry === userCountry ? true : false;
     const lineItems = !isPremium && isDomesticOrder ? domesticLineItems : internationalLineItems;
     const allowsInternationalOrders = !isPremium && publicData && publicData.allowsInternationalOrders && publicData.allowsInternationalOrders[0] === 'hasFee' ? true : false;
     const { formattedPrice, priceTitle } = priceData(price, intl);
