@@ -491,7 +491,7 @@ export class ListingPageComponent extends Component {
                   <SectionSizesMaybe sizes={sizes} />
                   {publicData ? (
                     isPremium ? <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
-                      : (isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders) ?
+                      : ((isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders)) && (userCountry && authorCountry) ?
                         <BookingPanel
                           className={css.bookingBreakdown}
                           listing={currentListing}
