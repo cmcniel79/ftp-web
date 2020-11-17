@@ -164,7 +164,6 @@ export const queryPromotedListings = queryParams => (dispatch, getState, sdk) =>
 };
 
 export const loadFeaturedPartners = ids => (dispatch, getState, sdk) => {
-  console.log(ids);
   dispatch(showUserRequest(ids));
   if (ids.length > 0) {
     ids.map(id => {
@@ -175,11 +174,9 @@ export const loadFeaturedPartners = ids => (dispatch, getState, sdk) => {
           'fields.image': ['variants.square-small', 'variants.square-small2x'],
         })
         .then(response => {
-          console.log(response);
           dispatch(addMarketplaceEntities(response));
         })
         .catch(e => {
-          console.log(e);
           dispatch(showUserError(storableError(e)
           ))
         });
