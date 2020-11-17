@@ -164,10 +164,9 @@ export const queryPromotedListings = queryParams => (dispatch, getState, sdk) =>
 };
 
 export const loadFeaturedPartners = ids => (dispatch, getState, sdk) => {
-  const idees = [{ type: 'user', id: new UUID("5f99bfd4-f237-4d5d-afea-445aacef888f") },{ type: 'user', id: new UUID("5f99d32d-0925-4712-94a8-5482c98f565d") }];
-  dispatch(showUserRequest(idees));
-  if (idees.length > 0) {
-    idees.map(id => {
+  dispatch(showUserRequest(ids));
+  if (ids.length > 0) {
+    ids.map(id => {
       return sdk.users
         .show({
           id: id.id,
