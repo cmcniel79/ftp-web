@@ -153,7 +153,7 @@ export class ProfileSettingsPageComponent extends Component {
         verification = null;
         break;
       case "n":
-        profileHeading = "Non-Profit";
+        profileHeading = "Nonprofit";
         listingsLimit = 1;
         verification = null;
         break;

@@ -155,7 +155,7 @@ class ProfileSettingsFormComponent extends Component {
             { key: 'art', label: "Art and Photography" },
             { key: 'professional', label: "Professional Services" },
             { key: 'hospitality', label: "Hospitality and Tourism" },
-            { key: 'nonprofit', label: "Non-Profit" },
+            { key: 'nonprofit', label: "Nonprofit" },
             { key: 'beauty', label: "Beauty and Personal Services" },
             { key: 'other', label: "Other" },
           ];
