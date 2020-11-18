@@ -47,6 +47,30 @@
   }
 }
 
+.cardWithButtons {
+  /**
+   * Since caret is absolutely positioned,
+   * label must have relative to be included to the same rendering layer
+   */
+  position: relative;
+  width: 400px;
+  /* Font */
+  @apply --marketplaceH5FontStyles;
+  color: var(--matterColor);
+  border-radius: 10px;
+  border: 0;
+  background-color: var(--matterColorLight);
+  /* Dimensions */
+  margin-top: 0;
+  margin-bottom: 0;
+  transition: var(--transitionStyleButton);
+  /* Overwrite dimensions from font styles */
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
 /* Overwrite Mapbox's specific font rules */
 
 .root .card {
@@ -207,4 +231,24 @@
   background-color: var(--marketplaceColor);
   border-right-color: var(--marketplaceColor);
   border-bottom-color: var(--marketplaceColor);
+}
+
+.forwardButton {
+  display: initial;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.backButton {
+  display: initial;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chevron {
+  width: 50px;
+  cursor: pointer;
+  transform: scale(1.02);
 }

@@ -52,6 +52,9 @@ const EditListingDescriptionPanel = props => {
   const websiteLink = publicData && publicData.websiteLink;
   const verifiedSellers = accountType && (accountType === 'e' || accountType === 'p' || accountType === 'n')
     ? 'verified' : 'unverified';
+  const barter = publicData && publicData.barter;
+  const allowsBarter = publicData && publicData.allowsBarter;
+
 
   const categoryOptions = findOptionsForSelectFilter('category', config.custom.filters);
   return (
@@ -59,16 +62,16 @@ const EditListingDescriptionPanel = props => {
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingDescriptionForm
         className={css.form}
-        initialValues={{ title, description, category, subCategory, style, region, material, customOrders, sizes, websiteLink }}
+        initialValues={{ title, description, category, subCategory, style, region, material, customOrders, sizes, websiteLink, barter, allowsBarter }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, category, subCategory, style, region, material, customOrders, sizes, websiteLink } = values;
+          const { title, description, category, subCategory, style, region, material, customOrders, sizes, websiteLink, barter, allowsBarter } = values;
           const customIsAvailable = customOrders ? 'available' : 'unavailable';
           const updateValues = {
             title: title.trim(),
             description,
             publicData: {
-              category, subCategory, style, region, material, customOrders: customIsAvailable, sizes, websiteLink, verifiedSellers
+              category, subCategory, style, region, material, customOrders: customIsAvailable, sizes, websiteLink, verifiedSellers, barter, allowsBarter
             },
           };
           onSubmit(updateValues);

@@ -76,7 +76,11 @@
 }
 
 .barterCheckbox {
-  padding: 0 0 20px 0;
+  @media (--viewportLarge) {
+    display: block;
+    margin-top: 10px;
+    width: 80%;
+  }
 }
 
 .barter {

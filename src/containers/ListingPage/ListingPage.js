@@ -56,6 +56,7 @@ import SectionSellerMaybe from './SectionSellerMaybe';
 import SectionSizesMaybe from './SectionSizesMaybe';
 import SectionCustomOrdersMaybe from './SectionCustomOrdersMaybe';
 import SectionPremiumPriceMaybe from './SectionPremiumPriceMaybe';
+import SectionBarterMaybe from './SectionBarterMaybe';
 import { sanitizeProtectedData } from '../../util/sanitize';
 
 import css from './ListingPage.css';
@@ -420,6 +421,9 @@ export class ListingPageComponent extends Component {
     const shippingFee = isDomesticOrder && domesticFee ? resolveShippingFeePrice(publicData.shippingFee) :
       !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
         resolveShippingFeePrice({ amount: 0, currency: config.currency });
+    const allowsBarter = publicData && publicData.allowsBarter && publicData.allowsBarter[0] === 'hasBarter' ? true : false;
+    const barter = publicData && publicData.barter ? publicData.barter : null;
+    console.log(publicData);
     return (
       <Page
         title={schemaTitle}
@@ -486,6 +490,9 @@ export class ListingPageComponent extends Component {
                     isPremium={isPremium}
                   />
                   <SectionDescriptionMaybe description={description} />
+                  {allowsBarter ? (
+                    <SectionBarterMaybe barter={barter} />
+                  ) : null}
                   <SectionCustomOrdersMaybe customOrders={customOrders} />
                   <SectionMaterialsMaybe options={materialOptions} material={material} />
                   <SectionSizesMaybe sizes={sizes} />
