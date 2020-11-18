@@ -61,12 +61,18 @@ const EditListingDescriptionFormComponent = props => (
         }
       );
 
-      const descriptionMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.description',
-      });
-      const descriptionPlaceholderMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.descriptionPlaceholder',
-      });
+      const descriptionMessage = (accountType === 'a' || accountType === 'n') ? intl.formatMessage({
+        id: 'EditListingDescriptionForm.descriptionAd'
+      })
+        : intl.formatMessage({
+          id: 'EditListingDescriptionForm.description'
+        });
+      const descriptionPlaceholderMessage = (accountType === 'a' || accountType === 'n') ? intl.formatMessage({
+        id: 'EditListingDescriptionForm.descriptionAdPlaceholder'
+      })
+        : intl.formatMessage({
+          id: 'EditListingDescriptionForm.descriptionPlaceholder'
+        });
       const maxLength60Message = maxLength(maxLengthMessage, TITLE_MAX_LENGTH);
       const descriptionRequiredMessage = intl.formatMessage({
         id: 'EditListingDescriptionForm.descriptionRequired',
@@ -339,7 +345,35 @@ const EditListingDescriptionFormComponent = props => (
                 /> : null}
             </div>) : null} */}
         </div>
-        : null;
+        : (
+          <div className={css.physicalItemFields}>
+            <h2 className={css.optionalHeader}>
+              <FormattedMessage id="EditListingDescriptionForm.optionalFields" />
+            </h2>
+            <div className={css.checkBoxes}>
+              <div className={css.region}>
+                <h2 className={css.checkTitle}>
+                  <FormattedMessage id="EditListingDescriptionForm.regionTitle" />
+                </h2>
+                <h4>
+                  <FormattedMessage id="EditListingDescriptionForm.regionSubtitle" />
+                </h4>
+                {regionOptions.map(option => (
+                  <div key={option.key}>
+                    <FieldRadioButton
+                      id={option.key}
+                      name="region"
+                      value={option.key}
+                      label={option.label}
+                      showAsRequired={pristine}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+
 
       return (
         <Form className={classes} onSubmit={handleSubmit}>
