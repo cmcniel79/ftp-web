@@ -152,7 +152,7 @@ export const sanitizeListing = entity => {
     // Here's an example how you could sanitize location and rules from publicData:
     // TODO: If you add public data, you should probably sanitize it here.
     const { country, category, subCategory, verifiedSellers, customOrders, websiteLink, region, sizes, style, material,
-      shippingFee, internationalFee, allowsInternationalOrders } = publicData || {};
+      shippingFee, internationalFee, allowsInternationalOrders, allowsBarter, barter } = publicData || {};
 
     const countryMaybe = country ? { country: sanitizeText(country) } : {};
 
@@ -178,13 +178,15 @@ export const sanitizeListing = entity => {
     } : {};
 
     const allowsInternationalOrdersMaybe = allowsInternationalOrders ? { allowsInternationalOrders: allowsInternationalOrders } : {}
+    const allowsBarterMaybe = allowsBarter ? { allowsBarter: allowsBarter } : {};
+    const barterMaybe = barter ? { barter: sanitizeText(barter) } : {};
 
 
     return publicData ? {
       publicData: {
         ...countryMaybe, ...categoryMaybe, ...subCategoryMaybe, ...verifiedSellersMaybe,
         ...customOrdersMaybe, ...websiteLinkMaybe, ...regionMaybe, ...sizesMaybe, ...styleMaybe, ...materialMaybe,
-        ...shippingFeeMaybe, ...internationalFeeMaybe, ...allowsInternationalOrdersMaybe,
+        ...shippingFeeMaybe, ...internationalFeeMaybe, ...allowsInternationalOrdersMaybe, ...allowsBarterMaybe, ...barterMaybe,
       }
     } : {};
   };

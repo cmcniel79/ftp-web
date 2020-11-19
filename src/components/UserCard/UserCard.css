@@ -16,7 +16,6 @@
   margin-right: 25px;
   width: 120px;
   height: 120px;
-
   @media (--viewportMedium) {
     width: 150px;
     height: 150px;
@@ -60,12 +59,13 @@
 }
 
 .bioTitle {
-  /* Font */
   @apply --marketplaceH3FontStyles;
-  color: var(--matterColorAnti);
-  margin-top: 10px;
+  font-weight: 550;
+  font-size: 22px;
+  line-height: 24px;
+  margin: 10px 0 15px 0;
   @media (--viewportMedium) {
-    margin-top: 18px;
+    margin: 20px 0 15px 0;
   }
 }
 

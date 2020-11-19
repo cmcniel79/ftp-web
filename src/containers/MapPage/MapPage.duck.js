@@ -130,9 +130,9 @@ export const fetchUUIDsFailure = error => ({
 });
 
 
-export const loadUsers = userIds => (dispatch, getState, sdk) => {
-  dispatch(showUserRequest(userIds));
-  if (userIds.length > 0) {
+export const loadUsers = (userIds) => (dispatch, getState, sdk) => {
+  if (userIds && userIds.length > 0) {
+    dispatch(showUserRequest(userIds));
     userIds.map(userId => {
       return sdk.users
         .show({

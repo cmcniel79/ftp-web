@@ -8,6 +8,7 @@ import retail from '../../assets/shopping.svg';
 import work from '../../assets/work.svg';
 import fitness from '../../assets/fitness.svg';
 import art from '../../assets/art.svg';
+import verified from '../../assets/checkmark-circle-outline.svg';
 
 import css from './MapPage.css';
 
@@ -20,6 +21,12 @@ export class MapLegend extends Component {
                 <h2 className={css.legendTitle}>
                     <FormattedMessage id="MapPage.legendTitle" />
                 </h2>
+                <div className={css.legendBlock}>
+                    <img className={css.image} src={verified} alt="icon" />
+                    <span className={css.legendLabel}>
+                        <FormattedMessage id="MapPage.legendVerified" />
+                    </span>
+                </div>
                 <div className={css.legendBlock}>
                     <img className={css.image} src={retail} alt="icon" />
                     <span className={css.legendLabel}>

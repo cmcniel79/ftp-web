@@ -400,7 +400,7 @@ class ProfileSettingsFormComponent extends Component {
                     null : <FormattedMessage id="ProfileSettingsForm.bioInfo" />}
                 </p>
               </div>
-              {/* {accountType === 'e' ?
+              {accountType === 'e' ?
                 <div className={css.sectionContainer}>
                   <h3 className={css.sectionTitle}>
                     <FormattedMessage id="ProfileSettingsForm.enrolledLocation" />
@@ -410,7 +410,7 @@ class ProfileSettingsFormComponent extends Component {
                     initialValue={this.props.initialValues.location}
                     accountType={accountType}
                   />
-                </div> : null} */}
+                </div> : null}
               {showSocialMediaFields &&
                 <div className={css.sectionContainer}>
                   <h3 className={css.sectionTitle}>

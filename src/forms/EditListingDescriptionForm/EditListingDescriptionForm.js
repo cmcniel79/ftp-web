@@ -173,16 +173,16 @@ const EditListingDescriptionFormComponent = props => (
         })
       }
 
-      // // let showBarterBox;
-      // const checkbox = document.getElementById('allowsBarter');
+      let showBarterBox;
+      const checkbox = document.getElementById('allowsBarter');
 
-      // if (checkbox) {
-      //   if (checkbox.checked) {
-      //     // showBarterBox = true;
-      //   } else {
-      //     // showBarterBox = false;
-      //   }
-      // };
+      if (checkbox) {
+        if (checkbox.checked) {
+          showBarterBox = true;
+        } else {
+          showBarterBox = false;
+        }
+      };
 
       // Special account users need to provide a link for their items. These can be either ad accounts,
       // non-profit accounts, or premium account users. The link will be used in the ListingCard componenent.
@@ -321,7 +321,7 @@ const EditListingDescriptionFormComponent = props => (
               />
             </div>
           </div>
-          {/* {(accountType === 'p' || accountType === 'e') ? (
+          {accountType === 'e' ? (
             <div className={css.barterSection}>
               <h2 className={css.checkTitle}>
                 <FormattedMessage id="EditListingDescriptionForm.barterTitle" />
@@ -343,7 +343,7 @@ const EditListingDescriptionFormComponent = props => (
                   placeholder={barterPlaceholderMessage}
                   validate={barterRequiredMessage}
                 /> : null}
-            </div>) : null} */}
+            </div>) : null}
         </div>
         : (
           <div className={css.physicalItemFields}>

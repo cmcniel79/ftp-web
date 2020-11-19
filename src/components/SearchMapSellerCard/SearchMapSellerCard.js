@@ -10,6 +10,8 @@ import navigateIcon from './Images/navigate.svg';
 import shareIcon from './Images/share.svg';
 import exitIcon from '../../assets/exit.svg';
 import { userAbbreviatedName } from '../../util/data';
+import forward from '../../assets/forward.svg';
+import back from '../../assets/back.svg';
 
 import css from './SearchMapSellerCard.css';
 // import { txHasBeenDelivered } from '../../util/transaction';
@@ -29,30 +31,33 @@ const AVATAR_IMAGE_VARIANTS = [
 ];
 
 const SellerCard = props => {
-  const { urlToProfile, user, shareButtonClick, wasCopySuccessful } = props;
+  const { urlToProfile, user, shareButtonClick, wasCopySuccessful, showButtons, changeUser } = props;
   const { displayName, publicData } = user.attributes.profile;
 
   const abbreviatedName = userAbbreviatedName(user, "");
   // Gather custom data fields from seller's account
-  const companyWebsite = publicData.companyWebsite ? user.attributes.profile.publicData.companyWebsite : null;
-  const companyAddress = publicData.companyLocation ? publicData.companyLocation.location.selectedPlace.address : null;
-  const companyName = publicData.companyName ? publicData.companyName : null;
-  const tribe = publicData.tribe ? publicData.tribe : null;
+  const companyWebsite = publicData && publicData.companyWebsite ? user.attributes.profile.publicData.companyWebsite : null;
+  const companyAddress = publicData && publicData.companyLocation ? publicData.companyLocation.location.selectedPlace.address : null;
+  const companyName = publicData && publicData.companyName ? publicData.companyName : null;
+  const tribe = publicData && publicData.tribe ? publicData.tribe : null;
   const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURI(companyAddress);
   const profileTitle = companyName ? companyName : displayName;
+  const accountType = publicData && publicData.accountType ? publicData.accountType : null;
+  const cardClasses = showButtons ? css.cardWithButtons : css.card;
   return (
-    <div className={css.card}>
+    <div className={cardClasses}>
       <div className={css.content}>
+        {showButtons ?
+          <button className={css.backButton} onClick={() => changeUser(false)}>
+            <img className={css.chevron} src={back} alt="chevron" />
+          </button> : null}
         {user.profileImage && user.profileImage.id ?
           <ResponsiveImage
             rootClassName={css.premiumAvatar}
             alt="Logo"
             image={user.profileImage}
             variants={AVATAR_IMAGE_VARIANTS}
-          />
-          :
-          <span className={css.initials}>{abbreviatedName}</span>
-        }
+          /> : <span className={css.initials}>{abbreviatedName}</span>}
         <div className={css.info}>
           <h2 className={css.heading}>
             <FormattedMessage id="SellerCard.heading" values={{ name: profileTitle }} />
@@ -60,42 +65,47 @@ const SellerCard = props => {
           {tribe &&
             <p className={css.subHeading}>
               {tribe}
-            </p>
-          }
-          <p className={css.subHeading}>
-            <ExternalLink href={urlToProfile}>
-              <FormattedMessage id="SellerCard.visitProfile" />
-            </ExternalLink>
-          </p>
+            </p>}
+          {urlToProfile &&
+            <p className={css.subHeading}>
+              <ExternalLink href={urlToProfile}>
+                <FormattedMessage id="SellerCard.visitProfile" />
+              </ExternalLink>
+            </p>}
         </div>
+        {showButtons ?
+          <button className={css.forwardButton} onClick={() => changeUser(true)}>
+            <img className={css.chevron} src={forward} alt="chevron" />
+          </button> : null}
       </div>
-      <div className={css.buttonRow} >
-        {companyAddress &&
-          <ExternalLink
-            className={css.linkButton}
-            href={googleMapsUrl}
+      {accountType !== 'e' ?
+        <div className={css.buttonRow} >
+          {companyAddress &&
+            <ExternalLink
+              className={css.linkButton}
+              href={googleMapsUrl}
+            >
+              <img className={css.linkIcon} src={navigateIcon} alt="Navigate" />
+              <FormattedMessage id="SellerCard.navigateButton" />
+            </ExternalLink>
+          }
+          {companyWebsite &&
+            <ExternalLink
+              className={css.linkButton}
+              href={companyWebsite}
+            >
+              <img className={css.linkIcon} src={exitIcon} alt="Link" />
+              <FormattedMessage id="SellerCard.websiteButton" />
+            </ExternalLink>
+          }
+          <button
+            className={css.shareButton}
+            onClick={() => shareButtonClick(urlToProfile)}
           >
-            <img className={css.linkIcon} src={navigateIcon} alt="Navigate"/>
-            <FormattedMessage id="SellerCard.navigateButton" />
-          </ExternalLink>
-        }
-        {companyWebsite &&
-          <ExternalLink
-            className={css.linkButton}
-            href={companyWebsite}
-          >
-            <img className={css.linkIcon} src={exitIcon} alt="Link"/>
-            <FormattedMessage id="SellerCard.websiteButton" />
-          </ExternalLink>
-        }
-        <button
-          className={css.shareButton}
-          onClick={() => shareButtonClick(urlToProfile)}
-        >
-          <img className={css.shareIcon} src={shareIcon} alt="Share"/>
-          <FormattedMessage id="SellerCard.shareButton" />
-        </button>
-      </div>
+            <img className={css.shareIcon} src={shareIcon} alt="Share" />
+            <FormattedMessage id="SellerCard.shareButton" />
+          </button>
+        </div> : null}
       {wasCopySuccessful === true ?
         <p className={css.copyStatus}>
           <FormattedMessage id="SellerCard.copySuccess" values={{ profileTitle }} />
@@ -122,6 +132,7 @@ class SearchMapSellerCard extends Component {
     super(props);
     this.state = { currentUserIndex: 0, wasCopySuccessful: null };
     this.shareButtonClick = this.shareButtonClick.bind(this);
+    this.changeUser = this.changeUser.bind(this);
   }
 
   shareButtonClick(urlToProfile) {
@@ -145,6 +156,24 @@ class SearchMapSellerCard extends Component {
     // https://medium.com/@feargswalsh/copying-to-the-clipboard-in-react-81bb956963ec
   }
 
+  changeUser(forward) {
+    const index = this.state.currentUserIndex;
+    const length = this.props.users.length;
+    if (forward) {
+      if (index >= length - 1) {
+        this.setState({ currentUserIndex: 0 });
+      } else {
+        this.setState({ currentUserIndex: (index + 1) });
+      }
+    } else {
+      if (index === 0) {
+        this.setState({ currentUserIndex: (length - 1) });
+      } else {
+        this.setState({ currentUserIndex: (index - 1) });
+      }
+    }
+  }
+
   render() {
     const {
       className,
@@ -155,6 +184,7 @@ class SearchMapSellerCard extends Component {
     const currentSeller = ensureUser(users[this.state.currentUserIndex]);
     const classes = classNames(rootClassName || css.root, className);
     const urlToProfile = createURLToProfile(currentSeller);
+    const showButtons = users && users.length > 1 ? true : false;
 
     return (
       <div className={classes}>
@@ -164,6 +194,8 @@ class SearchMapSellerCard extends Component {
           shareButtonClick={this.shareButtonClick}
           user={currentSeller}
           wasCopySuccessful={this.state.wasCopySuccessful}
+          showButtons={showButtons}
+          changeUser={this.changeUser}
         />
         <div className={css.caret} />
       </div>

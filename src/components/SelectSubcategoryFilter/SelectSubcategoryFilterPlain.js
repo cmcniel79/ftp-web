@@ -13,16 +13,16 @@ class SelectSubcategoryFilterPlain extends Component {
     this.toggleIsOpen = this.toggleIsOpen.bind(this);
   }
 
-  selectOption(queryParamName, option) {
+  selectOption(queryParamName, option, e) {
     const { onSelect } = this.props;
     // console.log(queryParamNames);
     // const queryParamName = getQueryParamName(queryParamNames);
     onSelect({ [queryParamName]: option });
 
-    // // blur event target if event is passed
-    // if (e && e.currentTarget) {
-    //   e.currentTarget.blur();
-    // }
+    // blur event target if event is passed
+    if (e && e.currentTarget) {
+      e.currentTarget.blur();
+    }
   }
 
   selectCategory(option) {
@@ -30,6 +30,8 @@ class SelectSubcategoryFilterPlain extends Component {
     if (sub !== null) {
       this.setState({ subCategory: sub });
       this.setState({ categorySelected: true });
+    } else if(option.key === 'other') {
+      this.selectOption('pub_subCategory', option.key);
     }
   }
 
@@ -65,7 +67,7 @@ class SelectSubcategoryFilterPlain extends Component {
 
     const bottomLinks = !this.state.categorySelected ?
       <div className={css.bottomLinks}>
-        <button className={css.clearButton} onClick={e => this.selectOption(null, e)}>
+        <button className={css.clearButton} onClick={e => this.selectOption(queryParamName, null, e)}>
         <FormattedMessage id={'SelectSubcategoryFilter.plainClear'} />
         </button>
       </div>
@@ -75,7 +77,7 @@ class SelectSubcategoryFilterPlain extends Component {
         >
         <FormattedMessage id={'SelectSubcategoryFilter.plainSearchAll'} />
   </button>
-        <button className={css.clearButton} onClick={e => this.selectOption(null, e)}>
+        <button className={css.clearButton} onClick={(e) => this.selectOption(queryParamName, null, e)}>
         <FormattedMessage id={'SelectSubcategoryFilter.plainClear'} />
         </button>
       </div>
@@ -119,25 +121,25 @@ class SelectSubcategoryFilterPlain extends Component {
           </button>
         {this.state.subCategory.map(sub => {
           // check if this option is selected
-          // const selected = initialValue === option.key;
-          // const optionClass = hasBullets && selected ? css.optionSelected : css.option;
+          const selected = initialValue === sub.key;
+          const optionClass = selected ? css.optionSelected : css.option;
           // menu item selected bullet or border class
-          // const optionBorderClass = hasBullets
-          //   ? classNames({
-          //     [css.optionBulletSelected]: selected,
-          //     [css.optionBullet]: !selected,
-          //   })
-          //   : classNames({
-          //     [css.optionBorderSelected]: selected,
-          //     [css.optionBorder]: !selected,
-          //   });
+          const optionBorderClass = hasBullets
+            ? classNames({
+              [css.optionBulletSelected]: selected,
+              [css.optionBullet]: !selected,
+            })
+            : classNames({
+              [css.optionBorderSelected]: selected,
+              [css.optionBorder]: !selected,
+            });
           return (
             <button
               key={sub.key}
-              className={css.option}
+              className={optionClass}
               onClick={() => this.selectOption(queryParamName, sub.key)}
             >
-              <span className={css.optionBullet} />
+              <span className={optionBorderClass} />
               {sub.label}
             </button>
           );

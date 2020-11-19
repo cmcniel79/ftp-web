@@ -20,7 +20,8 @@ import work from '../../assets/work.svg';
 import workFilled from '../../assets/work-filled.svg';
 import art from '../../assets/art.svg';
 import artFilled from '../../assets/art-filled.svg';
-
+import verifiedFilled from '../../assets/checkmark-circle.svg';
+import verified from '../../assets/checkmark-circle-outline.svg';
 
 import css from './SearchMapSellerLabel.css';
 
@@ -45,42 +46,49 @@ class SearchMapSellerLabel extends Component {
     const industry = currentSeller.attributes.profile.publicData && currentSeller.attributes.profile.publicData.companyIndustry ?
       currentSeller.attributes.profile.publicData.companyIndustry : null;
     const classes = classNames(rootClassName || css.root, className);
+    const accountType = currentSeller.attributes.profile.publicData && currentSeller.attributes.profile.publicData.accountType ?
+      currentSeller.attributes.profile.publicData.accountType : null;
 
     var imageOutline;
     var imageFilled;
-    switch (industry) {
-      case ("retail"):
-        imageOutline = <img className={css.image} src={retail} alt="icon" />;
-        imageFilled = <img className={css.image} src={retailFilled} alt="iconFilled" />;
-        break;
-      case ("dining"):
-        imageOutline = <img className={css.image} src={dining} alt="icon" />;
-        imageFilled = <img className={css.image} src={diningFilled} alt="iconFilled" />;
-        break;
-      case ("art"):
-        imageOutline = <img className={css.image} src={art} alt="icon" />;
-        imageFilled = <img className={css.image} src={artFilled} alt="iconFilled" />;
-        break;
-      case ("professional"):
-        imageOutline = <img className={css.image} src={work} alt="icon" />;
-        imageFilled = <img className={css.image} src={workFilled} alt="iconFilled" />;
-        break;
-      case ("hospitality"):
-        imageOutline = <img className={css.image} src={bed} alt="icon" />;
-        imageFilled = <img className={css.image} src={bedFilled} alt="iconFilled" />;
-        break;
-      case ("nonprofits"):
-        imageOutline = <img className={css.image} src={people} alt="icon" />;
-        imageFilled = <img className={css.image} src={peopleFilled} alt="iconFilled" />;
-        break;
-      case ("beauty"):
-        imageOutline = <img className={css.image} src={fitness} alt="icon" />;
-        imageFilled = <img className={css.image} src={fitnessFilled} alt="iconFilled" />;
-        break;
-      default:
-        imageOutline = <img className={css.image} src={other} alt="icon" />;
-        imageFilled = <img className={css.image} src={otherFilled} alt="iconFilled" />;
-        break;
+    if (accountType !== 'e') {
+      switch (industry) {
+        case ("retail"):
+          imageOutline = <img className={css.image} src={retail} alt="icon" />;
+          imageFilled = <img className={css.image} src={retailFilled} alt="iconFilled" />;
+          break;
+        case ("dining"):
+          imageOutline = <img className={css.image} src={dining} alt="icon" />;
+          imageFilled = <img className={css.image} src={diningFilled} alt="iconFilled" />;
+          break;
+        case ("art"):
+          imageOutline = <img className={css.image} src={art} alt="icon" />;
+          imageFilled = <img className={css.image} src={artFilled} alt="iconFilled" />;
+          break;
+        case ("professional"):
+          imageOutline = <img className={css.image} src={work} alt="icon" />;
+          imageFilled = <img className={css.image} src={workFilled} alt="iconFilled" />;
+          break;
+        case ("hospitality"):
+          imageOutline = <img className={css.image} src={bed} alt="icon" />;
+          imageFilled = <img className={css.image} src={bedFilled} alt="iconFilled" />;
+          break;
+        case ("nonprofits"):
+          imageOutline = <img className={css.image} src={people} alt="icon" />;
+          imageFilled = <img className={css.image} src={peopleFilled} alt="iconFilled" />;
+          break;
+        case ("beauty"):
+          imageOutline = <img className={css.image} src={fitness} alt="icon" />;
+          imageFilled = <img className={css.image} src={fitnessFilled} alt="iconFilled" />;
+          break;
+        default:
+          imageOutline = <img className={css.image} src={other} alt="icon" />;
+          imageFilled = <img className={css.image} src={otherFilled} alt="iconFilled" />;
+          break;
+      }
+    } else {
+      imageOutline = <img className={css.image} src={verified} alt="icon" />;
+      imageFilled = <img className={css.image} src={verifiedFilled} alt="iconFilled" />;
     }
 
     const image = !this.state.isShown ? imageOutline

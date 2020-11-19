@@ -64,15 +64,16 @@ const CompanyAddressMaybeComponent = props => {
                         validate={autocompletePlaceSelected(addressNotRecognizedMessage)}
                         showImage={false}
                     />
-                    <FieldTextInput
-                        className={css.companyField}
-                        type="text"
-                        name="building"
-                        id="building"
-                        label={buildingMessage}
-                        placeholder={buildingPlaceholderMessage}
-                        maxLength={30}
-                    />
+                    {accountType !== 'e' ?
+                        <FieldTextInput
+                            className={css.companyField}
+                            type="text"
+                            name="building"
+                            id="building"
+                            label={buildingMessage}
+                            placeholder={buildingPlaceholderMessage}
+                            maxLength={30}
+                        /> : null}
                     <p className={css.websiteSubtitle}>
                         {warningLabel}
                     </p>

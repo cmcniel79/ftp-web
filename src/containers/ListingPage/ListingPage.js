@@ -38,6 +38,7 @@ import {
   LayoutWrapperFooter,
   Footer,
   BookingPanel,
+  NamedLink
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '../../containers';
 
@@ -56,6 +57,7 @@ import SectionSellerMaybe from './SectionSellerMaybe';
 import SectionSizesMaybe from './SectionSizesMaybe';
 import SectionCustomOrdersMaybe from './SectionCustomOrdersMaybe';
 import SectionPremiumPriceMaybe from './SectionPremiumPriceMaybe';
+import SectionBarterMaybe from './SectionBarterMaybe';
 import { sanitizeProtectedData } from '../../util/sanitize';
 
 import css from './ListingPage.css';
@@ -397,19 +399,23 @@ export class ListingPageComponent extends Component {
 
     const materialOptions = findOptionsForSelectFilter('material', filterConfig);
     const categoryOptions = findOptionsForSelectFilter('category', filterConfig);
-    const headingSubtitle =
-      publicData && publicData.category && publicData.subCategory ? (
-        <span className={css.headingSubtitle}>
-          {categoryLabel(categoryOptions, publicData.category)}
-          <span className={css.separator}>•</span>
-          {subCategoryLabel(categoryOptions, publicData.category, publicData.subCategory)}
-          {authorTribe &&
-            <div className={css.authorTribe}>
-              <span className={css.separator}>•</span>
-              {authorTribe}
-            </div>}
-        </span>
-      ) : null;
+    const listingCategory = publicData && publicData.category ? categoryLabel(categoryOptions, publicData.category) : null;
+    const listingSubCategory = publicData && publicData.category && publicData.subCategory ? subCategoryLabel(categoryOptions, publicData.category, publicData.subCategory) : null;
+    const headingSubtitle = publicData && publicData.category && publicData.subCategory ? (
+      <span className={css.headingSubtitle}>
+        {listingCategory}
+        {listingSubCategory &&
+          <div className={css.authorTribe}>
+            <span className={css.separator}>•</span>
+            {listingSubCategory}
+          </div>}
+        {authorTribe &&
+          <div className={css.authorTribe}>
+            <span className={css.separator}>•</span>
+            {authorTribe}
+          </div>}
+      </span>
+    ) : null;
 
     const material = publicData && publicData.material ? publicData.material : null;
     const sizes = publicData && publicData.sizes ? publicData.sizes : null;
@@ -420,6 +426,13 @@ export class ListingPageComponent extends Component {
     const shippingFee = isDomesticOrder && domesticFee ? resolveShippingFeePrice(publicData.shippingFee) :
       !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
         resolveShippingFeePrice({ amount: 0, currency: config.currency });
+    const allowsBarter = publicData && publicData.allowsBarter && publicData.allowsBarter[0] === 'hasBarter' ? true : false;
+    const barter = publicData && publicData.barter ? publicData.barter : null;
+    const userAccountType = currentUser && currentUser.attributes.profile.publicData &&
+      currentUser.attributes.profile.publicData.accountType ? currentUser.attributes.profile.publicData.accountType : null;
+    const signUpLink = (<NamedLink name="SignupPage">
+      <FormattedMessage id="ListingPage.signupLink" />
+    </NamedLink>);
     return (
       <Page
         title={schemaTitle}
@@ -486,35 +499,39 @@ export class ListingPageComponent extends Component {
                     isPremium={isPremium}
                   />
                   <SectionDescriptionMaybe description={description} />
+                  {userAccountType === 'e' ? (
+                    <SectionBarterMaybe barter={barter} allowsBarter={allowsBarter} />
+                  ) : null}
                   <SectionCustomOrdersMaybe customOrders={customOrders} />
                   <SectionMaterialsMaybe options={materialOptions} material={material} />
                   <SectionSizesMaybe sizes={sizes} />
                   {publicData ? (
-                    isPremium ? <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
-                      : ((isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders)) && (userCountry && authorCountry) ?
-                        <BookingPanel
-                          className={css.bookingBreakdown}
-                          listing={currentListing}
-                          isOwnListing={isOwnListing}
-                          unitType={unitType}
-                          onSubmit={handleBookingSubmit}
-                          title={bookingTitle}
-                          subTitle={bookingSubTitle}
-                          authorDisplayName={authorDisplayName}
-                          onManageDisableScrolling={onManageDisableScrolling}
-                          timeSlots={timeSlots}
-                          fetchTimeSlotsError={fetchTimeSlotsError}
-                          onFetchTransactionLineItems={onFetchTransactionLineItems}
-                          lineItems={lineItems}
-                          fetchLineItemsInProgress={fetchLineItemsInProgress}
-                          fetchLineItemsError={fetchLineItemsError}
-                          isDomesticOrder={isDomesticOrder}
-                          shippingFee={shippingFee}
-                        />
-                        : !isDomesticOrder && !allowsInternationalOrders ?
-                          <span className={css.noInternational} >
-                            <FormattedMessage id="ListingPage.noInternationalOrders" />
-                          </span>
+                    isPremium ?
+                      <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
+                      : !currentUser ?
+                        <div>
+                          <FormattedMessage id="ListingPage.noAccount" values={{ signUpLink }} />
+                        </div>
+                        : ((isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders)) && (userCountry && authorCountry) ?
+                          <BookingPanel
+                            className={css.bookingBreakdown}
+                            listing={currentListing}
+                            isOwnListing={isOwnListing}
+                            unitType={unitType}
+                            onSubmit={handleBookingSubmit}
+                            title={bookingTitle}
+                            subTitle={bookingSubTitle}
+                            authorDisplayName={authorDisplayName}
+                            onManageDisableScrolling={onManageDisableScrolling}
+                            timeSlots={timeSlots}
+                            fetchTimeSlotsError={fetchTimeSlotsError}
+                            onFetchTransactionLineItems={onFetchTransactionLineItems}
+                            lineItems={lineItems}
+                            fetchLineItemsInProgress={fetchLineItemsInProgress}
+                            fetchLineItemsError={fetchLineItemsError}
+                            isDomesticOrder={isDomesticOrder}
+                            shippingFee={shippingFee}
+                          />
                           : userCountry === null ?
                             <span className={css.purchaseWarning} >
                               <FormattedMessage id="ListingPage.noUserCountry" />
@@ -523,9 +540,13 @@ export class ListingPageComponent extends Component {
                               <span className={css.purchaseWarning} >
                                 <FormattedMessage id="ListingPage.noAuthorCountry" />
                               </span>
-                              : <span className={css.purchaseWarning} >
-                                <FormattedMessage id="ListingPage.listingMissingInfo" />
-                              </span>) : null}
+                              : !isDomesticOrder && !allowsInternationalOrders ?
+                                <span className={css.noInternational} >
+                                  <FormattedMessage id="ListingPage.noInternationalOrders" />
+                                </span>
+                                : <span className={css.purchaseWarning} >
+                                  <FormattedMessage id="ListingPage.listingMissingInfo" />
+                                </span>) : null}
                   {!isPremium &&
                     <div className={css.reviewsContainerMobile}>
                       <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
@@ -618,7 +639,6 @@ const mapStateToProps = state => {
     enquiryModalOpenForListingId,
   } = state.ListingPage;
   const { currentUser } = state.user;
-
   const getListing = id => {
     const ref = { id, type: 'listing' };
     const listings = getMarketplaceEntities(state, [ref]);
