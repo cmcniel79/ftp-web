@@ -423,7 +423,9 @@ export class ListingPageComponent extends Component {
         resolveShippingFeePrice({ amount: 0, currency: config.currency });
     const allowsBarter = publicData && publicData.allowsBarter && publicData.allowsBarter[0] === 'hasBarter' ? true : false;
     const barter = publicData && publicData.barter ? publicData.barter : null;
-    console.log(publicData);
+    const userAccountType = currentUser && currentUser.attributes.profile.publicData && 
+      currentUser.attributes.profile.publicData.accountType ? currentUser.attributes.profile.publicData.accountType : null;
+    console.log(userAccountType);
     return (
       <Page
         title={schemaTitle}
@@ -490,8 +492,8 @@ export class ListingPageComponent extends Component {
                     isPremium={isPremium}
                   />
                   <SectionDescriptionMaybe description={description} />
-                  {allowsBarter ? (
-                    <SectionBarterMaybe barter={barter} />
+                  {userAccountType === 'e' ? (
+                    <SectionBarterMaybe barter={barter} allowsBarter={allowsBarter}/>
                   ) : null}
                   <SectionCustomOrdersMaybe customOrders={customOrders} />
                   <SectionMaterialsMaybe options={materialOptions} material={material} />
@@ -625,7 +627,6 @@ const mapStateToProps = state => {
     enquiryModalOpenForListingId,
   } = state.ListingPage;
   const { currentUser } = state.user;
-
   const getListing = id => {
     const ref = { id, type: 'listing' };
     const listings = getMarketplaceEntities(state, [ref]);
