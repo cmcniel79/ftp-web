@@ -362,6 +362,23 @@ const FAQPage = () => {
               <FormattedMessage id="FAQPage.rules" />
             </h2>
             <Accordion atomic={true}>
+            <AccordionButton title="Barter System">
+                <p>
+                  Verified Sellers can participate in our Barter System. <b>Participating is entirely optional!</b>&nbsp;
+                  Verified Sellers who would like to participate in bartering can list the items they are interested in, 
+                  on every listing that they post. Other Verified Sellers can then see on the listing what items the
+                  listing author is interested in. All trade offers can be sent with the Contact link under the 
+                  Author's name at the top of the listing. The two parties can then message about shipping and other details.
+                  <br/>
+                  <br/>
+                  The Barter System requires a high amount of trust in our Sellers to complete trades. 
+                  If someone is abusing the Barter System you can contact us through our&nbsp;
+                  <NamedLink name="ContactPage">
+                    <FormattedMessage id="FAQPage.contactPage" />
+                  </NamedLink>
+                  &nbsp;and we will investigate.
+                </p>
+              </AccordionButton>
               <AccordionButton title="Compliance with the Indian Arts and Crafts Act of 1990">
                 <p>
                   If you suspect a seller has misrepresented themselves in regards to Native American heritage or falsely suggests their product is Indian produced,
