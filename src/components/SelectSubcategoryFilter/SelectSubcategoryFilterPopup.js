@@ -30,9 +30,13 @@ class SelectSubcategoryFilterPopup extends Component {
     this.setState({ isOpen: isOpen });
   }
 
-  selectOption(queryParamName, option) {
+  selectOption(queryParamName, option, e) {
     this.setState({ isOpen: false });
     this.props.onSelect({ [queryParamName]: option });
+
+    if (e && e.currentTarget) {
+      e.currentTarget.blur();
+    }
   }
 
   selectCategory(option) {
@@ -40,6 +44,8 @@ class SelectSubcategoryFilterPopup extends Component {
     if (sub !== null) {
       this.setState({ subCategory: sub });
       this.setState({ categorySelected: true });
+    } else if(option.key === 'other') {
+      this.selectOption('pub_subCategory', option.key);
     }
   }
 
@@ -138,7 +144,7 @@ class SelectSubcategoryFilterPopup extends Component {
           </button>
           <button
             className={css.clearMenuItem}
-            onClick={() => this.selectOption(queryParamName, null)}
+            onClick={(e) => this.selectOption(queryParamName, null, e)}
           >
             <FormattedMessage id={'SelectSubcategoryFilter.popupClear'} />
           </button>

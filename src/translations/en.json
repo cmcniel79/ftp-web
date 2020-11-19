@@ -951,7 +951,7 @@
   "SelectSubcategoryFilter.popupBack": "Back to Main Categories",
   "SelectSubcategoryFilter.popupSearchAll": "Search All",
   "SelectSubcategoryFilter.popupClear": "Clear",
-  "SelectSubcategoryFilter.plainBack": "Back to Main Categories",
+  "SelectSubcategoryFilter.plainBack": "< Back to Main Categories",
   "SelectSubcategoryFilter.plainSearchAll": "Search All",
   "SelectSubcategoryFilter.plainClear": "Clear",
   "SellerCard.heading": "{name}",
