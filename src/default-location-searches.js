@@ -8,13 +8,13 @@ const { LatLng } = sdkTypes;
 // Each item in the array should be an object with a unique `id` (String) and a
 // `predictionPlace` (util.types.place) properties.
 export default [
-  {
-    id: 'default-albuquerque',
-    predictionPlace: {
-      address: 'Albuquerque, NM',
-      origin: new LatLng(35.106766, -106.629181)
-    },
-  },
+  // {
+  //   id: 'default-albuquerque',
+  //   predictionPlace: {
+  //     address: 'Albuquerque, NM',
+  //     origin: new LatLng(35.106766, -106.629181)
+  //   },
+  // },
   {
     id: 'default-gallup',
     predictionPlace: {
