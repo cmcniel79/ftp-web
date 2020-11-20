@@ -401,7 +401,6 @@ export class TransactionPanelComponent extends Component {
       !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
         resolveShippingFeePrice({ amount: 0, currency: config.currency });
     const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders && publicData.allowsInternationalOrders[0] === 'hasFee' ? true : false;
-    console.log(stateData.showBookingPanel);
 
     return (
       <div className={classes}>
@@ -434,7 +433,7 @@ export class TransactionPanelComponent extends Component {
                 {refundInfo}
               </div> : null}
 
-            {!stateData.showBookingPanel ? (
+            {!stateData.showBookingPanel && currentTransaction.attributes.payoutTotal ? (
               <div className={css.addressSection}>
                 <h3 className={css.addressHeading}>
                   <FormattedMessage id="TransactionPanel.customerAddress" />
