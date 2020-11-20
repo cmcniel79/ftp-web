@@ -11,8 +11,8 @@ export default [
   {
     id: 'default-albuquerque',
     predictionPlace: {
-      address: 'Albuquerque, NM',
-      origin: new LatLng(35.106766, -106.629181)
+      address: 'Gallup, NM',
+      origin: new LatLng(35.5280783, -108.7425843)
     },
   },
   {
