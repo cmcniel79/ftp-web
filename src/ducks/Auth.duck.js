@@ -5,7 +5,9 @@ import { storableError } from '../util/errors';
 import * as log from '../util/log';
 
 const authenticated = authInfo => authInfo && authInfo.isAnonymous === false;
-
+const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
+const URL = process.env.REACT_APP_API_MAILCHIMP + ENV;
+const KEY = process.env.REACT_APP_API_KEY;
 // ================ Action types ================ //
 
 export const AUTH_INFO_REQUEST = 'app/Auth/AUTH_INFO_REQUEST';
@@ -194,12 +196,27 @@ export const logout = () => (dispatch, getState, sdk) => {
     .catch(e => dispatch(logoutError(storableError(e))));
 };
 
+export const updateMailchimp = actionPayload => {
+  const options = {
+    method: 'POST',
+    withCredentials: false,
+    body: JSON.stringify(actionPayload),
+    headers: {
+      "Content-Type": "application/json",
+      "X-Api-Key": KEY,
+    }
+  }
+  fetch(URL, options)
+  .then(response => response.json())
+  .catch(() => console.log("Could not update ranking"))
+};
+
 export const signup = params => (dispatch, getState, sdk) => {
   if (authenticationInProgress(getState())) {
     return Promise.reject(new Error('Login or logout already in progress'));
   }
   dispatch(signupRequest());
-  const { email, password, firstName, lastName, country, ...rest } = params;
+  const { email, password, firstName, lastName, country, getNewsletter, ...rest } = params;
 
   // Account, shippingAddress and isAdult gets set for each user at signup. It makes it easier to change
   // user's account types later on in console if account type is already initialized. Country is also used
@@ -214,6 +231,11 @@ export const signup = params => (dispatch, getState, sdk) => {
       email, password, firstName, lastName, protectedData: { shippingAddress: { country: country }, ...rest}, 
       publicData: { accountType: "" , country: country}
     };
+
+  // Add subscribers to our mailchimp email list
+  const subscribed = getNewsletter && getNewsletter[0] === 'allowNewsletter' ? true : false
+  const mailchimpParams = { email, firstName, lastName, subscribed };
+  updateMailchimp(mailchimpParams);
 
   // We must login the user if signup succeeds since the API doesn't
   // do that automatically.
