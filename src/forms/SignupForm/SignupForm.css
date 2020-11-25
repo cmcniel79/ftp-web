@@ -45,11 +45,16 @@
 
 .bottomWrapper {
   @apply --marketplaceModalBottomWrapper;
-  margin-top: 50px;
+  margin-top: 25px;
 }
 
 .bottomWrapperText {
   @apply --marketplaceModalBottomWrapperText;
+}
+
+.newsletterCheckbox {
+  display: block;
+  margin: 25px 0;
 }
 
 .termsText {
