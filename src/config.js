@@ -97,7 +97,7 @@ const siteInstagramPage = 'https://www.instagram.com/fromthepeople.co/';
 // Facebook page is used in SEO schema (http://schema.org/Organization)
 const siteFacebookPage = 'https://www.facebook.com/fromthepeople.co/';
 
-const siteTikTokPage = null;
+const siteTikTokPage = 'https://www.tiktok.com/@fromthepeopleco';
 
 // Social logins & SSO
 
