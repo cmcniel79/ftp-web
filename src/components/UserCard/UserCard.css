@@ -8,7 +8,10 @@
 
 .avatar {
   flex-shrink: 0;
-  margin-right: 36px;
+  margin-right: 10px;
+  @media (--viewportMedium) {
+    margin-right: 36px;
+  }
 }
 
 .premiumAvatar {
@@ -28,10 +31,15 @@
 
 .heading {
   @apply --marketplaceH2FontStyles;
-  margin: 20px 0 0 0;
+  line-height: 20px;
+  margin:  0 0 0 0;
   @media (--viewportMedium) {
     margin: 0 0 0 0;
   }
+}
+
+.headingLink {
+  color: var(--matterColor);
 }
 
 .tribeText {
@@ -69,6 +77,19 @@
   }
 }
 
+.sideBioContainer {
+  display: none;
+  @media (--viewportMedium) {
+    display: initial;
+    margin: 0 0 0 50px;
+  }
+}
+
+.sideBioTitle {
+  margin: 0;
+  line-height: 16px;
+}
+
 .mobileBio {
   @media (--viewportMedium) {
     display: none;
@@ -90,9 +111,10 @@
 
 .links {
   @apply --marketplaceH4FontStyles;
-  margin-top: 13px;
+  margin: 13px 0 0 0;
+  white-space: nowrap;
   @media (--viewportMedium) {
-    margin: 16px 0 0 0;
+    margin: 10px 0 0 0;
   }
 }
 
@@ -104,7 +126,7 @@
 }
 
 .linkSeparator {
-  margin: 0 10px;
+  margin: 0 5px;
   color: var(--marketplaceColor);
 }
 
@@ -112,7 +134,7 @@
   display: flex;
   flex-direction: column;
   @media (--viewportMedium) {
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: baseline;
   }
@@ -128,17 +150,11 @@
   }
 }
 
-.editProfile {
-  @apply --marketplaceH4FontStyles;
+.editAndContactButtons {
   display: inline;
 }
 
-.contact {
-  @apply --marketplaceLinkStyles;
-  @apply --marketplaceH4FontStyles;
-  margin: 0;
-}
-
-.contactLink {
-  display: inline;
+.linkButton {
+  @apply --userCardButtonStyles;
+  margin-left: 5px;
 }

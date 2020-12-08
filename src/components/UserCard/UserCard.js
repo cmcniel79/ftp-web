@@ -3,7 +3,7 @@ import { string, func, oneOfType } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import truncate from 'lodash/truncate';
 import classNames from 'classnames';
-import { AvatarLarge, NamedLink, InlineTextButton, UserSocialMedia, ExternalLink } from '../../components';
+import { AvatarLarge, NamedLink, InlineTextButton, UserSocialMedia, ExternalLink, FollowButton } from '../../components';
 import { ensureUser, ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
 
@@ -71,7 +71,7 @@ ExpandableBio.propTypes = {
 };
 
 const UserCard = props => {
-  const { rootClassName, className, user, currentUser, onContactUser } = props;
+  const { rootClassName, className, user, currentUser, onContactUser, isFollowed, updateFollowed, isFollowingPage } = props;
 
   const userIsCurrentUser = user && user.type === 'currentUser';
   const ensuredUser = userIsCurrentUser ? ensureCurrentUser(user) : ensureUser(user);
@@ -82,17 +82,17 @@ const UserCard = props => {
   const { displayName, bio } = ensuredUser.attributes.profile;
 
   // Gather custom data fields from seller's account.
-  const accountType = ensuredUser.attributes.profile.publicData && ensuredUser.attributes.profile.publicData.accountType ? 
-    ensuredUser.attributes.profile.publicData.accountType : null;  
+  const accountType = ensuredUser.attributes.profile.publicData && ensuredUser.attributes.profile.publicData.accountType ?
+    ensuredUser.attributes.profile.publicData.accountType : null;
   const isPremium = accountType && accountType === "p" ? true : false;
   const isVerified = accountType && accountType === "e" ? true : false;
-  const companyWebsite = isPremium && ensuredUser.attributes.profile.publicData && ensuredUser.attributes.profile.publicData.companyWebsite ? 
+  const companyWebsite = isPremium && ensuredUser.attributes.profile.publicData && ensuredUser.attributes.profile.publicData.companyWebsite ?
     ensuredUser.attributes.profile.publicData.companyWebsite : null;
   const companyName = isPremium && ensuredUser.attributes.profile.publicData && ensuredUser.attributes.profile.publicData.companyName ?
     ensuredUser.attributes.profile.publicData.companyName : null;
   const socialMedia = ensuredUser.attributes.profile.publicData && ensuredUser.attributes.profile.publicData.socialMedia ?
     ensuredUser.attributes.profile.publicData.socialMedia : null;
-
+  const authorId = ensuredUser && ensuredUser.id && ensuredUser.id.uuid ? ensuredUser.id.uuid : null
   const handleContactUserClick = () => {
     onContactUser(user);
   };
@@ -103,71 +103,87 @@ const UserCard = props => {
     [css.withBioMissingAbove]: !hasBio,
   });
 
-  const separator = isCurrentUser ? null : <span className={css.linkSeparator}>•</span>;
-
-  const contact = !isPremium ? (
-    <span className={css.contactLink}>
-    {separator}
-    <InlineTextButton rootClassName={css.contact} onClick={handleContactUserClick}>
+  const contact = isFollowingPage ? (
+    <NamedLink className={css.linkButton} name="ProfileSettingsPage">
+      <FormattedMessage id="UserCard.viewProfile" />
+      </NamedLink>
+  ) : !isPremium ? (
+    <InlineTextButton rootClassName={css.linkButton} onClick={handleContactUserClick}>
       <FormattedMessage id="UserCard.contactUser" />
     </InlineTextButton>
-    </span>
-  )
-    : null;
+  ) : isPremium && companyName && companyWebsite ?
+        <ExternalLink className={css.linkButton} href={companyWebsite}>
+          <FormattedMessage id="UserCard.viewWebsite" />
+        </ExternalLink>
+        : isPremium && companyName ?
+          <NamedLink className={css.linkButton} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
+            <FormattedMessage id="UserCard.viewProfile" />
+          </NamedLink>
+          : null;
 
   const editProfile = (
-    <span className={css.editProfile}>
-      <span className={css.linkSeparator}>•</span>
-      <NamedLink name="ProfileSettingsPage">
-        <FormattedMessage id="ListingPage.editProfileLink" />
-      </NamedLink>
-    </span>
+    <NamedLink className={css.linkButton} name="ProfileSettingsPage">
+      <FormattedMessage id="ListingPage.editProfileLink" />
+    </NamedLink>
   );
 
   const links = ensuredUser.id ? (
-    <p className={linkClasses}>
-      {isPremium && companyWebsite ?
-        <ExternalLink className={css.link} href={companyWebsite}>
-          <FormattedMessage id="UserCard.companyWebsite" />
-        </ExternalLink>
-        :
-        <NamedLink className={css.link} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
-          <FormattedMessage id="UserCard.viewProfileLink" />
-        </NamedLink>
-      }
-      {isCurrentUser ? editProfile : contact}
-    </p>
+    <div className={linkClasses}>
+      {!isCurrentUser &&
+        <FollowButton
+          authorId={authorId}
+          isFollowed={isFollowed}
+          updateFollowed={updateFollowed}
+        />}
+        <span className={css.editAndContactButtons}>
+          {isCurrentUser ? editProfile : contact}
+        </span>
+    </div>
   ) : null;
 
-  const avatarClassNames = isPremium ? css.premiumAvatar : css.avatar;
+  const avatarClassNames = isPremium && !isFollowingPage ? css.premiumAvatar : css.avatar;
 
   return (
     <div className={classes}>
       <div className={css.content}>
-        <AvatarLarge className={avatarClassNames} user={user} enrolled={isVerified} companyWebsite={companyWebsite}/>
+        <AvatarLarge className={avatarClassNames} user={user} enrolled={isVerified} companyWebsite={companyWebsite} />
         <div className={css.info}>
           <div className={css.headingRow}>
             <h3 className={css.heading}>
-              {isPremium && companyName ?
-                <FormattedMessage id="UserCard.heading" values={{ name: companyName }} />
-                :
-                <FormattedMessage id="UserCard.heading" values={{ name: displayName }} />
-              }
+              {isPremium && companyName && companyWebsite ?
+                <ExternalLink className={css.headingLink} href={companyWebsite}>
+                  <FormattedMessage id="UserCard.heading" values={{ name: companyName }} />
+                </ExternalLink>
+                : isPremium && companyName ?
+                  <NamedLink className={css.headingLink} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
+                    <FormattedMessage id="UserCard.heading" values={{ name: companyName }} />
+                  </NamedLink>
+                  :
+                  <NamedLink className={css.headingLink} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
+                    <FormattedMessage id="UserCard.heading" values={{ name: displayName }} />
+                  </NamedLink>}
             </h3>
           </div>
           <UserSocialMedia socialMedia={socialMedia} />
           {links}
         </div>
+        {isFollowingPage ?
+          <div className={css.sideBioContainer}>
+            <h2 className={css.sideBioTitle}>
+              <FormattedMessage id="UserCard.sideBioTitle" />
+            </h2>
+            <ExpandableBio className={css.desktopBio} bio={bio} />
+          </div> : null}
       </div>
-      {isPremium && hasBio &&
-      <div>
-        <h2 className={css.bioTitle}>
-        <FormattedMessage id="UserCard.bioTitle"/>
-        </h2>
-        <ExpandableBio className={css.desktopBio} bio={bio} />
-        <ExpandableBio className={css.mobileBio} bio={bio} />
-      </div>
-      }
+      {isPremium && hasBio !== null && !isFollowingPage ?
+        <div>
+          <h2 className={css.bioTitle}>
+            <FormattedMessage id="UserCard.bioTitle" />
+          </h2>
+          <ExpandableBio className={css.desktopBio} bio={bio} />
+          <ExpandableBio className={css.mobileBio} bio={bio} />
+        </div>
+        : null}
     </div>
   );
 };
@@ -184,7 +200,7 @@ UserCard.propTypes = {
   className: string,
   user: oneOfType([propTypes.user, propTypes.currentUser]),
   currentUser: propTypes.currentUser,
-  onContactUser: func.isRequired,
+  // onContactUser: func.isRequired || null,
 };
 
 export default UserCard;

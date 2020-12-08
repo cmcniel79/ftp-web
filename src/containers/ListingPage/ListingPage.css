@@ -613,3 +613,8 @@
   word-break: break-word;
   hyphens: auto;
 }
+
+.externalLinkIcon {
+  height: 25px;
+  margin: 5px 5px 8px 5px;
+}

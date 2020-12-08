@@ -4,12 +4,10 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { propTypes } from '../../util/types';
-import { parse } from '../../util/urlHelpers';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import {
   ListingCard,
   Page,
-  PaginationLinks,
   UserNav,
   LayoutSingleColumn,
   LayoutWrapperTopbar,
@@ -20,16 +18,11 @@ import {
 import { TopbarContainer } from '../../containers';
 import {
   queryLikedListings,
+  callLikeAPI
 } from './LikedListingsPage.duck';
 import css from './LikedListingsPage.css';
-import { getListingsById } from '../../ducks/marketplaceData.duck';
+import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { ensureListing } from '../../util/data';
-
-
-// Pagination page size might need to be dynamic on responsive page layouts
-// Current design has max 3 columns 42 is divisible by 2 and 3
-// So, there's enough cards to fill all columns on full pagination pages
-const RESULT_PAGE_SIZE = 42;
 
 export class LikedListingsPageComponent extends Component {
   constructor(props) {
@@ -37,34 +30,70 @@ export class LikedListingsPageComponent extends Component {
 
     this.state = { listingMenuOpen: null };
     this.onToggleMenu = this.onToggleMenu.bind(this);
+    this.isLiked = this.isLiked.bind(this);
+    this.updateLikes = this.updateLikes.bind(this);
+    this.sendLikes = this.sendLikes.bind(this);
   }
 
   onToggleMenu(listing) {
     this.setState({ listingMenuOpen: listing });
   }
 
+  isLiked(listingId) {
+    return this.likes.findIndex(x => x === listingId);
+  }
+
+  updateLikes(listingId) {
+    const index = this.isLiked(listingId);
+    var likeBool;
+    if (index > -1) {
+      // Remove listing from likes list
+      this.likes.splice(index, 1);
+      likeBool = false;
+    } else {
+      // Add listing to likes list
+      this.likes.push(listingId);
+      likeBool = true;
+    }
+    this.sendLikes();
+    const apiPayload = {
+      uuid: listingId,
+      isListing: true,
+      add: likeBool
+    };
+    callLikeAPI(apiPayload);
+  }
+
+  sendLikes() {
+    const updatedLikes = {
+      privateData: {
+        likes: this.likes
+      }
+    };
+    this.props.onSendUpdatedLikes(updatedLikes);
+  }
+
   render() {
     const {
-      pagination,
       queryInProgress,
       queryListingsError,
-      queryParams,
       scrollingDisabled,
       intl,
       listings
     } = this.props;
 
-    listings.map(l => ensureListing(l));
+    
+    this.liked = listings && listings.map(l => {
+      return ensureListing(l).id.uuid;
+    });
+    const listingsAreLoaded = !queryInProgress;
 
-    const hasPaginationInfo = !!pagination && pagination.totalItems != null;
-    const listingsAreLoaded = !queryInProgress && hasPaginationInfo;
 
-
-    const loadingResults = (
+    const loadingResults = listingsAreLoaded ? (
       <h2>
         <FormattedMessage id="LikedListingsPage.loadingOwnListings" />
       </h2>
-    );
+    ) : null;
 
     const queryError = (
       <h2 className={css.error}>
@@ -73,34 +102,21 @@ export class LikedListingsPageComponent extends Component {
     );
 
     const noResults =
-      listingsAreLoaded && listings.length === 0 ? (
+      listingsAreLoaded && listings && listings.length === 0 ? (
         <h1 className={css.title}>
           <FormattedMessage id="LikedListingsPage.noResults" />
         </h1>
       ) : null;
 
     const heading =
-      listingsAreLoaded && listings.length > 0 ? (
+      listingsAreLoaded && listings && listings.length > 0 ? (
         <h1 className={css.title}>
           <FormattedMessage
             id="LikedListingsPage.youHaveListings"
-            values={{ count: pagination.totalItems }}
+            values={{ count: listings.length }}
           />
         </h1>
-      ) : (
-          noResults
-        );
-
-    const page = queryParams ? queryParams.page : 1;
-    const paginationLinks =
-      listingsAreLoaded && pagination && pagination.totalPages > 1 ? (
-        <PaginationLinks
-          className={css.pagination}
-          pageName="LikedListingsPage"
-          pageSearchParams={{ page }}
-          pagination={pagination}
-        />
-      ) : null;
+      ) : ( noResults );
 
     const title = intl.formatMessage({ id: 'LikedListingsPage.title' });
 
@@ -125,16 +141,17 @@ export class LikedListingsPageComponent extends Component {
             <div className={css.listingPanel}>
               {heading}
               <div className={css.listingCards}>
-                {listings.map(l => (
+                {listings && listings.length > 0 ? listings.map(l => (
                   <ListingCard
                     className={css.listingCard}
                     key={l.id.uuid}
                     listing={l}
                     renderSizes={renderSizes}
+                    isLiked={this.isLiked}
+                    updateLikes={this.updateLikes}
                   />
-                ))}
+                )) : null}
               </div>
-              {paginationLinks}
             </div>
           </LayoutWrapperMain>
           <LayoutWrapperFooter>
@@ -148,14 +165,12 @@ export class LikedListingsPageComponent extends Component {
 
 LikedListingsPageComponent.defaultProps = {
   listings: [],
-  pagination: null,
 };
 
 const { arrayOf, bool } = PropTypes;
 
 LikedListingsPageComponent.propTypes = {
   listings: arrayOf(propTypes.listing),
-  pagination: propTypes.pagination,
   scrollingDisabled: bool.isRequired,
   // from injectIntl
   intl: intlShape.isRequired,
@@ -163,14 +178,16 @@ LikedListingsPageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const {
-    // pagination,
-    currentPageResultIds,
+    queryInProgress,
+    queryListingsError,
+    likedIds,
   } = state.LikedListingsPage;
-  const listings = getListingsById(state, currentPageResultIds); 
+  const listings = likedIds && likedIds.length > 0 ? getMarketplaceEntities(state, likedIds) : null; 
   return {
-    // pagination,
     scrollingDisabled: isScrollingDisabled(state),
-    listings
+    listings,
+    queryInProgress,
+    queryListingsError,
   };
 };
 
@@ -181,17 +198,8 @@ const LikedListingsPage = compose(
   injectIntl
 )(LikedListingsPageComponent);
 
-LikedListingsPage.loadData = (params, search) => {
-  const queryParams = parse(search);
-  const page = queryParams.page || 1;
-  return queryLikedListings({
-    ...queryParams,
-    page,
-    perPage: RESULT_PAGE_SIZE,
-    include: ['images'],
-    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
-    'limit.images': 1,
-  });
+LikedListingsPage.loadData = () => {
+  return queryLikedListings();
 };
 
 export default LikedListingsPage;

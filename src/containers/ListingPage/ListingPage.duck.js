@@ -12,8 +12,9 @@ import {
   LISTING_PAGE_DRAFT_VARIANT,
   LISTING_PAGE_PENDING_APPROVAL_VARIANT,
 } from '../../util/urlHelpers';
-import { fetchCurrentUser, fetchCurrentUserHasOrdersSuccess } from '../../ducks/user.duck';
+import { fetchCurrentUser, fetchCurrentUserHasOrdersSuccess, currentUserShowSuccess } from '../../ducks/user.duck';
 
+const URL = process.env.REACT_APP_API_LIKES;
 const { UUID } = sdkTypes;
 
 // ================ Action types ================ //
@@ -334,4 +335,43 @@ export const loadData = (params, search) => dispatch => {
       dispatch(fetchReviews(listingId)),
     ]);
   }
+};
+
+export const sendUpdatedFollowed = actionPayload => {
+  return (dispatch, getState, sdk) => {
+    const queryParams = {
+      expand: true,
+    };
+    
+    return sdk.currentUser
+      .updateProfile(actionPayload, queryParams)
+      .then(response => {
+        const entities = denormalisedResponseEntities(response);
+        if (entities.length !== 1) {
+          throw new Error('Expected a resource in the sdk.currentUser.updateProfile response');
+        }
+        const currentUser = entities[0];
+
+        // Update current user in state.user.currentUser through user.duck.js
+        dispatch(currentUserShowSuccess(currentUser));
+      })
+      .catch(e => console.log(e));
+  };
+};
+
+export const callFollowAPI = actionPayload => {
+    const options = {
+      method: 'POST',
+      withCredentials: false,
+      body: JSON.stringify(actionPayload),
+      headers: {
+        "Content-Type": "application/json",
+        "X-Api-Key": "dShKIr3xlkgXBtiwSeSN7jaYIjmIwnnnN4rLDN00",
+      }
+    }
+    fetch(URL, options)
+      .then(response => {
+        response.json();
+      })
+      .catch(e => console.log(e));
 };

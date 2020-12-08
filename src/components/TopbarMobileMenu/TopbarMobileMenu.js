@@ -102,14 +102,22 @@ const TopbarMobileMenu = props => {
       <NamedLink name="ContactPage" className={css.regularLink}>
         <FormattedMessage id="TopbarMobileMenu.contactLink" />
       </NamedLink>
-      {/* {isAuthenticated &&
+      {isAuthenticated &&
         <NamedLink
           className={css.regularLink}
           name="LikedListingsPage"
         >
           <FormattedMessage id="TopbarMobileMenu.yourLikedListingsLink" />
         </NamedLink>
-      } */}
+      }
+      {isAuthenticated &&
+        <NamedLink
+          className={css.regularLink}
+          name="FollowingPage"
+        >
+          <FormattedMessage id="TopbarMobileMenu.yourFollowedArtistsLink" />
+        </NamedLink>
+      }
       {isAuthenticated &&
         <NamedLink
           className={css.regularLink}

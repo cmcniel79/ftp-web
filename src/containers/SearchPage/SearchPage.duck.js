@@ -6,6 +6,8 @@ import config from '../../config';
 import { denormalisedResponseEntities } from '../../util/data';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
 
+const URL = process.env.REACT_APP_API_LIKES;
+
 // ================ Action types ================ //
 
 export const SEARCH_LISTINGS_REQUEST = 'app/SearchPage/SEARCH_LISTINGS_REQUEST';
@@ -158,7 +160,7 @@ export const setActiveListing = listingId => ({
   payload: listingId,
 });
 
-export const updateLikedListings = actionPayload => {
+export const sendUpdatedLikes = actionPayload => {
   return (dispatch, getState, sdk) => {
     dispatch(updateProfileRequest());
 
@@ -182,4 +184,21 @@ export const updateLikedListings = actionPayload => {
       })
       .catch(e => dispatch(updateProfileError(storableError(e))));
   };
+};
+
+export const callLikeAPI = actionPayload => {
+    const options = {
+      method: 'POST',
+      withCredentials: false,
+      body: JSON.stringify(actionPayload),
+      headers: {
+        "Content-Type": "application/json",
+        "X-Api-Key": "dShKIr3xlkgXBtiwSeSN7jaYIjmIwnnnN4rLDN00",
+      }
+    }
+    fetch(URL, options)
+      .then(response => {
+        response.json();
+      })
+      .catch(e => console.log(e));
 };

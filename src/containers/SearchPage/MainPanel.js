@@ -171,9 +171,8 @@ class MainPanel extends Component {
       filterConfig,
       sortConfig,
       currentUser,
-      onUpdateLikedListings,
-      isListingLiked,
-      removeListing,
+      isLiked,
+      updateLikes,
       saveTribes,
       tribes
     } = this.props;
@@ -378,9 +377,8 @@ class MainPanel extends Component {
             search={searchParamsForPagination}
             setActiveListing={onActivateListing}
             currentUser={currentUser}
-            onUpdateLikedListings={onUpdateLikedListings}
-            isListingLiked={isListingLiked}
-            removeListing={removeListing}
+            isLiked={isLiked}
+            updateLikes={updateLikes}
           />
         </div>
       </div>
