@@ -5,8 +5,9 @@ import {
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { storableError } from '../../util/errors';
 import { types as sdkTypes } from '../../util/sdkLoader';
-import { currentUserShowSuccess } from '../../ducks/user.duck';
+import { currentUserShowSuccess } from '../../ducks/user.duck'
 
+const URL = process.env.REACT_APP_API_LIKES;
 const { UUID } = sdkTypes;
 
 
@@ -104,7 +105,7 @@ export const queryListingsError = e => ({
     payload: e,
 });
 
-export const updateLikedListings = actionPayload => {
+export const sendUpdatedLikes = actionPayload => {
     return (dispatch, getState, sdk) => {
         const queryParams = {
             expand: true,
@@ -135,7 +136,7 @@ export const queryLikedListings = () => (dispatch, getState, sdk) => {
             const likedListingIds = response.data.data.attributes.profile.privateData.likes ?
                 response.data.data.attributes.profile.privateData.likes : null;
             if (likedListingIds && likedListingIds.length > 0) {
-                dispatch(queryLikeIds(likedListingIds.map(l => ({ type: 'listing', id: new UUID(l) }))));
+                dispatch(queryLikeIds(likedListingIds.reverse().map(l => ({ type: 'listing', id: new UUID(l) }))));
                 return (likedListingIds.map(like =>
                     sdk.listings.show({
                         id: like,
@@ -146,7 +147,7 @@ export const queryLikedListings = () => (dispatch, getState, sdk) => {
                             dispatch(addMarketplaceEntities(response));
                         })
                         .catch(e => {
-                            dispatch(queryListingsError(storableError(e)));
+                            dispatch(console.log(e));
                         })
                 ))
             }

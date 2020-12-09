@@ -18,29 +18,24 @@ import {
 import { TopbarContainer } from '../../containers';
 import {
   queryLikedListings,
-  callLikeAPI
+  callLikeAPI,
+  sendUpdatedLikes
 } from './LikedListingsPage.duck';
 import css from './LikedListingsPage.css';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
-import { ensureListing } from '../../util/data';
 
 export class LikedListingsPageComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { listingMenuOpen: null };
-    this.onToggleMenu = this.onToggleMenu.bind(this);
+    this.likes = [];
     this.isLiked = this.isLiked.bind(this);
     this.updateLikes = this.updateLikes.bind(this);
     this.sendLikes = this.sendLikes.bind(this);
   }
 
-  onToggleMenu(listing) {
-    this.setState({ listingMenuOpen: listing });
-  }
-
   isLiked(listingId) {
-    return this.likes.findIndex(x => x === listingId);
+    return this.likes && this.likes.length > 0 ? this.likes.findIndex(x => x === listingId) : -1;
   }
 
   updateLikes(listingId) {
@@ -79,15 +74,14 @@ export class LikedListingsPageComponent extends Component {
       queryListingsError,
       scrollingDisabled,
       intl,
-      listings
+      listings,
+      currentUser
     } = this.props;
 
-    
-    this.liked = listings && listings.map(l => {
-      return ensureListing(l).id.uuid;
-    });
     const listingsAreLoaded = !queryInProgress;
 
+    this.likes = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likes ? 
+      currentUser.attributes.profile.privateData.likes : [];
 
     const loadingResults = listingsAreLoaded ? (
       <h2>
@@ -102,7 +96,7 @@ export class LikedListingsPageComponent extends Component {
     );
 
     const noResults =
-      listingsAreLoaded && listings && listings.length === 0 ? (
+      listingsAreLoaded && ((listings && listings.length === 0) || (!listings)) ? (
         <h1 className={css.title}>
           <FormattedMessage id="LikedListingsPage.noResults" />
         </h1>
@@ -149,6 +143,7 @@ export class LikedListingsPageComponent extends Component {
                     renderSizes={renderSizes}
                     isLiked={this.isLiked}
                     updateLikes={this.updateLikes}
+                    currentUser={currentUser}
                   />
                 )) : null}
               </div>
@@ -182,18 +177,25 @@ const mapStateToProps = state => {
     queryListingsError,
     likedIds,
   } = state.LikedListingsPage;
-  const listings = likedIds && likedIds.length > 0 ? getMarketplaceEntities(state, likedIds) : null; 
+  const { currentUser } = state.user;
+  const listings = !queryInProgress && likedIds && likedIds.length > 0 ? getMarketplaceEntities(state, likedIds) : null;
   return {
     scrollingDisabled: isScrollingDisabled(state),
     listings,
     queryInProgress,
     queryListingsError,
+    currentUser
   };
 };
 
+const mapDispatchToProps = dispatch => ({
+  onSendUpdatedLikes: data => dispatch(sendUpdatedLikes(data)),
+});
+
 const LikedListingsPage = compose(
   connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
   ),
   injectIntl
 )(LikedListingsPageComponent);

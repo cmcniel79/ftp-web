@@ -51,11 +51,11 @@ export class SearchPageComponent extends Component {
   }
 
   isLiked(listingId) {
-    return this.likes.findIndex(x => x === listingId);
+    return this.likes && this.likes.length > 0 ? this.likes.findIndex(x => x === listingId) : -1;
   }
 
   updateLikes(listingId) {
-    const index = this.isLiked(listingId);
+    const index = this.likes && this.likes.length > 0 ? this.isLiked(listingId) : -1;
     var likeBool;
     if (index > -1) {
       // Remove listing from likes list
@@ -120,8 +120,7 @@ export class SearchPageComponent extends Component {
     });
 
     this.likes = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likes ? 
-      currentUser.attributes.profile.privateData.likes : null;
-
+      currentUser.attributes.profile.privateData.likes : [];
     // urlQueryParams doesn't contain page specific url params
     // like mapSearch, page or origin (origin depends on config.sortSearchByDistance)
     const urlQueryParams = pickSearchParamsOnly(searchInURL, filterConfig, sortConfig);

@@ -23,14 +23,12 @@ import {
 } from './FollowingPage.duck';
 import css from './FollowingPage.css';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
-import { ensureUser } from '../../util/data';
 
 export class FollowingPageComponent extends Component {
   constructor(props) {
     super(props);
 
     this.followed = [];
-    this.state = { listingMenuOpen: null };
     this.isFollowed = this.isFollowed.bind(this);
     this.updateFollowed = this.updateFollowed.bind(this);
     this.sendFollowed = this.sendFollowed.bind(this);
@@ -41,7 +39,7 @@ export class FollowingPageComponent extends Component {
   }
 
   isFollowed(sellerId) {
-    return this.followed.findIndex(x => x === sellerId);
+    return this.followed && this.followed.length > 0 ? this.followed.findIndex(x => x === sellerId) : -1;
   }
 
   updateFollowed(sellerId) {
@@ -84,9 +82,8 @@ export class FollowingPageComponent extends Component {
       currentUser,
     } = this.props;
 
-    this.followed = users && users.map(u => {
-      return ensureUser(u).id.uuid;
-    });
+    this.followed = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.followed ?
+      currentUser.attributes.profile.privateData.followed : [];
 
     const listingsAreLoaded = !queryInProgress;
     const loadingResults = (
@@ -101,7 +98,7 @@ export class FollowingPageComponent extends Component {
       </h2>
     );
 
-    const noResults = !queryInProgress && users && users.length === 0 ? (
+    const noResults = !queryInProgress && ((users && users.length === 0) || (!users)) ? (
       <h1 className={css.title}>
         <FormattedMessage id="FollowingPage.noResults" />
       </h1>

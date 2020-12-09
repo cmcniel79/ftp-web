@@ -115,7 +115,7 @@ export const queryFollowed = () => (dispatch, getState, sdk) => {
             const followedIds = response.data.data.attributes.profile.privateData.followed ?
                 response.data.data.attributes.profile.privateData.followed : null;
             if (followedIds && followedIds.length > 0) {
-                dispatch(queryFollowedIds(followedIds.map(l => ({ type: 'user', id: new UUID(l) }))));
+                dispatch(queryFollowedIds(followedIds.reverse().map(l => ({ type: 'user', id: new UUID(l) }))));
                 return (followedIds.map(follow =>
                     sdk.users.show({
                         id: follow,
@@ -126,7 +126,7 @@ export const queryFollowed = () => (dispatch, getState, sdk) => {
                             dispatch(addMarketplaceEntities(response));
                         })
                         .catch(e => {
-                            dispatch(queryFollowedError(storableError(e)));
+                            dispatch(console.log(e));
                         })
                 ))
             }
