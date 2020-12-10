@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { AvatarLarge, NamedLink, InlineTextButton, UserSocialMedia, ExternalLink, FollowButton } from '../../components';
 import { ensureUser, ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
+import exit from '../../assets/exit-white.svg';
 
 import css from './UserCard.css';
 
@@ -57,7 +58,8 @@ class ExpandableBio extends Component {
     return (
       <p className={className}>
         {expand ? bio : truncatedBio}
-        {bio !== truncatedBio && !expand ? showMore : showLess}
+        &nbsp;
+        {bio !== truncatedBio && !expand ? showMore : bio && bio.length > BIO_COLLAPSED_LENGTH ? showLess : null}
       </p>
     );
   }
@@ -103,23 +105,19 @@ const UserCard = props => {
     [css.withBioMissingAbove]: !hasBio,
   });
 
-  const contact = isFollowingPage ? (
-    <NamedLink className={css.linkButton} name="ProfileSettingsPage">
-      <FormattedMessage id="UserCard.viewProfile" />
-      </NamedLink>
-  ) : !isPremium ? (
+  const contact = !isPremium && !isFollowingPage? (
     <InlineTextButton rootClassName={css.linkButton} onClick={handleContactUserClick}>
       <FormattedMessage id="UserCard.contactUser" />
     </InlineTextButton>
-  ) : isPremium && companyName && companyWebsite ?
+  ) : isPremium && companyWebsite ? (
         <ExternalLink className={css.linkButton} href={companyWebsite}>
           <FormattedMessage id="UserCard.viewWebsite" />
+          <img className={css.externalLinkIcon} src={exit} alt="External Link" />
         </ExternalLink>
-        : isPremium && companyName ?
-          <NamedLink className={css.linkButton} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
+       ) : (
+       <NamedLink className={css.linkButton} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
             <FormattedMessage id="UserCard.viewProfile" />
-          </NamedLink>
-          : null;
+          </NamedLink>);
 
   const editProfile = (
     <NamedLink className={css.linkButton} name="ProfileSettingsPage">

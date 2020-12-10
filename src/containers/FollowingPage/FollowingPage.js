@@ -34,10 +34,6 @@ export class FollowingPageComponent extends Component {
     this.sendFollowed = this.sendFollowed.bind(this);
   }
 
-  componentWillUnmount() {
-    this.sendFollowed();
-  }
-
   isFollowed(sellerId) {
     return this.followed && this.followed.length > 0 ? this.followed.findIndex(x => x === sellerId) : -1;
   }

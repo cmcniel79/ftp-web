@@ -83,11 +83,11 @@ export class LikedListingsPageComponent extends Component {
     this.likes = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likes ? 
       currentUser.attributes.profile.privateData.likes : [];
 
-    const loadingResults = listingsAreLoaded ? (
+    const loadingResults =  (
       <h2>
         <FormattedMessage id="LikedListingsPage.loadingOwnListings" />
       </h2>
-    ) : null;
+    );
 
     const queryError = (
       <h2 className={css.error}>

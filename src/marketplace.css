@@ -282,7 +282,7 @@
   }
 
   --userCardButtonStyles {
-    @apply --marketplaceH4FontStyles;
+    @apply --marketplaceH5FontStyles;
     display: inline;
     border: none;
     background-color: var(--marketplaceColor);
@@ -297,6 +297,7 @@
         background-color: rgb(212, 0, 0, .7);
     }
     @media (--viewportMedium) {
+      @apply --marketplaceH4FontStyles;
       margin: 0;
     }
   }

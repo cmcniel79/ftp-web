@@ -16,10 +16,11 @@
 
 .premiumAvatar {
   flex-shrink: 0;
-  margin-right: 25px;
-  width: 120px;
-  height: 120px;
+  margin-right: 10px;
+  width: 100px;
+  height: 100px;
   @media (--viewportMedium) {
+    margin-right: 25px;
     width: 150px;
     height: 150px;
   }
@@ -106,7 +107,7 @@
 .showMore {
   @apply --marketplaceLinkStyles;
   @apply --marketplaceH4FontStyles;
-  margin: 0 0 0 5px;
+  margin: 0;
 }
 
 .links {
@@ -157,4 +158,9 @@
 .linkButton {
   @apply --userCardButtonStyles;
   margin-left: 5px;
+}
+
+.externalLinkIcon {
+  height: 25px;
+  margin: 0 0 3px 5px;
 }
