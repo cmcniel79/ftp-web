@@ -5,7 +5,7 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Form as FinalForm } from 'react-final-form';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
-import { Form, PrimaryButton, FieldTextInput, FieldSelect } from '../../components';
+import { Form, PrimaryButton, FieldTextInput, FieldSelect, FieldCheckbox } from '../../components';
 import getCountryCodes from '../../translations/countryCodes';
 import config from '../../config';
 
@@ -107,6 +107,8 @@ const SignupFormComponent = props => (
       const lastNameRequiredMessage = intl.formatMessage({
         id: 'SignupForm.lastNameRequired',
       });
+
+      const newsletterLabel = intl.formatMessage({ id: 'SignupForm.newsletterLabel' });
 
       // const isAdultLabel = intl.formatMessage({ id: 'SignupForm.isAdultLabel' });
       // const isAdultPlaceholder = intl.formatMessage({ id: 'SignupForm.isAdultPlaceholder' });
@@ -236,6 +238,13 @@ const SignupFormComponent = props => (
               label={passwordLabel}
               placeholder={passwordPlaceholder}
               validate={passwordValidators}
+            />
+            <FieldCheckbox
+              className={css.newsletterCheckbox}
+              id="getNewsletter"
+              name="getNewsletter"
+              label={newsletterLabel}
+              value="allowNewsletter"
             />
           </div>
           <div className={css.bottomWrapper}>
