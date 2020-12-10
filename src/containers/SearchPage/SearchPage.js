@@ -13,7 +13,7 @@ import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck
 import { Page } from '../../components';
 import { TopbarContainer } from '../../containers';
 
-import { searchListings, setActiveListing, updateLikedListings } from './SearchPage.duck';
+import { searchListings, setActiveListing, sendUpdatedLikes, callLikeAPI } from './SearchPage.duck';
 import {
   pickSearchParamsOnly,
   validURLParamsForExtendedData,
@@ -33,17 +33,16 @@ export class SearchPageComponent extends Component {
     super(props);
 
     this.tribes = [];
-    this.likedListings = [];
+    this.likes = [];
     this.state = {
       isSearchMapOpenOnMobile: props.tab === 'map',
       isMobileModalOpen: false,
     };
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
-    this.addToLikedListings = this.addToLikedListings.bind(this);
-    this.removeFromLikedListings = this.removeFromLikedListings.bind(this);
-    this.sendUpdatedLikedListings = this.sendUpdatedLikedListings.bind(this);
-    this.isListingLiked = this.isListingLiked.bind(this);
+    this.isLiked = this.isLiked.bind(this);
+    this.updateLikes = this.updateLikes.bind(this);
+    this.sendLikes = this.sendLikes.bind(this);
     this.saveTribes = this.saveTribes.bind(this);
   }
 
@@ -51,38 +50,38 @@ export class SearchPageComponent extends Component {
     this.tribes = nativeLandTribes;
   }
 
-  isListingLiked(listing) {
-    var x;
-    for (x in this.likedListings) {
-      if (this.likedListings[x].uuid === listing.uuid) {
-        return true;
-      }
-    }
-    return false;
+  isLiked(listingId) {
+    return this.likes && this.likes.length > 0 ? this.likes.findIndex(x => x === listingId) : -1;
   }
 
-  addToLikedListings(listing) {
-    if (!this.isListingLiked(listing)) {
-      this.likedListings.push(listing);
-      this.sendUpdatedLikedListings(this.likedListings);
-    }
-  }
-
-  removeFromLikedListings(listing) {
-    const index = this.likedListings.findIndex(x => x.uuid === listing.uuid);
+  updateLikes(listingId) {
+    const index = this.likes && this.likes.length > 0 ? this.isLiked(listingId) : -1;
+    var likeBool;
     if (index > -1) {
-      this.likedListings.splice(index, 1);
-      this.sendUpdatedLikedListings(this.likedListings);
+      // Remove listing from likes list
+      this.likes.splice(index, 1);
+      likeBool = false;
+    } else {
+      // Add listing to likes list
+      this.likes.push(listingId);
+      likeBool = true;
     }
+    this.sendLikes();
+    const apiPayload = {
+      uuid: listingId,
+      isListing: true,
+      add: likeBool
+    };
+    callLikeAPI(apiPayload);
   }
 
-  sendUpdatedLikedListings() {
+  sendLikes() {
     const updatedLikes = {
       privateData: {
-        likedListings: this.likedListings
+        likes: this.likes
       }
     };
-    this.props.onUpdateLikedListings(updatedLikes);
+    this.props.onSendUpdatedLikes(updatedLikes);
   }
 
   // Invoked when a modal is opened from a child component,
@@ -120,10 +119,8 @@ export class SearchPageComponent extends Component {
       latlngBounds: ['bounds'],
     });
 
-    if (this.props.currentUser && this.props.currentUser.attributes.profile.privateData.likedListings) {
-      this.likedListings = Object.values(this.props.currentUser.attributes.profile.privateData.likedListings);
-    }
-
+    this.likes = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likes ? 
+      currentUser.attributes.profile.privateData.likes : [];
     // urlQueryParams doesn't contain page specific url params
     // like mapSearch, page or origin (origin depends on config.sortSearchByDistance)
     const urlQueryParams = pickSearchParamsOnly(searchInURL, filterConfig, sortConfig);
@@ -150,16 +147,6 @@ export class SearchPageComponent extends Component {
     const topbarClasses = this.state.isMobileModalOpen
       ? classNames(css.topbarBehindModal, css.topbar)
       : css.topbar;
-    // this.state.likedListings = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likedListings ?
-    //   Object.values(currentUser.attributes.profile.privateData.likedListings) : [];
-    // if(searchInProgress) {
-  //   for (var i = listings.length - 1; i > 0; i--) {
-  //     var j = Math.floor(Math.random() * (i + 1));
-  //     var temp = listings[i];
-  //     listings[i] = listings[j];
-  //     listings[j] = temp;
-  // }
-// }
     // N.B. openMobileMap button is sticky.
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
     /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -192,9 +179,8 @@ export class SearchPageComponent extends Component {
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             history={history}
             currentUser={currentUser}
-            onUpdateLikedListings={this.addToLikedListings}
-            isListingLiked={this.isListingLiked}
-            removeListing={this.removeFromLikedListings}
+            isLiked={this.isLiked}
+            updateLikes={this.updateLikes}
             saveTribes={this.saveTribes}
             tribes={this.tribes}
           />
@@ -270,7 +256,7 @@ const mapDispatchToProps = dispatch => ({
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
   onActivateListing: listingId => dispatch(setActiveListing(listingId)),
-  onUpdateLikedListings: data => dispatch(updateLikedListings(data)),
+  onSendUpdatedLikes: data => dispatch(sendUpdatedLikes(data)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the
@@ -302,8 +288,8 @@ SearchPage.loadData = (params, search) => {
     perPage: RESULT_PAGE_SIZE,
     include: ['author', 'images'],
     'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink', 'publicData.category'],
-    'fields.user': ['profile.displayName', 'profile.abbreviatedName', 
-                      'profile.publicData.accountType', 'profile.publicData.tribe', 'profile.publicData.companyName', 'profile.publicData.companyIndustry'], //added metadata for verify badge
+    'fields.user': ['profile.displayName', 'profile.abbreviatedName',
+      'profile.publicData.accountType', 'profile.publicData.tribe', 'profile.publicData.companyName', 'profile.publicData.companyIndustry'], //added metadata for verify badge
     'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
     'limit.images': 1,
   });

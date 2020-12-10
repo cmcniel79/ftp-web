@@ -47,6 +47,8 @@ import {
   loadData,
   setInitialValues,
   fetchTransactionLineItems,
+  sendUpdatedFollowed,
+  callFollowAPI
 } from './ListingPage.duck';
 import SectionImages from './SectionImages';
 import SectionHeading from './SectionHeading';
@@ -105,13 +107,15 @@ export class ListingPageComponent extends Component {
     const { enquiryModalOpenForListingId, params } = props;
     this.state = {
       pageClassNames: [],
-      imageCarouselOpen: false,
       enquiryModalOpen: enquiryModalOpenForListingId === params.id,
     };
-
+    this.followed = [];
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onContactUser = this.onContactUser.bind(this);
     this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
+    this.isFollowed = this.isFollowed.bind(this);
+    this.updateFollowed = this.updateFollowed.bind(this);
+    this.sendFollowed = this.sendFollowed.bind(this);
   }
 
   handleSubmit(values) {
@@ -167,6 +171,40 @@ export class ListingPageComponent extends Component {
     } else {
       this.setState({ enquiryModalOpen: true });
     }
+  }
+
+  isFollowed(sellerId) {
+    return this.followed.findIndex(x => x === sellerId);
+  }
+
+  updateFollowed(sellerId) {
+    const index = this.isFollowed(sellerId);
+    var followBool;
+    if (this.isFollowed(sellerId) > -1) {
+      // Remove seller from followed list
+      this.followed.splice(index, 1);
+      followBool = false;
+    } else {
+      // Add seller to followed
+      this.followed.push(sellerId);
+      followBool = true;
+    }
+    this.sendFollowed();
+    const apiPayload = {
+      uuid: sellerId,
+      isListing: false,
+      add: followBool
+    };
+    callFollowAPI(apiPayload);
+  }
+
+  sendFollowed() {
+    const updatedFollowed = {
+      privateData: {
+        followed: this.followed
+      }
+    };
+    this.props.onSendUpdatedFollowed(updatedFollowed);
   }
 
   onSubmitEnquiry(values) {
@@ -325,14 +363,8 @@ export class ListingPageComponent extends Component {
       );
     }
 
-    const handleViewPhotosClick = e => {
-      // Stop event from bubbling up to prevent image click handler
-      // trying to open the carousel as well.
-      e.stopPropagation();
-      this.setState({
-        imageCarouselOpen: true,
-      });
-    };
+    this.followed = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.followed ?
+      currentUser.attributes.profile.privateData.followed : [];
     const authorAvailable = currentListing && currentListing.author;
     const userAndListingAuthorAvailable = !!(currentUser && authorAvailable);
     const isOwnListing =
@@ -473,10 +505,6 @@ export class ListingPageComponent extends Component {
                       type: listingType,
                       tab: listingTab,
                     }}
-                    imageCarouselOpen={this.state.imageCarouselOpen}
-                    onImageCarouselClose={() => this.setState({ imageCarouselOpen: false })}
-                    handleViewPhotosClick={handleViewPhotosClick}
-                    onManageDisableScrolling={onManageDisableScrolling}
                   />
                   {!isPremium &&
                     <div className={css.reviewsContainerDesktop}>
@@ -497,6 +525,8 @@ export class ListingPageComponent extends Component {
                     currentUser={currentUser}
                     onManageDisableScrolling={onManageDisableScrolling}
                     isPremium={isPremium}
+                    isFollowed={this.isFollowed}
+                    updateFollowed={this.updateFollowed}
                   />
                   <SectionDescriptionMaybe description={description} />
                   {userAccountType === 'e' ? (
@@ -681,6 +711,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchTransactionLineItems(bookingData, listingId, isOwnListing)),
   onSendEnquiry: (listingId, message) => dispatch(sendEnquiry(listingId, message)),
   onInitializeCardPaymentData: () => dispatch(initializeCardPaymentData()),
+  onSendUpdatedFollowed: (data) => dispatch(sendUpdatedFollowed(data))
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

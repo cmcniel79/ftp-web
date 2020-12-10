@@ -18,7 +18,9 @@ const SectionSellerMaybe = props => {
     onSubmitEnquiry,
     currentUser,
     onManageDisableScrolling,
-    isPremium
+    isPremium,
+    isFollowed,
+    updateFollowed
   } = props;
 
   if (!listing.author) {
@@ -37,7 +39,14 @@ const SectionSellerMaybe = props => {
   return (
     <div id="seller" className={css.sectionSeller}>
       {sellerHeading}
-      <UserCard user={listing.author} currentUser={currentUser} onContactUser={onContactUser} />
+      <UserCard 
+      user={listing.author} 
+      currentUser={currentUser}
+      onContactUser={onContactUser}
+      isFollowed={isFollowed} 
+      updateFollowed={updateFollowed}
+      isFollowingPage={false}
+      />
       {!isPremium &&
         <Modal
           id="ListingPage.enquiry"
