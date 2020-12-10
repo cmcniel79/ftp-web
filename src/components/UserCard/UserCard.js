@@ -77,7 +77,6 @@ const UserCard = props => {
 
   const userIsCurrentUser = user && user.type === 'currentUser';
   const ensuredUser = userIsCurrentUser ? ensureCurrentUser(user) : ensureUser(user);
-
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
   const isCurrentUser =
     ensuredUser.id && ensuredCurrentUser.id && ensuredUser.id.uuid === ensuredCurrentUser.id.uuid;
@@ -127,7 +126,7 @@ const UserCard = props => {
 
   const links = ensuredUser.id ? (
     <div className={linkClasses}>
-      {!isCurrentUser &&
+      {!isCurrentUser && currentUser &&
         <FollowButton
           authorId={authorId}
           isFollowed={isFollowed}

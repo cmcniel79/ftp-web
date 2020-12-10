@@ -157,7 +157,6 @@
 
 .linkButton {
   @apply --userCardButtonStyles;
-  margin-left: 5px;
 }
 
 .externalLinkIcon {
