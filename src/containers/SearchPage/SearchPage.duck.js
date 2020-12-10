@@ -6,6 +6,7 @@ import config from '../../config';
 import { denormalisedResponseEntities } from '../../util/data';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
 
+const KEY = process.env.REACT_APP_API_KEY;
 const URL = process.env.REACT_APP_API_LIKES;
 
 // ================ Action types ================ //
@@ -193,7 +194,7 @@ export const callLikeAPI = actionPayload => {
       body: JSON.stringify(actionPayload),
       headers: {
         "Content-Type": "application/json",
-        "X-Api-Key": "dShKIr3xlkgXBtiwSeSN7jaYIjmIwnnnN4rLDN00",
+        "X-Api-Key": KEY,
       }
     }
     fetch(URL, options)

@@ -19,6 +19,8 @@ export const FETCH_FOLLOWED_ERROR = 'app/FollowingPage/FETCH_FOLLOWED_ERROR';
 export const ADD_OWN_ENTITIES = 'app/FollowingPage/ADD_OWN_ENTITIES';
 
 const { UUID } = sdkTypes;
+const KEY = process.env.REACT_APP_API_KEY;
+const URL = process.env.REACT_APP_API_LIKES;
 
 // ================ Reducer ================ //
 
@@ -169,7 +171,7 @@ export const callFollowAPI = actionPayload => {
         body: JSON.stringify(actionPayload),
         headers: {
             "Content-Type": "application/json",
-            "X-Api-Key": "dShKIr3xlkgXBtiwSeSN7jaYIjmIwnnnN4rLDN00",
+            "X-Api-Key": KEY,
         }
     }
     fetch(URL, options)
