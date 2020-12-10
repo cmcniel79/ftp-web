@@ -427,13 +427,13 @@ export class TransactionPanelComponent extends Component {
               listingDeleted={listingDeleted}
             />
 
-            <div className={css.bookingDetailsMobile}>
-              {stateData.showBookingPanel ? (null) :
-                <BreakdownMaybe transaction={currentTransaction} transactionRole={transactionRole} />}
-              {refundInfo}
-            </div>
+            {!stateData.showBookingPanel && currentTransaction.attributes.payoutTotal ?
+              <div className={css.bookingDetailsMobile}>
+                <BreakdownMaybe transaction={currentTransaction} transactionRole={transactionRole} />
+                {refundInfo}
+              </div> : null}
 
-            {!stateData.showBookingPanel ? (
+            {!stateData.showBookingPanel && currentTransaction.attributes.payoutTotal ? (
               <div className={css.addressSection}>
                 <h3 className={css.addressHeading}>
                   <FormattedMessage id="TransactionPanel.customerAddress" />
@@ -536,12 +536,15 @@ export class TransactionPanelComponent extends Component {
                 <span className={css.purchaseWarning} >
                   <FormattedMessage id="ListingPage.listingMissingInfo" />
                 </span>
-              ) : (
-                          <BreakdownMaybe
-                            className={css.breakdownContainer}
-                            transaction={currentTransaction}
-                            transactionRole={transactionRole}
-                          />)}
+              ) : null}
+
+              {!stateData.showBookingPanel && currentTransaction.attributes.payoutTotal ?
+                <BreakdownMaybe
+                  className={css.breakdownContainer}
+                  transaction={currentTransaction}
+                  transactionRole={transactionRole}
+                /> : null}
+
               {refundInfo}
               {stateData.showSaleButtons ? (
                 <div className={css.desktopActionButtons}>{saleButtons}</div>
