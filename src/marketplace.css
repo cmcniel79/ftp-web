@@ -298,6 +298,7 @@
     }
     @media (--viewportMedium) {
       @apply --marketplaceH4FontStyles;
+      margin: 0 5px 0 0;
     }
   }
 
