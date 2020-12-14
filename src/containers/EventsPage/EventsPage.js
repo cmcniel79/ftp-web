@@ -11,6 +11,12 @@ import {
   NamedLink,
   Page
 } from '../../components';
+import {
+  FormattedMessage,
+} from '../../util/reactIntl';
+import stanfordImage from '../../assets/stanford-bg.jpg';
+import forward from '../../assets/forward.svg';
+import back from '../../assets/back.svg';
 import css from './EventsPage.css';
 
 export class EventsPageComponent extends Component {
@@ -24,13 +30,32 @@ export class EventsPageComponent extends Component {
           </LayoutWrapperTopbar>
 
           <LayoutWrapperMain className={css.staticPageWrapper}>
-              <h1 className={css.pageTitle}>
-                {/* <FormattedMessage id="ContactPage.heading" /> */}
-                Events
-              </h1>
-              <NamedLink name="PowwowPage" params={{host:"stanford"}}>
-                Go to stanford powwow
-                </NamedLink>
+            <h1 className={css.pageSectionTitle}>
+              <FormattedMessage id="EventsPage.powwows" />
+            </h1>
+
+            <div className={css.powwowSection}>
+              <button className={css.backButtonDesktop}>
+                <img className={css.chevron} src={back} alt="chevron" />
+              </button>
+              <div className={css.powwowCard}>
+                <div className={css.powwowImageWrapper}>
+                  <NamedLink className={css.powwowLink} name="PowwowPage" params={{ host: "stanford" }}>
+                    <img className={css.powwowImage} src={stanfordImage} alt="stanford" />
+                    <div className={css.powwowTitle}>
+                      <FormattedMessage id="EventsPage.stanfordPowwow" />
+                    </div>
+                  </NamedLink>
+                </div>
+                <div className={css.powwowSubtitle}>
+                  <FormattedMessage id="EventsPage.stanfordLocation" />
+                </div>
+              </div>
+              <button className={css.forwardButtonDesktop}>
+                <img className={css.chevron} src={forward} alt="chevron" />
+              </button>
+            </div>
+
           </LayoutWrapperMain>
           <LayoutWrapperFooter>
             <Footer />
@@ -41,31 +66,7 @@ export class EventsPageComponent extends Component {
   }
 };
 
-// const mapStateToProps = state => {
-//   const { currentUser } = state.user;
-//   const {
-//     sendingInProgress,
-//     sendingEmailError,
-//     sendingSuccess
-//   } = state.ContactPage;
-//   return {
-//     currentUser,
-//     sendingInProgress,
-//     sendingEmailError,
-//     sendingSuccess,
-//   };
-// };
-
-// const mapDispatchToProps = dispatch => ({
-//   onSendEmail: data => dispatch(sendEmail(data)),
-// });
-
 const EventsPage = compose(
-//   connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-//   ),
-//   injectIntl
 )(EventsPageComponent);
 
 export default EventsPage;

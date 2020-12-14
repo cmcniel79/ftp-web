@@ -18,6 +18,9 @@ import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import SectionSellers from './SectionSellers';
 import SectionHost from './SectionHost';
+import {
+  FormattedMessage,
+} from '../../util/reactIntl';
 
 import css from './PowwowPage.css';
 
@@ -26,13 +29,12 @@ export class PowwowPageComponent extends Component {
   componentDidMount() {
     if (window) {
       this.props.onLoadData();
-      // this.loadInitialData();
     }
   }
 
   render() {
-    const { users } = this.props;
-    const host = users && users[0];
+    const { users, currentUser } = this.props;
+    const host = "Stanford Powwow";
     return (
       <Page className={css.root} title="Powwow Page" scrollingDisabled={false}>
         <LayoutSingleColumn>
@@ -41,14 +43,13 @@ export class PowwowPageComponent extends Component {
           </LayoutWrapperTopbar>
 
           <LayoutWrapperMain className={css.staticPageWrapper}>
-              <h1 className={css.pageTitle}>
-                {/* <FormattedMessage id="ContactPage.heading" /> */}
-                Powwow Page
-              </h1>
-              <div className={css.splitScreen}>
-              <SectionSellers className={css.sectionSellers} users={users}/>
+            <h1 className={css.pageTitle}>
+              <FormattedMessage id="PowwowPage.heading" values={{ host }} />
+            </h1>
+            <div className={css.splitScreen}>
+              <SectionSellers className={css.sectionSellers} users={users} currentUser={currentUser} />
               <SectionHost className={css.sectionHost} host={host} />
-              </div>
+            </div>
           </LayoutWrapperMain>
           <LayoutWrapperFooter>
             <Footer />
@@ -67,6 +68,7 @@ const mapStateToProps = state => {
     searchParams,
     userIds,
   } = state.PowwowPage;
+  const { currentUser } = state.user;
   const users = userIds && userIds.length > 0 ? getMarketplaceEntities(state, userIds) : null;
   return {
     users: users,
@@ -75,6 +77,7 @@ const mapStateToProps = state => {
     searchInProgress,
     searchListingsError,
     searchParams,
+    currentUser
   };
 };
 
@@ -96,6 +99,6 @@ const PowwowPage = compose(
     mapDispatchToProps
   ),
   injectIntl
-  )(PowwowPageComponent);
+)(PowwowPageComponent);
 
 export default PowwowPage;

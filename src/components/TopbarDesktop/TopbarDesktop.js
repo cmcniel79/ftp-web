@@ -136,13 +136,6 @@ const TopbarDesktop = props => {
     </Menu>
   ) : null;
 
-  const aboutLink =
-    <NamedLink className={css.customLink} name="AboutPage">
-      <span className={css.custom}>
-        <FormattedMessage id="TopbarDesktop.aboutPage" />
-      </span>
-    </NamedLink>;
-
   const shopLink =
     <NamedLink className={css.customLink} name="SearchPage" to={{ search: '' }}>
       <span className={css.custom}>
@@ -227,7 +220,6 @@ const TopbarDesktop = props => {
         />
       </NamedLink>
       {search}
-      {aboutLink}
       {shopLink}
       {mapLink}
       {eventsLink}

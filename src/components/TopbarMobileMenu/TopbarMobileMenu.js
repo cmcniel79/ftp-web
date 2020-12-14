@@ -81,9 +81,6 @@ const TopbarMobileMenu = props => {
 
   const regularLinks =
     <div className={regularLinksClasses}>
-      <NamedLink name="AboutPage" className={css.regularLink}>
-        <FormattedMessage id="TopbarMobileMenu.aboutLink" />
-      </NamedLink>
       <NamedLink name="SearchPage" className={css.regularLink}>
         <FormattedMessage id="TopbarMobileMenu.shopLink" />
       </NamedLink>
