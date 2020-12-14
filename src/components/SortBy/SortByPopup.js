@@ -62,7 +62,6 @@ class SortByPopup extends Component {
 
     const classes = classNames(rootClassName || css.root, className);
     const menuLabelClasses = classNames(menuLabelRootClassName || css.menuLabel);
-
     return (
       <Menu
         className={classes}

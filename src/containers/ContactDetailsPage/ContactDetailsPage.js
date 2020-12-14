@@ -52,7 +52,8 @@ export const ContactDetailsPageComponent = props => {
   const currentEmail = user.attributes.email || '';
   const protectedData = user.attributes.profile.protectedData ? sanitizeProtectedData(user.attributes.profile.protectedData) : {}; 
   const currentPhoneNumber = protectedData.phoneNumber || '';
-  const currentShippingAddress = protectedData.protectedData.shippingAddress || null;
+  const currentShippingAddress = protectedData && protectedData.protectedData && protectedData.protectedData.shippingAddress ? 
+    protectedData.protectedData.shippingAddress : null;
 
   // Pass in account type to Payment Methods tab to make sure Premium Users 
   // do not get confused about payments and subscriptions

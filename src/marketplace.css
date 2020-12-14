@@ -281,6 +281,27 @@
     }
   }
 
+  --userCardButtonStyles {
+    @apply --marketplaceH5FontStyles;
+    display: inline;
+    border: none;
+    background-color: var(--marketplaceColor);
+    color: white;
+    border-radius: 20px;
+    padding: 2px 10px;
+    margin: 0 5px 0 0;
+    border: solid 2px var(--marketplaceColor);
+    &:hover {
+        text-decoration: none;
+        cursor: pointer;
+        background-color: rgb(212, 0, 0, .7);
+    }
+    @media (--viewportMedium) {
+      @apply --marketplaceH4FontStyles;
+      margin: 0 5px 0 0;
+    }
+  }
+
   --marketplaceButtonSmallDesktopPadding: 9px 16px 9px 16px;
 
   /* ================ Inputs ================ */

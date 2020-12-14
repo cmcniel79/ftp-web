@@ -54,7 +54,7 @@ export class MapPageComponent extends Component {
       industry: null,
       tribe: null,
       origin: null,
-      bounds: new LatLngBounds(new LatLng(71.4202919997506, -66.8847646185949), new LatLng(10, -150)),
+      bounds: new LatLngBounds(new LatLng(71.4202919997506, -5), new LatLng(10, -150)),
     };
 
     this.searchMapListingsInProgress = false;

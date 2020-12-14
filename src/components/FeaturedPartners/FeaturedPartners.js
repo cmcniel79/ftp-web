@@ -5,8 +5,8 @@ import css from './FeaturedPartners.css';
 import { propTypes } from '../../util/types';
 import { FormattedMessage } from '../../util/reactIntl';
 import { arrayOf } from 'prop-types';
-import forward from './Images/forward.svg';
-import back from './Images/back.svg';
+import forward from '../../assets/forward.svg';
+import back from '../../assets/back.svg';
 
 const AVATAR_IMAGE_VARIANTS = [
   // 480x480

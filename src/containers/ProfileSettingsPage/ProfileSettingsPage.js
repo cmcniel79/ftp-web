@@ -85,9 +85,9 @@ export class ProfileSettingsPageComponent extends Component {
           ? { ...profile, profileImageId: uploadedImage.imageId }
           : profile;
       onUpdateProfile(updatedValues);
-
+      
       const accountValue = user && user.attributes.profile.publicData ? user.attributes.profile.publicData.accountType : null;
-      if (accountValue === 'p' || accountValue === 'a' || accountValue === 'n') {
+      if (accountValue === 'p' || accountValue === 'a' || accountValue === 'n' || accountValue === 'e') {
         const uuid = user && user.id ? user.id.uuid : null;
         const requestBody = {
             ownerName: firstName + " " + lastName,
@@ -153,7 +153,7 @@ export class ProfileSettingsPageComponent extends Component {
         verification = null;
         break;
       case "n":
-        profileHeading = "Non-Profit";
+        profileHeading = "Nonprofit";
         listingsLimit = 1;
         verification = null;
         break;

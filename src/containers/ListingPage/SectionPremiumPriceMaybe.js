@@ -4,7 +4,7 @@ import {
     Button,
     ExternalLink
 } from '../../components';
-
+import exit from '../../assets/exit-white.svg';
 import css from './ListingPage.css';
 import { string } from 'prop-types';
 
@@ -20,6 +20,7 @@ const SectionPremiumPriceMaybe = props => {
                     className={css.buyButton}
                 >
                     <FormattedMessage id="ListingPage.buyButtonMessage" />
+                    <img className={css.externalLinkIcon} src={exit} alt="External Link" />
                 </Button>
             </ExternalLink>
         </div>

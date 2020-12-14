@@ -94,6 +94,7 @@ export class ProfilePageComponent extends Component {
       publicData.companyLocation.location : null;
     const companyAddress = companyLocation ? companyLocation.selectedPlace.address : null;
     const googleMapsUrl = companyAddress ? "https://www.google.com/maps/search/?api=1&query=" + encodeURI(companyAddress) : null;
+    const accountType = publicData && publicData.accountType ? publicData.accountType : null;
 
     const editLinkMobile = isCurrentUser ? (
       <NamedLink className={css.editLinkMobile} name="ProfileSettingsPage">
@@ -217,7 +218,7 @@ export class ProfilePageComponent extends Component {
           <h3 className={css.desktopSubheading}>
             {tribe}
           </h3>}
-        {googleMapsUrl &&
+        {googleMapsUrl && accountType && accountType !== 'e' &&
           <ExternalLink className={css.companyAddress} href={googleMapsUrl} >
             {companyLocation.selectedPlace.address}
           </ExternalLink>}

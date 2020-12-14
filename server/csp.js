@@ -14,6 +14,8 @@ const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
 const emailURL = process.env.REACT_APP_API_EMAIL + ENV;
 const rankingURL = process.env.REACT_APP_API_RANKING + ENV;
 const databaseURL = process.env.REACT_APP_API_DATABASE + ENV;
+const likesURL = process.env.REACT_APP_API_LIKES;
+const mailchimpURL = process.env.REACT_APP_API_MAILCHIMP + ENV;
 
 // Default CSP whitelist.
 //
@@ -107,6 +109,8 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
    emailURL,
    rankingURL,
    databaseURL,
+   likesURL,
+   mailchimpURL
    ]);
   const customDirectives = {
     // Example: Add custom directive override

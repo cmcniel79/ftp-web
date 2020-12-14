@@ -118,7 +118,6 @@
 
 .optionSelected {
   composes: option;
-  color: var(--matterColorDark);
 }
 
 .clearButton {

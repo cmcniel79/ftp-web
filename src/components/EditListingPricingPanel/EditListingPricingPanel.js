@@ -71,14 +71,14 @@ const EditListingPricingPanel = props => {
         const internationalData = internationalFee ? { amount: internationalFee.amount, currency: internationalFee.currency } :
           { amount: 0, currency: config.currency };
 
-        const publicData = (accountType === 'e' || accountType === 'u') && domesticData &&
+        const publicData = (accountType === 'e' || accountType === 'u') &&
           allowsInternationalOrders && allowsInternationalOrders[0] === "hasFee" ? {
             // Allows domestic shipping and international shipping
             shippingFee: domesticData,
             internationalFee: internationalData,
             country: userCountry,
             allowsInternationalOrders
-          } : (accountType === 'e' || accountType === 'u') && domesticData ? {
+          } : (accountType === 'e' || accountType === 'u') ? {
             // Allows only domestic shipping
             shippingFee: domesticData,
             internationalFee: domesticData,

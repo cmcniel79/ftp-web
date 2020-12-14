@@ -7,7 +7,7 @@ import css from './SearchResultsPanel.css';
 
 const SearchResultsPanel = props => {
   const { className, rootClassName, listings, pagination, search, setActiveListing, currentUser, 
-    onUpdateLikedListings, isListingLiked, removeListing } = props;
+    isLiked, updateLikes } = props;
   const classes = classNames(rootClassName || css.root, className);
 
   const paginationLinks =
@@ -41,9 +41,8 @@ const SearchResultsPanel = props => {
             renderSizes={cardRenderSizes}
             setActiveListing={setActiveListing}
             currentUser={currentUser}
-            onUpdateLikedListings={onUpdateLikedListings}
-            isListingLiked={isListingLiked}
-            removeListing={removeListing}
+            isLiked={isLiked}
+            updateLikes={updateLikes}
           />
         ))}
         {props.children}

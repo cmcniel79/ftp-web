@@ -155,7 +155,7 @@ class ProfileSettingsFormComponent extends Component {
             { key: 'art', label: "Art and Photography" },
             { key: 'professional', label: "Professional Services" },
             { key: 'hospitality', label: "Hospitality and Tourism" },
-            { key: 'nonprofit', label: "Non-Profit" },
+            { key: 'nonprofit', label: "Nonprofit" },
             { key: 'beauty', label: "Beauty and Personal Services" },
             { key: 'other', label: "Other" },
           ];
@@ -400,7 +400,7 @@ class ProfileSettingsFormComponent extends Component {
                     null : <FormattedMessage id="ProfileSettingsForm.bioInfo" />}
                 </p>
               </div>
-              {/* {accountType === 'e' ?
+              {accountType === 'e' ?
                 <div className={css.sectionContainer}>
                   <h3 className={css.sectionTitle}>
                     <FormattedMessage id="ProfileSettingsForm.enrolledLocation" />
@@ -410,7 +410,7 @@ class ProfileSettingsFormComponent extends Component {
                     initialValue={this.props.initialValues.location}
                     accountType={accountType}
                   />
-                </div> : null} */}
+                </div> : null}
               {showSocialMediaFields &&
                 <div className={css.sectionContainer}>
                   <h3 className={css.sectionTitle}>

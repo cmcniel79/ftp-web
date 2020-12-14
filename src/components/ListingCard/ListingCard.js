@@ -9,7 +9,7 @@ import { ensureListing, ensureUser } from '../../util/data';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
 import { 
-  // LikeButton, 
+  LikeButton, 
   NamedLink, 
   ResponsiveImage 
 } from '../../components';
@@ -56,10 +56,9 @@ export const ListingCardComponent = props => {
     intl, 
     listing, 
     renderSizes, 
-    // currentUser,
-    // onUpdateLikedListings, 
-    // isListingLiked, 
-    // removeListing 
+    currentUser,
+    isLiked, 
+    updateLikes 
   } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
@@ -71,9 +70,6 @@ export const ListingCardComponent = props => {
   const firstImage =
     currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
   const { formattedPrice } = priceData(price, intl); // Took out priceTitle, might be used in the future
-
-  // const likedListings = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likedListings ?
-  //   Object.values(currentUser.attributes.profile.privateData.likedListings) : [];
 
   const accountType = author && author.attributes.profile.publicData &&
     author.attributes.profile.publicData.accountType ? author.attributes.profile.publicData.accountType : null;
@@ -209,15 +205,13 @@ export const ListingCardComponent = props => {
       <div className={css.threeToTwoWrapper}>
         <div className={css.aspectWrapper}>
           {imagesAndLinks}
-          {/* {currentUser &&
+          {currentUser &&
             <LikeButton
-              onUpdateLikedListings={onUpdateLikedListings}
-              currentListingID={id}
-              likedListings={likedListings}
-              isListingLiked={isListingLiked}
-              removeListing={removeListing}
+              listingId={id}
+              isLiked={isLiked}
+              updateLikes={updateLikes}
             />
-          } */}
+          }
         </div>
       </div>
       <div className={css.cardText}>

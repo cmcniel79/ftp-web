@@ -20,7 +20,7 @@ const SortBy = props => {
         (isRelevance && !isConflictingFilterActive) || (!isRelevance && isConflictingFilterActive),
     };
   });
-  const defaultValue = 'createdAt';
+  const defaultValue = null;
   const componentProps = {
     urlParam: queryParamName,
     label: intl.formatMessage({ id: 'SortBy.heading' }),
