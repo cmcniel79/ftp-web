@@ -43,7 +43,7 @@ const TopbarDesktop = props => {
   const isAuthenticatedOrJustHydrated = isAuthenticated || !mounted;
 
   const classes = classNames(rootClassName || css.root, className);
-  const accountType = currentUser && currentUser.attributes.profile.publicData && currentUser.attributes.profile.publicData.accountType ? 
+  const accountType = currentUser && currentUser.attributes.profile.publicData && currentUser.attributes.profile.publicData.accountType ?
     currentUser.attributes.profile.publicData.accountType : null;
   const search = (
     <TopbarSearchForm
@@ -155,6 +155,13 @@ const TopbarDesktop = props => {
       </span>
     </NamedLink>;
 
+  const eventsLink =
+    <NamedLink className={css.customLink} name="EventsPage">
+      <span className={css.custom}>
+        <FormattedMessage id="TopbarDesktop.eventsPage" />
+      </span>
+    </NamedLink>;
+
   const blogLink =
     <ExternalLink className={css.customLink} key="linkToBlog"
       href="https://fromthepeople.blog/"
@@ -163,13 +170,13 @@ const TopbarDesktop = props => {
         <FormattedMessage id="TopbarDesktop.blogLink" />
       </span>
     </ExternalLink>
-  
-  const contactLink = 
-  <NamedLink className={css.customLink} name="ContactPage">
-  <span className={css.custom}>
-    <FormattedMessage id="TopbarDesktop.contactPage" />
-  </span>
-</NamedLink>;
+
+  const contactLink =
+    <NamedLink className={css.customLink} name="ContactPage">
+      <span className={css.custom}>
+        <FormattedMessage id="TopbarDesktop.contactPage" />
+      </span>
+    </NamedLink>;
 
   const newListingLink = accountType && accountType !== '' ? (
     <NamedLink className={css.createListingLink} name="NewListingPage">
@@ -214,6 +221,7 @@ const TopbarDesktop = props => {
       {aboutLink}
       {shopLink}
       {mapLink}
+      {eventsLink}
       {faqLink}
       {blogLink}
       {contactLink}

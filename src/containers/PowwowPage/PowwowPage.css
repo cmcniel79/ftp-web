@@ -1,0 +1,19 @@
+@import '../../marketplace.css';
+
+.splitScreen {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sectionHost {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sectionSellers {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}

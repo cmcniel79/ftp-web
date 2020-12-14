@@ -8,6 +8,7 @@ import {
   FAQPage,
   EditListingPage,
   EmailVerificationPage,
+  EventsPage,
   InboxPage,
   LandingPage,
   // LikedListingsPage,
@@ -23,6 +24,7 @@ import {
   PrivacyPolicyPage,
   ProfilePage,
   ProfileSettingsPage,
+  PowwowPage,
   SearchPage,
   StyleguidePage,
   TermsOfServicePage,
@@ -73,6 +75,11 @@ const routeConfiguration = () => {
       name: 'ContactPage',
       component: props => <ContactPage {...props} />,
       loadData: ContactPage.loadData,
+    },
+    {
+      path: '/events',
+      name: 'EventsPage',
+      component: props => <EventsPage {...props} />,
     },
     {
       path: '/s',
@@ -188,6 +195,11 @@ const routeConfiguration = () => {
       auth: true,
       authPage: 'LoginPage',
       component: props => <ProfileSettingsPage {...props} />,
+    },
+    {
+      path: '/events/powwow/:host',
+      name: 'PowwowPage',
+      component: props => <PowwowPage {...props} />,
     },
 
     // Note: authenticating with IdP (e.g. Facebook) expects that /login path exists
