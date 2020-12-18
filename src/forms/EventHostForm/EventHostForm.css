@@ -1,0 +1,165 @@
+@import '../../marketplace.css';
+:root {
+  /*
+    These variables are available in global scope through ":root"
+    element (<html> tag). Variables with the same names are going to
+    overwrite each other if CSS Properties' (PostCSS plugin)
+    configuration "preserve: true" is used - meaning that variables
+    are left to CSS bundle. We are planning to enable it in the future
+    since browsers support CSS Properties already.
+ */
+}
+
+.root {
+  margin-top: 24px;
+  @media (--viewportMedium) {
+    margin-top: 32px;
+  }
+}
+
+.error {
+  /* Font */
+  @apply --marketplaceH4FontStyles;
+  color: var(--failColor);
+  margin-top: 18px;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 22px;
+    margin-bottom: 2px;
+  }
+}
+
+.sectionContainer {
+  padding: 0;
+  margin-bottom: 36px;
+  @media (--viewportMedium) {
+    padding: 0;
+    margin-bottom: 56px;
+  }
+}
+
+.sectionTitle {
+  /* Font */
+  color: var(--matterColorAnti);
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  @media (--viewportMedium) {
+    margin-top: 10px;
+    margin-bottom: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+.websiteTitle {
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 6px;
+  padding-bottom: 2px;
+  line-height: 16px;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+.websiteValue {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 5px 0 5px 0;
+  border-bottom: 2px solid var(--successColor);
+  border-radius: 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.websiteSubtitle {
+  color: var(--matterColorAnti);
+  font-size: 14px;
+  margin: 8px 0 10px 0;
+  line-height: 18px;
+}
+
+.eventContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  @media (--viewportMedium) {
+    margin-top: 24px;
+  }
+}
+
+.eventField {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.dateContainer {
+  @media (--viewportMedium) {
+    margin: 15px 0 15px 0;
+    width: 50%;
+  }
+}
+
+.dateTitle {
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 6px;
+  padding-bottom: 2px;
+}
+
+.dateAndTimeContainer {
+  display: flex;
+  flex-direction: column;
+    @media (--viewportMedium) {
+    }
+}
+
+.dateInput {
+    @media (--viewportMedium) {
+      width: 55%;
+    }
+}
+
+.timeContainer {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.eventTime {
+  @media (--viewportMedium) {
+    width: 55%;
+  }
+}
+
+.eventMeridiem {
+  margin-left: auto;
+  width: 45%;
+  @media (--viewportMedium) {
+    width: 35%;
+  }
+}
+
+.optionalContainer {
+  margin: 20px 0;
+}
+
+.submitButton {
+  margin-top: 50px;
+}
+
+.submitButtonExtraMargin {
+  margin-top: 200px;
+}
+
+.validLocation {
+  border-bottom-color: var(--successColor);
+}
+
+.invalidLocation {
+  border-bottom-color: var(--failColor);
+}
