@@ -16,11 +16,13 @@ import {
   Footer,
   NamedLink,
   ExternalLink,
+  LinkTabNavHorizontal,
 } from '../../components';
-import { EventHostForm } from '../../forms';
+import { EventDetailsForm, EventPhotosForm, EventSellersForm } from '../../forms';
 import { TopbarContainer } from '..';
 
 import { updateProfile, uploadImage, updateDatabase } from './EventHostPage.duck';
+import EventSellersListMaybe from './EventSellersListMaybe';
 import css from './EventHostPage.css';
 
 const onImageUploadHandler = (values, fn) => {
@@ -31,22 +33,84 @@ const onImageUploadHandler = (values, fn) => {
 };
 
 export class EventHostPageComponent extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { email: 'jhfajkdhk' };
+    this.addAnother = this.addAnother.bind(this);
+  }
+
+  addAnother(){
+    console.log("Hello There");
+    this.setState({
+      email: '',
+    });
+  }
+
   render() {
     const {
       currentUser,
       scrollingDisabled,
       intl,
+      tab
     } = this.props;
 
+    const sellers = ["chase@fromthepeople.co", "mcniel26@gmail.com", "isabella@fromthepeople.co"];
     const user = ensureCurrentUser(currentUser);
 
-    const eventHostForm = user.id ? (
-      <EventHostForm
-      onSubmit={(values)=> console.log(values)}/>
-    ) : null;
+    const eventDetailsForm = (
+      <EventDetailsForm onSubmit={(values) => console.log(values)} />
+    );
+
+    const eventPhotosForm = (
+    <EventPhotosForm onSubmit={(values) => console.log(values)} />
+    );
+
+    const eventSellersForm = (
+      <div className={css.sellersContainer}>
+        <EventSellersForm value={this.state.email} onSubmit={() => this.addAnother()} />
+        <EventSellersListMaybe sellersList={sellers} />
+      </div>
+    );
 
     const title = intl.formatMessage({ id: 'EventHostPage.title' });
 
+    const tabs = [
+      {
+        text: (
+          <h1 className={css.tab}>
+            <FormattedMessage id="EventHostPage.eventDetailsLinkText" />
+          </h1>
+        ),
+        selected: tab === 'details',
+        linkProps: {
+          name: 'EventDetailsPage',
+        },
+      },
+      {
+        text: (
+          <h1 className={css.tab}>
+            <FormattedMessage id="EventHostPage.eventPhotosLinkText" />
+          </h1>
+        ),
+        selected: tab === 'photos',
+        linkProps: {
+          name: 'EventPhotosPage',
+        },
+      },
+      {
+        text: (
+          <h1 className={css.tab}>
+            <FormattedMessage id="EventHostPage.eventSellersLinkText" />
+          </h1>
+        ),
+        selected: tab === 'sellers',
+        linkProps: {
+          name: 'EventSellersPage',
+        },
+      },
+    ];
+    console.log(tab);
     return (
       <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
         <LayoutSingleColumn>
@@ -56,12 +120,10 @@ export class EventHostPageComponent extends Component {
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
             <div className={css.content}>
-              <div className={css.headingContainer}>
-                <h1 className={css.heading}>
-                  <FormattedMessage id="EventHostPage.heading" />
-                </h1>
-              </div>
-              {eventHostForm}
+              <LinkTabNavHorizontal className={css.tabs} tabs={tabs} />
+              {tab === 'details' ? eventDetailsForm : null}
+              {tab === 'photos' ? eventPhotosForm : null}
+              {tab === 'sellers' ? eventSellersForm : null}
             </div>
           </LayoutWrapperMain>
           <LayoutWrapperFooter>

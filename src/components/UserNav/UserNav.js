@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
-import { ACCOUNT_SETTINGS_PAGES } from '../../routeConfiguration';
+import { ACCOUNT_SETTINGS_PAGES, EVENT_HOST_PAGES } from '../../routeConfiguration';
 import { LinkTabNavHorizontal } from '../../components';
 
 import css from './UserNav.css';
@@ -10,13 +10,12 @@ import css from './UserNav.css';
 const UserNav = props => {
   const { className, rootClassName, selectedPageName } = props;
   const classes = classNames(rootClassName || css.root, className);
-
   const tabs = [
     {
       text: <FormattedMessage id="ManageListingsPage.yourEvent" />,
-      selected: selectedPageName === 'EventHostPage',
+      selected: EVENT_HOST_PAGES.includes(selectedPageName),
       linkProps: {
-        name: 'EventHostPage',
+        name: 'EventDetailsPage',
       },
     },
     {

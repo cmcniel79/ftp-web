@@ -1,0 +1,77 @@
+@import '../../marketplace.css';
+:root {
+  /*
+    These variables are available in global scope through ":root"
+    element (<html> tag). Variables with the same names are going to
+    overwrite each other if CSS Properties' (PostCSS plugin)
+    configuration "preserve: true" is used - meaning that variables
+    are left to CSS bundle. We are planning to enable it in the future
+    since browsers support CSS Properties already.
+ */
+}
+
+.root {
+  margin-top: 24px;
+  @media (--viewportMedium) {
+    margin-top: 32px;
+  }
+}
+
+.error {
+  /* Font */
+  @apply --marketplaceH4FontStyles;
+  color: var(--failColor);
+  margin-top: 18px;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 22px;
+    margin-bottom: 2px;
+  }
+}
+
+.sectionContainer {
+  padding: 0;
+  margin-bottom: 15px;
+  @media (--viewportMedium) {
+    padding: 0;
+    margin-bottom: 25px;
+  }
+}
+
+.sectionTitle {
+  /* Font */
+  color: var(--matterColorAnti);
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  @media (--viewportMedium) {
+    margin-top: 10px;
+    margin-bottom: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+.sectionInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  @media (--viewportMedium) {
+    /* flex-direction: row; */
+    padding: 0;
+  }
+}
+
+.eventField {
+  margin: 0;
+}
+
+.submitButton {
+  margin: 15px 0;
+  border-radius: 20px;
+  @media (--viewportMedium) {
+    margin: 30px 0;
+  }
+}

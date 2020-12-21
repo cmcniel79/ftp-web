@@ -81,10 +81,10 @@ const TopbarDesktop = props => {
         <Avatar className={css.avatar} user={currentUser} disableProfileLink />
       </MenuLabel>
       <MenuContent className={css.profileMenuContent}>
-      <MenuItem key="EventHostPage">
+      <MenuItem key="EventDetailsPage">
           <NamedLink
-            className={classNames(css.yourListingsLink, currentPageClass('EventHostPage'))}
-            name="EventHostPage"
+            className={classNames(css.yourListingsLink, currentPageClass('EventDetailsPage'))}
+            name="EventDetailsPage"
           >
             <span className={css.menuItemBorder} />
             <FormattedMessage id="TopbarDesktop.yourEventLink" />

@@ -20,13 +20,13 @@ import {
   LocationAutocompleteInputField
 } from '../../components';
 
-import css from './EventHostForm.css';
+import css from './EventDetailsForm.css';
 
 const ACCEPT_IMAGES = 'image/*';
 const UPLOAD_CHANGE_DELAY = 2000; // Show spinner so that browser has time to load img srcset
 const identity = v => v;
 
-class EventHostFormComponent extends Component {
+class EventDetailsFormComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -75,42 +75,42 @@ class EventHostFormComponent extends Component {
           const user = ensureCurrentUser(currentUser);
 
           // Event Name
-          const eventNameLabel = intl.formatMessage({ id: 'EventHostForm.eventNameLabel' });
-          const eventNamePlaceholder = intl.formatMessage({ id: 'EventHostForm.eventNamePlaceholder' });
-          const eventNameRequiredMessage = intl.formatMessage({ id: 'EventHostForm.eventNameRequired' });
+          const eventNameLabel = intl.formatMessage({ id: 'EventDetailsForm.eventNameLabel' });
+          const eventNamePlaceholder = intl.formatMessage({ id: 'EventDetailsForm.eventNamePlaceholder' });
+          const eventNameRequiredMessage = intl.formatMessage({ id: 'EventDetailsForm.eventNameRequired' });
 
           // Event Type
-          const eventTypeLabel = intl.formatMessage({ id: 'EventHostForm.eventTypeLabel' });
-          const eventTypePlaceholder = intl.formatMessage({ id: 'EventHostForm.eventTypePlaceholder' });
-          const eventTypeRequiredMessage = intl.formatMessage({ id: 'EventHostForm.eventTypeRequired' });
+          const eventTypeLabel = intl.formatMessage({ id: 'EventDetailsForm.eventTypeLabel' });
+          const eventTypePlaceholder = intl.formatMessage({ id: 'EventDetailsForm.eventTypePlaceholder' });
+          const eventTypeRequiredMessage = intl.formatMessage({ id: 'EventDetailsForm.eventTypeRequired' });
 
           // Event Description
-          const eventDescriptionMessage = intl.formatMessage({ id: 'EventHostForm.eventDescriptionMessage' });
-          const eventDescriptionPlaceholder = intl.formatMessage({ id: 'EventHostForm.eventDescriptionPlaceholder' });
-          const descriptionRequiredMessage = intl.formatMessage({ id: 'EventHostForm.eventDescriptionRequired' });
+          const eventDescriptionMessage = intl.formatMessage({ id: 'EventDetailsForm.eventDescriptionMessage' });
+          const eventDescriptionPlaceholder = intl.formatMessage({ id: 'EventDetailsForm.eventDescriptionPlaceholder' });
+          const descriptionRequiredMessage = intl.formatMessage({ id: 'EventDetailsForm.eventDescriptionRequired' });
 
           // Event Duration
-          const eventDurationLabel = intl.formatMessage({ id: 'EventHostForm.eventDurationMessage' });
-          const eventDurationPlaceholder = intl.formatMessage({ id: 'EventHostForm.eventDurationPlaceholder' });
-          const eventDurationRequiredMessage = intl.formatMessage({ id: 'EventHostForm.eventDurationRequired' });
+          const eventDurationLabel = intl.formatMessage({ id: 'EventDetailsForm.eventDurationMessage' });
+          const eventDurationPlaceholder = intl.formatMessage({ id: 'EventDetailsForm.eventDurationPlaceholder' });
+          const eventDurationRequiredMessage = intl.formatMessage({ id: 'EventDetailsForm.eventDurationRequired' });
 
           // MC, Arena Director and Host Drum labels
-          const mcLabel = intl.formatMessage({ id: 'EventHostForm.mcLabel' });
-          const arenaLabel = intl.formatMessage({ id: 'EventHostForm.arenaLabel' });
-          const hostDrumLabel = intl.formatMessage({ id: 'EventHostForm.hostDrumLabel' });
+          const mcLabel = intl.formatMessage({ id: 'EventDetailsForm.mcLabel' });
+          const arenaLabel = intl.formatMessage({ id: 'EventDetailsForm.arenaLabel' });
+          const hostDrumLabel = intl.formatMessage({ id: 'EventDetailsForm.hostDrumLabel' });
 
           //Date and time fields
-          const eventTimeLabel = intl.formatMessage({ id: 'EventHostForm.eventTimeLabel' });
-          const eventTimePlaceholder = intl.formatMessage({ id: 'EventHostForm.eventTimePlaceholder' });
-          const eventTimeRequiredMessage = intl.formatMessage({ id: 'EventHostForm.eventTimeRequired' });
-          const eventMeridiemLabel = intl.formatMessage({ id: 'EventHostForm.eventMeridiemLabel' });
+          const eventTimeLabel = intl.formatMessage({ id: 'EventDetailsForm.eventTimeLabel' });
+          const eventTimePlaceholder = intl.formatMessage({ id: 'EventDetailsForm.eventTimePlaceholder' });
+          const eventTimeRequiredMessage = intl.formatMessage({ id: 'EventDetailsForm.eventTimeRequired' });
+          const eventMeridiemLabel = intl.formatMessage({ id: 'EventDetailsForm.eventMeridiemLabel' });
 
           //Location Fields
-          const addressLabel = intl.formatMessage({ id: 'EventHostForm.address' });
-          const addressPlaceholderMessage = intl.formatMessage({ id: 'EventHostForm.addressPlaceholder' });
-          const addressNotRecognizedMessage = intl.formatMessage({ id: 'EventHostForm.addressNotRecognized' });
-          const lotLabel = intl.formatMessage({ id: 'EventHostForm.lotLabel' });
-          const lotPlaceholderMessage = intl.formatMessage({ id: 'EventHostForm.lotPlaceholder' });
+          const addressLabel = intl.formatMessage({ id: 'EventDetailsForm.address' });
+          const addressPlaceholderMessage = intl.formatMessage({ id: 'EventDetailsForm.addressPlaceholder' });
+          const addressNotRecognizedMessage = intl.formatMessage({ id: 'EventDetailsForm.addressNotRecognized' });
+          const lotLabel = intl.formatMessage({ id: 'EventDetailsForm.lotLabel' });
+          const lotPlaceholderMessage = intl.formatMessage({ id: 'EventDetailsForm.lotPlaceholder' });
 
           const submitError = updateProfileError ? (
             <div className={css.error}>
@@ -172,17 +172,17 @@ class EventHostFormComponent extends Component {
             >
               <div className={css.sectionContainer}>
                 <h3 className={css.sectionTitle}>
-                  <FormattedMessage id="EventHostForm.eventInfo" />
+                  <FormattedMessage id="EventDetailsForm.eventInfo" />
                 </h3>
                 <div className={css.eventContainer}>
                   <p className={css.websiteTitle}>
-                    <FormattedMessage id="EventHostForm.yourWebsite" />
+                    <FormattedMessage id="EventDetailsForm.yourWebsite" />
                   </p>
                   <p className={css.websiteValue}>
-                    {companyWebsite ? companyWebsite : <FormattedMessage id="EventHostForm.noWebsite" />}
+                    {companyWebsite ? companyWebsite : <FormattedMessage id="EventDetailsForm.noWebsite" />}
                   </p>
                   <p className={css.websiteSubtitle}>
-                    <FormattedMessage id="EventHostForm.changeSettings" values={{ emailLink }} />
+                    <FormattedMessage id="EventDetailsForm.changeSettings" values={{ emailLink }} />
                   </p>
                   <FieldTextInput
                     className={css.eventField}
@@ -293,7 +293,7 @@ class EventHostFormComponent extends Component {
                 {typeSelection && typeSelection.value && typeSelection.value === 'powwow' ?
                   <div className={css.optionalContainer}>
                     <h3 className={css.sectionTitle}>
-                      <FormattedMessage id="EventHostForm.additionalInfo" />
+                      <FormattedMessage id="EventDetailsForm.additionalInfo" />
                     </h3>
                     <div className={css.eventContainer}>
                       <FieldTextInput
@@ -362,7 +362,7 @@ class EventHostFormComponent extends Component {
   }
 }
 
-EventHostFormComponent.defaultProps = {
+EventDetailsFormComponent.defaultProps = {
   rootClassName: null,
   className: null,
   uploadImageError: null,
@@ -371,7 +371,7 @@ EventHostFormComponent.defaultProps = {
   accountType: null
 };
 
-EventHostFormComponent.propTypes = {
+EventDetailsFormComponent.propTypes = {
   rootClassName: string,
   className: string,
 
@@ -386,8 +386,8 @@ EventHostFormComponent.propTypes = {
   intl: intlShape.isRequired,
 };
 
-const EventHostForm = compose(injectIntl)(EventHostFormComponent);
+const EventDetailsForm = compose(injectIntl)(EventDetailsFormComponent);
 
-EventHostForm.displayName = 'EventHostForm';
+EventDetailsForm.displayName = 'EventDetailsForm';
 
-export default EventHostForm;
+export default EventDetailsForm;

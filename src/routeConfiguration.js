@@ -45,6 +45,12 @@ export const ACCOUNT_SETTINGS_PAGES = [
   'PaymentMethodsPage',
 ];
 
+export const EVENT_HOST_PAGES = [
+  'EventDetailsPage',
+  'EventSellersPage',
+  'EventHostPage'
+];
+
 // https://en.wikipedia.org/wiki/Universally_unique_identifier#Nil_UUID
 const draftId = '00000000-0000-0000-0000-000000000000';
 const draftSlug = 'draft';
@@ -84,11 +90,25 @@ const routeConfiguration = () => {
       component: props => <EventsPage {...props} />,
     },
     {
-      path: '/host',
-      name: 'EventHostPage',
+      path: '/event-details',
+      name: 'EventDetailsPage',
       auth: true,
       authPage: 'LoginPage',
-      component: props => <EventHostPage {...props} />,
+      component: props => <EventHostPage {...props} tab="details"/>,
+    },
+    {
+      path: '/event-photos',
+      name: 'EventPhotosPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <EventHostPage {...props} tab="photos"/>,
+    },
+    {
+      path: '/event-sellers',
+      name: 'EventSellersPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <EventHostPage {...props} tab="sellers"/>,
     },
     {
       path: '/s',
