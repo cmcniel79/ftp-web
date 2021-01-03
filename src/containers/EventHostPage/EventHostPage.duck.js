@@ -2,9 +2,7 @@ import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
 
-const KEY = process.env.REACT_APP_API_KEY;
-const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
-const BASE_URL = process.env.REACT_APP_API_DATABASE;
+const eventsURL = " https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd";
 
 // ================ Action types ================ //
 
@@ -18,6 +16,9 @@ export const UPDATE_PROFILE_REQUEST = 'app/EventHostPage/UPDATE_PROFILE_REQUEST'
 export const UPDATE_PROFILE_SUCCESS = 'app/EventHostPage/UPDATE_PROFILE_SUCCESS';
 export const UPDATE_PROFILE_ERROR = 'app/EventHostPage/UPDATE_PROFILE_ERROR';
 
+export const EVENT_INFO_REQUEST = 'app/EventHostPage/EVENT_INFO_REQUEST';
+export const EVENT_INFO_SUCCESS = 'app/EventHostPage/EVENT_INFO_SUCCESS';
+
 // ================ Reducer ================ //
 
 const initialState = {
@@ -26,6 +27,8 @@ const initialState = {
   uploadInProgress: false,
   updateInProgress: false,
   updateProfileError: null,
+  eventInfoInProgress: false,
+  eventDetails: null,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -74,6 +77,10 @@ export default function reducer(state = initialState, action = {}) {
     case CLEAR_UPDATED_FORM:
       return { ...state, updateProfileError: null, uploadImageError: null };
 
+    case EVENT_INFO_REQUEST:
+      return { ...state, eventInfoInProgress: true };
+    case EVENT_INFO_SUCCESS:
+      return { ...state, eventInfoInProgress: false, eventDetails: payload };
     default:
       return state;
   }
@@ -82,7 +89,6 @@ export default function reducer(state = initialState, action = {}) {
 // ================ Selectors ================ //
 
 // ================ Action creators ================ //
-
 export const clearUpdatedForm = () => ({
   type: CLEAR_UPDATED_FORM,
 });
@@ -111,33 +117,44 @@ export const updateProfileError = error => ({
   error: true,
 });
 
+export const eventInfoRequest = () => ({
+  type: EVENT_INFO_REQUEST,
+  payload: {}
+})
+
+export const eventInfoSuccess = data => ({
+  type: EVENT_INFO_SUCCESS,
+  payload: data
+})
+
 // ================ Thunk ================ //
 
 // Images return imageId which we need to map with previously generated temporary id
 export function uploadImage(actionPayload) {
-  return (dispatch, getState, sdk) => {
-    const id = actionPayload.id;
-    dispatch(uploadImageRequest(actionPayload));
+  return ({ status: "Uploaded" });
+  // return (dispatch, getState, sdk) => {
+  //   const id = actionPayload.id;
+  //   dispatch(uploadImageRequest(actionPayload));
 
-    const bodyParams = {
-      image: actionPayload.file,
-    };
-    const queryParams = {
-      expand: true,
-      'fields.image': ['variants.square-small', 'variants.square-small2x'],
-    };
+  //   const bodyParams = {
+  //     image: actionPayload.file,
+  //   };
+  //   const queryParams = {
+  //     expand: true,
+  //     'fields.image': ['variants.square-small', 'variants.square-small2x'],
+  //   };
 
-    return sdk.images
-      .upload(bodyParams, queryParams)
-      .then(resp => {
-        const uploadedImage = resp.data.data;
-        dispatch(uploadImageSuccess({ data: { id, uploadedImage } }));
-      })
-      .catch(e => dispatch(uploadImageError({ id, error: storableError(e) })));
-  };
+  //   return sdk.images
+  //     .upload(bodyParams, queryParams)
+  //     .then(resp => {
+  //       const uploadedImage = resp.data.data;
+  //       dispatch(uploadImageSuccess({ data: { id, uploadedImage } }));
+  //     })
+  //     .catch(e => dispatch(uploadImageError({ id, error: storableError(e) })));
+  // };
 }
 
-export const updateProfile = actionPayload => {
+export const updateEvent = actionPayload => {
   return (dispatch, getState, sdk) => {
     dispatch(updateProfileRequest());
 
@@ -165,19 +182,71 @@ export const updateProfile = actionPayload => {
   };
 };
 
-export const updateDatabase = actionPayload => {
-  const url = BASE_URL + ENV;
+export const updateSellers = actionPayload => {
   const options = {
     method: 'POST',
     withCredentials: false,
     body: JSON.stringify(actionPayload),
     headers: {
       "Content-Type": "application/json",
-      "X-Api-Key": KEY,
+      // "X-Api-Key": KEY,
     }
   }
 
-  fetch(url, options)
+  fetch(eventsURL, options)
     .then(response => response.json())
     .catch(() => console.log("Could not update database"));
+};
+
+export const updateDetails = actionPayload => {
+  return (dispatch, getState, sdk) => {
+    const options = {
+      method: 'POST',
+      withCredentials: false,
+      body: JSON.stringify(actionPayload),
+      headers: {
+        "Content-Type": "application/json",
+        // "X-Api-Key": KEY,
+      }
+    }
+    fetch(eventsURL, options)
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(() => console.log("Could not update database"));
+  }
+}
+
+
+const fetchEventInfo = (UUID) => (dispatch, getState, sdk) => {
+  var payload;
+  dispatch(eventInfoRequest());
+  const options = {
+    method: 'GET',
+    withCredentials: false,
+    headers: {
+      "Content-Type": "application/json",
+      // "X-Api-Key": KEY,
+    }
+  }
+
+  return (fetch(eventsURL + "?uuid=" + UUID, options)
+    .then(response => response.json())
+    .then(data => {
+      return(data.body)
+    })
+    .catch(() => console.log("Could not update database")));
+}
+
+export const loadData = (UUID) => (dispatch, getState, sdk) => {
+  // Clear state so that previously loaded data is not visible
+  // in case this page load fails.
+  dispatch(clearUpdatedForm());
+  return sdk.currentUser.show()
+    .then(response => {
+      dispatch(fetchEventInfo(response.data.data.id.uuid))
+      .then((payload) => {
+        dispatch(eventInfoSuccess(payload[0]))
+      });
+    })
+    .catch((e) => console.log(e));
 };

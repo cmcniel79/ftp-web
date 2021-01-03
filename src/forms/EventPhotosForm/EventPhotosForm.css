@@ -10,7 +10,7 @@
  */
   --ProfileSettingsForm_avatarSize: 96px;
   --ProfileSettingsForm_avatarSizeDesktop: 240px;
-  --EditListingPhotosForm_imageWidthDesktop: calc(95% - 12px);
+  --EditListingPhotosForm_imageWidthDesktop: calc(75% - 12px);
 }
 
 .root {

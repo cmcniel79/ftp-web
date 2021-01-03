@@ -5,8 +5,9 @@ export { default as ContactDetailsPage } from './ContactDetailsPage/ContactDetai
 export { default as ContactPage } from './ContactPage/ContactPage';
 export { default as EditListingPage } from './EditListingPage/EditListingPage';
 export { default as EmailVerificationPage } from './EmailVerificationPage/EmailVerificationPage';
-export { default as EventsPage } from './EventsPage/EventsPage';
 export { default as EventHostPage } from './EventHostPage/EventHostPage';
+export { default as EventsPage } from './EventsPage/EventsPage';
+export { default as EventTypePage } from './EventTypePage/EventTypePage';
 export { default as FAQPage } from './FAQPage/FAQPage';
 export { default as FollowingPage } from './FollowingPage/FollowingPage';
 export { default as InboxPage } from './InboxPage/InboxPage';

@@ -11,17 +11,9 @@ import { required, validSocialMediaURL } from '../../util/validators';
 import { isUploadImageOverLimitError } from '../../util/errors';
 import {
   Form,
-  Avatar,
   Button,
   ImageFromFile,
   IconSpinner,
-  FieldTextInput,
-  FieldSelect,
-  IconSocialMediaFacebook,
-  IconSocialMediaInstagram,
-  IconSocialMediaTwitter,
-  IconSocialMediaTikTok,
-  ExternalLink,
 } from '../../components';
 
 import css from './EventPhotosForm.css';
@@ -115,16 +107,16 @@ class EventPhotosFormComponent extends Component {
               <div className={css.avatarContainer}>
                 {imageFromFile}
                 <div className={css.changeAvatar}>
-                  <FormattedMessage id="ProfileSettingsForm.changeAvatar" />
+                  <FormattedMessage id="EventPhotosForm.changePicture" />
                 </div>
               </div>
             ) : (
                 <div className={css.avatarPlaceholder}>
                   <div className={css.avatarPlaceholderText}>
-                    <FormattedMessage id="ProfileSettingsForm.addYourProfilePicture" />
+                    <FormattedMessage id="EventPhotosForm.addYourEventPicture" />
                   </div>
                   <div className={css.avatarPlaceholderTextMobile}>
-                    <FormattedMessage id="ProfileSettingsForm.addYourProfilePictureMobile" />
+                    <FormattedMessage id="EventPhotosForm.addYourEventPictureMobile" />
                   </div>
                 </div>
               );
@@ -132,7 +124,7 @@ class EventPhotosFormComponent extends Component {
           const updateProfileError = false;
           const submitError = updateProfileError ? (
             <div className={css.error}>
-              <FormattedMessage id="ProfileSettingsForm.updateProfileFailed" />
+              <FormattedMessage id="EventPhotosForm.updateProfileFailed" />
             </div>
           ) : null;
 
@@ -183,13 +175,13 @@ class EventPhotosFormComponent extends Component {
                     if (isUploadImageOverLimitError(uploadImageError)) {
                       error = (
                         <div className={css.error}>
-                          <FormattedMessage id="ProfileSettingsForm.imageUploadFailedFileTooLarge" />
+                          <FormattedMessage id="EventPhotosForm.imageUploadFailedFileTooLarge" />
                         </div>
                       );
                     } else if (uploadImageError) {
                       error = (
                         <div className={css.error}>
-                          <FormattedMessage id="ProfileSettingsForm.imageUploadFailed" />
+                          <FormattedMessage id="EventPhotosForm.imageUploadFailed" />
                         </div>
                       );
                     }
@@ -213,8 +205,11 @@ class EventPhotosFormComponent extends Component {
                     );
                   }}
                 </Field>
+                <div className={css.tip}>
+                  <FormattedMessage id="ProfileSettingsForm.tip" />
+                </div>
                 <div className={css.fileInfo}>
-                  <FormattedMessage id="ProfileSettingsForm.fileInfo" />
+                  <FormattedMessage id="EventPhotosForm.fileInfo" />
                 </div>
               </div>
               {submitError}
@@ -225,7 +220,7 @@ class EventPhotosFormComponent extends Component {
                 disabled={submitDisabled}
                 ready={pristineSinceLastSubmit}
               >
-                <FormattedMessage id="ProfileSettingsForm.saveChanges" />
+                <FormattedMessage id="EventPhotosForm.saveChanges" />
               </Button>
             </Form>
           );

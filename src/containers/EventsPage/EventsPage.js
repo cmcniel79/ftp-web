@@ -15,13 +15,28 @@ import {
   FormattedMessage,
 } from '../../util/reactIntl';
 import stanfordImage from '../../assets/stanford-bg.jpg';
-import forward from '../../assets/forward.svg';
-import back from '../../assets/back.svg';
 import css from './EventsPage.css';
+import EventSection from './EventSection';
+import bed from '../../assets/bed.svg';
+import people from '../../assets/people.svg';
+import fitness from '../../assets/fitness.svg';
 
 export class EventsPageComponent extends Component {
 
   render() {
+
+    const contactPageLink = <NamedLink name="ContactPage">
+      <FormattedMessage id="EventsPage.contactLink" />
+    </NamedLink>;
+
+    const powwows = [
+    {eventName: "Stanford Powwow", eventType: "powwwow", image: stanfordImage}, 
+    {eventName: "Oakland Powwow", eventType: "powwwow", image: bed},
+    {eventName: "Gathering of Nations", eventType: "powwwow", image: people}, 
+    // {eventName: "UNM Powwow", eventType: "powwwow", image: fitness}
+  ];
+    // I do not know why the length of the events list in section carousel is only 2,
+    // so I am passing in the length here
     return (
       <Page className={css.root} title="Events Page" scrollingDisabled={false}>
         <LayoutSingleColumn>
@@ -30,42 +45,13 @@ export class EventsPageComponent extends Component {
           </LayoutWrapperTopbar>
 
           <LayoutWrapperMain className={css.staticPageWrapper}>
-            <h1 className={css.pageSectionTitle}>
-              <FormattedMessage id="EventsPage.powwows"/>
-            </h1>
+              <EventSection eventList={powwows} eventType="powwow" />
+              <EventSection eventList={powwows} eventType="virtual"/>
 
-            <div className={css.powwowSection}>
-              <button className={css.backButtonDesktop}>
-                <img className={css.chevron} src={back} alt="chevron" />
-              </button>
-              <div className={css.powwowCard}>
-                <div className={css.powwowImageWrapper}>
-                  <NamedLink className={css.powwowLink} name="PowwowPage" params={{ host: "stanford" }}>
-                    <img className={css.powwowImage} src={stanfordImage} alt="stanford" />
-                    <div className={css.powwowTitle}>
-                      <FormattedMessage id="EventsPage.stanfordPowwow" />
-                    </div>
-                  </NamedLink>
-                </div>
-                <div className={css.powwowSubtitle}>
-                  <FormattedMessage id="EventsPage.powwowCardInfo" values={{ eventName: "Stanford Powwow", date: "May 5th-7th" }}/>
-                </div>
-              </div>
-              <button className={css.forwardButtonDesktop}>
-                <img className={css.chevron} src={forward} alt="chevron" />
-              </button>
-            </div>
-
-            <h1 className={css.pageSectionTitle}>
-              <FormattedMessage id="EventsPage.virtual" />
-            </h1>
-            <div className={css.powwowSection}>
-              <button className={css.backButtonDesktop}>
-                <img className={css.chevron} src={back} alt="chevron" />
-              </button>
-              <button className={css.forwardButtonDesktop}>
-                <img className={css.chevron} src={forward} alt="chevron" />
-              </button>
+            <div className={css.addEvent}>
+              <h3 className={css.addEventInfo}>
+                <FormattedMessage id="EventsPage.addAnEvent" values={{ link: contactPageLink }}/>
+              </h3>
             </div>
 
           </LayoutWrapperMain>

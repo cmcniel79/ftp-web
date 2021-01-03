@@ -1,4 +1,5 @@
 @import '../../marketplace.css';
+
 .staticPageWrapper {
     width: calc(100% - 48px);
     max-width: 1056px;
@@ -7,6 +8,12 @@
         width: calc(100% - 72px);
         margin: 72px auto;
     }
+}
+
+.titleContainer {
+    width: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .splitScreen {
@@ -19,15 +26,21 @@
 }
 
 .sectionHost {
-    width: 30%;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    @media (--viewportMedium) {
+        width: 40%;
+    }
 }
 
 .sectionSellers {
-    width: 70%;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    @media (--viewportMedium) {
+        width: 50%;
+    }
 }
 
 .userCardWrapper {
@@ -50,7 +63,7 @@
     width: 90%;
     margin: 0 auto 0 auto;
     @media (--viewportMedium) {
-        width: 400px;
+        width: 100%;
     }
 }
 
@@ -59,7 +72,7 @@
 }
 
 .hostInfo {
-    width: 90%;
+    width: 100%;
     margin: 0 auto 0 auto;
     @media (--viewportMedium) {
         width: 100%;
@@ -72,4 +85,56 @@
     flex-direction: row;
     justify-content: space-between;
     border-bottom: 1px solid var(--matterColorNegative);
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow: hidden;
 }
+
+.directionsLink{
+    width: 60%;
+}
+
+.buttonRow {
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2px 0 10px 0;
+  }
+  
+  .linkButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--marketplaceColor);
+    font-weight: normal;
+    &:hover {
+      text-decoration: none;
+      transform: scale(1.05);
+    }
+  }
+  
+  .linkIcon {
+    width: 40px;
+    border: none;
+  }
+  
+  .shareIcon {
+    width: 40px;
+  }
+  
+  .shareButton {
+    width: 40px;
+    padding: 0;
+    margin: 0;
+    background-color: var(--matterColorLight);
+    color: var(--marketplaceColor);
+    border: none;
+    font-weight: normal;
+    &:hover {
+      text-decoration: none;
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+  }

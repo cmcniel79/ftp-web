@@ -9,7 +9,7 @@ import {
   LayoutWrapperMain,
   LayoutWrapperFooter,
   Footer,
-  // ExternalLink,
+  ExternalLink,
   Page
 } from '../../components';
 import { loadData } from './PowwowPage.duck';
@@ -21,10 +21,17 @@ import SectionHost from './SectionHost';
 import {
   FormattedMessage,
 } from '../../util/reactIntl';
+import navigateIcon from '../../assets/navigate.svg';
+import shareIcon from '../../assets/share.svg';
+import exitIcon from '../../assets/exit.svg';
 
 import css from './PowwowPage.css';
 
 export class PowwowPageComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.shareButtonClick = this.shareButtonClick.bind(this);
+  }
 
   componentDidMount() {
     if (window) {
@@ -32,9 +39,33 @@ export class PowwowPageComponent extends Component {
     }
   }
 
+  shareButtonClick = urlToProfile => {
+    if (navigator.share) {
+      navigator.share({
+        text: 'Check out this awesome profile on From The People!',
+        url: urlToProfile
+      })
+        .catch(() => {
+          console.log('Could not share link');
+        });
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(urlToProfile)
+        .then(() => {
+          this.setState({ wasCopySuccessful: true })
+        })
+        .catch(() => {
+          console.log('Could not share link');
+        });
+    }
+    // https://medium.com/@feargswalsh/copying-to-the-clipboard-in-react-81bb956963ec
+  };
+
   render() {
     const { users, currentUser } = this.props;
     const host = "Stanford Powwow";
+    const website = "http://powwow.stanford.edu/";
+    const eventAddress = "410 Terry Ave, North Seattle, United States";
+    const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURI(eventAddress);
     return (
       <Page className={css.root} title="Powwow Page" scrollingDisabled={false}>
         <LayoutSingleColumn>
@@ -43,9 +74,38 @@ export class PowwowPageComponent extends Component {
           </LayoutWrapperTopbar>
 
           <LayoutWrapperMain className={css.staticPageWrapper}>
-            <h1 className={css.pageTitle}>
-              <FormattedMessage id="PowwowPage.heading" values={{ host }} />
-            </h1>
+            <div className={css.titleContainer} >
+              <h1 className={css.pageTitle}>
+                <FormattedMessage id="PowwowPage.heading" values={{ host }} />
+              </h1>
+              <div className={css.buttonRow} >
+                {eventAddress &&
+                  <ExternalLink
+                    className={css.linkButton}
+                    href={googleMapsUrl}
+                  >
+                    <img className={css.linkIcon} src={navigateIcon} alt="Navigate" />
+                    <FormattedMessage id="SellerCard.navigateButton" />
+                  </ExternalLink>
+                }
+                {website &&
+                  <ExternalLink
+                    className={css.linkButton}
+                    href={website}
+                  >
+                    <img className={css.linkIcon} src={exitIcon} alt="Link" />
+                    <FormattedMessage id="SellerCard.websiteButton" />
+                  </ExternalLink>
+                }
+                <button
+                  className={css.shareButton}
+                  onClick={() => this.shareButtonClick(window.location.href)}
+                >
+                  <img className={css.shareIcon} src={shareIcon} alt="Share" />
+                  <FormattedMessage id="SellerCard.shareButton" />
+                </button>
+              </div>
+            </div>
             <div className={css.splitScreen}>
               <SectionSellers className={css.sectionSellers} users={users} currentUser={currentUser} />
               <SectionHost className={css.sectionHost} host={host} />

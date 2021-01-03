@@ -61,7 +61,6 @@ class EventDetailsFormComponent extends Component {
             handleSubmit,
             intl,
             invalid,
-            onImageUpload,
             pristine,
             rootClassName,
             updateInProgress,
@@ -69,10 +68,12 @@ class EventDetailsFormComponent extends Component {
             uploadInProgress,
             values,
             accountType,
-            companyWebsite
+            initialValues,
+            eventInfoInProgress
           } = fieldRenderProps;
 
           const user = ensureCurrentUser(currentUser);
+          const website = initialValues && initialValues.eventWebsite;
 
           // Event Name
           const eventNameLabel = intl.formatMessage({ id: 'EventDetailsForm.eventNameLabel' });
@@ -140,18 +141,18 @@ class EventDetailsFormComponent extends Component {
           ];
 
           const timeOptions = [
-            { key: '1:00', label: "1:00" },
-            { key: '2:00', label: "2:00" },
-            { key: '3:00', label: "3:00" },
-            { key: '4:00', label: "4:00" },
-            { key: '5:00', label: "5:00" },
-            { key: '6:00', label: "6:00" },
-            { key: '7:00', label: "7:00" },
-            { key: '8:00', label: "8:00" },
-            { key: '9:00', label: "9:00" },
-            { key: '10:00', label: "10:00" },
-            { key: '11:00', label: "11:00" },
-            { key: '12:00', label: "12:00" },
+            { key: '01:00:00', label: "1:00" },
+            { key: '02:00:00', label: "2:00" },
+            { key: '03:00:00', label: "3:00" },
+            { key: '04:00:00', label: "4:00" },
+            { key: '05:00:00', label: "5:00" },
+            { key: '06:00:00', label: "6:00" },
+            { key: '07:00:00', label: "7:00" },
+            { key: '08:00:00', label: "8:00" },
+            { key: '09:00:00', label: "9:00" },
+            { key: '10:00:00', label: "10:00" },
+            { key: '11:00:00', label: "11:00" },
+            { key: '12:00:00', label: "12:00" },
           ];
 
           const meridiemOptions = [
@@ -162,135 +163,129 @@ class EventDetailsFormComponent extends Component {
           const durationSelection = document.getElementById('eventDuration');
           const typeSelection = document.getElementById('eventType');
 
-          return (
-            <Form
-              className={classes}
-              onSubmit={e => {
-                this.submittedValues = values;
-                handleSubmit(e);
-              }}
-            >
-              <div className={css.sectionContainer}>
-                <h3 className={css.sectionTitle}>
-                  <FormattedMessage id="EventDetailsForm.eventInfo" />
-                </h3>
-                <div className={css.eventContainer}>
-                  <p className={css.websiteTitle}>
-                    <FormattedMessage id="EventDetailsForm.yourWebsite" />
-                  </p>
-                  <p className={css.websiteValue}>
-                    {companyWebsite ? companyWebsite : <FormattedMessage id="EventDetailsForm.noWebsite" />}
-                  </p>
-                  <p className={css.websiteSubtitle}>
-                    <FormattedMessage id="EventDetailsForm.changeSettings" values={{ emailLink }} />
-                  </p>
-                  <FieldTextInput
-                    className={css.eventField}
-                    type="text"
-                    id="eventName"
-                    name="eventName"
-                    label={eventNameLabel}
-                    placeholder={eventNamePlaceholder}
-                    maxLength={30}
-                    validate={required(eventNameRequiredMessage)}
-                  />
-                  <FieldSelect
-                    className={css.eventField}
-                    name="eventType"
-                    id="eventType"
-                    label={eventTypeLabel}
-                    validate={required(eventTypeRequiredMessage)}
-                  >
-                    {<option disabled value="">
-                      {eventTypePlaceholder}
-                    </option>}
-                    {eventOptions.map(i => (
-                      <option key={i.key} value={i.key}>
-                        {i.label}
-                      </option>
-                    ))}
-                  </FieldSelect>
-                  <FieldTextInput
-                    id="description"
-                    name="description"
-                    className={css.eventField}
-                    type="textarea"
-                    label={eventDescriptionMessage}
-                    placeholder={eventDescriptionPlaceholder}
-                    validate={required(descriptionRequiredMessage)}
-                  />
-                  <FieldSelect
-                    className={css.eventField}
-                    name="eventDuration"
-                    id="eventDuration"
-                    label={eventDurationLabel}
-                    validate={required(eventDurationRequiredMessage)}
-                  >
-                    {<option disabled value="">
-                      {eventDurationPlaceholder}
-                    </option>}
-                    {durationOptions.map(i => (
-                      <option key={i.key} value={i.key}>
-                        {i.label}
-                      </option>
-                    ))}
-                  </FieldSelect>
-                  {durationSelection && durationSelection.value && durationSelection.value === 'multi' ?
-                    <div>
-                      <div className={css.dateContainer}>
-                        <FieldDateRangeInput
-                          name="eventDates"
-                          unitType="units"
-                          startDateLabel='Start date'
-                          startDateId='EmptyDateRange.bookingStartDate'
-                          endDateLabel='End date'
-                          endDateId='EmptyDateRangeInputForm.bookingEndDate'
-                        />
-                      </div>
-                    </div>
-                    :
-                    <div className={css.dateAndTimeContainer}>
-                      <FieldDateInput
-                        className={css.dateInput}
-                        name='eventDate'
-                        useMobileMargins={false}
-                        id={`EmptyDateInputForm.bookingDate`}
-                        label='Date'
-                        placeholderText={moment().format('ddd, MMMM D')}
+          const showDateRangeInput = durationSelection && durationSelection.value && durationSelection.value === 'multi' ? true : false;
+          const showOptionalInfo = typeSelection && typeSelection.value && typeSelection.value === 'powwow' ? true : false;
+
+          const formInputs =
+            (<div>
+              <div className={css.eventContainer}>
+                <p className={css.websiteTitle}>
+                  <FormattedMessage id="EventDetailsForm.yourWebsite" />
+                </p>
+                <p className={css.websiteValue}>
+                  {website ? website : <FormattedMessage id="EventDetailsForm.noWebsite" />}
+                </p>
+                <p className={css.websiteSubtitle}>
+                  <FormattedMessage id="EventDetailsForm.changeSettings" values={{ emailLink }} />
+                </p>
+                <FieldTextInput
+                  className={css.eventField}
+                  type="text"
+                  id="eventName"
+                  name="eventName"
+                  label={eventNameLabel}
+                  placeholder={eventNamePlaceholder}
+                  maxLength={30}
+                  validate={required(eventNameRequiredMessage)}
+                />
+                <FieldSelect
+                  className={css.eventField}
+                  name="eventType"
+                  id="eventType"
+                  label={eventTypeLabel}
+                  validate={required(eventTypeRequiredMessage)}
+                >
+                  {<option disabled value="">
+                    {eventTypePlaceholder}
+                  </option>}
+                  {eventOptions.map(i => (
+                    <option key={i.key} value={i.key}>
+                      {i.label}
+                    </option>
+                  ))}
+                </FieldSelect>
+                <FieldTextInput
+                  id="eventDescription"
+                  name="eventDescription"
+                  className={css.eventField}
+                  type="textarea"
+                  label={eventDescriptionMessage}
+                  placeholder={eventDescriptionPlaceholder}
+                  validate={required(descriptionRequiredMessage)}
+                />
+                <FieldSelect
+                  className={css.eventField}
+                  name="eventDuration"
+                  id="eventDuration"
+                  label={eventDurationLabel}
+                  validate={required(eventDurationRequiredMessage)}
+                >
+                  {<option disabled value="">
+                    {eventDurationPlaceholder}
+                  </option>}
+                  {durationOptions.map(i => (
+                    <option key={i.key} value={i.key}>
+                      {i.label}
+                    </option>
+                  ))}
+                </FieldSelect>
+                {showDateRangeInput ?
+                  <div>
+                    <div className={css.dateContainer}>
+                      <FieldDateRangeInput
+                        id="datesRange"
+                        name="datesRange"
+                        unitType="units"
+                        startDateLabel='Start date'
+                        startDateId='EmptyDateRange.bookingStartDate'
+                        endDateLabel='End date'
+                        endDateId='EmptyDateRangeInputForm.bookingEndDate'
                       />
-                      <div className={css.timeContainer}>
-                        <FieldSelect
-                          className={css.eventTime}
-                          name="eventTime"
-                          id="eventTime"
-                          label={eventTimeLabel}
-                          validate={required(eventTimeRequiredMessage)}
-                        >
-                          {<option disabled value="">
-                            {eventTimePlaceholder}
-                          </option>}
-                          {timeOptions.map(i => (
-                            <option key={i.key} value={i.key}>
-                              {i.label}
-                            </option>
-                          ))}
-                        </FieldSelect>
-                        <FieldSelect
-                          className={css.eventMeridiem}
-                          name="eventMeridiem"
-                          id="eventMeridiem"
-                          label={eventMeridiemLabel}
-                        >
-                          {meridiemOptions.map(i => (
-                            <option key={i.key} value={i.key}>
-                              {i.label}
-                            </option>
-                          ))}
-                        </FieldSelect>
-                      </div>
-                    </div>}
-                </div>
-                {typeSelection && typeSelection.value && typeSelection.value === 'powwow' ?
+                    </div>
+                  </div>
+                  :
+                  <div className={css.dateAndTimeContainer}>
+                    <FieldDateInput
+                      className={css.dateInput}
+                      name='startDate'
+                      useMobileMargins={false}
+                      id={`EmptyDateInputForm.bookingDate`}
+                      label='Date'
+                      placeholderText={moment().format('ddd, MMMM D')}
+                    />
+                    <div className={css.timeContainer}>
+                      <FieldSelect
+                        className={css.eventTime}
+                        name="startTime"
+                        id="startTime"
+                        label={eventTimeLabel}
+                        validate={required(eventTimeRequiredMessage)}
+                      >
+                        {<option disabled value="">
+                          {eventTimePlaceholder}
+                        </option>}
+                        {timeOptions.map(i => (
+                          <option key={i.key} value={i.key}>
+                            {i.label}
+                          </option>
+                        ))}
+                      </FieldSelect>
+                      <FieldSelect
+                        className={css.eventMeridiem}
+                        name="meridiem"
+                        id="meridiem"
+                        label={eventMeridiemLabel}
+                      >
+                        {meridiemOptions.map(i => (
+                          <option key={i.key} value={i.key}>
+                            {i.label}
+                          </option>
+                        ))}
+                      </FieldSelect>
+                    </div>
+                  </div>}
+              </div>
+              {showOptionalInfo ?
                   <div className={css.optionalContainer}>
                     <h3 className={css.sectionTitle}>
                       <FormattedMessage id="EventDetailsForm.additionalInfo" />
@@ -315,8 +310,8 @@ class EventDetailsFormComponent extends Component {
                       <FieldTextInput
                         className={css.eventField}
                         type="text"
-                        id="hostDrum"
-                        name="hostDrum"
+                        id="hostDrums"
+                        name="hostDrums"
                         label={hostDrumLabel}
                         maxLength={30}
                       />
@@ -342,8 +337,25 @@ class EventDetailsFormComponent extends Component {
                         maxLength={30}
                       />
                     </div>
-                  </div> : null}
+                  </div> : null
+              }</div>);
+
+          return (
+            <Form
+              className={classes}
+              onSubmit={e => {
+                this.submittedValues = values;
+                handleSubmit(e);
+              }}
+            >
+              <div className={css.sectionContainer}>
+                <h3 className={css.sectionTitle}>
+                  <FormattedMessage id="EventDetailsForm.eventInfo" />
+                </h3>
               </div>
+              {eventInfoInProgress ? (
+                  <FormattedMessage id="EventDetailsForm.eventInfoInProgress" />
+              ) : formInputs}
               {submitError}
               <Button
                 className={typeSelection && typeSelection.value && typeSelection.value === 'powwow' ? css.submitButton : css.submitButtonExtraMargin}

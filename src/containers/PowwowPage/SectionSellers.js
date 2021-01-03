@@ -11,9 +11,9 @@ class SectionSellers extends Component {
     }
 
     render() {
-        const { users, currentUser } = this.props;
+        const { users, currentUser, className } = this.props;
         return (
-            <div>
+            <div className={className}>
                 <h2>
                 <FormattedMessage id="PowwowPage.sellersHeading"/>
             </h2>

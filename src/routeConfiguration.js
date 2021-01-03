@@ -10,6 +10,7 @@ import {
   EditListingPage,
   EmailVerificationPage,
   EventsPage,
+  EventTypePage,
   EventHostPage,
   InboxPage,
   LandingPage,
@@ -88,6 +89,11 @@ const routeConfiguration = () => {
       path: '/events',
       name: 'EventsPage',
       component: props => <EventsPage {...props} />,
+    },
+    {
+      path: '/events/:type',
+      name: 'EventTypePage',
+      component: props => <EventTypePage {...props} />,
     },
     {
       path: '/event-details',
@@ -226,7 +232,7 @@ const routeConfiguration = () => {
       component: props => <ProfileSettingsPage {...props} />,
     },
     {
-      path: '/events/powwow/:host',
+      path: '/events/powwows/:eventName',
       name: 'PowwowPage',
       component: props => <PowwowPage {...props} />,
     },

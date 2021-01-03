@@ -6,6 +6,7 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { propTypes } from '../../util/types';
 import { ensureCurrentUser } from '../../util/data';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
+import moment from 'moment';
 import {
   Page,
   UserNav,
@@ -21,7 +22,7 @@ import {
 import { EventDetailsForm, EventPhotosForm, EventSellersForm } from '../../forms';
 import { TopbarContainer } from '..';
 
-import { updateProfile, uploadImage, updateDatabase } from './EventHostPage.duck';
+import { loadData, updateEvent, updateDetails, uploadImage, updateSellers } from './EventHostPage.duck';
 import EventSellersListMaybe from './EventSellersListMaybe';
 import css from './EventHostPage.css';
 
@@ -38,6 +39,31 @@ export class EventHostPageComponent extends Component {
 
     this.state = { email: 'jhfajkdhk' };
     this.addAnother = this.addAnother.bind(this);
+    this.submitDetails = this.submitDetails.bind(this);
+  }
+
+  submitDetails(values) {
+    const { eventDuration, datesRange, startDate, mc, arenaDirector, hostDrums, location, lot, ...rest} = values; 
+    console.log(datesRange);
+    const startDateObject = (eventDuration === "multi" && datesRange && datesRange.startDate) ? datesRange.startDate : 
+      (startDate && startDate.date) ? startDate.date : null;
+    const endDateObject = (eventDuration === "multi" && datesRange && datesRange.endDate) ? datesRange.endDate : null;
+    const payload = {
+      ...rest, 
+      hostUUID: this.props.hostUUID,
+      hostName: this.props.hostName,
+      hostEmail: this.props.hostEmail,
+      startDate: startDateObject ? startDateObject.toJSON().slice(0, 10) : null,
+      endDate: endDateObject ? endDateObject.toJSON().slice(0, 10) : null,
+      optionalData: {
+        location,
+        lot,
+        mc,
+        arenaDirector,
+        hostDrums
+      }
+    }
+    this.props.onUpdateDetails(payload);
   }
 
   addAnother(){
@@ -47,23 +73,58 @@ export class EventHostPageComponent extends Component {
     });
   }
 
+  componentDidMount() {
+    if (window) {
+      this.props.onLoadData();
+      // this.loadInitialData();
+    }
+  }
+
   render() {
     const {
       currentUser,
       scrollingDisabled,
       intl,
-      tab
+      tab,
+      onImageUpload,
+      eventInfoInProgress,
+      eventDetails,
     } = this.props;
 
     const sellers = ["chase@fromthepeople.co", "mcniel26@gmail.com", "isabella@fromthepeople.co"];
     const user = ensureCurrentUser(currentUser);
 
+    // Initial Values for EventDetailsForm
+    const eventName = eventDetails && eventDetails.eventName;
+    const eventType = eventDetails && eventDetails.eventType;
+    const eventWebsite = eventDetails && eventDetails.eventWebsite;
+    const eventDescription = eventDetails && eventDetails.eventDescription;
+    // const datesRange = eventDetails && eventDetails.datesRange;
+    const startDate = eventDetails && eventDetails.startDate;
+    const endDate = eventDetails && eventDetails.endDate;
+    const startTime = eventDetails && eventDetails.startTime;
+    const meridiem = eventDetails && eventDetails.meridiem;
+    // Optional Info just for Powwows
+    const mc = eventDetails && eventDetails.optional && eventDetails.optional.mc;
+    const arenaDirector = eventDetails && eventDetails.optional && eventDetails.optional.arenaDirector;
+    const hostDrums = eventDetails && eventDetails.optional && eventDetails.optional.hostDrums;
+    const location = eventDetails && eventDetails.location && eventDetails.optional.location;
+    const lot = eventDetails && eventDetails.lot && eventDetails.optional.lot;
+    const datesRange = {startDate: new Date("2020-12-24"), endDate: new Date("2020-12-31")};
+    
+    const eventDuration = startDate && endDate ? "multi" : "single";
+
     const eventDetailsForm = (
-      <EventDetailsForm onSubmit={(values) => console.log(values)} />
+      <EventDetailsForm 
+      onSubmit={(values) => this.submitDetails(values)} 
+      eventInfoInProgress={eventInfoInProgress}
+      initialValues = {{ eventName, eventType, eventWebsite, eventDescription, eventDuration, datesRange, startDate, endDate,
+        startTime, meridiem, mc, arenaDirector, hostDrums, location, lot}}
+      />
     );
 
     const eventPhotosForm = (
-    <EventPhotosForm onSubmit={(values) => console.log(values)} />
+    <EventPhotosForm onImageUpload={onImageUpload} onSubmit={(values) => console.log(values)} />
     );
 
     const eventSellersForm = (
@@ -110,7 +171,6 @@ export class EventHostPageComponent extends Component {
         },
       },
     ];
-    console.log(tab);
     return (
       <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
         <LayoutSingleColumn>
@@ -173,8 +233,18 @@ const mapStateToProps = state => {
     uploadInProgress,
     updateInProgress,
     updateProfileError,
-  } = state.ProfileSettingsPage;
+    eventInfoInProgress,
+    eventDetails,
+  } = state.EventHostPage;
+  const hostUUID = currentUser && currentUser.id ? currentUser.id.uuid : null;
+  const hostName = currentUser && currentUser.attributes ? currentUser.attributes.profile.displayName : null;
+  const hostEmail = currentUser && currentUser.attributes ? currentUser.attributes.email : null;
+
+  // const hostEmail = cu
   return {
+    hostUUID,
+    hostName,
+    hostEmail,
     currentUser,
     image,
     scrollingDisabled: isScrollingDisabled(state),
@@ -182,13 +252,17 @@ const mapStateToProps = state => {
     updateProfileError,
     uploadImageError,
     uploadInProgress,
+    eventInfoInProgress,
+    eventDetails
   };
 };
 
 const mapDispatchToProps = dispatch => ({
+  onLoadData: () => dispatch(loadData()),
+  onUpdateEvent: data => dispatch(updateEvent(data)),
+  onUpdateDetails: details => dispatch(updateDetails(details)),
   onImageUpload: data => dispatch(uploadImage(data)),
-  onUpdateProfile: data => dispatch(updateProfile(data)),
-  onUpdateDatabase: data => dispatch(updateDatabase(data)),
+  onUpdateSellers: data => dispatch(updateSellers(data)),
 });
 
 const EventHostPage = compose(
