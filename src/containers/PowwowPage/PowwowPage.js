@@ -21,9 +21,6 @@ import SectionHost from './SectionHost';
 import {
   FormattedMessage,
 } from '../../util/reactIntl';
-import navigateIcon from '../../assets/navigate.svg';
-import shareIcon from '../../assets/share.svg';
-import exitIcon from '../../assets/exit.svg';
 
 import css from './PowwowPage.css';
 
@@ -65,7 +62,7 @@ export class PowwowPageComponent extends Component {
     const host = "Stanford Powwow";
     const website = "http://powwow.stanford.edu/";
     const eventAddress = "410 Terry Ave, North Seattle, United States";
-    const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURI(eventAddress);
+    const dates = "May 15-17th 2021";
     return (
       <Page className={css.root} title="Powwow Page" scrollingDisabled={false}>
         <LayoutSingleColumn>
@@ -78,33 +75,15 @@ export class PowwowPageComponent extends Component {
               <h1 className={css.pageTitle}>
                 <FormattedMessage id="PowwowPage.heading" values={{ host }} />
               </h1>
-              <div className={css.buttonRow} >
-                {eventAddress &&
-                  <ExternalLink
-                    className={css.linkButton}
-                    href={googleMapsUrl}
-                  >
-                    <img className={css.linkIcon} src={navigateIcon} alt="Navigate" />
-                    <FormattedMessage id="SellerCard.navigateButton" />
-                  </ExternalLink>
-                }
-                {website &&
-                  <ExternalLink
-                    className={css.linkButton}
-                    href={website}
-                  >
-                    <img className={css.linkIcon} src={exitIcon} alt="Link" />
-                    <FormattedMessage id="SellerCard.websiteButton" />
-                  </ExternalLink>
-                }
-                <button
-                  className={css.shareButton}
-                  onClick={() => this.shareButtonClick(window.location.href)}
-                >
-                  <img className={css.shareIcon} src={shareIcon} alt="Share" />
-                  <FormattedMessage id="SellerCard.shareButton" />
-                </button>
-              </div>
+              <h3 className={css.pageSubtitleDesktop}>
+                {dates} 
+                <span className={css.separator}>•</span>
+                {eventAddress}
+              </h3>
+              <h3 className={css.pageSubtitleMobile}>
+                <span>{dates}</span> 
+                <span>{eventAddress}</span>
+              </h3>
             </div>
             <div className={css.splitScreen}>
               <SectionSellers className={css.sectionSellers} users={users} currentUser={currentUser} />

@@ -2,7 +2,7 @@ import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
 
-const eventsURL = " https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd";
+const eventsURL = " https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd/events";
 
 // ================ Action types ================ //
 
@@ -131,56 +131,28 @@ export const eventInfoSuccess = data => ({
 
 // Images return imageId which we need to map with previously generated temporary id
 export function uploadImage(actionPayload) {
-  return ({ status: "Uploaded" });
-  // return (dispatch, getState, sdk) => {
-  //   const id = actionPayload.id;
-  //   dispatch(uploadImageRequest(actionPayload));
-
-  //   const bodyParams = {
-  //     image: actionPayload.file,
-  //   };
-  //   const queryParams = {
-  //     expand: true,
-  //     'fields.image': ['variants.square-small', 'variants.square-small2x'],
-  //   };
-
-  //   return sdk.images
-  //     .upload(bodyParams, queryParams)
-  //     .then(resp => {
-  //       const uploadedImage = resp.data.data;
-  //       dispatch(uploadImageSuccess({ data: { id, uploadedImage } }));
-  //     })
-  //     .catch(e => dispatch(uploadImageError({ id, error: storableError(e) })));
-  // };
-}
-
-export const updateEvent = actionPayload => {
+  return ({ type: "string", status: "Uploaded" });
   return (dispatch, getState, sdk) => {
-    dispatch(updateProfileRequest());
+    const id = actionPayload.id;
+    dispatch(uploadImageRequest(actionPayload));
 
+    const bodyParams = {
+      image: actionPayload.file,
+    };
     const queryParams = {
       expand: true,
-      include: ['profileImage'],
       'fields.image': ['variants.square-small', 'variants.square-small2x'],
     };
 
-    return sdk.currentUser
-      .updateProfile(actionPayload, queryParams)
-      .then(response => {
-        dispatch(updateProfileSuccess(response));
-
-        const entities = denormalisedResponseEntities(response);
-        if (entities.length !== 1) {
-          throw new Error('Expected a resource in the sdk.currentUser.updateProfile response');
-        }
-        const currentUser = entities[0];
-
-        // Update current user in state.user.currentUser through user.duck.js
-        dispatch(currentUserShowSuccess(currentUser));
+    return sdk.images
+      .upload(bodyParams, queryParams)
+      .then(resp => {
+        const uploadedImage = resp.data.data;
+        dispatch(uploadImageSuccess({ data: { id, uploadedImage } }));
       })
-      .catch(e => dispatch(updateProfileError(storableError(e))));
+      .catch(e => dispatch(uploadImageError({ id, error: storableError(e) })));
   };
-};
+}
 
 export const updateSellers = actionPayload => {
   const options = {
@@ -232,7 +204,7 @@ const fetchEventInfo = (UUID) => (dispatch, getState, sdk) => {
   return (fetch(eventsURL + "?uuid=" + UUID, options)
     .then(response => response.json())
     .then(data => {
-      return(data.body)
+      return (data.body)
     })
     .catch(() => console.log("Could not update database")));
 }
@@ -244,9 +216,11 @@ export const loadData = (UUID) => (dispatch, getState, sdk) => {
   return sdk.currentUser.show()
     .then(response => {
       dispatch(fetchEventInfo(response.data.data.id.uuid))
-      .then((payload) => {
-        dispatch(eventInfoSuccess(payload[0]))
-      });
+        .then((payload) => {
+          if (payload && payload[0]) {
+            dispatch(eventInfoSuccess(payload[0]));
+          }
+        });
     })
     .catch((e) => console.log(e));
 };

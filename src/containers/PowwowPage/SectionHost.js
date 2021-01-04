@@ -1,9 +1,12 @@
-import React, { Component }  from 'react';
+import React, { Component } from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { string } from 'prop-types';
 import stanfordImage from '../../assets/stanford-bg.jpg';
 import { ExternalLink, InlineTextButton } from '../../components';
 import truncate from 'lodash/truncate';
+import navigateIcon from '../../assets/navigate.svg';
+import shareIcon from '../../assets/share.svg';
+import exitIcon from '../../assets/exit.svg';
 
 import css from './PowwowPage.css';
 
@@ -77,7 +80,7 @@ const SectionHost = props => {
     className
   } = props;
 
-  
+
   const address = "Stanford CA";
   const dates = "May 5th - 6th";
   const contact = "powwow@stanford.edu";
@@ -91,19 +94,34 @@ const SectionHost = props => {
         <img className={css.hostImage} src={stanfordImage} alt="stanford" />
       </div>
       <div className={css.hostInfo}>
-      <ExpandableBio className={css.mobileBio} bio={bio} />
-        <div className={css.hostInfoRow}>
-          <FormattedMessage id="PowwowPage.host" />
-          {host}
+        <div className={css.buttonRow} >
+          {eventAddress &&
+            <ExternalLink
+              className={css.linkButton}
+              href={googleMapsUrl}
+            >
+              <img className={css.linkIcon} src={navigateIcon} alt="Navigate" />
+              <FormattedMessage id="PowwowPage.navigateButton" />
+            </ExternalLink>
+          }
+          {website &&
+            <ExternalLink
+              className={css.linkButton}
+              href={website}
+            >
+              <img className={css.linkIcon} src={exitIcon} alt="Link" />
+              <FormattedMessage id="PowwowPage.websiteButton" />
+            </ExternalLink>
+          }
+          <button
+            className={css.shareButton}
+            onClick={() => this.shareButtonClick(window.location.href)}
+          >
+            <img className={css.shareIcon} src={shareIcon} alt="Share" />
+            <FormattedMessage id="PowwowPage.shareButton" />
+          </button>
         </div>
-        <div className={css.hostInfoRow}>
-          <FormattedMessage id="PowwowPage.dates" />
-          {dates}
-        </div >
-        <div className={css.hostInfoRow}>
-          <FormattedMessage id="PowwowPage.contact" />
-          {contact}
-        </div >
+        <ExpandableBio className={css.mobileBio} bio={bio} />
       </div >
     </div >
   );

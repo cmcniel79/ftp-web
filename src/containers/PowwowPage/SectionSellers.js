@@ -14,20 +14,20 @@ class SectionSellers extends Component {
         const { users, currentUser, className } = this.props;
         return (
             <div className={className}>
-                <h2>
-                <FormattedMessage id="PowwowPage.sellersHeading"/>
-            </h2>
-            {users && users.map(u => (
-                  <div className={css.userCardWrapper} key={u.id.uuid}>
-                    <UserCard
-                      user={u}
-                      currentUser={currentUser}
-                      onContactUser={null}
-                      isFollowed={() => console.log("Followed")} 
-                      updateFollowed={() => console.log("Update Followed")}
-                      isFollowingPage={false}
-                    />
-                  </div>
+                <h2 className={css.sellersHeading}>
+                    <FormattedMessage id="PowwowPage.sellersHeading" />
+                </h2>
+                {users && users.map(u => (
+                    <div className={css.userCardWrapper} key={u.id.uuid}>
+                        <UserCard
+                            user={u}
+                            currentUser={currentUser}
+                            onContactUser={null}
+                            isFollowed={() => console.log("Followed")}
+                            updateFollowed={() => console.log("Update Followed")}
+                            isFollowingPage={false}
+                        />
+                    </div>
                 ))}
             </div>
         );

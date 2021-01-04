@@ -22,7 +22,7 @@ import {
 import { EventDetailsForm, EventPhotosForm, EventSellersForm } from '../../forms';
 import { TopbarContainer } from '..';
 
-import { loadData, updateEvent, updateDetails, uploadImage, updateSellers } from './EventHostPage.duck';
+import { loadData, updateDetails, uploadImage, updateSellers } from './EventHostPage.duck';
 import EventSellersListMaybe from './EventSellersListMaybe';
 import css from './EventHostPage.css';
 
@@ -44,7 +44,6 @@ export class EventHostPageComponent extends Component {
 
   submitDetails(values) {
     const { eventDuration, datesRange, startDate, mc, arenaDirector, hostDrums, location, lot, ...rest} = values; 
-    console.log(datesRange);
     const startDateObject = (eventDuration === "multi" && datesRange && datesRange.startDate) ? datesRange.startDate : 
       (startDate && startDate.date) ? startDate.date : null;
     const endDateObject = (eventDuration === "multi" && datesRange && datesRange.endDate) ? datesRange.endDate : null;
@@ -63,6 +62,7 @@ export class EventHostPageComponent extends Component {
         hostDrums
       }
     }
+    console.log(payload);
     this.props.onUpdateDetails(payload);
   }
 
@@ -259,7 +259,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   onLoadData: () => dispatch(loadData()),
-  onUpdateEvent: data => dispatch(updateEvent(data)),
   onUpdateDetails: details => dispatch(updateDetails(details)),
   onImageUpload: data => dispatch(uploadImage(data)),
   onUpdateSellers: data => dispatch(updateSellers(data)),

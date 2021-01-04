@@ -36,18 +36,12 @@ export class EventTypePageComponent extends Component {
       length: null,
     };
     this.selectState = this.selectState.bind(this);
-    this.initialValues = this.initialValues.bind(this);
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
   }
 
   selectState(value) {
-    console.log(value);
-    this.setState({ state: value && value.state ? value.state : null });
-  }
-
-  initialValues(array) {
-    return { 'pub_state': this.state.state };
+    this.setState({ state: value && value.state && value.state !== "all" ? value.state : null });
   }
 
   // Invoked when a modal is opened from a child component,
@@ -84,7 +78,7 @@ export class EventTypePageComponent extends Component {
       { eventName: "Gathering of Nations", eventType: "powwwow", image: people, state: "TX" },
     ];
 
-    const length = this.state.state ? 
+    const length = this.state.state ?
       events.filter(e => e.state === this.state.state).length : events.length;
 
     var title;
@@ -107,15 +101,11 @@ export class EventTypePageComponent extends Component {
                 <h2 className={css.sectionTitle}>
                   {title} {this.state.state ? "in " + this.state.state : null}
                 </h2>
-                <StateSelectionForm onSubmit={(value) => this.selectState(value)} initialValues={{state: this.state.state}}/>
-                <button onClick={() => this.selectState(null)}>
-                {/* <FormattedMessage id="SignupForm.signUp" /> */}
-                See all Powwows
-              </button>
-                 <div className={css.half}></div>
-                  <h3 className={css.addEventInfo}>
-                    <FormattedMessage id="EventTypePage.addAnEvent" values={{ link: contactPageLink }} />
-                  </h3>
+                <StateSelectionForm onSubmit={(value) => this.selectState(value)} initialValues={{ state: this.state.state }} />
+                <div className={css.half}></div>
+                <h3 className={css.addEventInfo}>
+                  <FormattedMessage id="EventTypePage.addAnEvent" values={{ link: contactPageLink }} />
+                </h3>
               </div>
               <div className={css.eventsGrid} >
                 {events.filter(e =>

@@ -14,6 +14,7 @@
 }
 
 .panel {
+  margin: 25px;
   @media (--viewportMedium) {
     display: flex;
     flex-direction: column;
@@ -23,6 +24,11 @@
 
 .stateFilter {
   height: auto;
+}
+
+.allButton {
+  @apply --marketplaceButtonStyles;
+  margin: 15px 0;
 }
 
 .mobileButtons {
@@ -65,7 +71,11 @@
 }
 
 .addEventInfo {
-  margin: 20px 0;
+  display: none;
+  @media (--viewportMedium) {
+    display: initial;
+    margin: 20px 0;
+  }
 }
 
 .filtersButton {

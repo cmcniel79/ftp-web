@@ -1,12 +1,10 @@
 @import '../../marketplace.css';
-
 .staticPageWrapper {
     width: calc(100% - 48px);
     max-width: 1056px;
     margin: 24px auto;
     @media (--viewportMedium) {
         width: calc(100% - 72px);
-        margin: 72px auto;
     }
 }
 
@@ -14,6 +12,38 @@
     width: auto;
     display: flex;
     flex-direction: column;
+    margin: 0 0 15px 0;
+    @media (--viewportMedium) {
+        margin: 0 0 40px 0;
+    }
+}
+
+.pageTitle {
+    margin: 10px 0 0 0;
+}
+
+.pageSubtitleDesktop {
+    display: none;
+    @media (--viewportMedium) {
+        display: initial;
+        margin: 5px 0 0 0;
+        font-weight: 500;
+    }
+}
+
+.pageSubtitleMobile {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    @media (--viewportMedium) {
+        display: none;
+    }
+}
+
+.separator {
+    margin: 0 5px 0 5px;
 }
 
 .splitScreen {
@@ -43,6 +73,10 @@
     }
 }
 
+.sellersHeading {
+    margin: 0 0 20px 0;
+}
+
 .userCardWrapper {
     display: flex;
     flex-direction: row;
@@ -60,11 +94,8 @@
 }
 
 .hostImageWrapper {
-    width: 90%;
+    width: 100%;
     margin: 0 auto 0 auto;
-    @media (--viewportMedium) {
-        width: 100%;
-    }
 }
 
 .hostImage {
@@ -80,29 +111,14 @@
     }
 }
 
-.hostInfoRow {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--matterColorNegative);
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.directionsLink{
-    width: 60%;
-}
-
 .buttonRow {
-    width: 300px;
+    margin: 10px 30px 10px 30px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 2px 0 10px 0;
-  }
-  
-  .linkButton {
+}
+
+.linkButton {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -110,21 +126,21 @@
     color: var(--marketplaceColor);
     font-weight: normal;
     &:hover {
-      text-decoration: none;
-      transform: scale(1.05);
+        text-decoration: none;
+        transform: scale(1.05);
     }
-  }
-  
-  .linkIcon {
+}
+
+.linkIcon {
     width: 40px;
     border: none;
-  }
-  
-  .shareIcon {
+}
+
+.shareIcon {
     width: 40px;
-  }
-  
-  .shareButton {
+}
+
+.shareButton {
     width: 40px;
     padding: 0;
     margin: 0;
@@ -133,8 +149,8 @@
     border: none;
     font-weight: normal;
     &:hover {
-      text-decoration: none;
-      cursor: pointer;
-      transform: scale(1.1);
+        text-decoration: none;
+        cursor: pointer;
+        transform: scale(1.1);
     }
-  }
+}
