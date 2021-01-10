@@ -9,7 +9,6 @@ export { default as EmailVerificationForm } from './EmailVerificationForm/EmailV
 export { default as EnquiryForm } from './EnquiryForm/EnquiryForm';
 export { default as EventDetailsForm } from './EventDetailsForm/EventDetailsForm';
 export { default as EventPhotosForm } from './EventPhotosForm/EventPhotosForm';
-export { default as EventSellersForm } from './EventSellersForm/EventSellersForm';
 export { default as FilterForm } from './FilterForm/FilterForm';
 export { default as LocationSearchForm } from './LocationSearchForm/LocationSearchForm';
 export { default as LoginForm } from './LoginForm/LoginForm';

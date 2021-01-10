@@ -242,8 +242,22 @@
 
 /* Default is 3:2 */
 
-.squareAspectRatio {
-  padding-bottom: 100%;
+.imagesField {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.thumbnail {
+  margin: 24px 0 0 0;
+
+  @media (--viewportLarge) {
+    width: var(--EditListingPhotosForm_imageWidthDesktop);
+    margin: 0 24px 24px 0;
+
+    &:nth-child(even) {
+      margin: 0 0 24px 0;
+    }
+  }
 }
 
 .avatarInvisible {

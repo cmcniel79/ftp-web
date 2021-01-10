@@ -56,9 +56,10 @@ class EventPhotosFormComponent extends Component {
             handleSubmit,
             intl,
             invalid,
+            hostUUID,
             onImageUpload,
             pristine,
-            profileImage,
+            eventImage,
             rootClassName,
             updateInProgress,
             // updateProfileError,
@@ -79,31 +80,23 @@ class EventPhotosFormComponent extends Component {
           const errorClasses = classNames({ [css.avatarUploadError]: hasUploadError });
 
           // // Ensure that file exists if imageFromFile is used
-          const fileExists = profileImage ? !!profileImage.file : false;
+          const fileExists = eventImage ? !!eventImage.file : false;
           const fileUploadInProgress = uploadInProgress && fileExists;
-          const delayAfterUpload = profileImage && profileImage.imageId && this.state.uploadDelay;
+          const delayAfterUpload = eventImage && eventImage.imageId && this.state.uploadDelay;
           const imageFromFile =
             fileExists && (fileUploadInProgress || delayAfterUpload) ? (
               <ImageFromFile
-                id={profileImage.id}
-                className={errorClasses}
-                rootClassName={css.uploadingImage}
-                aspectRatioClassName={css.squareAspectRatio}
-                file={profileImage.file}
+                id={eventImage.id}
+                className={css.imagesField}
+                thumbnailClassName={css.thumbnail}
+                file={eventImage.file}
               >
                 {uploadingOverlay}
               </ImageFromFile>
             ) : null;
 
-          // // Avatar is rendered in hidden during the upload delay
-          // // Upload delay smoothes image change process:
-          // // responsive img has time to load srcset stuff before it is shown to user.
-          // const avatarClasses = classNames(errorClasses, css.avatar, {
-          //   [css.avatarInvisible]: this.state.uploadDelay,
-          // });
-
           const chooseAvatarLabel =
-            profileImage && profileImage.imageId || fileUploadInProgress ? (
+            eventImage && eventImage.id ? (
               <div className={css.avatarContainer}>
                 {imageFromFile}
                 <div className={css.changeAvatar}>
@@ -147,10 +140,11 @@ class EventPhotosFormComponent extends Component {
                 <h3 className={css.sectionTitle}>
                   <FormattedMessage id="EventPhotosForm.yourEventPicture" />
                 </h3>
+                {hostUUID ?
                 <Field
                   accept={ACCEPT_IMAGES}
-                  id="profileImage"
-                  name="profileImage"
+                  id="eventImage"
+                  name="eventImage"
                   label={chooseAvatarLabel}
                   type="file"
                   form={null}
@@ -162,10 +156,10 @@ class EventPhotosFormComponent extends Component {
                     const { name, type } = input;
                     const onChange = e => {
                       const file = e.target.files[0];
-                      form.change(`profileImage`, file);
-                      form.blur(`profileImage`);
+                      form.change(`eventImage`, file);
+                      form.blur(`eventImage`);
                       if (file != null) {
-                        const tempId = `${file.name}_${Date.now()}`;
+                        const tempId = `${hostUUID}_${Date.now()}`;
                         onImageUpload({ id: tempId, file });
                       }
                     };
@@ -205,6 +199,7 @@ class EventPhotosFormComponent extends Component {
                     );
                   }}
                 </Field>
+        : <div className={css.uploadAvatarWrapper}>...Loading information</div>}
                 <div className={css.tip}>
                   <FormattedMessage id="ProfileSettingsForm.tip" />
                 </div>

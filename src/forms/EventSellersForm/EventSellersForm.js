@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bool, string } from 'prop-types';
 import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
-import { Form as FinalForm } from 'react-final-form';
+import { Form as FinalForm, Field } from 'react-final-form';
 import isEqual from 'lodash/isEqual';
 import classNames from 'classnames';
 import { ensureCurrentUser } from '../../util/data';
@@ -29,11 +29,9 @@ class EventSellersFormComponent extends Component {
     this.addAnother = this.addAnother.bind(this);
   }
 
-  addAnother(){
-    console.log("Hello There");
-    this.setState({
-      email: '',
-    });
+  addAnother() {
+    // this.props.onSubmit(this.state.email);
+    this.setState({ email: '' });
   }
 
   render() {
@@ -43,7 +41,7 @@ class EventSellersFormComponent extends Component {
         render={fieldRenderProps => {
           const {
             className,
-            handleSubmit,
+            // handleSubmit,
             intl,
             invalid,
             pristine,
@@ -52,7 +50,6 @@ class EventSellersFormComponent extends Component {
             updateProfileError,
             uploadInProgress,
             values,
-            value
           } = fieldRenderProps;
 
           // Event Name
@@ -71,37 +68,55 @@ class EventSellersFormComponent extends Component {
           const submitInProgress = updateInProgress;
           const submittedOnce = Object.keys(this.submittedValues).length > 0;
           const pristineSinceLastSubmit = submittedOnce && isEqual(values, this.submittedValues);
+
+          const sellerInput = document.getElementById("sellerInput");
+          var validity;
+          var inputValue;
+          if (sellerInput) {
+            validity = sellerInput.validity.valid;
+            inputValue = sellerInput.value;
+          }
+
           const submitDisabled =
-            invalid || pristine || pristineSinceLastSubmit || uploadInProgress || submitInProgress;
+            !validity || inputValue === '' || pristineSinceLastSubmit || uploadInProgress || submitInProgress;
           const emailLink = (
             <ExternalLink href="mailto:customersupport@fromthepeople.co">
               <FormattedMessage id="ProfileSettingsForm.contactEmail" />
             </ExternalLink>);
-  console.log(value);
+
           return (
             <Form
               className={classes}
-              onSubmit={e => {
-                this.submittedValues = values;
-                handleSubmit(e);
-                // this.addAnother();
-              }}
+            onSubmit={() => 
+              this.addAnother()
+            }
             >
               <div className={css.sectionContainer}>
                 <h3 className={css.sectionTitle}>
                   <FormattedMessage id="EventSellersForm.eventSellersInfo" />
                 </h3>
-                <FieldTextInput
-                  className={css.eventField}
-                  type="textarea"
-                  id="sellerInput"
+                <Field
                   name="sellerInput"
-                  label={sellerInputLabel}
-                  placeholder={sellerInputPlaceholder}
-                  maxLength={30}
-                  validate={composeValidators(emailValid)}
-                  value={value}
-                />
+                  render={() => {
+                    return (
+                      <div>
+                        <label htmlFor="sellerInput">{sellerInputLabel}</label>
+                        <input
+                          className={css.eventField}
+                          type="email"
+                          id="sellerInput"
+                          label={sellerInputLabel}
+                          placeholder={sellerInputPlaceholder}
+                          maxLength={30}
+                          // validate={composeValidators(emailValid)}
+                          value={this.state.email}
+                          onChange={(e) => this.setState({ email: e.target.value })}
+                        />
+                      </div>
+                    )
+                  }}
+                >
+                </Field>
               </div>
               {submitError}
               <Button
@@ -131,15 +146,15 @@ EventSellersFormComponent.defaultProps = {
 };
 
 EventSellersFormComponent.propTypes = {
-  rootClassName: string,
-  className: string,
+  // rootClassName: string,
+  // className: string,
 
-  uploadImageError: propTypes.error,
-  uploadInProgress: bool.isRequired,
-  updateInProgress: bool.isRequired,
-  updateProfileError: propTypes.error,
-  updateProfileReady: bool,
-  accountType: string,
+  // uploadImageError: propTypes.error,
+  // uploadInProgress: bool.isRequired,
+  // updateInProgress: bool.isRequired,
+  // updateProfileError: propTypes.error,
+  // updateProfileReady: bool,
+  // accountType: string,
 
   // from injectIntl
   intl: intlShape.isRequired,

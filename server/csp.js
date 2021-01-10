@@ -16,6 +16,7 @@ const rankingURL = process.env.REACT_APP_API_RANKING + ENV;
 const databaseURL = process.env.REACT_APP_API_DATABASE + ENV;
 const likesURL = process.env.REACT_APP_API_LIKES;
 const mailchimpURL = process.env.REACT_APP_API_MAILCHIMP + ENV;
+const eventsURL = " https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd/events";
 
 // Default CSP whitelist.
 //
@@ -110,7 +111,8 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
    rankingURL,
    databaseURL,
    likesURL,
-   mailchimpURL
+   mailchimpURL,
+   eventsURL
    ]);
   const customDirectives = {
     // Example: Add custom directive override

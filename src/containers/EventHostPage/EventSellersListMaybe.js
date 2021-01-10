@@ -10,70 +10,54 @@ class EventSellersListMaybe extends Component {
   constructor(props) {
     super(props);
     const { sellersList } = props;
-    this.sellers = sellersList;
+    this.state = { sellers: sellersList };
     this.removeSeller = this.removeSeller.bind(this);
   }
 
-  removeSeller(sellerEmail) {
-    const index = this.sellers.findIndex(x => x === sellerEmail);
-    this.sellers = index > 1 ? this.sellers.splice(index, 1) : null;
+  removeSeller(deletedEmail) {
+    this.setState(prevState => ({ sellers: prevState.sellers.filter(e => e != deletedEmail) }));
+    this.props.updateSellers(deletedEmail);
   }
 
-  // updateSellers(sellerEmail) {
-  //   const index = this.isFollowed(sellerId);
-  //   var followBool;
-  //   if (this.isFollowed(sellerId) > -1) {
-  //     // Remove seller from followed list
-  //     this.followed.splice(index, 1);
-  //     followBool = false;
-  //   } else {
-  //     // Add seller to followed
-  //     this.followed.push(sellerId);
-  //     followBool = true;
-  //   }
-  //   this.sendFollowed();
-  //   const apiPayload = {
-  //     uuid: sellerId,
-  //     isListing: false,
-  //     add: followBool
-  //   };
-  //   callFollowAPI(apiPayload);
-  // }
-
-  // sendFollowed() {
-  //   const updatedFollowed = {
-  //     privateData: {
-  //       followed: this.followed
-  //     }
-  //   };
-  //   this.props.onSendUpdatedFollowed(updatedFollowed);
-  // }
-
   render() {
+    const { inProgress, response } = this.props;
+    const submitResponse = response ? (
+      <div className={css.success}>
+        {response}
+      </div>
+    ) : null;
     return (
       <div className={css.sectionSellersList}>
-        {this.sellers && this.sellers.length > 0 ? (
+        {submitResponse}
+        {this.state.sellers && this.state.sellers.length > 0 && !inProgress ? (
           <div>
             <h3 className={css.sectionTitle}>
-              <FormattedMessage id="EventHostPage.sellersListHeading" values={{ count: this.sellers.length }} />
+              <FormattedMessage id="EventHostPage.sellersListHeading" values={{ count: this.state.sellers.length }} />
             </h3>
-            {this.sellers.map(s => {
-              return (
-                <div className={css.sellerItem} key={s}>
-                  <h3 className={css.sellerName}>
-                    {s}
-                  </h3>
-                  <InlineTextButton className={css.removeButton} onClick={() => this.removeSeller(s)}>
-                    <FormattedMessage id="EventHostPage.removeSeller" />
-                  </InlineTextButton>
-                </div>
+            <ul>
+              {this.state.sellers.map(s => {
+                return (
+                  <li className={css.sellerItem} key={s} value={s}>
+                    <h3 className={css.sellerName}>
+                      {s}
+                    </h3>
+                    <InlineTextButton className={css.removeButton} onClick={() => this.removeSeller(s)}>
+                      <FormattedMessage id="EventHostPage.removeSeller" />
+                    </InlineTextButton>
+                  </li>
+                )
+              }
               )}
-            )}
+            </ul>
           </div>
-        ) : (
-            <h2 className={css.featuresHeading}>
-              <FormattedMessage id="EventHostPage.noSellers" />
-            </h2>)}
+        ) : inProgress ? (
+          <h2 className={css.featuresHeading}>
+            <FormattedMessage id="EventHostPage.loadingSellers" />
+          </h2>
+        ) : (<h2 className={css.featuresHeading}>
+          <FormattedMessage id="EventHostPage.noSellers" />
+        </h2>
+            )}
       </div>
     )
   }

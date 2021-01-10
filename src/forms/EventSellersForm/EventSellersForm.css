@@ -66,6 +66,7 @@
 
 .eventField {
   margin: 0;
+  border-bottom-color: black;
 }
 
 .submitButton {

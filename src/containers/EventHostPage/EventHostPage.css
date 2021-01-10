@@ -80,6 +80,79 @@
   flex-direction: column;
 }
 
+.error {
+  /* Font */
+  @apply --marketplaceH4FontStyles;
+  color: var(--failColor);
+  margin-top: 18px;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 22px;
+    margin-bottom: 2px;
+  }
+}
+
+
+.success {
+  /* Font */
+  @apply --marketplaceH4FontStyles;
+  color: var(--successColor);
+  margin-top: 18px;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 22px;
+    margin-bottom: 2px;
+  }
+}
+
+.sellerInputContainer {
+  padding: 0;
+  margin-bottom: 15px;
+  @media (--viewportMedium) {
+    padding: 0;
+    margin-bottom: 25px;
+  }
+}
+
+.sectionTitle {
+  /* Font */
+  color: var(--matterColorAnti);
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  @media (--viewportMedium) {
+    margin-top: 10px;
+    margin-bottom: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+.sectionInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  @media (--viewportMedium) {
+    /* flex-direction: row; */
+    padding: 0;
+  }
+}
+
+.eventField {
+  margin: 0;
+  border-bottom-color: black;
+}
+
+.submitButton {
+  margin: 15px 0;
+  border-radius: 20px;
+  @media (--viewportMedium) {
+    margin: 20px 0;
+  }
+}
+
 .sectionSellersList {
   margin: 20px 0;
   @media (--viewportMedium) {

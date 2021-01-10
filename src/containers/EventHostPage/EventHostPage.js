@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
-import { propTypes } from '../../util/types';
-import { ensureCurrentUser } from '../../util/data';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
-import moment from 'moment';
+import isEqual from 'lodash/isEqual';
 import {
+  Button,
   Page,
   UserNav,
   LayoutSingleColumn,
@@ -19,36 +18,37 @@ import {
   ExternalLink,
   LinkTabNavHorizontal,
 } from '../../components';
-import { EventDetailsForm, EventPhotosForm, EventSellersForm } from '../../forms';
+import { EventDetailsForm, EventPhotosForm } from '../../forms';
 import { TopbarContainer } from '..';
 
 import { loadData, updateDetails, uploadImage, updateSellers } from './EventHostPage.duck';
 import EventSellersListMaybe from './EventSellersListMaybe';
 import css from './EventHostPage.css';
 
-const onImageUploadHandler = (values, fn) => {
-  const { id, imageId, file } = values;
-  if (file) {
-    fn({ id, imageId, file });
-  }
-};
-
 export class EventHostPageComponent extends Component {
   constructor(props) {
     super(props);
-
-    this.state = { email: 'jhfajkdhk' };
-    this.addAnother = this.addAnother.bind(this);
+    this.state = { email: '' };
+    this.submittedValues = null;
+    this.sendUpdatedSellers = this.sendUpdatedSellers.bind(this);
     this.submitDetails = this.submitDetails.bind(this);
+    this.onImageUploadHandler = this.onImageUploadHandler.bind(this);
   }
 
+  onImageUploadHandler = (values, fn) => {
+    const { id, file } = values;
+    if (file && id && file.type) {
+      fn({ id, file, fileType: file.type });
+    }
+  };
+
   submitDetails(values) {
-    const { eventDuration, datesRange, startDate, mc, arenaDirector, hostDrums, location, lot, ...rest} = values; 
-    const startDateObject = (eventDuration === "multi" && datesRange && datesRange.startDate) ? datesRange.startDate : 
+    const { eventDuration, datesRange, startDate, mc, arenaDirector, hostDrums, location, lot, ...rest } = values;
+    const startDateObject = (eventDuration === "multi" && datesRange && datesRange.startDate) ? datesRange.startDate :
       (startDate && startDate.date) ? startDate.date : null;
     const endDateObject = (eventDuration === "multi" && datesRange && datesRange.endDate) ? datesRange.endDate : null;
     const payload = {
-      ...rest, 
+      ...rest,
       hostUUID: this.props.hostUUID,
       hostName: this.props.hostName,
       hostEmail: this.props.hostEmail,
@@ -62,37 +62,44 @@ export class EventHostPageComponent extends Component {
         hostDrums
       }
     }
-    console.log(payload);
     this.props.onUpdateDetails(payload);
   }
 
-  addAnother(){
-    console.log("Hello There");
-    this.setState({
-      email: '',
-    });
+  sendUpdatedSellers(removedEmail) {
+    if (removedEmail) {
+      this.props.onUpdateSellers({ email: removedEmail, eventName: "Test of Frontend 69", add: false });
+    } else {
+      const newEmail = this.state.email;
+      this.props.onUpdateSellers({ email: newEmail, eventName: "Test of Frontend 69", add: true });
+      this.submittedValues = newEmail;
+      this.setState({ email: '' });
+    }
   }
 
   componentDidMount() {
     if (window) {
       this.props.onLoadData();
-      // this.loadInitialData();
     }
   }
 
   render() {
     const {
-      currentUser,
+      hostUUID,
       scrollingDisabled,
+      image,
       intl,
       tab,
       onImageUpload,
       eventInfoInProgress,
       eventDetails,
+      uploadInProgress,
+      updateSellersInProgress,
+      updateSellersError,
+      updateSellersResponseAdd,
+      updateSellersResponseRemove
     } = this.props;
 
     const sellers = ["chase@fromthepeople.co", "mcniel26@gmail.com", "isabella@fromthepeople.co"];
-    const user = ensureCurrentUser(currentUser);
 
     // Initial Values for EventDetailsForm
     const eventName = eventDetails && eventDetails.eventName;
@@ -110,28 +117,97 @@ export class EventHostPageComponent extends Component {
     const hostDrums = eventDetails && eventDetails.optional && eventDetails.optional.hostDrums;
     const location = eventDetails && eventDetails.location && eventDetails.optional.location;
     const lot = eventDetails && eventDetails.lot && eventDetails.optional.lot;
-    const datesRange = {startDate: new Date("2020-12-24"), endDate: new Date("2020-12-31")};
-    
+    const datesRange = { startDate: new Date("2020-12-24"), endDate: new Date("2020-12-31") };
     const eventDuration = startDate && endDate ? "multi" : "single";
 
+    //Labels and stuff for eventSellers form
+    const sellerInputLabel = intl.formatMessage({ id: 'EventSellersForm.sellerInputLabel' });
+    const sellerInputPlaceholder = intl.formatMessage({ id: 'EventSellersForm.sellerInputPlaceholder' });
+
+    const sellerInput = document.getElementById("sellerInput");
+    var validity;
+    var inputValue;
+    if (sellerInput) {
+      validity = sellerInput.validity.valid;
+      inputValue = sellerInput.value;
+    }
+
+    const submittedOnce = this.submittedValues && this.submittedValues !== null;
+    const pristineSinceLastSubmit = submittedOnce && isEqual(inputValue, this.submittedValues);
+
+    const submitDisabled =
+      !validity || inputValue === '' || pristineSinceLastSubmit || uploadInProgress;
+
+    const submitError = updateSellersError ? (
+      <div className={css.error}>
+        {updateSellersError}
+      </div>
+    ) : null;
+    const submitSuccess = updateSellersResponseAdd ? (
+      <div className={css.success}>
+        {updateSellersResponseAdd}
+      </div>
+    ) : null;
+
+
+    const eventSellersForm = (
+      <div className={css.sellersContainer}>
+        <div className={css.sellerInput}>
+          <h3 className={css.sectionTitle}>
+            <FormattedMessage id="EventSellersForm.eventSellersInfo" />
+          </h3>
+          <label htmlFor="sellerInput">{sellerInputLabel}</label>
+          <input
+            className={css.eventField}
+            type="email"
+            id="sellerInput"
+            label={sellerInputLabel}
+            placeholder={sellerInputPlaceholder}
+            maxLength={30}
+            value={this.state.email}
+            onChange={(e) => this.setState({ email: e.target.value })}
+          />
+        </div>
+        {submitError}
+        {submitSuccess}
+        <Button
+          className={css.submitButton}
+          // type="submit"
+          inProgress={updateSellersInProgress}
+          disabled={submitDisabled}
+          ready={pristineSinceLastSubmit}
+          onClick={this.sendUpdatedSellers}
+        >
+          <FormattedMessage id="EventSellersForm.addSeller" />
+        </Button>
+        <EventSellersListMaybe
+          sellersList={sellers}
+          updateSellers={(values) => this.sendUpdatedSellers(values)}
+          inProgress={updateSellersInProgress}
+          response={updateSellersResponseRemove}
+        />
+      </div>
+    );
+
     const eventDetailsForm = (
-      <EventDetailsForm 
-      onSubmit={(values) => this.submitDetails(values)} 
-      eventInfoInProgress={eventInfoInProgress}
-      initialValues = {{ eventName, eventType, eventWebsite, eventDescription, eventDuration, datesRange, startDate, endDate,
-        startTime, meridiem, mc, arenaDirector, hostDrums, location, lot}}
+      <EventDetailsForm
+        onSubmit={(values) => this.submitDetails(values)}
+        eventInfoInProgress={eventInfoInProgress}
+        initialValues={{
+          eventName, eventType, eventWebsite, eventDescription, eventDuration, datesRange, startDate, endDate,
+          startTime, meridiem, mc, arenaDirector, hostDrums, location, lot
+        }}
       />
     );
 
     const eventPhotosForm = (
-    <EventPhotosForm onImageUpload={onImageUpload} onSubmit={(values) => console.log(values)} />
-    );
-
-    const eventSellersForm = (
-      <div className={css.sellersContainer}>
-        <EventSellersForm value={this.state.email} onSubmit={() => this.addAnother()} />
-        <EventSellersListMaybe sellersList={sellers} />
-      </div>
+      <EventPhotosForm
+        hostUUID={hostUUID}
+        eventImage={image}
+        onImageUpload={(e) => this.onImageUploadHandler(e, onImageUpload)}
+        onSubmit={(values) => console.log(values)}
+        uploadInProgress={uploadInProgress}
+      />
     );
 
     const title = intl.formatMessage({ id: 'EventHostPage.title' });
@@ -205,21 +281,20 @@ EventHostPageComponent.defaultProps = {
 const { bool, func, object, shape, string } = PropTypes;
 
 EventHostPageComponent.propTypes = {
-  currentUser: propTypes.currentUser,
-  image: shape({
-    id: string,
-    imageId: propTypes.uuid,
-    file: object,
-    uploadedImage: propTypes.image,
-  }),
-  onImageUpload: func.isRequired,
-  onUpdateProfile: func.isRequired,
-  scrollingDisabled: bool.isRequired,
-  updateInProgress: bool.isRequired,
-  updateProfileError: propTypes.error,
-  uploadImageError: propTypes.error,
-  uploadInProgress: bool.isRequired,
-  onUpdateDatabase: func.isRequired,
+  // currentUser: propTypes.currentUser,
+  // image: shape({
+  //   id: string,
+  //   file: object,
+  //   uploadedImage: propTypes.image,
+  // }),
+  // onImageUpload: func.isRequired,
+  // onUpdateProfile: func.isRequired,
+  // scrollingDisabled: bool.isRequired,
+  // updateInProgress: bool.isRequired,
+  // updateProfileError: propTypes.error,
+  // uploadImageError: propTypes.error,
+  // uploadInProgress: bool.isRequired,
+  // onUpdateDatabase: func.isRequired,
 
   // from injectIntl
   intl: intlShape.isRequired,
@@ -235,6 +310,10 @@ const mapStateToProps = state => {
     updateProfileError,
     eventInfoInProgress,
     eventDetails,
+    updateSellersInProgress,
+    updateSellersError,
+    updateSellersResponseAdd,
+    updateSellersResponseRemove
   } = state.EventHostPage;
   const hostUUID = currentUser && currentUser.id ? currentUser.id.uuid : null;
   const hostName = currentUser && currentUser.attributes ? currentUser.attributes.profile.displayName : null;
@@ -253,7 +332,11 @@ const mapStateToProps = state => {
     uploadImageError,
     uploadInProgress,
     eventInfoInProgress,
-    eventDetails
+    eventDetails,
+    updateSellersInProgress,
+    updateSellersError,
+    updateSellersResponseAdd,
+    updateSellersResponseRemove
   };
 };
 

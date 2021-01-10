@@ -315,6 +315,7 @@
   "EventHostPage.heading": "Event Details",
   "EventHostPage.sellersListHeading": "You have {count} {count, plural, one {seller} other {sellers}} added to your event",
   "EventHostPage.removeSeller": "Remove", 
+  "EventHostPage.loadingSellers": "Updating sellers list...",
   "EventHostPage.noSellers": "You have not added any sellers to your event",
   "EventHostPage.eventDetailsLinkText": "Details",
   "EventHostPage.eventPhotosLinkText": "Photos",
