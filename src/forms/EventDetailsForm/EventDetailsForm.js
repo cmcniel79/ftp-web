@@ -22,7 +22,6 @@ import {
 
 import css from './EventDetailsForm.css';
 
-const ACCEPT_IMAGES = 'image/*';
 const UPLOAD_CHANGE_DELAY = 2000; // Show spinner so that browser has time to load img srcset
 const identity = v => v;
 

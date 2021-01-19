@@ -21,7 +21,7 @@ import {
 import { EventDetailsForm, EventPhotosForm } from '../../forms';
 import { TopbarContainer } from '..';
 
-import { loadData, updateDetails, uploadImage, updateSellers } from './EventHostPage.duck';
+import { loadData, updateEventDetails, uploadImage, updateSellers } from './EventHostPage.duck';
 import EventSellersListMaybe from './EventSellersListMaybe';
 import css from './EventHostPage.css';
 
@@ -67,10 +67,10 @@ export class EventHostPageComponent extends Component {
 
   sendUpdatedSellers(removedEmail) {
     if (removedEmail) {
-      this.props.onUpdateSellers({ email: removedEmail, eventName: "Test of Frontend 69", add: false });
+      this.props.onUpdateSellers({ sellerEmail: removedEmail, eventName: "Test of Frontend 69", add: false, hostUUID: this.props.hostUUID });
     } else {
       const newEmail = this.state.email;
-      this.props.onUpdateSellers({ email: newEmail, eventName: "Test of Frontend 69", add: true });
+      this.props.onUpdateSellers({ sellerEmail: newEmail, eventName: "MYSQL test", add: true, hostUUID: this.props.hostUUID });
       this.submittedValues = newEmail;
       this.setState({ email: '' });
     }
@@ -90,6 +90,7 @@ export class EventHostPageComponent extends Component {
       intl,
       tab,
       onImageUpload,
+      eventSellers,
       eventInfoInProgress,
       eventDetails,
       uploadInProgress,
@@ -98,9 +99,7 @@ export class EventHostPageComponent extends Component {
       updateSellersResponseAdd,
       updateSellersResponseRemove
     } = this.props;
-
     const sellers = ["chase@fromthepeople.co", "mcniel26@gmail.com", "isabella@fromthepeople.co"];
-
     // Initial Values for EventDetailsForm
     const eventName = eventDetails && eventDetails.eventName;
     const eventType = eventDetails && eventDetails.eventType;
@@ -149,7 +148,6 @@ export class EventHostPageComponent extends Component {
       </div>
     ) : null;
 
-
     const eventSellersForm = (
       <div className={css.sellersContainer}>
         <div className={css.sellerInput}>
@@ -176,12 +174,12 @@ export class EventHostPageComponent extends Component {
           inProgress={updateSellersInProgress}
           disabled={submitDisabled}
           ready={pristineSinceLastSubmit}
-          onClick={this.sendUpdatedSellers}
+          onClick={() => this.sendUpdatedSellers(null)}
         >
           <FormattedMessage id="EventSellersForm.addSeller" />
         </Button>
         <EventSellersListMaybe
-          sellersList={sellers}
+          sellers={eventSellers}
           updateSellers={(values) => this.sendUpdatedSellers(values)}
           inProgress={updateSellersInProgress}
           response={updateSellersResponseRemove}
@@ -308,6 +306,7 @@ const mapStateToProps = state => {
     uploadInProgress,
     updateInProgress,
     updateProfileError,
+    eventSellers,
     eventInfoInProgress,
     eventDetails,
     updateSellersInProgress,
@@ -315,11 +314,11 @@ const mapStateToProps = state => {
     updateSellersResponseAdd,
     updateSellersResponseRemove
   } = state.EventHostPage;
+ 
   const hostUUID = currentUser && currentUser.id ? currentUser.id.uuid : null;
   const hostName = currentUser && currentUser.attributes ? currentUser.attributes.profile.displayName : null;
   const hostEmail = currentUser && currentUser.attributes ? currentUser.attributes.email : null;
-
-  // const hostEmail = cu
+  console.log(eventSellers);
   return {
     hostUUID,
     hostName,
@@ -331,6 +330,7 @@ const mapStateToProps = state => {
     updateProfileError,
     uploadImageError,
     uploadInProgress,
+    eventSellers,
     eventInfoInProgress,
     eventDetails,
     updateSellersInProgress,
@@ -342,7 +342,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   onLoadData: () => dispatch(loadData()),
-  onUpdateDetails: details => dispatch(updateDetails(details)),
+  onUpdateDetails: details => dispatch(updateEventDetails(details)),
   onImageUpload: data => dispatch(uploadImage(data)),
   onUpdateSellers: data => dispatch(updateSellers(data)),
 });

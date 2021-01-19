@@ -9,18 +9,15 @@ import css from './EventHostPage.css';
 class EventSellersListMaybe extends Component {
   constructor(props) {
     super(props);
-    const { sellersList } = props;
-    this.state = { sellers: sellersList };
     this.removeSeller = this.removeSeller.bind(this);
   }
 
   removeSeller(deletedEmail) {
-    this.setState(prevState => ({ sellers: prevState.sellers.filter(e => e != deletedEmail) }));
     this.props.updateSellers(deletedEmail);
   }
 
   render() {
-    const { inProgress, response } = this.props;
+    const { inProgress, response, sellers } = this.props;
     const submitResponse = response ? (
       <div className={css.success}>
         {response}
@@ -29,19 +26,19 @@ class EventSellersListMaybe extends Component {
     return (
       <div className={css.sectionSellersList}>
         {submitResponse}
-        {this.state.sellers && this.state.sellers.length > 0 && !inProgress ? (
+        {sellers && sellers.length > 0 && !inProgress ? (
           <div>
             <h3 className={css.sectionTitle}>
-              <FormattedMessage id="EventHostPage.sellersListHeading" values={{ count: this.state.sellers.length }} />
+              <FormattedMessage id="EventHostPage.sellersListHeading" values={{ count: sellers.length }} />
             </h3>
             <ul>
-              {this.state.sellers.map(s => {
+              {sellers.map(s => {
                 return (
-                  <li className={css.sellerItem} key={s} value={s}>
+                  <li className={css.sellerItem} key={s.sellerUUID} value={s.sellerEmail}>
                     <h3 className={css.sellerName}>
-                      {s}
+                      {s.sellerEmail}
                     </h3>
-                    <InlineTextButton className={css.removeButton} onClick={() => this.removeSeller(s)}>
+                    <InlineTextButton className={css.removeButton} onClick={() => this.removeSeller(s.sellerEmail)}>
                       <FormattedMessage id="EventHostPage.removeSeller" />
                     </InlineTextButton>
                   </li>
