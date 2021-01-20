@@ -12,43 +12,36 @@ import css from './EventsPage.css';
 
 export const EventSection = props => {
 
-  const { eventList, eventType } = props;
+  const { events, eventType } = props;
 
-  var title;
-  var link;
-  if (eventType && eventType === 'powwow') {
-    title = <FormattedMessage id="EventsPage.powwows" />;
-    link = (
-      <NamedLink name="EventTypePage" params={{ type: "powwows" }}>
-        <FormattedMessage id="EventsPage.powwowsLink" />
-      </NamedLink>
-    );
-  } else {
-    title = <FormattedMessage id="EventsPage.virtual" />;
-    link = (
-      <NamedLink name="EventTypePage" params={{ type: "virtual-events" }}>
-        <FormattedMessage id="EventsPage.virtualLink" />
-      </NamedLink>
-    );
-  }
 
-  return (eventList ? (
+  const specificText = eventType === 'powwow' ? 'Powwows' : eventType === 'virtual' ? 'Virtual Events' : null;
+  const title = <FormattedMessage id="EventsPage.sectionTitle" values={{ type: specificText }} />;
+  const link = (
+    <NamedLink name="EventTypePage" params={{ type: eventType }}>
+      <FormattedMessage id="EventsPage.sectionLink" values={{ type: specificText }} />
+    </NamedLink>
+  );
+    console.log(events);
+  return (
+    events ? (
     <div className={css.sectionContainer}>
       <div className={css.titleContainer}>
-      <h1 className={css.sectionTitle}>
-        {title}
-      </h1>
-      <h3 className={css.eventPageLink} >
-        {link}
-        <img className={css.arrow} src={arrow} alt="arrow" />
-      </h3>
+        <h1 className={css.sectionTitle}>
+          {title}
+        </h1>
+        <h3 className={css.eventPageLink} >
+          {link}
+          <img className={css.arrow} src={arrow} alt="arrow" />
+        </h3>
       </div>
       <div className={css.eventSection}>
-        {eventList.map(event => {
+        {events.map(event => {
           const pageName = eventType === "powwwow" ? "PowwowPage" : "PowwowPage";
           return (
-            <EventCard event={event} pageName={pageName} className={css.card}/>
-          )}
+            <EventCard key={event.hostUUID} event={event} pageName={pageName} className={css.card} />
+          )
+        }
         )}
       </div>
     </div>

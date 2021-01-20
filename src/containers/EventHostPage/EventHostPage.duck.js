@@ -204,7 +204,7 @@ export const updateSellers = actionPayload => {
     fetch(eventsURL + "/sellers", options)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data.statusCode >= 200 && data.statusCode < 300) {
           dispatch(updateSellersSuccess(data));
         } else {

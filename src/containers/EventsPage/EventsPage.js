@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { TopbarContainer } from '..';
 import {
   LayoutSingleColumn,
@@ -20,21 +21,25 @@ import EventSection from './EventSection';
 import bed from '../../assets/bed.svg';
 import people from '../../assets/people.svg';
 import fitness from '../../assets/fitness.svg';
+import { loadData } from './EventsPage.duck';
 
 export class EventsPageComponent extends Component {
 
-  render() {
+  componentDidMount() {
+    if (window) {
+      this.props.onLoadData();
+    }
+  }
 
+  render() {
+    const {
+      exampleEvents,
+    } = this.props;
+    console.log(exampleEvents);
     const contactPageLink = <NamedLink name="ContactPage">
       <FormattedMessage id="EventsPage.contactLink" />
     </NamedLink>;
 
-    const powwows = [
-    {eventName: "Stanford Powwow", eventType: "powwwow", image: stanfordImage}, 
-    {eventName: "Oakland Powwow", eventType: "powwwow", image: bed},
-    {eventName: "Gathering of Nations", eventType: "powwwow", image: people}, 
-    // {eventName: "UNM Powwow", eventType: "powwwow", image: fitness}
-  ];
     // I do not know why the length of the events list in section carousel is only 2,
     // so I am passing in the length here
     return (
@@ -45,12 +50,15 @@ export class EventsPageComponent extends Component {
           </LayoutWrapperTopbar>
 
           <LayoutWrapperMain className={css.staticPageWrapper}>
-              <EventSection eventList={powwows} eventType="powwow" />
-              <EventSection eventList={powwows} eventType="virtual"/>
-
+            {exampleEvents ?
+              <div>
+                <EventSection events={exampleEvents.filter(e => e.eventType === "powwow")} eventType="powwow" />
+                <EventSection events={exampleEvents.filter(e => e.eventType === "virtual")} eventType="virtual" />
+              </div>
+              : null}
             <div className={css.addEvent}>
               <h3 className={css.addEventInfo}>
-                <FormattedMessage id="EventsPage.addAnEvent" values={{ link: contactPageLink }}/>
+                <FormattedMessage id="EventsPage.addAnEvent" values={{ link: contactPageLink }} />
               </h3>
             </div>
 
@@ -64,7 +72,24 @@ export class EventsPageComponent extends Component {
   }
 };
 
+const mapStateToProps = state => {
+  const {
+    exampleEvents,
+  } = state.EventsPage;
+  return {
+    exampleEvents
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  onLoadData: () => dispatch(loadData()),
+});
+
 const EventsPage = compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(EventsPageComponent);
 
 export default EventsPage;

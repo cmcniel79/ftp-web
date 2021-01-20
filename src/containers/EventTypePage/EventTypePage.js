@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { TopbarContainer } from '..';
 import {
   LayoutSingleColumn,
@@ -23,6 +24,7 @@ import stanfordImage from '../../assets/stanford-bg.jpg';
 import bed from '../../assets/bed.svg';
 import people from '../../assets/people.svg';
 import fitness from '../../assets/fitness.svg';
+import { loadData } from './EventTypePage.duck';
 
 import css from './EventTypePage.css';
 
@@ -38,6 +40,12 @@ export class EventTypePageComponent extends Component {
     this.selectState = this.selectState.bind(this);
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
+  }
+
+  componentDidMount() {
+    if (window) {
+      this.props.onLoadData(this.props.params.type);
+    }
   }
 
   selectState(value) {
@@ -57,6 +65,9 @@ export class EventTypePageComponent extends Component {
   }
 
   render() {
+    const {
+      events
+    } = this.props;
     const eventType = this.props.params.type;
     const pageTitle = eventType === "powwows" ? "Powwows" : "Virtual Events";
 
@@ -64,28 +75,14 @@ export class EventTypePageComponent extends Component {
       <FormattedMessage id="EventsPage.contactLink" />
     </NamedLink>;
 
-    const events = [
-      { eventName: "Stanford Powwow", eventType: "powwwow", image: stanfordImage, state: "NM" },
-      { eventName: "Oakland Powwow", eventType: "powwwow", image: bed, state: "CA" },
-      { eventName: "Gathering of Nations", eventType: "powwwow", image: people, state: "TX" },
-      { eventName: "UNM Powwow", eventType: "powwwow", image: fitness, state: "AZ" },
-      { eventName: "Stanford Powwow", eventType: "powwwow", image: stanfordImage, state: "FL" },
-      { eventName: "Oakland Powwow", eventType: "powwwow", image: bed, state: "NM" },
-      { eventName: "Gathering of Nations", eventType: "powwwow", image: people, state: "CA" },
-      { eventName: "UNM Powwow", eventType: "powwwow", image: fitness, state: "TX" },
-      { eventName: "Stanford Powwow", eventType: "powwwow", image: stanfordImage, state: "CA" },
-      { eventName: "Oakland Powwow", eventType: "powwwow", image: bed, state: "AZ" },
-      { eventName: "Gathering of Nations", eventType: "powwwow", image: people, state: "TX" },
-    ];
-
-    const length = this.state.state ?
-      events.filter(e => e.state === this.state.state).length : events.length;
+    // const length = this.state.state ?
+    //   events.filter(e => e.state === this.state.state).length : events.length;
 
     var title;
     if (eventType && eventType === 'powwows') {
-      title = <FormattedMessage id="EventTypePage.powwows" values={{ total: length }} />;
+      title = <FormattedMessage id="EventTypePage.powwows" values={{ total: 6 }} />;
     } else {
-      title = <FormattedMessage id="EventTypePage.virtual" values={{ total: length }} />;
+      title = <FormattedMessage id="EventTypePage.virtual" values={{ total: 6 }} />;
     }
 
     return (
@@ -108,7 +105,7 @@ export class EventTypePageComponent extends Component {
                 </h3>
               </div>
               <div className={css.eventsGrid} >
-                {events.filter(e =>
+                {events && events.filter(e =>
                   this.state.state !== null ? e.state === this.state.state : e
                 ).map(event => {
                   const pageName = eventType === "powwwows" ? "PowwowPage" : "PowwowPage";
@@ -132,7 +129,25 @@ export class EventTypePageComponent extends Component {
   }
 };
 
+const mapStateToProps = state => {
+  const {
+    events,
+  } = state.EventTypePage;
+  console.log(events);
+  return {
+    events
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  onLoadData: (type) => dispatch(loadData(type)),
+});
+
 const EventTypePage = compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(EventTypePageComponent);
 
 export default EventTypePage;

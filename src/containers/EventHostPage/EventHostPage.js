@@ -318,7 +318,7 @@ const mapStateToProps = state => {
   const hostUUID = currentUser && currentUser.id ? currentUser.id.uuid : null;
   const hostName = currentUser && currentUser.attributes ? currentUser.attributes.profile.displayName : null;
   const hostEmail = currentUser && currentUser.attributes ? currentUser.attributes.email : null;
-  console.log(eventSellers);
+  // console.log(eventSellers);
   return {
     hostUUID,
     hostName,

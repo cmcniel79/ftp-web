@@ -11,15 +11,17 @@ export const EventCardComponent = props => {
   const { event, pageName, className } = props;
   const classes = classNames(css.eventCard, className);
   const slug = encodeURI(event.eventName);
+  const dateObject = new Date(event.startDate.slice(0,10));
+  const dateString = dateObject.toDateString().slice(3, 10);
   return (
-    <div className={classes} key={event.eventName}>
+    <div className={classes} key={event.hostUUID}>
     <div className={css.eventImageWrapper}>
       <NamedLink className={css.eventLink} name={pageName} params={{ eventName: slug }}>
-        <img className={css.eventImage} src={event.image} alt={event.eventName} />
+        <img className={css.eventImage} src={"https://ftpevents.imgix.net/5f99bfd4-f237-4d5d-afea-445aacef888f"} alt={event.eventName} />
       </NamedLink>
     </div>
     <div className={css.eventSubtitle}>
-      <FormattedMessage id="EventCard.eventCardInfo" values={{ eventName: event.eventName, date: "May 5th-7th" }} />
+      <FormattedMessage id="EventCard.eventCardInfo" values={{ eventName: event.eventName, date: dateString }} />
     </div>
   </div>
   );

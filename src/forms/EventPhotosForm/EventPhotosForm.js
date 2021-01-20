@@ -159,7 +159,8 @@ class EventPhotosFormComponent extends Component {
                       form.change(`eventImage`, file);
                       form.blur(`eventImage`);
                       if (file != null) {
-                        const tempId = `${hostUUID}_${Date.now()}`;
+                        // const tempId = `${hostUUID}_${Date.now()}`;
+                        const tempId = `${hostUUID}`;
                         onImageUpload({ id: tempId, file });
                       }
                     };
@@ -240,7 +241,7 @@ EventPhotosFormComponent.propTypes = {
 
   uploadImageError: propTypes.error,
   uploadInProgress: bool.isRequired,
-  updateInProgress: bool.isRequired,
+  // updateInProgress: bool.isRequired,
   updateProfileError: propTypes.error,
   updateProfileReady: bool,
   accountType: string,
