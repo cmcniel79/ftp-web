@@ -27,7 +27,7 @@ import {
   PrivacyPolicyPage,
   ProfilePage,
   ProfileSettingsPage,
-  PowwowPage,
+  SingleEventPage,
   SearchPage,
   StyleguidePage,
   TermsOfServicePage,
@@ -232,9 +232,9 @@ const routeConfiguration = () => {
       component: props => <ProfileSettingsPage {...props} />,
     },
     {
-      path: '/events/powwows/:eventName',
-      name: 'PowwowPage',
-      component: props => <PowwowPage {...props} />,
+      path: '/events/powwows/:eventName/:id',
+      name: 'SingleEventPage',
+      component: props => <SingleEventPage {...props} />,
     },
 
     // Note: authenticating with IdP (e.g. Facebook) expects that /login path exists

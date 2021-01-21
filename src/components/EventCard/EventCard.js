@@ -16,7 +16,7 @@ export const EventCardComponent = props => {
   return (
     <div className={classes} key={event.hostUUID}>
     <div className={css.eventImageWrapper}>
-      <NamedLink className={css.eventLink} name={pageName} params={{ eventName: slug }}>
+      <NamedLink className={css.eventLink} name="SingleEventPage" params={{ eventName: slug, id: event.hostUUID }}>
         <img className={css.eventImage} src={"https://ftpevents.imgix.net/5f99bfd4-f237-4d5d-afea-445aacef888f"} alt={event.eventName} />
       </NamedLink>
     </div>

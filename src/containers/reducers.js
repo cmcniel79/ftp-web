@@ -23,7 +23,7 @@ import PasswordResetPage from './PasswordResetPage/PasswordResetPage.duck';
 import PaymentMethodsPage from './PaymentMethodsPage/PaymentMethodsPage.duck';
 import ProfilePage from './ProfilePage/ProfilePage.duck';
 import ProfileSettingsPage from './ProfileSettingsPage/ProfileSettingsPage.duck';
-import PowwowPage from './PowwowPage/PowwowPage.duck';
+import SingleEventPage from './SingleEventPage/SingleEventPage.duck';
 import SearchPage from './SearchPage/SearchPage.duck';
 import StripePayoutPage from './StripePayoutPage/StripePayoutPage.duck';
 import TransactionPage from './TransactionPage/TransactionPage.duck';
@@ -49,7 +49,7 @@ export {
   PaymentMethodsPage,
   ProfilePage,
   ProfileSettingsPage,
-  PowwowPage,
+  SingleEventPage,
   SearchPage,
   StripePayoutPage,
   TransactionPage,

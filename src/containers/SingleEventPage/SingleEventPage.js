@@ -12,19 +12,20 @@ import {
   ExternalLink,
   Page
 } from '../../components';
-import { loadData } from './PowwowPage.duck';
+import { loadData } from './SingleEventPage.duck';
 import { injectIntl } from '../../util/reactIntl';
-import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
+import { getMarketplaceEntities, getListingsById } from '../../ducks/marketplaceData.duck';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import SectionSellers from './SectionSellers';
 import SectionHost from './SectionHost';
+import SectionListings from './SectionListings';
 import {
   FormattedMessage,
 } from '../../util/reactIntl';
 
-import css from './PowwowPage.css';
+import css from './SingleEventPage.css';
 
-export class PowwowPageComponent extends Component {
+export class SingleEventPageComponent extends Component {
   constructor(props) {
     super(props);
     this.shareButtonClick = this.shareButtonClick.bind(this);
@@ -32,7 +33,7 @@ export class PowwowPageComponent extends Component {
 
   componentDidMount() {
     if (window) {
-      this.props.onLoadData();
+      this.props.onLoadData(this.props.params.id);
     }
   }
 
@@ -58,9 +59,9 @@ export class PowwowPageComponent extends Component {
   };
 
   render() {
-    const { users, currentUser } = this.props;
-    const host = "Stanford Powwow";
-    const website = "http://powwow.stanford.edu/";
+    const { users, currentUser, eventDetails, eventInfoInProgress, listings } = this.props;
+    const eventName = eventDetails && eventDetails.eventName ? eventDetails.eventName : null;
+    const eventDescription = eventDetails && eventDetails.eventDescription ? eventDetails.eventDescription : null;
     const eventAddress = "410 Terry Ave, North Seattle, United States";
     const dates = "May 15-17th 2021";
     return (
@@ -71,9 +72,11 @@ export class PowwowPageComponent extends Component {
           </LayoutWrapperTopbar>
 
           <LayoutWrapperMain className={css.staticPageWrapper}>
-            <div className={css.titleContainer} >
+           {eventDetails && !eventInfoInProgress ?
+           <div>
+           <div className={css.titleContainer} >
               <h1 className={css.pageTitle}>
-                <FormattedMessage id="PowwowPage.heading" values={{ host }} />
+                <FormattedMessage id="SingleEventPage.heading" values={{ eventName }} />
               </h1>
               <h3 className={css.pageSubtitleDesktop}>
                 {dates} 
@@ -87,8 +90,21 @@ export class PowwowPageComponent extends Component {
             </div>
             <div className={css.splitScreen}>
               <SectionSellers className={css.sectionSellers} users={users} currentUser={currentUser} />
-              <SectionHost className={css.sectionHost} host={host} />
+              <SectionHost className={css.sectionHost} eventDescription={eventDescription}/>
             </div>
+            <SectionListings listings={listings}/>
+            </div> 
+            : !eventDetails && eventInfoInProgress ?
+            <div>
+              <h3>
+                Loading Event Info....
+              </h3>
+            </div>
+            : <div>
+              <h3>
+                No Event
+              </h3>
+              </div>}
           </LayoutWrapperMain>
           <LayoutWrapperFooter>
             <Footer />
@@ -101,27 +117,35 @@ export class PowwowPageComponent extends Component {
 
 const mapStateToProps = state => {
   const {
+    searchParams,
+    userIds,
+    eventDetails,
+    eventInfoInProgress,
+    currentPageResultIds,
     pagination,
     searchInProgress,
     searchListingsError,
-    searchParams,
-    userIds,
-  } = state.PowwowPage;
+  } = state.SingleEventPage;
+  const pageListings = currentPageResultIds ? getListingsById(state, currentPageResultIds) : null;
   const { currentUser } = state.user;
   const users = userIds && userIds.length > 0 ? getMarketplaceEntities(state, userIds) : null;
   return {
+    listings: pageListings,
     users: users,
-    pagination,
     scrollingDisabled: isScrollingDisabled(state),
+    searchParams,
+    currentUser,
+    eventDetails,
+    eventInfoInProgress,
+    currentPageResultIds,
+    pagination,
     searchInProgress,
     searchListingsError,
-    searchParams,
-    currentUser
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  onLoadData: () => dispatch(loadData()),
+  onLoadData: (id) => dispatch(loadData(id)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the
@@ -131,13 +155,13 @@ const mapDispatchToProps = dispatch => ({
 //
 // See: https://github.com/ReactTraining/react-router/issues/4671
 
-const PowwowPage = compose(
+const SingleEventPage = compose(
   withRouter,
   connect(
     mapStateToProps,
     mapDispatchToProps
   ),
   injectIntl
-)(PowwowPageComponent);
+)(SingleEventPageComponent);
 
-export default PowwowPage;
+export default SingleEventPage;

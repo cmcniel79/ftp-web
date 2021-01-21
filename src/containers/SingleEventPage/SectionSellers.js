@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { UserCard } from '../../components';
 
-import css from './PowwowPage.css';
+import css from './SingleEventPage.css';
 
 class SectionSellers extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class SectionSellers extends Component {
         return (
             <div className={className}>
                 <h2 className={css.sellersHeading}>
-                    <FormattedMessage id="PowwowPage.sellersHeading" />
+                    <FormattedMessage id="SingleEventPage.sellersHeading" />
                 </h2>
                 {users && users.map(u => (
                     <div className={css.userCardWrapper} key={u.id.uuid}>

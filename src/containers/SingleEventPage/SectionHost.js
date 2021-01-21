@@ -8,7 +8,7 @@ import navigateIcon from '../../assets/navigate.svg';
 import shareIcon from '../../assets/share.svg';
 import exitIcon from '../../assets/exit.svg';
 
-import css from './PowwowPage.css';
+import css from './SingleEventPage.css';
 
 // Approximated collapsed size so that there are ~three lines of text
 // in the desktop layout in the host section of the ListingPage.
@@ -76,18 +76,14 @@ ExpandableBio.propTypes = {
 
 const SectionHost = props => {
   const {
-    host,
+    eventDescription,
+    eventWebsite,
     className
   } = props;
 
-
-  const address = "Stanford CA";
-  const dates = "May 5th - 6th";
-  const contact = "powwow@stanford.edu";
   const website = "http://powwow.stanford.edu/";
   const eventAddress = "410 Terry Ave, North Seattle, United States";
   const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURI(eventAddress);
-  const bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
   return (
     <div className={className}>
       <div className={css.hostImageWrapper}>
@@ -101,27 +97,25 @@ const SectionHost = props => {
               href={googleMapsUrl}
             >
               <img className={css.linkIcon} src={navigateIcon} alt="Navigate" />
-              <FormattedMessage id="PowwowPage.navigateButton" />
-            </ExternalLink>
-          }
+              <FormattedMessage id="SingleEventPage.navigateButton" />
+            </ExternalLink>}
           {website &&
             <ExternalLink
               className={css.linkButton}
               href={website}
             >
               <img className={css.linkIcon} src={exitIcon} alt="Link" />
-              <FormattedMessage id="PowwowPage.websiteButton" />
-            </ExternalLink>
-          }
+              <FormattedMessage id="SingleEventPage.websiteButton" />
+            </ExternalLink>}
           <button
             className={css.shareButton}
             onClick={() => this.shareButtonClick(window.location.href)}
           >
             <img className={css.shareIcon} src={shareIcon} alt="Share" />
-            <FormattedMessage id="PowwowPage.shareButton" />
+            <FormattedMessage id="SingleEventPage.shareButton" />
           </button>
         </div>
-        <ExpandableBio className={css.mobileBio} bio={bio} />
+        <ExpandableBio className={css.mobileBio} bio={eventDescription} />
       </div >
     </div >
   );

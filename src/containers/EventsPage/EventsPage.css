@@ -51,7 +51,6 @@
 .eventSection {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   @media (--viewportMedium) {
     flex-direction: row;
   }
@@ -60,7 +59,12 @@
 .card {
   margin: 5px auto;
   @media (--viewportMedium) {
-    margin: 0;
+    max-width: 30%;
+    margin: 0 15px 0 0;
+  }
+  @media (--viewportLarge) {
+    max-width: 30%;
+    margin: 0 30px 0 0;
   }
 }
 
