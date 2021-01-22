@@ -1,7 +1,3 @@
-import { denormalisedResponseEntities } from '../../util/data';
-import { storableError } from '../../util/errors';
-import { currentUserShowSuccess } from '../../ducks/user.duck';
-
 const eventsURL = " https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd/events";
 
 // ================ Action types ================ //
@@ -13,7 +9,7 @@ export const EVENTS_ERROR = 'app/EventTypePage/EVENTS_ERROR';
 // ================ Reducer ================ //
 
 const initialState = {
-  events: null,
+  events: [],
   requestInProgress: false,
   requestError: null,
 };
@@ -42,11 +38,11 @@ export default function reducer(state = initialState, action = {}) {
 // All event details
 export const eventsRequest = () => ({ type: EVENTS_REQUEST, payload: {} });
 export const eventsSuccess = data => ({ type: EVENTS_SUCCESS, payload: data });
-export const eventsError = error => ({ type: EVENTS_ERROR, payload: error.body });
+export const eventsError = error => ({ type: EVENTS_ERROR, payload: error });
 
 // ================ Thunk ================ //
 
-const fetchExampleEvents = (type) => (dispatch, getState, sdk) => {
+const fetchEvents = (type) => (dispatch, getState, sdk) => {
   dispatch(eventsRequest());
   const options = {
     method: 'GET',
@@ -59,14 +55,12 @@ const fetchExampleEvents = (type) => (dispatch, getState, sdk) => {
 
   fetch(eventsURL + "?type=" + type, options)
     .then(response => response.json())
-    .then((res) => {
-      dispatch(eventsSuccess(res.body));
-    })
-    .catch(() => console.log("Could not update database"));
+    .then((res) => dispatch(eventsSuccess(res.body)))
+    .catch(() =>  dispatch(eventsError("An error occurred when loading events. Please try refreshing the page")));
 }
 
 export const loadData = (type) => (dispatch, getState, sdk) => {
   return Promise.all([
-    dispatch(fetchExampleEvents(type)),
+    dispatch(fetchEvents(type)),
   ]);
 };

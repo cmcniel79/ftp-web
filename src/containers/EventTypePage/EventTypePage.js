@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { TopbarContainer } from '..';
+import { FormattedMessage } from '../../util/reactIntl';
+import { StateSelectionForm } from '../../forms';
+import { loadData } from './EventTypePage.duck';
 import {
   LayoutSingleColumn,
   LayoutWrapperTopbar,
@@ -9,22 +12,9 @@ import {
   LayoutWrapperFooter,
   EventCard,
   Footer,
-  // ExternalLink,
-  Modal,
   NamedLink,
-  SelectSingleFilter,
   Page,
-  FieldSelect
 } from '../../components';
-import {
-  FormattedMessage,
-} from '../../util/reactIntl';
-import { StateSelectionForm } from '../../forms';
-import stanfordImage from '../../assets/stanford-bg.jpg';
-import bed from '../../assets/bed.svg';
-import people from '../../assets/people.svg';
-import fitness from '../../assets/fitness.svg';
-import { loadData } from './EventTypePage.duck';
 
 import css from './EventTypePage.css';
 
@@ -33,13 +23,10 @@ export class EventTypePageComponent extends Component {
     super(props);
 
     this.state = {
-      isMobileModalOpen: false,
-      state: null,
+      stateSelected: null,
       length: null,
     };
     this.selectState = this.selectState.bind(this);
-    this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
-    this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
   }
 
   componentDidMount() {
@@ -49,41 +36,66 @@ export class EventTypePageComponent extends Component {
   }
 
   selectState(value) {
-    this.setState({ state: value && value.state && value.state !== "all" ? value.state : null });
+    this.setState({ stateSelected: value && value.state && value.state !== "all" ? value.state : null });
   }
 
-  // Invoked when a modal is opened from a child component,
-  // for example when a filter modal is opened in mobile view
-  onOpenMobileModal() {
-    this.setState({ isMobileModalOpen: true });
-  }
-
-  // Invoked when a modal is closed from a child component,
-  // for example when a filter modal is opened in mobile view
-  onCloseMobileModal() {
-    this.setState({ isMobileModalOpen: false });
-  }
 
   render() {
     const {
-      events
+      events,
+      requestInProgress,
+      requestError,
     } = this.props;
+
     const eventType = this.props.params.type;
-    const pageTitle = eventType === "powwows" ? "Powwows" : "Virtual Events";
+    const pageTitle = eventType === "powwow" ? "Powwows" : "Virtual Events";
+    const contactPageLink = (
+      <NamedLink name="ContactPage">
+        <FormattedMessage id="EventsPage.contactLink" />
+      </NamedLink>);
 
-    const contactPageLink = <NamedLink name="ContactPage">
-      <FormattedMessage id="EventsPage.contactLink" />
-    </NamedLink>;
+    const length = events && this.state.stateSelected ?
+      events.filter(e => e.state === this.state.stateSelected).length : events ? events.length : 0;
 
-    // const length = this.state.state ?
-    //   events.filter(e => e.state === this.state.state).length : events.length;
-
-    var title;
-    if (eventType && eventType === 'powwows') {
-      title = <FormattedMessage id="EventTypePage.powwows" values={{ total: 6 }} />;
+    var heading;
+    if (eventType && eventType === 'powwow') {
+      heading = <FormattedMessage id="EventTypePage.powwowHeading" values={{ total: length }} />;
     } else {
-      title = <FormattedMessage id="EventTypePage.virtual" values={{ total: 6 }} />;
-    }
+      heading = <FormattedMessage id="EventTypePage.virtualHeading" values={{ total: length }} />;
+    };
+
+    const eventsMessage =
+      requestInProgress ? <FormattedMessage id="EventsTypePage.loadingEvents" />
+        : requestError ? <FormattedMessage id="EventsTypePage.loadingError" />
+          : events && events.length === 0 ? <FormattedMessage id="EventsTypePage.noEvents" />
+            : null;
+
+    const eventsPanel = events && events.length > 0 && !requestInProgress ? (
+      <div className={css.container}>
+        <div className={css.panel}>
+          <h2 className={css.sectionTitle}>
+            {heading} {this.state.stateSelected ? "in " + this.state.stateSelected : null}
+          </h2>
+          <StateSelectionForm onSubmit={(value) => this.selectState(value)} initialValues={{ state: this.state.stateSelected }} />
+          <div className={css.half}></div>
+          <h3 className={css.addEventInfo}>
+            <FormattedMessage id="EventTypePage.addAnEvent" values={{ link: contactPageLink }} />
+          </h3>
+        </div>
+        <div className={css.eventsGrid} >
+          {events && events.filter(e =>
+            this.state.stateSelected !== null ? e.state === this.state.stateSelected : e
+          ).map(event => {
+            const pageName = eventType === "powwwows" ? "PowwowPage" : "PowwowPage";
+            return (
+              <div className={css.eventCardWrapper} key={event.eventName}>
+                <EventCard event={event} pageName={pageName} />
+              </div>
+            )
+          }
+          )}
+        </div>
+      </div>) : null;
 
     return (
       <Page className={css.root} title={pageTitle} scrollingDisabled={false}>
@@ -93,32 +105,10 @@ export class EventTypePageComponent extends Component {
           </LayoutWrapperTopbar>
 
           <LayoutWrapperMain className={css.staticPageWrapper}>
-            <div className={css.container}>
-              <div className={css.panel}>
-                <h2 className={css.sectionTitle}>
-                  {title} {this.state.state ? "in " + this.state.state : null}
-                </h2>
-                <StateSelectionForm onSubmit={(value) => this.selectState(value)} initialValues={{ state: this.state.state }} />
-                <div className={css.half}></div>
-                <h3 className={css.addEventInfo}>
-                  <FormattedMessage id="EventTypePage.addAnEvent" values={{ link: contactPageLink }} />
-                </h3>
-              </div>
-              <div className={css.eventsGrid} >
-                {events && events.filter(e =>
-                  this.state.state !== null ? e.state === this.state.state : e
-                ).map(event => {
-                  const pageName = eventType === "powwwows" ? "PowwowPage" : "PowwowPage";
-                  return (
-                    <div className={css.eventCardWrapper} key={event.eventName}>
-                      <EventCard event={event} pageName={pageName} />
-                    </div>
-                  )
-                }
-                )}
-              </div>
-            </div>
-
+            {eventsPanel}
+            <h2>
+              {eventsMessage}
+            </h2>
           </LayoutWrapperMain>
           <LayoutWrapperFooter>
             <Footer />
@@ -132,10 +122,13 @@ export class EventTypePageComponent extends Component {
 const mapStateToProps = state => {
   const {
     events,
+    requestInProgress,
+    requestError,
   } = state.EventTypePage;
-  console.log(events);
   return {
-    events
+    events,
+    requestInProgress,
+    requestError,
   };
 };
 
