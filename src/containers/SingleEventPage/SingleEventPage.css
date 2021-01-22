@@ -46,12 +46,21 @@
     margin: 0 5px 0 5px;
 }
 
-.splitScreen {
-    display: flex;
-    flex-direction: column-reverse;
+.subtitleOptionalData {
+    display: inline;
+}
+
+.sectionListings {
+    margin-top: 20px;
     @media (--viewportMedium) {
-        flex-direction: row;
-        justify-content: space-between;
+        margin-top: 40px;
+    }
+}
+
+.searchListingsPanel {
+    margin: 20px 0 0 0;
+    @media (--viewportMedium) {
+        margin: 30px 0 0 0;
     }
 }
 
@@ -60,42 +69,36 @@
     display: flex;
     flex-direction: column;
     @media (--viewportMedium) {
-        width: 40%;
+        flex-direction: row-reverse;
     }
 }
 
-.sectionSellers {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+.desktopTitle {
+    display: none;
     @media (--viewportMedium) {
-        width: 50%;
+        display: initial;
     }
 }
 
-.sellersHeading {
-    margin: 0 0 20px 0;
-}
-
-.userCardWrapper {
-    display: flex;
-    flex-direction: row;
-    margin: 15px auto 0 auto;
-    width: 100%;
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--matterColorAnti);
+.mobileTitle {
+    display: block;
     @media (--viewportMedium) {
-        /* width: 75%; */
-        margin: 15px auto 0 0;
+        display: none;
     }
-    @media (--viewportLarge) {
-        /* width: 60%; */
-    }
+}
+
+.sectionHeading {
+    @apply --marketplaceH2FontStyles;
+    margin: 0;
 }
 
 .hostImageWrapper {
     width: 100%;
     margin: 0 auto 0 auto;
+    @media (--viewportMedium) {
+        width: 25vw;
+        margin: 0;
+    }
 }
 
 .hostImage {
@@ -104,18 +107,46 @@
 
 .hostInfo {
     width: 100%;
-    margin: 0 auto 0 auto;
+    margin: 20px auto 0 auto;
     @media (--viewportMedium) {
-        width: 100%;
-        margin: 10px 0;
+        width: 40vw;
+        margin: 0 auto 0 0;
     }
 }
 
-.buttonRow {
+.desktopBio {
+    display: none;
+    @media (--viewportMedium) {
+        display: initial;
+    }
+}
+
+.mobileBio {
+    display: block;
+    @media (--viewportMedium) {
+        display: none;
+    }
+}
+
+.buttonRowThree {
     margin: 10px 30px 10px 30px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.buttonRowTwo {
+    margin: 10px 60px 10px 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.buttonRowOne {
+    margin: 10px auto 10px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .linkButton {

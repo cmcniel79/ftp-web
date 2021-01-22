@@ -4,35 +4,42 @@ import { SearchResultsPanel } from '../../components';
 
 import css from './SingleEventPage.css';
 
-class SectionListings extends Component {
-    constructor(props) {
-        super(props);
-    }
+export const SectionListings = props => {
 
-    render() {
-        const { className, listings, pagination } = this.props;
-        return (
-            <div className={className}>
-                {listings ?
-                    <SearchResultsPanel
-                        className={css.searchListingsPanel}
-                        listings={listings}
-                        pagination={pagination}
-                    // search={searchParamsForPagination}
-                    // setActiveListing={onActivateListing}
-                    // currentUser={currentUser}
-                    // isLiked={isLiked}
-                    // updateLikes={updateLikes}
-                    /> : null}
-            </div>
-        );
-    }
+    const {
+        className,
+        listings,
+        pagination,
+        searchListingsInProgress,
+        searchListingsError,
+    } = props;
+
+    const heading =
+        <h2 className={css.sectionHeading}>
+            <FormattedMessage id="SingleEventPage.listingsHeading" />
+        </h2>;
+
+    const listingsMessage =
+        searchListingsInProgress ? <FormattedMessage id="SingleEventPage.listingsLoading" />
+            : !listings && !searchListingsInProgress ? <FormattedMessage id="SingleEventPage.noEventListings" />
+                : searchListingsError ? <FormattedMessage id="SingleEventPage.listingsError" /> : null;
+
+    const panel = listings ?
+        <SearchResultsPanel
+            className={css.searchListingsPanel}
+            listings={listings}
+            pagination={pagination}
+        /> : null;
+
+    return (
+        <div className={className}>
+            {heading}
+            {panel}
+            <h3>
+                {listingsMessage}
+            </h3>
+        </div>
+    );
 }
-
-SectionListings.defaultProps = {
-};
-
-SectionListings.propTypes = {
-};
 
 export default SectionListings;

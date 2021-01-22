@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { string } from 'prop-types';
-import stanfordImage from '../../assets/stanford-bg.jpg';
+import stanfordImage from '../../assets/test-powwow.jpg';
 import { ExternalLink, InlineTextButton } from '../../components';
 import truncate from 'lodash/truncate';
 import navigateIcon from '../../assets/navigate.svg';
@@ -73,24 +73,93 @@ ExpandableBio.propTypes = {
   bio: string.isRequired,
 };
 
+const shareButtonClick = urlToProfile => {
+  if (navigator.share) {
+    navigator.share({
+      text: 'Check out this awesome event on From The People!',
+      url: urlToProfile
+    })
+      .catch(() => {
+        console.log('Could not share link');
+      });
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(urlToProfile)
+      .then(() => {
+        console.log("Copy was successful");
+      })
+      .catch(() => {
+        console.log('Could not share link');
+      });
+  }
+  // https://medium.com/@feargswalsh/copying-to-the-clipboard-in-react-81bb956963ec
+};
 
 const SectionHost = props => {
   const {
+    className,
+    eventName,
     eventDescription,
     eventWebsite,
-    className
+    eventType,
+    dateString,
+    startTime,
+    optionalData,
+    eventAddress
   } = props;
 
-  const website = "http://powwow.stanford.edu/";
-  const eventAddress = "410 Terry Ave, North Seattle, United States";
+  const buttonRowClasses = eventAddress && eventWebsite ? css.buttonRowThree :
+    (!eventAddress && eventWebsite) || (eventAddress && !eventWebsite) ? css.buttonRowTwo : css.buttonRowOne;
+
   const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURI(eventAddress);
+  const powwowOptionalData = eventType === "powwow" ? (
+    <div className={css.optionalData}>
+      <p><b><FormattedMessage id="SingleEventPage.mc" /></b> Powwow MC</p>
+      <p><b><FormattedMessage id="SingleEventPage.hostDrums" /></b> Northern Cree</p>
+      <p><b><FormattedMessage id="SingleEventPage.arenaDirector" /></b> Mr. Arena Director</p>
+    </div>
+  ) : null;
+
+  const pageTitle = (
+    <div className={css.titleContainer} >
+      <h1 className={css.pageTitle}>
+        <FormattedMessage id="SingleEventPage.heading" values={{ eventName }} />
+      </h1>
+      <h3 className={css.pageSubtitleDesktop}>
+        {dateString}
+        {startTime ?
+          <div className={css.subtitleOptionalData}>
+            <span className={css.separator}>•</span>
+            {startTime}
+          </div>
+          : null}
+        {eventAddress ?
+          <div className={css.subtitleOptionalData}>
+            <span className={css.separator}>•</span>
+            {eventAddress}
+          </div>
+          : null}
+      </h3>
+      <h3 className={css.pageSubtitleMobile}>
+        <span>{dateString}
+          {startTime ?
+            <div className={css.subtitleOptionalData}>
+              <span className={css.separator}>•</span>
+              {startTime}
+            </div>
+            : null}
+        </span>
+        <span>{eventAddress}</span>
+      </h3>
+    </div>);
+
   return (
     <div className={className}>
+      <div className={css.mobileTitle}>
+        {pageTitle}
+      </div>
       <div className={css.hostImageWrapper}>
         <img className={css.hostImage} src={stanfordImage} alt="stanford" />
-      </div>
-      <div className={css.hostInfo}>
-        <div className={css.buttonRow} >
+        <div className={buttonRowClasses} >
           {eventAddress &&
             <ExternalLink
               className={css.linkButton}
@@ -99,23 +168,37 @@ const SectionHost = props => {
               <img className={css.linkIcon} src={navigateIcon} alt="Navigate" />
               <FormattedMessage id="SingleEventPage.navigateButton" />
             </ExternalLink>}
-          {website &&
+          {eventWebsite &&
             <ExternalLink
               className={css.linkButton}
-              href={website}
+              href={eventWebsite}
             >
               <img className={css.linkIcon} src={exitIcon} alt="Link" />
               <FormattedMessage id="SingleEventPage.websiteButton" />
             </ExternalLink>}
           <button
             className={css.shareButton}
-            onClick={() => this.shareButtonClick(window.location.href)}
+            onClick={() => shareButtonClick(window.location.href)}
           >
             <img className={css.shareIcon} src={shareIcon} alt="Share" />
             <FormattedMessage id="SingleEventPage.shareButton" />
           </button>
         </div>
+      </div>
+      <div className={css.hostInfo}>
+        <div className={css.desktopTitle}>
+          {pageTitle}
+        </div>
+        <h2 className={css.sectionHeading}>
+          <FormattedMessage id="SingleEventPage.hostHeading" />
+        </h2>
+        <div className={css.desktopBio}>
+          <p>
+            {eventDescription}
+          </p>
+        </div>
         <ExpandableBio className={css.mobileBio} bio={eventDescription} />
+        {powwowOptionalData}
       </div >
     </div >
   );
