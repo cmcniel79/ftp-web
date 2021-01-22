@@ -232,7 +232,7 @@ const routeConfiguration = () => {
       component: props => <ProfileSettingsPage {...props} />,
     },
     {
-      path: '/events/powwows/:eventName/:id',
+      path: '/events/:eventType/:slug/:id',
       name: 'SingleEventPage',
       component: props => <SingleEventPage {...props} />,
     },

@@ -1,14 +1,5 @@
 @import '../../marketplace.css';
 
-.eventCard {
-
-}
-
-.eventLink {
-  text-decoration: none;
-  color: white;
-}
-
 .eventImageWrapper {
   position: relative;
   width: 300px;
@@ -17,6 +8,11 @@
     transform: scale(1.02);
     box-shadow: var(--boxShadowListingCard);
   }
+}
+
+.eventLink {
+  text-decoration: none;
+  color: white;
 }
 
 .eventImage {

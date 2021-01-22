@@ -2,26 +2,20 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { TopbarContainer } from '..';
+import { FormattedMessage } from '../../util/reactIntl';
+import { loadData } from './EventsPage.duck';
+import EventSection from './EventSection';
 import {
   LayoutSingleColumn,
   LayoutWrapperTopbar,
   LayoutWrapperMain,
   LayoutWrapperFooter,
   Footer,
-  // ExternalLink,
   NamedLink,
   Page
 } from '../../components';
-import {
-  FormattedMessage,
-} from '../../util/reactIntl';
-import stanfordImage from '../../assets/stanford-bg.jpg';
+
 import css from './EventsPage.css';
-import EventSection from './EventSection';
-import bed from '../../assets/bed.svg';
-import people from '../../assets/people.svg';
-import fitness from '../../assets/fitness.svg';
-import { loadData } from './EventsPage.duck';
 
 export class EventsPageComponent extends Component {
 
@@ -34,34 +28,44 @@ export class EventsPageComponent extends Component {
   render() {
     const {
       exampleEvents,
+      requestInProgress,
+      requestError,
     } = this.props;
-    console.log(exampleEvents);
-    const contactPageLink = <NamedLink name="ContactPage">
-      <FormattedMessage id="EventsPage.contactLink" />
-    </NamedLink>;
 
-    // I do not know why the length of the events list in section carousel is only 2,
-    // so I am passing in the length here
+    const eventsSection = exampleEvents && !requestInProgress ? (
+      <div className={css.eventSections}>
+        <EventSection events={exampleEvents.filter(e => e.eventType === "powwow")} eventType="powwow" />
+        <EventSection events={exampleEvents.filter(e => e.eventType === "virtual")} eventType="virtual" />
+      </div>
+    ) : null;
+
+    const eventsMessage =
+      requestInProgress ? <FormattedMessage id="EventsPage.loadingEvents" />
+        : requestError ? <FormattedMessage id="EventsPage.loadingError" />
+          : exampleEvents && exampleEvents.length === 0 ? <FormattedMessage id="EventsPage.noEvents" />
+            : null;
+
+    const contactPageLink = (
+      <NamedLink name="ContactPage">
+        <FormattedMessage id="EventsPage.contactLink" />
+      </NamedLink>);
+
+    const addAnEventInfo = !requestInProgress ? (
+      <h3 className={css.addEvent}>
+        <FormattedMessage id="EventsPage.addAnEvent" values={{ link: contactPageLink }} />
+      </h3>
+    ) : null;
+
     return (
       <Page className={css.root} title="Events Page" scrollingDisabled={false}>
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer />
           </LayoutWrapperTopbar>
-
           <LayoutWrapperMain className={css.staticPageWrapper}>
-            {exampleEvents ?
-              <div>
-                <EventSection events={exampleEvents.filter(e => e.eventType === "powwow")} eventType="powwow" />
-                <EventSection events={exampleEvents.filter(e => e.eventType === "virtual")} eventType="virtual" />
-              </div>
-              : null}
-            <div className={css.addEvent}>
-              <h3 className={css.addEventInfo}>
-                <FormattedMessage id="EventsPage.addAnEvent" values={{ link: contactPageLink }} />
-              </h3>
-            </div>
-
+            {eventsSection}
+            {eventsMessage}
+            {addAnEventInfo}
           </LayoutWrapperMain>
           <LayoutWrapperFooter>
             <Footer />
@@ -75,9 +79,13 @@ export class EventsPageComponent extends Component {
 const mapStateToProps = state => {
   const {
     exampleEvents,
+    requestInProgress,
+    requestError,
   } = state.EventsPage;
   return {
-    exampleEvents
+    exampleEvents,
+    requestInProgress,
+    requestError,
   };
 };
 
