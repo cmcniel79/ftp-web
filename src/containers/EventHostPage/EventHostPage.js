@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
-import { isScrollingDisabled } from '../../ducks/UI.duck';
-import isEqual from 'lodash/isEqual';
+import { FormattedMessage, injectIntl } from '../../util/reactIntl';
+import { parseDateFromISO8601 } from '../../util/dates';
+import { EventDetailsForm, EventPhotosForm } from '../../forms';
+import { TopbarContainer } from '..';
+import { loadData, updateEventDetails, uploadImage, updateSellers } from './EventHostPage.duck';
+import EventSellersListMaybe from './EventSellersListMaybe';
 import {
   Button,
   Page,
@@ -14,16 +17,12 @@ import {
   LayoutWrapperMain,
   LayoutWrapperFooter,
   Footer,
-  NamedLink,
-  ExternalLink,
   LinkTabNavHorizontal,
 } from '../../components';
-import { EventDetailsForm, EventPhotosForm } from '../../forms';
-import { TopbarContainer } from '..';
 
-import { loadData, updateEventDetails, uploadImage, updateSellers } from './EventHostPage.duck';
-import EventSellersListMaybe from './EventSellersListMaybe';
 import css from './EventHostPage.css';
+const cdnDomain = "https://ftpevents.imgix.net/";
+const cdnParams = "?h=533&w=800&fit=crop&crop=focalpoint&fp-x=.5&fp-y=.0";
 
 export class EventHostPageComponent extends Component {
   constructor(props) {
@@ -43,7 +42,7 @@ export class EventHostPageComponent extends Component {
   };
 
   submitDetails(values) {
-    const { eventDuration, datesRange, startDate, mc, arenaDirector, hostDrums, location, lot, ...rest } = values;
+    const { eventDuration, datesRange, startDate, mc, arenaDirector, hostDrums, location, state, ...rest } = values;
     const startDateObject = (eventDuration === "multi" && datesRange && datesRange.startDate) ? datesRange.startDate :
       (startDate && startDate.date) ? startDate.date : null;
     const endDateObject = (eventDuration === "multi" && datesRange && datesRange.endDate) ? datesRange.endDate : null;
@@ -54,9 +53,9 @@ export class EventHostPageComponent extends Component {
       hostEmail: this.props.hostEmail,
       startDate: startDateObject ? startDateObject.toJSON().slice(0, 10) : null,
       endDate: endDateObject ? endDateObject.toJSON().slice(0, 10) : null,
+      state: state,
       optionalData: {
         location,
-        lot,
         mc,
         arenaDirector,
         hostDrums
@@ -84,39 +83,44 @@ export class EventHostPageComponent extends Component {
 
   render() {
     const {
-      hostUUID,
-      scrollingDisabled,
-      image,
-      intl,
       tab,
+      intl,
       onImageUpload,
-      eventSellers,
-      eventInfoInProgress,
+      hostUUID,
       eventDetails,
+      eventDetailsUpdate,
+      eventDetailsInProgress,
+      eventDetailsError,
+      imageId,
       uploadInProgress,
+      uploadImageError,
+      eventSellers,
+      updateSellersResponse,
       updateSellersInProgress,
       updateSellersError,
-      updateSellersResponseAdd,
-      updateSellersResponseRemove
     } = this.props;
-    const sellers = ["chase@fromthepeople.co", "mcniel26@gmail.com", "isabella@fromthepeople.co"];
+
     // Initial Values for EventDetailsForm
     const eventName = eventDetails && eventDetails.eventName;
     const eventType = eventDetails && eventDetails.eventType;
     const eventWebsite = eventDetails && eventDetails.eventWebsite;
     const eventDescription = eventDetails && eventDetails.eventDescription;
-    // const datesRange = eventDetails && eventDetails.datesRange;
-    const startDate = eventDetails && eventDetails.startDate;
-    const endDate = eventDetails && eventDetails.endDate;
-    const startTime = eventDetails && eventDetails.startTime;
-    const meridiem = eventDetails && eventDetails.meridiem;
-    // Optional Info just for Powwows
-    const mc = eventDetails && eventDetails.optional && eventDetails.optional.mc;
-    const arenaDirector = eventDetails && eventDetails.optional && eventDetails.optional.arenaDirector;
-    const hostDrums = eventDetails && eventDetails.optional && eventDetails.optional.hostDrums;
-    const location = eventDetails && eventDetails.location && eventDetails.optional.location;
-    const lot = eventDetails && eventDetails.lot && eventDetails.optional.lot;
-    const datesRange = { startDate: new Date("2020-12-24"), endDate: new Date("2020-12-31") };
+    const imageUUID = imageId ? imageId : eventDetails && eventDetails.imageUUID ? eventDetails.imageUUID : null; 
+    const imageSrc = imageUUID ? cdnDomain + imageUUID + cdnParams : null;
+    const eventImage = { id: imageUUID, src: imageSrc };
+
+    const startDate = eventDetails && eventDetails.startDate ? parseDateFromISO8601(eventDetails.startDate.slice(0, 10)) : null;
+    const endDate = eventDetails && eventDetails.endDate ? parseDateFromISO8601(eventDetails.endDate.slice(0, 10)) : null;
+
+    // Optional Info just for Powwows. State is not stored in optional data however, 
+    // because it needs to be called quickly from EventCard
+    const state = eventDetails && eventDetails.state;
+    const parsedData = eventDetails && eventDetails.optionalData ? JSON.parse(eventDetails.optionalData) : null
+    const mc = parsedData && parsedData.mc && parsedData.mc;
+    const arenaDirector = parsedData && parsedData.arenaDirector;
+    const hostDrums = parsedData && parsedData.hostDrums;
+    const location = parsedData && parsedData.location;
+    const datesRange = { startDate, endDate };
     const eventDuration = startDate && endDate ? "multi" : "single";
 
     //Labels and stuff for eventSellers form
@@ -142,9 +146,9 @@ export class EventHostPageComponent extends Component {
         {updateSellersError}
       </div>
     ) : null;
-    const submitSuccess = updateSellersResponseAdd ? (
+    const submitSuccess = updateSellersResponse ? (
       <div className={css.success}>
-        {updateSellersResponseAdd}
+        {updateSellersResponse}
       </div>
     ) : null;
 
@@ -170,7 +174,6 @@ export class EventHostPageComponent extends Component {
         {submitSuccess}
         <Button
           className={css.submitButton}
-          // type="submit"
           inProgress={updateSellersInProgress}
           disabled={submitDisabled}
           ready={pristineSinceLastSubmit}
@@ -182,7 +185,7 @@ export class EventHostPageComponent extends Component {
           sellers={eventSellers}
           updateSellers={(values) => this.sendUpdatedSellers(values)}
           inProgress={updateSellersInProgress}
-          response={updateSellersResponseRemove}
+          response={updateSellersResponse}
         />
       </div>
     );
@@ -190,10 +193,12 @@ export class EventHostPageComponent extends Component {
     const eventDetailsForm = (
       <EventDetailsForm
         onSubmit={(values) => this.submitDetails(values)}
-        eventInfoInProgress={eventInfoInProgress}
+        eventDetailsUpdate={eventDetailsUpdate}
+        eventDetailsInProgress={eventDetailsInProgress}
+        eventDetailsError={eventDetailsError}
         initialValues={{
-          eventName, eventType, eventWebsite, eventDescription, eventDuration, datesRange, startDate, endDate,
-          startTime, meridiem, mc, arenaDirector, hostDrums, location, lot
+          eventName, eventType, eventWebsite, eventDescription, eventDuration, datesRange, startDate,
+          mc, arenaDirector, hostDrums, location, state
         }}
       />
     );
@@ -201,10 +206,12 @@ export class EventHostPageComponent extends Component {
     const eventPhotosForm = (
       <EventPhotosForm
         hostUUID={hostUUID}
-        eventImage={image}
+        initialValues={eventImage}
+        eventImage={eventImage}
         onImageUpload={(e) => this.onImageUploadHandler(e, onImageUpload)}
         onSubmit={(values) => console.log(values)}
         uploadInProgress={uploadInProgress}
+        uploadImageError={uploadImageError}
       />
     );
 
@@ -245,8 +252,9 @@ export class EventHostPageComponent extends Component {
         },
       },
     ];
+    
     return (
-      <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
+      <Page className={css.root} title={title} scrollingDisabled={false}>
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer currentPage="EventHostPage" />
@@ -269,82 +277,50 @@ export class EventHostPageComponent extends Component {
   }
 }
 
-EventHostPageComponent.defaultProps = {
-  currentUser: null,
-  uploadImageError: null,
-  updateProfileError: null,
-  image: null,
-};
-
-const { bool, func, object, shape, string } = PropTypes;
-
-EventHostPageComponent.propTypes = {
-  // currentUser: propTypes.currentUser,
-  // image: shape({
-  //   id: string,
-  //   file: object,
-  //   uploadedImage: propTypes.image,
-  // }),
-  // onImageUpload: func.isRequired,
-  // onUpdateProfile: func.isRequired,
-  // scrollingDisabled: bool.isRequired,
-  // updateInProgress: bool.isRequired,
-  // updateProfileError: propTypes.error,
-  // uploadImageError: propTypes.error,
-  // uploadInProgress: bool.isRequired,
-  // onUpdateDatabase: func.isRequired,
-
-  // from injectIntl
-  intl: intlShape.isRequired,
-};
-
 const mapStateToProps = state => {
   const { currentUser } = state.user;
   const {
-    image,
-    uploadImageError,
-    uploadInProgress,
-    updateInProgress,
-    updateProfileError,
-    eventSellers,
-    eventInfoInProgress,
     eventDetails,
+    eventDetailsUpdate,
+    eventDetailsInProgress,
+    eventDetailsError,
+    imageId,
+    uploadInProgress,
+    uploadImageError,
+    eventSellers,
+    updateSellersResponse,
     updateSellersInProgress,
     updateSellersError,
-    updateSellersResponseAdd,
-    updateSellersResponseRemove
   } = state.EventHostPage;
  
   const hostUUID = currentUser && currentUser.id ? currentUser.id.uuid : null;
   const hostName = currentUser && currentUser.attributes ? currentUser.attributes.profile.displayName : null;
   const hostEmail = currentUser && currentUser.attributes ? currentUser.attributes.email : null;
-  // console.log(eventSellers);
+
   return {
     hostUUID,
     hostName,
     hostEmail,
     currentUser,
-    image,
-    scrollingDisabled: isScrollingDisabled(state),
-    updateInProgress,
-    updateProfileError,
-    uploadImageError,
-    uploadInProgress,
-    eventSellers,
-    eventInfoInProgress,
     eventDetails,
+    eventDetailsUpdate,
+    eventDetailsInProgress,
+    eventDetailsError,
+    imageId,
+    uploadInProgress,
+    uploadImageError,
+    eventSellers,
+    updateSellersResponse,
     updateSellersInProgress,
     updateSellersError,
-    updateSellersResponseAdd,
-    updateSellersResponseRemove
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   onLoadData: () => dispatch(loadData()),
   onUpdateDetails: details => dispatch(updateEventDetails(details)),
-  onImageUpload: data => dispatch(uploadImage(data)),
-  onUpdateSellers: data => dispatch(updateSellers(data)),
+  onImageUpload: image => dispatch(uploadImage(image)),
+  onUpdateSellers: seller => dispatch(updateSellers(seller)),
 });
 
 const EventHostPage = compose(

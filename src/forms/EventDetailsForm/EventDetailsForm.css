@@ -17,6 +17,18 @@
   }
 }
 
+.success {
+  /* Font */
+  @apply --marketplaceH4FontStyles;
+  color: var(--successColor);
+  margin-top: 18px;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 22px;
+    margin-bottom: 2px;
+  }
+}
+
 .error {
   /* Font */
   @apply --marketplaceH4FontStyles;

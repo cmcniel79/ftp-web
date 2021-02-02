@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { SearchResultsPanel } from '../../components';
 

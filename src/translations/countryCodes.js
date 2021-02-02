@@ -257,9 +257,9 @@ const getCountryCodes = lang => {
   // If locale is unknown or the translation is missing, this will default to english coutnry name.
   const codes = countryCodes.map(c => {
     const countryName = c[lang] ? c[lang] : c['en'];
-    const counryCode = c.code;
+    const countryCode = c.code;
 
-    return { code: counryCode, name: countryName };
+    return { code: countryCode, name: countryName };
   });
   return codes;
 };

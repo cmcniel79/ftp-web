@@ -23,9 +23,6 @@ import css from './SingleEventPage.css';
 
 
 export class SingleEventPageComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     if (window) {
@@ -49,10 +46,10 @@ export class SingleEventPageComponent extends Component {
     const eventDescription = eventDetails && eventDetails.eventDescription ? eventDetails.eventDescription : null;
     const eventWebsite = eventDetails && eventDetails.eventWebsite ? eventDetails.eventWebsite : null;
     const eventType = eventDetails && eventDetails.eventType ? eventDetails.eventType : null;
-    const parsedData = eventDetails && eventDetails.optionalData && eventDetails.optionalData ? JSON.parse(eventDetails.optionalData) : null
+    const imageUUID = eventDetails && eventDetails.imageUUID ? eventDetails.imageUUID : null;
+    const parsedData = eventDetails && eventDetails.optionalData ? JSON.parse(eventDetails.optionalData) : null
     const eventAddress = parsedData && parsedData.location && parsedData.location.selectedPlace ? parsedData.location.selectedPlace.address : null;
 
-    const startTime = eventDetails && eventDetails.startTime ? eventDetails.startTime : "8:00 PM";
     const startDate = eventDetails && eventDetails.startDate ? parseDateFromISO8601(eventDetails.startDate.slice(0, 10)) : null;
     const endDate = eventDetails && eventDetails.endDate ? parseDateFromISO8601(eventDetails.endDate.slice(0, 10)) : null;
     const dateString = getEventDateString(startDate, endDate);
@@ -67,8 +64,8 @@ export class SingleEventPageComponent extends Component {
           eventDescription={eventDescription}
           eventWebsite={eventWebsite}
           eventType={eventType}
+          imageUUID={imageUUID}
           dateString={dateString}
-          startTime={startTime}
           optionalData={parsedData}
           eventAddress={eventAddress}
         />

@@ -1,10 +1,11 @@
-import { denormalisedResponseEntities } from '../../util/data';
-import { storableError } from '../../util/errors';
-import { currentUserShowSuccess } from '../../ducks/user.duck';
-
 const eventsURL = " https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd/events";
 
 // ================ Action types ================ //
+
+export const EVENT_DETAILS_REQUEST = 'app/EventHostPage/EVENT_DETAILS_REQUEST';
+export const EVENT_DETAILS_SUCCESS = 'app/EventHostPage/EVENT_DETAILS_SUCCESS';
+export const EVENT_DETAILS_UPDATE = 'app/EventHostPage/EVENT_DETAILS_UPDATE';
+export const EVENT_DETAILS_ERROR = 'app/EventHostPage/EVENT_DETAILS_ERROR';
 
 export const UPLOAD_IMAGE_REQUEST = 'app/EventHostPage/UPLOAD_IMAGE_REQUEST';
 export const UPLOAD_IMAGE_SUCCESS = 'app/EventHostPage/UPLOAD_IMAGE_SUCCESS';
@@ -14,55 +15,55 @@ export const UPDATE_SELLERS_REQUEST = 'app/EventHostPage/UPDATE_SELLERS_REQUEST'
 export const UPDATE_SELLERS_SUCCESS = 'app/EventHostPage/UPDATE_SELLERS_SUCCESS';
 export const UPDATE_SELLERS_ERROR = 'app/EventHostPage/UPDATE_SELLERS_ERROR';
 
-export const EVENT_DETAILS_REQUEST = 'app/EventHostPage/EVENT_DETAILS_REQUEST';
-export const EVENT_DETAILS_SUCCESS = 'app/EventHostPage/EVENT_DETAILS_SUCCESS';
-export const EVENT_DETAILS_ERROR = 'app/EventHostPage/EVENT_DETAILS_ERROR';
-
-
 // ================ Reducer ================ //
 
 const initialState = {
-  image: null,
-  uploadImageError: null,
-  uploadInProgress: false,
-  updateSellersResponse: null,
-  updateSellersError: null,
-  updateSellersInProgress: false,
-  eventSellers: null,
-  eventInfoInProgress: false,
   eventDetails: null,
+  eventDetailsUpdate: false,
+  eventDetailsInProgress: false,
+  eventDetailsError: null,
+  imageId: null,
+  uploadInProgress: false,
+  uploadImageError: null,
+  eventSellers: null,
+  updateSellersResponse: null,
+  updateSellersInProgress: false,
+  updateSellersError: null,
 };
 
 export default function reducer(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
+
+    ////////////////  EVENT DETAILS  ////////////////
+    case EVENT_DETAILS_REQUEST:
+      return { ...state, eventDetailsInProgress: true };
+    case EVENT_DETAILS_SUCCESS:
+      return { ...state, eventDetailsInProgress: false, eventDetails: payload };
+    case EVENT_DETAILS_UPDATE:
+      return { ...state, eventDetailsInProgress: false, eventDetailsUpdate: true };
+    case EVENT_DETAILS_ERROR:
+      return { ...state, eventDetailsInProgress: false, eventDetailsError: payload };
+
     ////////////////  IMAGE ACTIONS  ////////////////
     case UPLOAD_IMAGE_REQUEST:
-      // payload.params: { id: 'tempId', file }
       return {
         ...state,
-        image: { ...payload.params },
         uploadInProgress: true,
         uploadImageError: null,
       };
     case UPLOAD_IMAGE_SUCCESS: {
-      // payload: { id: 'tempId', uploadedImage }
-      const { id, uploadedImage } = payload;
-      const { file } = state.image || {};
-      const image = { id, file, uploadedImage };
-      return { ...state, image, uploadInProgress: false };
+      return { ...state, imageId: payload, uploadInProgress: false };
     }
     case UPLOAD_IMAGE_ERROR: {
-      return { ...state, image: null, uploadInProgress: false, uploadImageError: payload.error };
+      return { ...state, imageId: null, uploadInProgress: false, uploadImageError: payload.error };
     }
 
     ////////////////  SELLER ACTIONS  ////////////////
     case UPDATE_SELLERS_REQUEST: {
-      // payload: {}
       return { ...state, updateSellersInProgress: true, updateSellersError: null, updateSellersResponse: null }
     }
     case UPDATE_SELLERS_SUCCESS: {
-      // payload: {}
       return {
         ...state,
         updateSellersInProgress: false,
@@ -72,17 +73,8 @@ export default function reducer(state = initialState, action = {}) {
       };
     }
     case UPDATE_SELLERS_ERROR: {
-      // payload: {}
       return { ...state, updateSellersInProgress: false, updateSellersError: payload.response, updateSellersResponse: null };
     };
-
-    ////////////////  EVENT DETAILS  ////////////////
-    case EVENT_DETAILS_REQUEST:
-      return { ...state, eventInfoInProgress: true };
-    case EVENT_DETAILS_SUCCESS:
-      return { ...state, eventInfoInProgress: false, eventDetails: payload };
-    case EVENT_DETAILS_ERROR:
-      return { ...state, eventInfoInProgress: false, };
 
     default:
       return state;
@@ -93,9 +85,15 @@ export default function reducer(state = initialState, action = {}) {
 
 // ================ Action creators ================ //
 
+// Event details
+export const eventDetailsRequest = () => ({ type: EVENT_DETAILS_REQUEST, payload: {} });
+export const eventDetailsSuccess = data => ({ type: EVENT_DETAILS_SUCCESS, payload: data });
+export const eventDetailsUpdateSuccess = () => ({ type: EVENT_DETAILS_UPDATE, payload: {} });
+export const eventDetailsError = error => ({ type: EVENT_DETAILS_ERROR, payload: error, error: true });
+
 // Event image upload
-export const uploadImageRequest = params => ({ type: UPLOAD_IMAGE_REQUEST, payload: {} });
-export const uploadImageSuccess = result => ({ type: UPLOAD_IMAGE_SUCCESS, payload: result.data });
+export const uploadImageRequest = params => ({ type: UPLOAD_IMAGE_REQUEST, payload: { params } });
+export const uploadImageSuccess = result => ({ type: UPLOAD_IMAGE_SUCCESS, payload: result });
 export const uploadImageError = error => ({ type: UPLOAD_IMAGE_ERROR, payload: error, error: true });
 
 // Event seller list update
@@ -103,12 +101,43 @@ export const updateSellersRequest = params => ({ type: UPDATE_SELLERS_REQUEST, p
 export const updateSellersSuccess = result => ({ type: UPDATE_SELLERS_SUCCESS, payload: result.body });
 export const updateSellersError = error => ({ type: UPDATE_SELLERS_ERROR, payload: error.body, error: true });
 
-// Event details
-export const eventDetailsRequest = () => ({ type: EVENT_DETAILS_REQUEST, payload: {} });
-export const eventDetailsSuccess = data => ({ type: EVENT_DETAILS_SUCCESS, payload: data });
-export const eventDetailsError = error => ({ type: EVENT_DETAILS_ERROR, payload: error.body, error: true });
-
 // ================ Thunk ================ //
+
+export const updateEventDetails = actionPayload => {
+  return (dispatch, getState, sdk) => {
+    dispatch(eventDetailsRequest());
+    const options = {
+      method: 'POST',
+      withCredentials: false,
+      body: JSON.stringify(actionPayload),
+      headers: {
+        "Content-Type": "application/json",
+        // "X-Api-Key": KEY,
+      }
+    }
+    fetch(eventsURL, options)
+      .then(response => response.json())
+      .then((res) => dispatch(eventDetailsUpdateSuccess()))
+      .catch(() => dispatch(eventDetailsError("Could not update event details. Please try again")));
+  }
+}
+
+const fetchEventDetails = (hostUUID) => (dispatch, getState, sdk) => {
+  dispatch(eventDetailsRequest());
+  const options = {
+    method: 'GET',
+    withCredentials: false,
+    headers: {
+      "Content-Type": "application/json",
+      // "X-Api-Key": KEY,
+    }
+  }
+
+  fetch(eventsURL + "?uuid=" + hostUUID, options)
+    .then(response => response.json())
+    .then((res) => dispatch(eventDetailsSuccess(res.body[0])))
+    .catch(() => dispatch(eventDetailsError("Could not update event details. Please try again")));
+}
 
 function readFileAsync(file) {
   return new Promise((resolve, reject) => {
@@ -146,46 +175,14 @@ export function uploadImage(actionPayload) {
         };
         fetch('https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd/events/photos', options)
           .then(response => response.json())
-          .then(data => console.log(data))
-          .then(() => dispatch(uploadImageSuccess({ data: { id: actionPayload.id, uploadedImage: actionPayload.file } })))
+          // .then(data => console.log(data))
+          .then(data => {
+            console.log(data);
+            dispatch(uploadImageSuccess(data.body.id))
+          })
           .catch(response => console.log(response));
       })
   }
-}
-
-export const updateEventDetails = actionPayload => {
-  return (dispatch, getState, sdk) => {
-    const options = {
-      method: 'POST',
-      withCredentials: false,
-      body: JSON.stringify(actionPayload),
-      headers: {
-        "Content-Type": "application/json",
-        // "X-Api-Key": KEY,
-      }
-    }
-    fetch(eventsURL, options)
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(() => console.log("Could not update database"));
-  }
-}
-
-const fetchEventDetails = (hostUUID) => (dispatch, getState, sdk) => {
-  dispatch(eventDetailsRequest());
-  const options = {
-    method: 'GET',
-    withCredentials: false,
-    headers: {
-      "Content-Type": "application/json",
-      // "X-Api-Key": KEY,
-    }
-  }
-
-  fetch(eventsURL + "?uuid=" + hostUUID, options)
-    .then(response => response.json())
-    .then((res) => dispatch(eventDetailsSuccess(res.body[0])))
-    .catch(() => console.log("Could not update database"));
 }
 
 export const updateSellers = actionPayload => {

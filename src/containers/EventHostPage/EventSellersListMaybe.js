@@ -1,8 +1,6 @@
-import { map } from 'lodash';
 import React, { Component } from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { InlineTextButton } from '../../components';
-
 
 import css from './EventHostPage.css';
 

@@ -101,8 +101,8 @@ const SectionHost = props => {
     eventDescription,
     eventWebsite,
     eventType,
+    imageUUID,
     dateString,
-    startTime,
     optionalData,
     eventAddress
   } = props;
@@ -111,11 +111,15 @@ const SectionHost = props => {
     (!eventAddress && eventWebsite) || (eventAddress && !eventWebsite) ? css.buttonRowTwo : css.buttonRowOne;
 
   const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURI(eventAddress);
+
+  const mc = optionalData && optionalData.mc;
+  const arenaDirector = optionalData && optionalData.arenaDirector;
+  const hostDrums = optionalData && optionalData.hostDrums;
   const powwowOptionalData = eventType === "powwow" ? (
     <div className={css.optionalData}>
-      <p><b><FormattedMessage id="SingleEventPage.mc" /></b> Powwow MC</p>
-      <p><b><FormattedMessage id="SingleEventPage.hostDrums" /></b> Northern Cree</p>
-      <p><b><FormattedMessage id="SingleEventPage.arenaDirector" /></b> Mr. Arena Director</p>
+      { mc ? <p><b><FormattedMessage id="SingleEventPage.mc" /></b> {mc} </p> : null}
+      { arenaDirector ? <p><b><FormattedMessage id="SingleEventPage.hostDrums" /></b> {arenaDirector} </p> : null }
+      { hostDrums ? <p><b><FormattedMessage id="SingleEventPage.arenaDirector" /></b> {hostDrums} </p> : null }
     </div>
   ) : null;
 
@@ -126,12 +130,6 @@ const SectionHost = props => {
       </h1>
       <h3 className={css.pageSubtitleDesktop}>
         {dateString}
-        {startTime ?
-          <div className={css.subtitleOptionalData}>
-            <span className={css.separator}>•</span>
-            {startTime}
-          </div>
-          : null}
         {eventAddress ?
           <div className={css.subtitleOptionalData}>
             <span className={css.separator}>•</span>
@@ -140,17 +138,12 @@ const SectionHost = props => {
           : null}
       </h3>
       <h3 className={css.pageSubtitleMobile}>
-        <span>{dateString}
-          {startTime ?
-            <div className={css.subtitleOptionalData}>
-              <span className={css.separator}>•</span>
-              {startTime}
-            </div>
-            : null}
-        </span>
+        <span>{dateString}</span>
         <span>{eventAddress}</span>
       </h3>
-    </div>);
+    </div> );
+   
+   const eventImage = imageUUID ? "https://ftpevents.imgix.net/" + imageUUID : stanfordImage;
 
   return (
     <div className={className}>
@@ -158,7 +151,7 @@ const SectionHost = props => {
         {pageTitle}
       </div>
       <div className={css.hostImageWrapper}>
-        <img className={css.hostImage} src={stanfordImage} alt="stanford" />
+        <img className={css.hostImage} src={eventImage} alt="stanford" />
         <div className={buttonRowClasses} >
           {eventAddress &&
             <ExternalLink

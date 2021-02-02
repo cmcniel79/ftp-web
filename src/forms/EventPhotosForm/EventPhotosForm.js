@@ -5,14 +5,11 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Field, Form as FinalForm } from 'react-final-form';
 import isEqual from 'lodash/isEqual';
 import classNames from 'classnames';
-import { ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
-import { required, validSocialMediaURL } from '../../util/validators';
 import { isUploadImageOverLimitError } from '../../util/errors';
 import {
   Form,
   Button,
-  ImageFromFile,
   IconSpinner,
 } from '../../components';
 
@@ -52,9 +49,7 @@ class EventPhotosFormComponent extends Component {
         render={fieldRenderProps => {
           const {
             className,
-            currentUser,
             handleSubmit,
-            intl,
             invalid,
             hostUUID,
             onImageUpload,
@@ -62,60 +57,43 @@ class EventPhotosFormComponent extends Component {
             eventImage,
             rootClassName,
             updateInProgress,
-            // updateProfileError,
             uploadImageError,
             uploadInProgress,
             form,
             values,
           } = fieldRenderProps;
 
-          const uploadingOverlay =
-            uploadInProgress || this.state.uploadDelay ? (
-              <div className={css.uploadingImageOverlay}>
-                <IconSpinner />
-              </div>
+          // // Ensure that image exists
+          const fileExists = eventImage && eventImage.id && eventImage.src ? true : false;
+          const imageComponent =
+            fileExists ? (
+              <img className={css.eventImage} src={eventImage.src} alt="Your Event"/>
             ) : null;
 
-          const hasUploadError = !!uploadImageError && !uploadInProgress;
-          const errorClasses = classNames({ [css.avatarUploadError]: hasUploadError });
-
-          // // Ensure that file exists if imageFromFile is used
-          const fileExists = eventImage ? !!eventImage.file : false;
-          const fileUploadInProgress = uploadInProgress && fileExists;
-          const delayAfterUpload = eventImage && eventImage.imageId && this.state.uploadDelay;
-          const imageFromFile =
-            fileExists && (fileUploadInProgress || delayAfterUpload) ? (
-              <ImageFromFile
-                id={eventImage.id}
-                className={css.imagesField}
-                thumbnailClassName={css.thumbnail}
-                file={eventImage.file}
-              >
-                {uploadingOverlay}
-              </ImageFromFile>
-            ) : null;
-
-          const chooseAvatarLabel =
-            eventImage && eventImage.id ? (
-              <div className={css.avatarContainer}>
-                {imageFromFile}
-                <div className={css.changeAvatar}>
+          const chooseImageLabel =
+            !uploadInProgress && eventImage && eventImage.src ? (
+              <div className={css.imageContainer}>
+                {imageComponent}
+                <div className={css.changeImage}>
                   <FormattedMessage id="EventPhotosForm.changePicture" />
                 </div>
               </div>
+            ) : uploadInProgress ? (
+              <div className={css.uploadingImageOverlay}>
+                <IconSpinner />
+              </div>
             ) : (
-                <div className={css.avatarPlaceholder}>
-                  <div className={css.avatarPlaceholderText}>
-                    <FormattedMessage id="EventPhotosForm.addYourEventPicture" />
+                  <div className={css.imagePlaceholder}>
+                    <div className={css.imagePlaceholderText}>
+                      <FormattedMessage id="EventPhotosForm.addYourEventPicture" />
+                    </div>
+                    <div className={css.imagePlaceholderTextMobile}>
+                      <FormattedMessage id="EventPhotosForm.addYourEventPictureMobile" />
+                    </div>
                   </div>
-                  <div className={css.avatarPlaceholderTextMobile}>
-                    <FormattedMessage id="EventPhotosForm.addYourEventPictureMobile" />
-                  </div>
-                </div>
-              );
-          
-          const updateProfileError = false;
-          const submitError = updateProfileError ? (
+                );
+
+          const submitError = uploadImageError ? (
             <div className={css.error}>
               <FormattedMessage id="EventPhotosForm.updateProfileFailed" />
             </div>
@@ -141,66 +119,69 @@ class EventPhotosFormComponent extends Component {
                   <FormattedMessage id="EventPhotosForm.yourEventPicture" />
                 </h3>
                 {hostUUID ?
-                <Field
-                  accept={ACCEPT_IMAGES}
-                  id="eventImage"
-                  name="eventImage"
-                  label={chooseAvatarLabel}
-                  type="file"
-                  form={null}
-                  uploadImageError={uploadImageError}
-                  disabled={uploadInProgress}
-                >
-                  {fieldProps => {
-                    const { accept, id, input, label, disabled, uploadImageError } = fieldProps;
-                    const { name, type } = input;
-                    const onChange = e => {
-                      const file = e.target.files[0];
-                      form.change(`eventImage`, file);
-                      form.blur(`eventImage`);
-                      if (file != null) {
-                        // const tempId = `${hostUUID}_${Date.now()}`;
-                        const tempId = `${hostUUID}`;
-                        onImageUpload({ id: tempId, file });
+                  <Field
+                    accept={ACCEPT_IMAGES}
+                    id="eventImage"
+                    name="eventImage"
+                    label={chooseImageLabel}
+                    type="file"
+                    form={null}
+                    uploadImageError={uploadImageError}
+                    disabled={uploadInProgress}
+                  >
+                    {fieldProps => {
+                      const { accept, id, input, label, disabled, uploadImageError } = fieldProps;
+                      const { name, type } = input;
+                      const onChange = e => {
+                        const file = e.target.files[0];
+                        form.change(`eventImage`, file);
+                        form.blur(`eventImage`);
+                        if (file != null) {
+                          // const tempId = `${hostUUID}_${Date.now()}`;
+                          const tempId = `${hostUUID}`;
+                          console.log("uploading Image");
+                          onImageUpload({ id: tempId, file });
+                        }
+                      };
+
+                      let error = null;
+
+                      if (isUploadImageOverLimitError(uploadImageError)) {
+                        error = (
+                          <div className={css.error}>
+                            <FormattedMessage id="EventPhotosForm.imageUploadFailedFileTooLarge" />
+                          </div>
+                        );
+                      } else if (uploadImageError) {
+                        error = (
+                          <div className={css.error}>
+                            <FormattedMessage id="EventPhotosForm.imageUploadFailed" />
+                          </div>
+                        );
                       }
-                    };
-
-                    let error = null;
-
-                    if (isUploadImageOverLimitError(uploadImageError)) {
-                      error = (
-                        <div className={css.error}>
-                          <FormattedMessage id="EventPhotosForm.imageUploadFailedFileTooLarge" />
+                      return (
+                        <div className={css.uploadWrapper}>
+                          <label className={css.label} htmlFor={id}>
+                            {label}
+                          </label>
+                          <input
+                            accept={accept}
+                            id={id}
+                            name={name}
+                            className={css.uploadInput}
+                            disabled={disabled}
+                            onChange={onChange}
+                            type={type}
+                          />
+                          {error}
                         </div>
                       );
-                    } else if (uploadImageError) {
-                      error = (
-                        <div className={css.error}>
-                          <FormattedMessage id="EventPhotosForm.imageUploadFailed" />
-                        </div>
-                      );
-                    }
-
-                    return (
-                      <div className={css.uploadAvatarWrapper}>
-                        <label className={css.label} htmlFor={id}>
-                          {label}
-                        </label>
-                        <input
-                          accept={accept}
-                          id={id}
-                          name={name}
-                          className={css.uploadAvatarInput}
-                          disabled={disabled}
-                          onChange={onChange}
-                          type={type}
-                        />
-                        {error}
-                      </div>
-                    );
-                  }}
-                </Field>
-        : <div className={css.uploadAvatarWrapper}>...Loading information</div>}
+                    }}
+                  </Field>
+                  :
+                  <div className={css.uploadWrapper}>
+                    ...Loading information
+                    </div>}
                 <div className={css.tip}>
                   <FormattedMessage id="ProfileSettingsForm.tip" />
                 </div>

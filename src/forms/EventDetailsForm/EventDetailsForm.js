@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { bool, string } from 'prop-types';
-import { compose } from 'redux';
-import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
-import { Field, Form as FinalForm } from 'react-final-form';
 import moment from 'moment';
 import isEqual from 'lodash/isEqual';
 import classNames from 'classnames';
-import { ensureCurrentUser } from '../../util/data';
-import { propTypes } from '../../util/types';
+import { compose } from 'redux';
+import { FormattedMessage, injectIntl } from '../../util/reactIntl';
+import { Form as FinalForm } from 'react-final-form';
 import { autocompletePlaceSelected, required } from '../../util/validators';
+import getStateCodes from '../../translations/stateCodes';
 import {
   Form,
   Button,
@@ -22,31 +20,14 @@ import {
 
 import css from './EventDetailsForm.css';
 
-const UPLOAD_CHANGE_DELAY = 2000; // Show spinner so that browser has time to load img srcset
+
 const identity = v => v;
 
 class EventDetailsFormComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.uploadDelayTimeoutId = null;
-    this.state = { uploadDelay: false };
     this.submittedValues = {};
-  }
-
-  componentDidUpdate(prevProps) {
-    // Upload delay is additional time window where Avatar is added to the DOM,
-    // but not yet visible (time to load image URL from srcset)
-    if (prevProps.uploadInProgress && !this.props.uploadInProgress) {
-      this.setState({ uploadDelay: true });
-      this.uploadDelayTimeoutId = window.setTimeout(() => {
-        this.setState({ uploadDelay: false });
-      }, UPLOAD_CHANGE_DELAY);
-    }
-  }
-
-  componentWillUnmount() {
-    window.clearTimeout(this.uploadDelayTimeoutId);
   }
 
   render() {
@@ -56,22 +37,19 @@ class EventDetailsFormComponent extends Component {
         render={fieldRenderProps => {
           const {
             className,
-            currentUser,
             handleSubmit,
             intl,
             invalid,
             pristine,
             rootClassName,
-            updateInProgress,
-            updateProfileError,
-            uploadInProgress,
             values,
-            accountType,
             initialValues,
-            eventInfoInProgress
+            eventDetailsUpdate,
+            eventDetailsInProgress,
+            eventDetailsError
           } = fieldRenderProps;
 
-          const user = ensureCurrentUser(currentUser);
+          // From The People Admins will set the event website
           const website = initialValues && initialValues.eventWebsite;
 
           // Event Name
@@ -99,31 +77,31 @@ class EventDetailsFormComponent extends Component {
           const arenaLabel = intl.formatMessage({ id: 'EventDetailsForm.arenaLabel' });
           const hostDrumLabel = intl.formatMessage({ id: 'EventDetailsForm.hostDrumLabel' });
 
-          //Date and time fields
-          const eventTimeLabel = intl.formatMessage({ id: 'EventDetailsForm.eventTimeLabel' });
-          const eventTimePlaceholder = intl.formatMessage({ id: 'EventDetailsForm.eventTimePlaceholder' });
-          const eventTimeRequiredMessage = intl.formatMessage({ id: 'EventDetailsForm.eventTimeRequired' });
-          const eventMeridiemLabel = intl.formatMessage({ id: 'EventDetailsForm.eventMeridiemLabel' });
-
           //Location Fields
           const addressLabel = intl.formatMessage({ id: 'EventDetailsForm.address' });
           const addressPlaceholderMessage = intl.formatMessage({ id: 'EventDetailsForm.addressPlaceholder' });
           const addressNotRecognizedMessage = intl.formatMessage({ id: 'EventDetailsForm.addressNotRecognized' });
-          const lotLabel = intl.formatMessage({ id: 'EventDetailsForm.lotLabel' });
-          const lotPlaceholderMessage = intl.formatMessage({ id: 'EventDetailsForm.lotPlaceholder' });
+          const stateLabel = intl.formatMessage({ id: 'EventDetailsForm.state' });
+          const stateRequiredMessage = intl.formatMessage({ id: 'EventDetailsForm.stateRequired' });
+          const stateOptions = getStateCodes();
 
-          const submitError = updateProfileError ? (
+          const updateMessage = eventDetailsUpdate ? (
+            <div className={css.success}>
+              <FormattedMessage id='EventDetailsForm.updateSuccessful' />
+            </div>
+          ) : null;
+
+          const submitError = eventDetailsError ? (
             <div className={css.error}>
-              <FormattedMessage id="ProfileSettingsForm.updateProfileFailed" />
+              <FormattedMessage id="EventDetailsForm.submitFailed" />
             </div>
           ) : null;
 
           const classes = classNames(rootClassName || css.root, className);
-          const submitInProgress = updateInProgress;
           const submittedOnce = Object.keys(this.submittedValues).length > 0;
           const pristineSinceLastSubmit = submittedOnce && isEqual(values, this.submittedValues);
           const submitDisabled =
-            invalid || pristine || pristineSinceLastSubmit || uploadInProgress || submitInProgress;
+            invalid || pristine || pristineSinceLastSubmit || eventDetailsInProgress;
           const emailLink = (
             <ExternalLink href="mailto:customersupport@fromthepeople.co">
               <FormattedMessage id="ProfileSettingsForm.contactEmail" />
@@ -139,34 +117,14 @@ class EventDetailsFormComponent extends Component {
             { key: 'multi', label: "Multi day" },
           ];
 
-          const timeOptions = [
-            { key: '01:00:00', label: "1:00" },
-            { key: '02:00:00', label: "2:00" },
-            { key: '03:00:00', label: "3:00" },
-            { key: '04:00:00', label: "4:00" },
-            { key: '05:00:00', label: "5:00" },
-            { key: '06:00:00', label: "6:00" },
-            { key: '07:00:00', label: "7:00" },
-            { key: '08:00:00', label: "8:00" },
-            { key: '09:00:00', label: "9:00" },
-            { key: '10:00:00', label: "10:00" },
-            { key: '11:00:00', label: "11:00" },
-            { key: '12:00:00', label: "12:00" },
-          ];
-
-          const meridiemOptions = [
-            { key: 'am', label: "AM" },
-            { key: 'pm', label: "PM" },
-          ]
-
           const durationSelection = document.getElementById('eventDuration');
           const typeSelection = document.getElementById('eventType');
 
           const showDateRangeInput = durationSelection && durationSelection.value && durationSelection.value === 'multi' ? true : false;
           const showOptionalInfo = typeSelection && typeSelection.value && typeSelection.value === 'powwow' ? true : false;
-
-          const formInputs =
-            (<div>
+          
+          const formInputs = (
+            <div>
               <div className={css.eventContainer}>
                 <p className={css.websiteTitle}>
                   <FormattedMessage id="EventDetailsForm.yourWebsite" />
@@ -232,9 +190,8 @@ class EventDetailsFormComponent extends Component {
                   <div>
                     <div className={css.dateContainer}>
                       <FieldDateRangeInput
-                        id="datesRange"
                         name="datesRange"
-                        unitType="units"
+                        unitType="line-item/day"
                         startDateLabel='Start date'
                         startDateId='EmptyDateRange.bookingStartDate'
                         endDateLabel='End date'
@@ -252,92 +209,68 @@ class EventDetailsFormComponent extends Component {
                       label='Date'
                       placeholderText={moment().format('ddd, MMMM D')}
                     />
-                    <div className={css.timeContainer}>
-                      <FieldSelect
-                        className={css.eventTime}
-                        name="startTime"
-                        id="startTime"
-                        label={eventTimeLabel}
-                        validate={required(eventTimeRequiredMessage)}
-                      >
-                        {<option disabled value="">
-                          {eventTimePlaceholder}
-                        </option>}
-                        {timeOptions.map(i => (
-                          <option key={i.key} value={i.key}>
-                            {i.label}
-                          </option>
-                        ))}
-                      </FieldSelect>
-                      <FieldSelect
-                        className={css.eventMeridiem}
-                        name="meridiem"
-                        id="meridiem"
-                        label={eventMeridiemLabel}
-                      >
-                        {meridiemOptions.map(i => (
-                          <option key={i.key} value={i.key}>
-                            {i.label}
-                          </option>
-                        ))}
-                      </FieldSelect>
-                    </div>
                   </div>}
               </div>
               {showOptionalInfo ?
-                  <div className={css.optionalContainer}>
-                    <h3 className={css.sectionTitle}>
-                      <FormattedMessage id="EventDetailsForm.additionalInfo" />
-                    </h3>
-                    <div className={css.eventContainer}>
-                      <FieldTextInput
-                        className={css.eventField}
-                        type="text"
-                        id="mc"
-                        name="mc"
-                        label={mcLabel}
-                        maxLength={30}
-                      />
-                      <FieldTextInput
-                        className={css.eventField}
-                        type="text"
-                        id="arenaDirector"
-                        name="arenaDirector"
-                        label={arenaLabel}
-                        maxLength={30}
-                      />
-                      <FieldTextInput
-                        className={css.eventField}
-                        type="text"
-                        id="hostDrums"
-                        name="hostDrums"
-                        label={hostDrumLabel}
-                        maxLength={30}
-                      />
-                      <LocationAutocompleteInputField
-                        className={css.eventField}
-                        validClassName={css.validLocation}
-                        invalidClassName={css.invalidLocation}
-                        name="location"
-                        label={addressLabel}
-                        placeholder={addressPlaceholderMessage}
-                        useDefaultPredictions={false}
-                        format={identity}
-                        validate={autocompletePlaceSelected(addressNotRecognizedMessage)}
-                        showImage={false}
-                      />
-                      <FieldTextInput
-                        className={css.eventField}
-                        type="text"
-                        name="lot"
-                        id="lot"
-                        label={lotLabel}
-                        placeholder={lotPlaceholderMessage}
-                        maxLength={30}
-                      />
-                    </div>
-                  </div> : null
-              }</div>);
+                <div className={css.optionalContainer}>
+                  <h3 className={css.sectionTitle}>
+                    <FormattedMessage id="EventDetailsForm.additionalInfo" />
+                  </h3>
+                  <div className={css.eventContainer}>
+                    <FieldTextInput
+                      className={css.eventField}
+                      type="text"
+                      id="mc"
+                      name="mc"
+                      label={mcLabel}
+                      maxLength={30}
+                    />
+                    <FieldTextInput
+                      className={css.eventField}
+                      type="text"
+                      id="arenaDirector"
+                      name="arenaDirector"
+                      label={arenaLabel}
+                      maxLength={30}
+                    />
+                    <FieldTextInput
+                      className={css.eventField}
+                      type="text"
+                      id="hostDrums"
+                      name="hostDrums"
+                      label={hostDrumLabel}
+                      maxLength={30}
+                    />
+                    <LocationAutocompleteInputField
+                      className={css.eventField}
+                      validClassName={css.validLocation}
+                      invalidClassName={css.invalidLocation}
+                      name="location"
+                      label={addressLabel}
+                      placeholder={addressPlaceholderMessage}
+                      useDefaultPredictions={false}
+                      format={identity}
+                      validate={autocompletePlaceSelected(addressNotRecognizedMessage)}
+                      showImage={false}
+                    />
+                    <FieldSelect
+                      id="state"
+                      name="state"
+                      className={css.field}
+                      label={stateLabel}
+                      validate={required(stateRequiredMessage)}
+                    >
+                      {stateOptions.map(s => {
+                        return (
+                          <option key={s.key} value={s.key}>
+                            {s.label}
+                          </option>
+                        );
+                      })}
+                    </FieldSelect>
+                  </div>
+                </div> : null}
+            </div>);
 
           return (
             <Form
@@ -349,17 +282,18 @@ class EventDetailsFormComponent extends Component {
             >
               <div className={css.sectionContainer}>
                 <h3 className={css.sectionTitle}>
-                  <FormattedMessage id="EventDetailsForm.eventInfo" />
+                  <FormattedMessage id="EventDetailsForm.eventDetails" />
                 </h3>
               </div>
-              {eventInfoInProgress ? (
-                  <FormattedMessage id="EventDetailsForm.eventInfoInProgress" />
-              ) : formInputs}
+              {updateMessage}
               {submitError}
+              {eventDetailsInProgress ? (
+                <FormattedMessage id="EventDetailsForm.eventDetailsInProgress" />
+              ) : formInputs}
               <Button
                 className={typeSelection && typeSelection.value && typeSelection.value === 'powwow' ? css.submitButton : css.submitButtonExtraMargin}
                 type="submit"
-                inProgress={submitInProgress}
+                inProgress={eventDetailsInProgress}
                 disabled={submitDisabled}
                 ready={pristineSinceLastSubmit}
               >
@@ -372,30 +306,6 @@ class EventDetailsFormComponent extends Component {
     );
   }
 }
-
-EventDetailsFormComponent.defaultProps = {
-  rootClassName: null,
-  className: null,
-  uploadImageError: null,
-  updateProfileError: null,
-  updateProfileReady: false,
-  accountType: null
-};
-
-EventDetailsFormComponent.propTypes = {
-  rootClassName: string,
-  className: string,
-
-  uploadImageError: propTypes.error,
-  uploadInProgress: bool.isRequired,
-  updateInProgress: bool.isRequired,
-  updateProfileError: propTypes.error,
-  updateProfileReady: bool,
-  accountType: string,
-
-  // from injectIntl
-  intl: intlShape.isRequired,
-};
 
 const EventDetailsForm = compose(injectIntl)(EventDetailsFormComponent);
 
