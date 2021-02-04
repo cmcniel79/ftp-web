@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { string } from 'prop-types';
-import stanfordImage from '../../assets/test-powwow.jpg';
 import { ExternalLink, InlineTextButton } from '../../components';
 import truncate from 'lodash/truncate';
 import navigateIcon from '../../assets/navigate.svg';
@@ -143,7 +142,7 @@ const SectionHost = props => {
       </h3>
     </div> );
    
-   const eventImage = imageUUID ? "https://ftpevents.imgix.net/" + imageUUID : stanfordImage;
+   const eventImage = imageUUID ? "https://ftpevents.imgix.net/" + imageUUID : "https://ftpevents.imgix.net/EventsLogo2.png";
 
   return (
     <div className={className}>

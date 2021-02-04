@@ -9,6 +9,7 @@ export const EVENT_DETAILS_ERROR = 'app/EventHostPage/EVENT_DETAILS_ERROR';
 
 export const UPLOAD_IMAGE_REQUEST = 'app/EventHostPage/UPLOAD_IMAGE_REQUEST';
 export const UPLOAD_IMAGE_SUCCESS = 'app/EventHostPage/UPLOAD_IMAGE_SUCCESS';
+export const SAVE_IMAGE_SUCCESS = 'app/EventHostPage/SAVE_IMAGE_SUCCESS';
 export const UPLOAD_IMAGE_ERROR = 'app/EventHostPage/UPLOAD_IMAGE_ERROR';
 
 export const UPDATE_SELLERS_REQUEST = 'app/EventHostPage/UPDATE_SELLERS_REQUEST';
@@ -55,6 +56,9 @@ export default function reducer(state = initialState, action = {}) {
     case UPLOAD_IMAGE_SUCCESS: {
       return { ...state, imageId: payload, uploadInProgress: false };
     }
+    case SAVE_IMAGE_SUCCESS: {
+      return { ...state, uploadInProgress: false };
+    }
     case UPLOAD_IMAGE_ERROR: {
       return { ...state, imageId: null, uploadInProgress: false, uploadImageError: payload.error };
     }
@@ -94,6 +98,7 @@ export const eventDetailsError = error => ({ type: EVENT_DETAILS_ERROR, payload:
 // Event image upload
 export const uploadImageRequest = params => ({ type: UPLOAD_IMAGE_REQUEST, payload: { params } });
 export const uploadImageSuccess = result => ({ type: UPLOAD_IMAGE_SUCCESS, payload: result });
+export const saveImageSuccess = () => ({ type: SAVE_IMAGE_SUCCESS, payload: {} });
 export const uploadImageError = error => ({ type: UPLOAD_IMAGE_ERROR, payload: error, error: true });
 
 // Event seller list update
@@ -135,7 +140,7 @@ const fetchEventDetails = (hostUUID) => (dispatch, getState, sdk) => {
 
   fetch(eventsURL + "?uuid=" + hostUUID, options)
     .then(response => response.json())
-    .then((res) => dispatch(eventDetailsSuccess(res.body[0])))
+    .then((res) => dispatch(eventDetailsSuccess(res.body[0][0])))
     .catch(() => dispatch(eventDetailsError("Could not update event details. Please try again")));
 }
 
@@ -175,14 +180,35 @@ export function uploadImage(actionPayload) {
         };
         fetch('https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd/events/photos', options)
           .then(response => response.json())
-          // .then(data => console.log(data))
           .then(data => {
             console.log(data);
-            dispatch(uploadImageSuccess(data.body.id))
+            dispatch(uploadImageSuccess(data.body.id));
           })
           .catch(response => console.log(response));
       })
   }
+}
+
+export function updateImage(actionPayload) {
+  return (dispatch, getState, sdk) => {
+    dispatch(uploadImageRequest(actionPayload));
+    const options = {
+      method: 'POST',
+      withCredentials: false,
+      body: JSON.stringify(actionPayload),
+      headers: {
+        "Content-Type": "application/json",
+        // "X-Api-Key": KEY,
+      }
+    }
+    fetch('https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd/events/photos', options)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        dispatch(saveImageSuccess());
+      })
+      .catch(response => console.log(response));
+  };
 }
 
 export const updateSellers = actionPayload => {

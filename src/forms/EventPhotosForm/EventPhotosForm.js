@@ -11,6 +11,7 @@ import {
   Form,
   Button,
   IconSpinner,
+  NamedLink
 } from '../../components';
 
 import css from './EventPhotosForm.css';
@@ -54,22 +55,28 @@ class EventPhotosFormComponent extends Component {
             hostUUID,
             onImageUpload,
             pristine,
+            initialValues,
             eventImage,
             rootClassName,
-            updateInProgress,
             uploadImageError,
             uploadInProgress,
+            isNewImage,
             form,
             values,
           } = fieldRenderProps;
+
+          const eventsPageLink = (
+            <NamedLink name="EventsPage">
+              <FormattedMessage id="EventPhotosForm.eventsPageLink" />
+            </NamedLink> );
 
           // // Ensure that image exists
           const fileExists = eventImage && eventImage.id && eventImage.src ? true : false;
           const imageComponent =
             fileExists ? (
-              <img className={css.eventImage} src={eventImage.src} alt="Your Event"/>
+              <img className={css.eventImage} src={eventImage.src} alt="Your Event" />
             ) : null;
-
+          
           const chooseImageLabel =
             !uploadInProgress && eventImage && eventImage.src ? (
               <div className={css.imageContainer}>
@@ -100,17 +107,16 @@ class EventPhotosFormComponent extends Component {
           ) : null;
 
           const classes = classNames(rootClassName || css.root, className);
-          const submitInProgress = updateInProgress;
           const submittedOnce = Object.keys(this.submittedValues).length > 0;
           const pristineSinceLastSubmit = submittedOnce && isEqual(values, this.submittedValues);
           const submitDisabled =
-            invalid || pristine || pristineSinceLastSubmit || uploadInProgress || submitInProgress;
-
+            invalid || !isNewImage || !fileExists || pristineSinceLastSubmit || uploadInProgress;
+          
           return (
             <Form
               className={classes}
               onSubmit={e => {
-                this.submittedValues = values;
+                this.submittedValues = eventImage.id;
                 handleSubmit(e);
               }}
             >
@@ -137,9 +143,7 @@ class EventPhotosFormComponent extends Component {
                         form.change(`eventImage`, file);
                         form.blur(`eventImage`);
                         if (file != null) {
-                          // const tempId = `${hostUUID}_${Date.now()}`;
                           const tempId = `${hostUUID}`;
-                          console.log("uploading Image");
                           onImageUpload({ id: tempId, file });
                         }
                       };
@@ -183,7 +187,7 @@ class EventPhotosFormComponent extends Component {
                     ...Loading information
                     </div>}
                 <div className={css.tip}>
-                  <FormattedMessage id="ProfileSettingsForm.tip" />
+                  <FormattedMessage id="EventPhotosForm.tip" values={{ link: eventsPageLink }}/>
                 </div>
                 <div className={css.fileInfo}>
                   <FormattedMessage id="EventPhotosForm.fileInfo" />
@@ -193,9 +197,9 @@ class EventPhotosFormComponent extends Component {
               <Button
                 className={css.submitButton}
                 type="submit"
-                inProgress={submitInProgress}
+                inProgress={uploadInProgress}
                 disabled={submitDisabled}
-                ready={pristineSinceLastSubmit}
+                // ready={fileExists}
               >
                 <FormattedMessage id="EventPhotosForm.saveChanges" />
               </Button>

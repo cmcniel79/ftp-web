@@ -53,6 +53,15 @@
   width: 100%;
   font-size: 16px;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  -webkit-line-clamp: 1;
+  -moz-box-orient: vertical;
+  /* fallback option */
+  word-break: break-all;
+  /* use break-word if available */
   word-break: break-word;
   hyphens: auto;
+  /* Remove default margins from font */
 }

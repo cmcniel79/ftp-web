@@ -61,7 +61,7 @@
   width: 100%;
   @media (--viewportMedium) {
     width: 30%;
-    margin: 0 auto 0 0;
+    margin: 0 3% 0 0;
   }
 }
 

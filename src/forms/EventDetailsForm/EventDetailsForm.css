@@ -1,20 +1,13 @@
 @import '../../marketplace.css';
 :root {
-  /*
-    These variables are available in global scope through ":root"
-    element (<html> tag). Variables with the same names are going to
-    overwrite each other if CSS Properties' (PostCSS plugin)
-    configuration "preserve: true" is used - meaning that variables
-    are left to CSS bundle. We are planning to enable it in the future
-    since browsers support CSS Properties already.
- */
-}
-
-.root {
   margin-top: 24px;
   @media (--viewportMedium) {
     margin-top: 32px;
   }
+}
+
+.arrow {
+  width: 20px;
 }
 
 .success {
@@ -38,15 +31,6 @@
   @media (--viewportMedium) {
     margin-top: 22px;
     margin-bottom: 2px;
-  }
-}
-
-.sectionContainer {
-  padding: 0;
-  margin-bottom: 36px;
-  @media (--viewportMedium) {
-    padding: 0;
-    margin-bottom: 56px;
   }
 }
 

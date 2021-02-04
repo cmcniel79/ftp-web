@@ -6,7 +6,9 @@ import { compose } from 'redux';
 import { FormattedMessage, injectIntl } from '../../util/reactIntl';
 import { Form as FinalForm } from 'react-final-form';
 import { autocompletePlaceSelected, required } from '../../util/validators';
+import { createSlug } from '../../util/urlHelpers';
 import getStateCodes from '../../translations/stateCodes';
+import arrow from '../../assets/arrow-forward-outline.svg';
 import {
   Form,
   Button,
@@ -15,7 +17,8 @@ import {
   ExternalLink,
   FieldDateRangeInput,
   FieldDateInput,
-  LocationAutocompleteInputField
+  LocationAutocompleteInputField,
+  NamedLink
 } from '../../components';
 
 import css from './EventDetailsForm.css';
@@ -26,7 +29,6 @@ const identity = v => v;
 class EventDetailsFormComponent extends Component {
   constructor(props) {
     super(props);
-
     this.submittedValues = {};
   }
 
@@ -43,11 +45,21 @@ class EventDetailsFormComponent extends Component {
             pristine,
             rootClassName,
             values,
+            hostUUID,
             initialValues,
             eventDetailsUpdate,
             eventDetailsInProgress,
             eventDetailsError
           } = fieldRenderProps;
+
+          const eventPageLink = !eventDetailsInProgress && initialValues && initialValues.eventName && initialValues.eventType ? (
+            <NamedLink
+              name="SingleEventPage"
+              params={{ eventType: initialValues.eventType, slug: createSlug(initialValues.eventName), id: hostUUID }}
+            >
+              <FormattedMessage id="EventDetailsForm.eventPageLink" />
+              <img className={css.arrow} src={arrow} alt="arrow" />
+            </NamedLink>) : null;
 
           // From The People Admins will set the event website
           const website = initialValues && initialValues.eventWebsite;
@@ -122,9 +134,8 @@ class EventDetailsFormComponent extends Component {
 
           const showDateRangeInput = durationSelection && durationSelection.value && durationSelection.value === 'multi' ? true : false;
           const showOptionalInfo = typeSelection && typeSelection.value && typeSelection.value === 'powwow' ? true : false;
-          
-          const formInputs = (
-            <div>
+
+          const requiredInfo = !eventDetailsInProgress ? (
               <div className={css.eventContainer}>
                 <p className={css.websiteTitle}>
                   <FormattedMessage id="EventDetailsForm.yourWebsite" />
@@ -205,13 +216,13 @@ class EventDetailsFormComponent extends Component {
                       className={css.dateInput}
                       name='startDate'
                       useMobileMargins={false}
-                      id={`EmptyDateInputForm.bookingDate`}
+                      id='EmptyDateInputForm.bookingDate'
                       label='Date'
                       placeholderText={moment().format('ddd, MMMM D')}
                     />
                   </div>}
-              </div>
-              {showOptionalInfo ?
+              </div> ) : null;
+              const optionalInfo = !eventDetailsInProgress && showOptionalInfo ? (
                 <div className={css.optionalContainer}>
                   <h3 className={css.sectionTitle}>
                     <FormattedMessage id="EventDetailsForm.additionalInfo" />
@@ -269,8 +280,7 @@ class EventDetailsFormComponent extends Component {
                       })}
                     </FieldSelect>
                   </div>
-                </div> : null}
-            </div>);
+                </div> ) : null;
 
           return (
             <Form
@@ -280,16 +290,17 @@ class EventDetailsFormComponent extends Component {
                 handleSubmit(e);
               }}
             >
-              <div className={css.sectionContainer}>
-                <h3 className={css.sectionTitle}>
-                  <FormattedMessage id="EventDetailsForm.eventDetails" />
-                </h3>
-              </div>
+              <h3 className={css.sectionTitle}>
+                <FormattedMessage id="EventDetailsForm.eventDetails" />
+              </h3>
               {updateMessage}
               {submitError}
+              {eventPageLink}
+              {requiredInfo}
+              {optionalInfo}
               {eventDetailsInProgress ? (
                 <FormattedMessage id="EventDetailsForm.eventDetailsInProgress" />
-              ) : formInputs}
+              ) : null}
               <Button
                 className={typeSelection && typeSelection.value && typeSelection.value === 'powwow' ? css.submitButton : css.submitButtonExtraMargin}
                 type="submit"

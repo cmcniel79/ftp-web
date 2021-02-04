@@ -102,7 +102,7 @@ const fetchEventDetails = (hostUUID) => (dispatch, getState, sdk) => {
   }
   fetch(eventsURL + "?uuid=" + hostUUID, options)
     .then(response => response.json())
-    .then((res) => dispatch(eventDetailsSuccess(res.body[0])))
+    .then((res) => dispatch(eventDetailsSuccess(res.body[0][0])))
     .catch(() => dispatch(eventDetailsError("Could Not Get Event Details")));
 }
 

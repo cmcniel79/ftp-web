@@ -83,9 +83,9 @@ export class EventTypePageComponent extends Component {
           </h3>
         </div>
         <div className={css.eventsGrid} >
-          {events && events.filter(e =>
-            this.state.stateSelected !== null ? e.state === this.state.stateSelected : e
-          ).map(event => {
+          {events && events.filter(e => 
+          this.state.stateSelected !== null ? e.state === this.state.stateSelected : e)
+          .map(event => {
             const pageName = eventType === "powwwows" ? "PowwowPage" : "PowwowPage";
             return (
               <div className={css.eventCardWrapper} key={event.eventName}>

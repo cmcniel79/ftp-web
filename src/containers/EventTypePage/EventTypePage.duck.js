@@ -55,7 +55,7 @@ const fetchEvents = (type) => (dispatch, getState, sdk) => {
 
   fetch(eventsURL + "?type=" + type, options)
     .then(response => response.json())
-    .then((res) => dispatch(eventsSuccess(res.body)))
+    .then((res) => dispatch(eventsSuccess(res.body[0])))
     .catch(() =>  dispatch(eventsError("An error occurred when loading events. Please try refreshing the page")));
 }
 

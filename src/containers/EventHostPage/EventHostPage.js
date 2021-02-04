@@ -6,7 +6,7 @@ import { FormattedMessage, injectIntl } from '../../util/reactIntl';
 import { parseDateFromISO8601 } from '../../util/dates';
 import { EventDetailsForm, EventPhotosForm } from '../../forms';
 import { TopbarContainer } from '..';
-import { loadData, updateEventDetails, uploadImage, updateSellers } from './EventHostPage.duck';
+import { loadData, updateEventDetails, uploadImage, updateSellers, updateImage } from './EventHostPage.duck';
 import EventSellersListMaybe from './EventSellersListMaybe';
 import {
   Button,
@@ -32,6 +32,7 @@ export class EventHostPageComponent extends Component {
     this.sendUpdatedSellers = this.sendUpdatedSellers.bind(this);
     this.submitDetails = this.submitDetails.bind(this);
     this.onImageUploadHandler = this.onImageUploadHandler.bind(this);
+    this.submitImage = this.submitImage.bind(this);
   }
 
   onImageUploadHandler = (values, fn) => {
@@ -40,6 +41,15 @@ export class EventHostPageComponent extends Component {
       fn({ id, file, fileType: file.type });
     }
   };
+
+  submitImage(values) {
+    const { id } = values;
+    const payload = {
+      hostUUID: this.props.hostUUID,
+      imageUUID: id,
+    }
+    this.props.onUpdateImage(payload);
+  }
 
   submitDetails(values) {
     const { eventDuration, datesRange, startDate, mc, arenaDirector, hostDrums, location, state, ...rest } = values;
@@ -105,9 +115,12 @@ export class EventHostPageComponent extends Component {
     const eventType = eventDetails && eventDetails.eventType;
     const eventWebsite = eventDetails && eventDetails.eventWebsite;
     const eventDescription = eventDetails && eventDetails.eventDescription;
+
+    // Image Stuff
     const imageUUID = imageId ? imageId : eventDetails && eventDetails.imageUUID ? eventDetails.imageUUID : null; 
     const imageSrc = imageUUID ? cdnDomain + imageUUID + cdnParams : null;
     const eventImage = { id: imageUUID, src: imageSrc };
+    const isNewImage = eventDetails && imageId && (imageId !== eventDetails.imageUUID);
 
     const startDate = eventDetails && eventDetails.startDate ? parseDateFromISO8601(eventDetails.startDate.slice(0, 10)) : null;
     const endDate = eventDetails && eventDetails.endDate ? parseDateFromISO8601(eventDetails.endDate.slice(0, 10)) : null;
@@ -196,8 +209,9 @@ export class EventHostPageComponent extends Component {
         eventDetailsUpdate={eventDetailsUpdate}
         eventDetailsInProgress={eventDetailsInProgress}
         eventDetailsError={eventDetailsError}
+        hostUUID={hostUUID}
         initialValues={{
-          eventName, eventType, eventWebsite, eventDescription, eventDuration, datesRange, startDate,
+          eventName, eventType, eventWebsite, eventDescription, eventDuration, datesRange, startDate: {date: startDate},
           mc, arenaDirector, hostDrums, location, state
         }}
       />
@@ -209,9 +223,10 @@ export class EventHostPageComponent extends Component {
         initialValues={eventImage}
         eventImage={eventImage}
         onImageUpload={(e) => this.onImageUploadHandler(e, onImageUpload)}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => this.submitImage(values)}
         uploadInProgress={uploadInProgress}
         uploadImageError={uploadImageError}
+        isNewImage={isNewImage}
       />
     );
 
@@ -319,6 +334,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   onLoadData: () => dispatch(loadData()),
   onUpdateDetails: details => dispatch(updateEventDetails(details)),
+  onUpdateImage: imageDetails => dispatch(updateImage(imageDetails)),
   onImageUpload: image => dispatch(uploadImage(image)),
   onUpdateSellers: seller => dispatch(updateSellers(seller)),
 });
