@@ -54,6 +54,7 @@ export const ContactDetailsPageComponent = props => {
   const currentPhoneNumber = protectedData.phoneNumber || '';
   const currentShippingAddress = protectedData && protectedData.protectedData && protectedData.protectedData.shippingAddress ? 
     protectedData.protectedData.shippingAddress : null;
+  const isEventHost = user && user.attributes.profile.metadata && user.attributes.profile.metadata.eventHost;
 
   // Pass in account type to Payment Methods tab to make sure Premium Users 
   // do not get confused about payments and subscriptions
@@ -92,7 +93,7 @@ export const ContactDetailsPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="ContactDetailsPage" />
+          <UserNav selectedPageName="ContactDetailsPage" isEventHost={isEventHost}/>
         </LayoutWrapperTopbar>
         <LayoutWrapperAccountSettingsSideNav currentTab="ContactDetailsPage" accountType={accountType}/>
         <LayoutWrapperMain>

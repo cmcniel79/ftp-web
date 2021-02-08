@@ -18,6 +18,7 @@ import {
   LayoutWrapperFooter,
   Footer,
   LinkTabNavHorizontal,
+  NamedLink
 } from '../../components';
 
 import css from './EventHostPage.css';
@@ -74,12 +75,12 @@ export class EventHostPageComponent extends Component {
     this.props.onUpdateDetails(payload);
   }
 
-  sendUpdatedSellers(removedEmail) {
+  sendUpdatedSellers(removedEmail, eventName) {
     if (removedEmail) {
-      this.props.onUpdateSellers({ sellerEmail: removedEmail, eventName: "Test of Frontend 69", add: false, hostUUID: this.props.hostUUID });
+      this.props.onUpdateSellers({ sellerEmail: removedEmail, eventName, add: false, hostUUID: this.props.hostUUID });
     } else {
       const newEmail = this.state.email;
-      this.props.onUpdateSellers({ sellerEmail: newEmail, eventName: "MYSQL test", add: true, hostUUID: this.props.hostUUID });
+      this.props.onUpdateSellers({ sellerEmail: newEmail, eventName, add: true, hostUUID: this.props.hostUUID });
       this.submittedValues = newEmail;
       this.setState({ email: '' });
     }
@@ -96,6 +97,7 @@ export class EventHostPageComponent extends Component {
       tab,
       intl,
       onImageUpload,
+      currentUser,
       hostUUID,
       eventDetails,
       eventDetailsUpdate,
@@ -110,6 +112,8 @@ export class EventHostPageComponent extends Component {
       updateSellersError,
     } = this.props;
 
+    const isEventHost = currentUser && currentUser.attributes.profile.metadata && currentUser.attributes.profile.metadata.eventHost;
+
     // Initial Values for EventDetailsForm
     const eventName = eventDetails && eventDetails.eventName;
     const eventType = eventDetails && eventDetails.eventType;
@@ -117,7 +121,7 @@ export class EventHostPageComponent extends Component {
     const eventDescription = eventDetails && eventDetails.eventDescription;
 
     // Image Stuff
-    const imageUUID = imageId ? imageId : eventDetails && eventDetails.imageUUID ? eventDetails.imageUUID : null; 
+    const imageUUID = imageId ? imageId : eventDetails && eventDetails.imageUUID ? eventDetails.imageUUID : null;
     const imageSrc = imageUUID ? cdnDomain + imageUUID + cdnParams : null;
     const eventImage = { id: imageUUID, src: imageSrc };
     const isNewImage = eventDetails && imageId && (imageId !== eventDetails.imageUUID);
@@ -154,17 +158,6 @@ export class EventHostPageComponent extends Component {
     const submitDisabled =
       !validity || inputValue === '' || pristineSinceLastSubmit || uploadInProgress;
 
-    const submitError = updateSellersError ? (
-      <div className={css.error}>
-        {updateSellersError}
-      </div>
-    ) : null;
-    const submitSuccess = updateSellersResponse ? (
-      <div className={css.success}>
-        {updateSellersResponse}
-      </div>
-    ) : null;
-
     const eventSellersForm = (
       <div className={css.sellersContainer}>
         <div className={css.sellerInput}>
@@ -183,22 +176,21 @@ export class EventHostPageComponent extends Component {
             onChange={(e) => this.setState({ email: e.target.value })}
           />
         </div>
-        {submitError}
-        {submitSuccess}
         <Button
           className={css.submitButton}
           inProgress={updateSellersInProgress}
           disabled={submitDisabled}
           ready={pristineSinceLastSubmit}
-          onClick={() => this.sendUpdatedSellers(null)}
+          onClick={() => this.sendUpdatedSellers(null, eventName)}
         >
           <FormattedMessage id="EventSellersForm.addSeller" />
         </Button>
         <EventSellersListMaybe
           sellers={eventSellers}
-          updateSellers={(values) => this.sendUpdatedSellers(values)}
+          updateSellers={(values) => this.sendUpdatedSellers(values, eventName)}
           inProgress={updateSellersInProgress}
           response={updateSellersResponse}
+          error={updateSellersError}
         />
       </div>
     );
@@ -211,7 +203,7 @@ export class EventHostPageComponent extends Component {
         eventDetailsError={eventDetailsError}
         hostUUID={hostUUID}
         initialValues={{
-          eventName, eventType, eventWebsite, eventDescription, eventDuration, datesRange, startDate: {date: startDate},
+          eventName, eventType, eventWebsite, eventDescription, eventDuration, datesRange, startDate: { date: startDate },
           mc, arenaDirector, hostDrums, location, state
         }}
       />
@@ -267,21 +259,33 @@ export class EventHostPageComponent extends Component {
         },
       },
     ];
-    
+
     return (
       <Page className={css.root} title={title} scrollingDisabled={false}>
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer currentPage="EventHostPage" />
-            <UserNav selectedPageName="EventHostPage" />
+            <UserNav selectedPageName="EventHostPage" isEventHost={isEventHost} />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
-            <div className={css.content}>
-              <LinkTabNavHorizontal className={css.tabs} tabs={tabs} />
-              {tab === 'details' ? eventDetailsForm : null}
-              {tab === 'photos' ? eventPhotosForm : null}
-              {tab === 'sellers' ? eventSellersForm : null}
-            </div>
+            {isEventHost ? (
+              <div className={css.content}>
+                <LinkTabNavHorizontal className={css.tabs} tabs={tabs} />
+                {tab === 'details' ? eventDetailsForm : null}
+                {tab === 'photos' ? eventPhotosForm : null}
+                {tab === 'sellers' ? eventSellersForm : null}
+              </div>
+            ) : (
+                <div className={css.content}>
+                  <h3>
+                    Your account is not linked with an event in our database. 
+                    If you would like to host an event, contact us through our&nbsp;
+                    <NamedLink name="ContactPage">
+                      Contact Page
+                    </NamedLink>
+                  </h3>
+                </div>
+              )}
           </LayoutWrapperMain>
           <LayoutWrapperFooter>
             <Footer />
@@ -307,12 +311,13 @@ const mapStateToProps = state => {
     updateSellersInProgress,
     updateSellersError,
   } = state.EventHostPage;
- 
+
   const hostUUID = currentUser && currentUser.id ? currentUser.id.uuid : null;
   const hostName = currentUser && currentUser.attributes ? currentUser.attributes.profile.displayName : null;
   const hostEmail = currentUser && currentUser.attributes ? currentUser.attributes.email : null;
 
   return {
+    currentUser,
     hostUUID,
     hostName,
     hostEmail,

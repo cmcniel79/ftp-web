@@ -47,6 +47,8 @@ const PaymentMethodsPageComponent = props => {
     intl,
     stripeCustomerFetched,
   } = props;
+  
+  const isEventHost = currentUser && currentUser.attributes.profile.metadata && currentUser.attributes.profile.metadata.eventHost;
 
   const getClientSecret = setupIntent => {
     return setupIntent && setupIntent.attributes ? setupIntent.attributes.clientSecret : null;
@@ -169,7 +171,7 @@ const PaymentMethodsPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="PaymentMethodsPage" />
+          <UserNav selectedPageName="PaymentMethodsPage" isEventHost={isEventHost}/>
         </LayoutWrapperTopbar>
         <LayoutWrapperAccountSettingsSideNav currentTab="PaymentMethodsPage" />
         <LayoutWrapperMain>

@@ -15,20 +15,24 @@ class EventSellersListMaybe extends Component {
   }
 
   render() {
-    const { inProgress, response, sellers } = this.props;
-    const submitResponse = response ? (
+    const { sellers, inProgress, response, error } = this.props;
+    const submitMessage = response ? (
       <div className={css.success}>
         {response}
       </div>
+    ) : error ? (
+      <div className={css.error}>
+      {error}
+    </div>
     ) : null;
     return (
       <div className={css.sectionSellersList}>
-        {submitResponse}
         {sellers && sellers.length > 0 && !inProgress ? (
           <div>
             <h3 className={css.sectionTitle}>
               <FormattedMessage id="EventHostPage.sellersListHeading" values={{ count: sellers.length }} />
             </h3>
+            {submitMessage}
             <ul>
               {sellers.map(s => {
                 return (
@@ -49,7 +53,8 @@ class EventSellersListMaybe extends Component {
           <h2 className={css.featuresHeading}>
             <FormattedMessage id="EventHostPage.loadingSellers" />
           </h2>
-        ) : (<h2 className={css.featuresHeading}>
+        ) : (
+        <h2 className={css.featuresHeading}>
           <FormattedMessage id="EventHostPage.noSellers" />
         </h2>
             )}

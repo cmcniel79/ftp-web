@@ -214,6 +214,7 @@ export function updateImage(actionPayload) {
 export const updateSellers = actionPayload => {
   return (dispatch, getState, sdk) => {
     dispatch(updateSellersRequest());
+    console.log(actionPayload);
     const options = {
       method: 'POST',
       withCredentials: false,
@@ -227,7 +228,7 @@ export const updateSellers = actionPayload => {
     fetch(eventsURL + "/sellers", options)
       .then(response => response.json())
       .then(data => {
-        // console.log(data);
+        console.log(data);
         if (data.statusCode >= 200 && data.statusCode < 300) {
           dispatch(updateSellersSuccess(data));
         } else {
@@ -249,12 +250,10 @@ const fetchEventSellers = (hostUUID) => (dispatch, getState, sdk) => {
     }
   }
 
-  fetch(eventsURL + "/sellers?" + hostUUID, options)
+  fetch(eventsURL + "/sellers?uuid=" + hostUUID, options)
     .then(response => response.json())
-    .then(data => {
-      dispatch(updateSellersSuccess(data));
-    })
-    .catch(() => console.log("Could not update database"));
+    .then(data => dispatch(updateSellersSuccess(data)))
+    .catch(() => dispatch(updateSellersError({ body: "There was an error when trying to update your sellers list" })));
 
 }
 

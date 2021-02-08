@@ -77,6 +77,8 @@ export class FollowingPageComponent extends Component {
       users,
       currentUser,
     } = this.props;
+    
+    const isEventHost = currentUser && currentUser.attributes.profile.metadata && currentUser.attributes.profile.metadata.eventHost;
 
     this.followed = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.followed ?
       currentUser.attributes.profile.privateData.followed : [];
@@ -118,7 +120,7 @@ export class FollowingPageComponent extends Component {
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer currentPage="FollowingPage" />
-            <UserNav selectedPageName="FollowingPage" />
+            <UserNav selectedPageName="FollowingPage" isEventHost={isEventHost}/>
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
             {queryInProgress ? loadingResults : null}

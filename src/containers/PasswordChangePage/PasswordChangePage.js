@@ -36,6 +36,8 @@ export const PasswordChangePageComponent = props => {
     intl,
   } = props;
 
+  const isEventHost = currentUser && currentUser.attributes.profile.metadata && currentUser.attributes.profile.metadata.eventHost;
+
   const changePasswordForm =
     currentUser && currentUser.id ? (
       <PasswordChangeForm
@@ -63,7 +65,7 @@ export const PasswordChangePageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="PasswordChangePage" />
+          <UserNav selectedPageName="PasswordChangePage" isEventHost={isEventHost}/>
         </LayoutWrapperTopbar>
         <LayoutWrapperAccountSettingsSideNav currentTab="PasswordChangePage" />
         <LayoutWrapperMain>

@@ -45,6 +45,7 @@ const TopbarDesktop = props => {
   const classes = classNames(rootClassName || css.root, className);
   const accountType = currentUser && currentUser.attributes.profile.publicData && currentUser.attributes.profile.publicData.accountType ?
     currentUser.attributes.profile.publicData.accountType : null;
+  const isEventHost = currentUser && currentUser.attributes.profile.metadata && currentUser.attributes.profile.metadata.eventHost;
   const search = (
     <TopbarSearchForm
       className={css.searchLink}
@@ -81,14 +82,16 @@ const TopbarDesktop = props => {
         <Avatar className={css.avatar} user={currentUser} disableProfileLink />
       </MenuLabel>
       <MenuContent className={css.profileMenuContent}>
-      <MenuItem key="EventDetailsPage">
-          <NamedLink
-            className={classNames(css.yourListingsLink, currentPageClass('EventDetailsPage'))}
-            name="EventDetailsPage"
-          >
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.yourEventLink" />
-          </NamedLink>
+        <MenuItem key="EventDetailsPage">
+          {isEventHost && (
+            <NamedLink
+              className={classNames(css.yourListingsLink, currentPageClass('EventDetailsPage'))}
+              name="EventDetailsPage"
+            >
+              <span className={css.menuItemBorder} />
+              <FormattedMessage id="TopbarDesktop.yourEventLink" />
+            </NamedLink>
+          )}
         </MenuItem>
         <MenuItem key="ManageListingsPage">
           <NamedLink
