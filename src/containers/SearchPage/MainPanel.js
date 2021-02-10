@@ -379,6 +379,7 @@ class MainPanel extends Component {
             currentUser={currentUser}
             isLiked={isLiked}
             updateLikes={updateLikes}
+            pageName="SearchPage"
           />
         </div>
       </div>

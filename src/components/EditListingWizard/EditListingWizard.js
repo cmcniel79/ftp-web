@@ -186,7 +186,7 @@ class EditListingWizard extends Component {
     this.hasScrolledToTab = shouldScroll;
   }
 
-  handlePublishListing(id, accountType) {
+  handlePublishListing(id, accountType, userUUID) {
     const { onPublishListingDraft, currentUser, stripeAccount, updateRanking } = this.props;
 
     const stripeConnected =
@@ -199,10 +199,10 @@ class EditListingWizard extends Component {
       (hasRequirements(stripeAccountData, 'past_due') ||
         hasRequirements(stripeAccountData, 'currently_due'));
 
-    const uuid = id.uuid;
     const requestBody = {
-      uuid: uuid,
-      ranking: null
+      uuid: id.uuid,
+      ranking: null,
+      userUUID: userUUID.uuid
     }
 
     // Added for Premium, Ad and non-profit accounts. They should not add payout info before being
@@ -311,7 +311,7 @@ class EditListingWizard extends Component {
     // Getting custom data added to users publicData
     const accountType = currentUserLoaded && ensuredCurrentUser.attributes.profile.publicData.accountType ?
       ensuredCurrentUser.attributes.profile.publicData.accountType : null;
-
+    const userUUID = currentUserLoaded && ensuredCurrentUser.id;
     const protectedData = currentUserLoaded && ensuredCurrentUser.attributes.profile.protectedData ? 
       sanitizeProtectedData(ensuredCurrentUser.attributes.profile.protectedData) : null; 
     const userCountry = protectedData && protectedData.protectedData && 
@@ -392,6 +392,7 @@ class EditListingWizard extends Component {
                 handlePublishListing={this.handlePublishListing}
                 fetchInProgress={fetchInProgress}
                 accountType={accountType}
+                userUUID={userUUID}
                 userCountry={userCountry}
                 allowsCustomOrders={allowsCustomOrders}
               />

@@ -12,13 +12,34 @@ const StateSelectionFormComponent = props => (
       <FinalForm
         {...props}
         render={formRenderProps => {
-          const { rootClassName, className, handleSubmit, intl } = formRenderProps;
+          const { 
+            rootClassName, 
+            className, 
+            handleSubmit, 
+            intl,
+            showLocationFilter
+           } = formRenderProps;
           const classes = classNames(rootClassName, className);
-          const allEventsOption = intl.formatMessage({ id:'StateSelectionForm.allEvents' });
+          const allStatesOption = intl.formatMessage({ id:'StateSelectionForm.allStates' });
+          const allDatesOption = intl.formatMessage({ id:'StateSelectionForm.allDates' });
           const stateOptions = getStateCodes();
-
+          const monthOptions = [
+            { key: "01", label: "January" },
+            { key: "02", label: "February" },
+            { key: "03", label: "March" },
+            { key: "04", label: "April" },
+            { key: "05", label: "May" },
+            { key: "06", label: "June" },
+            { key: "07", label: "July" },
+            { key: "08", label: "August" },
+            { key: "09", label: "September" },
+            { key: "10", label: "October" },
+            { key: "11", label: "November" },
+            { key: "12", label: "December" },
+          ];
           return (
             <Form className={classes} onChange={handleSubmit}>
+              {showLocationFilter ? (
               <FieldSelect
                 id="state"
                 name="state"
@@ -26,9 +47,27 @@ const StateSelectionFormComponent = props => (
                 label="State/Province"
               >
                 <option value="all">
-                  {allEventsOption}
+                  {allStatesOption}
                 </option>
                 {stateOptions.map(s => {
+                  return (
+                    <option key={s.key} value={s.key}>
+                      {s.label}
+                    </option>
+                  );
+                })}
+              </FieldSelect>
+              ) : null }
+              <FieldSelect
+                id="month"
+                name="month"
+                className={css.field}
+                label="Month"
+              >
+                <option value="all">
+                  {allDatesOption}
+                </option>
+                {monthOptions.map(s => {
                   return (
                     <option key={s.key} value={s.key}>
                       {s.label}

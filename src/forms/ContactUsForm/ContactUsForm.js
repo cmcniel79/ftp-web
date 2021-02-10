@@ -21,10 +21,7 @@ class ContactUsFormComponent extends Component {
                 {...this.props}
                 render={fieldRenderProps => {
                     const {
-                        // className,
-                        // formId,
                         handleSubmit,
-                        // inProgress,
                         intl,
                         disabled,
                         ready,
@@ -69,6 +66,7 @@ class ContactUsFormComponent extends Component {
                     const subjectOptions = [
                         { key: "selling", label: "Apply for a Seller account" },
                         { key: "premium accounts", label: "Apply for a Premium, Non-Profit or Ad account" },
+                        { key: "event hosting", label: "Hosting your event on From The People" },
                         { key: "verification", label: "Begin tribal enrollment verification" },
                         { key: "refunds", label: "Request a refund" },
                         { key: "reporting", label: "Report an Indian Arts and Crafts Act Violation" },

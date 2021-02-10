@@ -235,6 +235,7 @@ const routeConfiguration = () => {
       path: '/events/:eventType/:slug/:id',
       name: 'SingleEventPage',
       component: props => <SingleEventPage {...props} />,
+      loadData: SingleEventPage.loadData,
     },
 
     // Note: authenticating with IdP (e.g. Facebook) expects that /login path exists

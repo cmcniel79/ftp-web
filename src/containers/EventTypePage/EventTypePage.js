@@ -24,9 +24,10 @@ export class EventTypePageComponent extends Component {
 
     this.state = {
       stateSelected: null,
+      monthSelected: null,
       length: null,
     };
-    this.selectState = this.selectState.bind(this);
+    this.updateFilters = this.updateFilters.bind(this);
   }
 
   componentDidMount() {
@@ -35,8 +36,13 @@ export class EventTypePageComponent extends Component {
     }
   }
 
-  selectState(value) {
-    this.setState({ stateSelected: value && value.state && value.state !== "all" ? value.state : null });
+  updateFilters(values) {
+    if (values && values.state) {
+      this.setState({ stateSelected: values.state !== "all" ? values.state : null });
+    }
+    if (values && values.month) {
+      this.setState({ monthSelected: values.month !== "all" ? values.month : null });
+    }
   }
 
 
@@ -76,24 +82,29 @@ export class EventTypePageComponent extends Component {
           <h2 className={css.sectionTitle}>
             {heading} {this.state.stateSelected ? "in " + this.state.stateSelected : null}
           </h2>
-          <StateSelectionForm onSubmit={(value) => this.selectState(value)} initialValues={{ state: this.state.stateSelected }} />
+          <StateSelectionForm
+            showLocationFilter={eventType === "powwow" ? true : false}
+            onSubmit={(value) => this.updateFilters(value)}
+            initialValues={{ state: this.state.stateSelected }}
+          />
           <div className={css.half}></div>
           <h3 className={css.addEventInfo}>
             <FormattedMessage id="EventTypePage.addAnEvent" values={{ link: contactPageLink }} />
           </h3>
         </div>
         <div className={css.eventsGrid} >
-          {events && events.filter(e => 
-          this.state.stateSelected !== null ? e.state === this.state.stateSelected : e)
-          .map(event => {
-            const pageName = eventType === "powwwows" ? "PowwowPage" : "PowwowPage";
-            return (
-              <div className={css.eventCardWrapper} key={event.eventName}>
-                <EventCard event={event} pageName={pageName} />
-              </div>
-            )
-          }
-          )}
+          {events && events
+            .filter(e => this.state.stateSelected !== null ? e.state === this.state.stateSelected : e)
+            .filter(e => this.state.monthSelected !== null ? e.startDate.slice(5, 7) === this.state.monthSelected : e)
+            .map(event => {
+              const pageName = eventType === "powwwows" ? "PowwowPage" : "PowwowPage";
+              return (
+                <div className={css.eventCardWrapper} key={event.eventName}>
+                  <EventCard event={event} pageName={pageName} />
+                </div>
+              )
+            }
+            )}
         </div>
       </div>) : null;
 

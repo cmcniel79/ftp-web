@@ -44,10 +44,11 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 25px auto;
+  margin: 0 auto;
    @media (--viewportMedium) {
     min-width: 75%;
     padding: 0 0 0 100px; 
+    margin: 25px auto;
   }
 }
 

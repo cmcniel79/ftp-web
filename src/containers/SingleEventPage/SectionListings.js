@@ -12,6 +12,8 @@ export const SectionListings = props => {
         pagination,
         searchListingsInProgress,
         searchListingsError,
+        pageName,
+        pagePathParams
     } = props;
 
     const heading =
@@ -29,6 +31,8 @@ export const SectionListings = props => {
             className={css.searchListingsPanel}
             listings={listings}
             pagination={pagination}
+            pageName={pageName}
+            pagePathParams={pagePathParams}
         /> : null;
 
     return (

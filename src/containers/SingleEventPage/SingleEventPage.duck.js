@@ -4,7 +4,7 @@ import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import fetch from 'cross-fetch';
 
 const eventsURL = " https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd/events";
-const RESULT_PAGE_SIZE = 48;
+
 // ================ Action types ================ //
 
 export const EVENT_DETAILS_REQUEST = 'app/SingleEventPage/EVENT_DETAILS_REQUEST';
@@ -107,19 +107,7 @@ const fetchEventDetails = (hostUUID) => (dispatch, getState, sdk) => {
 }
 
 export const loadData = (id) => (dispatch, getState, sdk) => {
-  const searchParams = {
-    page: 1,
-    perPage: RESULT_PAGE_SIZE,
-    include: ['author', 'images'],
-    'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink', 'publicData.category'],
-    'fields.user': ['profile.displayName', 'profile.abbreviatedName',
-      'profile.publicData.accountType', 'profile.publicData.tribe', 'profile.publicData.companyName', 'profile.publicData.companyIndustry'], //added metadata for verify badge
-    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
-    'limit.images': 1,
-  };
-
   return Promise.all([
     dispatch(fetchEventDetails(id)),
-    dispatch(searchListings(searchParams, id))
   ]);
 };
