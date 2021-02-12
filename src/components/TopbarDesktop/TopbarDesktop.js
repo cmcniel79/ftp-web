@@ -83,7 +83,7 @@ const TopbarDesktop = props => {
       </MenuLabel>
       <MenuContent className={css.profileMenuContent}>
         <MenuItem key="EventDetailsPage">
-          {isEventHost && (
+          {isEventHost ? (
             <NamedLink
               className={classNames(css.yourListingsLink, currentPageClass('EventDetailsPage'))}
               name="EventDetailsPage"
@@ -91,7 +91,7 @@ const TopbarDesktop = props => {
               <span className={css.menuItemBorder} />
               <FormattedMessage id="TopbarDesktop.yourEventLink" />
             </NamedLink>
-          )}
+          ) : "" }
         </MenuItem>
         <MenuItem key="ManageListingsPage">
           <NamedLink

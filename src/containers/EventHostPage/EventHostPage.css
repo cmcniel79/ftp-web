@@ -119,3 +119,7 @@
     box-shadow: var(--boxShadowButton);
   }
 }
+
+.tabs {
+  justify-content: space-around;
+}

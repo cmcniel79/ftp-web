@@ -124,7 +124,6 @@ export class EventHostPageComponent extends Component {
     // Image Stuff
     const imageUUID = imageId ? imageId : eventDetails && eventDetails.imageUUID ? eventDetails.imageUUID : null;
     const imageSrc = imageUUID ? CDN_DOMAIN + imageUUID + CDN_PARAMS : null;
-    console.log(imageSrc);
     const eventImage = { id: imageUUID, src: imageSrc };
     const isNewImage = eventDetails && imageId && (imageId !== eventDetails.imageUUID);
 
@@ -160,7 +159,42 @@ export class EventHostPageComponent extends Component {
     const submitDisabled =
       !validity || inputValue === '' || pristineSinceLastSubmit || uploadInProgress;
 
-    const eventSellersForm = (
+    const eventDetailsNeeded = (
+      <div>
+        <h3>
+          <FormattedMessage id="EventSellersForm.eventDetailsNeeded" />
+        </h3>
+      </div>
+    );
+
+    const eventDetailsForm = (
+      <EventDetailsForm
+        onSubmit={(values) => this.submitDetails(values)}
+        eventDetailsUpdate={eventDetailsUpdate}
+        eventDetailsInProgress={eventDetailsInProgress}
+        eventDetailsError={eventDetailsError}
+        hostUUID={hostUUID}
+        initialValues={{
+          eventName, eventType, eventWebsite, eventDescription, eventDuration, datesRange, startDate: { date: startDate },
+          mc, arenaDirector, hostDrums, location, state
+        }}
+      />
+    );
+
+    const eventPhotosForm = eventDetails ? (
+      <EventPhotosForm
+        hostUUID={hostUUID}
+        initialValues={eventImage}
+        eventImage={eventImage}
+        onImageUpload={(e) => this.onImageUploadHandler(e, onImageUpload)}
+        onSubmit={(values) => this.submitImage(values)}
+        uploadInProgress={uploadInProgress}
+        uploadImageError={uploadImageError}
+        isNewImage={isNewImage}
+      />
+    ) : eventDetailsNeeded;
+
+    const eventSellersForm = eventDetails ? (
       <div className={css.sellersContainer}>
         <div className={css.sellerInput}>
           <h3 className={css.sectionTitle}>
@@ -195,34 +229,7 @@ export class EventHostPageComponent extends Component {
           error={updateSellersError}
         />
       </div>
-    );
-
-    const eventDetailsForm = (
-      <EventDetailsForm
-        onSubmit={(values) => this.submitDetails(values)}
-        eventDetailsUpdate={eventDetailsUpdate}
-        eventDetailsInProgress={eventDetailsInProgress}
-        eventDetailsError={eventDetailsError}
-        hostUUID={hostUUID}
-        initialValues={{
-          eventName, eventType, eventWebsite, eventDescription, eventDuration, datesRange, startDate: { date: startDate },
-          mc, arenaDirector, hostDrums, location, state
-        }}
-      />
-    );
-
-    const eventPhotosForm = (
-      <EventPhotosForm
-        hostUUID={hostUUID}
-        initialValues={eventImage}
-        eventImage={eventImage}
-        onImageUpload={(e) => this.onImageUploadHandler(e, onImageUpload)}
-        onSubmit={(values) => this.submitImage(values)}
-        uploadInProgress={uploadInProgress}
-        uploadImageError={uploadImageError}
-        isNewImage={isNewImage}
-      />
-    );
+    ) : eventDetailsNeeded;
 
     const title = intl.formatMessage({ id: 'EventHostPage.title' });
 
@@ -280,7 +287,7 @@ export class EventHostPageComponent extends Component {
             ) : (
                 <div className={css.content}>
                   <h3>
-                    Your account is not linked with an event in our database. 
+                    Your account is not linked with an event in our database.
                     If you would like to host an event, contact us through our&nbsp;
                     <NamedLink name="ContactPage">
                       Contact Page

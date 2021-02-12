@@ -369,6 +369,7 @@
   "EventPhotosForm.tip": "The image will be cropped for its Event Card. You can see what an Event Card looks like on our {link}. The full image will be shown on your individual event page.",
   "EventPhotosForm.updateProfileFailed": "Whoops, something went wrong. Please try again.",
   "EventPhotosForm.yourProfilePicture": "Your profile picture",
+  "EventSellersForm.eventDetailsNeeded": "Please submit your event info on the details tab first before completing this section",
   "EventSellersForm.eventSellersInfo": "Event Sellers",
   "EventSellersForm.sellerInputLabel": "Add a seller to your event",
   "EventSellersForm.sellerInputPlaceholder": "chakotay@starfleet.com",
