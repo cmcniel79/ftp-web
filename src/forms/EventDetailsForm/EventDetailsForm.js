@@ -180,6 +180,7 @@ class EventDetailsFormComponent extends Component {
                   label={eventDescriptionMessage}
                   placeholder={eventDescriptionPlaceholder}
                   validate={required(descriptionRequiredMessage)}
+                  maxLength={400}
                 />
                 <FieldSelect
                   className={css.eventField}

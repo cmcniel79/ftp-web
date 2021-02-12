@@ -159,7 +159,7 @@ export const loadUsers = (userIds) => (dispatch, getState, sdk) => {
 function callAPI() {
   const url = BASE_URL + ENV + "?type=map";
   const options = {
-    method: 'POST',
+    method: 'GET',
     withCredentials: false,
     headers: {
       "Content-Type": "application/json",

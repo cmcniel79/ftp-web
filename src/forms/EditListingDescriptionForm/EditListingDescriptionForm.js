@@ -399,6 +399,7 @@ const EditListingDescriptionFormComponent = props => (
             label={descriptionMessage}
             placeholder={descriptionPlaceholderMessage}
             validate={composeValidators(required(descriptionRequiredMessage))}
+            maxLength={400}
           />
           {websiteLink}
           {physicalItemFields}

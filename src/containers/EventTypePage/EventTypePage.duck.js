@@ -1,4 +1,4 @@
-const EVENTS_URL = process.env.REACT_APP_API_EVENTS;
+const EVENTS_URL = process.env.REACT_APP_API_EVENTS + 'prd/events';
 const KEY = process.env.REACT_APP_API_KEY;
 
 // ================ Action types ================ //
@@ -53,8 +53,8 @@ const fetchEvents = (type) => (dispatch, getState, sdk) => {
       "X-Api-Key": KEY,
     }
   }
-
-  fetch(EVENTS_URL + "?type=" + type, options)
+  const url = EVENTS_URL + "?type=" + type;
+  fetch(url, options)
     .then(response => response.json())
     .then((res) => dispatch(eventsSuccess(res.body[0])))
     .catch(() =>  dispatch(eventsError("An error occurred when loading events. Please try refreshing the page")));
