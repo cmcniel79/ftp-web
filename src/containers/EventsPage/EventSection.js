@@ -26,10 +26,11 @@ export const EventSection = props => {
         <h1 className={css.sectionTitle}>
           {title}
         </h1>
+        {events.length > 2 ? (
         <h3 className={css.eventPageLink} >
           {link}
           <img className={css.arrow} src={arrow} alt="arrow" />
-        </h3>
+        </h3> ) : null}
       </div>
       <div className={css.eventSection}>
         {events.map(event => { 
