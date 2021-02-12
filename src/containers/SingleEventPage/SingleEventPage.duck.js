@@ -3,7 +3,7 @@ import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 
 import fetch from 'cross-fetch';
 
-const EVENTS_URL = process.env.REACT_APP_API_EVENTS;
+const EVENTS_URL = process.env.REACT_APP_API_EVENTS + 'prd/events';
 const KEY = process.env.REACT_APP_API_KEY;
 
 // ================ Action types ================ //
