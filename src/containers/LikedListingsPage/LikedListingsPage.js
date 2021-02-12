@@ -78,6 +78,8 @@ export class LikedListingsPageComponent extends Component {
       currentUser
     } = this.props;
 
+    const isEventHost = currentUser && currentUser.attributes.profile.metadata && currentUser.attributes.profile.metadata.eventHost;
+
     const listingsAreLoaded = !queryInProgress;
 
     this.likes = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likes ? 
@@ -127,7 +129,7 @@ export class LikedListingsPageComponent extends Component {
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer currentPage="LikedListingsPage" />
-            <UserNav selectedPageName="LikedListingsPage" />
+            <UserNav selectedPageName="LikedListingsPage" isEventHost={isEventHost}/>
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
             {queryInProgress ? loadingResults : null}

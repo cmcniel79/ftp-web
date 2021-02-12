@@ -9,6 +9,9 @@ import {
   FollowingPage,
   EditListingPage,
   EmailVerificationPage,
+  EventsPage,
+  EventTypePage,
+  EventHostPage,
   InboxPage,
   LandingPage,
   LikedListingsPage,
@@ -24,6 +27,7 @@ import {
   PrivacyPolicyPage,
   ProfilePage,
   ProfileSettingsPage,
+  SingleEventPage,
   SearchPage,
   StyleguidePage,
   TermsOfServicePage,
@@ -40,6 +44,12 @@ export const ACCOUNT_SETTINGS_PAGES = [
   'PasswordChangePage',
   'StripePayoutPage',
   'PaymentMethodsPage',
+];
+
+export const EVENT_HOST_PAGES = [
+  'EventDetailsPage',
+  'EventSellersPage',
+  'EventHostPage'
 ];
 
 // https://en.wikipedia.org/wiki/Universally_unique_identifier#Nil_UUID
@@ -74,6 +84,37 @@ const routeConfiguration = () => {
       name: 'ContactPage',
       component: props => <ContactPage {...props} />,
       loadData: ContactPage.loadData,
+    },
+    {
+      path: '/events',
+      name: 'EventsPage',
+      component: props => <EventsPage {...props} />,
+    },
+    {
+      path: '/events/:type',
+      name: 'EventTypePage',
+      component: props => <EventTypePage {...props} />,
+    },
+    {
+      path: '/event-details',
+      name: 'EventDetailsPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <EventHostPage {...props} tab="details"/>,
+    },
+    {
+      path: '/event-photos',
+      name: 'EventPhotosPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <EventHostPage {...props} tab="photos"/>,
+    },
+    {
+      path: '/event-sellers',
+      name: 'EventSellersPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <EventHostPage {...props} tab="sellers"/>,
     },
     {
       path: '/s',
@@ -189,6 +230,12 @@ const routeConfiguration = () => {
       auth: true,
       authPage: 'LoginPage',
       component: props => <ProfileSettingsPage {...props} />,
+    },
+    {
+      path: '/events/:eventType/:slug/:id',
+      name: 'SingleEventPage',
+      component: props => <SingleEventPage {...props} />,
+      loadData: SingleEventPage.loadData,
     },
 
     // Note: authenticating with IdP (e.g. Facebook) expects that /login path exists

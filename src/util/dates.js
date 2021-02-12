@@ -274,3 +274,35 @@ export const formatDateToText = (intl, date) => {
     }),
   };
 };
+
+export const getEventDateString = (startDate, endDate) => {
+  if (!startDate) {
+    return null;
+  }
+  const startString = startDate.toDateString();
+  const startMonth = startString.substring(4, 7);
+  const startYear = startString.slice(11);
+
+  if ((startDate && !endDate) || startDate === endDate) {
+    // Both dates are the same, or only a start date is given
+    return startString.slice(3);
+  } 
+
+  const endString = endDate.toDateString();
+  const endDay = endString.substring(8, 10);
+  const endMonth = endString.substring(4, 7);
+  const endYear = endString.slice(11);
+  
+  if (startMonth === endMonth && (startYear === endYear)) {
+    // Both dates have the same month and same year
+    return startString.substring(4, 10) + "-" + endDay + ", " + endYear;
+
+  } else if(startYear === endYear) {
+    // Both dates have the same year but different months
+    return startString.substring(4, 10) + " - " + endMonth + " " + endDay + ", " + endYear;
+
+  } else {
+    // Dates have different years
+    return startString.slice(4) + " - " + endString.slice(4);
+  }
+}

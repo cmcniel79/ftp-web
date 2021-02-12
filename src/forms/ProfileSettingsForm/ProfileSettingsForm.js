@@ -106,7 +106,6 @@ class ProfileSettingsFormComponent extends Component {
           const bioLabel = intl.formatMessage({ id: 'ProfileSettingsForm.bioLabel' });
           const bioPlaceholder = intl.formatMessage({ id: 'ProfileSettingsForm.bioPlaceholder' });
 
-          // Social Media Fields
           // Facebook
           const facebookLabel = intl.formatMessage({ id: 'ProfileSettingsForm.facebookLabel' });
           const facebookPlaceholder = intl.formatMessage({ id: 'ProfileSettingsForm.facebookPlaceholder' });

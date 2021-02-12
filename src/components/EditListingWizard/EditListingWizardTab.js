@@ -82,6 +82,7 @@ const EditListingWizardTab = props => {
     updateInProgress,
     intl,
     accountType,
+    userUUID,
     userCountry,
     allowsCustomOrders,
   } = props;
@@ -121,7 +122,7 @@ const EditListingWizardTab = props => {
             // After successful saving of draft data, user should be redirected to next tab
             redirectAfterDraftUpdate(r.data.data.id.uuid, params, tab, marketplaceTabs, history);
           } else {
-            handlePublishListing(currentListing.id, accountType);
+            handlePublishListing(currentListing.id, accountType, userUUID);
           }
         })
         .catch(e => {

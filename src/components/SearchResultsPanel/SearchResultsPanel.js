@@ -6,17 +6,29 @@ import { ListingCard, PaginationLinks } from '../../components';
 import css from './SearchResultsPanel.css';
 
 const SearchResultsPanel = props => {
-  const { className, rootClassName, listings, pagination, search, setActiveListing, currentUser, 
-    isLiked, updateLikes } = props;
+  const { 
+    className, 
+    rootClassName, 
+    listings, 
+    pagination, 
+    search, 
+    setActiveListing, 
+    currentUser, 
+    isLiked, 
+    updateLikes,
+    pageName,
+    pagePathParams 
+  } = props;
   const classes = classNames(rootClassName || css.root, className);
 
   const paginationLinks =
     pagination && pagination.totalPages > 1 ? (
       <PaginationLinks
         className={css.pagination}
-        pageName="SearchPage"
         pageSearchParams={search}
         pagination={pagination}
+        pageName={pageName}
+        pagePathParams={pagePathParams}
       />
     ) : null;
 

@@ -45,8 +45,10 @@ export class ProfileSettingsPageComponent extends Component {
       intl,
     } = this.props;
 
+    const isEventHost = currentUser && currentUser.attributes.profile.metadata && currentUser.attributes.profile.metadata.eventHost;
+
     function checkAddress(location) {
-      return location && location.selectedPlace && location.selectedPlace.origin && 
+      return location && location.selectedPlace && location.selectedPlace.origin &&
         location.selectedPlace.origin.lat && location.selectedPlace.origin.lng ? true : false;
     }
 
@@ -85,16 +87,16 @@ export class ProfileSettingsPageComponent extends Component {
           ? { ...profile, profileImageId: uploadedImage.imageId }
           : profile;
       onUpdateProfile(updatedValues);
-      
+
       const accountValue = user && user.attributes.profile.publicData ? user.attributes.profile.publicData.accountType : null;
       if (accountValue === 'p' || accountValue === 'a' || accountValue === 'n' || accountValue === 'e') {
         const uuid = user && user.id ? user.id.uuid : null;
         const requestBody = {
-            ownerName: firstName + " " + lastName,
-            companyName: companyName ? companyName : null,
-            uuid: uuid,
-            hasAddress: checkAddress(location)
-          };
+          ownerName: firstName + " " + lastName,
+          companyName: companyName ? companyName : null,
+          uuid: uuid,
+          hasAddress: checkAddress(location)
+        };
         updateDatabase(requestBody);
       }
     };
@@ -119,10 +121,10 @@ export class ProfileSettingsPageComponent extends Component {
     const twitter = socialMedia && socialMedia.twitter ? socialMedia.twitter : null;
     const insta = socialMedia && socialMedia.insta ? socialMedia.insta : null;
     const tiktok = socialMedia && socialMedia.tiktok ? socialMedia.tiktok : null;
-    const faqLink = 
-    <NamedLink name="FAQPage">
-      <FormattedMessage id="ProfileSettingsPage.faqLink" />
-    </NamedLink>;
+    const faqLink =
+      <NamedLink name="FAQPage">
+        <FormattedMessage id="ProfileSettingsPage.faqLink" />
+      </NamedLink>;
     let verification;
     let listingsLimit;
     let profileHeading;
@@ -196,7 +198,7 @@ export class ProfileSettingsPageComponent extends Component {
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer currentPage="ProfileSettingsPage" />
-            <UserNav selectedPageName="ProfileSettingsPage" />
+            <UserNav selectedPageName="ProfileSettingsPage" isEventHost={isEventHost}/>
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
             <div className={css.content}>

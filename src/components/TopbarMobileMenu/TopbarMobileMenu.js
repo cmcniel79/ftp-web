@@ -78,17 +78,18 @@ const TopbarMobileMenu = props => {
   const regularLinksClasses = isAuthenticated ? css.regularLinks : css.regularLinksLarge;
   const accountType = user && user.attributes.profile.publicData && user.attributes.profile.publicData.accountType ?
     user.attributes.profile.publicData.accountType : null;
+  const isEventHost = currentUser && currentUser.attributes.profile.metadata && currentUser.attributes.profile.metadata.eventHost;
 
   const regularLinks =
     <div className={regularLinksClasses}>
-      <NamedLink name="AboutPage" className={css.regularLink}>
-        <FormattedMessage id="TopbarMobileMenu.aboutLink" />
-      </NamedLink>
       <NamedLink name="SearchPage" className={css.regularLink}>
         <FormattedMessage id="TopbarMobileMenu.shopLink" />
       </NamedLink>
       <NamedLink name="MapPage" className={css.regularLink}>
         <FormattedMessage id="TopbarMobileMenu.mapLink" />
+      </NamedLink>
+      <NamedLink name="EventsPage" className={css.regularLink}>
+        <FormattedMessage id="TopbarMobileMenu.eventsLink" />
       </NamedLink>
       <NamedLink name="FAQPage" className={css.regularLink}>
         <FormattedMessage id="TopbarMobileMenu.faqLink" />
@@ -124,6 +125,14 @@ const TopbarMobileMenu = props => {
           name="ManageListingsPage"
         >
           <FormattedMessage id="TopbarMobileMenu.yourListingsLink" />
+        </NamedLink>
+      }
+      {isEventHost &&
+        <NamedLink
+          className={css.regularLink}
+          name="EventDetailsPage"
+        >
+          <FormattedMessage id="TopbarMobileMenu.yourEventLink" />
         </NamedLink>
       }
     </div>

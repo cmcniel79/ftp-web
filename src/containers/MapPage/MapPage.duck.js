@@ -4,6 +4,10 @@ import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import fetch from 'cross-fetch';
 
+const KEY = process.env.REACT_APP_API_KEY;
+const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
+const BASE_URL = process.env.REACT_APP_API_DATABASE;
+
 const { UUID } = sdkTypes;
 // ================ Action types ================ //
 
@@ -153,7 +157,16 @@ export const loadUsers = (userIds) => (dispatch, getState, sdk) => {
 };
 
 function callAPI() {
-  return fetch("https://vyvhifh63b.execute-api.us-west-1.amazonaws.com/prd?type=map")
+  const url = BASE_URL + ENV + "?type=map";
+  const options = {
+    method: 'POST',
+    withCredentials: false,
+    headers: {
+      "Content-Type": "application/json",
+      "X-Api-Key": KEY,
+    }
+  }
+  return fetch(url, options)
     .then(handleErrors)
     .then(res => res.json())
     .then(data => {
