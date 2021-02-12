@@ -101,7 +101,8 @@ const fetchEventDetails = (hostUUID) => (dispatch, getState, sdk) => {
       "X-Api-Key": KEY,
     }
   }
-  fetch(EVENTS_URL + "?uuid=" + hostUUID, options)
+  const url = EVENTS_URL + "?uuid=" + hostUUID;
+  fetch(url, options)
     .then(response => response.json())
     .then((res) => dispatch(eventDetailsSuccess(res.body[0][0])))
     .catch(() => dispatch(eventDetailsError("Could Not Get Event Details")));

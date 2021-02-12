@@ -138,8 +138,8 @@ const fetchEventDetails = (hostUUID) => (dispatch, getState, sdk) => {
       "X-Api-Key": KEY,
     }
   }
-
-  fetch(EVENTS_URL + "?uuid=" + hostUUID, options)
+  const url = EVENTS_URL + "?uuid=" + hostUUID;
+  fetch(url, options)
     .then(response => response.json())
     .then((res) => dispatch(eventDetailsSuccess(res.body[0][0])))
     .catch(() => dispatch(eventDetailsError("Could not update event details. Please try again")));
@@ -179,7 +179,8 @@ export function uploadImage(actionPayload) {
             "X-Api-Key": KEY,
           }
         };
-        fetch(EVENTS_URL + '/photos', options)
+        const url = EVENTS_URL + '/photos';
+        fetch(url, options)
           .then(response => response.json())
           .then(data => dispatch(uploadImageSuccess(data.body.id)))
           .catch(response => dispatch(uploadImageError(response)));
@@ -199,7 +200,8 @@ export function updateImage(actionPayload) {
         "X-Api-Key": KEY,
       }
     }
-    fetch(EVENTS_URL + '/photos', options)
+    const url = EVENTS_URL + '/photos'
+    fetch(url, options)
       .then(response => response.json())
       .then(() => dispatch(saveImageSuccess()))
       .catch(response => dispatch(uploadImageError(response)));
@@ -218,8 +220,8 @@ export const updateSellers = actionPayload => {
         "X-Api-Key": KEY,
       }
     }
-
-    fetch(EVENTS_URL + "/sellers", options)
+    const url = EVENTS_URL + "/sellers";
+    fetch(url, options)
       .then(response => response.json())
       .then(data => {
         if (data.statusCode >= 200 && data.statusCode < 300) {
@@ -242,8 +244,8 @@ const fetchEventSellers = (hostUUID) => (dispatch, getState, sdk) => {
       "X-Api-Key": KEY,
     }
   }
-
-  fetch(EVENTS_URL + "/sellers?uuid=" + hostUUID, options)
+  const url = EVENTS_URL + "/sellers?uuid=" + hostUUID;
+  fetch(url, options)
     .then(response => response.json())
     .then(data => dispatch(updateSellersSuccess(data)))
     .catch(() => dispatch(updateSellersError({ body: "There was an error when trying to update your sellers list" })));
