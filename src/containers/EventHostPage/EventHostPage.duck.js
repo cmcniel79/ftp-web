@@ -1,4 +1,5 @@
-const eventsURL = " https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd/events";
+const EVENTS_URL = process.env.REACT_APP_API_EVENTS;
+const KEY = process.env.REACT_APP_API_KEY;
 
 // ================ Action types ================ //
 
@@ -78,7 +79,7 @@ export default function reducer(state = initialState, action = {}) {
     }
     case UPDATE_SELLERS_ERROR: {
       return { ...state, updateSellersInProgress: false, updateSellersError: payload.response, updateSellersResponse: null };
-    };
+    }
 
     default:
       return state;
@@ -117,10 +118,10 @@ export const updateEventDetails = actionPayload => {
       body: JSON.stringify(actionPayload),
       headers: {
         "Content-Type": "application/json",
-        // "X-Api-Key": KEY,
+        "X-Api-Key": KEY,
       }
     }
-    fetch(eventsURL, options)
+    fetch(EVENTS_URL, options)
       .then(response => response.json())
       .then((res) => dispatch(eventDetailsUpdateSuccess()))
       .catch(() => dispatch(eventDetailsError("Could not update event details. Please try again")));
@@ -134,11 +135,11 @@ const fetchEventDetails = (hostUUID) => (dispatch, getState, sdk) => {
     withCredentials: false,
     headers: {
       "Content-Type": "application/json",
-      // "X-Api-Key": KEY,
+      "X-Api-Key": KEY,
     }
   }
 
-  fetch(eventsURL + "?uuid=" + hostUUID, options)
+  fetch(EVENTS_URL + "?uuid=" + hostUUID, options)
     .then(response => response.json())
     .then((res) => dispatch(eventDetailsSuccess(res.body[0][0])))
     .catch(() => dispatch(eventDetailsError("Could not update event details. Please try again")));
@@ -175,16 +176,13 @@ export function uploadImage(actionPayload) {
           body: JSON.stringify({ file: src, id: actionPayload.id, fileType: actionPayload.fileType }),
           headers: {
             "Content-Type": "application/json",
-            // "X-Api-Key": KEY,
+            "X-Api-Key": KEY,
           }
         };
-        fetch('https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd/events/photos', options)
+        fetch(EVENTS_URL + '/photos', options)
           .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            dispatch(uploadImageSuccess(data.body.id));
-          })
-          .catch(response => console.log(response));
+          .then(data => dispatch(uploadImageSuccess(data.body.id)))
+          .catch(response => dispatch(uploadImageError(response)));
       })
   }
 }
@@ -198,37 +196,32 @@ export function updateImage(actionPayload) {
       body: JSON.stringify(actionPayload),
       headers: {
         "Content-Type": "application/json",
-        // "X-Api-Key": KEY,
+        "X-Api-Key": KEY,
       }
     }
-    fetch('https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd/events/photos', options)
+    fetch(EVENTS_URL + '/photos', options)
       .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        dispatch(saveImageSuccess());
-      })
-      .catch(response => console.log(response));
+      .then(() => dispatch(saveImageSuccess()))
+      .catch(response => dispatch(uploadImageError(response)));
   };
 }
 
 export const updateSellers = actionPayload => {
   return (dispatch, getState, sdk) => {
     dispatch(updateSellersRequest());
-    console.log(actionPayload);
     const options = {
       method: 'POST',
       withCredentials: false,
       body: JSON.stringify(actionPayload),
       headers: {
         "Content-Type": "application/json",
-        // "X-Api-Key": KEY,
+        "X-Api-Key": KEY,
       }
     }
 
-    fetch(eventsURL + "/sellers", options)
+    fetch(EVENTS_URL + "/sellers", options)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         if (data.statusCode >= 200 && data.statusCode < 300) {
           dispatch(updateSellersSuccess(data));
         } else {
@@ -246,11 +239,11 @@ const fetchEventSellers = (hostUUID) => (dispatch, getState, sdk) => {
     withCredentials: false,
     headers: {
       "Content-Type": "application/json",
-      // "X-Api-Key": KEY,
+      "X-Api-Key": KEY,
     }
   }
 
-  fetch(eventsURL + "/sellers?uuid=" + hostUUID, options)
+  fetch(EVENTS_URL + "/sellers?uuid=" + hostUUID, options)
     .then(response => response.json())
     .then(data => dispatch(updateSellersSuccess(data)))
     .catch(() => dispatch(updateSellersError({ body: "There was an error when trying to update your sellers list" })));

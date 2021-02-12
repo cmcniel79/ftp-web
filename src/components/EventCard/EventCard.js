@@ -7,6 +7,9 @@ import { NamedLink } from '..';
 
 import css from './EventCard.css';
 
+const CDN_DOMAIN = process.env.REACT_APP_CDN_DOMAIN;
+const CDN_PARAMS = process.env.REACT_APP_CDN_PARAMS;
+
 export const EventCardComponent = props => {
   const {
     rootClassName,
@@ -21,17 +24,15 @@ export const EventCardComponent = props => {
   const endDate = event && event.endDate ? parseDateFromISO8601(event.endDate.slice(0, 10)) : null;
   const dateString = !endDate ? startDate.toDateString().slice(3, 10) : getEventDateString(startDate, endDate).slice(0, -6);
 
-  const imageUrl = event && event.imageUUID ? "https://ftpevents.imgix.net/" + event.imageUUID
-    : "https://ftpevents.imgix.net/EventsLogo2.png";
-  const cropEnd = "?h=533&w=800&fit=crop&crop=focalpoint&fp-x=.5&fp-y=.0";
-
+  const imageId = event && event.imageUUID ? event.imageUUID : "grey.png";  
+  const imageSrc = CDN_DOMAIN + imageId + CDN_PARAMS;
   const card = (
     <div className={classes}>
       <div className={css.squareWrapper}>
         <div className={css.eventImageWrapper}>
           {event && eventType && eventSlug &&
             <NamedLink className={css.eventLink} name="SingleEventPage" params={{ eventType: eventType, slug: eventSlug, id: event.hostUUID }}>
-              <img className={css.eventImage} src={imageUrl + cropEnd} alt={event.eventName} />
+              <img className={css.eventImage} src={imageSrc} alt={event.eventName} />
             </NamedLink>
           }
         </div>

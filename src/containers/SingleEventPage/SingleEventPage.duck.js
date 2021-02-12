@@ -3,7 +3,8 @@ import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 
 import fetch from 'cross-fetch';
 
-const eventsURL = " https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd/events";
+const EVENTS_URL = process.env.REACT_APP_API_EVENTS;
+const KEY = process.env.REACT_APP_API_KEY;
 
 // ================ Action types ================ //
 
@@ -97,10 +98,10 @@ const fetchEventDetails = (hostUUID) => (dispatch, getState, sdk) => {
     withCredentials: false,
     headers: {
       "Content-Type": "application/json",
-      // "X-Api-Key": KEY,
+      "X-Api-Key": KEY,
     }
   }
-  fetch(eventsURL + "?uuid=" + hostUUID, options)
+  fetch(EVENTS_URL + "?uuid=" + hostUUID, options)
     .then(response => response.json())
     .then((res) => dispatch(eventDetailsSuccess(res.body[0][0])))
     .catch(() => dispatch(eventDetailsError("Could Not Get Event Details")));

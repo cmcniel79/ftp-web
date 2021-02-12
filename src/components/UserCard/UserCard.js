@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, func, oneOfType } from 'prop-types';
+import { string, oneOfType } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import truncate from 'lodash/truncate';
 import classNames from 'classnames';

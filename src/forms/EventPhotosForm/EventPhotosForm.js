@@ -54,8 +54,6 @@ class EventPhotosFormComponent extends Component {
             invalid,
             hostUUID,
             onImageUpload,
-            pristine,
-            initialValues,
             eventImage,
             rootClassName,
             uploadImageError,

@@ -1,4 +1,5 @@
-const eventsURL = " https://yxcapgxgcj.execute-api.us-west-1.amazonaws.com/prd/events";
+const EVENTS_URL = process.env.REACT_APP_API_EVENTS;
+const KEY = process.env.REACT_APP_API_KEY;
 
 // ================ Action types ================ //
 
@@ -49,11 +50,11 @@ const fetchEvents = (type) => (dispatch, getState, sdk) => {
     withCredentials: false,
     headers: {
       "Content-Type": "application/json",
-      // "X-Api-Key": KEY,
+      "X-Api-Key": KEY,
     }
   }
 
-  fetch(eventsURL + "?type=" + type, options)
+  fetch(EVENTS_URL + "?type=" + type, options)
     .then(response => response.json())
     .then((res) => dispatch(eventsSuccess(res.body[0])))
     .catch(() =>  dispatch(eventsError("An error occurred when loading events. Please try refreshing the page")));

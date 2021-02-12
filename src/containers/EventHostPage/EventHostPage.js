@@ -22,8 +22,9 @@ import {
 } from '../../components';
 
 import css from './EventHostPage.css';
-const cdnDomain = "https://ftpevents.imgix.net/";
-const cdnParams = "?h=533&w=800&fit=crop&crop=focalpoint&fp-x=.5&fp-y=.0";
+
+const CDN_DOMAIN = process.env.REACT_APP_CDN_DOMAIN;
+const CDN_PARAMS = process.env.REACT_APP_CDN_PARAMS;
 
 export class EventHostPageComponent extends Component {
   constructor(props) {
@@ -122,7 +123,8 @@ export class EventHostPageComponent extends Component {
 
     // Image Stuff
     const imageUUID = imageId ? imageId : eventDetails && eventDetails.imageUUID ? eventDetails.imageUUID : null;
-    const imageSrc = imageUUID ? cdnDomain + imageUUID + cdnParams : null;
+    const imageSrc = imageUUID ? CDN_DOMAIN + imageUUID + CDN_PARAMS : null;
+    console.log(imageSrc);
     const eventImage = { id: imageUUID, src: imageSrc };
     const isNewImage = eventDetails && imageId && (imageId !== eventDetails.imageUUID);
 
@@ -321,7 +323,6 @@ const mapStateToProps = state => {
     hostUUID,
     hostName,
     hostEmail,
-    currentUser,
     eventDetails,
     eventDetailsUpdate,
     eventDetailsInProgress,

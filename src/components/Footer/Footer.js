@@ -13,7 +13,6 @@ import {
   ExternalLink,
   NamedLink,
 } from '../../components';
-import pdf from '../../assets/advertising-guide.pdf';
 import css from './Footer.css';
 
 const renderSocialMediaLinks = intl => {
@@ -120,11 +119,6 @@ const Footer = props => {
                   <NamedLink name="AboutPage" className={css.link}>
                     <FormattedMessage id="Footer.toAboutPage" />
                   </NamedLink>
-                </li>
-                <li className={css.listItem}>
-                  <ExternalLink href={pdf} className={css.link}>
-                    <FormattedMessage id="Footer.advertiseWithUs" />
-                  </ExternalLink>
                 </li>
               </ul>
             </div>
