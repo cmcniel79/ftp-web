@@ -16,7 +16,7 @@ import {
   Page,
 } from '../../components';
 
-import css from './EventTypePage.css';
+import css from './EventTypePage.module.css';
 
 export class EventTypePageComponent extends Component {
   constructor(props) {

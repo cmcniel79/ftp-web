@@ -18,7 +18,7 @@ import SearchMapWithMapbox, {
   isMapsLibLoaded,
 } from './SearchMapWithMapbox';
 import ReusableMapContainer from './ReusableMapContainer';
-import css from './SearchMap.css';
+import css from './SearchMap.module.css';
 
 const REUSABLE_MAP_HIDDEN_HANDLE = 'reusableMapHidden';
 
@@ -125,6 +125,8 @@ export class SearchMapUsersComponent extends Component {
       messages,
       selectedIndustry,
       selectedTribe,
+      geometry,
+      showNativePlaces
     } = this.props;
     const classes = classNames(rootClassName || css.root, className);
     const usersWithLocation = users ? users.filter(u => !!(u.attributes.profile.publicData.companyLocation && u.attributes.profile.publicData.companyLocation.location
@@ -167,6 +169,8 @@ export class SearchMapUsersComponent extends Component {
           reusableMapHiddenHandle={REUSABLE_MAP_HIDDEN_HANDLE}
           selectedIndustry={selectedIndustry}
           selectedTribe={selectedTribe}
+          geometry={geometry}
+          showNativePlaces={showNativePlaces}
         />
       </ReusableMapContainer>
     ) : (

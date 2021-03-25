@@ -9,10 +9,16 @@ import { parse } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
 import { ensureUser } from '../../util/data';
 import { sdkBoundsToFixedCoordinates, hasSameSDKBounds } from '../../util/maps';
-import { SearchMapSellerCard, SearchMapInfoCard, SearchMapSellerLabel, SearchMapGroupLabel } from '../../components';
-
+import navigateIcon from '../../assets/navigate.svg';
+import {
+  ExternalLink,
+  SearchMapSellerCard,
+  SearchMapInfoCard,
+  SearchMapSellerLabel,
+  SearchMapGroupLabel
+} from '../../components';
 import { groupedByCoordinates, reducedToArray } from './SearchMap.helpers.js';
-import css from './SearchMapWithMapbox.css';
+import css from './SearchMapWithMapbox.module.css';
 import arrowIcon from './Images/arrow.svg'
 
 export const LABEL_HANDLE = 'SearchMapLabel';
@@ -21,6 +27,22 @@ export const SOURCE_AUTOCOMPLETE = 'autocomplete';
 const BOUNDS_FIXED_PRECISION = 8;
 
 const { LatLng: SDKLatLng, LatLngBounds: SDKLatLngBounds } = sdkTypes;
+const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+const GEO_SOURCE_NAME = 'geoSource';
+const NATIVE_SOURCE_NAME = 'native-place-names';
+const AVATAR_IMAGE_VARIANTS = [
+  // 40x40
+  'square-xsmall',
+
+  // 80x80
+  'square-xsmall2x',
+
+  // 240x240
+  'square-small',
+
+  // 480x480
+  'square-small2x',
+];
 
 /**
  * Fit part of map (descriped with bounds) to visible map-viewport
@@ -244,12 +266,21 @@ class SearchMapWithMapbox extends Component {
     this.currentInfoCard = null;
     this.state = { mapContainer: null, isMapReady: false };
     this.viewportBounds = null;
+    this.popup = new mapboxgl.Popup({
+      maxWidth: '325px',
+      closeButton: false,
+      closeOnClick: true,
+      anchor: 'bottom',
+      className: css.customPopup,
+    });
 
     this.onMount = this.onMount.bind(this);
     this.onMoveend = this.onMoveend.bind(this);
     this.initializeMap = this.initializeMap.bind(this);
     this.handleDoubleClickOnInfoCard = this.handleDoubleClickOnInfoCard.bind(this);
     this.handleMobilePinchZoom = this.handleMobilePinchZoom.bind(this);
+    this.createPopupElement = this.createPopupElement.bind(this);
+    this.addPopup = this.addPopup.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -287,10 +318,12 @@ class SearchMapWithMapbox extends Component {
   }
 
   componentWillUnmount() {
-    this.currentInfoCard.markerContainer.removeEventListener(
-      'dblclick',
-      this.handleDoubleClickOnInfoCard
-    );
+    if (this.currentInfoCard) {
+      this.currentInfoCard.markerContainer.removeEventListener(
+        'dblclick',
+        this.handleDoubleClickOnInfoCard
+      );
+    }
     document.removeEventListener('gesturestart', this.handleMobilePinchZoom, false);
     document.removeEventListener('gesturechange', this.handleMobilePinchZoom, false);
     document.removeEventListener('gestureend', this.handleMobilePinchZoom, false);
@@ -340,8 +373,8 @@ class SearchMapWithMapbox extends Component {
     if (hasDimensions) {
       this.map = new window.mapboxgl.Map({
         container: this.state.mapContainer,
-        style: 'mapbox://styles/mapbox/streets-v10',
-        scrollZoom: false,
+        style: 'mapbox://styles/cmcniel79/cklztcfzf7f2g17o1kj6tvr84',
+        accessToken: MAPBOX_TOKEN
       });
       window.mapboxMap = this.map;
 
@@ -367,6 +400,47 @@ class SearchMapWithMapbox extends Component {
     e.stopPropagation();
   }
 
+  createPopupElement(event, coordinates) {
+    return (
+      <div className={css.popup}>
+        <div className={css.topContainer}>
+          <div className={css.titleContainer}>
+            <h3 className={css.popupTitle}>{event.features[0].properties.nativeName}</h3>
+            <p className={css.popupSubtitle}>Diné Bizaad</p>
+          </div>
+          <ExternalLink
+            className={css.popupLink}
+            href={"https://www.google.com/maps/search/?api=1&query=" + coordinates[1] + "," + coordinates[0]}
+          >
+            <img className={css.linkIcon} src={navigateIcon} alt="Navigate" />
+          </ExternalLink>
+        </div>
+        <div className={css.popupCard}>
+          <img
+            className={css.popupImage}
+            alt="Logo"
+            src={"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Navajo_flag.svg/1920px-Navajo_flag.svg.png"}
+          />
+          <div className={css.popupTextContainer}>
+            <p className={css.popupText}>
+              A Navajo Nation chapter house named after a Mexican man who settled near there. English name is&nbsp;
+            {event.features[0].properties.englishName}.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  addPopup(element, coordinates) {
+    const placeholder = document.createElement('div');
+    ReactDOM.render(element, placeholder);
+    this.popup
+      .setDOMContent(placeholder)
+      .setLngLat(coordinates)
+      .addTo(this.map);
+  }
+
   render() {
     const {
       className,
@@ -378,9 +452,73 @@ class SearchMapWithMapbox extends Component {
       mapComponentRefreshToken,
       selectedIndustry,
       selectedTribe,
+      geometry,
+      showNativePlaces
     } = this.props;
 
     if (this.map) {
+
+      // Remove the native-lands polygon map layer & source
+      if (typeof this.map.getLayer(GEO_SOURCE_NAME) !== 'undefined') {
+        this.map.removeLayer(GEO_SOURCE_NAME).removeSource(GEO_SOURCE_NAME);
+      }
+
+      if (geometry) {
+        // Add the native-lands polygon map layer & source if user has selected a tribe
+        this.map.addSource(GEO_SOURCE_NAME, {
+          'type': 'geojson',
+          'data': {
+            'type': 'Feature',
+            'geometry': geometry
+          }
+        });
+        this.map.addLayer({
+          'id': GEO_SOURCE_NAME,
+          'type': 'fill',
+          'source': GEO_SOURCE_NAME,
+          'layout': {},
+          'paint': {
+            'fill-color': '#d40000',
+            'fill-opacity': .3
+          }
+        });
+      }
+
+      // Show or hide the native place nammes' map source based on user input
+      if (!showNativePlaces && typeof this.map.getLayer(NATIVE_SOURCE_NAME) !== 'undefined') {
+        this.map.setLayoutProperty(NATIVE_SOURCE_NAME, 'visibility', 'none');
+      } else if (showNativePlaces && typeof this.map.getLayer(NATIVE_SOURCE_NAME) !== 'undefined') {
+        this.map.setLayoutProperty(NATIVE_SOURCE_NAME, 'visibility', 'visible');
+      };
+
+      // Add the popup when mouse enters a feature on the native place names' map source
+      this.map.on('mouseenter', NATIVE_SOURCE_NAME, e => {
+        const coordinates = e.features[0].geometry ? e.features[0].geometry.coordinates : [e.lngLat.lng, e.lngLat.lat];
+        const element = this.createPopupElement(e, coordinates);
+        this.addPopup(element, coordinates);
+        const contentElement = document.getElementsByClassName('mapboxgl-popup-content');
+        if (contentElement[0]) {
+          contentElement[0].style.padding = '0 0 0 0';
+          contentElement[0].style.borderRadius = '5px';
+        }
+      });
+
+      this.map.on('touchstart', NATIVE_SOURCE_NAME, e => {
+        const coordinates = e.features[0].geometry ? e.features[0].geometry.coordinates : [e.lngLat.lng, e.lngLat.lat];
+        const element = this.createPopupElement(e, coordinates);
+        this.addPopup(element, coordinates);
+        const contentElement = document.getElementsByClassName('mapboxgl-popup-content');
+        if (contentElement[0]) {
+          contentElement[0].style.padding = '0 0 0 0';
+          contentElement[0].style.borderRadius = '5px';
+        }
+      });
+
+      // Remove popup on click
+      this.map.on('click', NATIVE_SOURCE_NAME, () => {
+        this.popup.remove();
+      });
+
       // Create markers out of price labels and grouped labels
       const labels = priceLabelsInLocations(
         users,

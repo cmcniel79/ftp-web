@@ -1,0 +1,255 @@
+@import '../../styles/propertySets.css';
+
+.root {
+  display: block;
+  position: relative;
+  height: auto;
+  border: 0;
+  padding: 0;
+  /* Borders */
+  border-radius: 4px;
+  box-shadow: var(--boxShadowPopupLight);
+  transition: var(--transitionStyleButton);
+  &:hover {
+    cursor: default;
+    box-shadow: var(--boxShadowPopup);
+  }
+}
+
+.anchor {
+  display: block;
+  overflow: hidden;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.card {
+  /**
+   * Since caret is absolutely positioned,
+   * label must have relative to be included to the same rendering layer
+   */
+  position: relative;
+  width: 325px;
+  /* Font */
+  @apply --marketplaceH5FontStyles;
+  color: var(--matterColor);
+  border-radius: 10px;
+  border: 0;
+  background-color: var(--matterColorLight);
+  /* Dimensions */
+  margin-top: 0;
+  margin-bottom: 0;
+  transition: var(--transitionStyleButton);
+  /* Overwrite dimensions from font styles */
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.cardWithButtons {
+  /**
+   * Since caret is absolutely positioned,
+   * label must have relative to be included to the same rendering layer
+   */
+  position: relative;
+  width: 400px;
+  /* Font */
+  @apply --marketplaceH5FontStyles;
+  color: var(--matterColor);
+  border-radius: 10px;
+  border: 0;
+  background-color: var(--matterColorLight);
+  /* Dimensions */
+  margin-top: 0;
+  margin-bottom: 0;
+  transition: var(--transitionStyleButton);
+  /* Overwrite dimensions from font styles */
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+/* Overwrite Mapbox's specific font rules */
+
+.root .card {
+  font-family: 'poppins', Helvetica, Arial, sans-serif;
+  font-weight: var(--fontWeightSemiBold);
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
+.premiumAvatar {
+  flex-shrink: 0;
+  margin: 10px 25px 10px 10px;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  @media (--viewportMedium) {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.initials {
+  /* Position possible initials to the center of the component */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Colors */
+  background-image: linear-gradient( -180deg, var(--marketplaceColorLight) 0%, var(--marketplaceColor) 100%);
+  color: var(--matterColorLight);
+  font-size: 30px;
+  font-weight: var(--fontWeightBold);
+  flex-shrink: 0;
+  border-radius: 50%;
+  margin: 10px 25px 10px 10px;
+  width: 75px;
+  height: 75px;
+  @media (--viewportMedium) {
+    width: 100px;
+    height: 100px;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  margin: 0 auto 0 0;
+  justify-content: space-evenly;
+}
+
+.heading {
+  @apply --marketplaceH2FontStyles;
+  line-height: 25px;
+  margin: 5px 0 0 0;
+  /* @media (--viewportMedium) {
+    margin: 5px 0 0 0;
+  } */
+}
+
+.subHeading {
+  margin: 0 3px 0 0;
+  line-height: 24px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 2px 0 10px 0;
+}
+
+.linkButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--marketplaceColor);
+  font-weight: normal;
+  &:hover {
+    text-decoration: none;
+    transform: scale(1.05);
+  }
+}
+
+.linkIcon {
+  width: 40px;
+  border: none;
+}
+
+.shareIcon {
+  width: 40px;
+}
+
+.shareButton {
+  width: 40px;
+  padding: 0;
+  margin: 0;
+  background-color: var(--matterColorLight);
+  color: var(--marketplaceColor);
+  border: none;
+  font-weight: normal;
+  &:hover {
+    text-decoration: none;
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+}
+
+.copyStatus {
+  font-size: 14px;
+  line-height: 17px;
+  margin: 0 25px 0 25px;
+  padding-bottom: 10px;
+  font-weight: 500;
+}
+
+.caretShadow {
+  /* Caret / arrow dimensions and position */
+  width: 6px;
+  height: 6px;
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  margin-left: -3px;
+  transform: rotate(45deg);
+  /* Caret should have same box-shadow as label */
+  box-shadow: var(--boxShadowPopupLight);
+}
+
+.caret {
+  /* Caret / arrow dimensions and position */
+  width: 6px;
+  height: 6px;
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  margin-left: -3px;
+  transform: rotate(45deg);
+  /* Caret should have same bg-color and border as label */
+  background-color: var(--matterColorLight);
+  border-right-style: solid;
+  border-right-color: var(--matterColorNegative);
+  border-right-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--matterColorNegative);
+  border-bottom-width: 1px;
+}
+
+.caretWithCarousel {
+  background-color: var(--marketplaceColor);
+  border-right-color: var(--marketplaceColor);
+  border-bottom-color: var(--marketplaceColor);
+}
+
+.forwardButton {
+  display: initial;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.backButton {
+  display: initial;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chevron {
+  width: 50px;
+  cursor: pointer;
+  transform: scale(1.02);
+}

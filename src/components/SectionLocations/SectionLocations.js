@@ -6,7 +6,7 @@ import { lazyLoadWithDimensions } from '../../util/contextHelpers';
 
 import { NamedLink } from '../../components';
 
-import css from './SectionLocations.css';
+import css from './SectionLocations.module.css';
 
 import jewelryImage from './images/jewelry.jpg';
 import artImage from './images/art.jpg';

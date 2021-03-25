@@ -1,5 +1,6 @@
 import React from 'react';
-import css from './ListingPage.css';
+
+import css from './ListingPage.module.css';
 
 const SectionHeading = props => {
   const {

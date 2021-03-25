@@ -1,0 +1,68 @@
+@import '../../styles/propertySets.css';
+
+.root {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  /* flex-basis: 100%; */
+  /* Remove link's hover effect */
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.squareWrapper {
+  /* Layout */
+  display: block;
+  width: 100%;
+  position: relative;
+  transition: var(--transitionStyleButton);
+  margin-bottom: 10px;
+  ;
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: var(--boxShadowListingCard);
+  }
+}
+
+.eventImageWrapper {
+  padding-bottom: 66.6667%;
+  /* 3:2 Aspect Ratio */
+  background: var(--matterColorNegative);
+  /* Loading BG color */
+}
+
+.eventLink {
+  text-decoration: none;
+  color: white;
+}
+
+.eventImage {
+  /* Layout - image will take space defined by aspect ratio wrapper */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  border-radius: var(--borderRadius);
+}
+
+.eventSubtitle {
+  width: 100%;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  -webkit-line-clamp: 1;
+  -moz-box-orient: vertical;
+  /* fallback option */
+  word-break: break-all;
+  /* use break-word if available */
+  word-break: break-word;
+  hyphens: auto;
+  /* Remove default margins from font */
+}

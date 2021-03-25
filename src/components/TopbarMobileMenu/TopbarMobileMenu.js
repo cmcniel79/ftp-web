@@ -22,7 +22,7 @@ import {
   ExternalLink,
 } from '../../components';
 
-import css from './TopbarMobileMenu.css';
+import css from './TopbarMobileMenu.module.css';
 
 const renderSocialMediaLinks = () => {
   const { siteFacebookPage, siteInstagramPage, siteTwitterHandle } = config;

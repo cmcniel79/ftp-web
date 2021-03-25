@@ -13,7 +13,7 @@ import {
   NamedLink
 } from '../../components';
 import verifiedImage from '../../assets/checkmark-circle.svg';
-import css from './FAQPage.css';
+import css from './FAQPage.module.css';
 
 const FAQPage = () => {
   return (
@@ -206,13 +206,13 @@ const FAQPage = () => {
                     to your business address. This plan is perfect for those Native/Indigenous Owned businesses that provide services instead of physical goods.
                     <br />
                   <br />
-                  <b>Artisan Plan - $14.99/month</b>
+                  <b>Artisan Plan - $9.99/month</b>
                   <br />
                     Post up to 10 listings on our Indigenous Marketplace and also get all of the other features included in the Map Only Plan. You will have the Premium Sellers badge on all your listings
                     and can add links to your website to showcase your products. All transactions for your products will take place on your website.
                     <br />
                   <br />
-                  <b>Trader Plan - $24.99/month</b>
+                  <b>Trader Plan - $18.99/month</b>
                   <br />
                     Post up to 20 listings on our Indigenous Marketplace, get placed on the&nbsp;
                     <ExternalLink href="https://www.fromthepeople.co/#featured-partners">"Featured Partners" Section</ExternalLink>&nbsp;

@@ -2,7 +2,7 @@ import React from 'react';
 import { string } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 
-import css from './ListingPage.css';
+import css from './ListingPage.module.css';
 
 const SectionSizesMaybe = props => {
   const { sizes } = props;

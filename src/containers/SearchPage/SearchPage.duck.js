@@ -2,12 +2,18 @@ import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { convertUnitToSubUnit, unitDivisor } from '../../util/currency';
 import { formatDateStringToUTC, getExclusiveEndDate } from '../../util/dates';
+import { parse } from '../../util/urlHelpers';
 import config from '../../config';
 import { denormalisedResponseEntities } from '../../util/data';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
 
 const KEY = process.env.REACT_APP_API_KEY;
 const URL = process.env.REACT_APP_API_LIKES;
+
+// Pagination page size might need to be dynamic on responsive page layouts
+// Current design has max 3 columns 12 is divisible by 2 and 3
+// So, there's enough cards to fill all columns on full pagination pages
+const RESULT_PAGE_SIZE = 72;
 
 // ================ Action types ================ //
 
@@ -52,7 +58,7 @@ const listingPageReducer = (state = initialState, action = {}) => {
       };
     case SEARCH_LISTINGS_ERROR:
       // eslint-disable-next-line no-console
-      console.error(payload);  
+      console.error(payload);
       return { ...state, searchInProgress: false, searchListingsError: payload };
 
     case SEARCH_MAP_SET_ACTIVE_LISTING:
@@ -188,18 +194,46 @@ export const sendUpdatedLikes = actionPayload => {
 };
 
 export const callLikeAPI = actionPayload => {
-    const options = {
-      method: 'POST',
-      withCredentials: false,
-      body: JSON.stringify(actionPayload),
-      headers: {
-        "Content-Type": "application/json",
-        "X-Api-Key": KEY,
-      }
+  const options = {
+    method: 'POST',
+    withCredentials: false,
+    body: JSON.stringify(actionPayload),
+    headers: {
+      "Content-Type": "application/json",
+      "X-Api-Key": KEY,
     }
-    fetch(URL, options)
-      .then(response => {
-        response.json();
-      })
-      .catch(e => console.log(e));
+  }
+  fetch(URL, options)
+    .then(response => {
+      response.json();
+    })
+    .catch(e => console.log(e));
+};
+
+export const loadData = (params, search) => {
+  const queryParams = parse(search, {
+    latlng: ['origin'],
+    latlngBounds: ['bounds'],
+  });
+  const { page = 1, address, origin, ...rest } = queryParams;
+  const originMaybe = config.sortSearchByDistance && origin ? { origin } : {};
+  return searchListings({
+    ...rest,
+    ...originMaybe,
+    page,
+    perPage: RESULT_PAGE_SIZE,
+    include: ['author', 'images'],
+    'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink', 'publicData.category'],
+    'fields.user': [
+      //added metadata for verify badge
+      'profile.displayName', 
+      'profile.abbreviatedName',
+      'profile.publicData.accountType', 
+      'profile.publicData.tribe',
+      'profile.publicData.companyName',
+       'profile.publicData.companyIndustry'
+    ],
+    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
+    'limit.images': 1,
+  });
 };

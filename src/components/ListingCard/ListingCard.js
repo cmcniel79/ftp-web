@@ -14,8 +14,11 @@ import {
   ResponsiveImage 
 } from '../../components';
 import verifiedImage from '../../assets/checkmark-circle.svg';
-import css from './ListingCard.css';
 import ExternalLink from '../ExternalLink/ExternalLink';
+
+import css from './ListingCard.module.css';
+
+const MIN_LENGTH_FOR_LONG_WORDS = 10;
 
 const priceData = (price, intl) => {
   if (price && price.currency === config.currency) {

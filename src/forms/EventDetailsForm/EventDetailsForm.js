@@ -21,7 +21,7 @@ import {
   NamedLink
 } from '../../components';
 
-import css from './EventDetailsForm.css';
+import css from './EventDetailsForm.module.css';
 
 
 const identity = v => v;

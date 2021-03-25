@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ResponsiveImage, NamedLink } from '..';
 import { ensureUser } from '../../util/data';
-import css from './FeaturedPartners.css';
+import css from './FeaturedPartners.module.css';
 import { propTypes } from '../../util/types';
 import { FormattedMessage } from '../../util/reactIntl';
 import { arrayOf } from 'prop-types';

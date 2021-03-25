@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import css from './AccordionButton.css';
-import chevron from './Images/chevron-down-outline.svg';
+import css from './AccordionButton.module.css';
+import chevron from '../../assets/chevron-down-outline.svg';
 
 class AccordionButton extends Component {
   static propTypes = {

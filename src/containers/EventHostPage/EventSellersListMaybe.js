@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { InlineTextButton } from '../../components';
 
-import css from './EventHostPage.css';
+import css from './EventHostPage.module.css';
 
 class EventSellersListMaybe extends Component {
   constructor(props) {

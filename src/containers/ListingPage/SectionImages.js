@@ -2,7 +2,7 @@ import React from 'react';
 import { ResponsiveImage, } from '../../components';
 import ActionBarMaybe from './ActionBarMaybe';
 
-import css from './ListingPage.css';
+import css from './ListingPage.module.css';
 
 const SectionImages = props => {
   const {

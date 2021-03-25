@@ -12,7 +12,7 @@ import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 // import { formatMoney } from '../../util/currency';
 // import { types as sdkTypes } from '../../util/sdkLoader';
 
-import css from './BookingDatesForm.css';
+import css from './BookingDatesForm.module.css';
 const Decimal = require('decimal.js');
 
 // const { Money } = sdkTypes;

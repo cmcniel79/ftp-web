@@ -6,7 +6,7 @@ import * as validators from '../../util/validators';
 import getCountryCodes from '../../translations/countryCodes';
 import { FieldTextInput, FieldSelect } from '../../components';
 
-import css from './ShippingAddress.css';
+import css from './ShippingAddress.module.css';
 
 const ShippingAddress = props => {
     const { className, intl, formId, isCheckoutPage, country } = props;

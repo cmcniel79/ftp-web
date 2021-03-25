@@ -23,8 +23,7 @@ import {
   LayoutWrapperTopbar,
   ExternalLink,
   NativeLand,
-  SelectSingleFilter,
-  Modal
+  Button
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
@@ -33,11 +32,11 @@ import {
   pickSearchParamsOnly,
   validFilterParams,
 } from './MapPage.helpers';
-import css from './MapPage.css';
 import { MapLegend } from './MapLegend';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 
+import css from './MapPage.module.css';
 
 
 const { LatLng, LatLngBounds } = sdkTypes;
@@ -50,24 +49,23 @@ export class MapPageComponent extends Component {
 
     this.state = {
       isSearchMapOpenOnMobile: props.tab === 'map',
-      isMobileModalOpen: false,
       industry: null,
       tribe: null,
       origin: null,
       bounds: new LatLngBounds(new LatLng(71.4202919997506, -5), new LatLng(10, -150)),
+      geometry: null,
+      showNativePlaces: true,
     };
 
     this.searchMapListingsInProgress = false;
     this.tribe = null;
     this.onMapMoveEnd = debounce(this.onMapMoveEnd.bind(this), SEARCH_WITH_MAP_DEBOUNCE);
-    this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
-    this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
     this.selectTribe = this.selectTribe.bind(this);
     this.selectIndustry = this.selectIndustry.bind(this);
     this.initialValues = this.initialValues.bind(this);
     this.setGeolocation = this.setGeolocation.bind(this);
-    // this.loadInitialData = this.loadInitialData.bind(this);
-
+    this.selectGeometry = this.selectGeometry.bind(this);
+    this.toggleNativeMaps = this.toggleNativeMaps.bind(this);
   }
 
   componentDidMount() {
@@ -86,7 +84,7 @@ export class MapPageComponent extends Component {
   }
 
   selectIndustry(value) {
-    this.setState({ industry: value['pub_industry'] });
+    this.setState({ industry: value });
   }
 
   initialValues(array) {
@@ -98,6 +96,17 @@ export class MapPageComponent extends Component {
     this.setState({
       bounds: new LatLngBounds(new LatLng(lat + .5, lng + .5), new LatLng(lat - .5, lng - .5))
     });
+  }
+
+  selectGeometry(geo) {
+    this.setState({ geometry: geo });
+  }
+
+  toggleNativeMaps() {
+    this.setState(prevState => ({
+      showNativePlaces: !prevState.showNativePlaces
+    })
+    )
   }
 
   // Callback to determine if new search is needed
@@ -141,18 +150,6 @@ export class MapPageComponent extends Component {
     }
   }
 
-  // Invoked when a modal is opened from a child component,
-  // for example when a filter modal is opened in mobile view
-  onOpenMobileModal() {
-    this.setState({ isMobileModalOpen: true });
-  }
-
-  // Invoked when a modal is closed from a child component,
-  // for example when a filter modal is opened in mobile view
-  onCloseMobileModal() {
-    this.setState({ isMobileModalOpen: false });
-  }
-
   render() {
     const {
       intl,
@@ -185,47 +182,13 @@ export class MapPageComponent extends Component {
       { id: 'MapPage.schemaDescription' },
     );
 
-    // Set topbar class based on if a modal is open in
-    // a child component
-    const topbarClasses = this.state.isMobileModalOpen
-      ? classNames(css.topbarBehindModal, css.topbar)
-      : css.topbar;
-
-    // Set topbar class based on if a modal is open in
-    // a child component
-    const mobileFilterButtonClasses = this.state.industry
-      ? css.filtersButtonSelected
-      : css.filtersButton;
-
     // N.B. openMobileMap button is sticky.
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
-    /* eslint-disable jsx-a11y/no-static-element-interactions */
+    // /* eslint-disable jsx-a11y/no-static-element-interactions */
 
     const faqLink = <ExternalLink href={'https://www.fromthepeople.co/faq#account-types'}> <FormattedMessage id="MapPage.faqLink" /> </ExternalLink>;
     const industryOptions = findOptionsForSelectFilter('industry', filterConfig);
-    const modal =
-      <Modal
-        id="MapPageFilters"
-        containerClassName={css.modalContainer}
-        isOpen={this.state.isMobileModalOpen}
-        onClose={() => this.setState({ isMobileModalOpen: false })}
-        usePortal
-        onManageDisableScrolling={() => null}
-      >
-        <h2 className={css.modalHeading}>
-          <FormattedMessage id="MapPage.modalTitle" />
-        </h2>
-        <SelectSingleFilter
-          className={css.industryFilter}
-          queryParamNames={['pub_industry']}
-          initialValues={this.initialValues()}
-          showAsPopup={false}
-          onSelect={this.selectIndustry}
-          label="Industry"
-          options={industryOptions}
-        />
-        <MapLegend options={industryOptions} />
-      </Modal>;
+    const nativePlacesButtonClasses = this.state.showNativePlaces ? css.nativePlacesSelected : css.nativePlaces;
 
     return (
       <Page
@@ -242,7 +205,7 @@ export class MapPageComponent extends Component {
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer
-              className={topbarClasses}
+              className={css.topbar}
               currentPage="MapPage"
               currentSearchParams={urlQueryParams}
             />
@@ -251,40 +214,45 @@ export class MapPageComponent extends Component {
             <div className={css.container}>
               <div className={css.pageHeading} id='header'>
                 <div className={css.desktopPanel}>
-                  <SelectSingleFilter
-                    className={css.industryFilter}
-                    queryParamNames={['pub_industry']}
-                    initialValues={this.initialValues()}
-                    showAsPopup={true}
-                    onSelect={this.selectIndustry}
-                    label="Industry"
-                    options={industryOptions}
-                  />
                   <NativeLand
                     onSelect={this.selectTribe}
                     initialValues={this.initialValues}
                     setGeolocation={this.setGeolocation}
                     onMapPage={true}
+                    selectGeometry={this.selectGeometry}
                   />
-                  <MapLegend options={industryOptions} />
+                  <Button className={nativePlacesButtonClasses} onClick={() => this.toggleNativeMaps()}>
+                    {this.state.showNativePlaces ? (
+                      <FormattedMessage id="MapPage.hideNative" />
+                    ) : (
+                      <FormattedMessage id="MapPage.showNative" />
+                    )}
+                  </Button>
+                  <MapLegend className={css.desktopLegend} options={industryOptions} onSelect={this.selectIndustry} selected={this.state.industry} />
                 </div>
-                <h5 className={css.pageSubtitle}>
+                <h5 className={css.pageSubtitleDesktop}>
                   <FormattedMessage id="MapPage.subtitle" values={{ faqLink }} />
                 </h5>
                 <div className={css.mobileButtons}>
-                  <button
-                    className={mobileFilterButtonClasses}
-                    onClick={() => this.setState({ isMobileModalOpen: true })}
-                  >
-                    {this.state.industry ? this.state.industry : "Filter"}
-                </button>
                   <NativeLand
                     onSelect={this.selectTribe}
                     initialValues={this.initialValues}
                     setGeolocation={this.setGeolocation}
                     onMapPage={true}
                   />
-                  {modal}
+                  <Button className={nativePlacesButtonClasses} onClick={() => this.toggleNativeMaps()}>
+                    {this.state.showNativePlaces ? (
+                      <FormattedMessage id="MapPage.hideNative" />
+                    ) : (
+                      <FormattedMessage id="MapPage.showNative" />
+                    )}
+                  </Button>
+                  <MapLegend
+                    className={css.mobileLegend}
+                    options={industryOptions}
+                    onSelect={this.selectIndustry}
+                    selected={this.state.industry}
+                  />
                 </div>
               </div>
               <div className={css.mapWrapper}>
@@ -302,8 +270,13 @@ export class MapPageComponent extends Component {
                   messages={intl.messages}
                   selectedIndustry={this.state.industry}
                   selectedTribe={this.state.tribe}
+                  geometry={this.state.geometry}
+                  showNativePlaces={this.state.showNativePlaces}
                 />
               </div>
+              <h5 className={css.pageSubtitleMobile}>
+                <FormattedMessage id="MapPage.subtitle" values={{ faqLink }} />
+              </h5>
             </div>
           </LayoutWrapperMain>
           <LayoutWrapperFooter>
@@ -312,7 +285,7 @@ export class MapPageComponent extends Component {
         </LayoutSingleColumn>
       </Page>
     );
-    /* eslint-enable jsx-a11y/no-static-element-interactions */
+    // /* eslint-enable jsx-a11y/no-static-element-interactions */
   }
 }
 
@@ -392,10 +365,5 @@ const MapPage = compose(
   ),
   injectIntl
 )(MapPageComponent);
-
-// MapPage.loadData = params => {
-//   // const id = new UUID("5f52e761-e46d-4d51-b4f2-a8a4ef16f8b2");
-//   return loadData();
-// };
 
 export default MapPage;

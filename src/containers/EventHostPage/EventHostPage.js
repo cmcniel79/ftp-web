@@ -21,7 +21,7 @@ import {
   NamedLink
 } from '../../components';
 
-import css from './EventHostPage.css';
+import css from './EventHostPage.module.css';
 
 const CDN_DOMAIN = process.env.REACT_APP_CDN_DOMAIN;
 const CDN_PARAMS = process.env.REACT_APP_CDN_PARAMS;

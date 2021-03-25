@@ -1,0 +1,23 @@
+.pageTitle {
+  text-align: left;
+}
+
+.staticPageWrapper {
+  width: calc(100% - 48px);
+  max-width: 1056px;
+  margin: 24px auto;
+  @media (--viewportMedium) {
+    width: calc(100% - 72px);
+    margin: 72px auto;
+  }
+}
+
+.formSection {
+  padding-top: 6px;
+  width: 100%;
+  margin: 16px auto 30px auto;
+  @media (--viewportMedium) {
+      padding-top: 0;
+      width: 70%;
+  }
+}

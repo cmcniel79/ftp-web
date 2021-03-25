@@ -5,7 +5,7 @@ import { intlShape, injectIntl } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { Form, LocationAutocompleteInput } from '../../components';
 
-import css from './NativeLandSearchForm.css';
+import css from './NativeLandSearchForm.module.css';
 
 const identity = v => v;
 

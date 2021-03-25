@@ -1,0 +1,245 @@
+@import '../../styles/customMediaQueries.css';
+@import '../../styles/propertySets.css';
+
+.error {
+  margin-top: 5px;
+
+  @media (--viewportMedium) {
+    margin-top: 4px;
+  }
+  @media (--viewportLarge) {
+    margin-top: 3px;
+  }
+}
+
+.error {
+  color: var(--failColor);
+}
+
+.aside {
+  box-shadow: none;
+}
+
+.asideContent {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid var(--matterColorNegative);
+
+  @media (--viewportLarge) {
+    flex-direction: column;
+    border-bottom: none;
+  }
+}
+
+.avatar {
+  margin: 30px 26px 29px 0;
+  flex-shrink: 0;
+
+  @media (--viewportLarge) {
+    margin: 0 96px 10px 0;
+  }
+}
+
+.asideHeading {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileHeading {
+  flex-shrink: 0;
+  margin: 30px 0 0 0;
+  width: 100%;
+  word-wrap: normal;
+
+  @media (--viewportMedium) {
+    margin: 49px 0 0 0;
+  }
+  @media (--viewportLarge) {
+    display: none;
+  }
+}
+
+.mobileSubheading {
+    flex-shrink: 0;
+    margin: 5px 0;
+    width: 100%;
+    word-wrap: normal;
+    @media (--viewportLarge) {
+      display: none;
+    }
+}
+
+.socialMediaMobile {
+  margin: 10px 0 5px 0;
+  @media (--viewportLarge) {
+    /* display: none; */
+  }
+}
+
+.editLinkMobile {
+  margin: 0;
+  @media (--viewportMedium) {
+  margin-left: auto;
+  }
+  @media (--viewportLarge) {
+    display: none;
+  }
+}
+
+.editLinkDesktop {
+  display: none;
+  @media (--viewportLarge) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.desktopHeading {
+  display: none;
+
+  @media (--viewportLarge) {
+    display: block;
+    margin: 2px 0 5px 0;
+  }
+}
+
+.desktopSubheading {
+  display: none;
+  @media (--viewportLarge) {
+    display: block;
+    margin: 2px 0 30px 0;
+  }
+}
+
+.companyAddress {
+  margin: 20px 0 20px 0;
+}
+
+
+.companyWebsite { 
+  margin: 0 0 25px 0;
+}
+
+.externalLink {
+  height: 20px;
+  margin: 5px 5px 8px 5px;
+}
+
+.bio {
+  /* Preserve newlines, but collapse other whitespace */
+  white-space: pre-line;
+  margin: 20px 0 24px 0;
+
+  @media (--viewportMedium) {
+    margin: 20px 0 25px 0;
+  }
+  @media (--viewportLarge) {
+    margin: 20px 0 25px 0;
+    max-width: 600px;
+  }
+}
+
+.listingsContainer {
+  @apply --clearfix;
+  border-top: 1px solid var(--matterColorNegative);
+  border-bottom: 1px solid var(--matterColorNegative);
+  padding-bottom: 23px;
+
+  @media (--viewportMedium) {
+    padding-bottom: 22px;
+  }
+}
+
+.listingsTitle {
+  @apply --marketplaceH3FontStyles;
+  color: var(--matterColorAnti);
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 48px;
+    margin-bottom: 8px;
+  }
+  @media (--viewportLarge) {
+    margin-top: 58px;
+    margin-bottom: 8px;
+  }
+}
+
+.withBioMissingAbove {
+  /* Avoid extra borders in mobile when bio is missing */
+  border-top: none;
+
+  @media (--viewportLarge) {
+    border-top: 1px solid var(--matterColorNegative);
+  }
+}
+
+.listings {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.listing {
+  width: 100%;
+
+  /* Single column in mobile */
+  margin-top: 34px;
+  &:first-of-type {
+    margin-top: 18px;
+  }
+
+  @media (--viewportMedium) {
+    /* Two columns in desktop */
+    width: calc(50% - 12px);
+    margin-bottom: 36px;
+
+    /* Horizontal space */
+    &:nth-of-type(odd) {
+      margin-right: 12px;
+    }
+    &:nth-of-type(even) {
+      margin-left: 12px;
+    }
+
+    /* Vertical space */
+    margin-top: 0;
+    &:nth-of-type(1),
+    &:nth-of-type(2) {
+      margin-top: 20px;
+    }
+  }
+}
+
+.mobileReviewsTitle {
+  @apply --marketplaceH3FontStyles;
+  color: var(--matterColorAnti);
+  margin: 24px 0 26px 0;
+}
+
+.mobileReviews {
+  margin-bottom: 36px;
+}
+
+.desktopReviews {
+  margin-top: 28px;
+
+  @media (--viewportMedium) {
+    margin-bottom: 48px;
+  }
+
+  @media (--viewportLarge) {
+    max-width: 600px;
+    margin-bottom: 0;
+  }
+}
+
+.desktopReviewsTitle {
+  @apply --marketplaceH3FontStyles;
+  margin-bottom: 0;
+}
+
+.desktopReviewsTabNav {
+  margin-bottom: 32px;
+}

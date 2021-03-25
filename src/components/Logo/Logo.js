@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import config from '../../config';
 import MobileLogoImage from './ftp-logo.png';
 import LogoImage from './ftp-logo.png';
-import css from './Logo.css';
+import css from './Logo.module.css';
 
 const Logo = props => {
   const { className, format, ...rest } = props;

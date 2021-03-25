@@ -12,7 +12,7 @@ import { CookieConsent } from '../../components';
 
 import facebookImage from '../../assets/SocialMedia-791x791.png';
 import twitterImage from '../../assets/SocialMedia-791x791.png';
-import css from './Page.css';
+import css from './Page.module.css';
 
 const preventDefault = e => {
   e.preventDefault();

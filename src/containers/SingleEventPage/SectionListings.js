@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { SearchResultsPanel } from '../../components';
 
-import css from './SingleEventPage.css';
+import css from './SingleEventPage.module.css';
 
 export const SectionListings = props => {
 

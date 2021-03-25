@@ -11,7 +11,7 @@ import { findOptionsForSelectFilter } from '../../util/search';
 import config from '../../config';
 import arrayMutators from 'final-form-arrays';
 
-import css from './EditListingDescriptionForm.css';
+import css from './EditListingDescriptionForm.module.css';
 
 const TITLE_MAX_LENGTH = 60;
 var subCategories = [];

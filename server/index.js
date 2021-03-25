@@ -33,6 +33,8 @@ const sitemap = require('express-sitemap');
 const passport = require('passport');
 const auth = require('./auth');
 const apiRouter = require('./apiRouter');
+const wellKnownRouter = require('./wellKnownRouter');
+const { getExtractors } = require('./importer');
 const renderer = require('./renderer');
 const dataLoader = require('./dataLoader');
 const fs = require('fs');
@@ -131,9 +133,15 @@ app.use('/static', express.static(path.join(buildPath, 'static')));
 app.use('/robots.txt', express.static(path.join(buildPath, 'robots.txt')));
 app.use(cookieParser());
 
+// These .well-known/* endpoints will be enabled if you are using FTW as OIDC proxy
+// https://www.sharetribe.com/docs/cookbook-social-logins-and-sso/setup-open-id-connect-proxy/
+// We need to handle these endpoints separately so that they are accessible by Flex
+// even if you have enabled basic authentication e.g. in staging environment.
+app.use('/.well-known', wellKnownRouter);
+
 // Use basic authentication when not in dev mode. This is
-// intentionally after the static middleware to skip basic auth for
-// static resources.
+// intentionally after the static middleware and /.well-known
+// endpoints as those will bypass basic auth.
 if (!dev) {
   const USERNAME = process.env.BASIC_AUTH_USERNAME;
   const PASSWORD = process.env.BASIC_AUTH_PASSWORD;
@@ -207,10 +215,18 @@ app.get('*', (req, res) => {
   // data, let's disable response caching altogether.
   res.set(noCacheHeaders);
 
+  // Get chunk extractors from node and web builds
+  // https://loadable-components.com/docs/api-loadable-server/#chunkextractor
+  const { nodeExtractor, webExtractor } = getExtractors();
+
+  // Server-side entrypoint provides us the functions for server-side data loading and rendering
+  const nodeEntrypoint = nodeExtractor.requireEntrypoint();
+  const { default: renderApp, matchPathname, configureStore, routeConfiguration } = nodeEntrypoint;
+
   dataLoader
-    .loadData(req.url, sdk)
+    .loadData(req.url, sdk, matchPathname, configureStore, routeConfiguration)
     .then(preloadedState => {
-      const html = renderer.render(req.url, context, preloadedState);
+      const html = renderer.render(req.url, context, preloadedState, renderApp, webExtractor);
 
       if (dev) {
         const debugData = {
@@ -224,18 +240,17 @@ app.get('*', (req, res) => {
         // Routes component injects the context.unauthorized when the
         // user isn't logged in to view the page that requires
         // authentication.
-
-        const token = tokenStore.getToken();
-        const scopes = !!token && token.scopes;
-        const isAnonymous = !!scopes && scopes.length === 1 && scopes[0] === 'public-read';
-        if (isAnonymous) {
-          res.status(401).send(html);
-        } else {
-          // If the token is associated with other than public-read scopes, we
-          // assume that client can handle the situation
-          // TODO: improve by checking if the token is valid (needs an API call)
-          res.status(200).send(html);
-        }
+        sdk.authInfo().then(authInfo => {
+          if (authInfo && authInfo.isAnonymous === false) {
+            // It looks like the user is logged in.
+            // Full verification would require actual call to API
+            // to refresh the access token
+            res.status(200).send(html);
+          } else {
+            // Current token is anonymous.
+            res.status(401).send(html);
+          }
+        });
       } else if (context.forbidden) {
         res.status(403).send(html);
       } else if (context.url) {

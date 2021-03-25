@@ -20,7 +20,7 @@ import {
   Page
 } from '../../components';
 
-import css from './SingleEventPage.css';
+import css from './SingleEventPage.module.css';
 
 const RESULT_PAGE_SIZE = 48;
 

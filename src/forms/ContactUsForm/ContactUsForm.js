@@ -7,7 +7,7 @@ import { composeValidators, required, emailFormatValid } from '../../util/valida
 import { Form, PrimaryButton, FieldTextInput, FieldSelect } from '../../components';
 
 
-import css from './ContactUsForm.css';
+import css from './ContactUsForm.module.css';
 
 class ContactUsFormComponent extends Component {
     constructor(props) {

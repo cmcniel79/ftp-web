@@ -13,7 +13,7 @@ import { userAbbreviatedName } from '../../util/data';
 import forward from '../../assets/forward.svg';
 import back from '../../assets/back.svg';
 
-import css from './SearchMapSellerCard.css';
+import css from './SearchMapSellerCard.module.css';
 // import { txHasBeenDelivered } from '../../util/transaction';
 
 const AVATAR_IMAGE_VARIANTS = [
@@ -51,13 +51,16 @@ const SellerCard = props => {
           <button className={css.backButton} onClick={() => changeUser(false)}>
             <img className={css.chevron} src={back} alt="chevron" />
           </button> : null}
-        {user.profileImage && user.profileImage.id ?
+        {user.profileImage && user.profileImage.id ? (
           <ResponsiveImage
             rootClassName={css.premiumAvatar}
             alt="Logo"
             image={user.profileImage}
             variants={AVATAR_IMAGE_VARIANTS}
-          /> : <span className={css.initials}>{abbreviatedName}</span>}
+          />
+         ) : ( 
+          <span className={css.initials}>{abbreviatedName}</span>
+         )}
         <div className={css.info}>
           <h2 className={css.heading}>
             <FormattedMessage id="SellerCard.heading" values={{ name: profileTitle }} />

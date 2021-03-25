@@ -3,7 +3,7 @@ import { FieldSelect, ExternalLink } from '../../components';
 import getNativeTribes from '../../translations/nativeTribes';
 import { FormattedMessage } from '../../util/reactIntl';
 
-import css from './ProfileSettingsForm.css';
+import css from './ProfileSettingsForm.module.css';
 
 const TribeSelectFieldMaybe = props => {
   const { name, id, intl } = props;

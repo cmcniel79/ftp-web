@@ -51,7 +51,7 @@ import PanelHeading, {
 } from './PanelHeading';
 import { types as sdkTypes } from '../../util/sdkLoader';
 
-import css from './TransactionPanel.css';
+import css from './TransactionPanel.module.css';
 
 const { Money } = sdkTypes;
 

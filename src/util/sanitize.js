@@ -18,19 +18,27 @@ const ESCAPE_TEXT_REPLACEMENTS = {
 // An example how you could sanitize text content.
 // This swaps some coding related characters to less dangerous ones
 const sanitizeText = str =>
-  str == null
-    ? str
-    : typeof str === 'string'
-      ? str.replace(ESCAPE_TEXT_REGEXP, ch => ESCAPE_TEXT_REPLACEMENTS[ch])
-      : '';
+  str == null ? str
+    : typeof str === 'string' ? str.replace(ESCAPE_TEXT_REGEXP, ch => ESCAPE_TEXT_REPLACEMENTS[ch])
+      : ''
+  ;
 
-const sanitizeNumber = nbr => {
-  return (
-    nbr == null
-      ? nbr
-      : typeof nbr === 'number'
-        ? nbr
-        : 0);
+const sanitizeNumber = nbr =>
+  nbr == null ? nbr
+    : typeof nbr === 'number' ? nbr
+      : 0
+  ;
+
+const sanitizeStringArray = array => {
+  var sanitizedArray = [];
+  if (array && array.length > 0) {
+    for (var i = 0; i < array.length; i++) {
+      sanitizedArray.push(sanitizeText(array[i]));
+    }
+  } else {
+    return [];
+  }
+  return sanitizedArray;
 };
 
 export const sanitizeProtectedData = protectedData => {
@@ -63,12 +71,11 @@ export const sanitizeProtectedData = protectedData => {
 export const sanitizeUser = entity => {
   const { attributes, ...restEntity } = entity || {};
   const { profile, ...restAttributes } = attributes || {};
-  const { bio, displayName, abbreviatedName, publicData } = profile || {};
+  const { bio, displayName, abbreviatedName, publicData, metadata } = profile || {};
 
   const sanitizeLocation = companyLocation => {
     const { building, location } = companyLocation || {};
     const selectedPlace = location && location.selectedPlace ? location.selectedPlace : {};
-
     const buildingMaybe = building ? { building: sanitizeText(building) } : {};
     const locationMaybe = location ? {
       location: {
@@ -86,8 +93,18 @@ export const sanitizeUser = entity => {
   };
 
   const sanitizePublicData = publicData => {
-    const { country, accountType, accountLimit, companyIndustry, companyLocation, companyName, companyWebsite, nativeLands, tribe,
-      socialMedia } = publicData || {};
+    const {
+      country,
+      accountType,
+      accountLimit,
+      companyIndustry,
+      companyLocation,
+      companyName,
+      companyWebsite,
+      nativeLands,
+      tribe,
+      socialMedia
+    } = publicData || {};
 
     const countryMaybe = country ? { country: sanitizeText(country) } : {};
     const accoutTypeMaybe = accountType ? { accountType: sanitizeText(accountType) } : {};
@@ -110,9 +127,39 @@ export const sanitizeUser = entity => {
 
     return publicData ? {
       publicData: {
-        ...countryMaybe, ...accoutTypeMaybe, ...accountLimitMaybe,
-        ...companyIndustryMaybe, ...companyLocationMaybe, ...companyNameMaybe, ...companyWebsiteMaybe,
-        ...nativeLandsMaybe, ...tribeMaybe, ...socialMediaMaybe
+        ...countryMaybe,
+        ...accoutTypeMaybe,
+        ...accountLimitMaybe,
+        ...companyIndustryMaybe,
+        ...companyLocationMaybe,
+        ...companyNameMaybe,
+        ...companyWebsiteMaybe,
+        ...nativeLandsMaybe,
+        ...tribeMaybe,
+        ...socialMediaMaybe
+      }
+    } : {};
+  };
+
+  const sanitizeMetadata = metadata => {
+    const {
+      events,
+      eventHost,
+      likes,
+      follows
+    } = metadata || {};
+
+    const eventsMaybe = events ? { events: sanitizeStringArray(events) } : {};
+    const isEventHostMaybe = eventHost === true ? { eventHost: true } : eventHost === false ? {eventHost: false } : {};
+    const likesMaybe = likes ? { likes: sanitizeNumber(likes) } : {};
+    const followsMaybe = follows ? { follows: sanitizeNumber(follows) } : {};
+
+    return metadata ? {
+      metadata: {
+        ...eventsMaybe,
+        ...isEventHostMaybe,
+        ...likesMaybe,
+        ...followsMaybe
       }
     } : {};
   };
@@ -124,12 +171,17 @@ export const sanitizeUser = entity => {
         displayName: sanitizeText(displayName),
         bio: sanitizeText(bio),
         ...sanitizePublicData(publicData),
+        ...sanitizeMetadata(metadata),
       },
     }
     : {};
+
   const attributesMaybe = attributes ? { attributes: { ...profileMaybe, ...restAttributes } } : {};
 
-  return { ...attributesMaybe, ...restEntity };
+  return {
+    ...attributesMaybe,
+    ...restEntity
+  };
 };
 
 /**
@@ -141,18 +193,26 @@ export const sanitizeUser = entity => {
  */
 export const sanitizeListing = entity => {
   const { attributes, ...restEntity } = entity;
-  const { title, description, publicData, ...restAttributes } = attributes || {};
-
-  // const sanitizeLocation = material => {
-  //   const { address, building } = location || {};
-  //   return { address: sanitizeText(address), building: sanitizeText(building) };
-  // };
+  const { title, description, publicData, metadata, ...restAttributes } = attributes || {};
 
   const sanitizePublicData = publicData => {
-    // Here's an example how you could sanitize location and rules from publicData:
-    // TODO: If you add public data, you should probably sanitize it here.
-    const { country, category, subCategory, verifiedSellers, customOrders, websiteLink, region, sizes, style, material,
-      shippingFee, internationalFee, allowsInternationalOrders, allowsBarter, barter } = publicData || {};
+    const {
+      country,
+      category,
+      subCategory,
+      verifiedSellers,
+      customOrders,
+      websiteLink,
+      region,
+      sizes,
+      style,
+      material,
+      shippingFee,
+      internationalFee,
+      allowsInternationalOrders,
+      allowsBarter,
+      barter
+    } = publicData || {};
 
     const countryMaybe = country ? { country: sanitizeText(country) } : {};
 
@@ -169,27 +229,69 @@ export const sanitizeListing = entity => {
     const materialMaybe = material ? { material: material } : {};
 
     const shippingFeeMaybe = shippingFee ? {
-      shippingFee:
-        { amount: sanitizeNumber(shippingFee.amount), currency: sanitizeText(shippingFee.currency) }
-    } : {};
-    const internationalFeeMaybe = internationalFee ? {
-      internationalFee:
-        { amount: sanitizeNumber(internationalFee.amount), currency: sanitizeText(internationalFee.currency) }
+      shippingFee: {
+        amount: sanitizeNumber(shippingFee.amount),
+        currency: sanitizeText(shippingFee.currency)
+      }
     } : {};
 
-    const allowsInternationalOrdersMaybe = allowsInternationalOrders ? { allowsInternationalOrders: allowsInternationalOrders } : {}
-    const allowsBarterMaybe = allowsBarter ? { allowsBarter: allowsBarter } : {};
-    const barterMaybe = barter ? { barter: sanitizeText(barter) } : {};
+    const internationalFeeMaybe = internationalFee ? {
+      internationalFee: {
+        amount: sanitizeNumber(internationalFee.amount),
+        currency: sanitizeText(internationalFee.currency)
+      }
+    } : {};
+
+    const allowsInternationalOrdersMaybe = allowsInternationalOrders ? {
+      allowsInternationalOrders: allowsInternationalOrders
+    } : {};
+
+    const allowsBarterMaybe = allowsBarter ? {
+      allowsBarter: allowsBarter
+    } : {};
+
+    const barterMaybe = barter ? {
+      barter: sanitizeText(barter)
+    } : {};
 
 
     return publicData ? {
       publicData: {
-        ...countryMaybe, ...categoryMaybe, ...subCategoryMaybe, ...verifiedSellersMaybe,
-        ...customOrdersMaybe, ...websiteLinkMaybe, ...regionMaybe, ...sizesMaybe, ...styleMaybe, ...materialMaybe,
-        ...shippingFeeMaybe, ...internationalFeeMaybe, ...allowsInternationalOrdersMaybe, ...allowsBarterMaybe, ...barterMaybe,
+        ...countryMaybe,
+        ...categoryMaybe,
+        ...subCategoryMaybe,
+        ...verifiedSellersMaybe,
+        ...customOrdersMaybe,
+        ...websiteLinkMaybe,
+        ...regionMaybe,
+        ...sizesMaybe,
+        ...styleMaybe,
+        ...materialMaybe,
+        ...shippingFeeMaybe,
+        ...internationalFeeMaybe,
+        ...allowsInternationalOrdersMaybe,
+        ...allowsBarterMaybe,
+        ...barterMaybe,
       }
     } : {};
   };
+
+  const sanitizeMetadata = metadata => {
+    const {
+      events,
+      ranking,
+    } = metadata || {};
+
+    const eventsMaybe = events ? { events: sanitizeStringArray(events) } : {};
+    const rankingMaybe = ranking ? { ranking: sanitizeNumber(ranking) } : {};
+
+    return metadata ? {
+      metadata: {
+        ...eventsMaybe,
+        ...rankingMaybe,
+      }
+    } : {};
+  }
 
   const attributesMaybe = attributes
     ? {
@@ -197,6 +299,7 @@ export const sanitizeListing = entity => {
         title: sanitizeText(title),
         description: sanitizeText(description),
         ...sanitizePublicData(publicData),
+        // ...sanitizeMetadata(metadata),
         ...restAttributes,
       },
     }

@@ -12,7 +12,6 @@ import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
 import { Page } from '../../components';
 import { TopbarContainer } from '../../containers';
-
 import { searchListings, setActiveListing, sendUpdatedLikes, callLikeAPI } from './SearchPage.duck';
 import {
   pickSearchParamsOnly,
@@ -20,12 +19,11 @@ import {
   createSearchResultSchema,
 } from './SearchPage.helpers';
 import MainPanel from './MainPanel';
-import css from './SearchPage.css';
+import css from './SearchPage.module.css';
 
 // Pagination page size might need to be dynamic on responsive page layouts
 // Current design has max 3 columns 12 is divisible by 2 and 3
 // So, there's enough cards to fill all columns on full pagination pages
-const RESULT_PAGE_SIZE = 48;
 const MODAL_BREAKPOINT = 768; // Search is in modal on mobile layout
 
 export class SearchPageComponent extends Component {
@@ -149,7 +147,6 @@ export class SearchPageComponent extends Component {
       : css.topbar;
     // N.B. openMobileMap button is sticky.
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
-    /* eslint-disable jsx-a11y/no-static-element-interactions */
     return (
       <Page
         scrollingDisabled={scrollingDisabled}
@@ -187,7 +184,6 @@ export class SearchPageComponent extends Component {
         </div>
       </Page>
     );
-    /* eslint-enable jsx-a11y/no-static-element-interactions */
   }
 }
 
@@ -274,25 +270,25 @@ const SearchPage = compose(
   injectIntl
 )(SearchPageComponent);
 
-SearchPage.loadData = (params, search) => {
-  const queryParams = parse(search, {
-    latlng: ['origin'],
-    latlngBounds: ['bounds'],
-  });
-  const { page = 1, address, origin, ...rest } = queryParams;
-  const originMaybe = config.sortSearchByDistance && origin ? { origin } : {};
-  return searchListings({
-    ...rest,
-    ...originMaybe,
-    page,
-    perPage: RESULT_PAGE_SIZE,
-    include: ['author', 'images'],
-    'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink', 'publicData.category'],
-    'fields.user': ['profile.displayName', 'profile.abbreviatedName',
-      'profile.publicData.accountType', 'profile.publicData.tribe', 'profile.publicData.companyName', 'profile.publicData.companyIndustry'], //added metadata for verify badge
-    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
-    'limit.images': 1,
-  });
-};
+// SearchPage.loadData = (params, search) => {
+//   const queryParams = parse(search, {
+//     latlng: ['origin'],
+//     latlngBounds: ['bounds'],
+//   });
+//   const { page = 1, address, origin, ...rest } = queryParams;
+//   const originMaybe = config.sortSearchByDistance && origin ? { origin } : {};
+//   return searchListings({
+//     ...rest,
+//     ...originMaybe,
+//     page,
+//     perPage: RESULT_PAGE_SIZE,
+//     include: ['author', 'images'],
+//     'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink', 'publicData.category'],
+//     'fields.user': ['profile.displayName', 'profile.abbreviatedName',
+//       'profile.publicData.accountType', 'profile.publicData.tribe', 'profile.publicData.companyName', 'profile.publicData.companyIndustry'], //added metadata for verify badge
+//     'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
+//     'limit.images': 1,
+//   });
+// };
 
 export default SearchPage;

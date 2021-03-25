@@ -13,7 +13,8 @@ import {
   ExternalLink,
   NamedLink,
 } from '../../components';
-import css from './Footer.css';
+
+import css from './Footer.module.css';
 
 const renderSocialMediaLinks = intl => {
   const { siteFacebookPage, siteInstagramPage, siteTwitterHandle, siteTikTokPage } = config;

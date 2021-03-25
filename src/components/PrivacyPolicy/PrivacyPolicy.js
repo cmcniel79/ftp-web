@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { ExternalLink } from '../../components';
 
-import css from './PrivacyPolicy.css';
+import css from './PrivacyPolicy.module.css';
 
 const PrivacyPolicy = props => {
   const { rootClassName, className } = props;

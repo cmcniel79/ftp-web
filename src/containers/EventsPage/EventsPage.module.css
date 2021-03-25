@@ -1,0 +1,74 @@
+@import '../../styles/propertySets.css';
+
+.staticPageWrapper {
+  width: calc(100% - 48px);
+  max-width: 1056px;
+  margin: 0 auto;
+  @media (--viewportMedium) {
+    width: calc(100% - 72px);
+    margin: 20px auto;
+  }
+}
+
+.sectionContainer {
+  margin: 40px 0 40px 0;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  @media (--viewportMedium) {
+    margin-bottom: 25px;
+  }
+}
+
+.sectionTitle {
+  /* Font */
+  @apply --marketplaceH1FontStyles;
+  color: var(--matterColor);
+  /* Layout */
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 5px;
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+}
+
+.eventPageLink {
+  margin: 0;
+  font-size: 14px !important;
+  @media (--viewportMedium) {
+    font-size: 18px !important;
+  }
+}
+
+.arrow {
+  width: 20px;
+}
+
+.eventSection {
+  display: flex;
+  flex-direction: column;
+  @media (--viewportMedium) {
+    flex-direction: row;
+  }
+}
+
+.card {
+  margin: 15px auto;
+  width: 100%;
+  @media (--viewportMedium) {
+    width: 30%;
+    margin: 0 3% 0 0;
+  }
+}
+
+.addEvent {
+  margin: 30px 0;
+  @media (--viewportMedium) {
+    margin: 100px 0;
+  }
+}

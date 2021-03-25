@@ -23,7 +23,7 @@ import artFilled from '../../assets/art-filled.svg';
 import verifiedFilled from '../../assets/checkmark-circle.svg';
 import verified from '../../assets/checkmark-circle-outline.svg';
 
-import css from './SearchMapSellerLabel.css';
+import css from './SearchMapSellerLabel.module.css';
 
 class SearchMapSellerLabel extends Component {
 

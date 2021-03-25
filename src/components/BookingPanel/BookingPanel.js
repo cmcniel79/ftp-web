@@ -12,7 +12,7 @@ import config from '../../config';
 import { ModalInMobile, Button } from '../../components';
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 
-import css from './BookingPanel.css';
+import css from './BookingPanel.module.css';
 
 const Decimal = require('decimal.js');
 

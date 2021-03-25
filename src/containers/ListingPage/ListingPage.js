@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
 import { array, arrayOf, bool, func, shape, string, oneOf } from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
@@ -62,7 +61,7 @@ import SectionPremiumPriceMaybe from './SectionPremiumPriceMaybe';
 import SectionBarterMaybe from './SectionBarterMaybe';
 import { sanitizeProtectedData } from '../../util/sanitize';
 
-import css from './ListingPage.css';
+import css from './ListingPage.module.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
@@ -728,8 +727,5 @@ const ListingPage = compose(
   ),
   injectIntl
 )(ListingPageComponent);
-
-ListingPage.setInitialValues = initialValues => setInitialValues(initialValues);
-ListingPage.loadData = loadData;
 
 export default ListingPage;

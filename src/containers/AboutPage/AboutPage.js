@@ -11,7 +11,7 @@ import {
   ExternalLink,
 } from '../../components';
 
-import css from './AboutPage.css';
+import css from './AboutPage.module.css';
 import desktopImage from './about-us.jpg';
 
 const AboutPage = () => {

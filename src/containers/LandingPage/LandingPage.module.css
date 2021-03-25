@@ -1,0 +1,207 @@
+@import '../../styles/propertySets.css';
+@import '../../styles/customMediaQueries.css';
+
+/* heroContainer gives the height for SectionHero */
+
+/* Safari has a bug with vw padding inside flexbox. Therefore we need an extra div (container) */
+
+/* If you've lot of content for the hero, multiple lines of text, make sure to adjust min-heights for each media breakpoint accordingly */
+
+.heroContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  height: 60vh;
+  max-height: 600px;
+  padding: 0;
+  @media (--viewportMedium) {
+    min-height: 500px;
+    height: 70vh;
+    max-height: none;
+  }
+  @media (--viewportLarge) {
+    max-height: 800px;
+    min-height: 600px;
+    height: calc(70vh - var(--topbarHeightDesktop));
+  }
+}
+
+.donateButton {
+  @apply --marketplaceButtonStyles;
+  width: auto;
+  max-width: 300px;
+  padding: 20px 20px 0;
+  @media (--viewportMedium) {
+    display: block;
+  }
+  margin: auto;
+  border-radius: 50px;
+}
+
+.donateSubText {
+  margin-top: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @media (--viewportLarge) {
+    width: 100%;
+    padding-top: 50px;
+    align-items: center;
+    text-align: center;
+    box-sizing: inherit;
+  }
+}
+
+.donateSubText .thirdDonate {
+  @media (--viewportLarge) {
+    width: 75%;
+  }
+}
+
+.donateText {
+  @media (--viewportLarge) {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    vertical-align: text-top;
+    align-items: flex-end;
+  }
+}
+
+.donateTitle {
+  text-align: center;
+  margin: auto;
+  width: 100%;
+  height: 75px;
+  @media (--viewportMedium) {
+    width: 75%;
+  }
+}
+
+.donateTitleBLM {
+  text-align: center;
+  margin: auto;
+  width: 75%;
+  @media (--viewportMedium) {
+    width: 100%;
+  }
+}
+
+.sectionContentNarrow {
+  margin: 40px 24px 27px;
+  padding: 0;
+}
+
+.customSectionTitle {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: -0.5px;
+  @media (--viewportMedium) {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 48px;
+    letter-spacing: -1px;
+  }
+}
+
+.featuredListings {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: start;
+  justify-content: space-between;
+  -webkit-box-align: start;
+  align-items: flex-start;
+  margin-top: 50px;
+}
+
+.listingCard {
+  width: 100%;
+  margin-bottom: 35px;
+  @media (--viewportMedium) {
+    width: 32.5%;
+  }
+}
+
+.hero {
+  flex-grow: 1;
+  justify-content: flex-end;
+  padding-bottom: 32px;
+  @media (--viewportMedium) {
+    padding-bottom: 83px;
+  }
+  @media (--viewportLarge) {
+    justify-content: center;
+    padding-top: 60px;
+  }
+}
+
+.sections {
+  margin: 0;
+  padding-top: 1px;
+}
+
+.section {
+  overflow: auto;
+}
+
+/* Square corners for the last section if it's even */
+
+.section:nth-of-type(2n):last-of-type {
+  @media (--viewportMedium) {
+    border-radius: 4px 4px 0 0;
+  }
+}
+
+/* Every other section has a light background */
+
+.section:nth-of-type(2n) {
+  background-color: var(--matterColorLight);
+  @media (--viewportMedium) {
+    border-radius: 4px;
+  }
+}
+
+.sectionContent {
+  margin: var(--LandingPage_sectionMarginTop) 24px 51px 24px;
+  @media (--viewportMedium) {
+    max-width: 100%;
+    margin: var(--LandingPage_sectionMarginTopMedium) 24px 60px 24px;
+  }
+  @media (--viewportLarge) {
+    max-width: 1128px;
+    padding: 0 36px 0 36px;
+    margin: 60px auto 60px auto;
+  }
+  @media (--viewportXLarge) {
+    max-width: 1056px;
+    padding: 0;
+  }
+}
+
+.sectionContentFirstChild {
+  /* composes: sectionContent; */
+  margin-top: 3vh;
+}
+
+/* A bar on top of light sections */
+
+.section:nth-of-type(2n) .sectionContent::before {
+  background: var(--marketplaceColor);
+  content: '';
+  display: block;
+  width: 109px;
+  height: 6px;
+  /* Place the bar on top of .sectionContent top margin */
+  position: relative;
+  top: calc(-1 * var(--LandingPage_sectionMarginTop));
+  @media (--viewportMedium) {
+    width: 192px;
+    height: 8px;
+    top: calc(-1 * var(--LandingPage_sectionMarginTopMedium));
+  }
+  @media (--viewportLarge) {
+    top: calc(-1 * var(--LandingPage_sectionMarginTopLarge));
+  }
+}

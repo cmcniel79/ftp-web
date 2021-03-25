@@ -17,11 +17,10 @@ import {
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 import {
-  queryLikedListings,
   callLikeAPI,
   sendUpdatedLikes
 } from './LikedListingsPage.duck';
-import css from './LikedListingsPage.css';
+import css from './LikedListingsPage.module.css';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 
 export class LikedListingsPageComponent extends Component {
@@ -179,8 +178,10 @@ const mapStateToProps = state => {
     queryListingsError,
     likedIds,
   } = state.LikedListingsPage;
+  
   const { currentUser } = state.user;
   const listings = !queryInProgress && likedIds && likedIds.length > 0 ? getMarketplaceEntities(state, likedIds) : null;
+
   return {
     scrollingDisabled: isScrollingDisabled(state),
     listings,
@@ -201,9 +202,5 @@ const LikedListingsPage = compose(
   ),
   injectIntl
 )(LikedListingsPageComponent);
-
-LikedListingsPage.loadData = () => {
-  return queryLikedListings();
-};
 
 export default LikedListingsPage;

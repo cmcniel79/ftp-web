@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { propTypes } from '../../util/types';
 import { ensureCurrentUser } from '../../util/data';
-import { fetchCurrentUser, sendVerificationEmail } from '../../ducks/user.duck';
+import { sendVerificationEmail } from '../../ducks/user.duck';
 import {
   LayoutSideNavigation,
   LayoutWrapperMain,
@@ -27,7 +27,7 @@ import {
 } from './ContactDetailsPage.duck';
 import { sanitizeProtectedData } from '../../util/sanitize';
 
-import css from './ContactDetailsPage.css';
+import css from './ContactDetailsPage.module.css';
 
 export const ContactDetailsPageComponent = props => {
   const {
@@ -181,10 +181,5 @@ const ContactDetailsPage = compose(
   ),
   injectIntl
 )(ContactDetailsPageComponent);
-
-ContactDetailsPage.loadData = () => {
-  // Since verify email happens in separate tab, current user's data might be updated
-  return fetchCurrentUser();
-};
 
 export default ContactDetailsPage;

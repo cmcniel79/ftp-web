@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { Form, FieldSelect } from '../../components';
 import getStateCodes from '../../translations/stateCodes';
 
-import css from './StateSelectionForm.css';
+import css from './StateSelectionForm.module.css';
 
 const StateSelectionFormComponent = props => (
       <FinalForm

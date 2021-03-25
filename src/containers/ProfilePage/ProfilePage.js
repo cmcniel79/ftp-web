@@ -4,7 +4,6 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { types as sdkTypes } from '../../util/sdkLoader';
 import { REVIEW_TYPE_OF_PROVIDER, REVIEW_TYPE_OF_CUSTOMER, propTypes } from '../../util/types';
 import { ensureCurrentUser, ensureUser } from '../../util/data';
 import { withViewport } from '../../util/contextHelpers';
@@ -27,13 +26,11 @@ import {
   ExternalLink,
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '../../containers';
-import { loadData } from './ProfilePage.duck';
 import config from '../../config';
 import exit from '../../assets/exit.svg';
 
-import css from './ProfilePage.css';
+import css from './ProfilePage.module.css';
 
-const { UUID } = sdkTypes;
 const MAX_MOBILE_SCREEN_WIDTH = 768;
 
 export class ProfilePageComponent extends Component {
@@ -74,10 +71,11 @@ export class ProfilePageComponent extends Component {
       viewport,
       intl,
     } = this.props;
+    
     const ensuredCurrentUser = ensureCurrentUser(currentUser);
     const profileUser = ensureUser(user);
-    const isCurrentUser =
-      ensuredCurrentUser.id && profileUser.id && ensuredCurrentUser.id.uuid === profileUser.id.uuid;
+    const isCurrentUser = ensuredCurrentUser.id && profileUser.id && ensuredCurrentUser.id.uuid === profileUser.id.uuid;
+
     const { displayName, bio } = profileUser.attributes.profile;
     const hasBio = !!bio;
     const hasListings = listings.length > 0;
@@ -120,9 +118,9 @@ export class ProfilePageComponent extends Component {
               ) : null}
           </h2>
           {tribe &&
-          <p className={css.mobileSubheading}>
-            {tribe}
-          </p>}
+            <p className={css.mobileSubheading}>
+              {tribe}
+            </p>}
           {editLinkMobile}
           {socialMedia && <UserSocialMedia className={css.socialMediaMobile} socialMedia={socialMedia} />}
           {editLinkDesktop}
@@ -201,18 +199,20 @@ export class ProfilePageComponent extends Component {
         {this.state.showReviewsType === REVIEW_TYPE_OF_PROVIDER ? (
           <Reviews reviews={reviewsOfProvider} />
         ) : (
-            <Reviews reviews={reviewsOfCustomer} />
-          )}
+          <Reviews reviews={reviewsOfCustomer} />
+        )}
       </div>
     );
 
     const mainContent = (
       <div>
         <h1 className={css.desktopHeading}>
-          {companyName ?
-            <FormattedMessage id="ProfilePage.desktopHeadingCompany" values={{ name: companyName }} />
-            :
-            <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />}
+          {!profileUser ?
+            <FormattedMessage id="ProfilePage.desktopHeadingLoading" />
+            : companyName ?
+              <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: companyName }} />
+              : <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />
+          }
         </h1>
         {tribe &&
           <h3 className={css.desktopSubheading}>
@@ -225,12 +225,12 @@ export class ProfilePageComponent extends Component {
         {hasBio && <p className={css.bio}>{bio}</p>}
         {companyWebsite ?
           <div className={css.companyWebsite}>
-            <ExternalLink href={companyWebsite} useIcon={true}>
+            <ExternalLink href={companyWebsite}>
               <FormattedMessage id="ProfilePage.companyWebsite" />
               <img className={css.externalLink} src={exit} alt="External Link" />
             </ExternalLink>
           </div>
-           : null}
+          : null}
         {hasListings ? (
           <div className={listingsContainerClasses}>
             <h2 className={css.listingsTitle}>
@@ -362,10 +362,5 @@ const ProfilePage = compose(
   withViewport,
   injectIntl
 )(ProfilePageComponent);
-
-ProfilePage.loadData = params => {
-  const id = new UUID(params.id);
-  return loadData(id);
-};
 
 export default ProfilePage;

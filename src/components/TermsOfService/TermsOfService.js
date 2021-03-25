@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { ExternalLink } from '../../components';
 
-import css from './TermsOfService.css';
+import css from './TermsOfService.module.css';
 
 const TermsOfService = props => {
   const { rootClassName, className } = props;

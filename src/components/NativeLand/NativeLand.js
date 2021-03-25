@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import css from './NativeLand.css';
+import css from './NativeLand.module.css';
 import { FormattedMessage } from '../../util/reactIntl';
 import { NativeLandSearchForm } from '../../forms';
 import { userLocation } from '../../util/maps';
@@ -19,11 +19,22 @@ class NativeLand extends Component {
   }
 
   selectOption(option, e) {
+    const slug = option && option.properties ? option.properties.Slug : null;
+    const geometry = option && option.geometry ? option.geometry : null;
+
     const queryParamName = 'pub_nativeLands';
-    this.props.onSelect({ [queryParamName]: option });
+    this.props.onSelect({ [queryParamName]: slug });
+
+    // Function for Search page
     if (this.props.saveTribes) {
       this.props.saveTribes(this.state.tribes);
     }
+
+    // Function for Map page
+    if (this.props.selectGeometry) {
+      this.props.selectGeometry(geometry);
+    }
+
     // blur event target if event is passed
     if (e && e.currentTarget) {
       e.currentTarget.blur();
@@ -45,7 +56,7 @@ class NativeLand extends Component {
     // Correct URL will look like 'https://native-land.ca/api/index.php?maps=territories&position=42.553080,-86.473389'
     // console.log(lat + " + " + lng);
     const apiURL = baseUrl + lat + "," + lng;
-    // const apiURL = 'https://native-land.ca/api/index.php?maps=territories&position='; //for testing
+
     fetch(apiURL)
       .catch(error => {
         this.setState({ tribeSearchInProgress: false });
@@ -105,7 +116,7 @@ class NativeLand extends Component {
                   css.buttonSelected : css.button
                 }
                 key={t.properties.Name}
-                onClick={() => this.selectOption(t.properties.Slug)}>
+                onClick={() => this.selectOption(t)}>
                 <h4 className={css.buttonText}> {t.properties.Name} </h4>
               </button>
             )
@@ -153,26 +164,20 @@ class NativeLand extends Component {
 
     return (
       <div className={css.nativeLandInfo}>
-        {!this.props.onMapPage ?
-          <div>
+        <div>
+          {!this.props.onMapPage &&
             <div className={css.half}></div>
-            {this.state.tribes.length === 0 ?
-              <h2 className={css.nativeLandHeader}>
-                <FormattedMessage id={'NativeLand.defaultHeading'} />
-              </h2>
-              :
-              <h2 className={css.nativeLandHeader}>
-                <FormattedMessage id={'NativeLand.nativeLandHeading'} />
-              </h2>
-            }
-          </div>
-          :
-          this.state.tribes.length > 0 ?
+          }
+          {this.state.tribes.length === 0 ? (
+            <h2 className={css.nativeLandHeader}>
+              <FormattedMessage id={'NativeLand.defaultHeading'} />
+            </h2>
+          ) : (
             <h2 className={css.nativeLandHeader}>
               <FormattedMessage id={'NativeLand.nativeLandHeading'} />
             </h2>
-            : null
-        }
+          )}
+        </div>
         {modal}
         {tribes}
         {loadingTribes}

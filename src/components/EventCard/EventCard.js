@@ -5,7 +5,7 @@ import { createSlug } from '../../util/urlHelpers';
 import { getEventDateString, parseDateFromISO8601 } from '../../util/dates';
 import { NamedLink } from '..';
 
-import css from './EventCard.css';
+import css from './EventCard.module.css';
 
 const CDN_DOMAIN = process.env.REACT_APP_CDN_DOMAIN;
 const CDN_PARAMS = process.env.REACT_APP_CDN_PARAMS;

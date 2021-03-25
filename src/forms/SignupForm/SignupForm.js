@@ -9,7 +9,7 @@ import { Form, PrimaryButton, FieldTextInput, FieldSelect, FieldCheckbox } from 
 import getCountryCodes from '../../translations/countryCodes';
 import config from '../../config';
 
-import css from './SignupForm.css';
+import css from './SignupForm.module.css';
 
 const KEY_CODE_ENTER = 13;
 

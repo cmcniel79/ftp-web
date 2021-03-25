@@ -21,6 +21,8 @@
     <!-- End Favicons -->
 
     <!--!link-->
+    <!--!ssrStyles-->
+    <!--!ssrLinks-->
 
     <style>
      /**
@@ -147,8 +149,8 @@
       We didn't bundle it to the main app since it would unnecessarily slow down initial rendering.
     -->
     <script src="%PUBLIC_URL%/static/scripts/mapbox/mapbox-sdk.min.js"></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css" rel="stylesheet" />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
     <script>
       window.mapboxgl.accessToken = '%REACT_APP_MAPBOX_ACCESS_TOKEN%';
     </script>
@@ -165,6 +167,8 @@
     <script src="https://js.stripe.com/v3/"></script>
     <!--!preloadedStateScript-->
     <!--!script-->
+
+    <!--!ssrScripts-->
 
     <!--
          Note when adding new external scripts/styles/fonts/etc.:

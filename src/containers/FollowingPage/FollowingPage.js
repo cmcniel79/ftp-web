@@ -17,11 +17,10 @@ import {
 } from '../../components';
 import { TopbarContainer } from '..';
 import {
-  queryFollowed,
   sendUpdatedFollowed,
   callFollowAPI
 } from './FollowingPage.duck';
-import css from './FollowingPage.css';
+import css from './FollowingPage.module.css';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 
 export class FollowingPageComponent extends Component {
@@ -173,8 +172,10 @@ const mapStateToProps = state => {
     queryInProgress,
     queryListingsError,
   } = state.FollowingPage;
+  
   const { currentUser } = state.user;
   const users = followedIds && followedIds.length > 0 ? getMarketplaceEntities(state, followedIds) : null;
+
   return {
     scrollingDisabled: isScrollingDisabled(state),
     users,
@@ -195,9 +196,5 @@ const FollowingPage = compose(
   ),
   injectIntl
 )(FollowingPageComponent);
-
-FollowingPage.loadData = () => {
-  return queryFollowed();
-};
 
 export default FollowingPage;

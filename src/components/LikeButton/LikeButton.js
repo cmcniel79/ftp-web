@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import css from './LikeButton.css';
+import css from './LikeButton.module.css';
 import heartOutline from './Images/heart-outline.svg';
 import heartFilled from './Images/heart-filled.svg';
 

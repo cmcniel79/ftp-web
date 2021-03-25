@@ -7,7 +7,7 @@ import navigateIcon from '../../assets/navigate.svg';
 import shareIcon from '../../assets/share.svg';
 import exitIcon from '../../assets/exit.svg';
 
-import css from './SingleEventPage.css';
+import css from './SingleEventPage.module.css';
 
 // Approximated collapsed size so that there are ~three lines of text
 // in the desktop layout in the host section of the ListingPage.

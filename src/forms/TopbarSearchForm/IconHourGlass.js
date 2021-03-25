@@ -1,6 +1,6 @@
 import React from 'react';
 
-import css from './TopbarSearchForm.css';
+import css from './TopbarSearchForm.module.css';
 
 const IconHourGlass = () => (
   <svg

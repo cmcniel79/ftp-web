@@ -6,7 +6,7 @@ import {
   NamedLink,
 } from '../../components';
 
-import css from './EventsPage.css';
+import css from './EventsPage.module.css';
 
 export const EventSection = props => {
 

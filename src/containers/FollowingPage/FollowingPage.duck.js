@@ -111,6 +111,7 @@ export const queryFollowedError = e => ({
 // Throwing error for new (loadData may need that info)
 export const queryFollowed = () => (dispatch, getState, sdk) => {
     dispatch(queryFollowedRequest());
+    
     return sdk.currentUser.show()
         .then(response => {
             // Pick only the id and type properties from the response listings
@@ -180,3 +181,7 @@ export const callFollowAPI = actionPayload => {
         })
         .catch(e => console.log(e));
 };
+
+export const loadData = () => {
+    return queryFollowed();
+  };

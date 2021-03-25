@@ -28,10 +28,11 @@ import jewelryImage from './images/jewelry.png';
 import artImage from './images/art.png';
 import apparelImage from './images/apparel.png';
 import traditionalImage from './images/traditional.png';
-
-import css from './LandingPage.css';
 import { getListingsById, getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { loadData } from './LandingPage.duck';
+
+
+import css from './LandingPage.module.css';
 
 export const LandingPageComponent = props => {
 

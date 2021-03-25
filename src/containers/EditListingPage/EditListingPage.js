@@ -36,14 +36,13 @@ import {
   requestImageUpload,
   updateImageOrder,
   removeListingImage,
-  loadData,
   clearUpdatedTab,
   savePayoutDetails,
   // queryOwnListings,
   updateRanking,
 } from './EditListingPage.duck';
 
-import css from './EditListingPage.css';
+import css from './EditListingPage.module.css';
 
 const STRIPE_ONBOARDING_RETURN_URL_SUCCESS = 'success';
 const STRIPE_ONBOARDING_RETURN_URL_FAILURE = 'failure';
@@ -396,7 +395,5 @@ const EditListingPage = compose(
     mapDispatchToProps
   )
 )(injectIntl(EditListingPageComponent));
-
-EditListingPage.loadData = loadData;
 
 export default EditListingPage;

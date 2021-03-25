@@ -7,7 +7,7 @@ import {
   IconSocialMediaTikTok,
   ExternalLink 
 } from '..';
-import css from './UserSocialMedia.css';
+import css from './UserSocialMedia.module.css';
 
 const UserSocialMedia = props => {
   const { socialMedia, className } = props;

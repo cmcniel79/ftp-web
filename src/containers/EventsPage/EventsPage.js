@@ -15,7 +15,7 @@ import {
   Page
 } from '../../components';
 
-import css from './EventsPage.css';
+import css from './EventsPage.module.css';
 
 export class EventsPageComponent extends Component {
 

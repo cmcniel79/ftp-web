@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
-import css from './FollowButton.css';
+import { FormattedMessage, injectIntl } from '../../util/reactIntl';
+import css from './FollowButton.module.css';
 
 class FollowButton extends Component {
     constructor(props) {
@@ -39,4 +39,4 @@ class FollowButton extends Component {
     }
 }
 
-export default FollowButton;
+export default injectIntl(FollowButton);

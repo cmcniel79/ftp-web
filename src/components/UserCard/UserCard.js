@@ -8,7 +8,7 @@ import { ensureUser, ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
 import exit from '../../assets/exit-white.svg';
 
-import css from './UserCard.css';
+import css from './UserCard.module.css';
 
 // Approximated collapsed size so that there are ~three lines of text
 // in the desktop layout in the host section of the ListingPage.
@@ -104,19 +104,23 @@ const UserCard = props => {
     [css.withBioMissingAbove]: !hasBio,
   });
 
-  const contact = !isPremium && !isFollowingPage? (
-    <InlineTextButton rootClassName={css.linkButton} onClick={handleContactUserClick}>
+  const contact = !isPremium && !isFollowingPage ? (
+    <InlineTextButton
+      rootClassName={css.linkButton}
+      onClick={handleContactUserClick}
+    // enforcePagePreloadFor="SignupPage"
+    >
       <FormattedMessage id="UserCard.contactUser" />
     </InlineTextButton>
   ) : isPremium && companyWebsite ? (
-        <ExternalLink className={css.linkButton} href={companyWebsite}>
-          <FormattedMessage id="UserCard.viewWebsite" />
-          <img className={css.externalLinkIcon} src={exit} alt="External Link" />
-        </ExternalLink>
-       ) : (
-       <NamedLink className={css.linkButton} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
-            <FormattedMessage id="UserCard.viewProfile" />
-          </NamedLink>);
+    <ExternalLink className={css.linkButton} href={companyWebsite}>
+      <FormattedMessage id="UserCard.viewWebsite" />
+      <img className={css.externalLinkIcon} src={exit} alt="External Link" />
+    </ExternalLink>
+  ) : (
+    <NamedLink className={css.linkButton} name="ProfilePage" params={{ id: ensuredUser.id.uuid }}>
+      <FormattedMessage id="UserCard.viewProfile" />
+    </NamedLink>);
 
   const editProfile = (
     <NamedLink className={css.linkButton} name="ProfileSettingsPage">
@@ -132,9 +136,9 @@ const UserCard = props => {
           isFollowed={isFollowed}
           updateFollowed={updateFollowed}
         />}
-        <span className={css.editAndContactButtons}>
-          {isCurrentUser ? editProfile : contact}
-        </span>
+      <span className={css.editAndContactButtons}>
+        {isCurrentUser ? editProfile : contact}
+      </span>
     </div>
   ) : null;
 

@@ -12,7 +12,7 @@ import {
 import { ResponsiveImage, IconBannedUser, NamedLink, ExternalLink } from '../../components/';
 import verifiedImage from '../../assets/checkmark-circle.svg';
 
-import css from './Avatar.css';
+import css from './Avatar.module.css';
 
 // Responsive image sizes hint
 const AVATAR_SIZES = '40px';

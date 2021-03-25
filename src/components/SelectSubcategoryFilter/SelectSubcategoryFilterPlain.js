@@ -3,7 +3,7 @@ import { arrayOf, bool, func, node, object, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
 
-import css from './SelectSubcategoryFilterPlain.css';
+import css from './SelectSubcategoryFilterPlain.module.css';
 
 class SelectSubcategoryFilterPlain extends Component {
   constructor(props) {

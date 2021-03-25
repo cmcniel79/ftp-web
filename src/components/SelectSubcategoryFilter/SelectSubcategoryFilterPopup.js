@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { Menu, MenuContent, MenuItem, MenuLabel } from '..';
 import forward from './Images/chevron-forward-outline.svg';
 import back from './Images/chevron-back-outline.svg';
-import css from './SelectSubcategoryFilterPopup.css';
+import css from './SelectSubcategoryFilterPopup.module.css';
 
 const optionLabel = (options, key) => {
   const option = options.find(o => o.key === key);

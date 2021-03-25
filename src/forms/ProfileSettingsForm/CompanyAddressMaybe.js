@@ -5,7 +5,7 @@ import { propTypes } from '../../util/types';
 import { autocompletePlaceSelected } from '../../util/validators';
 import { LocationAutocompleteInputField, FieldTextInput, FieldCheckbox } from '../../components';
 
-import css from './ProfileSettingsForm.css';
+import css from './ProfileSettingsForm.module.css';
 
 const identity = v => v;
 

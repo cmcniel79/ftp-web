@@ -19,7 +19,7 @@ import {
 } from '../../util/reactIntl';
 import { sendEmail } from './ContactPage.duck';
 
-import css from './ContactPage.css';
+import css from './ContactPage.module.css';
 
 export class ContactPageComponent extends Component {
 

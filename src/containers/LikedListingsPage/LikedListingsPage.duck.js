@@ -145,6 +145,7 @@ export const queryLikedListings = () => (dispatch, getState, sdk) => {
                         'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
                     })
                         .then(response => {
+                            console.log(response);
                             dispatch(addMarketplaceEntities(response));
                         })
                         .catch(e => {
@@ -179,3 +180,7 @@ export const callLikeAPI = actionPayload => {
       .catch(e => console.log(e));
 };
 
+export const loadData = () => {
+    console.log("hello liked");
+    return queryLikedListings();
+}

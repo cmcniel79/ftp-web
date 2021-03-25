@@ -5,7 +5,7 @@ import {
     ExternalLink
 } from '../../components';
 import exit from '../../assets/exit-white.svg';
-import css from './ListingPage.css';
+import css from './ListingPage.module.css';
 import { string } from 'prop-types';
 
 const SectionPremiumPriceMaybe = props => {

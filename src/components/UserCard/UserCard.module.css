@@ -1,0 +1,167 @@
+@import '../../styles/propertySets.css';
+
+.root {
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
+.avatar {
+  flex-shrink: 0;
+  margin-right: 10px;
+  @media (--viewportMedium) {
+    margin-right: 36px;
+  }
+}
+
+.premiumAvatar {
+  flex-shrink: 0;
+  margin-right: 10px;
+  width: 100px;
+  height: 100px;
+  @media (--viewportMedium) {
+    margin-right: 25px;
+    width: 150px;
+    height: 150px;
+  }
+}
+
+.info {
+  flex: 1;
+}
+
+.heading {
+  @apply --marketplaceH2FontStyles;
+  line-height: 20px;
+  margin:  0 0 0 0;
+  @media (--viewportMedium) {
+    margin: 0 0 0 0;
+  }
+}
+
+.headingLink {
+  color: var(--matterColor);
+}
+
+.tribeText {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.link {
+  white-space: nowrap;
+}
+
+.mobileBio, .desktopBio {
+  /* Preserve newlines, but collapse other whitespace */
+  white-space: pre-line;
+  margin: 18px 0 0 0;
+  transition: all 1s ease-in;
+  font-size: 20px;
+  line-height: 32px;
+  letter-spacing: -0.1px;
+  @apply --marketplaceH4FontStyles;
+  @media (--viewportMedium) {
+    margin: 0;
+  }
+}
+
+.bioTitle {
+  @apply --marketplaceH3FontStyles;
+  font-weight: 550;
+  font-size: 22px;
+  line-height: 24px;
+  margin: 10px 0 15px 0;
+  @media (--viewportMedium) {
+    margin: 20px 0 15px 0;
+  }
+}
+
+.sideBioContainer {
+  display: none;
+  @media (--viewportMedium) {
+    display: initial;
+    margin: 0 0 0 50px;
+  }
+}
+
+.sideBioTitle {
+  margin: 0;
+  line-height: 16px;
+}
+
+.mobileBio {
+  @media (--viewportMedium) {
+    display: none;
+  }
+}
+
+.desktopBio {
+  display: none;
+  @media (--viewportMedium) {
+    display: block;
+  }
+}
+
+.showMore {
+  @apply --marketplaceLinkStyles;
+  @apply --marketplaceH4FontStyles;
+  margin: 0;
+}
+
+.links {
+  @apply --marketplaceH4FontStyles;
+  margin: 13px 0 0 0;
+  white-space: nowrap;
+  @media (--viewportMedium) {
+    margin: 10px 0 0 0;
+  }
+}
+
+.withBioMissingAbove {
+  @media (--viewportMedium) {
+    /* Fix baseline alignment if bio is missing from above */
+    margin-top: 10px;
+  }
+}
+
+.linkSeparator {
+  margin: 0 5px;
+  color: var(--marketplaceColor);
+}
+
+.headingRow {
+  display: flex;
+  flex-direction: column;
+  @media (--viewportMedium) {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+}
+
+.editProfileDesktop {
+  @apply --marketplaceH4FontStyles;
+  display: none;
+  margin-bottom: 0;
+  white-space: nowrap;
+  @media (--viewportMedium) {
+    display: inline;
+  }
+}
+
+.editAndContactButtons {
+  display: inline;
+}
+
+.linkButton {
+  @apply --userCardButtonStyles;
+}
+
+.externalLinkIcon {
+  height: 25px;
+  margin: 0 0 3px 5px;
+}

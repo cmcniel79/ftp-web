@@ -16,19 +16,16 @@ export { default as LikedListingsPage } from './LikedListingsPage/LikedListingsP
 export { default as ListingPage } from './ListingPage/ListingPage';
 export { default as MapPage } from './MapPage/MapPage';
 export { default as ManageListingsPage } from './ManageListingsPage/ManageListingsPage';
-export { default as NotFoundPage } from './NotFoundPage/NotFoundPage';
 export { default as PasswordChangePage } from './PasswordChangePage/PasswordChangePage';
 export { default as PasswordRecoveryPage } from './PasswordRecoveryPage/PasswordRecoveryPage';
 export { default as PasswordResetPage } from './PasswordResetPage/PasswordResetPage';
 export { default as PaymentMethodsPage } from './PaymentMethodsPage/PaymentMethodsPage';
-export { default as StripePayoutPage } from './StripePayoutPage/StripePayoutPage'; // this line didnt end in a ;, why would that be
+export { default as StripePayoutPage } from './StripePayoutPage/StripePayoutPage';
 export { default as PrivacyPolicyPage } from './PrivacyPolicyPage/PrivacyPolicyPage';
 export { default as ProfilePage } from './ProfilePage/ProfilePage';
 export { default as ProfileSettingsPage } from './ProfileSettingsPage/ProfileSettingsPage';
 export { default as SingleEventPage } from './SingleEventPage/SingleEventPage';
 export { default as SearchPage } from './SearchPage/SearchPage';
+export { default as NotFoundPage } from './NotFoundPage/NotFoundPage';
 export { default as StaticPage } from './StaticPage/StaticPage';
-export { default as StyleguidePage } from './StyleguidePage/StyleguidePage';
-export { default as TermsOfServicePage } from './TermsOfServicePage/TermsOfServicePage';
 export { default as TopbarContainer } from './TopbarContainer/TopbarContainer';
-export { default as TransactionPage } from './TransactionPage/TransactionPage';
