@@ -28,7 +28,7 @@ class SearchMapPlaceLabel extends Component {
     const classes = classNames(rootClassName || css.root, className);
 
     const fullCard = (
-      <div className={classes}>
+      <div className={classes} onClick={() => this.setState({ isShown: false })}>
         <div className={css.topContainer}>
           <div className={css.titleContainer}>
             <h3 className={css.popupTitle}>{event.features[0].properties.nativeName}</h3>
@@ -64,7 +64,8 @@ class SearchMapPlaceLabel extends Component {
             className={classes}
             onClick={() => this.setState({ isShown: true })}
           >
-            Click Here!
+          <h3 className={css.popupTitle}>{event.features[0].properties.nativeName}</h3>
+          <p className={css.popupText}>Navajo Nation Chapter</p>
           </button>
         )
     );
