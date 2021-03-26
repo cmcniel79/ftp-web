@@ -496,22 +496,12 @@ class SearchMapWithMapbox extends Component {
         const coordinates = e.features[0].geometry ? e.features[0].geometry.coordinates : [e.lngLat.lng, e.lngLat.lat];
         const element = this.createPopupElement(e, coordinates);
         this.addPopup(element, coordinates);
-        const contentElement = document.getElementsByClassName('mapboxgl-popup-content');
-        if (contentElement[0]) {
-          contentElement[0].style.padding = '0 0 0 0';
-          contentElement[0].style.borderRadius = '5px';
-        }
       });
 
       this.map.on('touchstart', NATIVE_SOURCE_NAME, e => {
         const coordinates = e.features[0].geometry ? e.features[0].geometry.coordinates : [e.lngLat.lng, e.lngLat.lat];
         const element = this.createPopupElement(e, coordinates);
         this.addPopup(element, coordinates);
-        const contentElement = document.getElementsByClassName('mapboxgl-popup-content');
-        if (contentElement[0]) {
-          contentElement[0].style.padding = '0 0 0 0';
-          contentElement[0].style.borderRadius = '5px';
-        }
       });
 
       // Remove popup on click
