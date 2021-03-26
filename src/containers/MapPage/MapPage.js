@@ -71,13 +71,8 @@ export class MapPageComponent extends Component {
   componentDidMount() {
     if (window) {
       this.props.onLoadData();
-      // this.loadInitialData();
     }
   }
-
-  // loadInitialData() {
-
-  // }
 
   selectTribe(value) {
     this.setState({ tribe: value['pub_nativeLands'] });

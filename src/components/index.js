@@ -149,6 +149,7 @@ export { default as SearchMapUsers } from './SearchMapUsers/SearchMapUsers';
 export { default as SearchMapGroupLabel } from './SearchMapGroupLabel/SearchMapGroupLabel';
 export { default as SearchMapInfoCard } from './SearchMapInfoCard/SearchMapInfoCard';
 export { default as SearchMapSellerCard } from './SearchMapSellerCard/SearchMapSellerCard';
+export { default as SearchMapPlaceLabel } from './SearchMapPlaceLabel/SearchMapPlaceLabel';
 export { default as SearchMapPriceLabel } from './SearchMapPriceLabel/SearchMapPriceLabel';
 export { default as SearchMapSellerLabel } from './SearchMapSellerLabel/SearchMapSellerLabel';
 export { default as SearchResultsPanel } from './SearchResultsPanel/SearchResultsPanel';

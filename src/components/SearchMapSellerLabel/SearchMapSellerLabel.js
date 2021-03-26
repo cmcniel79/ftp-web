@@ -39,7 +39,7 @@ class SearchMapSellerLabel extends Component {
   }
 
   render() {
-    const { className, rootClassName, user, onUserClicked } = this.props;
+    const { className, rootClassName, intl, user, onUserClicked } = this.props;
     const currentSeller = ensureUser(user);
     const formattedName = currentSeller.attributes.profile.publicData && currentSeller.attributes.profile.publicData.companyName ?
       currentSeller.attributes.profile.publicData.companyName : currentSeller.attributes.profile.displayName;
@@ -93,8 +93,14 @@ class SearchMapSellerLabel extends Component {
 
     const image = !this.state.isShown ? imageOutline
       : imageFilled;
+      
     const name = !this.state.isShown ? null
-      : <span className={css.name}> {formattedName} </span>;
+      : (
+        <span className={css.name}>
+          {formattedName}
+        </span>
+      );
+
     return (
       <button
         className={classes}
