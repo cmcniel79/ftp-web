@@ -1,5 +1,4 @@
 @import '../../styles/propertySets.css';
-
 .root {
   position: relative;
   width: auto;
@@ -9,10 +8,34 @@
   outline: 0 !important;
 }
 
+.card {
+  min-width: 325px;
+  @media (--viewportSmall) {
+    max-width: 325px;
+  }
+  /* min-width: 768px */
+  @media (--viewportMedium) {
+    max-width: 500px;
+  }
+  /* min-width: 1024px */
+  @media ( --viewportLarge) {
+    max-width: 750px;
+  }
+  /* min-width: 1128px */
+  /* @media (--viewportLargeWithPaddings) {
+      max-width: 750px;
+    } */
+  /* min-width: 1921px */
+  @media ( --viewportXLarge) {
+    max-width: 1000px;
+  }
+}
+
 .popupCard {
   display: flex;
   flex-direction: row;
   padding: 0 0 0 0;
+  min-height: 120px;
 }
 
 .popupImage {
@@ -31,7 +54,6 @@
 .popupTextContainer {
   display: flex;
   flex-direction: column;
-  width: auto;
   margin: 3px 5px auto 0;
 }
 

@@ -252,7 +252,7 @@ class SearchMapWithMapbox extends Component {
     this.state = { mapContainer: null, isMapReady: false };
     this.viewportBounds = null;
     this.popup = new mapboxgl.Popup({
-      maxWidth: '325px',
+      maxWidth: 'none',
       closeButton: false,
       closeOnClick: true,
       anchor: 'bottom',
@@ -384,13 +384,13 @@ class SearchMapWithMapbox extends Component {
     e.stopPropagation();
   }
 
-  addPopup(e) {
+  addPopup(e, isTouchEvent) {
     const coordinates = e.features[0].geometry ? e.features[0].geometry.coordinates : [e.lngLat.lng, e.lngLat.lat];
     const popupContainer = document.createElement('div');
     popupContainer.setAttribute('id', 'nativePlacesPopup');
 
     const label = (
-      <SearchMapPlaceLabel event={e} coordinates={coordinates} />
+      <SearchMapPlaceLabel event={e} coordinates={coordinates} isTouchEvent={isTouchEvent} />
     );
 
     ReactDOM.render(label, popupContainer);
@@ -453,11 +453,13 @@ class SearchMapWithMapbox extends Component {
 
       // Add the popup when mouse enters a feature on the native place names' map source
       this.map.on('mouseenter', NATIVE_SOURCE_NAME, e => {
-        this.addPopup(e);
+        this.addPopup(e, false);
       });
 
-      this.map.on('touchstart', NATIVE_SOURCE_NAME, e => {
-        this.addPopup(e);
+      this.map.on('touchend', NATIVE_SOURCE_NAME, e => {
+        if (e.features && e.features[0] && e.features[0].properties) {
+          this.addPopup(e, true);
+        }
       });
 
       // Remove popup on click

@@ -234,6 +234,7 @@ export class MapPageComponent extends Component {
                     initialValues={this.initialValues}
                     setGeolocation={this.setGeolocation}
                     onMapPage={true}
+                    selectGeometry={this.selectGeometry}
                   />
                   <Button className={nativePlacesButtonClasses} onClick={() => this.toggleNativeMaps()}>
                     {this.state.showNativePlaces ? (
