@@ -35,16 +35,16 @@ class SearchMapPlaceLabel extends Component {
         <ExternalLink href="https://www.fromthepeople.co/contact">Contact Page</ExternalLink>
       </p>
     ) : (
-      <div className={css.popupText}>
+      <div>
         {translation ? (
-          <p>
+          <p className={css.popupText}>
             <b>
               Translation:&nbsp;
             </b>
             {translation}
           </p>
         ) : null}
-        <p>
+        <p className={css.popupText}>
           {background}
         </p>
       </div>

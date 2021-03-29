@@ -451,7 +451,7 @@ class SearchMapWithMapbox extends Component {
         this.map.setLayoutProperty(NATIVE_SOURCE_NAME, 'visibility', 'visible');
       };
 
-      this.map.on('touchend', NATIVE_SOURCE_NAME, e => {
+      this.map.on('touchstart', NATIVE_SOURCE_NAME, e => {
         if (e.features && e.features[0] && e.features[0].properties) {
           this.addPopup(e, true);
         }
