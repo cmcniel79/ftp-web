@@ -45,6 +45,7 @@ class SearchMapPlaceLabel extends Component {
             {translation}
           </p>
         ) : null}
+        <br/>
         <p className={css.popupText}>
           {background}
         </p>

@@ -55,6 +55,11 @@
   display: flex;
   flex-direction: column;
   margin: 3px 5px auto 0;
+  overflow-y: auto;
+  max-height: 150px;
+  @media (--viewportMedium) {
+    max-height: 200px;
+  }
 }
 
 .popupText {

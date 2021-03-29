@@ -460,6 +460,7 @@ class SearchMapWithMapbox extends Component {
 
       // Add the popup when mouse enters a feature on the native place names' map source
       this.map.on('mouseenter', NATIVE_SOURCE_NAME, e => {
+          console.log("TOUCHED");
         this.addPopup(e, false);
       });
 
