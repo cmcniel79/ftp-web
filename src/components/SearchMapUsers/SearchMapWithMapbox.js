@@ -451,11 +451,12 @@ class SearchMapWithMapbox extends Component {
         this.map.setLayoutProperty(NATIVE_SOURCE_NAME, 'visibility', 'visible');
       };
 
-      this.map.on('touchstart', NATIVE_SOURCE_NAME, e => {
-        if (e.features && e.features[0] && e.features[0].properties) {
-          this.addPopup(e, true);
-        }
-      });
+      // this.map.on('click', NATIVE_SOURCE_NAME, e => {
+      //   if (e.features && e.features[0] && e.features[0].properties) {
+      //     console.log("TOUCHED");
+      //     this.addPopup(e, false);
+      //   }
+      // });
 
       // Add the popup when mouse enters a feature on the native place names' map source
       this.map.on('mouseenter', NATIVE_SOURCE_NAME, e => {

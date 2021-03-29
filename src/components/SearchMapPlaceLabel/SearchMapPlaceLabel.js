@@ -23,6 +23,7 @@ class SearchMapPlaceLabel extends Component {
 
   render() {
     const { className, rootClassName, event, coordinates } = this.props;
+    console.log(event);
     const classes = classNames(rootClassName || css.root, className, this.state.isShown ? css.card : css.label);
     const eventExists = event && event.features && event.features[0];
     const translation = eventExists && event.features[0].properties.translation;
