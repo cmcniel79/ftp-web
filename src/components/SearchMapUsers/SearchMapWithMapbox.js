@@ -451,15 +451,15 @@ class SearchMapWithMapbox extends Component {
         this.map.setLayoutProperty(NATIVE_SOURCE_NAME, 'visibility', 'visible');
       };
 
-      // Add the popup when mouse enters a feature on the native place names' map source
-      this.map.on('mouseenter', NATIVE_SOURCE_NAME, e => {
-        this.addPopup(e, false);
-      });
-
       this.map.on('touchend', NATIVE_SOURCE_NAME, e => {
         if (e.features && e.features[0] && e.features[0].properties) {
           this.addPopup(e, true);
         }
+      });
+
+      // Add the popup when mouse enters a feature on the native place names' map source
+      this.map.on('mouseenter', NATIVE_SOURCE_NAME, e => {
+        this.addPopup(e, false);
       });
 
       // Remove popup on click
