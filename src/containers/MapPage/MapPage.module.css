@@ -362,6 +362,9 @@
   @media (--viewportMedium) {
     margin: 0;
   }
+  &:hover {
+    transform: scale(1.02);
+  }
 }
 
 .legendBlock {

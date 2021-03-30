@@ -13,17 +13,27 @@
 // Icons
 export { default as IconAdd } from './IconAdd/IconAdd';
 export { default as IconArrowHead } from './IconArrowHead/IconArrowHead';
+export { default as IconArt } from './IconArt/IconArt';
 export { default as IconBannedUser } from './IconBannedUser/IconBannedUser';
+export { default as IconBed } from './IconBed/IconBed';
 export { default as IconCard } from './IconCard/IconCard';
 export { default as IconCheckmark } from './IconCheckmark/IconCheckmark';
+export { default as IconChevronBack } from './IconChevronBack/IconChevronBack';
+export { default as IconChevronDown } from './IconChevronDown/IconChevronDown';
+export { default as IconChevronForward } from './IconChevronForward/IconChevronForward';
 export { default as IconClose } from './IconClose/IconClose';
+export { default as IconDining } from './IconDining/IconDining';
 export { default as IconEdit } from './IconEdit/IconEdit';
 export { default as IconEmailAttention } from './IconEmailAttention/IconEmailAttention';
 export { default as IconEmailSent } from './IconEmailSent/IconEmailSent';
 export { default as IconEmailSuccess } from './IconEmailSuccess/IconEmailSuccess';
 export { default as IconEnquiry } from './IconEnquiry/IconEnquiry';
+export { default as IconFitness } from './IconFitness/IconFitness';
 export { default as IconKeys } from './IconKeys/IconKeys';
 export { default as IconKeysSuccess } from './IconKeysSuccess/IconKeysSuccess';
+export { default as IconOther } from './IconOther/IconOther';
+export { default as IconPeople } from './IconPeople/IconPeople';
+export { default as IconRetail } from './IconRetail/IconRetail';
 export { default as IconReviewStar } from './IconReviewStar/IconReviewStar';
 export { default as IconReviewUser } from './IconReviewUser/IconReviewUser';
 export { default as IconSearch } from './IconSearch/IconSearch';
@@ -33,6 +43,8 @@ export { default as IconSocialMediaTikTok } from './IconSocialMediaTikTok/IconSo
 export { default as IconSocialMediaTwitter } from './IconSocialMediaTwitter/IconSocialMediaTwitter';
 export { default as IconSpinner } from './IconSpinner/IconSpinner';
 export { default as IconSuccess } from './IconSuccess/IconSuccess';
+export { default as IconVerified } from './IconVerified/IconVerified';
+export { default as IconWork } from './IconWork/IconWork';
 
 // Other independent components
 export { default as ExternalLink } from './ExternalLink/ExternalLink';

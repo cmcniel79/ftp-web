@@ -1,0 +1,9 @@
+.filled {
+  fill: var(--marketplaceColor);
+  stroke: var(--marketplaceColor);
+}
+
+.unfilled {
+  fill: var(--marketplaceColor);
+  stroke: var(--marketplaceColor);
+}

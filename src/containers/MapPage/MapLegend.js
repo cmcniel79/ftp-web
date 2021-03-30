@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
-import bed from '../../assets/bed.svg';
-import dining from '../../assets/dining.svg';
-import other from '../../assets/location.svg';
-import people from '../../assets/people.svg';
-import retail from '../../assets/shopping.svg';
-import work from '../../assets/work.svg';
-import fitness from '../../assets/fitness.svg';
-import art from '../../assets/art.svg';
-import verified from '../../assets/checkmark-circle-outline.svg';
-import chevron from '../../assets/chevron-down-outline.svg';
+import {
+    IconArt,
+    IconBed,
+    IconChevronDown,
+    IconDining,
+    IconFitness,
+    IconOther,
+    IconPeople,
+    IconRetail,
+    IconVerified,
+    IconWork
+} from '../../components';
 
 import css from './MapPage.module.css';
 
@@ -23,31 +25,23 @@ export class MapLegend extends Component {
     }
 
     getLegendImage(industry) {
-        // { key: 'retail', label: "Retail" },
-        // { key: 'dining', label: "Dining" },
-        // { key: 'art', label: "Art and Photography" },
-        // { key: 'professional', label: "Professional Services" },
-        // { key: 'hospitality', label: "Hospitality and Tourism" },
-        // { key: 'nonprofit', label: "Nonprofit" },
-        // { key: 'beauty', label: "Beauty and Personal Services" },
-        // { key: 'other', label: "Other" },
         switch (industry) {
-            case 'retail':
-                return retail;
-            case 'dining':
-                return dining;
             case 'art':
-                return art;
-            case 'professional':
-                return work;
+                return <IconArt className={css.legendImage} isFilled={false} />
             case 'hospitality':
-                return bed;
-            case 'nonprofit':
-                return people;
+                return <IconBed className={css.legendImage} isFilled={false} />
+            case 'dining':
+                return <IconDining className={css.legendImage} isFilled={false} />
             case 'beauty':
-                return fitness;
+                return <IconFitness className={css.legendImage} isFilled={false} />
             case 'other':
-                return other;
+                return <IconOther className={css.legendImage} isFilled={false} />
+            case 'nonprofit':
+                return <IconPeople className={css.legendImage} isFilled={false} /> 
+            case 'retail':
+                return <IconRetail className={css.legendImage} isFilled={false} />
+            case 'professional':
+                return <IconWork className={css.legendImage} isFilled={false}/>
         }
     }
 
@@ -61,18 +55,18 @@ export class MapLegend extends Component {
                     <h2 className={css.legendTitle}>
                         <FormattedMessage id="MapPage.legendTitle" />
                     </h2>
-                    <img className={chevronClasses} src={chevron} alt="chevron" />
+                    <IconChevronDown className={chevronClasses} />
                 </div>
                 <div className={panelClassNames}>
                     <div className={selected === 'verified' ? css.legendBlockSelected : css.legendBlock} onClick={() => onSelect('verified')}>
-                        <img className={css.legendImage} src={verified} alt="icon" />
+                        <IconVerified className={css.legendImage} isFilled={false}/>
                         <span className={css.legendLabel}>
                             <FormattedMessage id="MapPage.legendVerified" />
                         </span>
                     </div>
                     {options && options.map(i =>
                         <div key={i.key} className={selected === i.key ? css.legendBlockSelected : css.legendBlock} onClick={() => onSelect(i.key)}>
-                            <img className={css.legendImage} src={this.getLegendImage(i.key)} alt="icon" />
+                            {this.getLegendImage(i.key, selected)}
                             <span className={css.legendLabel}>
                                 {i.label}
                             </span>

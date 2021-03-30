@@ -4,24 +4,17 @@ import { injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { ensureUser } from '../../util/data';
-import bed from '../../assets/bed.svg';
-import bedFilled from '../../assets/bed-filled.svg';
-import dining from '../../assets/dining.svg';
-import diningFilled from '../../assets/dining-filled.svg';
-import fitness from '../../assets/fitness.svg';
-import fitnessFilled from '../../assets/fitness-filled.svg';
-import other from '../../assets/location.svg';
-import otherFilled from '../../assets/location-filled.svg';
-import people from '../../assets/people.svg';
-import peopleFilled from '../../assets/people-filled.svg';
-import retail from '../../assets/shopping.svg';
-import retailFilled from '../../assets/shopping-filled.svg';
-import work from '../../assets/work.svg';
-import workFilled from '../../assets/work-filled.svg';
-import art from '../../assets/art.svg';
-import artFilled from '../../assets/art-filled.svg';
-import verifiedFilled from '../../assets/checkmark-circle.svg';
-import verified from '../../assets/checkmark-circle-outline.svg';
+import {
+  IconArt,
+  IconBed,
+  IconDining,
+  IconFitness,
+  IconOther,
+  IconPeople,
+  IconRetail,
+  IconVerified,
+  IconWork
+} from '../../components';
 
 import css from './SearchMapSellerLabel.module.css';
 
@@ -49,51 +42,38 @@ class SearchMapSellerLabel extends Component {
     const accountType = currentSeller.attributes.profile.publicData && currentSeller.attributes.profile.publicData.accountType ?
       currentSeller.attributes.profile.publicData.accountType : null;
 
-    var imageOutline;
-    var imageFilled;
+    var image;
     if (accountType !== 'e') {
       switch (industry) {
         case ("retail"):
-          imageOutline = <img className={css.image} src={retail} alt="icon" />;
-          imageFilled = <img className={css.image} src={retailFilled} alt="iconFilled" />;
+          image = <IconRetail className={css.image} isFilled={!this.state.isShown} />
           break;
         case ("dining"):
-          imageOutline = <img className={css.image} src={dining} alt="icon" />;
-          imageFilled = <img className={css.image} src={diningFilled} alt="iconFilled" />;
+          image = <IconDining className={css.image} isFilled={!this.state.isShown} />;
           break;
         case ("art"):
-          imageOutline = <img className={css.image} src={art} alt="icon" />;
-          imageFilled = <img className={css.image} src={artFilled} alt="iconFilled" />;
+          image = <IconArt className={css.image} isFilled={!this.state.isShown} />;
           break;
         case ("professional"):
-          imageOutline = <img className={css.image} src={work} alt="icon" />;
-          imageFilled = <img className={css.image} src={workFilled} alt="iconFilled" />;
+          image = <IconWork className={css.image} isFilled={!this.state.isShown} />;
           break;
         case ("hospitality"):
-          imageOutline = <img className={css.image} src={bed} alt="icon" />;
-          imageFilled = <img className={css.image} src={bedFilled} alt="iconFilled" />;
+          image = <IconBed className={css.image} isFilled={!this.state.isShown} />;
           break;
         case ("nonprofits"):
-          imageOutline = <img className={css.image} src={people} alt="icon" />;
-          imageFilled = <img className={css.image} src={peopleFilled} alt="iconFilled" />;
+          image = <IconPeople className={css.image} isFilled={!this.state.isShown} />;
           break;
         case ("beauty"):
-          imageOutline = <img className={css.image} src={fitness} alt="icon" />;
-          imageFilled = <img className={css.image} src={fitnessFilled} alt="iconFilled" />;
+          image = <IconFitness className={css.image} isFilled={!this.state.isShown} />;
           break;
         default:
-          imageOutline = <img className={css.image} src={other} alt="icon" />;
-          imageFilled = <img className={css.image} src={otherFilled} alt="iconFilled" />;
+          image = <IconOther className={css.image} isFilled={!this.state.isShown} />;
           break;
       }
     } else {
-      imageOutline = <img className={css.image} src={verified} alt="icon" />;
-      imageFilled = <img className={css.image} src={verifiedFilled} alt="iconFilled" />;
+      image = <IconVerified className={css.image} isFilled={!this.state.isShown} />;
     }
 
-    const image = !this.state.isShown ? imageOutline
-      : imageFilled;
-      
     const name = !this.state.isShown ? null
       : (
         <span className={css.name}>

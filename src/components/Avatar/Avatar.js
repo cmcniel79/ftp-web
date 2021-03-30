@@ -9,8 +9,7 @@ import {
   userDisplayNameAsString,
   userAbbreviatedName,
 } from '../../util/data';
-import { ResponsiveImage, IconBannedUser, NamedLink, ExternalLink } from '../../components/';
-import verifiedImage from '../../assets/checkmark-circle.svg';
+import { ResponsiveImage, IconBannedUser, NamedLink, ExternalLink, IconVerified } from '../../components/';
 
 import css from './Avatar.module.css';
 
@@ -104,7 +103,7 @@ export const AvatarComponent = props => {
           sizes={renderSizes}
         />
         {enrolled &&
-          <img className={css.verifiedImage} src={verifiedImage} alt="verified tag"/>
+          <IconVerified className={css.verifiedImage} isFilled={true}/>
         }
       </NamedLink>
 
@@ -120,7 +119,7 @@ export const AvatarComponent = props => {
           sizes={renderSizes}
         />
         {enrolled &&
-          <img className={css.verifiedImage} src={verifiedImage} alt="verified tag"/>
+          <IconVerified className={css.verifiedImage} isFilled={true}/>
         }
       </div>
     );

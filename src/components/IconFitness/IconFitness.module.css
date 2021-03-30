@@ -1,0 +1,15 @@
+.filled {
+  fill: var(--marketplaceColor);
+  stroke: #ffffff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 32px;
+}
+
+.unfilled {
+  fill: none;
+  stroke: var(--marketplaceColor);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 32px;
+}

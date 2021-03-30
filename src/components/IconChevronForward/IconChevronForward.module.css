@@ -1,0 +1,7 @@
+.root {
+  fill: none;
+  stroke: var(--matterColor);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 48px;
+}

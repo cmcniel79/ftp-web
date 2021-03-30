@@ -1,6 +1,7 @@
 .avatarBase {
   font-family: 'poppins', Helvetica, Arial, sans-serif;
   border-radius: 50%;
+  position: relative;
 
   /* Position possible initials to the center of the component */
   display: flex;
@@ -31,9 +32,9 @@
 }
 
 .verifiedImage {
-  position: relative;
-  top: 35px;
-  right: 40px;
+  position: absolute;
+  bottom: -5px;
+  right: 5px;
   width: 33px;
 }
 

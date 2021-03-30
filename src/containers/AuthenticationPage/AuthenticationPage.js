@@ -271,10 +271,6 @@ export class AuthenticationPageComponent extends Component {
     );
     const socialLoginButtonsMaybe = showSocialLogins ? (
       <div className={css.idpButtons}>
-        <SocialLoginButton onClick={() => authWithFacebook()}>
-          <span className={css.buttonIcon}>{FacebookLogo}</span>
-          {facebookButtonText}
-        </SocialLoginButton>
         <div className={css.socialButtonsOr}>
           <span className={css.socialButtonsOrText}>
             <FormattedMessage id="AuthenticationPage.or" />

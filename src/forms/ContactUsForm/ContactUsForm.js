@@ -67,6 +67,7 @@ class ContactUsFormComponent extends Component {
                         { key: "selling", label: "Apply for a Seller account" },
                         { key: "premium accounts", label: "Apply for a Premium, Non-Profit or Ad account" },
                         { key: "event hosting", label: "Hosting your event on From The People" },
+                        { key: "native maps", label: "Submit Native language information for a Map location" },
                         { key: "verification", label: "Begin tribal enrollment verification" },
                         { key: "refunds", label: "Request a refund" },
                         { key: "reporting", label: "Report an Indian Arts and Crafts Act Violation" },

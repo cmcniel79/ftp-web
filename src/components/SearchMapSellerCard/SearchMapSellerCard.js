@@ -10,8 +10,8 @@ import navigateIcon from '../../assets/navigate.svg';
 import shareIcon from '../../assets/share.svg';
 import exitIcon from '../../assets/exit.svg';
 import { userAbbreviatedName } from '../../util/data';
-import forward from '../../assets/forward.svg';
-import back from '../../assets/back.svg';
+import { IconChevronBack, IconChevronForward } from '../../components';
+
 
 import css from './SearchMapSellerCard.module.css';
 // import { txHasBeenDelivered } from '../../util/transaction';
@@ -50,6 +50,7 @@ const SellerCard = props => {
         {showButtons ?
           <button className={css.backButton} onClick={() => changeUser(false)}>
             <img className={css.chevron} src={back} alt="chevron" />
+            <IconChevronBack className={css.chevron} />
           </button> : null}
         {user.profileImage && user.profileImage.id ? (
           <ResponsiveImage
@@ -58,9 +59,9 @@ const SellerCard = props => {
             image={user.profileImage}
             variants={AVATAR_IMAGE_VARIANTS}
           />
-         ) : ( 
+        ) : (
           <span className={css.initials}>{abbreviatedName}</span>
-         )}
+        )}
         <div className={css.info}>
           <h2 className={css.heading}>
             <FormattedMessage id="SellerCard.heading" values={{ name: profileTitle }} />
@@ -78,7 +79,7 @@ const SellerCard = props => {
         </div>
         {showButtons ?
           <button className={css.forwardButton} onClick={() => changeUser(true)}>
-            <img className={css.chevron} src={forward} alt="chevron" />
+            <IconChevronForward className={css.chevron} />
           </button> : null}
       </div>
       {accountType !== 'e' ?

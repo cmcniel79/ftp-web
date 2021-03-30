@@ -9,11 +9,11 @@ import { ensureListing, ensureUser } from '../../util/data';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
 import { 
+  IconVerified,
   LikeButton, 
   NamedLink, 
   ResponsiveImage 
 } from '../../components';
-import verifiedImage from '../../assets/checkmark-circle.svg';
 import ExternalLink from '../ExternalLink/ExternalLink';
 
 import css from './ListingCard.module.css';
@@ -153,7 +153,7 @@ export const ListingCardComponent = props => {
             variants={['landscape-crop', 'landscape-crop2x']}
             sizes={renderSizes}
           />
-          <img className={css.verifiedImage} src={verifiedImage} alt="verified tag" />
+          <IconVerified className={css.verifiedImage} isFilled={true}/>
         </NamedLink>;
       break;
     case "p":

@@ -4,6 +4,7 @@ import { FormattedMessage } from '../../util/reactIntl';
 import {
   Accordion,
   AccordionButton,
+  IconVerified,
   LayoutSingleColumn,
   LayoutWrapperTopbar,
   LayoutWrapperMain,
@@ -12,7 +13,6 @@ import {
   ExternalLink,
   NamedLink
 } from '../../components';
-import verifiedImage from '../../assets/checkmark-circle.svg';
 import css from './FAQPage.module.css';
 
 const FAQPage = () => {
@@ -147,7 +147,7 @@ const FAQPage = () => {
                 Verified Seller Accounts are sellers that have had their tribal enrollment verified by the From The People Team.
                 Verified Sellers can post up to 30 listings for free.
                 Verified Accounts have this symbol on all of their listings and profile images to denote their verified status:
-                <img className={css.verifiedImage} src={verifiedImage} alt="verified tag" />
+                <IconVerified className={css.verifiedImage} isFilled={true}/>
                   <br />
                   <br />
                   Premium Accounts are used by Native/Indigenous owned businesses that have their own websites but would still like to post their

@@ -5,8 +5,7 @@ import css from './FeaturedPartners.module.css';
 import { propTypes } from '../../util/types';
 import { FormattedMessage } from '../../util/reactIntl';
 import { arrayOf } from 'prop-types';
-import forward from '../../assets/forward.svg';
-import back from '../../assets/back.svg';
+import { IconChevronBack, IconChevronForward } from '../../components';
 
 const AVATAR_IMAGE_VARIANTS = [
   // 480x480
@@ -64,18 +63,18 @@ class FeaturedPartners extends Component {
         <div className={css.partnerCard}>
           {this.props.users && this.props.users.length > 1 ?
             <button className={css.backButtonDesktop} onClick={() => this.changeUser(false)}>
-              <img className={css.chevron} src={back} alt="chevron" />
+              <IconChevronBack className={css.chevron} />
             </button> : null}
           <div className={css.mobileImageWrapper}>
             {this.props.users && this.props.users.length > 1 ?
               <button className={css.backButton} onClick={() => this.changeUser(false)}>
-                <img className={css.chevron} src={back} alt="chevron" />
+                <IconChevronBack className={css.chevron} />
               </button> : null}
             {image}
             {this.props.users && this.props.users.length > 1 ?
-            <button className={css.forwardButton} onClick={() => this.changeUser(true)}>
-              <img className={css.chevron} src={forward} alt="chevron" />
-            </button> : null}
+              <button className={css.forwardButton} onClick={() => this.changeUser(true)}>
+                <IconChevronForward className={css.chevron} />
+              </button> : null}
           </div>
           <div className={css.partnerText}>
             <h3 className={css.subHeading}>
@@ -92,7 +91,7 @@ class FeaturedPartners extends Component {
           </div>
           {this.props.users && this.props.users.length > 1 ?
             <button className={css.forwardButtonDesktop} onClick={() => this.changeUser(true)}>
-              <img className={css.chevron} src={forward} alt="chevron" />
+              <IconChevronForward className={css.chevron} />
             </button> : null}
         </div>
       </div>

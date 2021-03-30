@@ -166,6 +166,8 @@ const priceLabelsInLocations = (
         user.attributes.profile.publicData.nativeLands : null;
       const industry = user.attributes.profile.publicData && user.attributes.profile.publicData.companyIndustry ?
         user.attributes.profile.publicData.companyIndustry : 'other';
+      const accountType = user.attributes.profile.publicData && user.attributes.profile.publicData.accountType ?
+        user.attributes.profile.publicData.accountType : null;
       const key = user.id.uuid;
 
       return {
@@ -173,7 +175,7 @@ const priceLabelsInLocations = (
         location: geolocation,
         type: 'user',
         tribe: tribe,
-        industry: industry,
+        industry: accountType === 'e' ? 'verified' : industry,
         componentProps: {
           key,
           className: LABEL_HANDLE,
@@ -451,16 +453,8 @@ class SearchMapWithMapbox extends Component {
         this.map.setLayoutProperty(NATIVE_SOURCE_NAME, 'visibility', 'visible');
       };
 
-      // this.map.on('click', NATIVE_SOURCE_NAME, e => {
-      //   if (e.features && e.features[0] && e.features[0].properties) {
-      //     console.log("TOUCHED");
-      //     this.addPopup(e, false);
-      //   }
-      // });
-
       // Add the popup when mouse enters a feature on the native place names' map source
       this.map.on('mouseenter', NATIVE_SOURCE_NAME, e => {
-          console.log("TOUCHED");
         this.addPopup(e, false);
       });
 
