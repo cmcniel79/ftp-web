@@ -1,4 +1,38 @@
 import React from 'react';
+// import {
+//   AboutPage,
+//   AuthenticationPage,
+//   CheckoutPage,
+//   ContactDetailsPage,
+//   ContactPage,
+//   FAQPage,
+//   FollowingPage,
+//   EditListingPage,
+//   EmailVerificationPage,
+//   EventsPage,
+//   EventTypePage,
+//   EventHostPage,
+//   InboxPage,
+//   LandingPage,
+//   LikedListingsPage,
+//   ListingPage,
+//   MapPage,
+//   ManageListingsPage,
+//   NotFoundPage,
+//   PasswordChangePage,
+//   PasswordRecoveryPage,
+//   PasswordResetPage,
+//   StripePayoutPage,
+//   PaymentMethodsPage,
+//   PrivacyPolicyPage,
+//   ProfilePage,
+//   ProfileSettingsPage,
+//   SingleEventPage,
+//   SearchPage,
+//   StyleguidePage,
+//   TermsOfServicePage,
+//   TransactionPage,
+// } from './containers';
 import loadable from '@loadable/component';
 import getPageDataLoadingAPI from './containers/pageDataLoadingAPI';
 import { NotFoundPage } from './containers';
@@ -14,12 +48,20 @@ const AboutPage = loadable(() => import(/* webpackChunkName: "AboutPage" */ './c
 const AuthenticationPage = loadable(() => import(/* webpackChunkName: "AuthenticationPage" */ './containers/AuthenticationPage/AuthenticationPage'));
 const CheckoutPage = loadable(() => import(/* webpackChunkName: "CheckoutPage" */ './containers/CheckoutPage/CheckoutPage'));
 const ContactDetailsPage = loadable(() => import(/* webpackChunkName: "ContactDetailsPage" */ './containers/ContactDetailsPage/ContactDetailsPage'));
+const ContactPage = loadable(() => import(/* webpackChunkName: "ContactPage" */ './containers/ContactPage/ContactPage'));
 const EditListingPage = loadable(() => import(/* webpackChunkName: "EditListingPage" */ './containers/EditListingPage/EditListingPage'));
 const EmailVerificationPage = loadable(() => import(/* webpackChunkName: "EmailVerificationPage" */ './containers/EmailVerificationPage/EmailVerificationPage'));
+const EventHostPage = loadable(() => import(/* webpackChunkName: "EventHostPage" */ './containers/EventHostPage/EventHostPage'));
+const EventsPage = loadable(() => import(/* webpackChunkName: "EventsPage" */ './containers/EventsPage/EventsPage'));
+const EventTypePage = loadable(() => import(/* webpackChunkName: "EventTypePage" */ './containers/EventTypePage/EventTypePage'));
+const FAQPage = loadable(() => import(/* webpackChunkName: "FAQPage" */ './containers/FAQPage/FAQPage'));
+const FollowingPage = loadable(() => import(/* webpackChunkName: "FollowingPage" */ './containers/FollowingPage/FollowingPage'));
 const InboxPage = loadable(() => import(/* webpackChunkName: "InboxPage" */ './containers/InboxPage/InboxPage'));
 const LandingPage = loadable(() => import(/* webpackChunkName: "LandingPage" */ './containers/LandingPage/LandingPage'));
+const LikedListingsPage = loadable(() => import(/* webpackChunkName: "LikedListingsPage" */ /* webpackPrefetch: true */ './containers/LikedListingsPage/LikedListingsPage'));
 const ListingPage = loadable(() => import(/* webpackChunkName: "ListingPage" */ /* webpackPrefetch: true */ './containers/ListingPage/ListingPage'));
 const ManageListingsPage = loadable(() => import(/* webpackChunkName: "ManageListingsPage" */ './containers/ManageListingsPage/ManageListingsPage'));
+const MapPage = loadable(() => import(/* webpackChunkName: "MapPage" */ './containers/MapPage/MapPage'));
 const PasswordChangePage = loadable(() => import(/* webpackChunkName: "PasswordChangePage" */ './containers/PasswordChangePage/PasswordChangePage'));
 const PasswordRecoveryPage = loadable(() => import(/* webpackChunkName: "PasswordRecoveryPage" */ './containers/PasswordRecoveryPage/PasswordRecoveryPage'));
 const PasswordResetPage = loadable(() => import(/* webpackChunkName: "PasswordResetPage" */ './containers/PasswordResetPage/PasswordResetPage'));
@@ -28,6 +70,7 @@ const PrivacyPolicyPage = loadable(() => import(/* webpackChunkName: "PrivacyPol
 const ProfilePage = loadable(() => import(/* webpackChunkName: "ProfilePage" */ './containers/ProfilePage/ProfilePage'));
 const ProfileSettingsPage = loadable(() => import(/* webpackChunkName: "ProfileSettingsPage" */ './containers/ProfileSettingsPage/ProfileSettingsPage'));
 const SearchPage = loadable(() => import(/* webpackChunkName: "SearchPage" */ /* webpackPrefetch: true */  './containers/SearchPage/SearchPage'));
+const SingleEventPage = loadable(() => import(/* webpackChunkName: "SingleEventPage" */ './containers/SingleEventPage/SingleEventPage'));
 const StripePayoutPage = loadable(() => import(/* webpackChunkName: "StripePayoutPage" */ './containers/StripePayoutPage/StripePayoutPage'));
 const TermsOfServicePage = loadable(() => import(/* webpackChunkName: "TermsOfServicePage" */ './containers/TermsOfServicePage/TermsOfServicePage'));
 const TransactionPage = loadable(() => import(/* webpackChunkName: "TransactionPage" */ './containers/TransactionPage/TransactionPage'));
@@ -40,6 +83,12 @@ export const ACCOUNT_SETTINGS_PAGES = [
   'PasswordChangePage',
   'StripePayoutPage',
   'PaymentMethodsPage',
+];
+
+export const EVENT_HOST_PAGES = [
+  'EventDetailsPage',
+  'EventSellersPage',
+  'EventHostPage'
 ];
 
 // https://en.wikipedia.org/wiki/Universally_unique_identifier#Nil_UUID
@@ -67,6 +116,43 @@ const routeConfiguration = () => {
       path: '/about',
       name: 'AboutPage',
       component: AboutPage,
+    },
+    {
+      path: '/contact',
+      name: 'ContactPage',
+      component: props => <ContactPage {...props} />,
+      loadData: ContactPage.loadData,
+    },
+    {
+      path: '/events',
+      name: 'EventsPage',
+      component: props => <EventsPage {...props} />,
+    },
+    {
+      path: '/events/:type',
+      name: 'EventTypePage',
+      component: props => <EventTypePage {...props} />,
+    },
+    {
+      path: '/event-details',
+      name: 'EventDetailsPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <EventHostPage {...props} tab="details"/>,
+    },
+    {
+      path: '/event-photos',
+      name: 'EventPhotosPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <EventHostPage {...props} tab="photos"/>,
+    },
+    {
+      path: '/event-sellers',
+      name: 'EventSellersPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <EventHostPage {...props} tab="sellers"/>,
     },
     {
       path: '/s',
@@ -126,6 +212,19 @@ const routeConfiguration = () => {
       loadData: pageDataLoadingAPI.EditListingPage.loadData,
     },
 
+    {
+      path: '/faq',
+      name: 'FAQPage',
+      component: FAQPage,
+    },
+
+    {
+      path: '/map',
+      name: 'MapPage',
+      component: MapPage,
+      loadData: MapPage.loadData,
+    },
+
     // Canonical path should be after the `/l/new` path since they
     // conflict and `new` is not a valid listing UUID.
     {
@@ -151,6 +250,12 @@ const routeConfiguration = () => {
       auth: true,
       authPage: 'LoginPage',
       component: ProfileSettingsPage,
+    },
+    {
+      path: '/events/:eventType/:slug/:id',
+      name: 'SingleEventPage',
+      component: props => <SingleEventPage {...props} />,
+      loadData: SingleEventPage.loadData,
     },
 
     // Note: authenticating with IdP (e.g. Facebook) expects that /login path exists
@@ -228,6 +333,22 @@ const routeConfiguration = () => {
       extraProps: { transactionRole: 'provider' },
       loadData: params =>
         pageDataLoadingAPI.TransactionPage.loadData({ ...params, transactionRole: 'provider' }),
+    },
+    {
+      path: '/likes',
+      name: 'LikedListingsPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: LikedListingsPage,
+      loadData: pageDataLoadingAPI.LikedListingsPage.loadData,
+    },
+    {
+      path: '/following',
+      name: 'FollowingPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: FollowingPage,
+      loadData: pageDataLoadingAPI.FollowingPage.loadData,
     },
     {
       path: '/listings',

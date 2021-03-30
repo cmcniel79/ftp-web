@@ -61,6 +61,7 @@ class CurrencyInputComponent extends Component {
       throw e;
     }
 
+    
     const initialValue = initialValueIsMoney ? convertMoneyToNumber(input.value) : defaultValue;
     const hasInitialValue = typeof initialValue === 'number' && !isNaN(initialValue);
 
@@ -229,7 +230,7 @@ CurrencyInputComponent.propTypes = {
   defaultValue: number,
   intl: intlShape.isRequired,
   input: shape({
-    value: oneOfType([string, propTypes.money]),
+    value: oneOfType([string, propTypes.money] || null), // Added null in case shippingFee on EditListingPanel is null
     onBlur: func,
     onChange: func.isRequired,
     onFocus: func,

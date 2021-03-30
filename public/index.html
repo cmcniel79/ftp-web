@@ -76,6 +76,12 @@
         }
       })(document);
     </script>
+    <script>
+      // before React is loaded
+      if (typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__ === 'object') {
+          __REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function() {};
+      }
+  </script>
 
     <link rel="stylesheet" href="%PUBLIC_URL%/static/reactDates.css" />
   </head>
@@ -143,8 +149,8 @@
       We didn't bundle it to the main app since it would unnecessarily slow down initial rendering.
     -->
     <script src="%PUBLIC_URL%/static/scripts/mapbox/mapbox-sdk.min.js"></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css" rel="stylesheet" />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
     <script>
       window.mapboxgl.accessToken = '%REACT_APP_MAPBOX_ACCESS_TOKEN%';
     </script>
@@ -156,7 +162,6 @@
     <!--
          Stripe script should be on every page, not just the pages that
          use the API:
-
          https://stripe.com/docs/stripe.js#including-stripejs
        -->
     <script src="https://js.stripe.com/v3/"></script>
@@ -169,7 +174,6 @@
          Note when adding new external scripts/styles/fonts/etc.:
          If a Content Security Policy (CSP) is turned on, the new URLs
          should be whitelisted in the policy.
-
          See docs/content-security-policy.md for more information.
     -->
   </body>

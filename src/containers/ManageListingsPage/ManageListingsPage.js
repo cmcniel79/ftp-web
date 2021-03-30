@@ -35,6 +35,7 @@ export class ManageListingsPageComponent extends Component {
 
   render() {
     const {
+      currentUser,
       closingListing,
       closingListingError,
       listings,
@@ -49,6 +50,8 @@ export class ManageListingsPageComponent extends Component {
       scrollingDisabled,
       intl,
     } = this.props;
+
+    const isEventHost = currentUser && currentUser.attributes.profile.metadata && currentUser.attributes.profile.metadata.eventHost;
 
     const hasPaginationInfo = !!pagination && pagination.totalItems != null;
     const listingsAreLoaded = !queryInProgress && hasPaginationInfo;
@@ -114,7 +117,7 @@ export class ManageListingsPageComponent extends Component {
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer currentPage="ManageListingsPage" />
-            <UserNav selectedPageName="ManageListingsPage" />
+            <UserNav selectedPageName="ManageListingsPage" isEventHost={isEventHost}/>
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
             {queryInProgress ? loadingResults : null}
@@ -188,6 +191,7 @@ ManageListingsPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
+  const { currentUser } = state.user;
   const {
     currentPageResultIds,
     pagination,
@@ -201,6 +205,7 @@ const mapStateToProps = state => {
   } = state.ManageListingsPage;
   const listings = getOwnListingsById(state, currentPageResultIds);
   return {
+    currentUser,
     currentPageResultIds,
     listings,
     pagination,

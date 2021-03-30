@@ -2,17 +2,19 @@ import React from 'react';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
-import { arrayOf, array, bool, func, node, oneOfType, shape, string } from 'prop-types';
+import { array, bool, func, node, oneOfType, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
-import { propTypes, LISTING_STATE_CLOSED, LINE_ITEM_NIGHT, LINE_ITEM_DAY } from '../../util/types';
+import { propTypes, LISTING_STATE_CLOSED } from '../../util/types';
 import { formatMoney } from '../../util/currency';
 import { parse, stringify } from '../../util/urlHelpers';
 import config from '../../config';
 import { ModalInMobile, Button } from '../../components';
-import { BookingDatesForm } from '../../forms';
+import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 
 import css from './BookingPanel.module.css';
+
+const Decimal = require('decimal.js');
 
 // This defines when ModalInMobile shows content as Modal
 const MODAL_BREAKPOINT = 1023;
@@ -47,55 +49,78 @@ const closeBookModal = (history, location) => {
   history.push(`${pathname}${searchString}`, state);
 };
 
+// const handleFormSubmit = () => {
+//   this.props.onSubmit(this.props.isDomesticOrder);
+// }
+
 const BookingPanel = props => {
   const {
     rootClassName,
     className,
-    titleClassName,
     listing,
     isOwnListing,
     unitType,
     onSubmit,
     title,
-    subTitle,
     authorDisplayName,
     onManageDisableScrolling,
-    timeSlots,
-    fetchTimeSlotsError,
+    // timeSlots,
+    // fetchTimeSlotsError,
     history,
     location,
     intl,
-    onFetchTransactionLineItems,
-    lineItems,
-    fetchLineItemsInProgress,
-    fetchLineItemsError,
+    // onFetchTransactionLineItems,
+    // lineItems,
+    // fetchLineItemsInProgress,
+    // fetchLineItemsError,
+    isDomesticOrder,
+    shippingFee
   } = props;
 
   const price = listing.attributes.price;
   const hasListingState = !!listing.attributes.state;
   const isClosed = hasListingState && listing.attributes.state === LISTING_STATE_CLOSED;
   const showBookingDatesForm = hasListingState && !isClosed;
-  const showClosedListingHelpText = listing.id && isClosed;
+  // Check where this is used in template
+  // const showClosedListingHelpText = listing.id && isClosed; 
   const { formattedPrice, priceTitle } = priceData(price, intl);
   const isBook = !!parse(location.search).book;
-
-  const subTitleText = !!subTitle
-    ? subTitle
-    : showClosedListingHelpText
-    ? intl.formatMessage({ id: 'BookingPanel.subTitleClosedListing' })
-    : null;
-
-  const isNightly = unitType === LINE_ITEM_NIGHT;
-  const isDaily = unitType === LINE_ITEM_DAY;
-
-  const unitTranslationKey = isNightly
-    ? 'BookingPanel.perNight'
-    : isDaily
-    ? 'BookingPanel.perDay'
-    : 'BookingPanel.perUnit';
-
   const classes = classNames(rootClassName || css.root, className);
-  const titleClasses = classNames(titleClassName || css.bookingTitle);
+
+  const bookingData = { unitType, isDomesticOrder };
+  const shippingFeeItem = isDomesticOrder ? {
+    code: 'line-item/shipping-fee',
+    unitPrice: shippingFee,
+    quantity: new Decimal(1),
+    includeFor: ['customer', 'provider'],
+    reversal: false,
+    lineTotal: shippingFee
+  } : {
+      code: 'line-item/international-shipping-fee',
+      unitPrice: shippingFee,
+      quantity: new Decimal(1),
+      includeFor: ['customer', 'provider'],
+      reversal: false,
+      lineTotal: shippingFee
+    };
+  const booking = {
+    code: 'line-item/units',
+    unitPrice: price,
+    quantity: new Decimal(1),
+    includeFor: ['customer', 'provider'],
+    reversal: false,
+    lineTotal: price
+  };
+
+  const lineItems = [booking, shippingFeeItem];
+  const showEstimatedBreakdown = bookingData && lineItems;
+
+  const bookingInfoMaybe = showEstimatedBreakdown ? (
+    <div className={css.priceBreakdownContainer}>
+      <EstimatedBreakdownMaybe bookingData={bookingData} lineItems={lineItems} />
+    </div>
+  ) : null;
+
 
   return (
     <div className={classes}>
@@ -113,40 +138,31 @@ const BookingPanel = props => {
             <FormattedMessage id="BookingPanel.hostedBy" values={{ name: authorDisplayName }} />
           </div>
         </div>
-
-        <div className={css.bookingHeading}>
-          <h2 className={titleClasses}>{title}</h2>
-          {subTitleText ? <div className={css.bookingHelp}>{subTitleText}</div> : null}
-        </div>
         {showBookingDatesForm ? (
-          <BookingDatesForm
-            className={css.bookingForm}
-            formId="BookingPanel"
-            submitButtonWrapperClassName={css.bookingDatesSubmitButtonWrapper}
-            unitType={unitType}
-            onSubmit={onSubmit}
-            price={price}
-            listingId={listing.id}
-            isOwnListing={isOwnListing}
-            timeSlots={timeSlots}
-            fetchTimeSlotsError={fetchTimeSlotsError}
-            onFetchTransactionLineItems={onFetchTransactionLineItems}
-            lineItems={lineItems}
-            fetchLineItemsInProgress={fetchLineItemsInProgress}
-            fetchLineItemsError={fetchLineItemsError}
-          />
+          <div>
+            <div className={css.modalBookingInfo}>
+              {bookingInfoMaybe}
+            </div>
+            <p className={css.smallPrint}>
+              <FormattedMessage
+                id={isOwnListing
+                    ? 'BookingDatesForm.ownListing'
+                    : 'BookingDatesForm.youWontBeChargedInfo'}
+              />
+            </p>
+            <div className={css.bookingDatesSubmitButtonWrapper}>
+              <Button className={css.bookButton} onClick={() => { onSubmit(isDomesticOrder) }}>
+                <FormattedMessage id="BookingDatesForm.requestToBook" />
+              </Button>
+            </div>
+          </div>
         ) : null}
       </ModalInMobile>
       <div className={css.openBookingForm}>
-        <div className={css.priceContainer}>
-          <div className={css.priceValue} title={priceTitle}>
+          <div className={css.priceContainer} title={priceTitle}>
+          <FormattedMessage id="BookingPanel.basePrice" />
             {formattedPrice}
-          </div>
-          <div className={css.perUnit}>
-            <FormattedMessage id={unitTranslationKey} />
-          </div>
         </div>
-
         {showBookingDatesForm ? (
           <Button
             rootClassName={css.bookButton}
@@ -171,8 +187,8 @@ BookingPanel.defaultProps = {
   isOwnListing: false,
   subTitle: null,
   unitType: config.bookingUnitType,
-  timeSlots: null,
-  fetchTimeSlotsError: null,
+  // timeSlots: null,
+  // fetchTimeSlotsError: null,
   lineItems: null,
   fetchLineItemsError: null,
 };
@@ -189,8 +205,8 @@ BookingPanel.propTypes = {
   subTitle: oneOfType([node, string]),
   authorDisplayName: oneOfType([node, string]).isRequired,
   onManageDisableScrolling: func.isRequired,
-  timeSlots: arrayOf(propTypes.timeSlot),
-  fetchTimeSlotsError: propTypes.error,
+  // timeSlots: arrayOf(propTypes.timeSlot),
+  // fetchTimeSlotsError: propTypes.error,
   onFetchTransactionLineItems: func.isRequired,
   lineItems: array,
   fetchLineItemsInProgress: bool.isRequired,

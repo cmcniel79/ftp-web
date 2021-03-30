@@ -24,8 +24,9 @@ const EditListingDescriptionPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
+    accountType,
+    allowsCustomOrders,
   } = props;
-
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { description, title, publicData } = currentListing.attributes;
@@ -37,8 +38,23 @@ const EditListingDescriptionPanel = props => {
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" />
-  );
+      <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" />
+    );
+
+  const category = publicData && publicData.category;
+  const subCategory = publicData && publicData.subCategory;
+  const style = publicData && publicData.style;
+  const region = publicData && publicData.region;
+  const material = publicData && publicData.material;
+  const customOrders = publicData && publicData.customOrders === 'available' ? true :
+    publicData.customOrders === 'unavailable' ? false : null;
+  const sizes = publicData && publicData.sizes;
+  const websiteLink = publicData && publicData.websiteLink;
+  const verifiedSellers = accountType && (accountType === 'e' || accountType === 'p' || accountType === 'n')
+    ? 'verified' : 'unverified';
+  const barter = publicData && publicData.barter;
+  const allowsBarter = publicData && publicData.allowsBarter;
+
 
   const categoryOptions = findOptionsForSelectFilter('category', config.custom.filters);
   return (
@@ -46,16 +62,18 @@ const EditListingDescriptionPanel = props => {
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingDescriptionForm
         className={css.form}
-        initialValues={{ title, description, category: publicData.category }}
+        initialValues={{ title, description, category, subCategory, style, region, material, customOrders, sizes, websiteLink, barter, allowsBarter }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, category } = values;
+          const { title, description, category, subCategory, style, region, material, customOrders, sizes, websiteLink, barter, allowsBarter } = values;
+          const customIsAvailable = customOrders ? 'available' : 'unavailable';
           const updateValues = {
             title: title.trim(),
             description,
-            publicData: { category },
+            publicData: {
+              category, subCategory, style, region, material, customOrders: customIsAvailable, sizes, websiteLink, verifiedSellers, barter, allowsBarter
+            },
           };
-
           onSubmit(updateValues);
         }}
         onChange={onChange}
@@ -65,6 +83,8 @@ const EditListingDescriptionPanel = props => {
         updateInProgress={updateInProgress}
         fetchErrors={errors}
         categories={categoryOptions}
+        accountType={accountType}
+        allowsCustomOrders={allowsCustomOrders}
       />
     </div>
   );

@@ -93,7 +93,7 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
   const apiQueryParams = {
     only: onlyFilter,
     lastTransitions: TRANSITIONS,
-    include: ['provider', 'provider.profileImage', 'customer', 'customer.profileImage', 'booking'],
+    include: ['provider', 'provider.profileImage', 'customer', 'customer.profileImage', 'listing'],
     'fields.transaction': [
       'lastTransition',
       'lastTransitionedAt',
@@ -101,7 +101,7 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
       'payinTotal',
       'payoutTotal',
     ],
-    'fields.user': ['profile.displayName', 'profile.abbreviatedName'],
+    'fields.user': ['profile.displayName', 'profile.abbreviatedName', 'deleted'],
     'fields.image': ['variants.square-small', 'variants.square-small2x'],
     page,
     per_page: INBOX_PAGE_SIZE,

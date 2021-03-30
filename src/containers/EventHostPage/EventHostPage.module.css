@@ -1,0 +1,126 @@
+@import '../../styles/propertySets.css';
+
+.root {
+  background-color: var(--matterColorLight);
+}
+
+.content {
+  width: calc(100% - 48px);
+  margin: 12px 24px 24px 24px;
+  @media (--viewportMedium) {
+    max-width: 565px;
+    margin: 55px auto 56px auto;
+  }
+}
+
+.error {
+  /* Font */
+  @apply --marketplaceH4FontStyles;
+  color: var(--failColor);
+  margin-top: 18px;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 22px;
+    margin-bottom: 2px;
+  }
+}
+
+.success {
+  /* Font */
+  @apply --marketplaceH4FontStyles;
+  color: var(--successColor);
+  margin-top: 18px;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 0px;
+    margin-bottom: 2px;
+  }
+}
+
+.sellersContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionTitle {
+  /* Font */
+  color: var(--matterColorAnti);
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  @media (--viewportMedium) {
+    margin-top: 10px;
+    margin-bottom: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+.sectionInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  @media (--viewportMedium) {
+    /* flex-direction: row; */
+    padding: 0;
+  }
+}
+
+.eventField {
+  margin: 0;
+  border-bottom-color: black;
+}
+
+.submitButton {
+  margin: 15px 0;
+  border-radius: var(--borderRadius);
+  @media (--viewportMedium) {
+    margin: 20px 0;
+  }
+}
+
+.sectionSellersList {
+  margin: 10px 0;
+  @media (--viewportMedium) {
+    margin: 0px 0;
+  }
+}
+
+.sellerItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.sellerName {
+  @apply --marketplaceH5FontStyles;
+  @media (--viewportMedium) {
+    @apply --marketplaceH3FontStyles;
+  }
+}
+
+.removeButton {
+  @apply --marketplaceH5FontStyles;
+  background-color: var(--marketplaceColor);
+  color: white;
+  border-radius: 20px;
+  padding: 2px 8px;
+  text-decoration: none !important;
+  font-weight: 500;
+  @media (--viewportMedium) {
+    @apply --marketplaceH3FontStyles;
+
+  }
+  &:hover {
+    outline: none;
+    background-color: var(--marketplaceColorDark);
+    text-decoration: none;
+    box-shadow: var(--boxShadowButton);
+  }
+}
+
+.tabs {
+  justify-content: space-around;
+}

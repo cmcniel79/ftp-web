@@ -13,7 +13,10 @@ import {
   isChangeEmailWrongPassword,
   isTooManyEmailVerificationRequestsError,
 } from '../../util/errors';
-import { FieldPhoneNumberInput, Form, PrimaryButton, FieldTextInput } from '../../components';
+// import getCountryCodes from '../../translations/countryCodes';
+import { Form, PrimaryButton, FieldTextInput, ShippingAddress } from '../../components';
+// import config from '../../config';
+import { sanitizeProtectedData } from '../../util/sanitize';
 
 import css from './ContactDetailsForm.module.css';
 
@@ -71,7 +74,7 @@ class ContactDetailsFormComponent extends Component {
             resetPasswordInProgress,
             values,
           } = fieldRenderProps;
-          const { email, phoneNumber } = values;
+          const { email, shippingAddress } = values;
 
           const user = ensureCurrentUser(currentUser);
 
@@ -182,18 +185,6 @@ class ContactDetailsFormComponent extends Component {
             );
           }
 
-          // phone
-          const protectedData = profile.protectedData || {};
-          const currentPhoneNumber = protectedData.phoneNumber;
-
-          // has the phone number changed
-          const phoneNumberChanged = currentPhoneNumber !== phoneNumber;
-
-          const phonePlaceholder = intl.formatMessage({
-            id: 'ContactDetailsForm.phonePlaceholder',
-          });
-          const phoneLabel = intl.formatMessage({ id: 'ContactDetailsForm.phoneLabel' });
-
           // password
           const passwordLabel = intl.formatMessage({
             id: 'ContactDetailsForm.passwordLabel',
@@ -237,6 +228,12 @@ class ContactDetailsFormComponent extends Component {
             [css.confirmChangesSectionVisible]: emailChanged,
           });
 
+          //shipping address, get from protected data
+          const protectedData = profile && profile.protectedData ? sanitizeProtectedData(profile.protectedData) : {};
+          const currentShippingAddress = protectedData && protectedData.protectedData && protectedData.protectedData.shippingAddress ?
+            protectedData.protectedData.shippingAddress : null;
+          const shippingAddressChanged = currentShippingAddress !== shippingAddress;
+
           // generic error
           const isGenericEmailError = saveEmailError && !(emailTakenErrorText || passwordErrorText);
 
@@ -257,11 +254,13 @@ class ContactDetailsFormComponent extends Component {
           } else if (savePhoneNumberError) {
             genericError = (
               <span className={css.error}>
-                <FormattedMessage id="ContactDetailsForm.genericPhoneNumberFailure" />
+                <FormattedMessage id="ContactDetailsForm.genericFailure" />
               </span>
             );
           }
 
+          const isCompleteShippingAddress = shippingAddress && shippingAddress.addressLine1 &&
+            shippingAddress.city && shippingAddress.state && shippingAddress.country ? true : false;
           const sendPasswordLink = (
             <span className={css.helperLink} onClick={this.handleResetPassword} role="button">
               <FormattedMessage id="ContactDetailsForm.resetPasswordLinkText" />
@@ -286,8 +285,8 @@ class ContactDetailsFormComponent extends Component {
                 {resendPasswordLink}
               </>
             ) : (
-              sendPasswordLink
-            );
+                sendPasswordLink
+              );
 
           const classes = classNames(rootClassName || css.root, className);
           const submittedOnce = Object.keys(this.submittedValues).length > 0;
@@ -296,7 +295,7 @@ class ContactDetailsFormComponent extends Component {
             invalid ||
             pristineSinceLastSubmit ||
             inProgress ||
-            !(emailChanged || phoneNumberChanged);
+            !((emailChanged || shippingAddressChanged) && isCompleteShippingAddress);
 
           return (
             <Form
@@ -307,6 +306,14 @@ class ContactDetailsFormComponent extends Component {
               }}
             >
               <div className={css.contactDetailsSection}>
+                <div className={className ? className : css.address}>
+                  <h3>
+                    <FormattedMessage id="ContactDetailsForm.defaultAddressHeading" />
+                  </h3>
+                  <div className={css.formRow}>
+                    <ShippingAddress shippingAddress={shippingAddress} intl={intl} formId={formId} isCheckoutPage={false} />
+                  </div>
+                </div>
                 <FieldTextInput
                   type="email"
                   name="email"
@@ -317,13 +324,6 @@ class ContactDetailsFormComponent extends Component {
                   customErrorText={emailTouched ? null : emailTakenErrorText}
                 />
                 {emailVerifiedInfo}
-                <FieldPhoneNumberInput
-                  className={css.phone}
-                  name="phoneNumber"
-                  id={formId ? `${formId}.phoneNumber` : 'phoneNumber'}
-                  label={phoneLabel}
-                  placeholder={phonePlaceholder}
-                />
               </div>
 
               <div className={confirmClasses}>
@@ -351,6 +351,7 @@ class ContactDetailsFormComponent extends Component {
                   customErrorText={passwordTouched ? null : passwordErrorText}
                 />
               </div>
+
               <div className={css.bottomWrapper}>
                 {genericError}
                 <PrimaryButton
@@ -358,10 +359,12 @@ class ContactDetailsFormComponent extends Component {
                   inProgress={inProgress}
                   ready={pristineSinceLastSubmit}
                   disabled={submitDisabled}
+                  className={css.submitButton}
                 >
                   <FormattedMessage id="ContactDetailsForm.saveChanges" />
                 </PrimaryButton>
               </div>
+
             </Form>
           );
         }}

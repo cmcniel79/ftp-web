@@ -2,19 +2,31 @@
 
 .root {
   @apply --marketplaceModalFormRootStyles;
-
   justify-content: flex-start;
-
   @media (--viewportMedium) {
     justify-content: space-between;
   }
+}
+
+.country {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.adultBool {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.minorsInfo {
+  font-size: 15px;
+  line-height: 20px;
 }
 
 .name {
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
-
   @media (--viewportMedium) {
     margin-top: 32px;
   }
@@ -34,10 +46,16 @@
 
 .bottomWrapper {
   @apply --marketplaceModalBottomWrapper;
+  margin-top: 25px;
 }
 
 .bottomWrapperText {
   @apply --marketplaceModalBottomWrapperText;
+}
+
+.newsletterCheckbox {
+  display: block;
+  margin: 25px 0;
 }
 
 .termsText {
@@ -46,7 +64,6 @@
 
 .termsLink {
   @apply --marketplaceModalHelperLink;
-
   &:hover {
     text-decoration: underline;
     cursor: pointer;

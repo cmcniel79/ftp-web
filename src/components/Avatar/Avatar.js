@@ -9,7 +9,7 @@ import {
   userDisplayNameAsString,
   userAbbreviatedName,
 } from '../../util/data';
-import { ResponsiveImage, IconBannedUser, NamedLink } from '../../components/';
+import { ResponsiveImage, IconBannedUser, NamedLink, ExternalLink, IconVerified } from '../../components/';
 
 import css from './Avatar.module.css';
 
@@ -33,9 +33,8 @@ const AVATAR_IMAGE_VARIANTS = [
 ];
 
 export const AvatarComponent = props => {
-  const { rootClassName, className, user, renderSizes, disableProfileLink, intl } = props;
+  const { rootClassName, className, user, renderSizes, disableProfileLink, intl, enrolled, companyWebsite } = props;
   const classes = classNames(rootClassName || css.root, className);
-
   const userIsCurrentUser = user && user.type === 'currentUser';
   const avatarUser = userIsCurrentUser ? ensureCurrentUser(user) : ensureUser(user);
 
@@ -53,8 +52,8 @@ export const AvatarComponent = props => {
   const defaultUserDisplayName = isBannedUser
     ? bannedUserDisplayName
     : isDeletedUser
-    ? deletedUserDisplayName
-    : '';
+      ? deletedUserDisplayName
+      : '';
 
   const defaultUserAbbreviatedName = '';
 
@@ -73,8 +72,28 @@ export const AvatarComponent = props => {
         <IconBannedUser className={css.bannedUserIcon} />
       </div>
     );
+  } else if (hasProfileImage && companyWebsite) {
+    return (
+      <ExternalLink {...rootProps} href={companyWebsite}>
+        <ResponsiveImage
+          rootClassName={css.avatarImage}
+          alt="Logo"
+          image={avatarUser.profileImage}
+          variants={AVATAR_IMAGE_VARIANTS}
+          sizes={renderSizes}
+        />
+      </ExternalLink>
+    );
+  } else if (companyWebsite) {
+    // Placeholder avatar (initials)
+    return (
+      <ExternalLink {...rootProps} href={companyWebsite}>
+        <span className={css.initials}>{abbreviatedName}</span>
+      </ExternalLink>
+    );
   } else if (hasProfileImage && profileLinkEnabled) {
     return (
+
       <NamedLink {...rootProps} {...linkProps}>
         <ResponsiveImage
           rootClassName={css.avatarImage}
@@ -83,7 +102,11 @@ export const AvatarComponent = props => {
           variants={AVATAR_IMAGE_VARIANTS}
           sizes={renderSizes}
         />
+        {enrolled &&
+          <IconVerified className={css.verifiedImage} isFilled={true}/>
+        }
       </NamedLink>
+
     );
   } else if (hasProfileImage) {
     return (
@@ -95,6 +118,9 @@ export const AvatarComponent = props => {
           variants={AVATAR_IMAGE_VARIANTS}
           sizes={renderSizes}
         />
+        {enrolled &&
+          <IconVerified className={css.verifiedImage} isFilled={true}/>
+        }
       </div>
     );
   } else if (profileLinkEnabled) {

@@ -5,7 +5,9 @@ import { setInitialValues as CheckoutPageInitialValues } from './CheckoutPage/Ch
 import { loadData as ContactDetailsPageLoader } from './ContactDetailsPage/ContactDetailsPage.duck';
 import { loadData as EditListingPageLoader } from './EditListingPage/EditListingPage.duck';
 import { loadData as EmailVerificationPageLoader } from './EmailVerificationPage/EmailVerificationPage.duck';
+import { loadData as FollowingPageLoader } from './FollowingPage/FollowingPage.duck';
 import { loadData as InboxPageLoader } from './InboxPage/InboxPage.duck';
+import { loadData as LikedListingsPageLoader } from './LikedListingsPage/LikedListingsPage.duck';
 import { loadData as ListingPageLoader } from './ListingPage/ListingPage.duck';
 import { loadData as ManageListingsPageLoader } from './ManageListingsPage/ManageListingsPage.duck';
 import { loadData as PaymentMethodsPageLoader } from './PaymentMethodsPage/PaymentMethodsPage.duck';
@@ -31,8 +33,14 @@ const getPageDataLoadingAPI = () => {
     EmailVerificationPage: {
       loadData: EmailVerificationPageLoader,
     },
+    FollowingPage: {
+      loadData: FollowingPageLoader,
+    },
     InboxPage: {
       loadData: InboxPageLoader,
+    },
+    LikedListingsPage: {
+      loadData: LikedListingsPageLoader,
     },
     ListingPage: {
       loadData: ListingPageLoader,

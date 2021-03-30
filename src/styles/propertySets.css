@@ -21,9 +21,7 @@
 
   /* Full screen Background image located in root-folder/src/assets */
   --backgroundImage: {
-    /* Gradient direction and overlaying the black color on top of the image for better readability */
-    background: linear-gradient(-45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
-      url('../../assets/background-1440.jpg');
+    background: url('../../assets/Background_mobile.png');
 
     /* Add loading color for the div */
     background-color: var(--matterColor);
@@ -34,11 +32,34 @@
     /* Align the image within the container */
     background-position: center center;
 
+    border-radius: 40px;
+    border: solid 36px var(--matterColorBright);
+
     @media (--viewportLarge) {
-      border-radius: 40px;
-      border: solid 36px var(--matterColorBright);
+      background: url('../../assets/LandingBackground.png');
+      background-size: cover;
+      background-position: center center;
     }
   }
+
+  --backgroundFilled: {
+    background: url('../../assets/BackgroundFilled.png');
+
+    /* Add loading color for the div */
+    background-color: var(--matterColor);
+
+    /* Cover the whole screen with the background image */
+    background-size: cover;
+
+    /* Align the image within the container */
+    background-position: center center;
+    background-attachment: fixed;
+
+    border-radius: 40px;
+    border: solid 36px var(--matterColorBright);
+  }
+
+  /* ================ Colors ================ */
 
   /**
    * Usage example: .root { @apply --marketplaceDefaultFontStyles; }
@@ -492,6 +513,29 @@
       border-color: var(--matterColorNegative);
     }
   }
+
+  --userCardButtonStyles {
+    @apply --marketplaceH5FontStyles;
+    display: inline;
+    border: none;
+    background-color: var(--marketplaceColor);
+    color: white;
+    border-radius: 20px;
+    padding: 2px 10px;
+    margin: 0 5px 0 0;
+    border: solid 2px var(--marketplaceColor);
+    &:hover {
+        text-decoration: none;
+        cursor: pointer;
+        background-color: rgb(212, 0, 0, .7);
+    }
+    @media (--viewportMedium) {
+      @apply --marketplaceH4FontStyles;
+      margin: 0 5px 0 0;
+    }
+  }
+
+  --marketplaceButtonSmallDesktopPadding: 9px 16px 9px 16px;
 
   /* ================ Inputs ================ */
 

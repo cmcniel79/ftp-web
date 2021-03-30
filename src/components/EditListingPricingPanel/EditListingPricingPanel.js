@@ -26,11 +26,26 @@ const EditListingPricingPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
+    userCountry,
+    accountType
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
-  const { price } = currentListing.attributes;
+
+  const { price, publicData } = currentListing.attributes;
+
+  const shippingFee =
+    publicData && publicData.shippingFee ?
+      new Money(publicData.shippingFee.amount, publicData.shippingFee.currency) : null;
+
+  const internationalFee =
+    publicData && publicData.internationalFee ?
+      new Money(publicData.internationalFee.amount, publicData.internationalFee.currency) : null;
+
+  const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders ? publicData.allowsInternationalOrders : null;
+
+  const initialValues = { price, shippingFee, internationalFee, allowsInternationalOrders };
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -39,15 +54,50 @@ const EditListingPricingPanel = props => {
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id="EditListingPricingPanel.createListingTitle" />
-  );
+      <FormattedMessage id="EditListingPricingPanel.createListingTitle" />
+    );
 
   const priceCurrencyValid = price instanceof Money ? price.currency === config.currency : true;
   const form = priceCurrencyValid ? (
     <EditListingPricingForm
       className={css.form}
-      initialValues={{ price }}
-      onSubmit={onSubmit}
+      initialValues={initialValues}
+      // Code for onSubmit function was taken from here: 
+      // https://www.sharetribe.com/docs/tutorial-transaction-process/customize-pricing-tutorial/
+      onSubmit={values => {
+        const { price, shippingFee, internationalFee, allowsInternationalOrders } = values;
+        const domesticData = shippingFee ? { amount: shippingFee.amount, currency: shippingFee.currency } :
+          { amount: 0, currency: config.currency };
+        const internationalData = internationalFee ? { amount: internationalFee.amount, currency: internationalFee.currency } :
+          { amount: 0, currency: config.currency };
+
+        const publicData = (accountType === 'e' || accountType === 'u') &&
+          allowsInternationalOrders && allowsInternationalOrders[0] === "hasFee" ? {
+            // Allows domestic shipping and international shipping
+            shippingFee: domesticData,
+            internationalFee: internationalData,
+            country: userCountry,
+            allowsInternationalOrders
+          } : (accountType === 'e' || accountType === 'u') ? {
+            // Allows only domestic shipping
+            shippingFee: domesticData,
+            internationalFee: domesticData,
+            country: userCountry,
+            allowsInternationalOrders
+          } : {
+              // Empty public data for premium, ad and non-profit listings. Those do not have shipping data show up.
+            };
+
+        const updatedValues = (accountType === 'a' || accountType === 'n') ? {
+          price: new Money(0, config.currency),
+          publicData: publicData
+        } : {
+            price,
+            publicData: publicData
+          };
+
+        onSubmit(updatedValues);
+      }}
       onChange={onChange}
       saveActionMsg={submitButtonText}
       disabled={disabled}
@@ -55,12 +105,14 @@ const EditListingPricingPanel = props => {
       updated={panelUpdated}
       updateInProgress={updateInProgress}
       fetchErrors={errors}
+      userCountry={userCountry}
+      accountType={accountType}
     />
   ) : (
-    <div className={css.priceCurrencyInvalid}>
-      <FormattedMessage id="EditListingPricingPanel.listingPriceCurrencyInvalid" />
-    </div>
-  );
+      <div className={css.priceCurrencyInvalid}>
+        <FormattedMessage id="EditListingPricingPanel.listingPriceCurrencyInvalid" />
+      </div>
+    );
 
   return (
     <div className={classes}>

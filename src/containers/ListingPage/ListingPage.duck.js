@@ -12,8 +12,10 @@ import {
   LISTING_PAGE_DRAFT_VARIANT,
   LISTING_PAGE_PENDING_APPROVAL_VARIANT,
 } from '../../util/urlHelpers';
-import { fetchCurrentUser, fetchCurrentUserHasOrdersSuccess } from '../../ducks/user.duck';
+import { fetchCurrentUser, fetchCurrentUserHasOrdersSuccess, currentUserShowSuccess } from '../../ducks/user.duck';
 
+const KEY = process.env.REACT_APP_API_KEY;
+const URL = process.env.REACT_APP_API_LIKES;
 const { UUID } = sdkTypes;
 
 // ================ Action types ================ //
@@ -33,6 +35,7 @@ export const FETCH_TIME_SLOTS_ERROR = 'app/ListingPage/FETCH_TIME_SLOTS_ERROR';
 
 export const FETCH_LINE_ITEMS_REQUEST = 'app/ListingPage/FETCH_LINE_ITEMS_REQUEST';
 export const FETCH_LINE_ITEMS_SUCCESS = 'app/ListingPage/FETCH_LINE_ITEMS_SUCCESS';
+export const FETCH_INTERNATIONAL_LINE_ITEMS_SUCCESS = 'app/ListingPage/FETCH_INTERNATIONAL_LINE_ITEMS_SUCCESS';
 export const FETCH_LINE_ITEMS_ERROR = 'app/ListingPage/FETCH_LINE_ITEMS_ERROR';
 
 export const SEND_ENQUIRY_REQUEST = 'app/ListingPage/SEND_ENQUIRY_REQUEST';
@@ -84,7 +87,9 @@ const listingPageReducer = (state = initialState, action = {}) => {
     case FETCH_LINE_ITEMS_REQUEST:
       return { ...state, fetchLineItemsInProgress: true, fetchLineItemsError: null };
     case FETCH_LINE_ITEMS_SUCCESS:
-      return { ...state, fetchLineItemsInProgress: false, lineItems: payload };
+      return { ...state, fetchLineItemsInProgress: false, domesticLineItems: payload };
+    case FETCH_INTERNATIONAL_LINE_ITEMS_SUCCESS:
+      return { ...state, fetchLineItemsInProgress: false, internationalLineItems: payload };
     case FETCH_LINE_ITEMS_ERROR:
       return { ...state, fetchLineItemsInProgress: false, fetchLineItemsError: payload };
 
@@ -314,7 +319,6 @@ export const fetchTransactionLineItems = ({ bookingData, listingId, isOwnListing
 
 export const loadData = (params, search) => dispatch => {
   const listingId = new UUID(params.id);
-
   const ownListingVariants = [LISTING_PAGE_DRAFT_VARIANT, LISTING_PAGE_PENDING_APPROVAL_VARIANT];
   if (ownListingVariants.includes(params.variant)) {
     return dispatch(showListing(listingId, true));
@@ -323,10 +327,52 @@ export const loadData = (params, search) => dispatch => {
   if (config.enableAvailability) {
     return Promise.all([
       dispatch(showListing(listingId)),
-      dispatch(fetchTimeSlots(listingId)),
+      // dispatch(fetchTimeSlots(listingId)),
       dispatch(fetchReviews(listingId)),
     ]);
   } else {
-    return Promise.all([dispatch(showListing(listingId)), dispatch(fetchReviews(listingId))]);
+    return Promise.all([
+      dispatch(showListing(listingId)),
+      dispatch(fetchReviews(listingId)),
+    ]);
   }
+};
+
+export const sendUpdatedFollowed = actionPayload => {
+  return (dispatch, getState, sdk) => {
+    const queryParams = {
+      expand: true,
+    };
+    
+    return sdk.currentUser
+      .updateProfile(actionPayload, queryParams)
+      .then(response => {
+        const entities = denormalisedResponseEntities(response);
+        if (entities.length !== 1) {
+          throw new Error('Expected a resource in the sdk.currentUser.updateProfile response');
+        }
+        const currentUser = entities[0];
+
+        // Update current user in state.user.currentUser through user.duck.js
+        dispatch(currentUserShowSuccess(currentUser));
+      })
+      .catch(e => console.log(e));
+  };
+};
+
+export const callFollowAPI = actionPayload => {
+    const options = {
+      method: 'POST',
+      withCredentials: false,
+      body: JSON.stringify(actionPayload),
+      headers: {
+        "Content-Type": "application/json",
+        "X-Api-Key": KEY,
+      }
+    }
+    fetch(URL, options)
+      .then(response => {
+        response.json();
+      })
+      .catch(e => console.log(e));
 };

@@ -13,6 +13,9 @@ import {
 import { fetchCurrentUser } from '../../ducks/user.duck';
 
 const { UUID } = sdkTypes;
+const KEY = process.env.REACT_APP_API_KEY;
+const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
+const BASE_URL = process.env.REACT_APP_API_RANKING;
 
 // A helper function to filter away exception that matches start and end timestamps
 const removeException = (exception, calendar) => {
@@ -100,6 +103,10 @@ const successAction = actionType => result => ({ type: actionType, payload: resu
 const errorAction = actionType => error => ({ type: actionType, payload: error, error: true });
 
 // ================ Action types ================ //
+
+export const FETCH_LISTINGS_REQUEST = 'app/ManageListingsPage/FETCH_LISTINGS_REQUEST';
+export const FETCH_LISTINGS_SUCCESS = 'app/ManageListingsPage/FETCH_LISTINGS_SUCCESS';
+export const FETCH_LISTINGS_ERROR = 'app/ManageListingsPage/FETCH_LISTINGS_ERROR';
 
 export const MARK_TAB_UPDATED = 'app/EditListingPage/MARK_TAB_UPDATED';
 export const CLEAR_UPDATED_TAB = 'app/EditListingPage/CLEAR_UPDATED_TAB';
@@ -395,12 +402,62 @@ export default function reducer(state = initialState, action = {}) {
 
     default:
       return state;
+
+    case FETCH_LISTINGS_REQUEST:
+      return {
+        ...state,
+        getOwnListingsInProgress: true,
+      };
+    case FETCH_LISTINGS_SUCCESS:
+      return {
+        ...state,
+        getOwnListingsInProgress: false,
+        allOwnListings: payload
+      };
+    case FETCH_LISTINGS_ERROR:
+      // eslint-disable-next-line no-console
+      console.error(payload);
+      return { 
+        ...state, 
+        queryListingsError: payload, 
+        getOwnListingsInProgress: false
+      };
   }
 }
 
 // ================ Selectors ================ //
 
 // ================ Action creators ================ //
+
+export const queryListingsRequest = () => ({
+  type: FETCH_LISTINGS_REQUEST,
+  payload: {},
+});
+
+export const queryListingsSuccess = response => ({
+  type: FETCH_LISTINGS_SUCCESS,
+  payload: { data: response.data },
+});
+
+export const queryListingsError = e => ({
+  type: FETCH_LISTINGS_ERROR,
+  error: true,
+  payload: e,
+});
+
+export const queryOwnListings = (queryParams) => (dispatch, getState, sdk) => {
+  dispatch(queryListingsRequest());
+  return sdk.ownListings
+    .query({})
+    .then(response => {
+      dispatch(queryListingsSuccess(response));
+      return response;
+    })
+    .catch(e => {
+      dispatch(queryListingsError(storableError(e)));
+      throw e;
+    });
+};
 
 export const markTabUpdated = tab => ({
   type: MARK_TAB_UPDATED,
@@ -693,6 +750,7 @@ export const savePayoutDetails = (values, isUpdateCall) => (dispatch, getState, 
 export const loadData = params => (dispatch, getState, sdk) => {
   dispatch(clearUpdatedTab());
   const { id, type } = params;
+  dispatch(queryOwnListings(params));
 
   if (type === 'new') {
     // No need to listing data when creating a new listing
@@ -726,4 +784,21 @@ export const loadData = params => (dispatch, getState, sdk) => {
     .catch(e => {
       throw e;
     });
+};
+
+export const updateRanking = actionPayload => {
+  const url = BASE_URL + ENV;
+  const options = {
+    method: 'POST',
+    withCredentials: false,
+    body: JSON.stringify(actionPayload),
+    headers: {
+      "Content-Type": "application/json",
+      "X-Api-Key": KEY,
+    }
+  }
+
+  fetch(url, options)
+    .then(response => response.json())
+    .catch(() => console.log("Could not update ranking"))
 };

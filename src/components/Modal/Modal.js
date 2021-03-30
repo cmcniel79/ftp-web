@@ -114,7 +114,7 @@ export class ModalComponent extends Component {
       isOpen,
       usePortal,
     } = this.props;
-
+    
     const closeModalMessage = intl.formatMessage({ id: 'Modal.closeModal' });
     const closeButtonClasses = classNames(css.close, {
       [css.closeLight]: lightCloseButton,

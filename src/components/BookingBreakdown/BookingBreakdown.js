@@ -11,10 +11,7 @@ import {
   LINE_ITEM_CUSTOMER_COMMISSION,
   LINE_ITEM_PROVIDER_COMMISSION,
 } from '../../util/types';
-
-import LineItemBookingPeriod from './LineItemBookingPeriod';
-import LineItemBasePriceMaybe from './LineItemBasePriceMaybe';
-import LineItemUnitsMaybe from './LineItemUnitsMaybe';
+import LineItemUnitPriceMaybe from './LineItemUnitPriceMaybe';
 import LineItemSubTotalMaybe from './LineItemSubTotalMaybe';
 import LineItemCustomerCommissionMaybe from './LineItemCustomerCommissionMaybe';
 import LineItemCustomerCommissionRefundMaybe from './LineItemCustomerCommissionRefundMaybe';
@@ -33,9 +30,7 @@ export const BookingBreakdownComponent = props => {
     userRole,
     unitType,
     transaction,
-    booking,
     intl,
-    dateType,
   } = props;
 
   const isCustomer = userRole === 'customer';
@@ -88,10 +83,14 @@ export const BookingBreakdownComponent = props => {
 
   return (
     <div className={classes}>
-      <LineItemBookingPeriod booking={booking} unitType={unitType} dateType={dateType} />
-      <LineItemUnitsMaybe transaction={transaction} unitType={unitType} />
+      <h3 className={css.priceBreakdownTitle}>
+        <FormattedMessage id="BookingDatesForm.priceBreakdownTitle" />
+      </h3>
+      {/* <LineItemBookingPeriod booking={booking} unitType={unitType} dateType={dateType} /> */}
+      {/* <LineItemUnitsMaybe transaction={transaction} unitType={unitType} /> */}
+      {/* <LineItemBasePriceMaybe transaction={transaction} unitType={unitType} intl={intl} /> */}
 
-      <LineItemBasePriceMaybe transaction={transaction} unitType={unitType} intl={intl} />
+      <LineItemUnitPriceMaybe transaction={transaction} unitType={unitType} intl={intl} />
       <LineItemUnknownItemsMaybe transaction={transaction} isProvider={isProvider} intl={intl} />
 
       <LineItemSubTotalMaybe
@@ -140,13 +139,10 @@ BookingBreakdownComponent.defaultProps = { rootClassName: null, className: null,
 BookingBreakdownComponent.propTypes = {
   rootClassName: string,
   className: string,
-
   userRole: oneOf(['customer', 'provider']).isRequired,
   unitType: propTypes.bookingUnitType.isRequired,
   transaction: propTypes.transaction.isRequired,
-  booking: propTypes.booking.isRequired,
   dateType: propTypes.dateType,
-
   // from injectIntl
   intl: intlShape.isRequired,
 };

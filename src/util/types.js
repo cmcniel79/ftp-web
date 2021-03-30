@@ -380,7 +380,7 @@ propTypes.transaction = shape({
     ),
     transitions: arrayOf(propTypes.transition).isRequired,
   }),
-  booking: propTypes.booking,
+  // booking: propTypes.booking,
   listing: propTypes.listing,
   customer: propTypes.user,
   provider: propTypes.user,

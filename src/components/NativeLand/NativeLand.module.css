@@ -1,0 +1,132 @@
+@import '../../styles/propertySets.css';
+
+.button {
+  display: flex;
+  flex-direction: row;
+  /* Override button styles */
+  outline: none;
+  text-align: left;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.buttonSelected {
+  display: flex;
+  flex-direction: row;
+  /* Override button styles */
+  outline: none;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  border-left-style: solid;
+  border-left-color: var(--marketplaceColor);
+  border-left-width: 5px;
+  padding-left: 10px;
+}
+
+.buttonText {
+  margin: 5px 0;
+  font-size: 20px
+}
+
+.nativeLandInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.nativeLandHeader {
+  margin: 10px 0;
+}
+
+.half {
+  border: none;
+  @media (--viewportMedium) {
+  margin-top: 10px;
+  width: 20%;
+  height: 0;
+  border-top-style: solid;
+  border-top-color: var(--marketplaceColor);
+  border-top-width: 10px;
+  }
+}
+
+.menuLabel {
+  @apply --marketplaceButtonStylesSecondary;
+  @apply --marketplaceSearchFilterLabelFontStyles;
+
+  padding: 9px 16px 10px 16px;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  border-radius: 4px;
+  margin-bottom: 6px;
+
+  &:focus {
+    outline: none;
+    background-color: var(--matterColorLight);
+    border-color: transparent;
+    text-decoration: none;
+    box-shadow: var(--boxShadowFilterButton);
+  }
+}
+
+
+.clearButton {
+  @apply --marketplaceH5FontStyles;
+  font-weight: var(--fontWeightMedium);
+  color: var(--matterColorAnti);
+
+  /* Layout */
+  display: inline;
+  float: left;
+  margin: 6px 0 0 0;
+  padding: 0;
+
+  /* Override button styles */
+  outline: none;
+  text-align: left;
+  border: none;
+
+  &:focus,
+  &:hover {
+    color: var(--matterColor);
+  }
+}
+
+.greySearchButton {
+  @apply --marketplaceH5FontStyles;
+  font-weight: var(--fontWeightMedium);
+  color: var(--matterColorAnti);
+
+  /* Layout */
+  display: inline;
+  float: right;
+  margin: 6px 0 0 0;
+  padding: 0;
+
+  /* Override button styles */
+  outline: none;
+  text-align: left;
+  border: none;
+
+  &:focus,
+  &:hover {
+    color: var(--matterColor);
+  }
+}
+
+.tribeInfo {
+  @apply --marketplaceH5FontStyles;
+  margin-top: 15px;
+  display: inline-block;
+}
+
+.modalHeading {
+  padding-bottom: 25px;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 36px;
+  letter-spacing: -1px;
+}

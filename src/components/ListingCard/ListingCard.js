@@ -3,13 +3,18 @@ import { string, func } from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
-import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, propTypes } from '../../util/types';
+import { propTypes } from '../../util/types';
 import { formatMoney } from '../../util/currency';
 import { ensureListing, ensureUser } from '../../util/data';
-import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
-import { NamedLink, ResponsiveImage } from '../../components';
+import { 
+  IconVerified,
+  LikeButton, 
+  NamedLink, 
+  ResponsiveImage 
+} from '../../components';
+import ExternalLink from '../ExternalLink/ExternalLink';
 
 import css from './ListingCard.module.css';
 
@@ -34,6 +39,13 @@ const priceData = (price, intl) => {
   return {};
 };
 
+const checkAccountCode = (letter) => {
+  if (letter === "e" || letter === "p" || letter === "a" || letter === "n") {
+    return letter;
+  }
+  return null;
+}
+
 class ListingImage extends Component {
   render() {
     return <ResponsiveImage {...this.props} />;
@@ -42,37 +54,86 @@ class ListingImage extends Component {
 const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export const ListingCardComponent = props => {
-  const { className, rootClassName, intl, listing, renderSizes, setActiveListing } = props;
+  const { className, 
+    rootClassName, 
+    intl, 
+    listing, 
+    renderSizes, 
+    currentUser,
+    isLiked, 
+    updateLikes 
+  } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
   const { title = '', price } = currentListing.attributes;
   const slug = createSlug(title);
+
   const author = ensureUser(listing.author);
-  const authorName = author.attributes.profile.displayName;
   const firstImage =
     currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
+  const { formattedPrice } = priceData(price, intl); // Took out priceTitle, might be used in the future
 
-  const { formattedPrice, priceTitle } = priceData(price, intl);
+  const accountType = author && author.attributes.profile.publicData &&
+    author.attributes.profile.publicData.accountType ? author.attributes.profile.publicData.accountType : null;
+  const validAccountType = checkAccountCode(accountType);
 
-  const unitType = config.bookingUnitType;
-  const isNightly = unitType === LINE_ITEM_NIGHT;
-  const isDaily = unitType === LINE_ITEM_DAY;
+  const externalLink = currentListing && currentListing.attributes.publicData &&
+    currentListing.attributes.publicData.websiteLink ? currentListing.attributes.publicData.websiteLink : null;
+  const category = currentListing && currentListing.attributes.publicData &&
+    currentListing.attributes.publicData.category ? currentListing.attributes.publicData.category : null;
+  const tribe = author.attributes.profile.publicData && author.attributes.profile.publicData.tribe ?
+    author.attributes.profile.publicData.tribe : null;
+  const companyName = author.attributes.profile.publicData && author.attributes.profile.publicData.companyName ?
+    author.attributes.profile.publicData.companyName : null;
+  const companyIndustry = author.attributes.profile.publicData && author.attributes.profile.publicData.companyIndustry ?
+    author.attributes.profile.publicData.companyIndustry : null;
 
-  const unitTranslationKey = isNightly
-    ? 'ListingCard.perNight'
-    : isDaily
-    ? 'ListingCard.perDay'
-    : 'ListingCard.perUnit';
+  // Text above the listing title will need to change based on the account type.
+  // Standard, enrolled and premium accounts will have listing price and the listing category and the tribe associated
+  // with the company/user. Ad and non-profit accounts will have their company name and a longer title.
+  // Ad and non-profit accounts need a longer title because that's all they get as they do not link to a listing page.
+  const optionalText = accountType !== "a" && accountType !== "n" ?
+    <div className={css.optionalText}>
+      <div className={css.priceValue}>
+        {formattedPrice}
+      </div>
+      <div className={css.categoryAndTribe}>
+        {category}
+        {tribe ?
+          " • " + tribe
+          :
+          null
+        }
+      </div>
+    </div>
+    :
+    <div className={css.optionalText}>
+      <div className={css.priceValue}>
+        {companyName}
+      </div>
+      <div className={css.categoryAndTribe}>
+        {companyIndustry}
+        {tribe && companyIndustry ?
+          " • " + tribe
+          : tribe ? tribe
+            : null
+        }
+      </div>
+    </div>;
 
-  return (
-    <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
-      <div
-        className={css.threeToTwoWrapper}
-        onMouseEnter={() => setActiveListing(currentListing.id)}
-        onMouseLeave={() => setActiveListing(null)}
-      >
-        <div className={css.aspectWrapper}>
+  // Link associated with listing card image will need to change based on the account type.
+  // Standard and enrolled accounts will be taken to the normal listing page. Premium accounts
+  // will have their accounts take to the premium listing page. Ad and non-profit accounts will
+  // have links that take them away from the website entirely. Switch statement also adds different
+  // tags onto listing image based on the account type.
+  let imagesAndLinks;
+  switch (validAccountType) {
+    // Default case used for sellers without any accountType. This should not happen as they should have 'u' 
+    // for their accountType as they are unverified. Default will still pick them up however.
+    default:
+      imagesAndLinks =
+        <NamedLink name="ListingPage" params={{ id, slug }}>
           <LazyImage
             rootClassName={css.rootForImage}
             alt={title}
@@ -80,30 +141,95 @@ export const ListingCardComponent = props => {
             variants={['landscape-crop', 'landscape-crop2x']}
             sizes={renderSizes}
           />
+        </NamedLink>;
+      break;
+    case "e":
+      imagesAndLinks =
+        <NamedLink name="ListingPage" params={{ id, slug }}>
+          <LazyImage
+            rootClassName={css.rootForImage}
+            alt={title}
+            image={firstImage}
+            variants={['landscape-crop', 'landscape-crop2x']}
+            sizes={renderSizes}
+          />
+          <IconVerified className={css.verifiedImage} isFilled={true}/>
+        </NamedLink>;
+      break;
+    case "p":
+      imagesAndLinks =
+        <NamedLink name="ListingPage" params={{ id, slug }}>
+          <LazyImage
+            rootClassName={css.rootForImage}
+            alt={title}
+            image={firstImage}
+            variants={['landscape-crop', 'landscape-crop2x']}
+            sizes={renderSizes}
+          />
+          <span className={css.premiumTag}>
+            <FormattedMessage id="ListingCard.premiumTag" />
+          </span>
+        </NamedLink>;
+      break;
+    case "a":
+      imagesAndLinks =
+        <ExternalLink href={externalLink}>
+          <LazyImage
+            rootClassName={css.rootForImage}
+            alt={title}
+            image={firstImage}
+            variants={['landscape-crop', 'landscape-crop2x']}
+            sizes={renderSizes}
+          />
+          <span className={css.adTag}>
+            <FormattedMessage id="ListingCard.adTag" />
+          </span>
+        </ExternalLink>;
+      break;
+    case "n":
+      imagesAndLinks =
+        <ExternalLink href={externalLink}>
+          <LazyImage
+            rootClassName={css.rootForImage}
+            alt={title}
+            image={firstImage}
+            variants={['landscape-crop', 'landscape-crop2x']}
+            sizes={renderSizes}
+          />
+          <span className={css.nonProfitTag}>
+            <FormattedMessage id="ListingCard.nonProfitTag" />
+          </span>
+        </ExternalLink>;
+      break;
+  }
+
+  return (
+    <div className={classes}>
+      <div className={css.threeToTwoWrapper}>
+        <div className={css.aspectWrapper}>
+          {imagesAndLinks}
+          {currentUser &&
+            <LikeButton
+              listingId={id}
+              isLiked={isLiked}
+              updateLikes={updateLikes}
+            />
+          }
         </div>
       </div>
-      <div className={css.info}>
-        <div className={css.price}>
-          <div className={css.priceValue} title={priceTitle}>
-            {formattedPrice}
-          </div>
-          <div className={css.perUnit}>
-            <FormattedMessage id={unitTranslationKey} />
-          </div>
-        </div>
-        <div className={css.mainInfo}>
-          <div className={css.title}>
-            {richText(title, {
-              longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
-              longWordClass: css.longWord,
-            })}
-          </div>
-          <div className={css.authorInfo}>
-            <FormattedMessage id="ListingCard.hostedBy" values={{ authorName }} />
-          </div>
-        </div>
+      <div className={css.cardText}>
+        {accountType === "a" || accountType === "n" ? (
+          <ExternalLink className={css.adLink} href={externalLink}>
+            {optionalText}
+            {title}
+          </ExternalLink>
+        ) : <NamedLink className={css.link} name="ListingPage" params={{ id, slug }}>
+            {optionalText}
+            {title}
+          </NamedLink>
+        }
       </div>
-    </NamedLink>
+    </div>
   );
 };
 

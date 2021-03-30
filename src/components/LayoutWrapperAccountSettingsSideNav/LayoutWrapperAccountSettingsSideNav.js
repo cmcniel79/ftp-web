@@ -24,7 +24,7 @@ const scrollToTab = currentTab => {
 };
 
 const LayoutWrapperAccountSettingsSideNavComponent = props => {
-  const { currentTab, viewport } = props;
+  const { currentTab, viewport, accountType } = props;
 
   let hasScrolledToTab = false;
 
@@ -76,6 +76,10 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
       },
     },
   ];
+
+  if(accountType === 'p' || accountType === 'a' || accountType === 'n') {
+    tabs.splice(2,1);
+  }
 
   return <LayoutWrapperSideNav tabs={tabs} />;
 };

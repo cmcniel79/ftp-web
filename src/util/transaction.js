@@ -43,6 +43,8 @@ export const TRANSITION_CANCEL = 'transition/cancel';
 // The backend will mark the transaction completed.
 export const TRANSITION_COMPLETE = 'transition/complete';
 
+export const TRANSITION_BEGIN_REVIEWS = 'transition/begin-reviews';
+
 // Reviews are given through transaction transitions. Review 1 can be
 // by provider or customer, and review 2 will be the other party of
 // the transaction.
@@ -91,6 +93,7 @@ const STATE_DECLINED = 'declined';
 const STATE_ACCEPTED = 'accepted';
 const STATE_CANCELED = 'canceled';
 const STATE_DELIVERED = 'delivered';
+const STATE_REVIEW_STAGE = 'review-stage';
 const STATE_REVIEWED = 'reviewed';
 const STATE_REVIEWED_BY_CUSTOMER = 'reviewed-by-customer';
 const STATE_REVIEWED_BY_PROVIDER = 'reviewed-by-provider';
@@ -108,7 +111,7 @@ const stateDescription = {
   // id is defined only to support Xstate format.
   // However if you have multiple transaction processes defined,
   // it is best to keep them in sync with transaction process aliases.
-  id: 'flex-default-process/release-1',
+  id: 'ftp-item-transaction/release-1',
 
   // This 'initial' state is a starting point for new transaction
   initial: STATE_INITIAL,
@@ -147,7 +150,7 @@ const stateDescription = {
     [STATE_ACCEPTED]: {
       on: {
         [TRANSITION_CANCEL]: STATE_CANCELED,
-        [TRANSITION_COMPLETE]: STATE_DELIVERED,
+        [TRANSITION_COMPLETE]: STATE_REVIEW_STAGE,
       },
     },
 
@@ -157,6 +160,12 @@ const stateDescription = {
         [TRANSITION_EXPIRE_REVIEW_PERIOD]: STATE_REVIEWED,
         [TRANSITION_REVIEW_1_BY_CUSTOMER]: STATE_REVIEWED_BY_CUSTOMER,
         [TRANSITION_REVIEW_1_BY_PROVIDER]: STATE_REVIEWED_BY_PROVIDER,
+      },
+    },
+
+    [STATE_REVIEW_STAGE]: {
+      on: {
+        [TRANSITION_BEGIN_REVIEWS]: STATE_DELIVERED,
       },
     },
 
@@ -246,6 +255,9 @@ export const txIsCanceled = tx =>
 export const txIsDelivered = tx =>
   getTransitionsToState(STATE_DELIVERED).includes(txLastTransition(tx));
 
+export const txIsReviewStage = tx =>
+getTransitionsToState(STATE_REVIEW_STAGE).includes(txLastTransition(tx));
+
 const firstReviewTransitions = [
   ...getTransitionsToState(STATE_REVIEWED_BY_CUSTOMER),
   ...getTransitionsToState(STATE_REVIEWED_BY_PROVIDER),
@@ -304,6 +316,7 @@ export const isRelevantPastTransition = transition => {
     TRANSITION_CONFIRM_PAYMENT,
     TRANSITION_DECLINE,
     TRANSITION_EXPIRE,
+    TRANSITION_BEGIN_REVIEWS,
     TRANSITION_REVIEW_1_BY_CUSTOMER,
     TRANSITION_REVIEW_1_BY_PROVIDER,
     TRANSITION_REVIEW_2_BY_CUSTOMER,

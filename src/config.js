@@ -32,19 +32,15 @@ const sortSearchByDistance = false;
 //
 // In a way, 'processAlias' defines which transaction process (or processes)
 // this particular web application is able to handle.
-const bookingProcessAlias = 'flex-default-process/release-1';
+const bookingProcessAlias = 'ftp-item-transaction/release-1';
 
 // The transaction line item code for the main unit type in bookings.
 //
 // Possible values: ['line-item/night', 'line-item/day', 'line-item/units';]
 //
-// Note 1: This 'bookingUnitType' variable affects only web app.
-//         If you are using privileged transitions (which is used by the default process),
-//         you also need to configure unit type in API server: server/api-util/lineItems.js
-//
-// Note 2: Translations will use different translation keys for night, day or unit
-//         depending on the value chosen.
-const bookingUnitType = 'line-item/night';
+// Note: translations will use different translation keys for night, day or unit
+// depending on the value chosen.
+const bookingUnitType = 'line-item/units';
 
 // Should the application fetch available time slots (currently defined as
 // start and end dates) to be shown on listing page.
@@ -72,7 +68,7 @@ const currencyConfig = currencyConfiguration(currency);
 
 // Listing minimum price in currency sub units, e.g. cents.
 // 0 means no restriction to the price
-const listingMinimumPriceSubUnits = 0;
+const listingMinimumPriceSubUnits = 500;
 
 // Sentry DSN (Data Source Name), a client key for authenticating calls to Sentry
 const sentryDsn = process.env.REACT_APP_SENTRY_DSN;
@@ -90,16 +86,18 @@ const streetAddress = 'Bulevardi 14';
 const canonicalRootURL = process.env.REACT_APP_CANONICAL_ROOT_URL;
 
 // Site title is needed in meta tags (bots and social media sharing reads those)
-const siteTitle = 'Saunatime';
+const siteTitle = 'From The People';
 
 // Twitter handle is needed in meta tags (twitter:site). Start it with '@' character
-const siteTwitterHandle = '@sharetribe';
+const siteTwitterHandle = '@FromThePeopleCo';
 
 // Instagram page is used in SEO schema (http://schema.org/Organization)
-const siteInstagramPage = null;
+const siteInstagramPage = 'https://www.instagram.com/fromthepeople.co/';
 
 // Facebook page is used in SEO schema (http://schema.org/Organization)
-const siteFacebookPage = 'https://www.facebook.com/Sharetribe/';
+const siteFacebookPage = 'https://www.facebook.com/fromthepeople.co/';
+
+const siteTikTokPage = 'https://www.tiktok.com/@fromthepeopleco';
 
 // Social logins & SSO
 
@@ -122,7 +120,7 @@ const maps = {
     // When enabled, the first suggestion is "Current location" that
     // uses the browser Geolocation API to query the user's current
     // location.
-    suggestCurrentLocation: process.env.REACT_APP_DEFAULT_SEARCHES_ENABLED === 'true',
+    suggestCurrentLocation: process.env.REACT_APP_DEFAULT_SEARCHES_ENABLED === 'false',
 
     // Distance in meters for calculating the bounding box around the
     // current location.
@@ -222,6 +220,7 @@ const config = {
   siteFacebookPage,
   siteInstagramPage,
   siteTwitterHandle,
+  siteTikTokPage,
   facebookAppId,
   sentryDsn,
   usingSSL,

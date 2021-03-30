@@ -1,0 +1,247 @@
+@import '../../styles/propertySets.css';
+
+:root {
+  /*
+    These variables are available in global scope through ":root"
+    element (<html> tag). Variables with the same names are going to
+    overwrite each other if CSS Properties' (PostCSS plugin)
+    configuration "preserve: true" is used - meaning that variables
+    are left to CSS bundle. We are planning to enable it in the future
+    since browsers support CSS Properties already.
+ */
+  --EventPhotosForm_imageWidthDesktop: calc(75% - 12px);
+}
+
+.root {
+  margin-top: 24px;
+  @media (--viewportMedium) {
+    margin-top: 32px;
+  }
+}
+
+.eventImage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sectionContainer {
+  padding: 0;
+  margin-bottom: 36px;
+  @media (--viewportMedium) {
+    padding: 0;
+    margin-bottom: 56px;
+  }
+}
+
+.sectionTitle {
+  /* Font */
+  color: var(--matterColorAnti);
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+.uploadInput {
+  display: none;
+}
+
+.uploadWrapper {
+  margin: 24px 0 0 0;
+
+  @media (--viewportLarge) {
+    width: var(--EventPhotosForm_imageWidthDesktop);
+    margin: 0 24px 24px 0;
+  }
+}
+
+.label {
+  position: relative;
+  padding-bottom: calc(100% * (2 / 3));
+}
+
+.imagePlaceholder, .imageContainer {
+  /* Layout */
+  /* Maintain aspect ratio */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+
+  /* Colors */
+  background-color: var(--matterColorLight);
+
+  @media (--viewportLarge) {
+    background-color: var(--matterColorBright);
+  }
+  /* Behaviour */
+  cursor: pointer;
+  transition: var(--transitionStyleButton);
+}
+
+.imagePlaceholder {
+  /* Placeholder border */
+  border-style: dashed;
+  border-color: var(--matterColorNegative);
+  border-width: 2px;
+  border-radius: 2px;
+  &:hover {
+    border-color: var(--matterColorAnti);
+  }
+}
+
+.imagePlaceholderTextMobile {
+  @media (--viewportMedium) {
+    display: none;
+  }
+}
+
+.imagePlaceholderText {
+  display: none;
+  @media (--viewportMedium) {
+    display: block;
+    max-width: 130px;
+    text-align: center;
+  }
+}
+
+.imageUploadError {
+  /* Placeholder border */
+  border-style: dashed;
+  border-color: var(--failColor);
+  border-width: 2px;
+}
+
+.error {
+  /* Font */
+  @apply --marketplaceH4FontStyles;
+  color: var(--failColor);
+  margin-top: 18px;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 22px;
+    margin-bottom: 2px;
+  }
+}
+
+.changeImage {
+  /* Font */
+  @apply --marketplaceH5FontStyles;
+  font-weight: var(--fontWeightMedium);
+  /* Positioning: right */
+  position: absolute;
+  bottom: 27px;
+  right: -129px;
+  /* Dimensions */
+  width: 105px;
+  height: 41px;
+  padding: 11px 10px 7px 35px;
+  /* Look and feel (buttonish) */
+  background-color: var(--matterColorLight);
+  background-image: url('data:image/svg+xml;utf8,<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><g stroke="%234A4A4A" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"><path d="M5.307 11.155L1 13l1.846-4.308L10.54 1 13 3.46zM11 5L9 3M5 11L3 9"/></g></svg>');
+  background-repeat: no-repeat;
+  background-position: 15px 12px;
+  border: solid 1px var(--matterColorNegative);
+  border-radius: 2px;
+  margin-top: 0;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    /* Position: under */
+    bottom: -10px;
+    right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    transition: var(--transitionStyleButton);
+    padding: 11px 10px 7px 35px;
+  }
+  &:hover {
+    border: solid 1px var(--matterColorAnti);
+  }
+}
+
+.uploadingImageOverlay {
+  /* Cover everything (overlay) */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* Overlay style */
+  background-color: var(--matterColorLight);
+  opacity: 0.8;
+  /* Center content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Avatar has square aspect ratio */
+
+/* Default is 3:2 */
+
+.imagesField {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.thumbnail {
+  margin: 24px 0 0 0;
+
+  @media (--viewportLarge) {
+    width: var(--EventPhotosForm_imageWidthDesktop);
+    margin: 0 24px 24px 0;
+
+    &:nth-child(even) {
+      margin: 0 0 24px 0;
+    }
+  }
+}
+
+.tip {
+  @apply --marketplaceDefaultFontStyles;
+  color: var(--matterColorAnti);
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-top: 5px;
+  padding-bottom: 1px;
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+.fileInfo {
+  @apply --marketplaceH5FontStyles;
+  color: var(--matterColorAnti);
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 5px;
+  padding-bottom: 1px;
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 6px;
+    padding-bottom: 2px;
+  }
+}

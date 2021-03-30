@@ -13,13 +13,14 @@
   @apply --marketplaceModalRootStyles;
 
   @media (--viewportMedium) {
-    @apply --backgroundImage;
+    @apply --backgroundFilled;
   }
 }
 
 .content {
   @apply --marketplaceModalBaseStyles;
   padding-top: 29px;
+  min-height: 700px;
 }
 
 /* ================ Tabs & Form ================ */
@@ -41,7 +42,7 @@
 }
 
 .form {
-  margin-top: 24px;
+  margin-top: 0;
 
   @media (--viewportMedium) {
     margin-top: 30px;
@@ -203,6 +204,10 @@
   @apply --marketplaceH4FontStyles;
 }
 
+.idpButtons {
+  margin: 20px 0 10px 0;
+}
+
 .buttonIcon {
   position: absolute;
   left: 0;
@@ -238,7 +243,7 @@
 @media (--viewportMedium) {
   .socialButtonsOr {
     height: 34px;
-    margin: 15px 0;
+    margin: 15px 0 0 0;
   }
 }
 

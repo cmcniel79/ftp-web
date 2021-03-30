@@ -6,8 +6,6 @@ import classNames from 'classnames';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import routeConfiguration from '../../routeConfiguration';
 import {
-  LINE_ITEM_NIGHT,
-  LINE_ITEM_DAY,
   LISTING_STATE_PENDING_APPROVAL,
   LISTING_STATE_CLOSED,
   LISTING_STATE_DRAFT,
@@ -123,7 +121,6 @@ export const ManageListingCardComponent = props => {
     onOpenListing,
     onToggleMenu,
     renderSizes,
-    availabilityEnabled,
   } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
@@ -163,16 +160,6 @@ export const ManageListingCardComponent = props => {
   const editListingLinkType = isDraft
     ? LISTING_PAGE_PARAM_TYPE_DRAFT
     : LISTING_PAGE_PARAM_TYPE_EDIT;
-
-  const unitType = config.bookingUnitType;
-  const isNightly = unitType === LINE_ITEM_NIGHT;
-  const isDaily = unitType === LINE_ITEM_DAY;
-
-  const unitTranslationKey = isNightly
-    ? 'ManageListingCard.perNight'
-    : isDaily
-    ? 'ManageListingCard.perDay'
-    : 'ManageListingCard.perUnit';
 
   return (
     <div className={classes}>
@@ -312,9 +299,6 @@ export const ManageListingCardComponent = props => {
               <div className={css.priceValue} title={priceTitle}>
                 {formattedPrice}
               </div>
-              <div className={css.perUnit}>
-                <FormattedMessage id={unitTranslationKey} />
-              </div>
             </React.Fragment>
           ) : (
             <div className={css.noPrice}>
@@ -346,20 +330,6 @@ export const ManageListingCardComponent = props => {
           >
             <FormattedMessage id="ManageListingCard.editListing" />
           </NamedLink>
-
-          {availabilityEnabled ? (
-            <React.Fragment>
-              <span className={css.manageLinksSeparator}>{' • '}</span>
-
-              <NamedLink
-                className={css.manageLink}
-                name="EditListingPage"
-                params={{ id, slug, type: editListingLinkType, tab: 'availability' }}
-              >
-                <FormattedMessage id="ManageListingCard.manageAvailability" />
-              </NamedLink>
-            </React.Fragment>
-          ) : null}
         </div>
       </div>
     </div>

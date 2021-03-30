@@ -18,6 +18,7 @@ import {
   Footer,
   Page,
   UserNav,
+  ExternalLink,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 import { PaymentMethodsForm } from '../../forms';
@@ -46,6 +47,8 @@ const PaymentMethodsPageComponent = props => {
     intl,
     stripeCustomerFetched,
   } = props;
+  
+  const isEventHost = currentUser && currentUser.attributes.profile.metadata && currentUser.attributes.profile.metadata.eventHost;
 
   const getClientSecret = setupIntent => {
     return setupIntent && setupIntent.attributes ? setupIntent.attributes.clientSecret : null;
@@ -55,15 +58,15 @@ const PaymentMethodsPageComponent = props => {
     const addressMaybe =
       addressLine1 && postal
         ? {
-            address: {
-              city: city,
-              country: country,
-              line1: addressLine1,
-              line2: addressLine2,
-              postal_code: postal,
-              state: state,
-            },
-          }
+          address: {
+            city: city,
+            country: country,
+            line1: addressLine1,
+            line2: addressLine2,
+            postal_code: postal,
+            state: state,
+          },
+        }
         : {};
     const billingDetails = {
       name,
@@ -136,6 +139,21 @@ const PaymentMethodsPageComponent = props => {
     ? `${ensuredCurrentUser.attributes.profile.firstName} ${ensuredCurrentUser.attributes.profile.lastName}`
     : null;
 
+  // Get account type from user public data to show Chargebee info
+  const accountType = ensuredCurrentUser.attributes.profile.publicData && ensuredCurrentUser.attributes.profile.publicData.accountType ?
+    ensuredCurrentUser.attributes.profile.publicData.accountType : null;
+
+  const chargeBeeSection = accountType === 'p' || accountType === 'a' ?
+    <div>
+      <p>
+        <FormattedMessage id="PaymentMethodsPage.chargebeeText" />
+        <ExternalLink href="https://fromthepeople.chargebeeportal.com/portal/v2/login?forward=portal_main">
+          <FormattedMessage id="PaymentMethodsPage.chargebeeLink" />
+        </ExternalLink>
+      </p>
+    </div>
+    : null;
+
   const initalValuesForStripePayment = { name: userName };
 
   const card = hasDefaultPaymentMethod
@@ -153,7 +171,7 @@ const PaymentMethodsPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="PaymentMethodsPage" />
+          <UserNav selectedPageName="PaymentMethodsPage" isEventHost={isEventHost}/>
         </LayoutWrapperTopbar>
         <LayoutWrapperAccountSettingsSideNav currentTab="PaymentMethodsPage" />
         <LayoutWrapperMain>
@@ -161,6 +179,7 @@ const PaymentMethodsPageComponent = props => {
             <h1 className={css.title}>
               <FormattedMessage id="PaymentMethodsPage.heading" />
             </h1>
+            {chargeBeeSection}
             {!stripeCustomerFetched ? null : (
               <>
                 {showCardDetails ? (

@@ -1,0 +1,28 @@
+@import '../../styles/propertySets.css';
+
+.followButton {
+    @apply --userCardButtonStyles;
+    width: 100px;
+}
+
+.unfollowButton {
+    @apply --marketplaceH4FontStyles;
+    display: inline;
+    border: none;
+    background-color: white;
+    color: var(--marketplaceColor);
+    border-radius: 20px;
+    padding: 2px 10px;
+    margin: 0 5px 0 0;
+    border: solid 2px var(--marketplaceColor);
+    width: 100px;
+    &:hover {
+        text-decoration: none;
+        cursor: pointer;
+        background-color: rgb(212, 0, 0, .05);
+    }
+    @media (--viewportMedium) {
+        @apply --marketplaceH4FontStyles;
+        margin: 0 5px 0 0;
+    }
+}

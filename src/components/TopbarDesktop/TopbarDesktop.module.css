@@ -28,17 +28,17 @@
 .logoLink {
   @apply --TopbarDesktop_linkHover;
   flex-shrink: 0;
-  padding: 21px 24px 21px 24px;
+  padding: 21\px 24px 21px 24px;
   height: 100%;
 
   @media (--viewportLarge) {
-    padding: 21px 36px 21px 36px;
+    padding: 18px 36px 21px 36px;
   }
 }
 
 .logo {
   /* If height is increased, change link paddings accordingly */
-  height: 27px;
+  height: 35px;
 
   /* Good aspect ratio should be less than 160/27 (width/height) */
   /* NOTE: extremely wide logos, need special handling. */
@@ -50,12 +50,14 @@
 
 /* Search */
 .searchLink {
+  max-width: 300px;
   flex-grow: 1;
   height: 100%;
   margin-right: 24px;
-  border-left-style: solid;
+  /* Took out because I did not like how line on left looked */
+  /* border-left-style: solid;
   border-left-width: 1px;
-  border-left-color: var(--matterColorNegative);
+  border-left-color: var(--matterColorNegative); */
 
   @media (--viewportLarge) {
     padding-left: 0;
@@ -66,6 +68,10 @@
   @apply --marketplaceH4FontStyles;
   @apply --TopbarDesktop_label;
   color: var(--matterColor);
+}
+
+.searchImage {
+
 }
 
 .topbarSearchWithLeftPadding {
@@ -103,8 +109,7 @@
   @apply --TopbarDesktop_label;
 }
 
-/* Inbox */
-.inboxLink {
+.customLink {
   @apply --TopbarDesktop_linkHover;
   @apply --marketplaceH5FontStyles;
   height: 100%;
@@ -123,7 +128,7 @@
   }
 }
 
-.inbox {
+.custom {
   @apply --TopbarDesktop_label;
   position: relative;
 }

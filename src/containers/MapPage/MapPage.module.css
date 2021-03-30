@@ -1,0 +1,424 @@
+@import '../../styles/propertySets.css';
+:root {
+  /*
+    These variables are available in global scope through ":root"
+    element (<html> tag). Variables with the same names are going to
+    overwrite each other if CSS Properties' (PostCSS plugin)
+    configuration "preserve: true" is used - meaning that variables
+    are left to CSS bundle. We are planning to enable it in the future
+    since browsers support CSS Properties already.
+ */
+  --SearchPage_containerHeight: calc(95vh - var(--topbarHeightDesktop));
+}
+
+/* Can be given to Topbar when a modal is opened
+ * so that the Topbar is not rendered on top of it.*/
+
+.topbarBehindModal {
+  z-index: initial;
+}
+
+.topbar {
+  @media (--viewportMedium) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* We need to raise Topbar above .container */
+    z-index: 1;
+  }
+}
+
+.container {
+  /* Layout */
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  @media (--viewportMedium) {
+    padding-top: var(--topbarHeightDesktop);
+    min-height: var(--SearchPage_containerHeight);
+    flex-direction: row;
+  }
+}
+
+.pageHeading {
+  /* width: 90vw; */
+  margin: 15px;
+}
+
+.title {
+  margin-top: 0;
+}
+
+.mobileButtons {
+  @media (--viewportMedium) {
+    display: none;
+  }
+}
+
+.filtersButton {
+  text-transform: capitalize;
+  @apply --marketplaceButtonStylesSecondary;
+  @apply --marketplaceSearchFilterLabelFontStyles;
+  padding: 9px 16px 10px 16px;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  &:focus {
+    outline: none;
+    background-color: var(--matterColorLight);
+    border-color: transparent;
+    text-decoration: none;
+    box-shadow: var(--boxShadowFilterButton);
+  }
+}
+
+.filtersButtonSelected {
+  text-transform: capitalize;
+  @apply --marketplaceButtonStylesSecondary;
+  @apply --marketplaceSearchFilterLabelFontStyles;
+  padding: 9px 16px 10px 16px;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  background-color: var(--marketplaceColor);
+  color: white;
+  &:focus {
+    outline: none;
+    background-color: var(--matterColorLight);
+    border-color: transparent;
+    text-decoration: none;
+    box-shadow: var(--boxShadowFilterButton);
+  }
+}
+
+.industryFilter {
+  height: auto;
+}
+
+.modalContainer {
+  width: 100%;
+  padding: 50px 0;
+  margin: 0 24px;
+}
+
+.modalHeading {
+  @apply --marketplaceH1FontStyles;
+  margin-top: 0;
+  margin-bottom: 10px;
+  border-bottom: solid var(--marketplaceColor) 2px;
+  padding-bottom: 20px;
+}
+
+.desktopPanel {
+  display: none;
+  @media (--viewportMedium) {
+    display: initial;
+  }
+}
+
+.pageSubtitleDesktop {
+  display: none;
+  @media (--viewportMedium) {
+    display: inline-block;
+    font-weight: 425;
+    margin: 10px 0;
+  }
+}
+
+.pageSubtitleMobile {
+  display: inline-block;
+  font-weight: 425;
+  width: 90%;
+  margin: 30px auto;
+  @media (--viewportMedium) {
+    display: none;
+  }
+}
+
+.searchResultContainer {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2px 0 0 0;
+  @media (--viewportMedium) {
+    padding: 18px 0 0 0;
+    /**
+     * .container is using flexbox,
+     * This specifies that searchResultContainer is taking 60% from the viewport width
+     */
+    flex-basis: 50%;
+  }
+  @media (--viewportLarge) {
+    flex-basis: 62.5%;
+    padding: 23px 0 0 0;
+  }
+}
+
+.error {
+  color: var(--failColor);
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.searchString {
+  /* Search string should not break on white spaces - i.e. line-break should happen before. */
+  white-space: nowrap;
+}
+
+.searchFiltersPrimary {
+  display: none;
+  @media (--viewportMedium) {
+    display: flex;
+    padding: 0 24px;
+    margin-bottom: 21px;
+  }
+  @media (--viewportLarge) {
+    padding: 0 36px;
+  }
+}
+
+.searchFiltersMobile {
+  padding: 16px 24px;
+  @media (--viewportMedium) {
+    display: none;
+  }
+}
+
+.searchFiltersPanel {
+  flex-grow: 1;
+  display: flex;
+  padding: 0 24px 24px 24px;
+  @media (--viewportLarge) {
+    padding: 0 36px 36px 36px;
+  }
+}
+
+.listings {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.newSearchInProgress {
+  opacity: 0.1;
+}
+
+.searchListingsPanel {
+  flex-grow: 1;
+}
+
+.mapPanel {
+  @media (--viewportMedium) {
+    /**
+     * .container is using flexbox,
+     * This specifies that mapPanel is taking 34% from the viewport width
+     */
+    flex-basis: 50%;
+    /* Own layout settings */
+    display: flex;
+    height: 100%;
+  }
+  @media (--viewportLarge) {
+    flex-basis: 37.5%;
+  }
+}
+
+.sortBy {
+  margin-right: 9px;
+}
+
+.sortByMenuLabel {
+  @apply --marketplaceButtonStylesSecondary;
+  @apply --marketplaceTinyFontStyles;
+  font-weight: var(--fontWeightMedium);
+  height: 35px;
+  min-height: 35px;
+  padding: 0 18px;
+  margin: 0;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.mapWrapper {
+  width: 100%;
+  height: 100%;
+  @media (--viewportMedium) {
+    min-width: 75%;
+  }
+}
+
+.map {
+  width: 100vw;
+  height: 70vh;
+  @media (--viewportMedium) {
+    margin: auto;
+    /* Fixed content needs width relative to viewport */
+    width: 75vw;
+    height: var(--SearchPage_containerHeight);
+  }
+}
+
+.half {
+  border: none;
+  @media (--viewportMedium) {
+    margin-top: 10px;
+    width: 20%;
+    height: 0;
+    border-top-style: solid;
+    border-top-color: var(--marketplaceColor);
+    border-top-width: 10px;
+  }
+}
+
+.chevronUp {
+  width: 20px;
+  height: 20px;
+  float: right;
+  transition: transform .2s,-webkit-transform .2s;
+  margin: auto 0;
+}
+
+.chevronDown {
+  transform: rotate(180deg);
+  width: 20px;
+  height: 20px;
+  float: right;
+  transition: transform .2s,-webkit-transform .2s;
+  margin: auto 0;
+}
+
+.panelClosed {
+  max-height: 0;
+  padding: 0 20px 0 20px;
+  transition: .3s;
+  overflow: hidden;
+}
+
+.panelOpened {
+  max-height: 1500px;
+  padding: 0 20px 0 20px;
+  transition: .3s ease-in;
+  overflow: hidden;
+}
+
+.desktopLegend {
+  margin: 20px 0 20px 0;
+}
+
+.mobileLegend {
+  width: 100%;
+  margin: 15px 0 0 0;
+  @media (--viewportMedium) {
+    display: none;
+  }
+}
+
+.legendTitleContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.legendTitle {
+  margin: 10px 0 10px 0;
+}
+
+.clearButton {
+  @apply --marketplaceH5FontStyles;
+  font-weight: var(--fontWeightMedium);
+  color: var(--matterColorAnti);
+  cursor: pointer;
+  /* Layout */
+  display: inline;
+  float: left;
+  margin: 15px 0 0 0;
+  padding: 0;
+
+  /* Override button styles */
+  outline: none;
+  text-align: left;
+  border: none;
+
+  &:focus,
+  &:hover {
+    color: var(--matterColor);
+  }
+}
+
+.legendBlock, .legendBlockSelected {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 10px;
+  margin: 10px 0 0 15px;
+  cursor: pointer;
+  @media (--viewportMedium) {
+    margin: 0;
+  }
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.legendBlock {
+  border-left: solid 7px transparent;
+}
+
+.legendBlockSelected {
+  border-left: solid 7px var(--marketplaceColor);
+}
+
+.legendImage {
+  width: 25px;
+  @media (--viewportMedium) {
+    width: 22px;
+  }
+}
+
+.legendLabel {
+  margin-left: 10px;
+  @media (--viewportMedium) {
+    font-size: 18px;
+    /* line-height: 32px; */
+  }
+}
+
+.nativePlaces {
+  @apply --marketplaceButtonStylesSecondary;
+  @apply --marketplaceSearchFilterLabelFontStyles;
+  padding: var(--marketplaceButtonSmallDesktopPadding);
+  width: auto;
+  height: auto;
+  min-height: 0;
+  border-radius: 4px;
+  &:focus {
+    outline: none;
+    background-color: var(--matterColorLight);
+    border-color: transparent;
+    text-decoration: none;
+    box-shadow: var(--boxShadowFilterButton);
+  }
+}
+
+.nativePlacesSelected {
+  @apply --marketplaceButtonStyles;
+  @apply --marketplaceSearchFilterLabelFontStyles;
+  font-weight: var(--fontWeightSemiBold);
+  padding: var(--marketplaceButtonSmallDesktopPadding);
+  width: auto;
+  height: auto;
+  min-height: 0;
+  border-radius: 4px;
+  border: 1px solid var(--marketplaceColor);
+  &:hover, &:focus {
+    border: 1px solid var(--marketplaceColorDark);
+  }
+}
+

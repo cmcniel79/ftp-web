@@ -5,11 +5,11 @@ import { Form as FinalForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import config from '../../config';
-import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
+import { propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
-import { Button, Form, FieldCurrencyInput } from '../../components';
+import { Button, Form, FieldCurrencyInput, FieldCheckbox } from '../../components';
 import css from './EditListingPricingForm.module.css';
 
 const { Money } = sdkTypes;
@@ -30,20 +30,33 @@ export const EditListingPricingFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
+        accountType,
+        userCountry,
+        // initialValues
       } = formRenderProps;
 
-      const unitType = config.bookingUnitType;
-      const isNightly = unitType === LINE_ITEM_NIGHT;
-      const isDaily = unitType === LINE_ITEM_DAY;
+      const shippingFeeMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.shippingFeeInputMessage',
+      });
 
-      const translationKey = isNightly
-        ? 'EditListingPricingForm.pricePerNight'
-        : isDaily
-        ? 'EditListingPricingForm.pricePerDay'
-        : 'EditListingPricingForm.pricePerUnit';
+      const shippingFeePlaceholder = intl.formatMessage({
+        id: 'EditListingPricingForm.shippingFeeInputPlaceholder',
+      });
+
+      const internationalFeeMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.internationalFeeInputMessage',
+      });
+
+      const internationalFeePlaceholder = intl.formatMessage({
+        id: 'EditListingPricingForm.internationalFeeInputPlaceholder',
+      });
+
+      const internationalCheckboxMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.internationalCheckboxMessage',
+      });
 
       const pricePerUnitMessage = intl.formatMessage({
-        id: translationKey,
+        id: 'EditListingPricingForm.pricePerUnit',
       });
 
       const pricePlaceholderMessage = intl.formatMessage({
@@ -76,6 +89,24 @@ export const EditListingPricingFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
+      let showInternational; 
+
+      const checkbox = document.getElementById('allowsInternationalOrders');
+
+      if (checkbox) {
+        if (checkbox.checked) {
+          showInternational = true;
+        } else {
+          showInternational = false;
+        }
+      };
+      // For ad and non-profit account types, no price is needed on their listing cards.
+      const noPriceNeededInfo = (accountType === "n" || accountType === "a") ?
+        <div className={css.accountInfo}>
+          <p>
+            <FormattedMessage id="EditListingPricingForm.specialAccountInfo" />
+          </p>
+        </div> : null;
 
       return (
         <Form onSubmit={handleSubmit} className={classes}>
@@ -89,17 +120,64 @@ export const EditListingPricingFormComponent = props => (
               <FormattedMessage id="EditListingPricingForm.showListingFailed" />
             </p>
           ) : null}
-          <FieldCurrencyInput
-            id="price"
-            name="price"
-            className={css.priceInput}
-            autoFocus
-            label={pricePerUnitMessage}
-            placeholder={pricePlaceholderMessage}
-            currencyConfig={config.currencyConfig}
-            validate={priceValidators}
-          />
 
+          <div className={css.columns}>
+            {accountType !== "n" && accountType !== "a" &&
+              <div className={css.priceInputs}>
+                <FieldCurrencyInput
+                  id="price"
+                  name="price"
+                  className={css.priceInput}
+                  // autoFocus
+                  label={pricePerUnitMessage}
+                  placeholder={pricePlaceholderMessage}
+                  currencyConfig={config.currencyConfig}
+                  validate={priceValidators}
+                />
+                {accountType !== "p" ?
+                  <div className={css.shippingFees}>
+                    <FieldCurrencyInput
+                      id="shippingFee"
+                      name="shippingFee"
+                      className={css.priceInput}
+                      label={shippingFeeMessage}
+                      placeholder={shippingFeePlaceholder}
+                      currencyConfig={config.currencyConfig}
+                    />
+                    <div className={css.internationalFee}>
+                      <FieldCheckbox
+                        id="allowsInternationalOrders"
+                        name="allowsInternationalOrders"
+                        label={internationalCheckboxMessage}
+                        value="hasFee"
+                      />
+                      {showInternational &&
+                      <div>
+                        <FieldCurrencyInput
+                          id="internationalFee"
+                          name="internationalFee"
+                          className={css.priceInput}
+                          label={internationalFeeMessage}
+                          placeholder={internationalFeePlaceholder}
+                          currencyConfig={config.currencyConfig}
+                        />
+                        <div className={css.instructions}>
+                        <p className={css.instructionsText}>
+                          <FormattedMessage id="EditListingPricingForm.instructionsLine1" values={{ userCountry }} />
+                          <br />
+                          <br />
+                          <FormattedMessage id="EditListingPricingForm.instructionsLine2" />
+                        </p>
+                      </div>
+                      </div>
+                      }
+                    </div>
+                  </div>
+                  : null}
+              </div>
+            }
+            {noPriceNeededInfo}
+          </div>
           <Button
             className={css.submitButton}
             type="submit"

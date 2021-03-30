@@ -20,6 +20,7 @@ import {
   IconSpinner,
   SavedCardDetails,
   StripePaymentAddress,
+  ShippingAddress,
 } from '../../components';
 import css from './StripePaymentForm.module.css';
 
@@ -161,8 +162,8 @@ const getPaymentMethod = (selectedPaymentMethod, hasDefaultPaymentMethod) => {
   return selectedPaymentMethod == null && hasDefaultPaymentMethod
     ? 'defaultCard'
     : selectedPaymentMethod == null
-    ? 'onetimeCardPayment'
-    : selectedPaymentMethod;
+      ? 'onetimeCardPayment'
+      : selectedPaymentMethod;
 };
 
 const initialState = {
@@ -328,6 +329,7 @@ class StripePaymentForm extends Component {
       form,
       hasHandledCardPayment,
       defaultPaymentMethod,
+      shippingAddress
     } = formRenderProps;
 
     this.finalFormAPI = form;
@@ -353,10 +355,10 @@ class StripePaymentForm extends Component {
       confirmCardPaymentError && confirmCardPaymentError.code === piAuthenticationFailure
         ? intl.formatMessage({ id: 'StripePaymentForm.confirmCardPaymentError' })
         : confirmCardPaymentError
-        ? confirmCardPaymentError.message
-        : confirmPaymentError
-        ? intl.formatMessage({ id: 'StripePaymentForm.confirmPaymentError' })
-        : intl.formatMessage({ id: 'StripePaymentForm.genericError' });
+          ? confirmCardPaymentError.message
+          : confirmPaymentError
+            ? intl.formatMessage({ id: 'StripePaymentForm.confirmPaymentError' })
+            : intl.formatMessage({ id: 'StripePaymentForm.genericError' });
 
     const billingDetailsNameLabel = intl.formatMessage({
       id: 'StripePaymentForm.billingDetailsNameLabel',
@@ -386,6 +388,13 @@ class StripePaymentForm extends Component {
       <StripePaymentAddress intl={intl} form={form} fieldId={formId} card={this.card} />
     );
 
+    const shippingAddressFields = shippingAddress && shippingAddress.country ? (
+      <ShippingAddress intl={intl} formId={formId} country={shippingAddress.country} isCheckoutPage={true} />
+    ) : (
+      <ShippingAddress intl={intl} formId={formId} country={null} isCheckoutPage={false} />
+    );
+
+
     const hasStripeKey = config.stripe.publishableKey;
     const showPaymentMethodSelector = ensuredDefaultPaymentMethod.id;
     const selectedPaymentMethod = getPaymentMethod(
@@ -412,20 +421,20 @@ class StripePaymentForm extends Component {
                 intl={intl}
               />
             ) : (
-              <React.Fragment>
-                <h3 className={css.paymentHeading}>
-                  <FormattedMessage id="StripePaymentForm.paymentHeading" />
-                </h3>
-                <OneTimePaymentWithCardElement
-                  cardClasses={cardClasses}
-                  formId={formId}
-                  handleStripeElementRef={this.handleStripeElementRef}
-                  hasCardError={hasCardError}
-                  error={this.state.error}
-                  intl={intl}
-                />
-              </React.Fragment>
-            )}
+                <React.Fragment>
+                  <h3 className={css.paymentHeading}>
+                    <FormattedMessage id="StripePaymentForm.paymentHeading" />
+                  </h3>
+                  <OneTimePaymentWithCardElement
+                    cardClasses={cardClasses}
+                    formId={formId}
+                    handleStripeElementRef={this.handleStripeElementRef}
+                    hasCardError={hasCardError}
+                    error={this.state.error}
+                    intl={intl}
+                  />
+                </React.Fragment>
+              )}
 
             {showOnetimePaymentFields ? (
               <div className={css.paymentAddressField}>
@@ -455,6 +464,17 @@ class StripePaymentForm extends Component {
 
         {initiateOrderError ? (
           <span className={css.errorMessage}>{initiateOrderError.message}</span>
+        ) : null}
+        {shippingAddressFields ? (
+          <div>
+            <h3 className={css.messageHeading}>
+              <FormattedMessage id="StripePaymentForm.shippingHeading" />
+            </h3>
+            {shippingAddressFields}
+            <p className={css.shippingSubheading}>
+              <FormattedMessage id="StripePaymentForm.shippingSubheading" />
+            </p>
+          </div>
         ) : null}
         {showInitialMessageInput ? (
           <div>
@@ -486,16 +506,16 @@ class StripePaymentForm extends Component {
             {billingDetailsNeeded ? (
               <FormattedMessage id="StripePaymentForm.submitPaymentInfo" />
             ) : (
-              <FormattedMessage id="StripePaymentForm.submitConfirmPaymentInfo" />
-            )}
+                <FormattedMessage id="StripePaymentForm.submitConfirmPaymentInfo" />
+              )}
           </PrimaryButton>
         </div>
       </Form>
     ) : (
-      <div className={css.missingStripeKey}>
-        <FormattedMessage id="StripePaymentForm.missingStripeKey" />
-      </div>
-    );
+        <div className={css.missingStripeKey}>
+          <FormattedMessage id="StripePaymentForm.missingStripeKey" />
+        </div>
+      );
   }
 
   render() {

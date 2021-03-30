@@ -106,8 +106,9 @@ class ModalMissingInformation extends Component {
     const classes = classNames(rootClassName || css.root, className);
 
     let content = null;
-
     const currentUserLoaded = user && user.id;
+    const accountType = currentUserLoaded && user.attributes.profile.publicData.accountType ?
+    user.attributes.profile.publicData.accountType : null;
     if (currentUserLoaded) {
       if (this.state.showMissingInformationReminder === EMAIL_VERIFICATION) {
         content = (
@@ -119,7 +120,7 @@ class ModalMissingInformation extends Component {
             sendVerificationEmailError={sendVerificationEmailError}
           />
         );
-      } else if (this.state.showMissingInformationReminder === STRIPE_ACCOUNT) {
+      } else if (this.state.showMissingInformationReminder === STRIPE_ACCOUNT && accountType && (accountType === 'e' || accountType === 'u' || accountType === '')) {
         content = <StripeAccountReminder className={classes} />;
       }
     }
@@ -132,7 +133,7 @@ class ModalMissingInformation extends Component {
       <Modal
         id="MissingInformationReminder"
         containerClassName={containerClassName}
-        isOpen={!!this.state.showMissingInformationReminder}
+        isOpen={!!this.state.showMissingInformationReminder && accountType && (accountType === 'e' || accountType === 'u' || accountType === '')}
         onClose={() => {
           this.setState({
             showMissingInformationReminder: null,

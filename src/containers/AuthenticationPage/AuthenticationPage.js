@@ -6,7 +6,6 @@ import { withRouter, Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import classNames from 'classnames';
 import { isEmpty } from 'lodash';
-
 import routeConfiguration from '../../routeConfiguration';
 import { pathByRouteName } from '../../util/routes';
 import { apiBaseUrl } from '../../util/api';
@@ -203,15 +202,12 @@ export class AuthenticationPageComponent extends Component {
     const getDefaultRoutes = () => {
       const routes = routeConfiguration();
       const baseUrl = apiBaseUrl();
-
       // Route where the user should be returned after authentication
       // This is used e.g. with EditListingPage and ListingPage
       const fromParam = from ? `from=${from}` : '';
-
       // Default route where user is returned after successfull authentication
       const defaultReturn = pathByRouteName('LandingPage', routes);
       const defaultReturnParam = defaultReturn ? `&defaultReturn=${defaultReturn}` : '';
-
       // Route for confirming user data before creating a new user
       const defaultConfirm = pathByRouteName('ConfirmPage', routes);
       const defaultConfirmParam = defaultConfirm ? `&defaultConfirm=${defaultConfirm}` : '';
@@ -306,7 +302,7 @@ export class AuthenticationPageComponent extends Component {
       <div className={css.content}>
         <LinkTabNavHorizontal className={css.tabs} tabs={tabs} />
         {loginOrSignupError}
-
+        {socialLoginButtonsMaybe}
         {isLogin ? (
           <LoginForm className={css.loginForm} onSubmit={submitLogin} inProgress={authInProgress} />
         ) : (
@@ -317,8 +313,6 @@ export class AuthenticationPageComponent extends Component {
             onOpenTermsOfService={() => this.setState({ tosModalOpen: true })}
           />
         )}
-
-        {socialLoginButtonsMaybe}
       </div>
     );
 
@@ -404,6 +398,7 @@ export class AuthenticationPageComponent extends Component {
           <LayoutWrapperTopbar>
             <TopbarContainer className={topbarClasses} />
           </LayoutWrapperTopbar>
+
           <LayoutWrapperMain className={css.layoutWrapperMain}>
             <div className={css.root}>
               {showEmailVerification ? emailVerificationContent : formContent}
@@ -413,8 +408,7 @@ export class AuthenticationPageComponent extends Component {
               isOpen={this.state.tosModalOpen}
               onClose={() => this.setState({ tosModalOpen: false })}
               usePortal
-              onManageDisableScrolling={onManageDisableScrolling}
-            >
+              onManageDisableScrolling={onManageDisableScrolling}>
               <div className={css.termsWrapper}>
                 <h2 className={css.termsHeading}>
                   <FormattedMessage id="AuthenticationPage.termsHeading" />
@@ -423,9 +417,11 @@ export class AuthenticationPageComponent extends Component {
               </div>
             </Modal>
           </LayoutWrapperMain>
+
           <LayoutWrapperFooter>
             <Footer />
           </LayoutWrapperFooter>
+          
         </LayoutSingleColumn>
       </Page>
     );

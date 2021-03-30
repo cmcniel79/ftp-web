@@ -1,0 +1,195 @@
+@import '../../styles/propertySets.css';
+
+.root {
+  display: inline-block;
+  margin-bottom: 6px;
+  &:last-of-type {
+    padding-right: 0;
+  }
+}
+
+.forward {
+  fill: var(--marketplaceColor);
+  width: 15px;
+}
+
+.back {
+  width: 15px;
+}
+
+.panel {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+.subPanel {
+  background-color: white;
+  position: absolute;
+  z-index: 100;
+  margin-left: 200px;
+  margin-top: 80px;
+}
+
+.menuLabel {
+  @apply --marketplaceButtonStylesSecondary;
+  @apply --marketplaceSearchFilterLabelFontStyles;
+  padding: 9px 16px 10px 16px;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  border-radius: 4px;
+  &:focus {
+    outline: none;
+    background-color: var(--matterColorLight);
+    border-color: transparent;
+    text-decoration: none;
+    box-shadow: var(--boxShadowFilterButton);
+  }
+}
+
+.menuLabelSelected {
+  @apply --marketplaceButtonStyles;
+  @apply --marketplaceSearchFilterLabelFontStyles;
+  text-transform: capitalize !important;
+  font-weight: var(--fontWeightSemiBold);
+  padding: 9px 16px 10px 16px;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  border-radius: 4px;
+  border: 1px solid var(--marketplaceColor);
+  &:hover, &:focus {
+    border: 1px solid var(--marketplaceColorDark);
+  }
+}
+
+.menuContent {
+  margin-top: 7px;
+  padding-top: 13px;
+  min-width: 300px;
+  border-radius: 4px;
+}
+
+/* left animated "border" like hover element */
+
+.menuItemBorder {
+  position: absolute;
+  top: 2px;
+  left: 0px;
+  height: calc(100% - 4px);
+  width: 0;
+  background-color: var(--marketplaceColor);
+  transition: width var(--transitionStyleButton);
+}
+
+/* left static border for selected element */
+
+.menuItemBorderSelected {
+  position: absolute;
+  top: 2px;
+  left: 0px;
+  height: calc(100% - 7px);
+  width: 6px;
+  background-color: var(--matterColorDark);
+}
+
+.menuItem {
+  @apply --marketplaceListingAttributeFontStyles;
+  color: var(--matterColor);
+  /* Layout */
+  position: relative;
+  min-width: 300px;
+  margin: 0;
+  padding: 4px 15px;
+  /* Override button styles */
+  outline: none;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  &:focus, &:hover {
+    color: var(--matterColorDark);
+  }
+  &:hover .menuItemBorder {
+    width: 6px;
+  }
+}
+
+.clearMenuItem {
+  /* display: inline; */
+  float: left;
+  @apply --marketplaceListingAttributeFontStyles;
+  font-weight: var(--fontWeightMedium);
+  color: var(--matterColorAnti);
+  /* Layout */
+  position: relative;
+  width: 50%;
+  /* min-width: 300px; */
+  margin: 0;
+  padding: 15px 30px;
+  /* Override button styles */
+  outline: none;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  transition: width var(--transitionStyleButton);
+  &:focus, &:hover {
+    color: var(--matterColor);
+    transition: width var(--transitionStyleButton);
+  }
+}
+
+.searchAllMenuItem {
+  /* display: inline; */
+  float: right;
+  @apply --marketplaceListingAttributeFontStyles;
+  color: var(--marketplaceColor);
+  /* Layout */
+  position: relative;
+  /* min-width: 300px; */
+  width: 50%;
+  margin: 0;
+  padding: 15px 30px;
+  /* Override button styles */
+  outline: none;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  &:focus, &:hover {
+    color: var(--matterColorDark);
+  }
+  &:hover .menuItemBorder {
+    width: 6px;
+  }
+}
+
+.bottomLinks {
+  display: inline;
+}
+
+.backButton {
+  @apply --marketplaceListingAttributeFontStyles;
+  font-weight: var(--fontWeightMedium);
+  color: var(--matterColorAnti);
+  /* Layout */
+  position: relative;
+  min-width: 300px;
+  margin: 0;
+  padding: 4px 15px;
+  display: flex;
+  flex-direction: row;
+  /* Override button styles */
+  outline: none;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  &:focus, &:hover {
+    color: var(--matterColorDark);
+  }
+  &:hover .menuItemBorder {
+    width: 6px;
+  }
+}

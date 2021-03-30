@@ -10,6 +10,25 @@ const LINE_ITEM_DAY = 'line-item/day';
 
 /** Helper functions for constructing line items*/
 
+
+/**
+ * Calculates lineTotal for lineItem based on quantity.
+ * The total will be `unitPrice * quantity`.
+ *
+ * @param {Money} unitPrice
+ * @param {int} quantity
+ *
+ * @returns {Money} lineTotal
+ */
+exports.resolveShippingFeePrice = shippingFee => {
+  const { amount, currency } = shippingFee;
+  if ((amount && currency) || (amount === 0 && currency)) {
+    return new Money(amount, currency);
+  }
+
+  return null;
+};
+
 /**
  * Calculates lineTotal for lineItem based on quantity.
  * The total will be `unitPrice * quantity`.
@@ -117,7 +136,6 @@ exports.calculateQuantityFromDates = (startDate, endDate, type) => {
  */
 exports.calculateLineTotal = lineItem => {
   const { code, unitPrice, quantity, percentage, seats, units } = lineItem;
-
   if (quantity) {
     return this.calculateTotalPriceFromQuantity(unitPrice, quantity);
   } else if (percentage) {
@@ -146,7 +164,6 @@ exports.calculateTotalFromLineItems = lineItems => {
   // Get total price as Number (and validate that the conversion is safe)
   const numericTotalPrice = convertDecimalJSToNumber(totalPrice);
   const unitPrice = lineItems[0].unitPrice;
-
   return new Money(numericTotalPrice, unitPrice.currency);
 };
 

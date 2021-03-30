@@ -76,7 +76,7 @@ export const saveEmailError = error => ({
   payload: error,
   error: true,
 });
-export const savePhoneNumberError = error => ({
+export const saveShippingAddressError = error => ({
   type: SAVE_PHONE_NUMBER_ERROR,
   payload: error,
   error: true,
@@ -99,12 +99,18 @@ export const resetPasswordError = e => ({
 /**
  * Make a phone number update request to the API and return the current user.
  */
-const requestSavePhoneNumber = params => (dispatch, getState, sdk) => {
-  const phoneNumber = params.phoneNumber;
+const requestSaveShippingAddress = params => (dispatch, getState, sdk) => {
+  const shippingAddress = params.shippingAddress;
 
   return sdk.currentUser
-    .updateProfile(
-      { protectedData: { phoneNumber } },
+    .updateProfile({
+      publicData: {
+        country: shippingAddress.country
+      },
+      protectedData: { 
+        shippingAddress 
+      }, 
+    },
       {
         expand: true,
         include: ['profileImage'],
@@ -121,7 +127,7 @@ const requestSavePhoneNumber = params => (dispatch, getState, sdk) => {
       return currentUser;
     })
     .catch(e => {
-      dispatch(savePhoneNumberError(storableError(e)));
+      dispatch(saveShippingAddressError(storableError(e)));
       // pass the same error so that the SAVE_CONTACT_DETAILS_SUCCESS
       // action will not be fired
       throw e;
@@ -178,9 +184,9 @@ const saveEmail = params => (dispatch, getState, sdk) => {
 /**
  * Save phone number and update the current user.
  */
-const savePhoneNumber = params => (dispatch, getState, sdk) => {
+const saveShippingAddress = params => (dispatch, getState, sdk) => {
   return (
-    dispatch(requestSavePhoneNumber(params))
+    dispatch(requestSaveShippingAddress(params))
       .then(user => {
         dispatch(currentUserShowSuccess(user));
         dispatch(saveContactDetailsSuccess());
@@ -193,13 +199,13 @@ const savePhoneNumber = params => (dispatch, getState, sdk) => {
 /**
  * Save email and phone number and update the current user.
  */
-const saveEmailAndPhoneNumber = params => (dispatch, getState, sdk) => {
-  const { email, phoneNumber, currentPassword } = params;
+const saveEmailAndShippingAddress = params => (dispatch, getState, sdk) => {
+  const { email, currentPassword, shippingAddress } = params;
 
   // order of promises: 1. email, 2. phone number
   const promises = [
     dispatch(requestSaveEmail({ email, currentPassword })),
-    dispatch(requestSavePhoneNumber({ phoneNumber })),
+    dispatch(requestSaveShippingAddress({ shippingAddress })),
   ];
 
   return Promise.all(promises)
@@ -223,22 +229,24 @@ const saveEmailAndPhoneNumber = params => (dispatch, getState, sdk) => {
     .catch(e => null);
 };
 
+
 /**
  * Update contact details, actions depend on which data has changed
  */
 export const saveContactDetails = params => (dispatch, getState, sdk) => {
   dispatch(saveContactDetailsRequest());
 
-  const { email, currentEmail, phoneNumber, currentPhoneNumber, currentPassword } = params;
-  const emailChanged = email !== currentEmail;
-  const phoneNumberChanged = phoneNumber !== currentPhoneNumber;
+  const { email, currentEmail, currentPassword, shippingAddress, currentShippingAddress } = params;
 
-  if (emailChanged && phoneNumberChanged) {
-    return dispatch(saveEmailAndPhoneNumber({ email, currentPassword, phoneNumber }));
+  const emailChanged = email !== currentEmail;
+  const shippingAddressChanged = shippingAddress !== currentShippingAddress;
+
+  if (emailChanged && shippingAddressChanged) {
+    return dispatch(saveEmailAndShippingAddress({ email, currentPassword, shippingAddress }));
   } else if (emailChanged) {
     return dispatch(saveEmail({ email, currentPassword }));
-  } else if (phoneNumberChanged) {
-    return dispatch(savePhoneNumber({ phoneNumber }));
+  } else if (shippingAddressChanged) {
+    return dispatch(saveShippingAddress({shippingAddress }));
   }
 };
 

@@ -13,6 +13,7 @@ import {
   MenuContent,
   MenuItem,
   NamedLink,
+  ExternalLink,
 } from '../../components';
 import { TopbarSearchForm } from '../../forms';
 
@@ -42,7 +43,9 @@ const TopbarDesktop = props => {
   const isAuthenticatedOrJustHydrated = isAuthenticated || !mounted;
 
   const classes = classNames(rootClassName || css.root, className);
-
+  const accountType = currentUser && currentUser.attributes.profile.publicData && currentUser.attributes.profile.publicData.accountType ?
+    currentUser.attributes.profile.publicData.accountType : null;
+  const isEventHost = currentUser && currentUser.attributes.profile.metadata && currentUser.attributes.profile.metadata.eventHost;
   const search = (
     <TopbarSearchForm
       className={css.searchLink}
@@ -56,11 +59,11 @@ const TopbarDesktop = props => {
 
   const inboxLink = authenticatedOnClientSide ? (
     <NamedLink
-      className={css.inboxLink}
+      className={css.customLink}
       name="InboxPage"
       params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
     >
-      <span className={css.inbox}>
+      <span className={css.custom}>
         <FormattedMessage id="TopbarDesktop.inbox" />
         {notificationDot}
       </span>
@@ -79,6 +82,17 @@ const TopbarDesktop = props => {
         <Avatar className={css.avatar} user={currentUser} disableProfileLink />
       </MenuLabel>
       <MenuContent className={css.profileMenuContent}>
+        <MenuItem key="EventDetailsPage">
+          {isEventHost ? (
+            <NamedLink
+              className={classNames(css.yourListingsLink, currentPageClass('EventDetailsPage'))}
+              name="EventDetailsPage"
+            >
+              <span className={css.menuItemBorder} />
+              <FormattedMessage id="TopbarDesktop.yourEventLink" />
+            </NamedLink>
+          ) : "" }
+        </MenuItem>
         <MenuItem key="ManageListingsPage">
           <NamedLink
             className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))}
@@ -86,6 +100,24 @@ const TopbarDesktop = props => {
           >
             <span className={css.menuItemBorder} />
             <FormattedMessage id="TopbarDesktop.yourListingsLink" />
+          </NamedLink>
+        </MenuItem>
+        <MenuItem key="LikedListingsPage">
+          <NamedLink
+            className={classNames(css.yourListingsLink, currentPageClass('LikedListingsPage'))}
+            name="LikedListingsPage"
+          >
+            <span className={css.menuItemBorder} />
+            <FormattedMessage id="TopbarDesktop.yourLikedListingsLink" />
+          </NamedLink>
+        </MenuItem>
+        <MenuItem key="FollowingPage">
+          <NamedLink
+            className={classNames(css.yourListingsLink, currentPageClass('FollowingPage'))}
+            name="FollowingPage"
+          >
+            <span className={css.menuItemBorder} />
+            <FormattedMessage id="TopbarDesktop.yourFollowedArtistsLink" />
           </NamedLink>
         </MenuItem>
         <MenuItem key="ProfileSettingsPage">
@@ -116,6 +148,63 @@ const TopbarDesktop = props => {
     </Menu>
   ) : null;
 
+  const shopLink =
+    <NamedLink className={css.customLink} name="SearchPage" to={{ search: '' }}>
+      <span className={css.custom}>
+        <FormattedMessage id="TopbarDesktop.searchPage" />
+      </span>
+    </NamedLink>;
+
+  const faqLink =
+    <NamedLink className={css.customLink} name="FAQPage">
+      <span className={css.custom}>
+        <FormattedMessage id="TopbarDesktop.faqPage" />
+      </span>
+    </NamedLink>;
+
+  const mapLink =
+    <NamedLink className={css.customLink} name="MapPage">
+      <span className={css.custom}>
+        <FormattedMessage id="TopbarDesktop.mapPage" />
+      </span>
+    </NamedLink>;
+
+  const eventsLink =
+    <NamedLink className={css.customLink} name="EventsPage">
+      <span className={css.custom}>
+        <FormattedMessage id="TopbarDesktop.eventsPage" />
+      </span>
+    </NamedLink>;
+
+  const blogLink =
+    <ExternalLink className={css.customLink} key="linkToBlog"
+      href="https://fromthepeople.blog/"
+    >
+      <span className={css.custom}>
+        <FormattedMessage id="TopbarDesktop.blogLink" />
+      </span>
+    </ExternalLink>
+
+  const contactLink =
+    <NamedLink className={css.customLink} name="ContactPage">
+      <span className={css.custom}>
+        <FormattedMessage id="TopbarDesktop.contactPage" />
+      </span>
+    </NamedLink>;
+
+  const newListingLink = accountType && accountType !== '' ? (
+    <NamedLink className={css.createListingLink} name="NewListingPage">
+      <span className={css.createListing}>
+        <FormattedMessage id="TopbarDesktop.createListing" />
+      </span>
+    </NamedLink>
+  ) : (
+      <ExternalLink className={css.createListingLink} href="https://www.fromthepeople.co/faq#become-a-seller">
+        <span className={css.createListing}>
+          <FormattedMessage id="TopbarDesktop.becomeSeller" />
+        </span>
+      </ExternalLink>);
+
   const signupLink = isAuthenticatedOrJustHydrated ? null : (
     <NamedLink name="SignupPage" className={css.signupLink}>
       <span className={css.signup}>
@@ -132,6 +221,7 @@ const TopbarDesktop = props => {
     </NamedLink>
   );
 
+
   return (
     <nav className={classes}>
       <NamedLink className={css.logoLink} name="LandingPage">
@@ -142,11 +232,13 @@ const TopbarDesktop = props => {
         />
       </NamedLink>
       {search}
-      <NamedLink className={css.createListingLink} name="NewListingPage">
-        <span className={css.createListing}>
-          <FormattedMessage id="TopbarDesktop.createListing" />
-        </span>
-      </NamedLink>
+      {shopLink}
+      {mapLink}
+      {eventsLink}
+      {faqLink}
+      {blogLink}
+      {contactLink}
+      {newListingLink}
       {inboxLink}
       {profileMenu}
       {signupLink}

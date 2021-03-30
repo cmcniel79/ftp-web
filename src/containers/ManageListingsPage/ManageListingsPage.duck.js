@@ -221,10 +221,8 @@ export const queryListingsError = e => ({
 // Throwing error for new (loadData may need that info)
 export const queryOwnListings = queryParams => (dispatch, getState, sdk) => {
   dispatch(queryListingsRequest(queryParams));
-
   const { perPage, ...rest } = queryParams;
   const params = { ...rest, per_page: perPage };
-
   return sdk.ownListings
     .query(params)
     .then(response => {

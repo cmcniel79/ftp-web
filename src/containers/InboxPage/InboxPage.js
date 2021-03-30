@@ -13,14 +13,15 @@ import {
   txHasBeenDelivered,
   txIsPaymentExpired,
   txIsPaymentPending,
+  txIsReviewStage,
 } from '../../util/transaction';
-import { propTypes, DATE_TYPE_DATE } from '../../util/types';
+import { propTypes } from '../../util/types';
 import { ensureCurrentUser } from '../../util/data';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import {
   Avatar,
-  BookingTimeInfo,
+  // BookingTimeInfo,
   NamedLink,
   NotificationBadge,
   Page,
@@ -67,23 +68,23 @@ export const txState = (intl, tx, type) => {
   } else if (txIsRequested(tx)) {
     const requested = isOrder
       ? {
-          nameClassName: css.nameNotEmphasized,
-          bookingClassName: css.bookingNoActionNeeded,
-          lastTransitionedAtClassName: css.lastTransitionedAtEmphasized,
-          stateClassName: css.stateActionNeeded,
-          state: intl.formatMessage({
-            id: 'InboxPage.stateRequested',
-          }),
-        }
+        nameClassName: css.nameNotEmphasized,
+        bookingClassName: css.bookingNoActionNeeded,
+        lastTransitionedAtClassName: css.lastTransitionedAtEmphasized,
+        stateClassName: css.stateActionNeeded,
+        state: intl.formatMessage({
+          id: 'InboxPage.stateRequested',
+        }),
+      }
       : {
-          nameClassName: css.nameEmphasized,
-          bookingClassName: css.bookingActionNeeded,
-          lastTransitionedAtClassName: css.lastTransitionedAtEmphasized,
-          stateClassName: css.stateActionNeeded,
-          state: intl.formatMessage({
-            id: 'InboxPage.statePending',
-          }),
-        };
+        nameClassName: css.nameEmphasized,
+        bookingClassName: css.bookingActionNeeded,
+        lastTransitionedAtClassName: css.lastTransitionedAtEmphasized,
+        stateClassName: css.stateActionNeeded,
+        state: intl.formatMessage({
+          id: 'InboxPage.statePending',
+        }),
+      };
 
     return requested;
   } else if (txIsPaymentPending(tx)) {
@@ -146,57 +147,35 @@ export const txState = (intl, tx, type) => {
         id: 'InboxPage.stateDelivered',
       }),
     };
+  } else if (txIsReviewStage(tx)) {
+    return {
+    nameClassName: css.nameNotEmphasized,
+    bookingClassName: css.bookingNoActionNeeded,
+    lastTransitionedAtClassName: css.lastTransitionedAtNotEmphasized,
+    stateClassName: css.stateNoActionNeeded,
+    state: intl.formatMessage({
+      id: 'InboxPage.stateBeginReviews',
+    }),
+  };
   } else {
     console.warn('This transition is unknown:', tx.attributes.lastTransition);
     return null;
   }
 };
 
-// Functional component as internal helper to print BookingTimeInfo if that is needed
-const BookingInfoMaybe = props => {
-  const { bookingClassName, isOrder, intl, tx, unitType } = props;
-  const isEnquiry = txIsEnquired(tx);
-
-  if (isEnquiry) {
-    return null;
-  }
-
-  // If you want to show the booking price after the booking time on InboxPage you can
-  // add the price after the BookingTimeInfo component. You can get the price by uncommenting
-  // sthe following lines:
-
-  // const bookingPrice = isOrder ? tx.attributes.payinTotal : tx.attributes.payoutTotal;
-  // const price = bookingPrice ? formatMoney(intl, bookingPrice) : null;
-
-  // Remember to also add formatMoney function from 'util/currency.js' and add this after BookingTimeInfo:
-  // <div className={css.itemPrice}>{price}</div>
-
-  return (
-    <div className={classNames(css.bookingInfoWrapper, bookingClassName)}>
-      <BookingTimeInfo
-        bookingClassName={bookingClassName}
-        isOrder={isOrder}
-        intl={intl}
-        tx={tx}
-        unitType={unitType}
-        dateType={DATE_TYPE_DATE}
-      />
-    </div>
-  );
-};
-
-BookingInfoMaybe.propTypes = {
-  intl: intlShape.isRequired,
-  isOrder: bool.isRequired,
-  tx: propTypes.transaction.isRequired,
-  unitType: propTypes.bookingUnitType.isRequired,
-};
-
 export const InboxItem = props => {
-  const { unitType, type, tx, intl, stateData } = props;
-  const { customer, provider } = tx;
+  const {
+    // unitType,
+    type,
+    tx,
+    intl,
+    stateData
+  } = props;
+  const { customer, provider, listing } = tx;
   const isOrder = type === 'order';
-
+  const listingTitle =
+    listing && listing.attributes.title ? listing.attributes.title :
+      listing && listing.attributes.deleted ? "Listing has been deleted" : "Could not find listing title";
   const otherUser = isOrder ? provider : customer;
   const otherUserDisplayName = <UserDisplayName user={otherUser} intl={intl} />;
   const isOtherUserBanned = otherUser.attributes.banned;
@@ -224,13 +203,9 @@ export const InboxItem = props => {
           <div className={classNames(css.itemUsername, stateData.nameClassName)}>
             {otherUserDisplayName}
           </div>
-          <BookingInfoMaybe
-            bookingClassName={stateData.bookingClassName}
-            intl={intl}
-            isOrder={isOrder}
-            tx={tx}
-            unitType={unitType}
-          />
+          <div className={classNames(css.itemListing, stateData.nameClassName)}>
+            {listingTitle}
+          </div>
         </div>
         <div className={css.itemState}>
           <div className={classNames(css.stateName, stateData.stateClassName)}>
@@ -270,7 +245,6 @@ export const InboxPageComponent = props => {
   } = props;
   const { tab } = params;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
-
   const validTab = tab === 'orders' || tab === 'sales';
   if (!validTab) {
     return <NotFoundPage />;
@@ -285,7 +259,6 @@ export const InboxPageComponent = props => {
   const toTxItem = tx => {
     const type = isOrders ? 'order' : 'sale';
     const stateData = txState(intl, tx, type);
-
     // Render InboxItem only if the latest transition of the transaction is handled in the `txState` function.
     return stateData ? (
       <li key={tx.id.uuid} className={css.listItem}>
@@ -378,10 +351,10 @@ export const InboxPageComponent = props => {
             {!fetchInProgress ? (
               transactions.map(toTxItem)
             ) : (
-              <li className={css.listItemsLoading}>
-                <IconSpinner />
-              </li>
-            )}
+                <li className={css.listItemsLoading}>
+                  <IconSpinner />
+                </li>
+              )}
             {noResults}
           </ul>
           {pagingLinks}

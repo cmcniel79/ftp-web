@@ -10,8 +10,8 @@ const SectionDescriptionMaybe = props => {
   const { description } = props;
   return description ? (
     <div className={css.sectionDescription}>
-      <h2 className={css.descriptionTitle}>
-        <FormattedMessage id="ListingPage.descriptionTitle" />
+      <h2 className={css.featuresHeading}>
+        <FormattedMessage id="ListingPage.descriptionHeading" />
       </h2>
       <p className={css.description}>
         {richText(description, {

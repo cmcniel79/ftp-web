@@ -171,11 +171,12 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
     ? TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY
     : TRANSITION_REQUEST_PAYMENT;
   const isPrivilegedTransition = isPrivileged(transition);
-
-  const bookingData = {
-    startDate: orderParams.bookingStart,
-    endDate: orderParams.bookingEnd,
-  };
+  const bookingData = orderParams.bookingData;
+  // {
+  //   // startDate: orderParams.bookingStart,
+  //   // endDate: orderParams.bookingEnd,
+  //   shippingFee: orderParams.lineItems,
+  // };
 
   const bodyParams = isTransition
     ? {
@@ -189,7 +190,7 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
         params: orderParams,
       };
   const queryParams = {
-    include: ['booking', 'provider'],
+    include: ['provider'],
     expand: true,
   };
 
@@ -207,8 +208,7 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
     log.error(e, 'initiate-order-failed', {
       ...transactionIdMaybe,
       listingId: orderParams.listingId.uuid,
-      bookingStart: orderParams.bookingStart,
-      bookingEnd: orderParams.bookingEnd,
+      lineItems: orderParams.bookingData.lineItems,
     });
     throw e;
   };
@@ -239,12 +239,13 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
 };
 
 export const confirmPayment = orderParams => (dispatch, getState, sdk) => {
+  // Changed orderParams to include fnParams. Only way I could get shippingAddress to be passed in
+  // orderparams = { fnParams: { transactionId, paymentIntents } shippingAddress}
   dispatch(confirmPaymentRequest());
-
   const bodyParams = {
-    id: orderParams.transactionId,
+    id: orderParams.fnParams.transactionId,
     transition: TRANSITION_CONFIRM_PAYMENT,
-    params: {},
+    params: { protectedData: orderParams.shippingDetails },
   };
 
   return sdk.transactions
@@ -256,8 +257,8 @@ export const confirmPayment = orderParams => (dispatch, getState, sdk) => {
     })
     .catch(e => {
       dispatch(confirmPaymentError(storableError(e)));
-      const transactionIdMaybe = orderParams.transactionId
-        ? { transactionId: orderParams.transactionId.uuid }
+      const transactionIdMaybe = orderParams.fnParams.transactionId
+        ? { transactionId: orderParams.fnParams.transactionId.uuid }
         : {};
       log.error(e, 'initiate-order-failed', {
         ...transactionIdMaybe,
@@ -309,10 +310,12 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
     : TRANSITION_REQUEST_PAYMENT;
   const isPrivilegedTransition = isPrivileged(transition);
 
-  const bookingData = {
-    startDate: orderParams.bookingStart,
-    endDate: orderParams.bookingEnd,
-  };
+  const bookingData = orderParams.bookingData;
+  // {
+  //   // startDate: orderParams.bookingStart,
+  //   // endDate: orderParams.bookingEnd,
+  //   // lineItems: orderParams.lineItems,
+  // };
 
   const params = {
     ...orderParams,
@@ -332,7 +335,7 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
       };
 
   const queryParams = {
-    include: ['booking', 'provider'],
+    include: ['provider'],
     expand: true,
   };
 
@@ -346,11 +349,11 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
   };
 
   const handleError = e => {
-    const { listingId, bookingStart, bookingEnd } = params;
+    // took out line items from params
+    const { listingId, bookingData } = params;
     log.error(e, 'speculate-transaction-failed', {
       listingId: listingId.uuid,
-      bookingStart,
-      bookingEnd,
+      bookingData: bookingData
     });
     return dispatch(speculateTransactionError(storableError(e)));
   };

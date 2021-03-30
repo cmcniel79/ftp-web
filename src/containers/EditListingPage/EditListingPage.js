@@ -38,6 +38,8 @@ import {
   removeListingImage,
   clearUpdatedTab,
   savePayoutDetails,
+  // queryOwnListings,
+  updateRanking,
 } from './EditListingPage.duck';
 
 import css from './EditListingPage.module.css';
@@ -54,6 +56,7 @@ const { UUID } = sdkTypes;
 // N.B. All the presentational content needs to be extracted to their own components
 export const EditListingPageComponent = props => {
   const {
+    allOwnListings,
     currentUser,
     createStripeAccountError,
     fetchInProgress,
@@ -94,13 +97,33 @@ export const EditListingPageComponent = props => {
   const listingId = page.submittedListingId || (id ? new UUID(id) : null);
   const currentListing = ensureOwnListing(getOwnListing(listingId));
   const { state: currentListingState } = currentListing.attributes;
-
   const isPastDraft = currentListingState && currentListingState !== LISTING_STATE_DRAFT;
   const shouldRedirect = isNewListingFlow && listingId && isPastDraft;
 
   const hasStripeOnboardingDataIfNeeded = returnURLType ? !!(currentUser && currentUser.id) : true;
   const showForm = hasStripeOnboardingDataIfNeeded && (isNewURI || currentListing.id);
 
+  const accountType = currentUser && currentUser.attributes.profile.publicData.accountType ?
+    currentUser.attributes.profile.publicData.accountType : null;
+  const accountLimit = currentUser && currentUser.attributes.profile.publicData.accountLimit ?
+    currentUser.attributes.profile.publicData.accountLimit : null;
+
+  // Default limits for different account types
+  const listingsLimit = accountLimit ? accountLimit :
+    accountType && accountType === "u" ? 5 :
+      accountType && accountType === "e" ? 30 :
+        accountType && accountType === "p" ? 0 :
+          accountType && accountType === "a" ? 1 :
+            accountType && accountType === "n" ? 1 : 0;
+
+  // Get number of current listings that are published. API doesn't allow query of listing state           
+  const publishedNumber = allOwnListings && allOwnListings.data.data.length > 0 ?
+    allOwnListings.data.data.filter(l => l.attributes.state === 'published').length : 0;
+
+  // Test to see if user has a listings limit and if they are
+  // currently under their limit of published listings.
+  const isUnderLimit = listingsLimit && (publishedNumber < listingsLimit) ? true : false;
+  
   if (shouldRedirect) {
     const isPendingApproval =
       currentListing && currentListingState === LISTING_STATE_PENDING_APPROVAL;
@@ -108,24 +131,28 @@ export const EditListingPageComponent = props => {
     // If page has already listingId (after submit) and current listings exist
     // redirect to listing page
     const listingSlug = currentListing ? createSlug(currentListing.attributes.title) : null;
-
     const redirectProps = isPendingApproval
       ? {
-          name: 'ListingPageVariant',
-          params: {
-            id: listingId.uuid,
-            slug: listingSlug,
-            variant: LISTING_PAGE_PENDING_APPROVAL_VARIANT,
-          },
-        }
+        name: 'ListingPageVariant',
+        params: {
+          id: listingId.uuid,
+          slug: listingSlug,
+          variant: LISTING_PAGE_PENDING_APPROVAL_VARIANT,
+        },
+      }
       : {
-          name: 'ListingPage',
-          params: {
-            id: listingId.uuid,
-            slug: listingSlug,
-          },
-        };
+        name: 'ListingPage',
+        params: {
+          id: listingId.uuid,
+          slug: listingSlug,
+        },
+      };
 
+    return <NamedRedirect {...redirectProps} />;
+  } else if (currentListingState && currentListingState !== "published" && isUnderLimit === false) {
+    const redirectProps = {
+      name: 'ProfileSettingsPage',
+    };
     return <NamedRedirect {...redirectProps} />;
   } else if (showForm) {
     const {
@@ -218,6 +245,7 @@ export const EditListingPageComponent = props => {
             createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
           }
           stripeAccountLinkError={getAccountLinkError}
+          updateRanking={updateRanking}
         />
       </Page>
     );
@@ -306,16 +334,18 @@ const mapStateToProps = state => {
     stripeAccountFetched,
   } = state.stripeConnectAccount;
 
+  const { allOwnListings } = state.EditListingPage;
   const { currentUser } = state.user;
 
   const fetchInProgress = createStripeAccountInProgress;
 
   const getOwnListing = id => {
     const listings = getMarketplaceEntities(state, [{ id, type: 'ownListing' }]);
-
     return listings.length === 1 ? listings[0] : null;
   };
+
   return {
+    allOwnListings,
     getAccountLinkInProgress,
     getAccountLinkError,
     createStripeAccountError,

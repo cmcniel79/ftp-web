@@ -17,8 +17,10 @@ import {
   TRANSITION_REVIEW_1_BY_PROVIDER,
   TRANSITION_REVIEW_2_BY_CUSTOMER,
   TRANSITION_REVIEW_2_BY_PROVIDER,
+  TRANSITION_BEGIN_REVIEWS,
   transitionIsReviewed,
   txIsDelivered,
+  // txIsReviewStage,
   txIsInFirstReviewBy,
   txIsReviewed,
   isCustomerReview,
@@ -114,53 +116,54 @@ const resolveTransitionMessage = (
   const isOwnTransition = transition.by === ownRole;
   const currentTransition = transition.transition;
   const displayName = otherUsersName;
-
   switch (currentTransition) {
     case TRANSITION_CONFIRM_PAYMENT:
       return isOwnTransition ? (
         <FormattedMessage id="ActivityFeed.ownTransitionRequest" values={{ listingTitle }} />
       ) : (
-        <FormattedMessage
-          id="ActivityFeed.transitionRequest"
-          values={{ displayName, listingTitle }}
-        />
-      );
+          <FormattedMessage
+            id="ActivityFeed.transitionRequest"
+            values={{ displayName, listingTitle }}
+          />
+        );
     case TRANSITION_ACCEPT:
       return isOwnTransition ? (
         <FormattedMessage id="ActivityFeed.ownTransitionAccept" />
       ) : (
-        <FormattedMessage id="ActivityFeed.transitionAccept" values={{ displayName }} />
-      );
+          <FormattedMessage id="ActivityFeed.transitionAccept" values={{ displayName }} />
+        );
     case TRANSITION_DECLINE:
       return isOwnTransition ? (
         <FormattedMessage id="ActivityFeed.ownTransitionDecline" />
       ) : (
-        <FormattedMessage id="ActivityFeed.transitionDecline" values={{ displayName }} />
-      );
+          <FormattedMessage id="ActivityFeed.transitionDecline" values={{ displayName }} />
+        );
     case TRANSITION_EXPIRE:
       return txRoleIsProvider(ownRole) ? (
         <FormattedMessage id="ActivityFeed.ownTransitionExpire" />
       ) : (
-        <FormattedMessage id="ActivityFeed.transitionExpire" values={{ displayName }} />
-      );
+          <FormattedMessage id="ActivityFeed.transitionExpire" values={{ displayName }} />
+        );
     case TRANSITION_CANCEL:
       return <FormattedMessage id="ActivityFeed.transitionCancel" />;
     case TRANSITION_COMPLETE:
+      return (
+        <FormattedMessage
+          id="ActivityFeed.transitionComplete"
+        />
+      );
+    case TRANSITION_BEGIN_REVIEWS:
       // Show the leave a review link if the state is delivered and if the current user is the first to leave a review
       const reviewPeriodJustStarted = txIsDelivered(transaction);
-
       const reviewAsFirstLink = reviewPeriodJustStarted ? (
         <InlineTextButton onClick={onOpenReviewModal}>
           <FormattedMessage id="ActivityFeed.leaveAReview" values={{ displayName }} />
         </InlineTextButton>
       ) : null;
-
-      return (
-        <FormattedMessage
-          id="ActivityFeed.transitionComplete"
-          values={{ reviewLink: reviewAsFirstLink }}
-        />
-      );
+      return <FormattedMessage
+        id="ActivityFeed.beginReviews"
+        values={{ reviewLink: reviewAsFirstLink }}
+      />;
 
     case TRANSITION_REVIEW_1_BY_PROVIDER:
     case TRANSITION_REVIEW_1_BY_CUSTOMER:
@@ -230,8 +233,8 @@ const Transition = props => {
   const otherUsersName = txRoleIsProvider(ownRole) ? (
     <UserDisplayName user={customer} intl={intl} />
   ) : (
-    <UserDisplayName user={provider} intl={intl} />
-  );
+      <UserDisplayName user={provider} intl={intl} />
+    );
 
   const transitionMessage = resolveTransitionMessage(
     transaction,
@@ -253,15 +256,15 @@ const Transition = props => {
       reviewComponent = review ? (
         <Review content={review.attributes.content} rating={review.attributes.rating} />
       ) : (
-        <Review content={deletedReviewContent} />
-      );
+          <Review content={deletedReviewContent} />
+        );
     } else if (isProviderReview(currentTransition)) {
       const review = reviewByAuthorId(currentTransaction, provider.id);
       reviewComponent = review ? (
         <Review content={review.attributes.content} rating={review.attributes.rating} />
       ) : (
-        <Review content={deletedReviewContent} />
-      );
+          <Review content={deletedReviewContent} />
+        );
     }
   }
 

@@ -19,18 +19,15 @@ import { Modal, NamedRedirect, Tabs, StripeConnectAccountStatusBox } from '../..
 import { StripeConnectAccountForm } from '../../forms';
 
 import EditListingWizardTab, {
-  AVAILABILITY,
   DESCRIPTION,
-  FEATURES,
-  POLICY,
-  LOCATION,
   PRICING,
   PHOTOS,
 } from './EditListingWizardTab';
+import { sanitizeProtectedData } from '../../util/sanitize';
 import css from './EditListingWizard.module.css';
 
-// Show availability calendar only if environment variable availabilityEnabled is true
-const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
+// // Show availability calendar only if environment variable availabilityEnabled is true
+// const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 
 // You can reorder these panels.
 // Note 1: You need to change save button translations for new listing flow
@@ -38,11 +35,7 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // and listing publishing happens after last panel.
 export const TABS = [
   DESCRIPTION,
-  FEATURES,
-  POLICY,
-  LOCATION,
   PRICING,
-  ...availabilityMaybe,
   PHOTOS,
 ];
 
@@ -56,20 +49,11 @@ const tabLabel = (intl, tab) => {
   let key = null;
   if (tab === DESCRIPTION) {
     key = 'EditListingWizard.tabLabelDescription';
-  } else if (tab === FEATURES) {
-    key = 'EditListingWizard.tabLabelFeatures';
-  } else if (tab === POLICY) {
-    key = 'EditListingWizard.tabLabelPolicy';
-  } else if (tab === LOCATION) {
-    key = 'EditListingWizard.tabLabelLocation';
   } else if (tab === PRICING) {
     key = 'EditListingWizard.tabLabelPricing';
-  } else if (tab === AVAILABILITY) {
-    key = 'EditListingWizard.tabLabelAvailability';
   } else if (tab === PHOTOS) {
     key = 'EditListingWizard.tabLabelPhotos';
   }
-
   return intl.formatMessage({ id: key });
 };
 
@@ -83,28 +67,17 @@ const tabLabel = (intl, tab) => {
  */
 const tabCompleted = (tab, listing) => {
   const {
-    availabilityPlan,
     description,
-    geolocation,
     price,
     title,
-    publicData,
   } = listing.attributes;
   const images = listing.images;
 
   switch (tab) {
     case DESCRIPTION:
       return !!(description && title);
-    case FEATURES:
-      return !!(publicData && publicData.amenities);
-    case POLICY:
-      return !!(publicData && typeof publicData.rules !== 'undefined');
-    case LOCATION:
-      return !!(geolocation && publicData && publicData.location && publicData.location.address);
     case PRICING:
       return !!price;
-    case AVAILABILITY:
-      return !!availabilityPlan;
     case PHOTOS:
       return images && images.length > 0;
     default:
@@ -212,8 +185,8 @@ class EditListingWizard extends Component {
     this.hasScrolledToTab = shouldScroll;
   }
 
-  handlePublishListing(id) {
-    const { onPublishListingDraft, currentUser, stripeAccount } = this.props;
+  handlePublishListing(id, accountType, userUUID) {
+    const { onPublishListingDraft, currentUser, stripeAccount, updateRanking } = this.props;
 
     const stripeConnected =
       currentUser && currentUser.stripeAccount && !!currentUser.stripeAccount.id;
@@ -225,8 +198,20 @@ class EditListingWizard extends Component {
       (hasRequirements(stripeAccountData, 'past_due') ||
         hasRequirements(stripeAccountData, 'currently_due'));
 
-    if (stripeConnected && !requirementsMissing) {
+    const requestBody = {
+      uuid: id.uuid,
+      ranking: null,
+      userUUID: userUUID.uuid
+    }
+
+    // Added for Premium, Ad and non-profit accounts. They should not add payout info before being
+    // allowed to post their items.
+    if (accountType === 'p' || accountType === 'a' || accountType === 'n') {
       onPublishListingDraft(id);
+      updateRanking(requestBody);
+    } else if (stripeConnected && !requirementsMissing) {
+      onPublishListingDraft(id);
+      updateRanking(requestBody);
     } else {
       this.setState({
         draftId: id,
@@ -322,6 +307,19 @@ class EditListingWizard extends Component {
     const currentUserLoaded = !!ensuredCurrentUser.id;
     const stripeConnected = currentUserLoaded && !!stripeAccount && !!stripeAccount.id;
 
+    // Getting custom data added to users publicData
+    const accountType = currentUserLoaded && ensuredCurrentUser.attributes.profile.publicData.accountType ?
+      ensuredCurrentUser.attributes.profile.publicData.accountType : null;
+    const userUUID = currentUserLoaded && ensuredCurrentUser.id;
+    const protectedData = currentUserLoaded && ensuredCurrentUser.attributes.profile.protectedData ? 
+      sanitizeProtectedData(ensuredCurrentUser.attributes.profile.protectedData) : null; 
+    const userCountry = protectedData && protectedData.protectedData && 
+      protectedData.protectedData.shippingAddress && protectedData.protectedData.shippingAddress.country ?
+      protectedData.protectedData.shippingAddress.country : null;
+      
+    const allowsCustomOrders = currentUserLoaded && ensuredCurrentUser.attributes.profile.publicData.allowsCustomOrders ?
+      ensuredCurrentUser.attributes.profile.publicData.allowsCustomOrders : null;
+
     const rootURL = config.canonicalRootURL;
     const routes = routeConfiguration();
     const { returnURLType, ...pathParams } = params;
@@ -392,6 +390,10 @@ class EditListingWizard extends Component {
                 handleCreateFlowTabScrolling={this.handleCreateFlowTabScrolling}
                 handlePublishListing={this.handlePublishListing}
                 fetchInProgress={fetchInProgress}
+                accountType={accountType}
+                userUUID={userUUID}
+                userCountry={userCountry}
+                allowsCustomOrders={allowsCustomOrders}
               />
             );
           })}
@@ -407,8 +409,10 @@ class EditListingWizard extends Component {
             <h1 className={css.modalTitle}>
               <FormattedMessage id="EditListingWizard.payoutModalTitleOneMoreThing" />
               <br />
-              <FormattedMessage id="EditListingWizard.payoutModalTitlePayoutPreferences" />
             </h1>
+            <h2>
+              <FormattedMessage id="EditListingWizard.payoutModalTitlePayoutPreferences" />
+            </h2>
             {!currentUserLoaded ? (
               <FormattedMessage id="StripePayoutPage.loadingData" />
             ) : returnedAbnormallyFromStripe && !stripeAccountLinkError ? (
@@ -416,49 +420,46 @@ class EditListingWizard extends Component {
                 <RedirectToStripe redirectFn={handleGetStripeConnectAccountLink} />
               </p>
             ) : (
-              <>
-                <p className={css.modalMessage}>
-                  <FormattedMessage id="EditListingWizard.payoutModalInfo" />
-                </p>
-                <StripeConnectAccountForm
-                  disabled={formDisabled}
-                  inProgress={payoutDetailsSaveInProgress}
-                  ready={payoutDetailsSaved}
-                  currentUser={ensuredCurrentUser}
-                  stripeBankAccountLastDigits={getBankAccountLast4Digits(stripeAccountData)}
-                  savedCountry={savedCountry}
-                  submitButtonText={intl.formatMessage({
-                    id: 'StripePayoutPage.submitButtonText',
-                  })}
-                  stripeAccountError={stripeAccountError}
-                  stripeAccountFetched={stripeAccountFetched}
-                  stripeAccountLinkError={stripeAccountLinkError}
-                  onChange={onPayoutDetailsFormChange}
-                  onSubmit={rest.onPayoutDetailsSubmit}
-                  onGetStripeConnectAccountLink={handleGetStripeConnectAccountLink}
-                  stripeConnected={stripeConnected}
-                >
-                  {stripeConnected && !returnedAbnormallyFromStripe && showVerificationNeeded ? (
-                    <StripeConnectAccountStatusBox
-                      type="verificationNeeded"
-                      inProgress={getAccountLinkInProgress}
-                      onGetStripeConnectAccountLink={handleGetStripeConnectAccountLink(
-                        'custom_account_verification'
-                      )}
-                    />
-                  ) : stripeConnected && savedCountry && !returnedAbnormallyFromStripe ? (
-                    <StripeConnectAccountStatusBox
-                      type="verificationSuccess"
-                      inProgress={getAccountLinkInProgress}
-                      disabled={payoutDetailsSaveInProgress}
-                      onGetStripeConnectAccountLink={handleGetStripeConnectAccountLink(
-                        'custom_account_update'
-                      )}
-                    />
-                  ) : null}
-                </StripeConnectAccountForm>
-              </>
-            )}
+                  <>
+                    <StripeConnectAccountForm
+                      disabled={formDisabled}
+                      inProgress={payoutDetailsSaveInProgress}
+                      ready={payoutDetailsSaved}
+                      currentUser={ensuredCurrentUser}
+                      stripeBankAccountLastDigits={getBankAccountLast4Digits(stripeAccountData)}
+                      savedCountry={savedCountry}
+                      submitButtonText={intl.formatMessage({
+                        id: 'StripePayoutPage.submitButtonText',
+                      })}
+                      stripeAccountError={stripeAccountError}
+                      stripeAccountFetched={stripeAccountFetched}
+                      stripeAccountLinkError={stripeAccountLinkError}
+                      onChange={onPayoutDetailsFormChange}
+                      onSubmit={rest.onPayoutDetailsSubmit}
+                      onGetStripeConnectAccountLink={handleGetStripeConnectAccountLink}
+                      stripeConnected={stripeConnected}
+                    >
+                      {stripeConnected && !returnedAbnormallyFromStripe && showVerificationNeeded ? (
+                        <StripeConnectAccountStatusBox
+                          type="verificationNeeded"
+                          inProgress={getAccountLinkInProgress}
+                          onGetStripeConnectAccountLink={handleGetStripeConnectAccountLink(
+                            'custom_account_verification'
+                          )}
+                        />
+                      ) : stripeConnected && savedCountry && !returnedAbnormallyFromStripe ? (
+                        <StripeConnectAccountStatusBox
+                          type="verificationSuccess"
+                          inProgress={getAccountLinkInProgress}
+                          disabled={payoutDetailsSaveInProgress}
+                          onGetStripeConnectAccountLink={handleGetStripeConnectAccountLink(
+                            'custom_account_update'
+                          )}
+                        />
+                      ) : null}
+                    </StripeConnectAccountForm>
+                  </>
+                )}
           </div>
         </Modal>
       </div>

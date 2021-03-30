@@ -14,6 +14,8 @@ import {
   SearchFiltersPrimary,
   SearchFiltersSecondary,
   SortBy,
+  NativeLand,
+  Modal
 } from '../../components';
 
 import FilterComponent from './FilterComponent';
@@ -107,8 +109,8 @@ class MainPanel extends Component {
     const isArray = Array.isArray(queryParamNames);
     return isArray
       ? queryParamNames.reduce((acc, paramName) => {
-          return { ...acc, [paramName]: getInitialValue(paramName) };
-        }, {})
+        return { ...acc, [paramName]: getInitialValue(paramName) };
+      }, {})
       : {};
   }
 
@@ -168,6 +170,11 @@ class MainPanel extends Component {
       showAsModalMaxWidth,
       filterConfig,
       sortConfig,
+      currentUser,
+      isLiked,
+      updateLikes,
+      saveTribes,
+      tribes
     } = this.props;
 
     const primaryFilters = filterConfig.filter(f => f.group === 'primary');
@@ -187,12 +194,12 @@ class MainPanel extends Component {
     const isSecondaryFiltersOpen = !!hasSecondaryFilters && this.state.isSecondaryFiltersOpen;
     const propsForSecondaryFiltersToggle = hasSecondaryFilters
       ? {
-          isSecondaryFiltersOpen: this.state.isSecondaryFiltersOpen,
-          toggleSecondaryFiltersOpen: isOpen => {
-            this.setState({ isSecondaryFiltersOpen: isOpen });
-          },
-          selectedSecondaryFiltersCount,
-        }
+        isSecondaryFiltersOpen: this.state.isSecondaryFiltersOpen,
+        toggleSecondaryFiltersOpen: isOpen => {
+          this.setState({ isSecondaryFiltersOpen: isOpen });
+        },
+        selectedSecondaryFiltersCount,
+      }
       : {};
 
     const hasPaginationInfo = !!pagination && pagination.totalItems != null;
@@ -209,9 +216,9 @@ class MainPanel extends Component {
       const mobileClassesMaybe =
         mode === 'mobile'
           ? {
-              rootClassName: css.sortBy,
-              menuLabelRootClassName: css.sortByMenuLabel,
-            }
+            rootClassName: css.sortBy,
+            menuLabelRootClassName: css.sortByMenuLabel,
+          }
           : {};
       return sortConfig.active ? (
         <SortBy
@@ -226,33 +233,51 @@ class MainPanel extends Component {
     };
 
     const classes = classNames(rootClassName || css.searchResultContainer, className);
-
     return (
       <div className={classes}>
-        <SearchFiltersPrimary
-          className={css.searchFiltersPrimary}
-          sortByComponent={sortBy('desktop')}
-          listingsAreLoaded={listingsAreLoaded}
-          resultsCount={totalItems}
-          searchInProgress={searchInProgress}
-          searchListingsError={searchListingsError}
-          {...propsForSecondaryFiltersToggle}
-        >
-          {primaryFilters.map(config => {
-            return (
-              <FilterComponent
-                key={`SearchFiltersPrimary.${config.id}`}
-                idPrefix="SearchFiltersPrimary"
-                filterConfig={config}
-                urlQueryParams={urlQueryParams}
+        <div className={css.searchPanelNativeLand}>
+          <SearchFiltersPrimary
+            className={css.searchFiltersPrimary}
+            sortByComponent={sortBy('desktop')}
+            listingsAreLoaded={listingsAreLoaded}
+            resultsCount={totalItems}
+            searchInProgress={searchInProgress}
+            searchListingsError={searchListingsError}
+            {...propsForSecondaryFiltersToggle}
+          >
+            {primaryFilters.map(config => {
+              // Do not want keyword, nativeLands or industry filters to be used here.
+              // Keyword filter is used in topbar, nativeLands has unique filter below and
+              // industry filter is only used on MapPage for Premium sellers.
+              if (config.id !== 'keyword' && config.id !== 'nativeLands' && config.id !== 'industry') {
+                return (
+                  <FilterComponent
+                    key={`SearchFiltersPrimary.${config.id}`}
+                    idPrefix="SearchFiltersPrimary"
+                    filterConfig={config}
+                    urlQueryParams={urlQueryParams}
+                    initialValues={this.initialValues}
+                    getHandleChangedValueFn={this.getHandleChangedValueFn}
+                    showAsPopup
+                    contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })}
+          </SearchFiltersPrimary>
+          <div className={css.nativeLandsSection}>
+            {!searchInProgress &&
+              <NativeLand
+                onSelect={this.getHandleChangedValueFn(true)}
                 initialValues={this.initialValues}
-                getHandleChangedValueFn={this.getHandleChangedValueFn}
-                showAsPopup
-                contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+                saveTribes={saveTribes}
+                tribes={tribes}
               />
-            );
-          })}
-        </SearchFiltersPrimary>
+            }
+          </div>
+        </div>
         <SearchFiltersMobile
           className={css.searchFiltersMobile}
           urlQueryParams={urlQueryParams}
@@ -270,65 +295,93 @@ class MainPanel extends Component {
           selectedFiltersCount={selectedFiltersCount}
         >
           {filterConfig.map(config => {
-            return (
-              <FilterComponent
-                key={`SearchFiltersMobile.${config.id}`}
-                idPrefix="SearchFiltersMobile"
-                filterConfig={config}
-                urlQueryParams={urlQueryParams}
-                initialValues={this.initialValues}
-                getHandleChangedValueFn={this.getHandleChangedValueFn}
-                liveEdit
-                showAsPopup={false}
-              />
-            );
+            // See comment about not using these filters above, where desktop filters are shown.
+            if (config.id !== 'keyword' && config.id !== 'nativeLands' && config.id !== 'industry') {
+              return (
+                <FilterComponent
+                  key={`SearchFiltersMobile.${config.id}`}
+                  idPrefix="SearchFiltersMobile"
+                  filterConfig={config}
+                  urlQueryParams={urlQueryParams}
+                  initialValues={this.initialValues}
+                  getHandleChangedValueFn={this.getHandleChangedValueFn}
+                  liveEdit
+                  showAsPopup={false}
+                />
+              );
+            } else {
+              return null;
+            }
           })}
+          <div className={css.nativeLandsMobile}>
+            {!searchInProgress &&
+              <NativeLand
+                onSelect={this.getHandleChangedValueFn(true)}
+                initialValues={this.initialValues}
+                saveTribes={saveTribes}
+                tribes={tribes}
+              />
+            }
+          </div>
         </SearchFiltersMobile>
         {isSecondaryFiltersOpen ? (
           <div className={classNames(css.searchFiltersPanel)}>
-            <SearchFiltersSecondary
-              urlQueryParams={urlQueryParams}
-              listingsAreLoaded={listingsAreLoaded}
-              applyFilters={this.applyFilters}
-              cancelFilters={this.cancelFilters}
-              resetAll={this.resetAll}
-              onClosePanel={() => this.setState({ isSecondaryFiltersOpen: false })}
+            <Modal
+              id='secondaryFilterModal'
+              onClose={() => this.setState({ isSecondaryFiltersOpen: false })}
+              onManageDisableScrolling={this.props.onManageDisableScrolling}
+              isOpen={isSecondaryFiltersOpen}
             >
-              {secondaryFilters.map(config => {
-                return (
-                  <FilterComponent
-                    key={`SearchFiltersSecondary.${config.id}`}
-                    idPrefix="SearchFiltersSecondary"
-                    filterConfig={config}
-                    urlQueryParams={urlQueryParams}
-                    initialValues={this.initialValues}
-                    getHandleChangedValueFn={this.getHandleChangedValueFn}
-                    showAsPopup={false}
-                  />
-                );
-              })}
-            </SearchFiltersSecondary>
-          </div>
-        ) : (
-          <div
-            className={classNames(css.listings, {
-              [css.newSearchInProgress]: !listingsAreLoaded,
-            })}
-          >
-            {searchListingsError ? (
-              <h2 className={css.error}>
-                <FormattedMessage id="SearchPage.searchError" />
+              <h2 className={css.modalHeading}>
+                <FormattedMessage id="SearchPage.secondaryFiltersHeading" />
               </h2>
-            ) : null}
-            <SearchResultsPanel
-              className={css.searchListingsPanel}
-              listings={listings}
-              pagination={listingsAreLoaded ? pagination : null}
-              search={searchParamsForPagination}
-              setActiveListing={onActivateListing}
-            />
+              <SearchFiltersSecondary
+                urlQueryParams={urlQueryParams}
+                listingsAreLoaded={listingsAreLoaded}
+                applyFilters={this.applyFilters}
+                cancelFilters={this.cancelFilters}
+                resetAll={this.resetAll}
+                onClosePanel={() => this.setState({ isSecondaryFiltersOpen: false })}
+              >
+                {secondaryFilters.map(config => {
+                  return (
+                    <FilterComponent
+                      key={`SearchFiltersSecondary.${config.id}`}
+                      idPrefix="SearchFiltersSecondary"
+                      filterConfig={config}
+                      urlQueryParams={urlQueryParams}
+                      initialValues={this.initialValues}
+                      getHandleChangedValueFn={this.getHandleChangedValueFn}
+                      showAsPopup={false}
+                    />
+                  );
+                })}
+              </SearchFiltersSecondary>
+            </Modal>
           </div>
-        )}
+        ) : (null)}
+        <div
+          className={classNames(css.listings, {
+            [css.newSearchInProgress]: !listingsAreLoaded,
+          })}
+        >
+          {searchListingsError ? (
+            <h2 className={css.error}>
+              <FormattedMessage id="SearchPage.searchError" />
+            </h2>
+          ) : null}
+          <SearchResultsPanel
+            className={css.searchListingsPanel}
+            listings={listings}
+            pagination={listingsAreLoaded ? pagination : null}
+            search={searchParamsForPagination}
+            setActiveListing={onActivateListing}
+            currentUser={currentUser}
+            isLiked={isLiked}
+            updateLikes={updateLikes}
+            pageName="SearchPage"
+          />
+        </div>
       </div>
     );
   }
@@ -343,6 +396,7 @@ MainPanel.defaultProps = {
   searchParamsForPagination: {},
   filterConfig: config.custom.filters,
   sortConfig: config.custom.sortConfig,
+  currentUser: null
 };
 
 MainPanel.propTypes = {
@@ -364,6 +418,7 @@ MainPanel.propTypes = {
   showAsModalMaxWidth: number.isRequired,
   filterConfig: propTypes.filterConfig,
   sortConfig: propTypes.sortConfig,
+  currentUser: propTypes.currentUser,
 
   history: shape({
     push: func.isRequired,

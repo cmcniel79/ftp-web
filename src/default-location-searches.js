@@ -1,6 +1,6 @@
 import { types as sdkTypes } from './util/sdkLoader';
 
-const { LatLng, LatLngBounds } = sdkTypes;
+const { LatLng } = sdkTypes;
 
 // An array of locations to show in the LocationAutocompleteInput when
 // the input is in focus but the user hasn't typed in any search yet.
@@ -9,38 +9,52 @@ const { LatLng, LatLngBounds } = sdkTypes;
 // `predictionPlace` (util.types.place) properties.
 const defaultLocations = [
   {
-    id: 'default-helsinki',
+    id: 'default-albuquerque',
     predictionPlace: {
-      address: 'Helsinki, Finland',
-      bounds: new LatLngBounds(new LatLng(60.29783, 25.25448), new LatLng(59.92248, 24.78287)),
+      address: 'Albuquerque, NM',
+      origin: new LatLng(35.106766, -106.629181)
+    },
+  },
+  // {
+  //   id: 'default-gallup',
+  //   predictionPlace: {
+  //     address: 'Gallup, NM',
+  //     origin: new LatLng(35.5280783, -108.7425843)
+  //   },
+  // },
+  {
+    id: 'default-seattle',
+    predictionPlace: {
+      address: 'Seattle, WA',
+      origin: new LatLng(47.6038321, -122.3300624)
     },
   },
   {
-    id: 'default-turku',
+    id: 'default-los-angeles',
     predictionPlace: {
-      address: 'Turku, Finland',
-      bounds: new LatLngBounds(new LatLng(60.53045, 22.38197), new LatLng(60.33361, 22.06644)),
+      address: 'Los Angeles, CA',
+      origin: new LatLng(34.0536909, -118.242766)
     },
   },
   {
-    id: 'default-tampere',
+    id: 'default-toronto',
     predictionPlace: {
-      address: 'Tampere, Finland',
-      bounds: new LatLngBounds(new LatLng(61.83657, 24.11838), new LatLng(61.42728, 23.5422)),
+      address: 'Toronto, ON',
+      origin: new LatLng(43.7001100,-79.4163000)
     },
   },
   {
-    id: 'default-oulu',
+    id: 'default-vancouver',
     predictionPlace: {
-      address: 'Oulu, Finland',
-      bounds: new LatLngBounds(new LatLng(65.56434, 26.77069), new LatLng(64.8443, 24.11494)),
+      address: 'Vancouver, BC',
+      origin: new LatLng(49.246292, -123.116226)
     },
   },
   {
-    id: 'default-ruka',
+    id: 'default-winnipeg',
     predictionPlace: {
-      address: 'Ruka, Finland',
-      bounds: new LatLngBounds(new LatLng(66.16997, 29.16773), new LatLng(66.16095, 29.13572)),
+      address: 'Winnipeg, MB',
+      origin: new LatLng(49.895077, -97.138451)
     },
   },
 ];

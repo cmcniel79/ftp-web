@@ -33,11 +33,12 @@
 
 .input {
   flex-grow: 1;
-  height: var(--LocationAutocompleteInput_inputHeight);
-  padding-left: 10px;
+  height: auto;
+  /* padding-left: 10px; */
   margin: 0;
-  line-height: unset;
+  line-height: 24px;
   border-bottom-width: 2px;
+  border-bottom-color: var(--attentionColor);
 
   /* Safari bugfix: without this Safari will print placeholder to a wrong place */
   &::-webkit-input-placeholder {
@@ -46,7 +47,7 @@
 
   &:hover,
   &:focus {
-    border-bottom-color: var(--marketplaceColor);
+    border-bottom-color: var(--matterColor);
     outline: none;
   }
 }

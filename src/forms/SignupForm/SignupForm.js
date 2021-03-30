@@ -5,7 +5,9 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Form as FinalForm } from 'react-final-form';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
-import { Form, PrimaryButton, FieldTextInput } from '../../components';
+import { Form, PrimaryButton, FieldTextInput, FieldSelect, FieldCheckbox } from '../../components';
+import getCountryCodes from '../../translations/countryCodes';
+import config from '../../config';
 
 import css from './SignupForm.module.css';
 
@@ -105,11 +107,47 @@ const SignupFormComponent = props => (
       const lastNameRequiredMessage = intl.formatMessage({
         id: 'SignupForm.lastNameRequired',
       });
+
+      const newsletterLabel = intl.formatMessage({ id: 'SignupForm.newsletterLabel' });
+
+      // const isAdultLabel = intl.formatMessage({ id: 'SignupForm.isAdultLabel' });
+      // const isAdultPlaceholder = intl.formatMessage({ id: 'SignupForm.isAdultPlaceholder' });
+      // const isAdultRequired = validators.required(
+      //   intl.formatMessage({
+      //     id: 'SignupForm.isAdultRequired',
+      //   })
+      // );
+
+      const countryLabel = intl.formatMessage({ id: 'SignupForm.countryLabel' });
+      const countryPlaceholder = intl.formatMessage({ id: 'SignupForm.countryPlaceholder' });
+      const countryRequired = validators.required(
+        intl.formatMessage({
+          id: 'SignupForm.countryRequired',
+        })
+      );
       const lastNameRequired = validators.required(lastNameRequiredMessage);
 
       const classes = classNames(rootClassName || css.root, className);
       const submitInProgress = inProgress;
       const submitDisabled = invalid || submitInProgress;
+      const countryCodes = getCountryCodes(config.locale);
+
+      // const adultBool = document.getElementById("isAdult");
+      // const minorsInfo = adultBool != null && adultBool.value === 'false' ?
+      //   <div>
+      //     <p className={css.minorsInfo}>
+      //       From The People's Terms of Use require all account owners to be at least 18 years of age. Individuals under 
+      //       the age of 18 are considered minors on From The People. Minors under age 13 are not allowed on From The People.
+      //       <br/>
+      //       <br/>
+      //       Minors under 18 and at least 13 years of age are permitted to use From The People's services only if 
+      //       they have the appropriate permission and direct supervision of their parent or legal guardian 
+      //       who is the owner of the account.
+      //       <br/>
+      //       <br/>
+      //       You are responsible for any and all account activity conducted by a minor on your account.
+      //     </p>
+      //   </div> : null;
 
       const handleTermsKeyUp = e => {
         // Allow click action with keyboard like with normal links
@@ -128,7 +166,6 @@ const SignupFormComponent = props => (
           <FormattedMessage id="SignupForm.termsAndConditionsLinkText" />
         </span>
       );
-
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           <div>
@@ -163,6 +200,35 @@ const SignupFormComponent = props => (
                 validate={lastNameRequired}
               />
             </div>
+
+            {/* <FieldBoolean
+              className={css.adultBool}
+              id={formId ? `${formId}.isAdult` : 'isAdult'}
+              name="isAdult"
+              label={isAdultLabel}
+              placeholder={isAdultPlaceholder}
+              validate={isAdultRequired}
+            // onChange={adultInputChange}
+            />
+            {minorsInfo} */}
+            <FieldSelect
+              className={css.country}
+              id={formId ? `${formId}.country` : 'country'}
+              name="country"
+              label={countryLabel}
+              validate={countryRequired}
+            >
+              <option disabled value="">
+                {countryPlaceholder}
+              </option>
+              {countryCodes.map(country => {
+                return (
+                  <option key={country.code} value={country.name}>
+                    {country.name}
+                  </option>
+                );
+              })}
+            </FieldSelect>
             <FieldTextInput
               className={css.password}
               type="password"
@@ -173,8 +239,14 @@ const SignupFormComponent = props => (
               placeholder={passwordPlaceholder}
               validate={passwordValidators}
             />
+            <FieldCheckbox
+              className={css.newsletterCheckbox}
+              id="getNewsletter"
+              name="getNewsletter"
+              label={newsletterLabel}
+              value="allowNewsletter"
+            />
           </div>
-
           <div className={css.bottomWrapper}>
             <p className={css.bottomWrapperText}>
               <span className={css.termsText}>

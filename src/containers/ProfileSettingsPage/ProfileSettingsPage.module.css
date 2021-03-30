@@ -12,6 +12,10 @@
     max-width: 565px;
     margin: 55px auto 56px auto;
   }
+  /* @media (--viewportLarge) {
+    max-width: 750px;
+    margin: 55px auto 56px auto;
+  } */
 }
 
 .headingContainer {
@@ -21,7 +25,6 @@
 
 .heading {
   margin-right: 24px;
-  hyphens: auto;
 }
 
 .profileLink {
@@ -42,4 +45,40 @@
   @media (--viewportMedium) {
     margin: 37px 0 0 auto;
   }
+}
+
+.sectionTitle {
+  /* Font */
+  color: var(--matterColorAnti);
+
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+.infoLine {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid 1px #9e9e9e;
+}
+
+.lineTitle {
+  color: var(--matterColorAnti);
+}
+
+.faqLink {
+  font-size: 17px;
+  line-height: 20px;
+  margin: 15px 0 ;
 }

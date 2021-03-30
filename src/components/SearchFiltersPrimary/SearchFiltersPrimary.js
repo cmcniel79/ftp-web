@@ -56,16 +56,16 @@ const SearchFiltersPrimaryComponent = props => {
         {sortByComponent}
       </div>
 
-      <div className={css.filters}>
-        {children}
-        {toggleSecondaryFiltersOpenButton}
-      </div>
-
       {hasNoResult ? (
         <div className={css.noSearchResults}>
           <FormattedMessage id="SearchFiltersPrimary.noResults" />
         </div>
       ) : null}
+
+      <div className={css.filters}>
+        {children}
+        {toggleSecondaryFiltersOpenButton}
+      </div>
 
       {searchInProgress ? (
         <div className={css.loadingResults}>

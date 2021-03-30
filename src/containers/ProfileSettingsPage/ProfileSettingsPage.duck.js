@@ -2,6 +2,10 @@ import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
 
+const KEY = process.env.REACT_APP_API_KEY;
+const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
+const BASE_URL = process.env.REACT_APP_API_DATABASE;
+
 // ================ Action types ================ //
 
 export const CLEAR_UPDATED_FORM = 'app/ProfileSettingsPage/CLEAR_UPDATED_FORM';
@@ -159,4 +163,21 @@ export const updateProfile = actionPayload => {
       })
       .catch(e => dispatch(updateProfileError(storableError(e))));
   };
+};
+
+export const updateDatabase = actionPayload => {
+  const url = BASE_URL + ENV;
+  const options = {
+    method: 'POST',
+    withCredentials: false,
+    body: JSON.stringify(actionPayload),
+    headers: {
+      "Content-Type": "application/json",
+      "X-Api-Key": KEY,
+    }
+  }
+
+  fetch(url, options)
+    .then(response => response.json())
+    .catch(() => console.log("Could not update database"));
 };

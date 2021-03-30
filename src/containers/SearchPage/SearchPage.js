@@ -4,87 +4,82 @@ import { injectIntl, intlShape } from '../../util/reactIntl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import debounce from 'lodash/debounce';
-import unionWith from 'lodash/unionWith';
 import classNames from 'classnames';
 import config from '../../config';
-import routeConfiguration from '../../routeConfiguration';
-import { createResourceLocatorString, pathByRouteName } from '../../util/routes';
 import { parse, stringify } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
 import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
-import { SearchMap, ModalInMobile, Page } from '../../components';
+import { Page } from '../../components';
 import { TopbarContainer } from '../../containers';
-
-import { searchMapListings, setActiveListing } from './SearchPage.duck';
+import { searchListings, setActiveListing, sendUpdatedLikes, callLikeAPI } from './SearchPage.duck';
 import {
   pickSearchParamsOnly,
   validURLParamsForExtendedData,
-  validFilterParams,
   createSearchResultSchema,
 } from './SearchPage.helpers';
 import MainPanel from './MainPanel';
 import css from './SearchPage.module.css';
 
+// Pagination page size might need to be dynamic on responsive page layouts
+// Current design has max 3 columns 12 is divisible by 2 and 3
+// So, there's enough cards to fill all columns on full pagination pages
 const MODAL_BREAKPOINT = 768; // Search is in modal on mobile layout
-const SEARCH_WITH_MAP_DEBOUNCE = 300; // Little bit of debounce before search is initiated.
 
 export class SearchPageComponent extends Component {
   constructor(props) {
     super(props);
 
+    this.tribes = [];
+    this.likes = [];
     this.state = {
       isSearchMapOpenOnMobile: props.tab === 'map',
       isMobileModalOpen: false,
     };
-
-    this.searchMapListingsInProgress = false;
-
-    this.onMapMoveEnd = debounce(this.onMapMoveEnd.bind(this), SEARCH_WITH_MAP_DEBOUNCE);
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
+    this.isLiked = this.isLiked.bind(this);
+    this.updateLikes = this.updateLikes.bind(this);
+    this.sendLikes = this.sendLikes.bind(this);
+    this.saveTribes = this.saveTribes.bind(this);
   }
 
-  // Callback to determine if new search is needed
-  // when map is moved by user or viewport has changed
-  onMapMoveEnd(viewportBoundsChanged, data) {
-    const { viewportBounds, viewportCenter } = data;
+  saveTribes(nativeLandTribes) {
+    this.tribes = nativeLandTribes;
+  }
 
-    const routes = routeConfiguration();
-    const searchPagePath = pathByRouteName('SearchPage', routes);
-    const currentPath =
-      typeof window !== 'undefined' && window.location && window.location.pathname;
+  isLiked(listingId) {
+    return this.likes && this.likes.length > 0 ? this.likes.findIndex(x => x === listingId) : -1;
+  }
 
-    // When using the ReusableMapContainer onMapMoveEnd can fire from other pages than SearchPage too
-    const isSearchPage = currentPath === searchPagePath;
-
-    // If mapSearch url param is given
-    // or original location search is rendered once,
-    // we start to react to "mapmoveend" events by generating new searches
-    // (i.e. 'moveend' event in Mapbox and 'bounds_changed' in Google Maps)
-    if (viewportBoundsChanged && isSearchPage) {
-      const { history, location, filterConfig } = this.props;
-
-      // parse query parameters, including a custom attribute named category
-      const { address, bounds, mapSearch, ...rest } = parse(location.search, {
-        latlng: ['origin'],
-        latlngBounds: ['bounds'],
-      });
-
-      //const viewportMapCenter = SearchMap.getMapCenter(map);
-      const originMaybe = config.sortSearchByDistance ? { origin: viewportCenter } : {};
-
-      const searchParams = {
-        address,
-        ...originMaybe,
-        bounds: viewportBounds,
-        mapSearch: true,
-        ...validFilterParams(rest, filterConfig),
-      };
-
-      history.push(createResourceLocatorString('SearchPage', routes, {}, searchParams));
+  updateLikes(listingId) {
+    const index = this.likes && this.likes.length > 0 ? this.isLiked(listingId) : -1;
+    var likeBool;
+    if (index > -1) {
+      // Remove listing from likes list
+      this.likes.splice(index, 1);
+      likeBool = false;
+    } else {
+      // Add listing to likes list
+      this.likes.push(listingId);
+      likeBool = true;
     }
+    this.sendLikes();
+    const apiPayload = {
+      uuid: listingId,
+      isListing: true,
+      add: likeBool
+    };
+    callLikeAPI(apiPayload);
+  }
+
+  sendLikes() {
+    const updatedLikes = {
+      privateData: {
+        likes: this.likes
+      }
+    };
+    this.props.onSendUpdatedLikes(updatedLikes);
   }
 
   // Invoked when a modal is opened from a child component,
@@ -101,20 +96,19 @@ export class SearchPageComponent extends Component {
 
   render() {
     const {
+      currentUser,
       intl,
       listings,
       filterConfig,
       sortConfig,
       history,
       location,
-      mapListings,
       onManageDisableScrolling,
       pagination,
       scrollingDisabled,
       searchInProgress,
       searchListingsError,
       searchParams,
-      activeListingId,
       onActivateListing,
     } = this.props;
     // eslint-disable-next-line no-unused-vars
@@ -123,6 +117,8 @@ export class SearchPageComponent extends Component {
       latlngBounds: ['bounds'],
     });
 
+    this.likes = currentUser && currentUser.attributes.profile.privateData && currentUser.attributes.profile.privateData.likes ? 
+      currentUser.attributes.profile.privateData.likes : [];
     // urlQueryParams doesn't contain page specific url params
     // like mapSearch, page or origin (origin depends on config.sortSearchByDistance)
     const urlQueryParams = pickSearchParamsOnly(searchInURL, filterConfig, sortConfig);
@@ -136,17 +132,12 @@ export class SearchPageComponent extends Component {
 
     const validQueryParams = validURLParamsForExtendedData(searchInURL, filterConfig);
 
-    const isWindowDefined = typeof window !== 'undefined';
-    const isMobileLayout = isWindowDefined && window.innerWidth < MODAL_BREAKPOINT;
-    const shouldShowSearchMap =
-      !isMobileLayout || (isMobileLayout && this.state.isSearchMapOpenOnMobile);
-
     const onMapIconClick = () => {
       this.useLocationSearchBounds = true;
       this.setState({ isSearchMapOpenOnMobile: true });
     };
 
-    const { address, bounds, origin } = searchInURL || {};
+    const { address } = searchInURL || {};
     const { title, description, schema } = createSearchResultSchema(listings, address, intl);
 
     // Set topbar class based on if a modal is open in
@@ -154,7 +145,6 @@ export class SearchPageComponent extends Component {
     const topbarClasses = this.state.isMobileModalOpen
       ? classNames(css.topbarBehindModal, css.topbar)
       : css.topbar;
-
     // N.B. openMobileMap button is sticky.
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
     return (
@@ -185,34 +175,12 @@ export class SearchPageComponent extends Component {
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             history={history}
+            currentUser={currentUser}
+            isLiked={this.isLiked}
+            updateLikes={this.updateLikes}
+            saveTribes={this.saveTribes}
+            tribes={this.tribes}
           />
-          <ModalInMobile
-            className={css.mapPanel}
-            id="SearchPage.map"
-            isModalOpenOnMobile={this.state.isSearchMapOpenOnMobile}
-            onClose={() => this.setState({ isSearchMapOpenOnMobile: false })}
-            showAsModalMaxWidth={MODAL_BREAKPOINT}
-            onManageDisableScrolling={onManageDisableScrolling}
-          >
-            <div className={css.mapWrapper}>
-              {shouldShowSearchMap ? (
-                <SearchMap
-                  reusableContainerClassName={css.map}
-                  activeListingId={activeListingId}
-                  bounds={bounds}
-                  center={origin}
-                  isSearchMapOpenOnMobile={this.state.isSearchMapOpenOnMobile}
-                  location={location}
-                  listings={mapListings || []}
-                  onMapMoveEnd={this.onMapMoveEnd}
-                  onCloseAsModal={() => {
-                    onManageDisableScrolling('SearchPage.map', false);
-                  }}
-                  messages={intl.messages}
-                />
-              ) : null}
-            </div>
-          </ModalInMobile>
         </div>
       </Page>
     );
@@ -221,7 +189,6 @@ export class SearchPageComponent extends Component {
 
 SearchPageComponent.defaultProps = {
   listings: [],
-  mapListings: [],
   pagination: null,
   searchListingsError: null,
   searchParams: {},
@@ -229,14 +196,13 @@ SearchPageComponent.defaultProps = {
   filterConfig: config.custom.filters,
   sortConfig: config.custom.sortConfig,
   activeListingId: null,
+  currentUser: null
 };
 
 SearchPageComponent.propTypes = {
   listings: array,
-  mapListings: array,
   onActivateListing: func.isRequired,
   onManageDisableScrolling: func.isRequired,
-  onSearchMapListings: func.isRequired,
   pagination: propTypes.pagination,
   scrollingDisabled: bool.isRequired,
   searchInProgress: bool.isRequired,
@@ -245,6 +211,7 @@ SearchPageComponent.propTypes = {
   tab: oneOf(['filters', 'listings', 'map']).isRequired,
   filterConfig: propTypes.filterConfig,
   sortConfig: propTypes.sortConfig,
+  currentUser: propTypes.currentUser,
 
   // from withRouter
   history: shape({
@@ -265,18 +232,13 @@ const mapStateToProps = state => {
     searchInProgress,
     searchListingsError,
     searchParams,
-    searchMapListingIds,
     activeListingId,
   } = state.SearchPage;
   const pageListings = getListingsById(state, currentPageResultIds);
-  const mapListings = getListingsById(
-    state,
-    unionWith(currentPageResultIds, searchMapListingIds, (id1, id2) => id1.uuid === id2.uuid)
-  );
-
+  const { currentUser } = state.user;
   return {
+    currentUser,
     listings: pageListings,
-    mapListings,
     pagination,
     scrollingDisabled: isScrollingDisabled(state),
     searchInProgress,
@@ -289,8 +251,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
-  onSearchMapListings: searchParams => dispatch(searchMapListings(searchParams)),
   onActivateListing: listingId => dispatch(setActiveListing(listingId)),
+  onSendUpdatedLikes: data => dispatch(sendUpdatedLikes(data)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the
@@ -307,5 +269,26 @@ const SearchPage = compose(
   ),
   injectIntl
 )(SearchPageComponent);
+
+// SearchPage.loadData = (params, search) => {
+//   const queryParams = parse(search, {
+//     latlng: ['origin'],
+//     latlngBounds: ['bounds'],
+//   });
+//   const { page = 1, address, origin, ...rest } = queryParams;
+//   const originMaybe = config.sortSearchByDistance && origin ? { origin } : {};
+//   return searchListings({
+//     ...rest,
+//     ...originMaybe,
+//     page,
+//     perPage: RESULT_PAGE_SIZE,
+//     include: ['author', 'images'],
+//     'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink', 'publicData.category'],
+//     'fields.user': ['profile.displayName', 'profile.abbreviatedName',
+//       'profile.publicData.accountType', 'profile.publicData.tribe', 'profile.publicData.companyName', 'profile.publicData.companyIndustry'], //added metadata for verify badge
+//     'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
+//     'limit.images': 1,
+//   });
+// };
 
 export default SearchPage;

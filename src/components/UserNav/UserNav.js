@@ -2,21 +2,41 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
-import { ACCOUNT_SETTINGS_PAGES } from '../../routeConfiguration';
+import { ACCOUNT_SETTINGS_PAGES, EVENT_HOST_PAGES } from '../../routeConfiguration';
 import { LinkTabNavHorizontal } from '../../components';
 
 import css from './UserNav.module.css';
 
 const UserNav = props => {
-  const { className, rootClassName, selectedPageName } = props;
+  const { className, rootClassName, selectedPageName, isEventHost } = props;
   const classes = classNames(rootClassName || css.root, className);
-
-  const tabs = [
+  const eventTab = {
+    text: <FormattedMessage id="ManageListingsPage.yourEvent" />,
+    selected: EVENT_HOST_PAGES.includes(selectedPageName),
+    linkProps: {
+      name: 'EventDetailsPage',
+    },
+  };
+  var tabs = [
     {
       text: <FormattedMessage id="ManageListingsPage.yourListings" />,
       selected: selectedPageName === 'ManageListingsPage',
       linkProps: {
         name: 'ManageListingsPage',
+      },
+    },
+    {
+      text: <FormattedMessage id="ManageListingsPage.yourLikedListings" />,
+      selected: selectedPageName === 'LikedListingsPage',
+      linkProps: {
+        name: 'LikedListingsPage',
+      },
+    },
+    {
+      text: <FormattedMessage id="ManageListingsPage.yourFollowedArtists" />,
+      selected: selectedPageName === 'FollowingPage',
+      linkProps: {
+        name: 'FollowingPage',
       },
     },
     {
@@ -36,6 +56,10 @@ const UserNav = props => {
       },
     },
   ];
+
+  if (isEventHost) {
+    tabs.unshift(eventTab);
+  }
 
   return (
     <LinkTabNavHorizontal className={classes} tabRootClassName={css.tab} tabs={tabs} skin="dark" />

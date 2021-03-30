@@ -1,0 +1,162 @@
+@import '../../styles/propertySets.css';
+
+.root {
+  margin-top: 24px;
+  @media (--viewportMedium) {
+    margin-top: 32px;
+  }
+}
+
+.arrow {
+  width: 20px;
+}
+
+.success {
+  /* Font */
+  @apply --marketplaceH4FontStyles;
+  color: var(--successColor);
+  margin-top: 18px;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 22px;
+    margin-bottom: 2px;
+  }
+}
+
+.error {
+  /* Font */
+  @apply --marketplaceH4FontStyles;
+  color: var(--failColor);
+  margin-top: 18px;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 22px;
+    margin-bottom: 2px;
+  }
+}
+
+.sectionTitle {
+  /* Font */
+  color: var(--matterColorAnti);
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  @media (--viewportMedium) {
+    margin-top: 10px;
+    margin-bottom: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+.websiteTitle {
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 6px;
+  padding-bottom: 2px;
+  line-height: 16px;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+.websiteValue {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 5px 0 5px 0;
+  border-bottom: 2px solid var(--successColor);
+  border-radius: 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.websiteSubtitle {
+  color: var(--matterColorAnti);
+  font-size: 14px;
+  margin: 8px 0 10px 0;
+  line-height: 18px;
+}
+
+.eventContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  @media (--viewportMedium) {
+    margin-top: 24px;
+  }
+}
+
+.eventField {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.dateContainer {
+  @media (--viewportMedium) {
+    margin: 15px 0 15px 0;
+    width: 50%;
+  }
+}
+
+.dateTitle {
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 6px;
+  padding-bottom: 2px;
+}
+
+.dateAndTimeContainer {
+  display: flex;
+  flex-direction: column;
+    @media (--viewportMedium) {
+    }
+}
+
+.dateInput {
+    @media (--viewportMedium) {
+      width: 55%;
+    }
+}
+
+.timeContainer {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.eventTime {
+  @media (--viewportMedium) {
+    width: 55%;
+  }
+}
+
+.eventMeridiem {
+  margin-left: auto;
+  width: 45%;
+  @media (--viewportMedium) {
+    width: 35%;
+  }
+}
+
+.optionalContainer {
+  margin: 20px 0;
+}
+
+.submitButton {
+  margin-top: 50px;
+}
+
+.submitButtonExtraMargin {
+  margin-top: 200px;
+}
+
+.validLocation {
+  border-bottom-color: var(--successColor);
+}
+
+.invalidLocation {
+  border-bottom-color: var(--failColor);
+}

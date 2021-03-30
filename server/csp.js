@@ -1,4 +1,5 @@
 const helmet = require('helmet');
+const { connect } = require('react-redux');
 
 const dev = process.env.REACT_APP_ENV === 'development';
 const self = "'self'";
@@ -8,6 +9,14 @@ const data = 'data:';
 const blob = 'blob:';
 const devImagesMaybe = dev ? ['*.localhost:8000'] : [];
 const baseUrl = process.env.REACT_APP_SHARETRIBE_SDK_BASE_URL || 'https://flex-api.sharetribe.com';
+
+const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
+const emailURL = process.env.REACT_APP_API_EMAIL + ENV;
+const rankingURL = process.env.REACT_APP_API_RANKING + ENV;
+const databaseURL = process.env.REACT_APP_API_DATABASE + ENV;
+const likesURL = process.env.REACT_APP_API_LIKES;
+const mailchimpURL = process.env.REACT_APP_API_MAILCHIMP + ENV;
+const eventsURL = process.env.REACT_APP_API_EVENTS;
 
 // Default CSP whitelist.
 //
@@ -95,9 +104,20 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
   // const { imgSrc = [self] } = defaultDirectives;
   // const exampleImgSrc = imgSrc.concat('my-custom-domain.example.com');
 
+  const { connectSrc = [self] } = defaultDirectives;
+  const customConnectSrc = connectSrc.concat([
+   'https://native-land.ca/',
+   emailURL,
+   rankingURL,
+   databaseURL,
+   likesURL,
+   mailchimpURL,
+   eventsURL
+   ]);
   const customDirectives = {
     // Example: Add custom directive override
     // imgSrc: exampleImgSrc,
+    connectSrc: customConnectSrc, 
   };
 
   // ================ END CUSTOM CSP URLs ================ //

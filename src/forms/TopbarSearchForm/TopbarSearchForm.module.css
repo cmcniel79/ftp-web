@@ -1,10 +1,22 @@
 @import '../../styles/propertySets.css';
 
+.searchBox {
+  display: flex;
+  flex-direction: row;
+}
+
+.searchImage {
+  display: flex;
+  align-self: center;
+  margin-right: 15px;
+}
+
 .mobileInputRoot {
   width: 100%;
 }
 
 .desktopInputRoot {
+  border: none;
   height: var(--topbarHeightDesktop);
 }
 
@@ -89,8 +101,8 @@
   &::placeholder {
     text-overflow: ellipsis;
     overflow-x: hidden;
-    font-weight: var(--fontWeightMedium);
-    transition: var(--transitionStyleButton);
+    font-weight: var(--fontWeightRegular);
+    /* transition: var(--transitionStyleButton); */
   }
 
   margin-top: 0;
@@ -146,4 +158,17 @@
       var(--TopbarSearchForm_bottomBorder)
   );
   max-width: 434px;
+}
+
+.iconSvg {
+  margin: auto 10px auto;
+}
+
+.iconSvgGroup {
+  stroke: var(--marketplaceColor);
+  stroke-width: 2.5px;
+
+  @media (--viewportMedium) {
+    stroke-width: 2px;
+  }
 }

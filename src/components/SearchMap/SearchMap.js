@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 import routeConfiguration from '../../routeConfiguration';
 import { createResourceLocatorString } from '../../util/routes';
-import { createSlug } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
 import { obfuscatedCoordinates } from '../../util/maps';
 import config from '../../config';
@@ -74,10 +73,10 @@ export class SearchMapComponent extends Component {
     const routes = routeConfiguration();
 
     const id = listing.id.uuid;
-    const slug = createSlug(listing.attributes.title);
-    const pathParams = { id, slug };
+    // const slug = createSlug(listing.attributes.title);
+    const pathParams = { id, slug: null };
 
-    return createResourceLocatorString('ListingPage', routes, pathParams, {});
+    return createResourceLocatorString('ProfilePage', routes, pathParams, {});
   }
 
   onListingClicked(listings) {
@@ -125,12 +124,11 @@ export class SearchMapComponent extends Component {
       onMapMoveEnd,
       zoom,
       mapsConfig,
-      activeListingId,
       messages,
     } = this.props;
     const classes = classNames(rootClassName || css.root, className);
 
-    const listingsWithLocation = originalListings.filter(l => !!l.attributes.geolocation);
+    const listingsWithLocation = originalListings.filter(l => !!l.attributes.profile.publicData.companyLocation.location.selectedPlace.origin);
     const listings = mapsConfig.fuzzy.enabled
       ? withCoordinatesObfuscated(listingsWithLocation)
       : listingsWithLocation;
@@ -154,7 +152,6 @@ export class SearchMapComponent extends Component {
     //   location={location}
     //   infoCardOpen={infoCardOpen}
     //   listings={listings}
-    //   activeListingId={activeListingId}
     //   mapComponentRefreshToken={this.state.mapReattachmentCount}
     //   createURLToListing={this.createURLToListing}
     //   onClick={this.onMapClicked}
@@ -181,7 +178,6 @@ export class SearchMapComponent extends Component {
           location={location}
           infoCardOpen={infoCardOpen}
           listings={listings}
-          activeListingId={activeListingId}
           mapComponentRefreshToken={this.state.mapReattachmentCount}
           createURLToListing={this.createURLToListing}
           onClick={this.onMapClicked}
@@ -194,8 +190,8 @@ export class SearchMapComponent extends Component {
         />
       </ReusableMapContainer>
     ) : (
-      <div className={classes} />
-    );
+        <div className={classes} />
+      );
   }
 }
 
@@ -207,7 +203,6 @@ SearchMapComponent.defaultProps = {
   reusableContainerClassName: null,
   bounds: null,
   center: null,
-  activeListingId: null,
   listings: [],
   onCloseAsModal: null,
   zoom: 11,
@@ -225,8 +220,7 @@ SearchMapComponent.propTypes = {
   location: shape({
     search: string.isRequired,
   }).isRequired,
-  activeListingId: propTypes.uuid,
-  listings: arrayOf(propTypes.listing),
+  listings: arrayOf(propTypes.user),
   onCloseAsModal: func,
   onMapMoveEnd: func.isRequired,
   zoom: number,

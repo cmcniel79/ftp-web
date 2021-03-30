@@ -87,9 +87,15 @@ const CreateStripeAccountFields = props => {
       id: 'StripeConnectAccountForm.countryRequired',
     })
   );
-
+  
   return (
     <div className={css.sectionContainer}>
+      <h3 className={css.subTitle}>
+      <FormattedMessage id="StripeConnectAccountForm.accountPayoutPreferences"/>
+      </h3>
+      <p>
+      <FormattedMessage id="EditListingWizard.payoutModalInfo" />
+      </p>
       <h3 className={css.subTitle}>
         <FormattedMessage id="StripeConnectAccountForm.accountTypeTitle" />
       </h3>
@@ -280,18 +286,18 @@ const StripeConnectAccountFormComponent = props => {
             intl={intl}
           />
         ) : (
-          <UpdateStripeAccountFields
-            disabled={disabled}
-            countryLabel={countryLabel}
-            savedCountry={savedCountry}
-            stripeBankAccountLastDigits={stripeBankAccountLastDigits}
-            showCardUpdateInput={showCardUpdateInput}
-            values={values}
-            submitInProgress={submitInProgress}
-            setShowCardUpdateInput={setShowCardUpdateInput}
-            intl={intl}
-          />
-        );
+            <UpdateStripeAccountFields
+              disabled={disabled}
+              countryLabel={countryLabel}
+              savedCountry={savedCountry}
+              stripeBankAccountLastDigits={stripeBankAccountLastDigits}
+              showCardUpdateInput={showCardUpdateInput}
+              values={values}
+              submitInProgress={submitInProgress}
+              setShowCardUpdateInput={setShowCardUpdateInput}
+              intl={intl}
+            />
+          );
 
         const stripeConnectedAccountTermsLink = (
           <ExternalLink href="https://stripe.com/connect-account/legal" className={css.termsLink}>
@@ -330,10 +336,10 @@ const StripeConnectAccountFormComponent = props => {
             {!stripeConnected || accountDataLoaded ? (
               stripeAccountFields
             ) : (
-              <div className={css.savedInformation}>
-                <FormattedMessage id="StripeConnectAccountForm.loadingStripeAccountData" />
-              </div>
-            )}
+                <div className={css.savedInformation}>
+                  <FormattedMessage id="StripeConnectAccountForm.loadingStripeAccountData" />
+                </div>
+              )}
 
             <ErrorsMaybe
               stripeAccountError={stripeAccountError}
@@ -345,10 +351,10 @@ const StripeConnectAccountFormComponent = props => {
             {submitButtonMaybe}
           </Form>
         ) : (
-          <div className={css.missingStripeKey}>
-            <FormattedMessage id="StripeConnectAccountForm.missingStripeKey" />
-          </div>
-        );
+            <div className={css.missingStripeKey}>
+              <FormattedMessage id="StripeConnectAccountForm.missingStripeKey" />
+            </div>
+          );
       }}
     />
   );

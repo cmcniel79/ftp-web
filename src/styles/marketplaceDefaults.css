@@ -17,7 +17,7 @@
 :root {
   /* ================ Colors ================ */
 
-  --marketplaceColor: #c0392b;
+  --marketplaceColor: #d40000;
   --marketplaceColorLight: #ff4c38;
   --marketplaceColorDark: #8c291e;
 
@@ -285,4 +285,8 @@ textarea {
   & button {
     font-family: 'poppins', Helvetica, Arial, sans-serif;
   }
+}
+
+mapboxgl-popup-content {
+  border-radius: 10px;
 }

@@ -5,6 +5,7 @@ import {
   KeywordFilter,
   SelectSingleFilter,
   SelectMultipleFilter,
+  SelectSubcategoryFilter,
 } from '../../components';
 
 /**
@@ -95,6 +96,18 @@ const FilterComponent = props => {
           {...rest}
         />
       );
+      case 'SelectSubcategoryFilter':
+        return (
+          <SelectSubcategoryFilter
+          id={componentId}
+          label={label}
+          queryParamNames={queryParamNames}
+          initialValues={initialValues(["pub_subCategory"])}
+          onSelect={getHandleChangedValueFn(useHistoryPush)}
+          {...config}
+          {...rest}
+          />
+        );
     default:
       return null;
   }

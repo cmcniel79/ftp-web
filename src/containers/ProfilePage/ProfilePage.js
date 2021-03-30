@@ -22,9 +22,12 @@ import {
   ListingCard,
   Reviews,
   ButtonTabNavHorizontal,
+  UserSocialMedia,
+  ExternalLink,
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '../../containers';
 import config from '../../config';
+import exit from '../../assets/exit.svg';
 
 import css from './ProfilePage.module.css';
 
@@ -68,15 +71,28 @@ export class ProfilePageComponent extends Component {
       viewport,
       intl,
     } = this.props;
+    
     const ensuredCurrentUser = ensureCurrentUser(currentUser);
     const profileUser = ensureUser(user);
-    const isCurrentUser =
-      ensuredCurrentUser.id && profileUser.id && ensuredCurrentUser.id.uuid === profileUser.id.uuid;
-    const displayName = profileUser.attributes.profile.displayName;
-    const bio = profileUser.attributes.profile.bio;
+    const isCurrentUser = ensuredCurrentUser.id && profileUser.id && ensuredCurrentUser.id.uuid === profileUser.id.uuid;
+
+    const { displayName, bio } = profileUser.attributes.profile;
     const hasBio = !!bio;
     const hasListings = listings.length > 0;
     const isMobileLayout = viewport.width < MAX_MOBILE_SCREEN_WIDTH;
+
+    // Get custom data fields from profileUser's account. Social media will go onto everyone's profile page if they fill it out.
+    // Company name and companyWebsite will only go onto profile page if user has a premium account.
+    const publicData = profileUser.attributes.profile.publicData ? profileUser.attributes.profile.publicData : null;
+    const socialMedia = publicData && publicData.socialMedia ? publicData.socialMedia : null;
+    const tribe = publicData && publicData.tribe ? publicData.tribe : null;
+    const companyName = publicData && publicData.companyName ? publicData.companyName : null;
+    const companyWebsite = publicData && publicData.companyWebsite ? publicData.companyWebsite : null;
+    const companyLocation = publicData && publicData.companyLocation && publicData.companyLocation.location ?
+      publicData.companyLocation.location : null;
+    const companyAddress = companyLocation ? companyLocation.selectedPlace.address : null;
+    const googleMapsUrl = companyAddress ? "https://www.google.com/maps/search/?api=1&query=" + encodeURI(companyAddress) : null;
+    const accountType = publicData && publicData.accountType ? publicData.accountType : null;
 
     const editLinkMobile = isCurrentUser ? (
       <NamedLink className={css.editLinkMobile} name="ProfileSettingsPage">
@@ -92,13 +108,23 @@ export class ProfilePageComponent extends Component {
     const asideContent = (
       <div className={css.asideContent}>
         <AvatarLarge className={css.avatar} user={user} disableProfileLink />
-        <h1 className={css.mobileHeading}>
-          {displayName ? (
-            <FormattedMessage id="ProfilePage.mobileHeading" values={{ name: displayName }} />
-          ) : null}
-        </h1>
-        {editLinkMobile}
-        {editLinkDesktop}
+        <div className={css.asideHeading}>
+          <h2 className={css.mobileHeading}>
+            {companyName ? (
+              <FormattedMessage id="ProfilePage.mobileHeading" values={{ name: companyName }} />
+            ) :
+              displayName ? (
+                <FormattedMessage id="ProfilePage.mobileHeading" values={{ name: displayName }} />
+              ) : null}
+          </h2>
+          {tribe &&
+            <p className={css.mobileSubheading}>
+              {tribe}
+            </p>}
+          {editLinkMobile}
+          {socialMedia && <UserSocialMedia className={css.socialMediaMobile} socialMedia={socialMedia} />}
+          {editLinkDesktop}
+        </div>
       </div>
     );
 
@@ -181,9 +207,30 @@ export class ProfilePageComponent extends Component {
     const mainContent = (
       <div>
         <h1 className={css.desktopHeading}>
-          <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />
+          {!profileUser ?
+            <FormattedMessage id="ProfilePage.desktopHeadingLoading" />
+            : companyName ?
+              <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: companyName }} />
+              : <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />
+          }
         </h1>
-        {hasBio ? <p className={css.bio}>{bio}</p> : null}
+        {tribe &&
+          <h3 className={css.desktopSubheading}>
+            {tribe}
+          </h3>}
+        {googleMapsUrl && accountType && accountType !== 'e' &&
+          <ExternalLink className={css.companyAddress} href={googleMapsUrl} >
+            {companyLocation.selectedPlace.address}
+          </ExternalLink>}
+        {hasBio && <p className={css.bio}>{bio}</p>}
+        {companyWebsite ?
+          <div className={css.companyWebsite}>
+            <ExternalLink href={companyWebsite}>
+              <FormattedMessage id="ProfilePage.companyWebsite" />
+              <img className={css.externalLink} src={exit} alt="External Link" />
+            </ExternalLink>
+          </div>
+          : null}
         {hasListings ? (
           <div className={listingsContainerClasses}>
             <h2 className={css.listingsTitle}>
@@ -224,7 +271,7 @@ export class ProfilePageComponent extends Component {
         id: 'ProfilePage.schemaTitle',
       },
       {
-        name: displayName,
+        name: companyName || displayName,
         siteTitle: config.siteTitle,
       }
     );

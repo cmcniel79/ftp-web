@@ -4,7 +4,6 @@ import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import debounce from 'lodash/debounce';
 import { IconSpinner } from '../../components';
-import { propTypes } from '../../util/types';
 import config from '../../config';
 
 import IconHourGlass from './IconHourGlass';
@@ -92,8 +91,8 @@ const LocationPredictionsList = props => {
             <FormattedMessage id="LocationAutocompleteInput.currentLocation" />
           </span>
         ) : (
-          geocoder.getPredictionAddress(prediction)
-        )}
+            geocoder.getPredictionAddress(prediction)
+          )}
       </li>
     );
   };
@@ -450,6 +449,7 @@ class LocationAutocompleteInputImpl extends Component {
       predictionsClassName,
       predictionsAttributionClassName,
       validClassName,
+      invalidClassName,
       placeholder,
       input,
       meta,
@@ -457,8 +457,9 @@ class LocationAutocompleteInputImpl extends Component {
     } = this.props;
     const { name, onFocus } = input;
     const { search } = currentValue(this.props);
-    const { touched, valid } = meta || {};
-    const isValid = valid && touched;
+    const { touched, valid, invalid } = meta || {};
+    const isValid = valid;
+    const isInvalid = invalid && touched;
     const predictions = this.currentPredictions();
 
     const handleOnFocus = e => {
@@ -468,7 +469,7 @@ class LocationAutocompleteInputImpl extends Component {
 
     const rootClass = classNames(rootClassName || css.root, className);
     const iconClass = classNames(iconClassName || css.icon);
-    const inputClass = classNames(inputClassName || css.input, { [validClassName]: isValid });
+    const inputClass = classNames(inputClassName || css.input, { [validClassName]: isValid }, { [invalidClassName]: isInvalid });
     const predictionsClass = classNames(predictionsClassName);
 
     // Only render predictions when the input has focus. For
@@ -479,13 +480,15 @@ class LocationAutocompleteInputImpl extends Component {
 
     return (
       <div className={rootClass}>
-        <div className={iconClass}>
-          {this.state.fetchingPlaceDetails ? (
-            <IconSpinner className={css.iconSpinner} />
-          ) : (
-            <IconHourGlass />
-          )}
-        </div>
+        {this.props.showImage &&
+          <div className={iconClass}>
+            {this.state.fetchingPlaceDetails ? (
+              <IconSpinner className={css.iconSpinner} />
+            ) : (
+                <IconHourGlass />
+              )}
+          </div>
+        }
         <input
           className={inputClass}
           type="search"
@@ -557,7 +560,7 @@ LocationAutocompleteInputImpl.propTypes = {
       shape({
         search: string,
         predictions: any,
-        selectedPlace: propTypes.place,
+        selectedPlace: any,
       }),
       string,
     ]),
