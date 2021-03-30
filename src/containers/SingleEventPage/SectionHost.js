@@ -117,8 +117,8 @@ const SectionHost = props => {
   const powwowOptionalData = eventType === "powwow" ? (
     <div className={css.optionalData}>
       { mc ? <p><b><FormattedMessage id="SingleEventPage.mc" /></b> {mc} </p> : null}
-      { arenaDirector ? <p><b><FormattedMessage id="SingleEventPage.hostDrums" /></b> {arenaDirector} </p> : null }
-      { hostDrums ? <p><b><FormattedMessage id="SingleEventPage.arenaDirector" /></b> {hostDrums} </p> : null }
+      { hostDrums ? <p><b><FormattedMessage id="SingleEventPage.hostDrums" /></b> {hostDrums} </p> : null }
+      { arenaDirector ? <p><b><FormattedMessage id="SingleEventPage.arenaDirector" /></b> {arenaDirector} </p> : null }
     </div>
   ) : null;
 
