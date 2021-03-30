@@ -20,6 +20,11 @@
   }
 }
 
+.country {
+  width: 100%;
+  margin-top: 24px;
+}
+
 .firstNameRoot {
   width: calc(34% - 9px);
 }
@@ -38,6 +43,11 @@
 
 .bottomWrapperText {
   @apply --marketplaceModalBottomWrapperText;
+}
+
+.newsletterCheckbox {
+  display: block;
+  margin: 25px 0;
 }
 
 .termsText {

@@ -1096,7 +1096,7 @@
   "SignupForm.isAdultLabel": "Are you over 18 years of age?",
   "SignupForm.isAdultPlaceholder": "Please select yes/no",
   "SignupForm.isAdultRequired": "Age selection is required",
-  "SignupForm.newsletterLabel": "Would you like to receive our newsletter about new listings and Marketplace updates?",
+  "SignupForm.newsletterLabel": "Would you like to receive our email newsletter about new listings and Marketplace updates?",
   "SignupForm.countryLabel": "What country will you ship/receive items from?",
   "SignupForm.countryPlaceholder": "Please select a country",
   "SignupForm.countryRequired": "Country selection is required",
