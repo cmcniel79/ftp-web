@@ -64,15 +64,12 @@ class ContactUsFormComponent extends Component {
                     const subjectRequiredMessage = intl.formatMessage({ id: 'ContactUsForm.subjectRequired' });
                     const subjectRequired = required(subjectRequiredMessage);
                     const subjectOptions = [
-                        { key: "selling", label: "Apply for a Seller account" },
-                        { key: "premium accounts", label: "Apply for a Premium, Non-Profit or Ad account" },
+                        { key: "selling", label: "Apply for a Seller, Premium, Non-Profit or Ad account" },
                         { key: "event hosting", label: "Hosting your event on From The People" },
                         { key: "native maps", label: "Submit Native language information for a Map location" },
-                        { key: "verification", label: "Begin tribal enrollment verification" },
                         { key: "refunds", label: "Request a refund" },
                         { key: "reporting", label: "Report an Indian Arts and Crafts Act Violation" },
-                        { key: "general questions", label: "General Questions" },
-                        { key: "website feedback", label: "Website Feedback" },
+                        { key: "website feedback", label: "Website Feedback and General Questions" },
                     ];
 
                     const submitDisabled = invalid || disabled || sendingInProgress;

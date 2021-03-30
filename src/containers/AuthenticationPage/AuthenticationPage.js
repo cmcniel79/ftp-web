@@ -271,12 +271,6 @@ export class AuthenticationPageComponent extends Component {
     );
     const socialLoginButtonsMaybe = showSocialLogins ? (
       <div className={css.idpButtons}>
-        <div className={css.socialButtonsOr}>
-          <span className={css.socialButtonsOrText}>
-            <FormattedMessage id="AuthenticationPage.or" />
-          </span>
-        </div>
-
         {showFacebookLogin ? (
           <div className={css.socialButtonWrapper}>
             <SocialLoginButton onClick={() => authWithFacebook()}>
@@ -285,6 +279,12 @@ export class AuthenticationPageComponent extends Component {
             </SocialLoginButton>
           </div>
         ) : null}
+
+        <div className={css.socialButtonsOr}>
+          <span className={css.socialButtonsOrText}>
+            <FormattedMessage id="AuthenticationPage.or" />
+          </span>
+        </div>
 
         {showGoogleLogin ? (
           <div className={css.socialButtonWrapper}>
@@ -421,7 +421,7 @@ export class AuthenticationPageComponent extends Component {
           <LayoutWrapperFooter>
             <Footer />
           </LayoutWrapperFooter>
-          
+
         </LayoutSingleColumn>
       </Page>
     );
