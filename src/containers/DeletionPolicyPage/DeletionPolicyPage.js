@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
-import { TopbarContainer } from '../../containers';
+import { TopbarContainer } from '..';
 import {
   Page,
   LayoutSideNavigation,
@@ -12,59 +12,71 @@ import {
   LayoutWrapperSideNav,
   LayoutWrapperTopbar,
   LayoutWrapperFooter,
-  PrivacyPolicy,
   Footer,
+  NamedLink,
 } from '../../components';
 import config from '../../config';
 
-import css from './PrivacyPolicyPage.module.css';
+import css from './DeletionPolicyPage.module.css';
 
-const PrivacyPolicyPageComponent = props => {
+const DeletionPolicyPageComponent = props => {
   const { scrollingDisabled, intl } = props;
 
   const tabs = [
     {
-      text: intl.formatMessage({ id: 'PrivacyPolicyPage.privacyTabTitle' }),
-      selected: true,
+      text: intl.formatMessage({ id: 'DeletionPolicyPage.privacyTabTitle' }),
+      selected: false,
       linkProps: {
         name: 'PrivacyPolicyPage',
       },
     },
     {
-      text: intl.formatMessage({ id: 'PrivacyPolicyPage.tosTabTitle' }),
+      text: intl.formatMessage({ id: 'DeletionPolicyPage.tosTabTitle' }),
       selected: false,
       linkProps: {
         name: 'TermsOfServicePage',
       },
     },
     {
-      text: intl.formatMessage({ id: 'PrivacyPolicyPage.deletionTabTitle' }),
-      selected: false,
+      text: intl.formatMessage({ id: 'DeletionPolicyPage.deletionTabTitle' }),
+      selected: true,
       linkProps: {
         name: 'DeletionPolicyPage',
       },
     },
   ];
+
   const siteTitle = config.siteTitle;
-  const schemaTitle = intl.formatMessage({ id: 'PrivacyPolicyPage.schemaTitle' }, { siteTitle });
+  const schemaTitle = intl.formatMessage({ id: 'DeletionPolicyPage.schemaTitle' }, { siteTitle });
   const schema = {
     '@context': 'http://schema.org',
     '@type': 'WebPage',
     name: schemaTitle,
   };
+  const contactPageLink = (
+    <NamedLink name="ContactPage">
+      <FormattedMessage id="DeletionPolicyPage.contactLink" />
+    </NamedLink>
+  );
+
   return (
     <Page title={schemaTitle} scrollingDisabled={scrollingDisabled} schema={schema}>
       <LayoutSideNavigation>
         <LayoutWrapperTopbar>
-          <TopbarContainer currentPage="PrivacyPolicyPage" />
+          <TopbarContainer currentPage="DeletionPolicyPage" />
         </LayoutWrapperTopbar>
         <LayoutWrapperSideNav tabs={tabs} />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.heading}>
-              <FormattedMessage id="PrivacyPolicyPage.heading" />
+              <FormattedMessage id="DeletionPolicyPage.heading" />
             </h1>
-            <PrivacyPolicy />
+            <p>
+              <FormattedMessage id="DeletionPolicyPage.updateDate" />
+            </p>
+            <p>
+              <FormattedMessage id="DeletionPolicyPage.deletionInstructions" values={{ link: contactPageLink }}/>
+            </p>
           </div>
         </LayoutWrapperMain>
         <LayoutWrapperFooter>
@@ -77,7 +89,7 @@ const PrivacyPolicyPageComponent = props => {
 
 const { bool } = PropTypes;
 
-PrivacyPolicyPageComponent.propTypes = {
+DeletionPolicyPageComponent.propTypes = {
   scrollingDisabled: bool.isRequired,
 
   // from injectIntl
@@ -90,9 +102,9 @@ const mapStateToProps = state => {
   };
 };
 
-const PrivacyPolicyPage = compose(
+const DeletionPolicyPage = compose(
   connect(mapStateToProps),
   injectIntl
-)(PrivacyPolicyPageComponent);
+)(DeletionPolicyPageComponent);
 
-export default PrivacyPolicyPage;
+export default DeletionPolicyPage;
