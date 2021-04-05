@@ -49,7 +49,7 @@ const SellerCard = props => {
       <div className={css.content}>
         {showButtons ?
           <button className={css.backButton} onClick={() => changeUser(false)}>
-            <img className={css.chevron} src={back} alt="chevron" />
+            <img className={css.chevron} src={IconChevronBack} alt="chevron" />
             <IconChevronBack className={css.chevron} />
           </button> : null}
         {user.profileImage && user.profileImage.id ? (
