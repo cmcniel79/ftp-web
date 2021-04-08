@@ -198,7 +198,7 @@ export const LandingPageComponent = props => {
                         <FormattedMessage id="LandingPage.blmText" />
                       </p>
                       <ExternalLink
-                        href="https://www.firstnations.org/covid-19-emergency-response-fund/"
+                        href="https://nymag.com/strategist/article/where-to-donate-for-black-lives-matter.html"
                         className={css.donateButton}>
                         <FormattedMessage id="LandingPage.blmButton" />
                       </ExternalLink>
