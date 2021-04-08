@@ -43,7 +43,6 @@ import { TopbarContainer, NotFoundPage } from '../../containers';
 
 import {
   sendEnquiry,
-  loadData,
   setInitialValues,
   fetchTransactionLineItems,
   sendUpdatedFollowed,

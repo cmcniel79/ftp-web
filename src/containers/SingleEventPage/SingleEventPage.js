@@ -22,8 +22,6 @@ import {
 
 import css from './SingleEventPage.module.css';
 
-const RESULT_PAGE_SIZE = 48;
-
 export class SingleEventPageComponent extends Component {
 
   componentDidMount() {
@@ -147,26 +145,5 @@ const SingleEventPage = compose(
   ),
   injectIntl
 )(SingleEventPageComponent);
-
-SingleEventPage.loadData = (params, search) => {
-  const queryId = params && params.id;
-  const queryParams = parse(search, {
-    latlng: ['origin'],
-    latlngBounds: ['bounds'],
-  });
-  const { page = 1, address, origin, ...rest } = queryParams;
-  const searchParams = {
-    ...rest,
-    page,
-    perPage: RESULT_PAGE_SIZE,
-    include: ['author', 'images'],
-    'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink', 'publicData.category'],
-    'fields.user': ['profile.displayName', 'profile.abbreviatedName',
-      'profile.publicData.accountType', 'profile.publicData.tribe', 'profile.publicData.companyName', 'profile.publicData.companyIndustry'], //added metadata for verify badge
-    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
-    'limit.images': 1,
-  };
-  return searchListings(searchParams, queryId);
-};
 
 export default SingleEventPage;

@@ -1,8 +1,10 @@
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
+import { parse } from '../../util/urlHelpers';
 
 import fetch from 'cross-fetch';
 
+const RESULT_PAGE_SIZE = 48;
 const EVENTS_URL = process.env.REACT_APP_API_EVENTS + 'prd/events';
 const KEY = process.env.REACT_APP_API_KEY;
 
@@ -39,7 +41,7 @@ const SingleEventPageReducer = (state = initialState, action = {}) => {
     case EVENT_DETAILS_SUCCESS:
       return { ...state, eventInfoInProgress: false, eventDetails: payload };
     case EVENT_DETAILS_ERROR:
-      return { ...state, eventInfoInProgress: false, eventInfoError: payload};
+      return { ...state, eventInfoInProgress: false, eventInfoError: payload };
 
     case SEARCH_LISTINGS_REQUEST:
       return { ...state, searchListingsInProgress: true, searchListingsError: null };
@@ -108,8 +110,28 @@ const fetchEventDetails = (hostUUID) => (dispatch, getState, sdk) => {
     .catch(() => dispatch(eventDetailsError("Could Not Get Event Details")));
 }
 
-export const loadData = (id) => (dispatch, getState, sdk) => {
+export const loadData = (params, search) => dispatch  => {
+  
+  const queryId = params;
+  const queryParams = parse(search, {
+    latlng: ['origin'],
+    latlngBounds: ['bounds'],
+  });
+
+  const { page = 1, address, origin, ...rest } = queryParams;
+  const searchParams = {
+    ...rest,
+    page,
+    perPage: RESULT_PAGE_SIZE,
+    include: ['author', 'images'],
+    'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink', 'publicData.category'],
+    'fields.user': ['profile.displayName', 'profile.abbreviatedName',
+      'profile.publicData.accountType', 'profile.publicData.tribe', 'profile.publicData.companyName', 'profile.publicData.companyIndustry'], //added metadata for verify badge
+    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
+    'limit.images': 1,
+  };
   return Promise.all([
-    dispatch(fetchEventDetails(id)),
+    dispatch(searchListings(searchParams, queryId)),
+    dispatch(fetchEventDetails(queryId)),
   ]);
 };

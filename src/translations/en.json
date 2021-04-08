@@ -871,7 +871,7 @@
   "SingleEventPage.heading": "{eventName}",
   "SingleEventPage.loadingEvent": "Loading Event Info....",
   "SingleEventPage.eventError": "There was an error when loading the event info. Please try refreshing the page",
-  "SingleEventPage.noEvent": "No Event :(",
+  "SingleEventPage.noEvent": "This event could not be loaded",
   "SingleEventPage.hostHeading": "Event Details",
   "SingleEventPage.listingsHeading": "Event Listings",
   "SingleEventPage.listingsLoading": "Listings are loading...",
