@@ -7,6 +7,7 @@ import { loadData as EditListingPageLoader } from './EditListingPage/EditListing
 import { loadData as EmailVerificationPageLoader } from './EmailVerificationPage/EmailVerificationPage.duck';
 import { loadData as FollowingPageLoader } from './FollowingPage/FollowingPage.duck';
 import { loadData as InboxPageLoader } from './InboxPage/InboxPage.duck';
+import { loadData as LandingPageLoader } from './LandingPage/LandingPage.duck';
 import { loadData as LikedListingsPageLoader } from './LikedListingsPage/LikedListingsPage.duck';
 import { loadData as ListingPageLoader } from './ListingPage/ListingPage.duck';
 import { loadData as ManageListingsPageLoader } from './ManageListingsPage/ManageListingsPage.duck';
@@ -39,6 +40,9 @@ const getPageDataLoadingAPI = () => {
     },
     InboxPage: {
       loadData: InboxPageLoader,
+    },
+    LandingPage: {
+      loadData: LandingPageLoader,
     },
     LikedListingsPage: {
       loadData: LikedListingsPageLoader,

@@ -1,12 +1,9 @@
 @import '../../styles/propertySets.css';
-
-.root {
-}
+.root {}
 
 .heading {
   @apply --marketplaceH1FontStyles;
-  margin: 0 0 18px 0;
-
+  margin: 0 0 25px 0;
   @media (--viewportMedium) {
     margin: 0 0 23px 0;
   }
@@ -14,7 +11,6 @@
 
 .subHeading {
   margin: 0 0 57px 0;
-
   @media (--viewportMedium) {
     margin: 0 0 57px 0;
   }
@@ -22,24 +18,18 @@
 
 .links {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-
-  @media (--viewportMedium) {
-    flex-direction: row;
-  }
 }
 
 .link {
   position: relative;
   width: 100%;
   margin-top: 25px;
-
   &:hover {
     text-decoration: none;
   }
-
   /* First link should not have top margin */
   &:nth-of-type(1) {
     margin-top: 0;
@@ -47,25 +37,21 @@
 }
 
 .link2Columns {
+  width: calc(48%);
   @media (--viewportMedium) {
     width: calc(50% - 20px);
-
-    /* First row should not have top margin */
-    &:nth-of-type(1),
-    &:nth-of-type(2) {
-      margin-top: 0;
-    }
+  }
+  /* First row should not have top margin */
+  &:nth-of-type(1), &:nth-of-type(2) {
+    margin-top: 0;
   }
 }
 
 .link3Columns {
   @media (--viewportMedium) {
     width: calc(33.333% - 20px);
-
     /* First row should not have top margin */
-    &:nth-of-type(1),
-    &:nth-of-type(2),
-    &:nth-of-type(3) {
+    &:nth-of-type(1), &:nth-of-type(2), &:nth-of-type(3) {
       margin-top: 0;
     }
   }
@@ -75,7 +61,6 @@
   width: 100%;
   border-radius: 4px;
   transition: var(--transitionStyleButton);
-
   &:hover {
     transform: scale(1.02);
     box-shadow: var(--boxShadowSectionLocationHover);
@@ -84,11 +69,8 @@
 
 .aspectWrapper {
   position: relative;
-  padding-bottom: calc(6 / 13 * 100%); /* 13:6 Aspect Ratio */
-
-  @media (--viewportMedium) {
-    padding-bottom: calc(2 / 3 * 100%); /* 3:2 Aspect Ratio */
-  }
+  padding-bottom: calc(2 / 3 * 100%);
+  /* 3:2 Aspect Ratio */
 }
 
 .image {
@@ -106,18 +88,11 @@
 
 .text {
   position: relative;
-  @apply --marketplaceH2FontStyles;
-  /* color: var(--matterColor); */
-  /* top: 45%;
-  left: 50%; */
-  /* transform: translate(-50%, -50%); */
-  /* background: rgb(30, 30, 30, .95); */
-  /* border-radius: 5px;
-  padding: 10px 20px; */
-
+  color: var(--matterColor);
+  margin: 5px 0;
+  line-height: 1.2em;
   @media (--viewportMedium) {
-    /* margin-top: 21px; */
+    @apply --marketplaceH2FontStyles;
+    margin-top: 10px;
   }
 }
-
-

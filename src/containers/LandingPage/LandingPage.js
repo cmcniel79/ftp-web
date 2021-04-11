@@ -29,8 +29,6 @@ import artImage from './images/art.png';
 import apparelImage from './images/apparel.png';
 import traditionalImage from './images/traditional.png';
 import { getListingsById, getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
-import { loadData } from './LandingPage.duck';
-
 
 import css from './LandingPage.module.css';
 
@@ -49,9 +47,9 @@ export const LandingPageComponent = props => {
   const hasListings = props.listings && props.listings.length === 6;
 
   // Only want Featured Users with full profiles
-  const completeUsers = users && users.length > 0 ? 
+  const completeUsers = users && users.length > 0 ?
     users.filter(user => user.profileImage && user.profileImage.id && !user.attributes.banned && !user.attributes.deleted &&
-    user.attributes.profile.bio && user.attributes.profile.bio.length > 150) : null;
+      user.attributes.profile.bio && user.attributes.profile.bio.length > 150) : null;
 
   return (
     <Page
@@ -77,11 +75,8 @@ export const LandingPageComponent = props => {
           <TopbarContainer />
         </LayoutWrapperTopbar>
         <LayoutWrapperMain>
-          <div className={css.heroContainer}>
-            <SectionHero className={css.hero} history={history} location={location} />
-          </div>
+          <SectionHero className={css.hero} history={history} location={location} />
           <ul className={css.sections}>
-
             <li className={css.section}>
               <div className={css.sectionContent}>
                 <SectionThumbnailLinks
@@ -129,7 +124,6 @@ export const LandingPageComponent = props => {
                     },
                   ]}
                   heading='Popular Categories'
-                  subHeading=' '
                 />
               </div>
             </li>
@@ -160,9 +154,10 @@ export const LandingPageComponent = props => {
                 <h2 className={css.customSectionTitle}>
                   <FormattedMessage id="LandingPage.donationTitle" />
                 </h2>
-                <div className={css.donateText}>
-                  <div className={css.donateSubText}>
-                  <h2 className={css.donateTitle}>
+
+                <div className={css.donateContainer}>
+                  <div className={css.donateSection}>
+                    <h2 className={css.donateTitle}>
                       <FormattedMessage id="LandingPage.covidTitle" />
                     </h2>
                     <p>
@@ -174,7 +169,8 @@ export const LandingPageComponent = props => {
                       <FormattedMessage id="LandingPage.covidButton" />
                     </ExternalLink>
                   </div>
-                  <div className={css.donateSubText}>
+
+                  <div className={css.donateSection}>
                     <h2 className={css.donateTitle}>
                       <FormattedMessage id="LandingPage.mmiwTitle" />
                     </h2>
@@ -187,23 +183,21 @@ export const LandingPageComponent = props => {
                       <FormattedMessage id="LandingPage.mmiwButton" />
                     </ExternalLink>
                   </div>
-                </div>
-                <div className={css.donateText}>
-                  <div className={css.donateSubText}>
-                    <div className={css.thirdDonate}>
-                    <h2 className={css.donateTitleBLM}>
-                        <FormattedMessage id="LandingPage.blmTitle" />
-                      </h2>
-                      <p>
-                        <FormattedMessage id="LandingPage.blmText" />
-                      </p>
-                      <ExternalLink
-                        href="https://nymag.com/strategist/article/where-to-donate-for-black-lives-matter.html"
-                        className={css.donateButton}>
-                        <FormattedMessage id="LandingPage.blmButton" />
-                      </ExternalLink>
-                    </div>
+
+                  <div className={css.donateSection}>
+                    <h2 className={css.donateTitle}>
+                      <FormattedMessage id="LandingPage.blmTitle" />
+                    </h2>
+                    <p>
+                      <FormattedMessage id="LandingPage.blmText" />
+                    </p>
+                    <ExternalLink
+                      href="https://nymag.com/strategist/article/where-to-donate-for-black-lives-matter.html"
+                      className={css.donateButton}>
+                      <FormattedMessage id="LandingPage.blmButton" />
+                    </ExternalLink>
                   </div>
+
                 </div>
               </div>
             </li>
@@ -262,7 +256,5 @@ const LandingPage = compose(
   connect(mapStateToProps),
   injectIntl
 )(LandingPageComponent);
-
-LandingPage.loadData = loadData;
 
 export default LandingPage;

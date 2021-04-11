@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
-import { NamedLink } from '../../components';
+import { Button, NamedLink } from '../../components';
 
 import css from './SectionHowItWorks.module.css';
 
@@ -10,10 +10,10 @@ const SectionHowItWorks = props => {
   const { rootClassName, className } = props;
 
   const classes = classNames(rootClassName || css.root, className);
-  const aboutPageLink = 
-  <NamedLink name="AboutPage">
-        <FormattedMessage id="SectionHowItWorks.aboutPageLink" />
-     </NamedLink>;
+  const aboutPageLink =
+    <NamedLink name="AboutPage">
+      <FormattedMessage id="SectionHowItWorks.aboutPageLink" />
+    </NamedLink>;
   return (
     <div className={classes}>
       <div className={css.title}>
@@ -21,17 +21,40 @@ const SectionHowItWorks = props => {
         <br />
       </div>
 
-      <div className={css.steps}>
-        <div className={css.step}>
-          <p>
-            <FormattedMessage id="SectionHowItWorks.part1Text" values={{ aboutPageLink }}/>
+      <div className={css.partContainer}>
+        <div className={css.part}>
+          <h2 className={css.partTitle}>
+            <FormattedMessage id="SectionHowItWorks.part1Title" />
+          </h2>
+          <p className={css.partText}>
+            <FormattedMessage id="SectionHowItWorks.part1Text" />
+          </p>
+        </div>
+
+        <div className={css.part}>
+          <h2 className={css.partTitle}>
+            <FormattedMessage id="SectionHowItWorks.part2Title" />
+          </h2>
+          <p className={css.partText}>
+            <FormattedMessage id="SectionHowItWorks.part2Text" />
+          </p>
+        </div>
+
+        <div className={css.part}>
+          <h2 className={css.partTitle}>
+            <FormattedMessage id="SectionHowItWorks.part3Title" />
+          </h2>
+          <p className={css.partText}>
+            <FormattedMessage id="SectionHowItWorks.part3Text" />
           </p>
         </div>
       </div>
-
-      <div className={css.signUpLink}>
-        <NamedLink name="SignupPage">
-          <FormattedMessage id="SectionHowItWorks.signUpLink" />
+      <div className={css.signupSection}>
+        <h2 className={css.signupText}>
+          <FormattedMessage id="SectionHowItWorks.signUpQuestion" />
+        </h2>
+        <NamedLink name="SignupPage" className={css.signupButton}>
+          <FormattedMessage id="SectionHowItWorks.signUpButton" />
         </NamedLink>
       </div>
     </div>

@@ -7,44 +7,25 @@
 
 /* If you've lot of content for the hero, multiple lines of text, make sure to adjust min-heights for each media breakpoint accordingly */
 
-.heroContainer {
-  display: flex;
-  flex-direction: column;
-  min-height: 300px;
-  height: 60vh;
-  max-height: 600px;
-  padding: 0;
-  @media (--viewportMedium) {
-    min-height: 500px;
-    height: 70vh;
-    max-height: none;
-  }
-  @media (--viewportLarge) {
-    max-height: 800px;
-    min-height: 600px;
-    height: calc(70vh - var(--topbarHeightDesktop));
-  }
-}
-
 .donateButton {
   @apply --marketplaceButtonStyles;
-  width: auto;
-  max-width: 300px;
-  padding: 20px 20px 0;
+  color: white;
+  text-decoration: none !important;
   @media (--viewportMedium) {
     display: block;
+    width: 300px;
   }
-  margin: auto;
   border-radius: 50px;
 }
 
-.donateSubText {
-  margin-top: 35px;
+.donateSection {
+  margin: 35px auto 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
   @media (--viewportLarge) {
-    width: 100%;
+    width: 50%;
     padding-top: 50px;
     align-items: center;
     text-align: center;
@@ -58,32 +39,18 @@
   }
 }
 
-.donateText {
-  @media (--viewportLarge) {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    vertical-align: text-top;
-    align-items: flex-end;
-  }
+.donateContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .donateTitle {
   text-align: center;
   margin: auto;
   width: 100%;
-  height: 75px;
   @media (--viewportMedium) {
     width: 75%;
-  }
-}
-
-.donateTitleBLM {
-  text-align: center;
-  margin: auto;
-  width: 75%;
-  @media (--viewportMedium) {
-    width: 100%;
   }
 }
 
@@ -127,13 +94,8 @@
 .hero {
   flex-grow: 1;
   justify-content: flex-end;
-  padding-bottom: 32px;
-  @media (--viewportMedium) {
-    padding-bottom: 83px;
-  }
   @media (--viewportLarge) {
     justify-content: center;
-    padding-top: 60px;
   }
 }
 

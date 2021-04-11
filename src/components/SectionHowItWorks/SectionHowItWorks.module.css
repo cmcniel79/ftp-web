@@ -1,24 +1,7 @@
 @import '../../styles/propertySets.css';
-
 .title {
   @apply --marketplaceH1FontStyles;
   margin-top: 0;
-}
-
-.steps {
-  display: flex;
-  flex-direction: row;
-
-  @media (--viewportMedium) {
-    flex-direction: row;
-  }
-}
-
-.step {
-  @media (--viewportMedium) {
-    width: 1000px;
-    margin-right: 40px;
-  }
 }
 
 .step:last-of-type {
@@ -30,18 +13,62 @@
 .stepTitle {
   margin-top: 18px;
   margin-bottom: 18px;
-
   @media (--viewportMedium) {
     margin-top: 21px;
     margin-bottom: 18px;
   }
 }
 
-.signUpLink {
-  margin-top: 25px;
-  font-size: 20px;
-
+.partContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
   @media (--viewportMedium) {
-    margin-top: 24px;
+    margin-top: 50px;
+    flex-direction: row;
+    justify-content: space-between;
   }
+}
+
+.part {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  @media (--viewportMedium) {
+    margin-top: 0;
+    width: 30%;
+  }
+}
+
+.partText {}
+
+.partTitle {
+  @apply --marketplaceH2FontStyles;
+  margin: 0;
+}
+
+.signupSection {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  margin: 10px auto;
+  align-items: center;
+  @media (--viewportMedium) {
+    margin-top: 20px;
+  }
+}
+
+.signupText {
+  display: inline-block;
+}
+
+.signupButton {
+  @apply --marketplaceButtonStyles;
+  color: white;
+  text-decoration: none !important;
+  @media (--viewportMedium) {
+    display: block;
+    width: 250px;
+  }
+  border-radius: 50px;
 }

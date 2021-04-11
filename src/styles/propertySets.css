@@ -118,8 +118,8 @@
     margin-bottom: 14px;
 
     @media (--viewportMedium) {
-      font-size: 64px;
-      line-height: 64px;
+      font-size: 48px;
+      line-height: 48px;
       letter-spacing: -1.5px;
       /* margin-top + n * line-height + margin-bottom => x * 8px */
       margin-top: 25px;

@@ -1,5 +1,4 @@
 @import '../../styles/propertySets.css';
-
 /* Animation for the hero elements */
 
 @keyframes animationTitle {
@@ -16,43 +15,39 @@
 }
 
 /* Shared animation rules */
+
 .animation {
   animation-name: animationTitle;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
   -webkit-animation-fill-mode: forwards;
-
   visibility: hidden;
   opacity: 1;
   position: relative;
 }
 
 .root {
-  @apply --backgroundImage;
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
-
   /* Text positioning is done with paddings */
 }
 
 .heroContent {
+  /* background-color: turquoise; */
   margin: 0 24px 0 24px;
-
   @media (--viewportMedium) {
     margin: 0 7.5vw 0 7.5vw;
   }
-
   /* Special viewport for adjusting the heroContent's placement */
-
   @media only screen and (min-width: 1025px) and (max-width: 1366px) {
     padding: 0 36px 0 36px;
   }
-
   @media only screen and (min-width: 1367px) {
     margin: 0 auto;
-    max-width: calc(900px + 36px + 36px);
+    /* max-width: calc(900px + 36px + 36px); */
+    max-width: 1500px;
     width: 100%;
     padding: 0 36px 0 36px;
   }
@@ -61,44 +56,63 @@
 
 .heroMainTitle {
   @apply --marketplaceHeroTitleFontStyles;
-  color: var(--matterColorLight);
-
+  color: var(--matterColor);
   composes: animation;
   animation-delay: 0.5s;
-
-  @media (--viewportMedium) {
-    max-width: 1000px;
-  }
   font-family: "Josefin Sans", poppins;
   font-weight: normal;
-  margin-bottom: 13px;
-}
-
-.heroSubTitle {
-  @apply --marketplaceH4FontStyles;
-
-  color: var(--matterColorLight);
-  margin: 0 0 32px 0;
-
-  composes: animation;
-  animation-delay: 0.65s;
-
+  margin: 20px auto;
   @media (--viewportMedium) {
-    max-width: var(--SectionHero_desktopTitleMaxWidth);
-    margin: 0 0 47px 0;
+    margin: 40px auto;
   }
+  max-width: 1000px;
 }
 
 .heroButton {
   @apply --marketplaceButtonStyles;
   composes: animation;
-
   animation-delay: 0.8s;
-
+  margin: 20px auto 20px auto;
   @media (--viewportMedium) {
     display: block;
     width: 260px;
   }
-  margin: auto;
   border-radius: 50px;
+}
+
+.imagesContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  @media (--viewportMedium) {
+    flex-wrap: nowrap;
+    margin-bottom: 20px;
+  }
+}
+
+.imageSections {
+  margin: 0 auto;
+  position: relative;
+  width: 30%;
+  @media (--viewportMedium) {
+    width: 14%;
+  }
+}
+
+.image {
+  border-radius: 50%;
+  width: 100%;
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: var(--boxShadowListingCard);
+  }
+}
+
+.imageText {
+  color: var(--matterColor);
+}
+
+.chevron {
+  width: 20px;
+  margin-bottom: 1px;
 }
