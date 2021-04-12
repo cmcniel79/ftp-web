@@ -49,6 +49,7 @@ const AuthenticationPage = loadable(() => import(/* webpackChunkName: "Authentic
 const CheckoutPage = loadable(() => import(/* webpackChunkName: "CheckoutPage" */ './containers/CheckoutPage/CheckoutPage'));
 const ContactDetailsPage = loadable(() => import(/* webpackChunkName: "ContactDetailsPage" */ './containers/ContactDetailsPage/ContactDetailsPage'));
 const ContactPage = loadable(() => import(/* webpackChunkName: "ContactPage" */ './containers/ContactPage/ContactPage'));
+const DeletionPolicyPage = loadable(() => import(/* webpackChunkName: "DeletionPolicyPage" */ './containers/DeletionPolicyPage/DeletionPolicyPage'));
 const EditListingPage = loadable(() => import(/* webpackChunkName: "EditListingPage" */ './containers/EditListingPage/EditListingPage'));
 const EmailVerificationPage = loadable(() => import(/* webpackChunkName: "EmailVerificationPage" */ './containers/EmailVerificationPage/EmailVerificationPage'));
 const EventHostPage = loadable(() => import(/* webpackChunkName: "EventHostPage" */ './containers/EventHostPage/EventHostPage'));
@@ -413,6 +414,11 @@ const routeConfiguration = () => {
       path: '/privacy-policy',
       name: 'PrivacyPolicyPage',
       component: PrivacyPolicyPage,
+    },
+    {
+      path: '/account-deletion',
+      name: 'DeletionPolicyPage',
+      component: DeletionPolicyPage,
     },
     {
       path: '/styleguide',

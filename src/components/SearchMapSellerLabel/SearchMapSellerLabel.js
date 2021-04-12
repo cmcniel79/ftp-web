@@ -46,32 +46,32 @@ class SearchMapSellerLabel extends Component {
     if (accountType !== 'e') {
       switch (industry) {
         case ("retail"):
-          image = <IconRetail className={css.image} isFilled={!this.state.isShown} />
+          image = <IconRetail className={css.image} isFilled={this.state.isShown} />
           break;
         case ("dining"):
-          image = <IconDining className={css.image} isFilled={!this.state.isShown} />;
+          image = <IconDining className={css.image} isFilled={this.state.isShown} />;
           break;
         case ("art"):
-          image = <IconArt className={css.image} isFilled={!this.state.isShown} />;
+          image = <IconArt className={css.image} isFilled={this.state.isShown} />;
           break;
         case ("professional"):
-          image = <IconWork className={css.image} isFilled={!this.state.isShown} />;
+          image = <IconWork className={css.image} isFilled={this.state.isShown} />;
           break;
         case ("hospitality"):
-          image = <IconBed className={css.image} isFilled={!this.state.isShown} />;
+          image = <IconBed className={css.image} isFilled={this.state.isShown} />;
           break;
         case ("nonprofits"):
-          image = <IconPeople className={css.image} isFilled={!this.state.isShown} />;
+          image = <IconPeople className={css.image} isFilled={this.state.isShown} />;
           break;
         case ("beauty"):
-          image = <IconFitness className={css.image} isFilled={!this.state.isShown} />;
+          image = <IconFitness className={css.image} isFilled={this.state.isShown} />;
           break;
         default:
-          image = <IconOther className={css.image} isFilled={!this.state.isShown} />;
+          image = <IconOther className={css.image} isFilled={this.state.isShown} />;
           break;
       }
     } else {
-      image = <IconVerified className={css.image} isFilled={!this.state.isShown} />;
+      image = <IconVerified className={css.image} isFilled={this.state.isShown} />;
     }
 
     const name = !this.state.isShown ? null
