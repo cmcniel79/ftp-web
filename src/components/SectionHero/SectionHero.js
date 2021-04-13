@@ -40,7 +40,7 @@ const SectionHero = props => {
     {
       title: "Shirts",
       img: shirts,
-      search: "pub_subCategory=shirts"
+      search: "pub_subCategory=tops"
     },
     {
       title: "Skin Care",
@@ -50,7 +50,7 @@ const SectionHero = props => {
     {
       title: "Supplies",
       img: supplies,
-      search: "pub_subCategory=supplies"
+      search: "pub_subCategory=beading"
     },
   ];
 
