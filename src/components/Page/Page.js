@@ -111,16 +111,16 @@ class PageComponent extends Component {
       {
         name: 'facebook',
         url: `${canonicalRootURL}${facebookImage}`,
-        width: 1200,
-        height: 630,
+        width: 300,
+        height: 300,
       },
     ];
     const twitterImgs = twitterImages || [
       {
         name: 'twitter',
         url: `${canonicalRootURL}${twitterImage}`,
-        width: 600,
-        height: 314,
+        width: 300,
+        height: 300,
       },
     ];
 
