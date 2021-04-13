@@ -22,8 +22,8 @@ import {
   ListingCard
 } from '../../components';
 import { TopbarContainer } from '../../containers';
-import facebookImage from '../../assets/SocialMedia-791x791.png';
-import twitterImage from '../../assets/SocialMedia-791x791.png';
+import facebookImage from '../../assets/square_400x400.png';
+import twitterImage from '../../assets/square_400x400.png';
 import jewelryImage from './images/jewelry.png';
 import artImage from './images/art.png';
 import apparelImage from './images/apparel.png';
@@ -58,9 +58,9 @@ export const LandingPageComponent = props => {
       contentType="website"
       description={schemaDescription}
       title={schemaTitle}
-      facebookImages={[{ url: facebookImage, width: 1200, height: 630 }]}
+      facebookImages={[{ url: facebookImage, width: 300, height: 300 }]}
       twitterImages={[
-        { url: `${config.canonicalRootURL}${twitterImage}`, width: 600, height: 314 },
+        { url: `${config.canonicalRootURL}${twitterImage}`, width: 300, height: 300 },
       ]}
       schema={{
         '@context': 'http://schema.org',

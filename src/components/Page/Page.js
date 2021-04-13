@@ -10,8 +10,8 @@ import { metaTagProps } from '../../util/seo';
 import { canonicalRoutePath } from '../../util/routes';
 import { CookieConsent } from '../../components';
 
-import facebookImage from '../../assets/SocialMedia-791x791.png';
-import twitterImage from '../../assets/SocialMedia-791x791.png';
+import facebookImage from '../../assets/square_400x400.png';
+import twitterImage from '../../assets/square_400x400.png';
 import css from './Page.module.css';
 
 const preventDefault = e => {
@@ -111,16 +111,16 @@ class PageComponent extends Component {
       {
         name: 'facebook',
         url: `${canonicalRootURL}${facebookImage}`,
-        width: 1200,
-        height: 630,
+        width: 300,
+        height: 300,
       },
     ];
     const twitterImgs = twitterImages || [
       {
         name: 'twitter',
         url: `${canonicalRootURL}${twitterImage}`,
-        width: 600,
-        height: 314,
+        width: 300,
+        height: 300,
       },
     ];
 

@@ -165,7 +165,7 @@ export const queryPromotedListings = queryParams => (dispatch, getState, sdk) =>
 
 export const loadFeaturedPartners = ids => (dispatch, getState, sdk) => {
   dispatch(showUserRequest(ids));
-  if (ids.length > 0) {
+  if (ids && ids.length > 0) {
     ids.map(id => {
       return sdk.users
         .show({
@@ -215,11 +215,10 @@ function handleErrors(response) {
 }
 
 
-export const loadData = () => (dispatch, getState, sdk) => {
+export const loadData = () => dispatch => {
   // Clear state so that previously loaded data is not visible
   // in case this page load fails.
   dispatch(setInitialState());
-
   return Promise.all([
     dispatch(fetchFeaturedUUIDs())
       .then(ids => {

@@ -1,0 +1,2985 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.625465,
+                    35.310188
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsídii To’í",
+                "englishName": "Bird Springs",
+                "language": "Diné Bizaad",
+                "translation": "Bird Springs",
+                "background": "\"Tsidi To’ii (Birdsprings) Chapter derived its name from a spring over which birds flew, that was witnessed by one of the original Navajo clans looking for a place to settle. Other Navajos came to the area for better grazing for their large herds.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -111.613333,
+                    36.29
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsinaabąąs Habitiin",
+                "englishName": "Bodeway",
+                "language": "Diné Bizaad",
+                "translation": "Wagon Trail",
+                "background": "The Bodaway Gap Chapter is geographically the largest Chapter on the Navajo Nation. Eighty percent of it lies within the former Bennett Freeze with the Bodaway Gap Community being the most impacted.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -111.421389,
+                    35.855278
+                ]
+            },
+            "properties": {
+                "nativeName": "Na’ní’á Hasání",
+                "englishName": "Cameron",
+                "language": "Diné Bizaad",
+                "translation": "Old Bridge",
+                "background": "Prior to the construction of the Cameron Chapter House facility the voting community members held their meeting in the lobby of the Cameron Motel or an old building behind the Cameron Trading Post. The Cameron Trading Post and Motel were established in 1905 by the late Hubert Richardson. ",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-cameron-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.063832,
+                    36.530559
+                ]
+            },
+            "properties": {
+                "nativeName": "Chiiłchin Bii’ Tó",
+                "englishName": "Chilchinbeto",
+                "language": "Diné Bizaad",
+                "translation": "Sumac Spring",
+                "background": "Chilchinbeto Chapter is located 24 miles southeast of Kayenta on Navajo Route 59. The Northeastern edge of Black Mesa serves as a backdrop to the community. Chilchinbeto Chapter is the home of the world’s two largest hand-woven Navajo Rugs.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-chilchinbeto-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.9396,
+                    35.9597
+                ]
+            },
+            "properties": {
+                "nativeName": "Łeejin Haagééd",
+                "englishName": "Coalmine",
+                "language": "Diné Bizaad",
+                "translation": "Digging out Coal",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -111.454239,
+                    36.572414
+                ]
+            },
+            "properties": {
+                "nativeName": "Béésh Haagééd",
+                "englishName": "Copper Mine",
+                "language": "Diné Bizaad",
+                "translation": "Digging out Metal",
+                "background": "The Community of Coppermine started during the 1930’s. The community was named after an open-pit mine. The copper mine closed in 1968. The copper deposit was apparently originally discovered in the 1880s.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-copper-mine-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.8465,
+                    36.8458
+                ]
+            },
+            "properties": {
+                "nativeName": "Denihootsoh",
+                "englishName": "Dennehotso",
+                "language": "Diné Bizaad",
+                "translation": "Meadows Merging",
+                "background": "In 1920 a community began to form around a trading post that was built north of the present-day chapter house. In the early years, Dennehotso was mainly a farming community. Laguna Creek, which runs central to the farming region, provided irrigation water to this small farming community.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-dennehotso-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.6792,
+                    36.7666
+                ]
+            },
+            "properties": {
+                "nativeName": "Ts’ah Bii’ Kin",
+                "englishName": "Inscription House",
+                "language": "Diné Bizaad",
+                "translation": "House in the Field of Sagebrush ",
+                "background": "The Ts’ah Bii Kin Chapter is located in a rural area of the Navajo Nation approximately 5 miles North of Junction Hwy 98 & N16 and about 60 miles north of Tuba City, AZ. The community is predominately Navajo and Navajo continues to be the dominant language. ",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-inscription-house-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -111.0942,
+                    36.5796
+                ]
+            },
+            "properties": {
+                "nativeName": "K’ai Bii’ Tó",
+                "englishName": "Kaibeto",
+                "language": "Diné Bizaad",
+                "translation": "Willows within the Water",
+                "background": "The K’ai’bii’to’ Chapter is located in the Northeast corner of Coconino County, Arizona and it is 36 miles East of Page, Arizona. The K’ai’bii’to Chapter consists of a local community with scenic walls of White Mesa into the East, Navajo Mountain to the North, Ts’egzzi’ to the Northwest and the chapter sits along the banks of the K’ai’bii’to’ Wash",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-kaibeto-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.2546,
+                    36.7278
+                ]
+            },
+            "properties": {
+                "nativeName": "Tó Dínéeshzhee’",
+                "englishName": "Kayenta",
+                "language": "Diné Bizaad",
+                "translation": "Fingers of Water",
+                "background": "Kayenta is located 25 miles (40 km) south of Monument Valley and contains a number of hotels and motels which service visitors to Monument Valley. Kayenta Township is the only municipal-style government on the Navajo Nation. It is regarded as a political sub-division of the Navajo Nation.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-kayenta-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -111.4395,
+                    36.8617
+                ]
+            },
+            "properties": {
+                "nativeName": "Łichíí’ii",
+                "englishName": "Lechee",
+                "language": "Diné Bizaad",
+                "translation": "Name of extinct burgundy-colored medicinal plant",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -111.4395,
+                    36.8617
+                ]
+            },
+            "properties": {
+                "nativeName": "Tółchíí’ Kooh",
+                "englishName": "Leupp",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": "Francis E. Leupp (which Leupp was named after) grew up around the Little Colorado River, where early residents planted corn, beans and squash on the flood plain. After a series of floods in the 1940s, the town was moved to higher ground at its present location on N-15.  Leupp was also the very first Navajo chapter, and comprises the southwestern corner of the Navajo Nation.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-leupp-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.8696,
+                    37.0342
+                ]
+            },
+            "properties": {
+                "nativeName": "Nattsis’áán",
+                "englishName": "Navajo Mountain",
+                "language": "Diné Bizaad",
+                "translation": "Earth Head",
+                "background": "Navajo Mountain straddles the Arizona-Utah border and rises to a height of 10,416 feet. Two trails (each 14 miles long) to the largest natural arch in the world, Rainbow Bridge [Tsé naní’áhí], begin near this mountain. As the Navajo are fortunate enough to realize that the universe around them is filled by the holy, it was natural to interpret this incredible structure as a petrified rainbow. In fact, it is two petrified rainbows, one male and one female, in perfect union. This is only natural since this arch lies very close to the confluence of the San Juan [Tooh] (male) and the Colorado [Tóníts’ósíkooh] (female) rivers where the Cloud and Rain People were born.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-navajo-mountain-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.1939,
+                    36.9914
+                ]
+            },
+            "properties": {
+                "nativeName": "’Ooljéé’ Tó",
+                "englishName": "Oljato",
+                "language": "Diné Bizaad",
+                "translation": "To Moonwater",
+                "background": "Oljato Chapter is located in the northern portion of the Western Agency. The chapter includes the scenic area of Monument Valley and Mexican Hat. The Oljato Chapter conducts monthly meetings to keep residents informed; residents have a forum to express their opinions to their Navajo Nation Council Delegate or to decide on matters concerning the chapter.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.6586,
+                    36.5883
+                ]
+            },
+            "properties": {
+                "nativeName": "Shą́ą́’ Tó",
+                "englishName": "Shonto",
+                "language": "Diné Bizaad",
+                "translation": "Water on the Sunny Side ",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.970278,
+                    36.317778
+                ]
+            },
+            "properties": {
+                "nativeName": "Tó Nehelį́į́h",
+                "englishName": "Tonalea",
+                "language": "Diné Bizaad",
+                "translation": "Water Collecting in a basin",
+                "background": "Tonalea/Redlake Chapter is one of the 18 Chapters in Western Navajo Agency and a part of District 1.  Tonalea Chapter was first recognized and certified as a Navajo Nation Chapter on February 14, 1956 and home to the Elephants Feet Monument.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -111.2399,
+                    36.135
+                ]
+            },
+            "properties": {
+                "nativeName": "Tó Naneesdizí",
+                "englishName": "Tuba City",
+                "language": "Diné Bizaad",
+                "translation": "Tangled Water, Scattered Water, or Braided Water ",
+                "background": "Tó Naneesdizí Local Government (formerly known as Tuba City Chapter) is located on the western portion of the Navajo Nation. Home of the 2015 World Champion Team Roper and numerous state champion teams, Tuba City also boast the “best performing” school in Navajo country. Tuba City is also the largest community on Navajo Nation, but don’t be fooled, Tuba City is not quite an actual “city.” Our traditional values, community spirit, and family strength make for a comforting home town feel. From the traditional Hopi dances in Moenkopi (our neighbors) to the Festivals and Community Celebrations to the Dinosaur tracks and other historical land marks, Tuba City offers so much to explore.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.029722,
+                    36.333056
+                ]
+            },
+            "properties": {
+                "nativeName": "Kits’iilí",
+                "englishName": "Black Mesa",
+                "language": "Diné Bizaad",
+                "translation": "Shattered House",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.5526,
+                    36.1544
+                ]
+            },
+            "properties": {
+                "nativeName": "Ch’ínílį́",
+                "englishName": "Chinle",
+                "language": "Diné Bizaad",
+                "translation": "Where the Water Flows Out",
+                "background": "The name “where the water flows out” describes the location of the water flowing out from Canyon de Chelly. The Chinle community is situated in the center of the Navajo Nation and was established after the Navajo people returned from the Long Walk when thousands of Navajos were forced from their homes to march over 300 miles to Ft. Sumner, New Mexico. After the Treaty of 1868 was signed, Navajos returned to their homelands and many families came back to this area. Chinle serves as the Gateway to Canyon de Chelly where the canyon has provided food, water and shelter for groups of people for over 5,000 years including Archaic, Basketmakers, Ancestral Puebloans, and Hopi.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-chinle-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.22,
+                    36.37
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsiiyi’ Be’ak’id",
+                "englishName": "Forest Lake",
+                "language": "Diné Bizaad",
+                "translation": "Pond between the trees",
+                "background": "The first community meeting assembled under a tree about two miles from the Forest Lake Chapter House. In these early days, sheep dipping and branding of livestock were the main resources for the community in the earlier days. Forest Lake Chapter, tucked away in an isolated location, brings the community its scenic welcome to its open land on top of Black Mesa, in the mid-north central part of the Navajo Reservation in Arizona.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-forest-lake-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.439,
+                    36.0783
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Dildǫ́’ii",
+                "englishName": "Hard Rock",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": "Tsé Dildǫ́’ii in Navajo, refers to the stony outcrops quarried for thousands of years as building material. Even today, people haul rocks from the ridges to build foundations for their homes.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.2287,
+                    36.4169
+                ]
+            },
+            "properties": {
+                "nativeName": "Lók’aa’ Jígai",
+                "englishName": "Lukachukai",
+                "language": "Diné Bizaad",
+                "translation": "White Reeds Extending Out",
+                "background": "Lukachukai is located near the foothills of the Lukachukai Mountain. The Lukachukai Mountain connects with the Chuska Mountains and stretches approximately 60 miles straddling the Arizona and New Mexico state line. Roof Butte at an elevation of 9,835 feet above sea level is the high point of the Lukachukai Mountain range.  ",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-lukachukai-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.6179,
+                    36.3528
+                ]
+            },
+            "properties": {
+                "nativeName": "Dá’ák’eh Halání",
+                "englishName": "Many Farms",
+                "language": "Diné Bizaad",
+                "translation": "Many Fields",
+                "background": "Now known to community members as Dá’ák’e Halani or Many Fields, the Chapter’s original name was To Naneesdizi, meaning Water Stringing Out in Rivulets. Dá’ák’e Halani began in 1937 as a small farming community near an irrigation dam, 15 miles North of Chinle, Arizona, on the site of an ephemeral spring fed by Sheep Dip Wash, a Diversion Channel of Chinle Wash. ",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.4487,
+                    35.8964
+                ]
+            },
+            "properties": {
+                "nativeName": "Názlíní",
+                "englishName": "Nazlini",
+                "language": "Diné Bizaad",
+                "translation": "Bend in the river",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.226,
+                    36.1008
+                ]
+            },
+            "properties": {
+                "nativeName": "Be’ak’id Baa ’Ahhodzání",
+                "englishName": "Pinon",
+                "language": "Diné Bizaad",
+                "translation": "Body of Water in a Sunken Area",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.8729,
+                    36.4072
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Ch’ízhí",
+                "englishName": "Rough Rock",
+                "language": "Diné Bizaad",
+                "translation": "Rough Rock",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.4734,
+                    36.5131
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Níkání",
+                "englishName": "Round Rock",
+                "language": "Diné Bizaad",
+                "translation": "Flat Plated Rocks",
+                "background": "Round Rock Community is known for by two names: Tsenikani (Flat Plated Rocks) and Bis Doolizh Deezahi (Blue Pointed Mesa). Round Rock Chapter is located in the north central part of the Navajo Nation within Apache County, Arizona. A majority of Round Rock’s population maintain the rural setting of the chapter area.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.9465,
+                    36.1708
+                ]
+            },
+            "properties": {
+                "nativeName": "Bis Dootł’izhí Nídeeshgiizh",
+                "englishName": "Blue Gap",
+                "language": "Diné Bizaad",
+                "translation": "Blue Clay Gap",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.54603,
+                    35.021562
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Łání",
+                "englishName": "Cottonwood",
+                "language": "Diné Bizaad",
+                "translation": "Many Rocks",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.1287,
+                    36.2378
+                ]
+            },
+            "properties": {
+                "nativeName": "Tódzís’áh ",
+                "englishName": "Wheatfields",
+                "language": "Diné Bizaad",
+                "translation": "Wheatfields",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.2208,
+                    36.3061
+                ]
+            },
+            "properties": {
+                "nativeName": "Tséíhílį́",
+                "englishName": "Tsaile",
+                "language": "Diné Bizaad",
+                "translation": "Flowing through rock",
+                "background": "The chapter is home to the main campus of Dine’ College. Dine’ College is the largest employer in the area. Dine’ College has 7 extension branches at each of the Navajo Nation growth centers. ",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.081,
+                    36.0286
+                ]
+            },
+            "properties": {
+                "nativeName": "Hooshdódii Tó",
+                "englishName": "Wippoorwill",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.6805,
+                    35.6518
+                ]
+            },
+            "properties": {
+                "nativeName": "K’ii’ Tsoiitah",
+                "englishName": "Cornfields",
+                "language": "Diné Bizaad",
+                "translation": "Rabbit Brush",
+                "background": "The fertile farming land attracted people to move in and start farming in the vicinity of the Cornfields community during the 1940’s. It was due to abundant production of corn that the community was called “Cornfields”. However, the Navajo name is K’iiltsoiitah, meaning “ among the rabbit brush”.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-cornfields-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.3207,
+                    35.3853
+                ]
+            },
+            "properties": {
+                "nativeName": "Tó’ Ałchi’į́dí",
+                "englishName": "Dilkon",
+                "language": "Diné Bizaad",
+                "translation": "Smooth Butte",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.0765,
+                    35.7445
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Hootsooí",
+                "englishName": "Fort Defiance",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": "The land on which Fort Defiance was eventually established was first noted by white military men when Colonel John Washington stopped there on his return journey from an expedition to Canyon de Chelly. Fort Defiance was established on September 18, 1851, by Col. Edwin V. Sumner to create a military presence in Diné bikéyah (Navajo territory). Fort Defiance was built on valuable grazing land that the federal government then prohibited the Navajo from using.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-fort-defiance-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.542,
+                    35.7114
+                ]
+            },
+            "properties": {
+                "nativeName": "Lók’aah Niteel",
+                "englishName": "Ganado",
+                "language": "Diné Bizaad",
+                "translation": "Wide Reeds",
+                "background": "Residents enjoy an ideal four-season climate that averages 300+ days of sunshine every year, together with moderate temperatures and low humidity, year-round. This ideal recreational climate promotes all sorts of outdoor activities like visiting the NPS – Hubbell Trading Post National Historic Site and its rug auctions, fishing at Ganado Lake, attending the annual Roy Johnson Memorial Rodeo, and other local events. ",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.207,
+                    35.2831
+                ]
+            },
+            "properties": {
+                "nativeName": "Ma’ii To’í",
+                "englishName": "Houck",
+                "language": "Diné Bizaad",
+                "translation": "Coyote Spring",
+                "background": "The chapter was named “Houck” after a trading post which was owned by an early trader named John Houck. Houck Chapter was certified in 1956. The Present chapter house was built in 1963. This area was not made part of the Navajo reservation until 1934, although Navajos have lived in the area since the 17th century. Following the treaty of 1868, Navajo returned to live in their customary areas after Fort Sumner.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.0953,
+                    35.3923
+                ]
+            },
+            "properties": {
+                "nativeName": "Tó Hahadleeh",
+                "englishName": "Indian Wells",
+                "language": "Diné Bizaad",
+                "translation": "Dripping Water",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.1368,
+                    35.7745
+                ]
+            },
+            "properties": {
+                "nativeName": "Jádí Tó",
+                "englishName": "Jeddito",
+                "language": "Diné Bizaad",
+                "translation": "Antelope Springs",
+                "background": "The Navajo name of Jádí Tó (Antelope Springs) was derived from nearby watering points, which were frequently used by antelopes. Most families living within the Jeddito “island” are members of the extended families who were forcefully evicted from the old Hopi Reservation (District 6) in September and October of 1944.  This marked the first mass relocation of Navajos determined to be living on the wrong side of the Navajo-Hopi boundary.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.4257,
+                    35.7561
+                ]
+            },
+            "properties": {
+                "nativeName": "Kin Łichíí’",
+                "englishName": "Kinlichee",
+                "language": "Diné Bizaad",
+                "translation": "Red House",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.5281,
+                    35.5013
+                ]
+            },
+            "properties": {
+                "nativeName": "Łeeyi’ Tó",
+                "englishName": "Klagetoh",
+                "language": "Diné Bizaad",
+                "translation": "Water under the Ground",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.1128,
+                    35.9403
+                ]
+            },
+            "properties": {
+                "nativeName": "Jee Jeez’á",
+                "englishName": "Low Mountain",
+                "language": "Diné Bizaad",
+                "translation": "Piñon Gum Point",
+                "background": "The chapter consists of a broad valley between two mesas. One known as “Low Mountain” in English — Ta’ Sahdi’ Da’ Askani’, or “Lone Mesa” in Navajo. Most of the top of the southern mesa, known as Jeeh Deez’ah (“Piñon Gum Point”) in Navajo, was lost in the Navajo-Hopi Land Settlement Act of 1974.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-low-mountain-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.8479,
+                    35.7514
+                ]
+            },
+            "properties": {
+                "nativeName": "Hóyéé’",
+                "englishName": "Steamboat",
+                "language": "Diné Bizaad",
+                "translation": "State of Fright",
+                "background": "The Navajo community named Steamboat “Hóyee,” which roughly translates to “State of Fright.” The meaning has been said to be attributed to a V shaped canyon, which converges with an overhanging cliff. At the convergence is a natural spring. Historically, the spring was a watering hole for passers-by. Local people feared being ambushed by enemies or mountain lions if they got water there. The name Steamboat refers to a large rock formation that resembles a steamship.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.6974,
+                    35.0242
+                ]
+            },
+            "properties": {
+                "nativeName": "Ha’naa Ni’deetiin",
+                "englishName": "Teesto",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": "When Teesto laid along the main road between Dilkon and Polacca it was known as Naat’ee’tiin, “Road Going Past.” When Arizona Route 87 was built in the 1960s, the community was bypassed and became much less prominent. Teesto’s unique location was the blending ground between Navajos and the Hopis to the north. Today, Teesto remains on the border between the Navajo and Hopi Reservations where the community has remained committed to the land and the people surrounding them.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-teesto-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.0677,
+                    35.6059
+                ]
+            },
+            "properties": {
+                "nativeName": "Be’ak’id Baa ’A’oogeedí",
+                "englishName": "White Cone",
+                "language": "Diné Bizaad",
+                "translation": "Excavated for a Pond",
+                "background": "The elders say that Be’akid Baa’a’oogeed was named after a local trader/ trading post manager who dug a well next to a local livestock pond, which was needed for quality water to operate the White Cone Trading Post. Later, people began gathering for local community meetings in front of the trading post wall until a more permanent site for a meeting place was planned. The White Cone Chapter was first certified in 1957 and a facility for the Chapter House was built shortly thereafter.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-white-cone-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.0537,
+                    35.3539
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Si’ání",
+                "englishName": "Lupton",
+                "language": "Diné Bizaad",
+                "translation": "Unmoveable Rock",
+                "background": "In the Navajo language, Lupton is known as Tsé Si’ání (Setting Rock) and Tsedijooli (Round Rock). There are spectacular sandstone cliffs that encompass the Helena Canyon, which meets the deep arroyos of the Rio Puerco. Lupton, Arizona has been inhabited on intermittent basis for over two Centuries. It has been known as a travel and trade center since that time. Prior to Fort Sumner, New Mexico, it was a central point of departure for military expeditions and for supply routes.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.9101,
+                    35.4239
+                ]
+            },
+            "properties": {
+                "nativeName": "Ayei Díwózhii Bii’ Tó",
+                "englishName": "Greasewood Springs",
+                "language": "Diné Bizaad",
+                "translation": "Greasewood Springs",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.3288,
+                    35.2091
+                ]
+            },
+            "properties": {
+                "nativeName": "Nahat’á Dziil",
+                "englishName": "Sanders",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.4917,
+                    35.4165
+                ]
+            },
+            "properties": {
+                "nativeName": "Kin Niteel",
+                "englishName": "Wide Ruins",
+                "language": "Diné Bizaad",
+                "translation": "Wide House",
+                "background": "Wide Ruins is a community situated in a spectacularly scenic area. There is much history attached to the land surrounding the chapter community and if you ask any of the community residents, they will tell you that the area is a wonderful place to live. For instance, Antelope Lake is 14 miles to the northeast which offers good fishing and camping.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.1269,
+                    35.4756
+                ]
+            },
+            "properties": {
+                "nativeName": "T’eeł Ch’ínít’i’í",
+                "englishName": "Oak Springs",
+                "language": "Diné Bizaad",
+                "translation": "Cattails in a Row",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.9493,
+                    36.3225
+                ]
+            },
+            "properties": {
+                "nativeName": "Be’ak’id Halchíí’",
+                "englishName": "Red Lake",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.0956,
+                    35.6447
+                ]
+            },
+            "properties": {
+                "nativeName": "Ch’íhootsooí",
+                "englishName": "St. Michaels",
+                "language": "Diné Bizaad",
+                "translation": "Green Meadow",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.1659,
+                    35.9025
+                ]
+            },
+            "properties": {
+                "nativeName": "Ni’iijííh Hasání",
+                "englishName": "Saw Mill",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.630833,
+                    35.769722
+                ]
+            },
+            "properties": {
+                "nativeName": "Ma’ii Tsééhítłizhí",
+                "englishName": "Coyote Canyon",
+                "language": "Diné Bizaad",
+                "translation": "Coyote fell in the Watering Hole",
+                "background": "Upon returning from the “Long Walk” 1868, or the Navajo imprisonment in Fort Sumner, New Mexico, Chief Manuelito took residence in the northeastern part of the Chapter area and lived there the rest of his life. The place is named after him as a reminder of the Great Chief. ",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.9662,
+                    36.0458
+                ]
+            },
+            "properties": {
+                "nativeName": "Tó Niłts’ílí",
+                "englishName": "Crystal",
+                "language": "Diné Bizaad",
+                "translation": "Crystal-Clear Water",
+                "background": "Crystal, New Mexico offers great scenic and recreational characteristics which include Assayi Lake, Narbona Pass, Berland Lake, Tódích’iini Lake, and Crystal Lake. Narbona Pass (former Washington Pass) has great recreational qualities especially for Hiking and Cross Country activities, students at Dine College advocated in changing the name of Washington Pass to Narbona Pass to pay tribute to an early famous Navajo leader.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.827,
+                    35.7928
+                ]
+            },
+            "properties": {
+                "nativeName": "Naakai Bito’í",
+                "englishName": "Mexican Springs",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": "Mexican Springs Chapter was recognized as a chapter Government in 1955. The Community population is roughly around 1,200. Its Navajo name is Nakai Bito which means Mexican’s water.  Storytellers from our community say that there were Mexicans who lived at the old Trading Post; one day a Mexican man was in the arroyo south of the chapter house and was digging up water, thereafter that’s the name of this community.    ",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.7615,
+                    35.8589
+                ]
+            },
+            "properties": {
+                "nativeName": "Tó Haach’i’",
+                "englishName": "Tohatchi ",
+                "language": "Diné Bizaad",
+                "translation": "One Who Digs for Water",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.7748,
+                    35.7092
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Nahazoh",
+                "englishName": "Twin Lakes",
+                "language": "Diné Bizaad",
+                "translation": "Canyon Cove",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.682,
+                    36.065
+                ]
+            },
+            "properties": {
+                "nativeName": "Nahashch’idii",
+                "englishName": "Naschitti",
+                "language": "Diné Bizaad",
+                "translation": "Badger",
+                "background": "Naschitti is located in a unique area along the U.S. 491, 43 miles north of Gallup and 52 miles south of Shiprock. The Naschitti Community was founded and established in 1893. The name originates from a badger that was digging for shelter or for food, but instead dug up water. Early settlers made a well out of the badger’s discovery which provided drinking water for years.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.164379,
+                    37.205595
+                ]
+            },
+            "properties": {
+                "nativeName": "T’áá Bíích’į́įdii",
+                "englishName": "Aneth",
+                "language": "Diné Bizaad",
+                "translation": "Big Cottonwood Tree",
+                "background": "The Navajo name T’aabiich’iidii (Just like the Devil) was the term applied to the business practice of the community’s first anglo trader. So the community was given the same name in Navajo. The Christian concept of “the devil” is not applicable to traditional Navajo thought, but is used here as the closest inference; “Ch’iidii” is much like “ghost” and is a very negative connotation. Oral history places Navajo homelands as far north as Moab, Utah and Delores, Colorado. However, when the original Navajo Reservation was created as part of the 1868 Navajo and United States treaty, Utah portions of the Navajo country were not included.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.389167,
+                    36.9675
+                ]
+            },
+            "properties": {
+                "nativeName": "Łichíí’ Dah Azkání",
+                "englishName": "Red Mesa",
+                "language": "Diné Bizaad",
+                "translation": "Red Rock Mesa",
+                "background": "The Red Mesa Chapter is located near a unique and strikingly beautiful large mesa. The reddish mesa is located southeast of the Chapter House. ",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.0195,
+                    36.8414
+                ]
+            },
+            "properties": {
+                "nativeName": "Bitł’ááh Bitó",
+                "englishName": "Beclabito",
+                "language": "Diné Bizaad",
+                "translation": "Water Underneath",
+                "background": "The main formations in the area include the Beclabito Dome with its colorful red rocks of Entrada Sandstone and the Carrizo Mountains. A Member of the Beclabito Chapter related the story as how the community got its name: “…A gentleman by the name of “Bit’laah” settled close to a water source, now where the Day School is situated. Since he lived near the watering site, neighbors considered the water to belong to him. After his death, the area became known as “Bit’laah Bito”. “Bit’laah” means under or beneath; “bi” means possessively his and “to” means water.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.7129,
+                    36.3348
+                ]
+            },
+            "properties": {
+                "nativeName": "T’iis Tsoh Sikaad",
+                "englishName": "Burnham",
+                "language": "Diné Bizaad",
+                "translation": "Big Tree Spreading Out",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.780843,
+                    36.851376
+                ]
+            },
+            "properties": {
+                "nativeName": "Gadíí’áhí",
+                "englishName": "Gadii'ahi",
+                "language": "Diné Bizaad",
+                "translation": "Juniper Tree Sticking in the Ground",
+                "background": "The Gadíí’áhí / To’koi (formerly Cudeii) Chapter is comprised of two different communities. Gadíí’áhí in Navajo means “a lone juniper tree”, the name derived from one juniper tree growing along the river. To’koi (also known as Rattlesnake) in Navajo means “gas latern”. The name is derived in the 1920’s when Oil and Gas was discovered in the area. In the community of Gadii’ahi, a Farming Community, farmers grow an abundance of melon, Indian (Blue, White, Yellow) corn and a variety of vegetables, along with grain and hay. In the community of To’koi, a Grazing Community, livestock owners graze sheep, horses and cattle.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.49357,
+                    36.76117
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Daak’áán",
+                "englishName": "Hogback",
+                "language": "Diné Bizaad",
+                "translation": "Rock Uplift",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.4181,
+                    36.7361
+                ]
+            },
+            "properties": {
+                "nativeName": "Niinah Nízaad",
+                "englishName": "Nenahnezad",
+                "language": "Diné Bizaad",
+                "translation": "A Long Incline",
+                "background": "Nenahnezad Chapter is located within the Northern Navajo Agency about 15 miles west of Farmington and 24 miles east of Shiprock. Nenahnezad Chapter, along with the chapters of Upper Fruitland and San Juan are part of the “Fruitland Irrigation Project” which involves 317 farmers. There are two major industrial activities with and near the chapter: coal mining and power plant operations.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-nenahnezad-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.3142,
+                    36.7158
+                ]
+            },
+            "properties": {
+                "nativeName": "Doo ’Alk’akií",
+                "englishName": "Upper Fruitland",
+                "language": "Diné Bizaad",
+                "translation": "Nonfattening",
+                "background": "Upper Fruitland, (Navajo name) “Doolkai”, is located on the Navajo Reservation 8 miles Southwest of Farmington, New Mexico. Upper Fruitland is primarily an Agrarian community and has about 145 farm plots of farmland.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-upper-fruitland-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.7059,
+                    36.2847
+                ]
+            },
+            "properties": {
+                "nativeName": "T’iis Nídeeshgiizh",
+                "englishName": "Newcomb",
+                "language": "Diné Bizaad",
+                "translation": "Cottonwoods Spreading out from the Wash",
+                "background": "Newcomb Chapter is located on the Navajo reservation in San Juan County, New Mexico, 35 miles south of Shiprock, New Mexico and 58 miles north of Gallup, New Mexico on U.S. Highway 491. The community has a population of approximately 2,000 members with 591 registered voters and is the first Chapter in the State of New Mexico to become Local Governance Act Certified in 2004.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-newcomb-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.7059,
+                    36.2847
+                ]
+            },
+            "properties": {
+                "nativeName": "Tó Háálį́",
+                "englishName": "Toadlena",
+                "language": "Diné Bizaad",
+                "translation": "Where the Water Flows Out",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-toadlena-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.8743,
+                    36.4247
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé  ’Ałnáozt’i’í",
+                "englishName": "Sanostee",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-sanostee-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.6948,
+                    36.1531
+                ]
+            },
+            "properties": {
+                "nativeName": "Tó Hałtsooí",
+                "englishName": "Sheep Springs",
+                "language": "Diné Bizaad",
+                "translation": "Yellow Springs",
+                "background": "Sheep Springs is named after Tooh Haltsooi (Verdent Springs or Dibébito’ another orgin name is grassy field blowing in the wind, somewhat resembling waves on a lake, this term was used when we returned from our captivity in Fort Sumner). The area of the land includes the eastern slopes and foothills of the Chuska Mountains. Most of the chapter lands are in the San Juan Basin. The entire chapter covers 169 square miles with elevations ranging from 5,000 to over 9,000 feet above sea level near Narbona Pass.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.687,
+                    36.7856
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Bit’a’í",
+                "englishName": "Shiprock",
+                "language": "Diné Bizaad",
+                "translation": "Rock with Wings",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-shiprock-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.218056,
+                    36.565
+                ]
+            },
+            "properties": {
+                "nativeName": "K’aabiizhii Nástł’ah",
+                "englishName": "Cove",
+                "language": "Diné Bizaad",
+                "translation": "Nestled in a Cove",
+                "background": "Our community enjoys a rich fabric of valley and woodland areas, interwoven with environmental resources, grazing, open space and the vast mountains, all representing a heritage of natural beauty.  Our Chapter house serves and ties together the entire community.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.637778,
+                    36.966944
+                ]
+            },
+            "properties": {
+                "nativeName": "Naakai Tó",
+                "englishName": "Mexican Water",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.0604,
+                    36.604
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Łichíí’ Dah Azkání",
+                "englishName": "Red Valley",
+                "language": "Diné Bizaad",
+                "translation": "Red Rock Mesa",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.6259,
+                    36.7181
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Nitsaa Deez’áhí",
+                "englishName": "Rock Point",
+                "language": "Diné Bizaad",
+                "translation": "Big Rock Point",
+                "background": "The first settler called the community “Beesh ii ahi” (standing metal) because of a windmill that was in the Area. Later, many local people were hired to build the community irrigation and diversion dam. The dam was built using manpower and teams of horses. The chapter name was changed to reflect a nearby rock formation and to date the chapter is known as “Rock Point”.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.362778,
+                    36.812222
+                ]
+            },
+            "properties": {
+                "nativeName": "Tó Łikan",
+                "englishName": "Sweetwater",
+                "language": "Diné Bizaad",
+                "translation": "Sweet Water",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-sweetwater-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.0857,
+                    36.9211
+                ]
+            },
+            "properties": {
+                "nativeName": "T’iis Názbąs",
+                "englishName": "Teec Nos Pos",
+                "language": "Diné Bizaad",
+                "translation": "Cottonwood Trees in a Circle",
+                "background": "There are several stories on how the community obtained its name.  The most common story currently shared is that the name, “T’iis nazbas” was given to the are in the 1800s after several cottonwood trees that naturally stood side-by-side forming a large circle in a radius of about 50 to 60 feet in diameter. Some area residents say only one tree remains to this day.  The local youths are planning on replanting some trees in the same area where those trees once existed. The other story is that there was one tree that bloomed to a near perfect round  during the summer months, what this tree was remains a mystery to this day.  Some local elders say the tree was a Navajo Willow but others say the tree was a large cotton tree.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-teec-nos-pos-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -107.514722,
+                    34.409167
+                ]
+            },
+            "properties": {
+                "nativeName": "T’iis Tsoh Sikaadí",
+                "englishName": "Alamo",
+                "language": "Diné Bizaad",
+                "translation": "Big Cottonwood Tree",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.036944,
+                    35.3628
+                ]
+            },
+            "properties": {
+                "nativeName": "Kin Łigaii ",
+                "englishName": "Prewitt",
+                "language": "Diné Bizaad",
+                "translation": "White House",
+                "background": "The Baca/Prewitt Chapter house is located in Prewitt, a small community approximately 20 miles west of Grants and about 43 miles east of Gallup. The chapter area includes the communities of Prewitt, Haystack, South Chavez, and Blue Water. The southern Navajo Sacred Mountain, Tsoodizl (Mt. Taylor) looms in the east. Haystack (mesa) and other pinnacles and mesas make up a dramatic panorama and foreground to Tsoodzil as one views it from Baca, site of the chapter house.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.1666,
+                    35.8152
+                ]
+            },
+            "properties": {
+                "nativeName": "Jádí Hádít’įįh",
+                "englishName": "Becenti",
+                "language": "Diné Bizaad",
+                "translation": "Antelope Lookout",
+                "background": "According to the local people, the chapter is known by two names: Tloo’di’tsin, meaning “barren of trees” and Jádí Hádít’įįh meaning “Antelope Lookout”. These names are representative of life in past, and conditions of the area. Since the names were hard to pronounce by Non-Navajos, the chapter was named simply “Becenti” after Chief Becenti, the first documented leader of the community. In the past, the land was once densely covered with pinon and juniper, which were eventually depleted due to demand for shelter and firewood. The probable abundance of trees is suggested by two names: Tsin neez Chooz and Tsin yaa naalk’d. Many types of wild animals used to roam the area, notably antelope. ",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.667,
+                    35.3984
+                ]
+            },
+            "properties": {
+                "nativeName": "Bááh Háálį́",
+                "englishName": "Bread Springs",
+                "language": "Diné Bizaad",
+                "translation": "Bread Flowing Out",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.0617,
+                    35.5081
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsétah Tó ’Alk’olí",
+                "englishName": "Cassamero Lake",
+                "language": "Diné Bizaad",
+                "translation": "Water Waves Among the Rock",
+                "background": "The community was named after a Spanish man named Casamero who lived near the lake; he wanted the community named after him. It is said the early community meetings were held in a Hogan until the first chapter house was built. The meetings were generally conducted by a man named Incly Begay. People walked to the meetings or came on horseback and wagons. Meeting in the early days dealt with dam building and repair, plowing, sheep-dipping, etc. ",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.907864,
+                    35.249471
+                ]
+            },
+            "properties": {
+                "nativeName": "Chéch’il Tah",
+                "englishName": "Chichilatah",
+                "language": "Diné Bizaad",
+                "translation": "Among the Oaks",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.5998,
+                    35.5339
+                ]
+            },
+            "properties": {
+                "nativeName": "Kin Łitsoh Sinilí",
+                "englishName": "Church Rock",
+                "language": "Diné Bizaad",
+                "translation": "Group of Yellow Houses",
+                "background": "Church Rock Chapter is located approximately 4 miles east of Gallup, New Mexico. The chapter house is set atop a hill just northeast of the junction of NM Highway 556 and NM Highway 118 (formerly known as Old Highway 66). Church Rock Chapter is situated against the beautiful red rocks north of Interstate 40 and has a community population of approximately 2800 members.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -107.4578,
+                    36.2092
+                ]
+            },
+            "properties": {
+                "nativeName": "Bilagáanaa Nééz",
+                "englishName": "Counselor",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": "Counselor community was named after Jim Counselor, an early settler, and trader who opened the very first trading post in the year of 1930. The Trading Post still exists today, but in the years since it has been converted to Redmesa Trading. The community of Counselor is also just south of the historic Dinetah; one of the earliest Navajo settlements that dates back to the 1400s. Major highways nearby are Highway 550, located between Farmington and Albuquerque.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.1512,
+                    35.6781
+                ]
+            },
+            "properties": {
+                "nativeName": "T’iis Ts’óóz Nídeeshgiizh",
+                "englishName": "Crownpoint",
+                "language": "Diné Bizaad",
+                "translation": "Skinny Tree Canyon",
+                "background": "The history of Crownpoint goes back to the first inhabitants when the Anasazi lived here in the local area.  It was here they farmed and hunted as well as engaged in social activities.  The Diné also came along side the Ansazi and lived in the local area. They called this area T’iis Ts’óóz Nídeeshgiizh because of the greasewood and cottonwood which grew in the back canyons. In more contemporary times, a man from Idaho came and became the first Superintendent for the new Easten Navajo Agency.  Samuel F. Stacher established the new government agency and the new Pueblo Bonito Boarding School in 1910.  Later a trading post, a church, and other residential housing were built.  All thru this time, the Dine have maintained their culture and heritage, including continued their cultural native practices, which still plays an important and powerful role in their day-to-day life.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.0315,
+                    36.527
+                ]
+            },
+            "properties": {
+                "nativeName": "Dził Ná’oodiłii",
+                "englishName": "Huerfano",
+                "language": "Diné Bizaad",
+                "translation": "Water Coming Up ",
+                "background": "The Huerfano Chapter is approximately 90 square miles in the northeastern portion of the Navajo Nation/Eastern Navajo Agency. The Chapter covers the communities of Carson, Otis, Bisti, Adobe, Gallegos, Blanco, Huerfano and Jacquez. With the largest land base in the Navajo Eastern Agency, Huerfano sits on an area known as the Checkerboard region, it is a mixture of land ownerships which include: Navajo Trust , Allotted, State and Bureau of Land Management.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.4776,
+                    35.5222
+                ]
+            },
+            "properties": {
+                "nativeName": "Ayání Bito’",
+                "englishName": "Iyanbito",
+                "language": "Diné Bizaad",
+                "translation": "Buffalo Springs",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-iyanbito-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.1573,
+                    36.0917
+                ]
+            },
+            "properties": {
+                "nativeName": "Be’ak’id Halgai",
+                "englishName": "Lake Valley",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-lake-valley-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.274167,
+                    36.092778
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Łigai",
+                "englishName": "White Rock",
+                "language": "Diné Bizaad",
+                "translation": "White Rock",
+                "background": "White Rock Chapter is located in an isolated area, approximately 28 miles north of Crownpoint and approximately 55 miles south of Farmington, New Mexico.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.7233,
+                    36.4431
+                ]
+            },
+            "properties": {
+                "nativeName": "Tó ’Áłch’į́dí",
+                "englishName": "Little Water",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": "We are located 13 miles east of Crownpoint and are a community of about 2,000 people.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.994,
+                    35.422
+                ]
+            },
+            "properties": {
+                "nativeName": "Kin Hózhóní",
+                "englishName": "Manuelito",
+                "language": "Diné Bizaad",
+                "translation": "Beautiful House",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.950714,
+                    35.541328
+                ]
+            },
+            "properties": {
+                "nativeName": "Tséyaa Tó",
+                "englishName": "Tsayatoh",
+                "language": "Diné Bizaad",
+                "translation": "Water Under the Rock",
+                "background": "Tsayatoh Chapter is located in a rural area of the Navajo Nation approximately 15 miles northwest of Gallup, New Mexico on McKinley County Road, between the Rock Springs and Manuelito Chapters and Tse Bonito, New Mexico.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.322,
+                    35.5781
+                ]
+            },
+            "properties": {
+                "nativeName": "Be’ak’id Hóteelí",
+                "englishName": "Mariano Lake",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": "After the signing of the 1868 Treaty, an elderly man named Chief Munyanna settled the lake area. When asked for his name the Anglo could not spell it from the pronunciation so they renamed him Chief Mariano. The community did not have a name at the time. Chief Mariano and his scouts began construction of an earthen embankment to catch rain and melting snow runoff. The workmen used arrows, saddle blankets and rugs to excavate the silt to build the embankment. Soon after, the dam created a lake. Because Chief Mariano, mobilized the construction of the dam the lake became known as “Mariano Lake”, and eventually, the community became known by the same name.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-mariano-lake-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.1378,
+                    35.5285
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsin Názbąs Si’ą́",
+                "englishName": "Smith Lake",
+                "language": "Diné Bizaad",
+                "translation": "Round Tree",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.2234,
+                    35.4025
+                ]
+            },
+            "properties": {
+                "nativeName": "Dlǫ́’í Yázhí",
+                "englishName": "Thoreau",
+                "language": "Diné Bizaad",
+                "translation": "Little Prairie Dog",
+                "background": "The town started its life as an Army base, according to Radosevich. It was originally known as “Mitchell,” after the base’s barber, and later “Theroux,” after its paymaster. Somehow the spelling got changed to “Thoreau,” but anyone who pronounces it “Thor-OH,” as in Henry David, has instantly branded himself an outsider. It’s “Thor-OO.”",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -107.742,
+                    36.2667
+                ]
+            },
+            "properties": {
+                "nativeName": "Naayízí",
+                "englishName": "Naageezi",
+                "language": "Diné Bizaad",
+                "translation": "Squash",
+                "background": "Nageezi was named after an elderly woman named “Asdzaan Naayizi”, who found a garden of dark green wild squash in the early 1900’s. The Navajo word “Naayizi” means squash.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.3609,
+                    35.8031
+                ]
+            },
+            "properties": {
+                "nativeName": "Nahodeeshgiizh",
+                "englishName": "Nahodishgish",
+                "language": "Diné Bizaad",
+                "translation": "The Gap",
+                "background": "In the 1870’s, a Navajo family settled in the Nahodishgish area. They adopted the name Morgan. J.C. Morgan was from this family. He was elected the fifth chairman of the Navajo Tribal Council and served a term from 1938 to 1942. In 1927, an Anglo by the name of Jesse Dalton opened up the first trading post near the southern area of the canyon. A pass in the higher region was named “Dalton Pass” and for this reason the chapter has also been referred to by this name.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.3609,
+                    35.8031
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé ’Íí’áhí",
+                "englishName": "Standing Rock",
+                "language": "Diné Bizaad",
+                "translation": "Standing Rock",
+                "background": "The Floyd Burnham family established a trading post in the 1930s. The trading post and the BIA school served as the center of the community for a long time. The Standing Rock Community School is now considered a historical site. ",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -107.3478,
+                    35.9556
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Ch’ízhi Bii’ Tó",
+                "englishName": "Ojo Encino",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": "In the early days, a family by the name of Augustine was the first family to ever settle here. The grandfather of the family, Salvador Toledo, was the first person within the community to be assigned land on the “Indian Allotment” basis. By 1950, the first organized community group was started. Many negotiations took place between the Bureau of Indian Affairs and the local landowners. Therefore, giving people land within Ojo Encino.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-ojo-encino-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -107.2075,
+                    35.7974
+                ]
+            },
+            "properties": {
+                "nativeName": "Na’neelzhiin",
+                "englishName": "Torreon",
+                "language": "Diné Bizaad",
+                "translation": "Dark-colored Barrier",
+                "background": "The Torreon/Star Lake Chapter is located in a rural area of the Navajo Nation approximately 72 miles east of Crownpoint, New Mexico on New Mexico HWY. 197. The Torreon/Star Lake Chapter was certified by the Navajo Tribal Council on November 10, 1955. “Naneelzhiin” is the Navajo name of the Chapter and means – marked area; man-made barricade once used to guide game.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.447,
+                    35.6039
+                ]
+            },
+            "properties": {
+                "nativeName": "Tó Bééhwíísganí",
+                "englishName": "Pine Dale",
+                "language": "Diné Bizaad",
+                "translation": "Hardened Mud Around the Water",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -107.6275,
+                    35.9515
+                ]
+            },
+            "properties": {
+                "nativeName": "Nahodeeshgiizh Ch’ínílį́",
+                "englishName": "Pueblo Pintado",
+                "language": "Diné Bizaad",
+                "translation": "Flowing out from the Gap",
+                "background": "According to the local people, the chapter is known by Nahodeeshgiizh Ch’ínílį́, meaning water flowing from canyon. The Pueblo Pintado Chapter is named in English for the ruins of a Chacoan Great House, and it is located one and half mile north of Highway 9.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -107.7625,
+                    35.8129
+                ]
+            },
+            "properties": {
+                "nativeName": "Łį́į́gai Bitó",
+                "englishName": "White Horse Lake",
+                "language": "Diné Bizaad",
+                "translation": null,
+                "background": "Whitehorse Lake Chapter is located 28 miles east of Crownpoint, New Mexico.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.4917,
+                    35.1331
+                ]
+            },
+            "properties": {
+                "nativeName": "Tł’oh Chiní",
+                "englishName": "Ramah",
+                "language": "Diné Bizaad",
+                "translation": "Onions",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -107.0776,
+                    35.1037
+                ]
+            },
+            "properties": {
+                "nativeName": "Tó Hajileehí",
+                "englishName": "Tohajiileeh",
+                "language": "Diné Bizaad",
+                "translation": "Where They Pull the Water Up and it Keeps Refilling Itself ",
+                "background": null,
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.7559,
+                    35.4542
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Łichíí’",
+                "englishName": "Red Rock",
+                "language": "Diné Bizaad",
+                "translation": "Red Rock",
+                "background": "Tsé Łichíí’ located 5 miles South of Gallup, New Mexico is part of the Eastern Navajo Agency.",
+                "type": "Navajo Nation Chapter",
+                "imageId": "navajo-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.7426,
+                    35.5281
+                ]
+            },
+            "properties": {
+                "nativeName": "Naʼnízhoozhí",
+                "englishName": "Gallup",
+                "language": "Diné Bizaad",
+                "translation": "Something Lies Side by Side Across",
+                "background": "Naʼnízhoozhí refers to the old foot bridge spanning the Rio Puerco River across from the Santa Fe Railway station. ",
+                "type": "Town",
+                "imageId": "navajo-gallup-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -106.6504,
+                    35.0844
+                ]
+            },
+            "properties": {
+                "nativeName": "Beeʼeldííl Dahsinil",
+                "englishName": "Albuquerque",
+                "language": "Diné Bizaad",
+                "translation": "Where the Bell Sits Up High",
+                "background": null,
+                "type": "Town",
+                "imageId": "navajo-albuquerque-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -105.9378,
+                    35.687
+                ]
+            },
+            "properties": {
+                "nativeName": "Yootó",
+                "englishName": "Santa Fe",
+                "language": "Diné Bizaad",
+                "translation": "Bead Springs",
+                "background": null,
+                "type": "Town",
+                "imageId": "navajo-santa-fe-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -106.7053,
+                    34.8548
+                ]
+            },
+            "properties": {
+                "nativeName": "Nák'aa't'áhí",
+                "englishName": "Bosque Farms",
+                "language": "Diné Bizaad",
+                "translation": "White Cotton Cloth",
+                "background": null,
+                "type": "Town",
+                "imageId": "navajo-bosque-farms-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -111.631111,
+                    35.199167
+                ]
+            },
+            "properties": {
+                "nativeName": "Kinłání",
+                "englishName": "Flagstaff",
+                "language": "Diné Bizaad",
+                "translation": "Many Houses",
+                "background": null,
+                "type": "Town",
+                "imageId": "navajo-flagstaff-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -106.4506,
+                    35.2037
+                ]
+            },
+            "properties": {
+                "nativeName": "Dził Nááyizí ",
+                "englishName": "Sandia Mountains",
+                "language": "Diné Bizaad",
+                "translation": "The Mountain That Moves Around",
+                "background": null,
+                "type": "Mountain",
+                "imageId": "navajo-sandia-mountains-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -107.538333,
+                    37.797778
+                ]
+            },
+            "properties": {
+                "nativeName": "Tooh Ba'áadii ",
+                "englishName": "Rio Grande",
+                "language": "Diné Bizaad",
+                "translation": "The Female River",
+                "background": null,
+                "type": "River",
+                "imageId": "navajo-rio-grande-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -106.7405,
+                    35.1368
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Hane'é ",
+                "englishName": "Petroglyph National Monument",
+                "language": "Diné Bizaad",
+                "translation": "Rocks That Tell Stories",
+                "background": null,
+                "type": "National Monument",
+                "imageId": "navajo-petroglyph-national-monument-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -105.4858,
+                    37.5772
+                ]
+            },
+            "properties": {
+                "nativeName": "Sis Naajiní",
+                "englishName": "Blanca Peak",
+                "language": "Diné Bizaad",
+                "translation": "Sacred Mountain of the East",
+                "background": null,
+                "type": "Navajo Sacred Mountain",
+                "imageId": "navajo-blanca-peak-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -107.6082,
+                    35.2386
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsoodził",
+                "englishName": "Mount Taylor",
+                "language": "Diné Bizaad",
+                "translation": "Sacred Mountain of the South",
+                "background": null,
+                "type": "Navajo Sacred Mountain",
+                "imageId": "navajo-mount-taylor-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -111.6832,
+                    35.3408
+                ]
+            },
+            "properties": {
+                "nativeName": "Dook’o’oosłííd",
+                "englishName": "San Francisco Peaks",
+                "language": "Diné Bizaad",
+                "translation": "Sacred Mountain of the West",
+                "background": null,
+                "type": "Navajo Sacred Mountain",
+                "imageId": "navajo-san-francisco-peaks-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -108.089,
+                    37.445
+                ]
+            },
+            "properties": {
+                "nativeName": "Dibé Nitsaa",
+                "englishName": "Mount Hesperus",
+                "language": "Diné Bizaad",
+                "translation": "Sacred Mountain of the North",
+                "background": null,
+                "type": "Navajo Sacred Mountain",
+                "imageId": "navajo-mount-hesperus-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -110.1,
+                    36.983333
+                ]
+            },
+            "properties": {
+                "nativeName": "Tsé Biiʼ Ndzisgaii",
+                "englishName": "Monument Valley",
+                "language": "Diné Bizaad",
+                "translation": "Valley of the Rocks",
+                "background": null,
+                "type": "Navajo Tribal Park",
+                "imageId": "navajo-monument-valley-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -109.508995,
+                    36.155281
+                ]
+            },
+            "properties": {
+                "nativeName": "Tséyi",
+                "englishName": "Canyon De Chelly",
+                "language": "Diné Bizaad",
+                "translation": "In The Rock",
+                "background": null,
+                "type": "National Monument",
+                "imageId": "navajo-canyon-de-chelly-1",
+                "showNav": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -86.9023,
+                    32.3182
+                ]
+            },
+            "properties": {
+                "nativeName": "Albaamu",
+                "englishName": "Alabama",
+                "language": "Choctaw",
+                "translation": "Thicket-clearers, or Plant-cutters",
+                "background": "Named for the Alibamu, a tribe whose name derives from a Choctaw phrase meaning \"thicket-clearers\" or \"plant-cutters\" (from albah, \"(medicinal) plants\", and amo, \"to clear\"). The modern Choctaw name for the tribe is Albaamu.",
+                "type": "State",
+                "imageId": "alabama-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -149.4937,
+                    64.2008
+                ]
+            },
+            "properties": {
+                "nativeName": "Alaxsxaq",
+                "englishName": "Alaska",
+                "language": "Aleut",
+                "translation": "The Mainland",
+                "background": "From Aleut alaxsxaq, \"the mainland\" (literally \"the object towards which the action of the sea is directed\").",
+                "type": "State",
+                "imageId": "alaska-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -111.0937,
+                    34.0489
+                ]
+            },
+            "properties": {
+                "nativeName": "Ali ṣona-g",
+                "englishName": "Arizona",
+                "language": "O'odham or Basque",
+                "translation": null,
+                "background": "May be from O'odham ali ṣona-g, \"having a little spring\", though it may come from Basque: aritz zonak (\"Good oaks\").",
+                "type": "State",
+                "imageId": "arizona-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -91.8318,
+                    35.201
+                ]
+            },
+            "properties": {
+                "nativeName": "Akansa",
+                "englishName": "Arkansas",
+                "language": "Kansa",
+                "translation": null,
+                "background": "Arkansas derives from a French term, Arcansas, their plural term for their transliteration of akansa, an Algonquian term for the Quapaw people. These were a Dhegiha Siouan-speaking people who settled in Arkansas around the 13th century. Akansa is likely also the root term for Kansas.",
+                "type": "State",
+                "imageId": "arkansas-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -73.0877,
+                    41.6032
+                ]
+            },
+            "properties": {
+                "nativeName": "Quonehtacut",
+                "englishName": "Connecticut",
+                "language": "Eastern Algonquian",
+                "translation": "At the Long Tidal River",
+                "background": "Name comes from an Eastern Algonquian language of southern New England (perhaps Mahican), and refers to the the Connecticut River.",
+                "type": "State",
+                "imageId": "connecticut-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -114.742,
+                    44.0682
+                ]
+            },
+            "properties": {
+                "nativeName": "Ídaahę́",
+                "englishName": "Idaho",
+                "language": "Plains Apache",
+                "translation": null,
+                "background": "May be from Plains Apache ídaahę́, \"enemy\", used to refer to the Comanches, or it may have been an invented word.",
+                "type": "State",
+                "imageId": "idaho-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -89.3985,
+                    40.6331
+                ]
+            },
+            "properties": {
+                "nativeName": "Illiniwek",
+                "englishName": "Illinois",
+                "language": "Frenchs",
+                "translation": null,
+                "background": "From the French rendering of an Algonquian (perhaps Miami) word apparently meaning \"s/he speaks normally\", referring to the Illiniwek.",
+                "type": "State",
+                "imageId": "illinois-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -93.0977,
+                    41.878
+                ]
+            },
+            "properties": {
+                "nativeName": "Ioway",
+                "englishName": "Iowa",
+                "language": "Dakota",
+                "translation": null,
+                "background": "Iowa derives its name from the Ioway people, one of the many Native American nations whose territory comprised the future state at the time of European colonization.",
+                "type": "State",
+                "imageId": "iowa-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -98.4842,
+                    39.0119
+                ]
+            },
+            "properties": {
+                "nativeName": "Kansa",
+                "englishName": "Kansas",
+                "language": "Kansa",
+                "translation": null,
+                "background": "\"Kansas\" was derived from the name of the Kaw tribe. The tribe known as Kaw have also been known as the \"People of the South wind\", \"People of water\", Kansa, Kaza, Konza, Conza, Quans, Kosa, and Kasa. Their tribal language is Kansa, classified as a Siouan language.",
+                "type": "State",
+                "imageId": "kansas-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -84.27,
+                    37.8393
+                ]
+            },
+            "properties": {
+                "nativeName": "Kenhtà:ke",
+                "englishName": "Kentucky",
+                "language": "Iroquois",
+                "translation": "At the Meadow, or On the Prairie",
+                "background": "The precise etymology of the name is uncertain, but likely based on an Iroquoian name. Mohawk kenhtà:ke, Seneca gëdá'geh.",
+                "type": "State",
+                "imageId": "kentucky-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -71.3824,
+                    42.4072
+                ]
+            },
+            "properties": {
+                "nativeName": "Massachusêuck",
+                "englishName": "Massachusetts",
+                "language": "Algonquian",
+                "translation": "Near the Small Big Mountain",
+                "background": "From an Algonquian language of southern New England, and the \"mountain\" in the translation is usually identified as Great Blue Hill on the border of Milton and Canton, Massachusetts.",
+                "type": "State",
+                "imageId": "massachusetts-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -85.6024,
+                    44.3148
+                ]
+            },
+            "properties": {
+                "nativeName": "Mishigami",
+                "englishName": "Michigan",
+                "language": "Ojibwe",
+                "translation": "Large Water",
+                "background": "Named for Lake Michigan",
+                "type": "State",
+                "imageId": "michigan-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -94.6859,
+                    46.7296
+                ]
+            },
+            "properties": {
+                "nativeName": "Mni-sota",
+                "englishName": "Minnesota",
+                "language": "Dakota",
+                "translation": "Turbid Water",
+                "background": "The word Minnesota comes from the Dakota name for the Minnesota River, which got its name from one of two words in Dakota: \"mní sóta\", which means \"clear blue water\", or \"Mníssota\", which means \"cloudy water\". Dakota people demonstrated the name to early settlers by dropping milk into water and calling it mní sóta.",
+                "type": "State",
+                "imageId": "minnesota-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -89.3985,
+                    32.3547
+                ]
+            },
+            "properties": {
+                "nativeName": "Misiziibi",
+                "englishName": "Mississippi",
+                "language": "Ojibwe",
+                "translation": "Big River",
+                "background": "Named for the Mississippi River.",
+                "type": "State",
+                "imageId": "mississippi-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -91.8318,
+                    37.9643
+                ]
+            },
+            "properties": {
+                "nativeName": "Mihsoori",
+                "englishName": "Missouri",
+                "language": "Chiwere",
+                "translation": "Dugout Canoe",
+                "background": "Named for the Missouri tribe, whose name comes from Illinois mihsoori, \"dugout canoe\".",
+                "type": "State",
+                "imageId": "missouri-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -99.9018,
+                    41.4925
+                ]
+            },
+            "properties": {
+                "nativeName": "Nįbraske",
+                "englishName": "Nebraska",
+                "language": "Chiwere",
+                "translation": "Flattened Water",
+                "background": "Named after the Platte River which flows through the state.",
+                "type": "State",
+                "imageId": "nebraska-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -105.8701,
+                    34.5199
+                ]
+            },
+            "properties": {
+                "nativeName": "Mēxihco",
+                "englishName": "New Mexico",
+                "language": "Nahuatl",
+                "translation": null,
+                "background": "The name \"Mexico\" comes from Nahuatl Mēxihco, of unknown derivation.",
+                "type": "State",
+                "imageId": "new-mexico-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -101.002,
+                    47.5515
+                ]
+            },
+            "properties": {
+                "nativeName": "Dakhóta",
+                "englishName": "North Dakota",
+                "language": "Dakota",
+                "translation": null,
+                "background": "Named after the Lakota and Dakota Sioux Native American tribes, who comprise a large portion of the population and historically dominated the territory.",
+                "type": "State",
+                "imageId": "north-dakota-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -99.9018,
+                    43.9695
+                ]
+            },
+            "properties": {
+                "nativeName": "Dakhóta",
+                "englishName": "South Dakota",
+                "language": "Dakota",
+                "translation": null,
+                "background": "Named after the Lakota and Dakota Sioux Native American tribes, who comprise a large portion of the population and historically dominated the territory.",
+                "type": "State",
+                "imageId": "south-dakota-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -82.9071,
+                    40.4173
+                ]
+            },
+            "properties": {
+                "nativeName": "Ohi:yo’",
+                "englishName": "Ohio",
+                "language": "Seneca",
+                "translation": "Good River, or Great River",
+                "background": "Named after the Ohio River.",
+                "type": "State",
+                "imageId": "ohio-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -97.5164,
+                    35.4676
+                ]
+            },
+            "properties": {
+                "nativeName": "Oklahoma",
+                "englishName": "Oklahoma",
+                "language": "Choctaw",
+                "translation": "Red People",
+                "background": "Invented by Chief Allen Wright as a rough translation of \"Indian Territory\"; in Choctaw, okla means \"people\", \"tribe\", or \"nation\", and homa- means \"red\", thus: \"Red people\".",
+                "type": "State",
+                "imageId": "oklahoma-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -86.5804,
+                    35.5175
+                ]
+            },
+            "properties": {
+                "nativeName": "Tanasi",
+                "englishName": "Tennessee",
+                "language": "Cherokee",
+                "translation": null,
+                "background": "Derived from the name of a Cherokee village, Tanasi, whose etymology is unknown.",
+                "type": "State",
+                "imageId": "tennessee-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -99.9018,
+                    31.9686
+                ]
+            },
+            "properties": {
+                "nativeName": "Táysha",
+                "englishName": "Texas",
+                "language": "Caddo",
+                "translation": null,
+                "background": "The name Texas, based on the Caddo word táyshaʼ,\"friend\", was applied, in the spelling Tejas or Texas, by the Spanish to the Caddo themselves, specifically the Hasinai Confederacy, the final -s representing the Spanish plural. The Mission San Francisco de los Tejas was completed near the Hasinai village of Nabedaches in May 1690, in what is now Houston County, East Texas.",
+                "type": "State",
+                "imageId": "texas-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -111.0937,
+                    39.321
+                ]
+            },
+            "properties": {
+                "nativeName": "Yúdah",
+                "englishName": "Utah",
+                "language": "Western Apache",
+                "translation": "High Up",
+                "background": "The name Utah is said to derive from the name of the Ute tribe, meaning \"people of the mountains\". However, no such word actually exists in the Utes' language, and the Utes refer to themselves as Noochee. The meaning of Utes as \"the mountain people\" has been attributed to the neighboring Pueblo Indians, as well as to the Apache word Yuttahih, which means \"one that is higher up\" or \"those that are higher up\".",
+                "type": "State",
+                "imageId": "utah-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -88.7879,
+                    43.7844
+                ]
+            },
+            "properties": {
+                "nativeName": "Mescousing",
+                "englishName": "Wisconsin",
+                "language": "Miami",
+                "translation": null,
+                "background": "The word Wisconsin originates from the name given to the Wisconsin River by one of the Algonquian-speaking Native American groups living in the region at the time of European contact. French explorer Jacques Marquette was the first European to reach the Wisconsin River, arriving in 1673 and calling the river Meskousing  in his journal. Subsequent French writers changed the spelling from Meskousing to Ouisconsin, and over time this became the name for both the Wisconsin River and the surrounding lands. English speakers anglicized the spelling from Ouisconsin to Wisconsin when they began to arrive in large numbers during the early 19th century. \n\nThe Algonquian word for Wisconsin and its original meaning have both grown obscure. While interpretations vary, most implicate the river and the red sandstone that lines its banks. One leading theory holds that the name originated from the Miami word Meskonsing, meaning \"it lies red\", a reference to the setting of the Wisconsin River as it flows through the reddish sandstone of the Wisconsin Dells.[17] Other theories include claims that the name originated from one of a variety of Ojibwa words meaning \"red stone place\", \"where the waters gather\", or \"great rock\".[18] ",
+                "type": "State",
+                "imageId": "wisconsin-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -107.2903,
+                    43.076
+                ]
+            },
+            "properties": {
+                "nativeName": "Xwé:wamənk",
+                "englishName": "Wyoming",
+                "language": "Munsee Delaware",
+                "translation": "At the Big River Flat",
+                "background": "The region acquired the name \"Wyoming\" when a bill was introduced to Congress in 1865 to provide a temporary government for the territory of Wyoming. The name had been used earlier for the Wyoming Valley in Pennsylvania, and is derived from the Munsee word xwé:wamənk, meaning \"at the big river flat\".",
+                "type": "State",
+                "imageId": "wyoming-1",
+                "showNav": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -155.5828,
+                    19.8968
+                ]
+            },
+            "properties": {
+                "nativeName": "Hawaiʻi",
+                "englishName": "Hawaii",
+                "language": "ʻŌlelo Hawaiʻi",
+                "translation": null,
+                "background": "The state of Hawaii derives its name from the name of its largest island, Hawaiʻi. A common Hawaiian explanation of the name of Hawaiʻi is that it was named for Hawaiʻiloa, a legendary figure from Hawaiian myth. He is said to have discovered the islands when they were first settled. The Hawaiian language word Hawaiʻi is very similar to Proto-Polynesian Sawaiki, with the reconstructed meaning \"homeland\". Cognates of Hawaiʻi are found in other Polynesian languages, including Māori (Hawaiki), Rarotongan (ʻAvaiki) and Samoan (Savaiʻi). According to linguists Pukui and Elbert, \"elsewhere in Polynesia, Hawaiʻi or a cognate is the name of the underworld or of the ancestral home, but in Hawaii, the name has no meaning\".",
+                "type": "State",
+                "imageId": "hawaii-1",
+                "showNav": false
+            }
+        }
+    ]
+}

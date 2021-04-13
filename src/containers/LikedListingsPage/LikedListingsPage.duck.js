@@ -181,6 +181,5 @@ export const callLikeAPI = actionPayload => {
 };
 
 export const loadData = () => {
-    console.log("hello liked");
     return queryLikedListings();
 }

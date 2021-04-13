@@ -391,6 +391,7 @@ export class AuthenticationPageComponent extends Component {
         schema={{
           '@context': 'http://schema.org',
           '@type': 'WebPage',
+          description: 'Signup or login to From The People',
           name: schemaTitle,
         }}
       >
