@@ -10,8 +10,8 @@ import { metaTagProps } from '../../util/seo';
 import { canonicalRoutePath } from '../../util/routes';
 import { CookieConsent } from '../../components';
 
-import facebookImage from '../../assets/SocialMedia-791x791.png';
-import twitterImage from '../../assets/SocialMedia-791x791.png';
+import facebookImage from '../../assets/square_400x400.png';
+import twitterImage from '../../assets/square_400x400.png';
 import css from './Page.module.css';
 
 const preventDefault = e => {

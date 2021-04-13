@@ -51,6 +51,7 @@ const DeletionPolicyPageComponent = props => {
   const schema = {
     '@context': 'http://schema.org',
     '@type': 'WebPage',
+    description: "Account Deletion",
     name: schemaTitle,
   };
   const contactPageLink = (

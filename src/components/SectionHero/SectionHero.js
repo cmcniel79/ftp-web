@@ -9,8 +9,8 @@ import {
 import earrings from './Assets/earrings.jpg';
 import balms from './Assets/balms.jpg';
 import bracelets from './Assets/bracelets.jpg';
-import paintings from './Assets/paintings.jpg';
-import shirts from './Assets/shirts.jpg';
+import prints from './Assets/prints.jpg';
+import shirts from './Assets/shirts.png';
 import supplies from './Assets/supplies.jpg';
 
 
@@ -33,19 +33,19 @@ const SectionHero = props => {
       search: "pub_subCategory=bracelets"
     },
     {
-      title: "Paintings",
-      img: paintings,
-      search: "pub_subCategory=paintings"
-    },
-    {
-      title: "Skin Care",
-      img: balms,
-      search: "pub_subCategory=skincare"
+      title: "Prints",
+      img: prints,
+      search: "pub_subCategory=prints"
     },
     {
       title: "Shirts",
       img: shirts,
       search: "pub_subCategory=shirts"
+    },
+    {
+      title: "Skin Care",
+      img: balms,
+      search: "pub_subCategory=skincare"
     },
     {
       title: "Supplies",

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import debounce from 'lodash/debounce';
-import classNames from 'classnames';
+// import NativeMapsJSON from '../../assets/NativeMapsJSON.json';
 import config from '../../config';
 import routeConfiguration from '../../routeConfiguration';
 import { createResourceLocatorString, pathByRouteName } from '../../util/routes';
@@ -13,6 +13,8 @@ import { parse } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
 import { findOptionsForSelectFilter } from '../../util/search';
+import facebookImage from '../../assets/map_square_400x400.png';
+import twitterImage from '../../assets/map_square_400x400.png';
 import {
   SearchMapUsers,
   Page,
@@ -177,6 +179,7 @@ export class MapPageComponent extends Component {
       { id: 'MapPage.schemaDescription' },
     );
 
+    const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
     // N.B. openMobileMap button is sticky.
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
     // /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -184,17 +187,27 @@ export class MapPageComponent extends Component {
     const faqLink = <ExternalLink href={'https://www.fromthepeople.co/faq#account-types'}> <FormattedMessage id="MapPage.faqLink" /> </ExternalLink>;
     const industryOptions = findOptionsForSelectFilter('industry', filterConfig);
     const nativePlacesButtonClasses = this.state.showNativePlaces ? css.nativePlacesSelected : css.nativePlaces;
+    // const jsonLink = (
+    //   <ExternalLink href={`data:application/json,${JSON.stringify(NativeMapsJSON)}`}>
+    //       here
+    //   </ExternalLink>
+    // );
 
     return (
       <Page
         scrollingDisabled={scrollingDisabled}
         description={description}
         title={title}
+        facebookImages={[{ url: facebookImage, width: 300, height: 300 }]}
+        twitterImages={[
+          { url: `${config.canonicalRootURL}${twitterImage}`, width: 300, height: 300 },
+        ]}
         schema={{
           '@context': 'http://schema.org',
           '@type': 'ItemPage',
           description: description,
           name: title,
+          image: [schemaImage],
         }}
       >
         <LayoutSingleColumn>
@@ -226,7 +239,10 @@ export class MapPageComponent extends Component {
                   <MapLegend className={css.desktopLegend} options={industryOptions} onSelect={this.selectIndustry} selected={this.state.industry} />
                 </div>
                 <h5 className={css.pageSubtitleDesktop}>
-                  <FormattedMessage id="MapPage.subtitle" values={{ faqLink }} />
+                  <FormattedMessage id="MapPage.subtitle1" values={{ faqLink }} />
+                  {/* <br />
+                  <br />
+                  <FormattedMessage id="MapPage.subtitle2" values={{ jsonLink }}/> */}
                 </h5>
                 <div className={css.mobileButtons}>
                   <NativeLand
@@ -271,7 +287,7 @@ export class MapPageComponent extends Component {
                 />
               </div>
               <h5 className={css.pageSubtitleMobile}>
-                <FormattedMessage id="MapPage.subtitle" values={{ faqLink }} />
+                <FormattedMessage id="MapPage.subtitle1" values={{ faqLink }} />
               </h5>
             </div>
           </LayoutWrapperMain>

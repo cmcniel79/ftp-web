@@ -23,6 +23,7 @@ const FAQPage = () => {
       schema={{
         '@context': 'http://schema.org',
         '@type': 'FAQPage',
+        description: "Learn About From The People",
         name: 'FAQ page',
       }}
     >
