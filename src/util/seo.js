@@ -112,7 +112,7 @@ export const twitterMetaProps = data => {
   }
 
   const twitterMeta = [
-    { name: 'twitter:card', content: 'summary_large_image' },
+    // { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description },
     { name: 'twitter:site', content: siteTwitterHandle },
