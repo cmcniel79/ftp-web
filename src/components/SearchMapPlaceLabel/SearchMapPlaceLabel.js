@@ -25,8 +25,13 @@ class SearchMapPlaceLabel extends Component {
     const { className, rootClassName, event, coordinates } = this.props;
     const classes = classNames(rootClassName || css.root, className, this.state.isShown ? css.card : css.label);
     const eventExists = event && event.features && event.features[0];
+    const nativeName = eventExists && event.features[0].properties.nativeName;
+    const englishName = eventExists && event.features[0].properties.englishName;
+    const language = eventExists && event.features[0].properties.language;
     const translation = eventExists && event.features[0].properties.translation;
     const background = eventExists && event.features[0].properties.background;
+
+    const popupTitle = nativeName ? nativeName : englishName;
 
     const popupText = !translation && !background ? (
       <p className={css.popupText}>
@@ -44,7 +49,7 @@ class SearchMapPlaceLabel extends Component {
             {translation}
           </p>
         ) : null}
-        <br/>
+        <br />
         <p className={css.popupText}>
           {background}
         </p>
@@ -55,8 +60,10 @@ class SearchMapPlaceLabel extends Component {
       <div className={classes} onClick={() => !this.props.isTouchEvent ? this.setState({ isShown: false }) : null}>
         <div className={css.topContainer}>
           <div className={css.titleContainer}>
-            <h3 className={css.popupTitle}>{event.features[0].properties.nativeName}</h3>
-            <p className={css.popupSubtitle}>{event.features[0].properties.language}</p>
+            <h3 className={css.popupTitle}>{popupTitle}</h3>
+            {language ? (
+              <p className={css.popupSubtitle}>{event.features[0].properties.language}</p>
+            ) : null}
           </div>
           <ExternalLink
             className={css.popupLink}
