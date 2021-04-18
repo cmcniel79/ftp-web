@@ -30,6 +30,7 @@ class SearchMapPlaceLabel extends Component {
     const language = eventExists && event.features[0].properties.language;
     const translation = eventExists && event.features[0].properties.translation;
     const background = eventExists && event.features[0].properties.background;
+    const type = eventExists && event.features[0].properties.type;
 
     const popupTitle = nativeName ? nativeName : englishName;
 
@@ -92,8 +93,10 @@ class SearchMapPlaceLabel extends Component {
             className={classes}
             onClick={() => this.setState({ isShown: true })}
           >
-            <h3 className={css.popupTitle}>{event.features[0].properties.nativeName}</h3>
-            <p className={css.popupText}>{event.features[0].properties.type}</p>
+            <h3 className={css.popupTitle}>{popupTitle}</h3>
+            {type ? (
+              <p className={css.popupText}>{type}</p>
+            ) : null}
           </button>
         ) : null
     );
