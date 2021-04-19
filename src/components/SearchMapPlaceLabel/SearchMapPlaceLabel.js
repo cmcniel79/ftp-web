@@ -23,7 +23,7 @@ class SearchMapPlaceLabel extends Component {
 
   render() {
     const { className, rootClassName, event, coordinates } = this.props;
-    const classes = classNames(rootClassName || css.root, className, this.state.isShown ? css.card : css.label);
+
     const eventExists = event && event.features && event.features[0];
     const nativeName = eventExists && event.features[0].properties.nativeName;
     const englishName = eventExists && event.features[0].properties.englishName;
@@ -31,7 +31,11 @@ class SearchMapPlaceLabel extends Component {
     const translation = eventExists && event.features[0].properties.translation;
     const background = eventExists && event.features[0].properties.background;
     const type = eventExists && event.features[0].properties.type;
+    const imageId = eventExists && event.features[0].properties.imageId;
+    const showNav = eventExists && event.features[0].properties.showNav;
 
+    const popupClasses = classNames(rootClassName || css.root, className, this.state.isShown ? css.card : css.label);
+    const popupCardClasses = imageId ? css.cardHasImage : css.cardNoImage;
     const popupTitle = nativeName ? nativeName : englishName;
 
     const popupText = !translation && !background ? (
@@ -50,35 +54,40 @@ class SearchMapPlaceLabel extends Component {
             {translation}
           </p>
         ) : null}
-        <br />
-        <p className={css.popupText}>
-          {background}
-        </p>
+        {background ? (
+          <p className={css.popupText}>
+            {background}
+          </p>
+        ) : null}
       </div>
     );
 
     const fullCard = eventExists ? (
-      <div className={classes} onClick={() => !this.props.isTouchEvent ? this.setState({ isShown: false }) : null}>
+      <div className={popupClasses} onClick={() => !this.props.isTouchEvent ? this.setState({ isShown: false }) : null}>
         <div className={css.topContainer}>
           <div className={css.titleContainer}>
             <h3 className={css.popupTitle}>{popupTitle}</h3>
             {language ? (
-              <p className={css.popupSubtitle}>{event.features[0].properties.language}</p>
+              <p className={css.popupSubtitle}>{language}</p>
             ) : null}
           </div>
-          <ExternalLink
-            className={css.popupLink}
-            href={"https://www.google.com/maps/search/?api=1&query=" + coordinates[1] + "," + coordinates[0]}
-          >
-            <img className={css.linkIcon} src={navigateIcon} alt="Navigate" />
-          </ExternalLink>
+          {showNav ? (
+            <ExternalLink
+              className={css.popupLink}
+              href={"https://www.google.com/maps/search/?api=1&query=" + coordinates[1] + "," + coordinates[0]}
+            >
+              <img className={css.linkIcon} src={navigateIcon} alt="Navigate" />
+            </ExternalLink>
+          ) : null}
         </div>
-        <div className={css.popupCard}>
-          <img
-            className={css.popupImage}
-            alt="Logo"
-            src={IMGIX_DOMAIN + event.features[0].properties.imageId}
-          />
+        <div className={popupCardClasses}>
+          {imageId ? (
+            <img
+              className={css.popupImage}
+              alt={englishName}
+              src={IMGIX_DOMAIN + imageId}
+            />
+          ) : null}
           <div className={css.popupTextContainer}>
             {popupText}
           </div>
@@ -90,7 +99,7 @@ class SearchMapPlaceLabel extends Component {
       eventExists && this.state.isShown ? fullCard
         : eventExists ? (
           <button
-            className={classes}
+            className={popupClasses}
             onClick={() => this.setState({ isShown: true })}
           >
             <h3 className={css.popupTitle}>{popupTitle}</h3>

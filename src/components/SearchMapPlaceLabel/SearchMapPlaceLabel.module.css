@@ -26,16 +26,27 @@
       max-width: 750px;
     } */
   /* min-width: 1921px */
-  @media ( --viewportXLarge) {
+  /* @media ( --viewportXLarge) {
     max-width: 1000px;
-  }
+  } */
 }
 
-.popupCard {
+.label {
+  min-width: 100px;
+}
+
+.cardHasImage, .cardNoImage {
   display: flex;
   flex-direction: row;
   padding: 0 0 0 0;
+}
+
+.cardHasImage {
   min-height: 120px;
+}
+
+.cardNoImage {
+  min-height: 60px;
 }
 
 .popupImage {
@@ -63,7 +74,7 @@
 }
 
 .popupText {
-  margin: 0;
+  margin: 20px 0 0 0;
   line-height: 25px;
   font-size: 14px;
 }
