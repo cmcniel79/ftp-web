@@ -104,7 +104,7 @@ class SearchMapPlaceLabel extends Component {
           >
             <h3 className={css.popupTitle}>{popupTitle}</h3>
             {type ? (
-              <p className={css.popupText}>{type}</p>
+              <p className={css.labelText}>{type}</p>
             ) : null}
           </button>
         ) : null

@@ -79,6 +79,12 @@
   font-size: 14px;
 }
 
+.labelText {
+  margin: 0;
+  line-height: 25px;
+  font-size: 14px;
+}
+
 .popupLink {
   line-height: 25px;
   outline: 0 !important;
