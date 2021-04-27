@@ -64,8 +64,6 @@ const BookingPanel = props => {
     title,
     authorDisplayName,
     onManageDisableScrolling,
-    // timeSlots,
-    // fetchTimeSlotsError,
     history,
     location,
     intl,
@@ -103,6 +101,7 @@ const BookingPanel = props => {
       reversal: false,
       lineTotal: shippingFee
     };
+    
   const booking = {
     code: 'line-item/units',
     unitPrice: price,
@@ -187,8 +186,6 @@ BookingPanel.defaultProps = {
   isOwnListing: false,
   subTitle: null,
   unitType: config.bookingUnitType,
-  // timeSlots: null,
-  // fetchTimeSlotsError: null,
   lineItems: null,
   fetchLineItemsError: null,
 };
@@ -205,8 +202,6 @@ BookingPanel.propTypes = {
   subTitle: oneOfType([node, string]),
   authorDisplayName: oneOfType([node, string]).isRequired,
   onManageDisableScrolling: func.isRequired,
-  // timeSlots: arrayOf(propTypes.timeSlot),
-  // fetchTimeSlotsError: propTypes.error,
   onFetchTransactionLineItems: func.isRequired,
   lineItems: array,
   fetchLineItemsInProgress: bool.isRequired,

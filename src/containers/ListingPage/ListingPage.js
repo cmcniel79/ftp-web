@@ -48,16 +48,17 @@ import {
   sendUpdatedFollowed,
   callFollowAPI
 } from './ListingPage.duck';
-import SectionImages from './SectionImages';
-import SectionHeading from './SectionHeading';
+
+import SectionBarterMaybe from './SectionBarterMaybe';
+import SectionCustomOrdersMaybe from './SectionCustomOrdersMaybe';
 import SectionDescriptionMaybe from './SectionDescriptionMaybe';
+import SectionHeading from './SectionHeading';
+import SectionImages from './SectionImages';
 import SectionMaterialsMaybe from './SectionMaterialsMaybe';
+import SectionPriceMaybe from './SectionPriceMaybe';
 import SectionReviews from './SectionReviews';
 import SectionSellerMaybe from './SectionSellerMaybe';
 import SectionSizesMaybe from './SectionSizesMaybe';
-import SectionCustomOrdersMaybe from './SectionCustomOrdersMaybe';
-import SectionPremiumPriceMaybe from './SectionPremiumPriceMaybe';
-import SectionBarterMaybe from './SectionBarterMaybe';
 import { sanitizeProtectedData } from '../../util/sanitize';
 
 import css from './ListingPage.module.css';
@@ -116,7 +117,7 @@ export class ListingPageComponent extends Component {
     this.sendFollowed = this.sendFollowed.bind(this);
   }
 
-  handleSubmit(values) {
+  handleSubmit() {
     const {
       history,
       getListing,
@@ -126,9 +127,10 @@ export class ListingPageComponent extends Component {
     } = this.props;
     const listingId = new UUID(params.id);
     const listing = getListing(listingId);
+    const values = { isDomesticOrder: true };
     const initialValues = {
       listing,
-      bookingData: { isDomesticOrder: values },
+      bookingData: values,
       confirmPaymentError: null,
     };
 
@@ -149,7 +151,6 @@ export class ListingPageComponent extends Component {
         'CheckoutPage',
         routes,
         { id: listing.id.uuid, slug: createSlug(listing.attributes.title) },
-        {}
       )
     );
   }
@@ -242,8 +243,6 @@ export class ListingPageComponent extends Component {
       fetchReviewsError,
       sendEnquiryInProgress,
       sendEnquiryError,
-      timeSlots,
-      fetchTimeSlotsError,
       filterConfig,
       onFetchTransactionLineItems,
       domesticLineItems,
@@ -394,6 +393,7 @@ export class ListingPageComponent extends Component {
     const lineItems = !isPremium && isDomesticOrder ? domesticLineItems : internationalLineItems;
     const allowsInternationalOrders = !isPremium && publicData && publicData.allowsInternationalOrders && publicData.allowsInternationalOrders[0] === 'hasFee' ? true : false;
     const { formattedPrice, priceTitle } = priceData(price, intl);
+
     const handleBookingSubmit = values => {
       const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;
       if (isOwnListing || isCurrentlyClosed) {
@@ -460,9 +460,7 @@ export class ListingPageComponent extends Component {
     const barter = publicData && publicData.barter ? publicData.barter : null;
     const userAccountType = currentUser && currentUser.attributes.profile.publicData &&
       currentUser.attributes.profile.publicData.accountType ? currentUser.attributes.profile.publicData.accountType : null;
-    const signUpLink = (<NamedLink name="SignupPage">
-      <FormattedMessage id="ListingPage.signupLink" />
-    </NamedLink>);
+
     return (
       <Page
         title={schemaTitle}
@@ -533,48 +531,13 @@ export class ListingPageComponent extends Component {
                   <SectionCustomOrdersMaybe customOrders={customOrders} />
                   <SectionMaterialsMaybe options={materialOptions} material={material} />
                   <SectionSizesMaybe sizes={sizes} />
-                  {publicData ? (
-                    isPremium ?
-                      <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
-                      : !currentUser ?
-                        <div>
-                          <FormattedMessage id="ListingPage.noAccount" values={{ signUpLink }} />
-                        </div>
-                        : ((isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders)) && (userCountry && authorCountry) ?
-                          <BookingPanel
-                            className={css.bookingBreakdown}
-                            listing={currentListing}
-                            isOwnListing={isOwnListing}
-                            unitType={unitType}
-                            onSubmit={handleBookingSubmit}
-                            title={bookingTitle}
-                            subTitle={bookingSubTitle}
-                            authorDisplayName={authorDisplayName}
-                            onManageDisableScrolling={onManageDisableScrolling}
-                            timeSlots={timeSlots}
-                            fetchTimeSlotsError={fetchTimeSlotsError}
-                            onFetchTransactionLineItems={onFetchTransactionLineItems}
-                            lineItems={lineItems}
-                            fetchLineItemsInProgress={fetchLineItemsInProgress}
-                            fetchLineItemsError={fetchLineItemsError}
-                            isDomesticOrder={isDomesticOrder}
-                            shippingFee={shippingFee}
-                          />
-                          : userCountry === null ?
-                            <span className={css.purchaseWarning} >
-                              <FormattedMessage id="ListingPage.noUserCountry" />
-                            </span>
-                            : authorCountry === null ?
-                              <span className={css.purchaseWarning} >
-                                <FormattedMessage id="ListingPage.noAuthorCountry" />
-                              </span>
-                              : !isDomesticOrder && !allowsInternationalOrders ?
-                                <span className={css.noInternational} >
-                                  <FormattedMessage id="ListingPage.noInternationalOrders" />
-                                </span>
-                                : <span className={css.purchaseWarning} >
-                                  <FormattedMessage id="ListingPage.listingMissingInfo" />
-                                </span>) : null}
+                  <SectionPriceMaybe
+                    currentUser={currentUser}
+                    isPremium={isPremium}
+                    price={formattedPrice}
+                    websiteLink={websiteLink}
+                    onSubmit={handleBookingSubmit}
+                  />
                   {!isPremium &&
                     <div className={css.reviewsContainerMobile}>
                       <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
@@ -599,8 +562,6 @@ ListingPageComponent.defaultProps = {
   showListingError: null,
   reviews: [],
   fetchReviewsError: null,
-  timeSlots: null,
-  fetchTimeSlotsError: null,
   sendEnquiryError: null,
   filterConfig: config.custom.filters,
   lineItems: null,
@@ -637,8 +598,6 @@ ListingPageComponent.propTypes = {
   callSetInitialValues: func.isRequired,
   reviews: arrayOf(propTypes.review),
   fetchReviewsError: propTypes.error,
-  timeSlots: arrayOf(propTypes.timeSlot),
-  fetchTimeSlotsError: propTypes.error,
   sendEnquiryInProgress: bool.isRequired,
   sendEnquiryError: propTypes.error,
   onSendEnquiry: func.isRequired,
@@ -656,8 +615,6 @@ const mapStateToProps = state => {
     showListingError,
     reviews,
     fetchReviewsError,
-    timeSlots,
-    fetchTimeSlotsError,
     sendEnquiryInProgress,
     sendEnquiryError,
     domesticLineItems,
@@ -689,8 +646,6 @@ const mapStateToProps = state => {
     showListingError,
     reviews,
     fetchReviewsError,
-    timeSlots,
-    fetchTimeSlotsError,
     domesticLineItems,
     internationalLineItems,
     fetchLineItemsInProgress,

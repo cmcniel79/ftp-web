@@ -10,7 +10,6 @@ const LINE_ITEM_DAY = 'line-item/day';
 
 /** Helper functions for constructing line items*/
 
-
 /**
  * Calculates lineTotal for lineItem based on quantity.
  * The total will be `unitPrice * quantity`.
