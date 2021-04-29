@@ -423,7 +423,12 @@ export class CheckoutPageComponent extends Component {
 
     const shippingDetails = {
       name,
-      ...shippingAddress
+      city: shippingAddress.city,
+      country: bookingData.country,
+      line1: shippingAddress.addressLine1,
+      line2: shippingAddress.addressLine2,
+      postal_code: shippingAddress.postal,
+      state: shippingAddress.state,
     };
 
     console.log(shippingDetails);
