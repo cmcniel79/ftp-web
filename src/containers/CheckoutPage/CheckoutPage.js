@@ -382,7 +382,7 @@ export class CheckoutPageComponent extends Component {
       return;
     }
     this.setState({ submitting: true });
-
+    console.log(values);
     const { history, speculatedTransaction, currentUser, paymentIntent, dispatch, bookingData } = this.props;
     const { card, message, paymentMethod, formValues } = values;
     const {
@@ -391,6 +391,7 @@ export class CheckoutPageComponent extends Component {
       addressLine2,
       postal,
       city,
+      country,
       state,
       saveAfterOnetimePayment,
       shippingAddress
@@ -405,7 +406,7 @@ export class CheckoutPageComponent extends Component {
         ? {
           address: {
             city: city,
-            country: bookingData.country,
+            country: country,
             line1: addressLine1,
             line2: addressLine2,
             postal_code: postal,
@@ -424,6 +425,8 @@ export class CheckoutPageComponent extends Component {
       name,
       ...shippingAddress
     };
+
+    console.log(shippingDetails);
 
     const requestPaymentParams = {
       pageData: this.state.pageData,

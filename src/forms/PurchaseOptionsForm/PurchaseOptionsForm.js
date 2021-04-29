@@ -34,7 +34,10 @@ export class PurchaseOptionsFormComponent extends Component {
     // focus on that input, otherwise continue with the
     // default handleSubmit function.
     handleFormSubmit(e) {
-        const { country, quantity } = e || {};
+        const country = e && e.country ? e.country :
+            (!this.props.allowsInternationalOrders && this.props.authorCountry) ? this.props.authorCountry : null;
+        const quantity = e && e.quantity ? e.quantity : null
+
         if (!country) {
             e.preventDefault();
             this.setState({ focusedInput: "country" });
@@ -42,7 +45,7 @@ export class PurchaseOptionsFormComponent extends Component {
             e.preventDefault();
             this.setState({ focusedInput: "quantity" });
         } else {
-            this.props.onSubmit(e);
+            this.props.onSubmit({country, quantity});
         }
     }
 
@@ -51,8 +54,8 @@ export class PurchaseOptionsFormComponent extends Component {
     // In case you add more fields to the form, make sure you add
     // the values here to the bookingData object.
     handleOnChange(formValues) {
-        const country = (formValues.values && formValues.values.country) || 
-            (!this.props.allowsInternationalOrders && this.props.authorCountry);
+        const country = formValues.values && formValues.values.country ? formValues.values.country : 
+            !this.props.allowsInternationalOrders && this.props.authorCountry ? this.props.authorCountry : null;
         const quantity = formValues.values && formValues.values.quantity;
         const listingId = this.props.listingId;
         const isOwnListing = this.props.isOwnListing;
