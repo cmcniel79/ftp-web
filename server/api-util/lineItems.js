@@ -31,7 +31,6 @@ exports.transactionLineItems = (listing, bookingData) => {
   const unitPrice = listing.attributes.price;
   const { shippingCountry, quantity } = bookingData;
 
-  console.log(bookingData);
   const isDomesticOrder = shippingCountry === listing.attributes.publicData.country;
 
   /**

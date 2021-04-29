@@ -114,9 +114,6 @@ export class PurchaseOptionsFormComponent extends Component {
                         authorCountry
                     } = fieldRenderProps;
 
-                    console.log(lineItems);
-                    console.log(fetchLineItemsInProgress);
-
                     const country = values && values.country;
                     const quantity = values && values.quantity;
 

@@ -169,7 +169,6 @@ export class CheckoutPageComponent extends Component {
     // Check if a booking is already created according to stored data.
     const tx = pageData ? pageData.transaction : null;
     const isBookingCreated = tx && tx.booking && tx.booking.id;
-    console.log(bookingData);
     const shouldFetchSpeculatedTransaction =
       pageData &&
       pageData.listing &&
@@ -382,7 +381,6 @@ export class CheckoutPageComponent extends Component {
       return;
     }
     this.setState({ submitting: true });
-    console.log(values);
     const { history, speculatedTransaction, currentUser, paymentIntent, dispatch, bookingData } = this.props;
     const { card, message, paymentMethod, formValues } = values;
     const {
@@ -425,13 +423,11 @@ export class CheckoutPageComponent extends Component {
       name,
       city: shippingAddress.city,
       country: bookingData.country,
-      line1: shippingAddress.addressLine1,
-      line2: shippingAddress.addressLine2,
-      postal_code: shippingAddress.postal,
+      addressLine1: shippingAddress.addressLine1,
+      addressLine2: shippingAddress.addressLine2,
+      postal: shippingAddress.postal,
       state: shippingAddress.state,
     };
-
-    console.log(shippingDetails);
 
     const requestPaymentParams = {
       pageData: this.state.pageData,
@@ -582,8 +578,6 @@ export class CheckoutPageComponent extends Component {
     // Show breakdown only when speculated transaction and booking are loaded
     // (i.e. have an id)
     const tx = existingTransaction.booking ? existingTransaction : speculatedTransaction;
-    console.log(existingTransaction);
-    console.log(speculatedTransaction);
     const txBooking = ensureBooking(tx.booking);
     const breakdown =
       tx.id ? (
