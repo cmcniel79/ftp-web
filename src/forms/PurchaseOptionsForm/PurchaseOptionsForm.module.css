@@ -1,5 +1,4 @@
 @import '../../styles/propertySets.css';
-
 .root {
   display: flex;
   flex-direction: column;
@@ -8,16 +7,15 @@
 .bookingDates {
   flex-shrink: 0;
   margin-bottom: 38px;
-
   /* Ensure that calendar dropdown gets some stacking context relative to other form items below */
   z-index: 1;
 }
 
 .priceBreakdownContainer {
-  padding: 0 24px;
-  margin-bottom: 40px;
-
+  width: 90%;
+  margin: 0 auto 40px auto;
   @media (--viewportMedium) {
+    width: 100%;
     padding: 0;
     margin-bottom: 0;
     margin-top: 1px;
@@ -27,7 +25,6 @@
 .priceBreakdownTitle {
   /* Font */
   color: var(--matterColorAnti);
-
   margin-top: 5px;
   margin-bottom: 14px;
   @media (--viewportMedium) {
@@ -48,14 +45,13 @@
 }
 
 .spinner {
-  margin: auto;
+  margin: 10px auto 10px auto;
 }
 
 .sideBarError {
   @apply --marketplaceH4FontStyles;
   color: var(--failColor);
   margin: 0 24px 12px 24px;
-
   @media (--viewportMedium) {
     margin: 0 0 12px 0;
   }
@@ -67,19 +63,18 @@
   text-align: center;
   margin: auto 24px 20px 24px;
   flex-shrink: 0;
-
   @media (--viewportMedium) {
     margin-top: auto;
     margin-bottom: 20px;
   }
-
   @media (--viewportLarge) {
-    margin-top: 4px;
+    margin-top: 6px;
     margin-bottom: 21px;
   }
 }
 
 .submitButtonWrapper {
+  margin-top: 10px;
   flex-shrink: 0;
   padding: 0 24px 24px 24px;
   width: 100%;
@@ -89,9 +84,51 @@
   }
 }
 
-.bookButton {
-  @apply --marketplaceButtonStyles;
+.purchaseButton {
+  background-color: var(--marketplaceColor) !important;
+  color: var(--matterColorLight) !important;
+}
 
-  /* Clear padding that is set for link elements looking like buttons */
-  padding: 0;
+.fieldContainer {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  width: 90%;
+  margin: 0 auto 20px auto;
+  justify-content: space-between;
+  @media (--viewportMedium) {
+    width: 100%;
+  }
+}
+
+.countryField {
+  width: 70%;
+}
+
+.quantityField {
+  width: 25%;
+}
+
+.basePrice {
+  font-weight: 550;
+  font-size: 22px;
+  line-height: 24px;
+  margin: 0 auto 15px auto;
+  width: 90%;
+  @media (--viewportMedium) {
+    margin: 0 0 15px 0;
+  }
+}
+
+.onlyShipsToCountry {
+  @apply --userCardButtonStyles;
+  margin: 0 auto 15px auto;
+  &:hover {
+    text-decoration: none;
+    cursor: default;
+    background-color: var(--marketplaceColor);
+}
+  @media (--viewportMedium) {
+      margin: 0 auto 15px 0;
+  }
 }

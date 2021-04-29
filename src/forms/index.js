@@ -1,4 +1,3 @@
-export { default as BookingDatesForm } from './BookingDatesForm/BookingDatesForm';
 export { default as ContactDetailsForm } from './ContactDetailsForm/ContactDetailsForm';
 export { default as ContactUsForm } from './ContactUsForm/ContactUsForm';
 export { default as ConfirmSignupForm } from './ConfirmSignupForm/ConfirmSignupForm';
@@ -19,6 +18,7 @@ export { default as PasswordResetForm } from './PasswordResetForm/PasswordResetF
 export { default as PaymentMethodsForm } from './PaymentMethodsForm/PaymentMethodsForm';
 export { default as PriceFilterForm } from './PriceFilterForm/PriceFilterForm';
 export { default as ProfileSettingsForm } from './ProfileSettingsForm/ProfileSettingsForm';
+export { default as PurchaseOptionsForm } from './PurchaseOptionsForm/PurchaseOptionsForm';
 export { default as ReviewForm } from './ReviewForm/ReviewForm';
 export { default as SendMessageForm } from './SendMessageForm/SendMessageForm';
 export { default as SignupForm } from './SignupForm/SignupForm';

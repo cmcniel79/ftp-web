@@ -35,7 +35,6 @@ export const FETCH_TIME_SLOTS_ERROR = 'app/ListingPage/FETCH_TIME_SLOTS_ERROR';
 
 export const FETCH_LINE_ITEMS_REQUEST = 'app/ListingPage/FETCH_LINE_ITEMS_REQUEST';
 export const FETCH_LINE_ITEMS_SUCCESS = 'app/ListingPage/FETCH_LINE_ITEMS_SUCCESS';
-export const FETCH_INTERNATIONAL_LINE_ITEMS_SUCCESS = 'app/ListingPage/FETCH_INTERNATIONAL_LINE_ITEMS_SUCCESS';
 export const FETCH_LINE_ITEMS_ERROR = 'app/ListingPage/FETCH_LINE_ITEMS_ERROR';
 
 export const SEND_ENQUIRY_REQUEST = 'app/ListingPage/SEND_ENQUIRY_REQUEST';
@@ -87,9 +86,7 @@ const listingPageReducer = (state = initialState, action = {}) => {
     case FETCH_LINE_ITEMS_REQUEST:
       return { ...state, fetchLineItemsInProgress: true, fetchLineItemsError: null };
     case FETCH_LINE_ITEMS_SUCCESS:
-      return { ...state, fetchLineItemsInProgress: false, domesticLineItems: payload };
-    case FETCH_INTERNATIONAL_LINE_ITEMS_SUCCESS:
-      return { ...state, fetchLineItemsInProgress: false, internationalLineItems: payload };
+      return { ...state, fetchLineItemsInProgress: false, lineItems: payload };
     case FETCH_LINE_ITEMS_ERROR:
       return { ...state, fetchLineItemsInProgress: false, fetchLineItemsError: payload };
 
@@ -305,6 +302,7 @@ export const fetchTransactionLineItems = ({ bookingData, listingId, isOwnListing
   dispatch(fetchLineItemsRequest());
   transactionLineItems({ bookingData, listingId, isOwnListing })
     .then(response => {
+      console.log(response);
       const lineItems = response.data;
       dispatch(fetchLineItemsSuccess(lineItems));
     })

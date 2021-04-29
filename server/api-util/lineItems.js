@@ -29,7 +29,10 @@ const PROVIDER_COMMISSION_PERCENTAGE = -6;
  */
 exports.transactionLineItems = (listing, bookingData) => {
   const unitPrice = listing.attributes.price;
-  const { isDomesticOrder } = bookingData;
+  const { shippingCountry, quantity } = bookingData;
+
+  console.log(bookingData);
+  const isDomesticOrder = shippingCountry === listing.attributes.publicData.country;
 
   /**
    * If you want to use pre-defined component and translations for printing the lineItems base price for booking,
@@ -41,20 +44,21 @@ exports.transactionLineItems = (listing, bookingData) => {
    *
    * By default BookingBreakdown prints line items inside LineItemUnknownItemsMaybe if the lineItem code is not recognized. */
 
+  
   const booking = {
     code: 'line-item/units',
     unitPrice: unitPrice,
-    quantity: 1,
+    quantity: quantity ? quantity : 1,
     includeFor: ['customer', 'provider'],
   };
 
   const shippingFee = isDomesticOrder ? {
-    code: 'line-item/domestic-shipping-fee',
+    code: 'line-item/shipping',
     unitPrice: resolveShippingFeePrice(listing.attributes.publicData.shippingFee),
     quantity: 1,
     includeFor: ['customer', 'provider'],
   } : {
-    code: 'line-item/international-shipping-fee',
+    code: 'line-item/shipping',
     unitPrice: resolveShippingFeePrice(listing.attributes.publicData.internationalFee),
     quantity: 1,
     includeFor: ['customer', 'provider'],

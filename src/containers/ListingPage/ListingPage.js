@@ -59,21 +59,12 @@ import SectionPriceMaybe from './SectionPriceMaybe';
 import SectionReviews from './SectionReviews';
 import SectionSellerMaybe from './SectionSellerMaybe';
 import SectionSizesMaybe from './SectionSizesMaybe';
-import { sanitizeProtectedData } from '../../util/sanitize';
 
 import css from './ListingPage.module.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
-const { UUID, Money } = sdkTypes;
-
-const resolveShippingFeePrice = shippingFee => {
-  const { amount, currency } = shippingFee;
-  if ((amount && currency) || (amount === 0 && currency)) {
-    return new Money(amount, currency);
-  }
-  return null;
-};
+const { UUID } = sdkTypes;
 
 const priceData = (price, intl) => {
   if (price && price.currency === config.currency) {
@@ -117,7 +108,7 @@ export class ListingPageComponent extends Component {
     this.sendFollowed = this.sendFollowed.bind(this);
   }
 
-  handleSubmit() {
+  handleSubmit(values) {
     const {
       history,
       getListing,
@@ -127,7 +118,6 @@ export class ListingPageComponent extends Component {
     } = this.props;
     const listingId = new UUID(params.id);
     const listing = getListing(listingId);
-    const values = { isDomesticOrder: true };
     const initialValues = {
       listing,
       bookingData: values,
@@ -245,8 +235,7 @@ export class ListingPageComponent extends Component {
       sendEnquiryError,
       filterConfig,
       onFetchTransactionLineItems,
-      domesticLineItems,
-      internationalLineItems,
+      lineItems,
       fetchLineItemsInProgress,
       fetchLineItemsError,
     } = this.props;
@@ -376,22 +365,12 @@ export class ListingPageComponent extends Component {
     // banned or deleted display names for the function
     const authorDisplayName = userDisplayNameAsString(ensuredAuthor, '');
 
-    const authorTribe = ensuredAuthor.attributes.profile.publicData && ensuredAuthor.attributes.profile.publicData.tribe ?
-      ensuredAuthor.attributes.profile.publicData.tribe : null;
-    const accountType = ensuredAuthor.attributes.profile.publicData && ensuredAuthor.attributes.profile.publicData.accountType ?
-      ensuredAuthor.attributes.profile.publicData.accountType : null;
+    const authorPublicData = ensuredAuthor.attributes.profile.publicData;
+    const authorCountry = authorPublicData && authorPublicData.country ? authorPublicData.country : "United States";
+    const authorTribe = authorPublicData && authorPublicData.tribe ? authorPublicData.tribe : null;
+    const accountType = authorPublicData && authorPublicData.accountType ? authorPublicData.accountType : null;
     const isPremium = accountType && (accountType === "p" || accountType === "a" || accountType === "n") ? true : false;
 
-    const authorCountry = publicData && publicData.country ? publicData.country : null;
-
-    const protectedData = currentUser && currentUser.attributes.profile.protectedData ?
-      sanitizeProtectedData(currentUser.attributes.profile.protectedData) : {};
-    const userCountry = protectedData && protectedData.protectedData && protectedData.protectedData.shippingAddress ?
-      protectedData.protectedData.shippingAddress.country : null;
-
-    const isDomesticOrder = authorCountry && userCountry && authorCountry === userCountry ? true : false;
-    const lineItems = !isPremium && isDomesticOrder ? domesticLineItems : internationalLineItems;
-    const allowsInternationalOrders = !isPremium && publicData && publicData.allowsInternationalOrders && publicData.allowsInternationalOrders[0] === 'hasFee' ? true : false;
     const { formattedPrice, priceTitle } = priceData(price, intl);
 
     const handleBookingSubmit = values => {
@@ -451,11 +430,6 @@ export class ListingPageComponent extends Component {
     const sizes = publicData && publicData.sizes ? publicData.sizes : null;
     const customOrders = publicData && publicData.customOrders ? publicData.customOrders : null;
     const websiteLink = isPremium && publicData && publicData.websiteLink ? publicData.websiteLink : null;
-    const domesticFee = publicData && publicData.shippingFee ? publicData.shippingFee : null;
-    const internationalFee = publicData && publicData.internationalFee ? publicData.internationalFee : null;
-    const shippingFee = isDomesticOrder && domesticFee ? resolveShippingFeePrice(publicData.shippingFee) :
-      !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
-        resolveShippingFeePrice({ amount: 0, currency: config.currency });
     const allowsBarter = publicData && publicData.allowsBarter && publicData.allowsBarter[0] === 'hasBarter' ? true : false;
     const barter = publicData && publicData.barter ? publicData.barter : null;
     const userAccountType = currentUser && currentUser.attributes.profile.publicData &&
@@ -531,13 +505,32 @@ export class ListingPageComponent extends Component {
                   <SectionCustomOrdersMaybe customOrders={customOrders} />
                   <SectionMaterialsMaybe options={materialOptions} material={material} />
                   <SectionSizesMaybe sizes={sizes} />
-                  <SectionPriceMaybe
-                    currentUser={currentUser}
-                    isPremium={isPremium}
-                    price={formattedPrice}
-                    websiteLink={websiteLink}
-                    onSubmit={handleBookingSubmit}
-                  />
+                  {isPremium ? (
+                    <SectionPriceMaybe
+                      currentUser={currentUser}
+                      isPremium={isPremium}
+                      price={formattedPrice}
+                      websiteLink={websiteLink}
+                      onSubmit={handleBookingSubmit}
+                    />
+                  ) : (
+                    <BookingPanel
+                      className={css.bookingBreakdown}
+                      listing={currentListing}
+                      isOwnListing={isOwnListing}
+                      unitType={unitType}
+                      onSubmit={handleBookingSubmit}
+                      title={bookingTitle}
+                      subTitle={bookingSubTitle}
+                      authorDisplayName={authorDisplayName}
+                      onManageDisableScrolling={onManageDisableScrolling}
+                      onFetchTransactionLineItems={onFetchTransactionLineItems}
+                      lineItems={lineItems}
+                      fetchLineItemsInProgress={fetchLineItemsInProgress}
+                      fetchLineItemsError={fetchLineItemsError}
+                      authorCountry={authorCountry}
+                    />
+                  )}
                   {!isPremium &&
                     <div className={css.reviewsContainerMobile}>
                       <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
@@ -617,8 +610,7 @@ const mapStateToProps = state => {
     fetchReviewsError,
     sendEnquiryInProgress,
     sendEnquiryError,
-    domesticLineItems,
-    internationalLineItems,
+    lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
     enquiryModalOpenForListingId,
@@ -646,8 +638,7 @@ const mapStateToProps = state => {
     showListingError,
     reviews,
     fetchReviewsError,
-    domesticLineItems,
-    internationalLineItems,
+    lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
     sendEnquiryInProgress,

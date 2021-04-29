@@ -12,13 +12,13 @@ import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 // import { formatMoney } from '../../util/currency';
 // import { types as sdkTypes } from '../../util/sdkLoader';
 
-import css from './BookingDatesForm.module.css';
+import css from './PurchaseDataForm.module.css';
 const Decimal = require('decimal.js');
 
 // const { Money } = sdkTypes;
 // const identity = v => v;
 
-export class BookingDatesFormComponent extends Component {
+export class PurchaseDataFormComponent extends Component {
   constructor(props) {
     super(props);
     this.state = { focusedInput: null };
@@ -67,7 +67,7 @@ export class BookingDatesFormComponent extends Component {
       return (
         <div className={classes}>
           <p className={css.error}>
-            <FormattedMessage id="BookingDatesForm.listingPriceMissing" />
+            <FormattedMessage id="PurchaseDataForm.listingPriceMissing" />
           </p>
         </div>
       );
@@ -76,7 +76,7 @@ export class BookingDatesFormComponent extends Component {
       return (
         <div className={classes}>
           <p className={css.error}>
-            <FormattedMessage id="BookingDatesForm.listingCurrencyInvalid" />
+            <FormattedMessage id="PurchaseDataForm.listingCurrencyInvalid" />
           </p>
         </div>
       );
@@ -105,11 +105,11 @@ export class BookingDatesFormComponent extends Component {
           } = fieldRenderProps;
           
           // const quantityMessage = intl.formatMessage({
-          //   id: 'BookingDatesForm.quantityMessage',
+          //   id: 'PurchaseDataForm.quantityMessage',
           // });
     
           // const quantityPlaceholderMessage = intl.formatMessage({
-          //   id: 'BookingDatesForm.quantityPlaceholder',
+          //   id: 'PurchaseDataForm.quantityPlaceholder',
           // });
 
           const bookingData = { unitType, isDomesticOrder };
@@ -138,7 +138,7 @@ export class BookingDatesFormComponent extends Component {
           const bookingInfoMaybe = showEstimatedBreakdown ? (
             <div className={css.priceBreakdownContainer}>
               <h3 className={css.priceBreakdownTitle}>
-                <FormattedMessage id="BookingDatesForm.priceBreakdownTitle" />
+                <FormattedMessage id="PurchaseDataForm.priceBreakdownTitle" />
               </h3>
               <EstimatedBreakdownMaybe bookingData={bookingData} lineItems={lineItems} />
             </div>
@@ -150,7 +150,7 @@ export class BookingDatesFormComponent extends Component {
 
           // const bookingInfoErrorMaybe = fetchLineItemsError ? (
           //   <span className={css.sideBarError}>
-          //     <FormattedMessage id="BookingDatesForm.fetchLineItemsError" />
+          //     <FormattedMessage id="PurchaseDataForm.fetchLineItemsError" />
           //   </span>
           // ) : null;
 
@@ -174,14 +174,14 @@ export class BookingDatesFormComponent extends Component {
                 <FormattedMessage
                   id={
                     isOwnListing
-                      ? 'BookingDatesForm.ownListing'
-                      : 'BookingDatesForm.youWontBeChargedInfo'
+                      ? 'PurchaseDataForm.ownListing'
+                      : 'PurchaseDataForm.youWontBeChargedInfo'
                   }
                 />
               </p>
               <div className={submitButtonClasses}>
                 <Button type="submit" className={css.bookButton}>
-                  <FormattedMessage id="BookingDatesForm.requestToBook" />
+                  <FormattedMessage id="PurchaseDataForm.requestToBook" />
                 </Button>
               </div>
             </Form>
@@ -192,7 +192,7 @@ export class BookingDatesFormComponent extends Component {
   }
 }
 
-BookingDatesFormComponent.defaultProps = {
+PurchaseDataFormComponent.defaultProps = {
   rootClassName: null,
   className: null,
   submitButtonWrapperClassName: null,
@@ -200,12 +200,11 @@ BookingDatesFormComponent.defaultProps = {
   isOwnListing: false,
   startDatePlaceholder: null,
   endDatePlaceholder: null,
-  timeSlots: null,
   lineItems: null,
   fetchLineItemsError: null,
 };
 
-BookingDatesFormComponent.propTypes = {
+PurchaseDataFormComponent.propTypes = {
   rootClassName: string,
   className: string,
   submitButtonWrapperClassName: string,
@@ -213,7 +212,6 @@ BookingDatesFormComponent.propTypes = {
   unitType: propTypes.bookingUnitType.isRequired,
   price: propTypes.money,
   isOwnListing: bool,
-  timeSlots: arrayOf(propTypes.timeSlot),
 
   onFetchTransactionLineItems: func.isRequired,
   lineItems: array,
@@ -228,7 +226,7 @@ BookingDatesFormComponent.propTypes = {
   endDatePlaceholder: string,
 };
 
-const BookingDatesForm = compose(injectIntl)(BookingDatesFormComponent);
-BookingDatesForm.displayName = 'BookingDatesForm';
+const PurchaseDataForm = compose(injectIntl)(PurchaseDataFormComponent);
+PurchaseDataForm.displayName = 'PurchaseDataForm';
 
-export default BookingDatesForm;
+export default PurchaseDataForm;
