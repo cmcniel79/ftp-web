@@ -135,6 +135,12 @@ export const filters = [
           ]
         },
         {
+          key: 'digital', label: 'Digital Goods',
+          subCategories: [
+            { key: 'nfts', label: 'NFTs' },
+          ]
+        },
+        {
           key: 'other', label: 'Other',
           subCategories: [
             { key: 'other', label: 'No Subcategory' },
