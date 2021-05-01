@@ -216,7 +216,7 @@ export const signup = params => (dispatch, getState, sdk) => {
     return Promise.reject(new Error('Login or logout already in progress'));
   }
   dispatch(signupRequest());
-  const { email, password, firstName, lastName, country, getNewsletter, ...rest } = params;
+  const { email, password, firstName, lastName, getNewsletter, ...rest } = params;
 
   // Account, shippingAddress and isAdult gets set for each user at signup. It makes it easier to change
   // user's account types later on in console if account type is already initialized. Country is also used
@@ -224,12 +224,12 @@ export const signup = params => (dispatch, getState, sdk) => {
   // boolean used to figure out if a user should be shown casino ads. Took out isAdult
   const createUserParams = isEmpty(rest)
     ? {
-      email, password, firstName, lastName, protectedData: { shippingAddress: { country: country } },
-      publicData: { accountType: "", country: country }
+      email, password, firstName, lastName,
+      publicData: { accountType: "" }
     }
     : {
-      email, password, firstName, lastName, protectedData: { shippingAddress: { country: country }, ...rest}, 
-      publicData: { accountType: "" , country: country}
+      email, password, firstName, lastName, ...rest, 
+      publicData: { accountType: "" }
     };
 
   // Add subscribers to our mailchimp email list
