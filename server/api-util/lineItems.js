@@ -66,8 +66,13 @@ exports.transactionLineItems = (listing, bookingData) => {
     percentage: PROVIDER_COMMISSION_PERCENTAGE,
     includeFor: ['provider'],
   };
- 
-  const lineItems = [booking, shippingFee, providerCommission];
+
+  
+  const listingEvents = listing.attributes.metadata && listing.attributes.metadata.events;
+  const isWithStanford = listingEvents && listingEvents.includes("5fa4f884-a33e-45d8-a0b2-a8cef62d85ab");
+
+  // No commission on Stanford Powwow Listings
+  const lineItems = isWithStanford ? [booking, shippingFee] : [booking, shippingFee, providerCommission];
 
   return lineItems;
 };

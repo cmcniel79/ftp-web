@@ -63,6 +63,7 @@ export const filters = [
             { key: 'rings', label: 'Rings' },
             { key: 'bracelets', label: 'Bracelets' },
             { key: 'anklets', label: 'Anklets' },
+            { key: 'sets', label: 'Full Sets' },
           ]
         },
         {
