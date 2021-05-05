@@ -59,6 +59,7 @@ import SectionPriceMaybe from './SectionPriceMaybe';
 import SectionReviews from './SectionReviews';
 import SectionSellerMaybe from './SectionSellerMaybe';
 import SectionSizesMaybe from './SectionSizesMaybe';
+import SectionVideoMaybe from './SectionVideoMaybe';
 
 import css from './ListingPage.module.css';
 
@@ -435,6 +436,9 @@ export class ListingPageComponent extends Component {
     const userAccountType = currentUser && currentUser.attributes.profile.publicData &&
       currentUser.attributes.profile.publicData.accountType ? currentUser.attributes.profile.publicData.accountType : null;
 
+    const videoData = publicData && publicData.videoData ? publicData.videoData : null
+        console.log(videoData);
+        console.log(publicData);
     return (
       <Page
         title={schemaTitle}
@@ -476,6 +480,7 @@ export class ListingPageComponent extends Component {
                       tab: listingTab,
                     }}
                   />
+                  <SectionVideoMaybe videoData={videoData}/>
                   {!isPremium &&
                     <div className={css.reviewsContainerDesktop}>
                       <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />

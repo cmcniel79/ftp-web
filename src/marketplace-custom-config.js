@@ -63,6 +63,7 @@ export const filters = [
             { key: 'rings', label: 'Rings' },
             { key: 'bracelets', label: 'Bracelets' },
             { key: 'anklets', label: 'Anklets' },
+            { key: 'sets', label: 'Full Sets' },
           ]
         },
         {
@@ -131,6 +132,12 @@ export const filters = [
             { key: 'fiction', label: 'Fiction and Poetry' },
             { key: 'comics', label: 'Comics and Graphic Novels' },
             { key: 'children', label: "Children's Books" },
+          ]
+        },
+        {
+          key: 'digital', label: 'Digital Goods',
+          subCategories: [
+            { key: 'nfts', label: 'NFTs' },
           ]
         },
         {

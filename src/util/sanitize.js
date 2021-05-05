@@ -211,9 +211,11 @@ export const sanitizeListing = entity => {
       internationalFee,
       allowsInternationalOrders,
       allowsBarter,
-      barter
+      barter,
+      maxQuantity,
+      videoData
     } = publicData || {};
-
+    console.log(typeof maxQuantity);
     const countryMaybe = country ? { country: sanitizeText(country) } : {};
 
     const categoryMaybe = category ? { category: sanitizeText(category) } : {};
@@ -254,6 +256,17 @@ export const sanitizeListing = entity => {
       barter: sanitizeText(barter)
     } : {};
 
+    const maxQuantityMaybe = maxQuantity ? {
+      maxQuantity: sanitizeNumber(maxQuantity)
+    } : {};
+
+    const videoDataMaybe = videoData && videoData.type && videoData.url ? {
+      videoData: {
+      type: sanitizeText(videoData.type),
+      url: sanitizeText(videoData.url)
+      }
+    } : {};
+
 
     return publicData ? {
       publicData: {
@@ -272,6 +285,8 @@ export const sanitizeListing = entity => {
         ...allowsInternationalOrdersMaybe,
         ...allowsBarterMaybe,
         ...barterMaybe,
+        ...maxQuantityMaybe,
+        ...videoDataMaybe
       }
     } : {};
   };

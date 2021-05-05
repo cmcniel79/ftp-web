@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { nonEmptyArray, composeValidators } from '../../util/validators';
 import { isUploadImageOverLimitError } from '../../util/errors';
-import { AddImages, Button, Form, ValidationError } from '../../components';
+import { AddImages, Button, Form, ValidationError, FieldTextInput, FieldSelect } from '../../components';
 
 import css from './EditListingPhotosForm.module.css';
 
@@ -42,7 +42,11 @@ export class EditListingPhotosFormComponent extends Component {
         {...this.props}
         onImageUploadHandler={this.onImageUploadHandler}
         imageUploadRequested={this.state.imageUploadRequested}
-        initialValues={{ images: this.props.images }}
+        initialValues={{ 
+          images: this.props.images, 
+          videoType: this.props.videoType, 
+          videoUrl: this.props.videoUrl
+        }}
         render={formRenderProps => {
           const {
             form,
@@ -60,8 +64,9 @@ export class EditListingPhotosFormComponent extends Component {
             saveActionMsg,
             updated,
             updateInProgress,
+            accountType,
           } = formRenderProps;
-
+          
           const chooseImageText = (
             <span className={css.chooseImageText}>
               <span className={css.chooseImage}>
@@ -126,6 +131,53 @@ export class EditListingPhotosFormComponent extends Component {
             invalid || disabled || submitInProgress || imageUploadRequested || ready;
 
           const classes = classNames(css.root, className);
+
+          const videoTypeOptions = [
+            {
+              name: "Youtube",
+              value: "youtube"
+            },
+            {
+              name: "TikTok",
+              value: "tiktok"
+            }
+          ];
+          const videoTypeLabel = intl.formatMessage({ id: 'EditListingPhotosForm.videoTypeLabel' });
+          const videoTypePlaceholder = intl.formatMessage({ id: 'EditListingPhotosForm.videoTypePlaceholder' });
+          const videoUrlLabel = intl.formatMessage({ id: 'EditListingPhotosForm.videoUrlLabel' });
+          const videoUrlPlaceholder = intl.formatMessage({ id: 'EditListingPhotosForm.videoUrlPlaceholder' });
+
+          const videoSection = (accountType !== "n" || accountType !== "a") ? (
+            <div className={css.videoSection}>
+              <h2 className={css.videoTitle}>
+                <FormattedMessage id="EditListingPhotosForm.videoSectionTitle" />
+              </h2>
+              <FieldSelect
+                id="videoType"
+                name="videoType"
+                className={css.videoTypeField}
+                type="text"
+                label={videoTypeLabel}
+              >
+                <option disabled value="">
+                  {videoTypePlaceholder}
+                </option>
+                {videoTypeOptions.map(v =>
+                  <option key={v.value} value={v.value}>
+                    {v.name}
+                  </option>
+                )}
+              </FieldSelect>
+              <FieldTextInput
+                id="videoUrl"
+                name="videoUrl"
+                className={css.videUrlField}
+                type="url"
+                label={videoUrlLabel}
+                placeholder={videoUrlPlaceholder}
+              />
+            </div>
+          ) : null;
 
           return (
             <Form
@@ -205,6 +257,7 @@ export class EditListingPhotosFormComponent extends Component {
               </p>
               {publishListingFailed}
               {showListingFailed}
+              {videoSection}
 
               <Button
                 className={css.submitButton}
