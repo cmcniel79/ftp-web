@@ -41,7 +41,7 @@
 .adLink {
   @apply --marketplaceH4FontStyles;
   color: var(--matterColor);
-  white-space: nowrap;
+  white-space: wrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
@@ -51,7 +51,7 @@
   word-break: break-all;
   /* use break-word if available */
   word-break: break-word;
-  hyphens: auto;
+  /* hyphens: auto; */
   /* Remove default margins from font */
   margin-top: 0;
   margin-bottom: 0;
