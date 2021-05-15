@@ -176,15 +176,6 @@ const TopbarDesktop = props => {
       </span>
     </NamedLink>;
 
-  const blogLink =
-    <ExternalLink className={css.customLink} key="linkToBlog"
-      href="https://fromthepeople.blog/"
-    >
-      <span className={css.custom}>
-        <FormattedMessage id="TopbarDesktop.blogLink" />
-      </span>
-    </ExternalLink>
-
   const contactLink =
     <NamedLink className={css.customLink} name="ContactPage">
       <span className={css.custom}>
@@ -236,7 +227,6 @@ const TopbarDesktop = props => {
       {mapLink}
       {eventsLink}
       {faqLink}
-      {blogLink}
       {contactLink}
       {newListingLink}
       {inboxLink}
