@@ -104,7 +104,7 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
   // const { imgSrc = [self] } = defaultDirectives;
   // const exampleImgSrc = imgSrc.concat('my-custom-domain.example.com');
 
-  const { connectSrc = [self] } = defaultDirectives;
+  const { connectSrc = [self], scriptSrc= [self] } = defaultDirectives;
   const customConnectSrc = connectSrc.concat([
    'https://native-land.ca/',
    emailURL,
@@ -114,10 +114,16 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
    mailchimpURL,
    eventsURL
    ]);
+
+  const customScriptSrc = scriptSrc.concat([
+    "www.tiktok.com"
+  ]);
+
   const customDirectives = {
     // Example: Add custom directive override
     // imgSrc: exampleImgSrc,
     connectSrc: customConnectSrc, 
+    scriptSrc: customScriptSrc
   };
 
   // ================ END CUSTOM CSP URLs ================ //

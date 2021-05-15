@@ -87,7 +87,7 @@ const EditListingPricingPanel = props => {
           shippingFee: domesticData,
           internationalFee: shouldSaveInternational ? internationalData : domesticData,
           allowsInternationalOrders: shouldSaveInternational,
-          maxQuantity
+          maxQuantity: parseInt(maxQuantity)
         } : {
           // Empty public data for premium, ad and non-profit listings. 
           // Those do not have shipping data show up.

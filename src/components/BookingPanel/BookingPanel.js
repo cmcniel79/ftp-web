@@ -69,7 +69,8 @@ const BookingPanel = props => {
     lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
-    authorCountry
+    authorCountry,
+    maxQuantity
   } = props;
 
   const {
@@ -123,6 +124,7 @@ const BookingPanel = props => {
             initialValues={{ quantity: 1 }}
             allowsInternationalOrders={allowsInternationalOrders}
             authorCountry={authorCountry}
+            maxQuantity={maxQuantity}
           />
         ) : null}
       </ModalInMobile>

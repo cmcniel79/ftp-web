@@ -45,7 +45,7 @@ export class PurchaseOptionsFormComponent extends Component {
             e.preventDefault();
             this.setState({ focusedInput: "quantity" });
         } else {
-            this.props.onSubmit({country, quantity});
+            this.props.onSubmit({ country, quantity });
         }
     }
 
@@ -54,7 +54,7 @@ export class PurchaseOptionsFormComponent extends Component {
     // In case you add more fields to the form, make sure you add
     // the values here to the bookingData object.
     handleOnChange(formValues) {
-        const country = formValues.values && formValues.values.country ? formValues.values.country : 
+        const country = formValues.values && formValues.values.country ? formValues.values.country :
             !this.props.allowsInternationalOrders && this.props.authorCountry ? this.props.authorCountry : null;
         const quantity = formValues.values && formValues.values.quantity;
         const listingId = this.props.listingId;
@@ -111,7 +111,8 @@ export class PurchaseOptionsFormComponent extends Component {
                         fetchLineItemsInProgress,
                         fetchLineItemsError,
                         allowsInternationalOrders,
-                        authorCountry
+                        authorCountry,
+                        maxQuantity
                     } = fieldRenderProps;
 
                     const country = values && values.country;
@@ -126,10 +127,14 @@ export class PurchaseOptionsFormComponent extends Component {
                     const quantityRequiredMessage = intl.formatMessage({ id: 'PurchaseOptionsForm.quantityRequiredMessage' });
                     const quantityRequired = required(quantityRequiredMessage);
 
+
                     var quantityArray = [];
-                    for (var i = 1; i <= 10; i++) {
-                        quantityArray.push(i);
-                    }
+                    const shouldShowQuantityField = maxQuantity && maxQuantity > 1;
+                    if (shouldShowQuantityField) {
+                        for (var i = 1; i <= maxQuantity; i++) {
+                            quantityArray.push(i);
+                        }
+                    };
 
                     // This is the place to collect breakdown estimation data.
                     // Note: lineItems are calculated and fetched from FTW backend
@@ -211,21 +216,23 @@ export class PurchaseOptionsFormComponent extends Component {
                                         })}
                                     </FieldSelect>
                                 ) : null}
-                                <FieldSelect
-                                    id={`${formId}.quantity`}
-                                    name="quantity"
-                                    className={css.quantityField}
-                                    label={quantityLabel}
-                                    validate={quantityRequired}
-                                >
-                                    {quantityArray.map(x => {
-                                        return (
-                                            <option key={x} value={x}>
-                                                {x}
-                                            </option>
-                                        );
-                                    })}
-                                </FieldSelect>
+                                {shouldShowQuantityField ? (
+                                    <FieldSelect
+                                        id={`${formId}.quantity`}
+                                        name="quantity"
+                                        className={css.quantityField}
+                                        label={quantityLabel}
+                                        validate={quantityRequired}
+                                    >
+                                        {quantityArray.map(x => {
+                                            return (
+                                                <option key={x} value={x}>
+                                                    {x}
+                                                </option>
+                                            );
+                                        })}
+                                    </FieldSelect>
+                                ) : null}
                             </div>
                             {onlyShipsToCountry}
                             {bookingInfoMaybe}

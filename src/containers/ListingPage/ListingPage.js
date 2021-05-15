@@ -436,9 +436,9 @@ export class ListingPageComponent extends Component {
     const userAccountType = currentUser && currentUser.attributes.profile.publicData &&
       currentUser.attributes.profile.publicData.accountType ? currentUser.attributes.profile.publicData.accountType : null;
 
-    const videoData = publicData && publicData.videoData ? publicData.videoData : null
-        console.log(videoData);
-        console.log(publicData);
+    const videoData = publicData && publicData.videoData ? publicData.videoData : null;
+    const maxQuantity = publicData && publicData.maxQuantity ? publicData.maxQuantity : null;
+
     return (
       <Page
         title={schemaTitle}
@@ -534,6 +534,7 @@ export class ListingPageComponent extends Component {
                       fetchLineItemsInProgress={fetchLineItemsInProgress}
                       fetchLineItemsError={fetchLineItemsError}
                       authorCountry={authorCountry}
+                      maxQuantity={maxQuantity}
                     />
                   )}
                   {!isPremium &&

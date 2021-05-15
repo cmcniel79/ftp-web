@@ -215,7 +215,6 @@ export const sanitizeListing = entity => {
       maxQuantity,
       videoData
     } = publicData || {};
-    console.log(typeof maxQuantity);
     const countryMaybe = country ? { country: sanitizeText(country) } : {};
 
     const categoryMaybe = category ? { category: sanitizeText(category) } : {};
