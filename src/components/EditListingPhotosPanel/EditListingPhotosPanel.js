@@ -34,9 +34,6 @@ class EditListingPhotosPanel extends Component {
     const classes = classNames(rootClass, className);
     const currentListing = ensureOwnListing(listing);
     const publicData = currentListing && currentListing.attributes.publicData ? currentListing.attributes.publicData : null;
-    const videoData = publicData && publicData.videoData ? publicData.videoData : null;
-    const videoType = videoData && videoData.type ? videoData.type : null;
-    const videoUrl = videoData && videoData.url ? videoData.url : null;
 
     const isPublished =
       currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
@@ -57,37 +54,13 @@ class EditListingPhotosPanel extends Component {
           disabled={disabled}
           ready={ready}
           fetchErrors={errors}
-          initialValues={{ images, videoType, videoUrl }}
+          initialValues={{ images }}
           images={images}
           onImageUpload={onImageUpload}
-          videoType={videoType}
-          videoUrl={videoUrl}
           onSubmit={values => {
-            const { addImage, videoType, videoUrl, images } = values;
-            const publicData = {
-              videoData: {
-                type: videoType,
-                url: videoUrl
-              }
-            };
-            const updateValues = {
-              publicData,
-              images
-            };
+            const { addImage, ...updateValues } = values;
             onSubmit(updateValues);
           }}
-          // onSubmit={values => {
-          //   const { addImage, videoType, videoUrl } = values;
-          //   const updateValues = {
-          //     publicData: {
-          //       videoData: {
-          //         type: videoType,
-          //         url: videoUrl
-          //       }
-          //     }
-          //   }
-          //   onSubmit(updateValues);
-          // }}
           onChange={onChange}
           onUpdateImageOrder={onUpdateImageOrder}
           onRemoveImage={onRemoveImage}

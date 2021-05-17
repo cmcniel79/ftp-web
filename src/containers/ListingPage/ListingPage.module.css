@@ -30,16 +30,6 @@
   }
 }
 
-.sectionVideoMaybe {
-  position: relative;
-  margin: 40px auto 0 auto;
-  @media (--viewportMedium) {
-    margin-top: 0;
-    width: 85%;
-    margin-bottom: 80px;
-  }
-}
-
 .youtubePlayer {
   width: 100%;
   height: 200px;

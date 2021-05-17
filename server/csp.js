@@ -115,15 +115,10 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
    eventsURL
    ]);
 
-  const customScriptSrc = scriptSrc.concat([
-    "www.tiktok.com"
-  ]);
-
   const customDirectives = {
     // Example: Add custom directive override
     // imgSrc: exampleImgSrc,
     connectSrc: customConnectSrc, 
-    scriptSrc: customScriptSrc
   };
 
   // ================ END CUSTOM CSP URLs ================ //

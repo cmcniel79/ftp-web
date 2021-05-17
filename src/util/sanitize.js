@@ -213,7 +213,6 @@ export const sanitizeListing = entity => {
       allowsBarter,
       barter,
       maxQuantity,
-      videoData
     } = publicData || {};
     const countryMaybe = country ? { country: sanitizeText(country) } : {};
 
@@ -259,14 +258,6 @@ export const sanitizeListing = entity => {
       maxQuantity: sanitizeNumber(maxQuantity)
     } : {};
 
-    const videoDataMaybe = videoData && videoData.type && videoData.url ? {
-      videoData: {
-      type: sanitizeText(videoData.type),
-      url: sanitizeText(videoData.url)
-      }
-    } : {};
-
-
     return publicData ? {
       publicData: {
         ...countryMaybe,
@@ -285,7 +276,6 @@ export const sanitizeListing = entity => {
         ...allowsBarterMaybe,
         ...barterMaybe,
         ...maxQuantityMaybe,
-        ...videoDataMaybe
       }
     } : {};
   };
