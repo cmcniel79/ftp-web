@@ -94,12 +94,6 @@ const TopbarMobileMenu = props => {
       <NamedLink name="FAQPage" className={css.regularLink}>
         <FormattedMessage id="TopbarMobileMenu.faqLink" />
       </NamedLink>
-      <ExternalLink
-        className={css.regularLink}
-        href="https://fromthepeople.blog/"
-      >
-        <FormattedMessage id="TopbarMobileMenu.blogLink" />
-      </ExternalLink>
       <NamedLink name="ContactPage" className={css.regularLink}>
         <FormattedMessage id="TopbarMobileMenu.contactLink" />
       </NamedLink>
