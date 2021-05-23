@@ -117,6 +117,8 @@ export const loadData = (params, search) => dispatch  => {
     latlng: ['origin'],
     latlngBounds: ['bounds'],
   });
+  console.log("Load on single event page");
+  console.log(queryParams);
 
   const { page = 1, address, origin, ...rest } = queryParams;
   const searchParams = {

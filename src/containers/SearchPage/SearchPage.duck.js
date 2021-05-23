@@ -215,6 +215,8 @@ export const loadData = (params, search) => {
     latlng: ['origin'],
     latlngBounds: ['bounds'],
   });
+  console.log("Load on search page");
+  console.log(queryParams);
   const { page = 1, address, origin, ...rest } = queryParams;
   const originMaybe = config.sortSearchByDistance && origin ? { origin } : {};
   return searchListings({
