@@ -437,9 +437,9 @@ export class ListingPageComponent extends Component {
 
     const maxQuantity = publicData && publicData.maxQuantity ? publicData.maxQuantity : null;
 
-    const loadingSpinnerMaybe = fetchLineItemsInProgress ? (
+    const loadingSpinnerMaybe = (
       <IconSpinner className={css.spinner} />
-    ) : null;
+    );
 
     return (
       <Page
@@ -545,7 +545,7 @@ export class ListingPageComponent extends Component {
                       </div>}
                   </div>
                 ) : (
-                  {loadingSpinnerMaybe}
+                  loadingSpinnerMaybe
                 )}
               </div>
             </div>
