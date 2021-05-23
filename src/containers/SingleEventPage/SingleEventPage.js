@@ -41,6 +41,7 @@ export class SingleEventPageComponent extends Component {
       listings,
     } = this.props;
 
+    console.log(pagination);
     // Get basic Event info from eventDetails 
     const hostUUID = eventDetails && eventDetails.hostUUID ? eventDetails.hostUUID : null;
     const eventName = eventDetails && eventDetails.eventName ? eventDetails.eventName : null;
