@@ -24,12 +24,6 @@ import css from './SingleEventPage.module.css';
 
 export class SingleEventPageComponent extends Component {
 
-  componentDidMount() {
-    if (window) {
-      this.props.onLoadData(this.props.params.id);
-    }
-  }
-
   render() {
     const {
       eventInfoInProgress,
@@ -41,7 +35,6 @@ export class SingleEventPageComponent extends Component {
       listings,
     } = this.props;
 
-    console.log(pagination);
     // Get basic Event info from eventDetails 
     const hostUUID = eventDetails && eventDetails.hostUUID ? eventDetails.hostUUID : null;
     const eventName = eventDetails && eventDetails.eventName ? eventDetails.eventName : null;
@@ -134,8 +127,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onLoadData: (id) => dispatch(loadData(id)),
-  onSearchListings: (searchParams) => dispatch(searchListings(searchParams))
 });
 
 const SingleEventPage = compose(

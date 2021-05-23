@@ -69,17 +69,32 @@ export const searchListingsRequest = searchParams => ({ type: SEARCH_LISTINGS_RE
 export const searchListingsSuccess = response => ({ type: SEARCH_LISTINGS_SUCCESS, payload: { data: response.data } });
 export const searchListingsError = e => ({ type: SEARCH_LISTINGS_ERROR, error: true, payload: e });
 
-
 export const searchListings = (searchParams, id) => (dispatch, getState, sdk) => {
   dispatch(searchListingsRequest(searchParams));
-  const { perPage, sort, keywords, ...rest } = searchParams;
+  const priceSearchParams = priceParam => {
+    const inSubunits = value =>
+      convertUnitToSubUnit(value, unitDivisor(config.currencyConfig.currency));
+    const values = priceParam ? priceParam.split(',') : [];
+    return priceParam && values.length === 2
+      ? {
+        price: [inSubunits(values[0]), inSubunits(values[1]) + 1].join(','),
+      }
+      : {};
+  };
+
+  const { perPage, price, dates, sort, keywords, ...rest } = searchParams;
+  const priceMaybe = priceSearchParams(price);
   const params = {
     ...rest,
+    ...priceMaybe,
     per_page: perPage,
     meta_ranking: "0,",
     meta_events: id,
-    sort: "-meta_ranking"
+    sort: "-meta_ranking",
+    keywords: keywords,
+    sort: (keywords ? null : sort ? sort : "-meta_ranking")
   };
+
   return sdk.listings
     .query(params)
     .then(response => {
@@ -112,13 +127,11 @@ const fetchEventDetails = (hostUUID) => (dispatch, getState, sdk) => {
 
 export const loadData = (params, search) => dispatch  => {
   
-  const queryId = params;
+  const queryId = params.id;
   const queryParams = parse(search, {
     latlng: ['origin'],
     latlngBounds: ['bounds'],
   });
-  console.log("Load on single event page");
-  console.log(queryParams);
 
   const { page = 1, address, origin, ...rest } = queryParams;
   const searchParams = {
@@ -127,8 +140,15 @@ export const loadData = (params, search) => dispatch  => {
     perPage: RESULT_PAGE_SIZE,
     include: ['author', 'images'],
     'fields.listing': ['title', 'geolocation', 'price', 'publicData.websiteLink', 'publicData.category'],
-    'fields.user': ['profile.displayName', 'profile.abbreviatedName',
-      'profile.publicData.accountType', 'profile.publicData.tribe', 'profile.publicData.companyName', 'profile.publicData.companyIndustry'], //added metadata for verify badge
+    'fields.user': [
+      //added metadata for verify badge
+      'profile.displayName', 
+      'profile.abbreviatedName',
+      'profile.publicData.accountType', 
+      'profile.publicData.tribe',
+      'profile.publicData.companyName',
+       'profile.publicData.companyIndustry'
+    ],
     'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
     'limit.images': 1,
   };
