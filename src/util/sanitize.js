@@ -31,7 +31,7 @@ const sanitizeNumber = nbr =>
 
   const sanitizeBool = bool =>
   bool == null ? bool
-    : typeof bool === 'boolean' ? nbr
+    : typeof bool === 'boolean' ? bool
       : null
   ;
 

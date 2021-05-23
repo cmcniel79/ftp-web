@@ -118,12 +118,10 @@ export class PurchaseOptionsFormComponent extends Component {
                     const country = values && values.country;
                     const quantity = values && values.quantity;
 
-                    const countryLabel = intl.formatMessage({ id: 'PurchaseOptionsForm.countryLabel' });
                     const countryPlaceholder = intl.formatMessage({ id: 'PurchaseOptionsForm.countryPlaceholder' });
                     const countryRequiredMessage = intl.formatMessage({ id: 'PurchaseOptionsForm.countryRequiredMessage' });
                     const countryRequired = required(countryRequiredMessage);
 
-                    const quantityLabel = intl.formatMessage({ id: 'PurchaseOptionsForm.quantityLabel' });
                     const quantityRequiredMessage = intl.formatMessage({ id: 'PurchaseOptionsForm.quantityRequiredMessage' });
                     const quantityRequired = required(quantityRequiredMessage);
 
@@ -198,7 +196,6 @@ export class PurchaseOptionsFormComponent extends Component {
                                         <FieldSelect
                                             id={`${formId}.country`}
                                             name="country"
-                                            label={countryLabel}
                                             validate={countryRequired}
                                         >
                                             <option disabled value="">
