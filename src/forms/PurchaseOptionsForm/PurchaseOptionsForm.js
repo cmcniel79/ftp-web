@@ -62,7 +62,7 @@ export class PurchaseOptionsFormComponent extends Component {
 
         if (country && quantity && !this.props.fetchLineItemsInProgress) {
             this.props.onFetchTransactionLineItems({
-                bookingData: { isDomesticOrder: true, shippingCountry: country, quantity },
+                bookingData: { authorCountry: this.props.authorCountry, shippingCountry: country, quantity },
                 listingId,
                 isOwnListing,
             });
@@ -143,7 +143,8 @@ export class PurchaseOptionsFormComponent extends Component {
                         (country && quantity) || (!allowsInternationalOrders && authorCountry && quantity)
                             ? {
                                 unitType,
-                                country: country ? country : authorCountry,
+                                authorCountry,
+                                shippingCountry: country ? country : authorCountry,
                                 quantity,
                             }
                             : null;

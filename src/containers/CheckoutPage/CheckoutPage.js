@@ -800,7 +800,7 @@ export class CheckoutPageComponent extends Component {
                   paymentIntent={paymentIntent}
                   onStripeInitialized={this.onStripeInitialized}
                   shippingAddress={shippingAddress}
-                  bookingCountry={this.props.bookingData.country}
+                  bookingCountry={this.props.bookingData.shippingCountry}
                 />
               ) : null}
               {isPaymentExpired ? (

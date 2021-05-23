@@ -29,9 +29,9 @@ const PROVIDER_COMMISSION_PERCENTAGE = -6;
  */
 exports.transactionLineItems = (listing, bookingData) => {
   const unitPrice = listing.attributes.price;
-  const { shippingCountry, quantity } = bookingData;
+  const { authorCountry, shippingCountry, quantity } = bookingData;
 
-  const isDomesticOrder = shippingCountry === listing.attributes.publicData.country;
+  const isDomesticOrder = shippingCountry === authorCountry;
 
   /**
    * If you want to use pre-defined component and translations for printing the lineItems base price for booking,

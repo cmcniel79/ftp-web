@@ -64,13 +64,36 @@ const EditListingDescriptionPanel = props => {
         initialValues={{ title, description, category, subCategory, style, region, material, customOrders, sizes, websiteLink, barter, allowsBarter }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, category, subCategory, style, region, material, customOrders, sizes, websiteLink, barter, allowsBarter } = values;
+          const { 
+            title, 
+            description, 
+            category, 
+            subCategory, 
+            style, 
+            region, 
+            material, 
+            customOrders, 
+            sizes, 
+            websiteLink, 
+            barter, 
+            allowsBarter 
+          } = values;
           const customIsAvailable = customOrders ? 'available' : 'unavailable';
           const updateValues = {
             title: title.trim(),
             description,
             publicData: {
-              category, subCategory, style, region, material, customOrders: customIsAvailable, sizes, websiteLink, verifiedSellers, barter, allowsBarter
+              category, 
+              subCategory, 
+              style, 
+              region, 
+              material, 
+              customOrders: customIsAvailable, 
+              sizes, 
+              websiteLink, 
+              verifiedSellers, 
+              barter, 
+              allowsBarter
             },
           };
           onSubmit(updateValues);
