@@ -119,16 +119,3 @@
     margin: 0 0 15px 0;
   }
 }
-
-.onlyShipsToCountry {
-  @apply --userCardButtonStyles;
-  margin: 0 auto 15px auto;
-  &:hover {
-    text-decoration: none;
-    cursor: default;
-    background-color: var(--marketplaceColor);
-}
-  @media (--viewportMedium) {
-      margin: 0 auto 15px 0;
-  }
-}

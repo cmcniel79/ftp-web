@@ -180,12 +180,6 @@ export class PurchaseOptionsFormComponent extends Component {
                         </span>
                     ) : null;
 
-                    const onlyShipsToCountry = !allowsInternationalOrders && authorCountry ? (
-                        <span className={css.onlyShipsToCountry}>
-                            <FormattedMessage id="PurchaseOptionsForm.onlyShipsToCountry" values={{ country: authorCountry }} />
-                        </span>
-                    ) : null;
-
                     return (
                         <Form onSubmit={handleSubmit} className={classes} enforcePagePreloadFor="CheckoutPage">
                             <FormSpy
@@ -196,45 +190,54 @@ export class PurchaseOptionsFormComponent extends Component {
                             />
                             {basePrice}
                             <div className={css.fieldContainer}>
-                                {allowsInternationalOrders ? (
-                                    <FieldSelect
-                                        id={`${formId}.country`}
-                                        name="country"
-                                        className={css.countryField}
-                                        label={countryLabel}
-                                        validate={countryRequired}
-                                    >
-                                        <option disabled value="">
-                                            {countryPlaceholder}
-                                        </option>
-                                        {countryCodes.map(country => {
-                                            return (
-                                                <option key={country.code} value={country.name}>
-                                                    {country.name}
-                                                </option>
-                                            );
-                                        })}
-                                    </FieldSelect>
-                                ) : null}
+                                <div className={css.countryField}>
+                                    <h2 className={css.featuresHeading}>
+                                        <FormattedMessage id="PurchaseOptionsForm.shippingHeading" />
+                                    </h2>
+                                    {allowsInternationalOrders ? (
+                                        <FieldSelect
+                                            id={`${formId}.country`}
+                                            name="country"
+                                            label={countryLabel}
+                                            validate={countryRequired}
+                                        >
+                                            <option disabled value="">
+                                                {countryPlaceholder}
+                                            </option>
+                                            {countryCodes.map(country => {
+                                                return (
+                                                    <option key={country.code} value={country.name}>
+                                                        {country.name}
+                                                    </option>
+                                                );
+                                            })}
+                                        </FieldSelect>
+                                    ) : !allowsInternationalOrders && authorCountry ? (
+                                        <FormattedMessage id="PurchaseOptionsForm.onlyShipsToCountry" values={{ country: authorCountry }} />
+                                    ) : null}
+                                </div>
                                 {shouldShowQuantityField ? (
-                                    <FieldSelect
-                                        id={`${formId}.quantity`}
-                                        name="quantity"
-                                        className={css.quantityField}
-                                        label={quantityLabel}
-                                        validate={quantityRequired}
-                                    >
-                                        {quantityArray.map(x => {
-                                            return (
-                                                <option key={x} value={x}>
-                                                    {x}
-                                                </option>
-                                            );
-                                        })}
-                                    </FieldSelect>
+                                    <div className={css.quantityField}>
+                                        <h2 className={css.featuresHeading}>
+                                            <FormattedMessage id="PurchaseOptionsForm.quantityHeading" />
+                                        </h2>
+                                        <FieldSelect
+                                            id={`${formId}.quantity`}
+                                            name="quantity"
+                                            // label={quantityLabel}
+                                            validate={quantityRequired}
+                                        >
+                                            {quantityArray.map(x => {
+                                                return (
+                                                    <option key={x} value={x}>
+                                                        {x}
+                                                    </option>
+                                                );
+                                            })}
+                                        </FieldSelect>
+                                    </div>
                                 ) : null}
                             </div>
-                            {onlyShipsToCountry}
                             {bookingInfoMaybe}
                             {loadingSpinnerMaybe}
                             {bookingInfoErrorMaybe}

@@ -81,8 +81,7 @@ const BookingPanel = props => {
   const hasListingState = !!listing.attributes.state;
   const isClosed = hasListingState && listing.attributes.state === LISTING_STATE_CLOSED;
   const showPurchaseOptionsForm = hasListingState && !isClosed;
-  const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders && 
-    publicData.allowsInternationalOrders[0] === 'hasFee' ? true : false;
+  const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders;
 
 
   // Check where this is used in template

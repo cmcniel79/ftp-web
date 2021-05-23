@@ -55,7 +55,6 @@ const EditListingDescriptionPanel = props => {
   const barter = publicData && publicData.barter;
   const allowsBarter = publicData && publicData.allowsBarter;
 
-
   const categoryOptions = findOptionsForSelectFilter('category', config.custom.filters);
   return (
     <div className={classes}>

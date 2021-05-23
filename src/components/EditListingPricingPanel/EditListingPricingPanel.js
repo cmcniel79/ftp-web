@@ -43,7 +43,7 @@ const EditListingPricingPanel = props => {
   const internationalFee = publicData && publicData.internationalFee ?
     new Money(publicData.internationalFee.amount, publicData.internationalFee.currency) : null;
   // Does Listing allow international orders?    
-  const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders ? ["hasFee"] : null;
+  const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders;
 
   // Order quantity stuff
   const maxQuantity = publicData && publicData.maxQuantity ? publicData.maxQuantity : null;
@@ -80,7 +80,7 @@ const EditListingPricingPanel = props => {
           currency: config.currency
         };
 
-        const shouldSaveInternational = allowsInternationalOrders && allowsInternationalOrders[0] === "hasFee";
+        const shouldSaveInternational = allowsInternationalOrders;
 
         const publicData = (accountType === 'e' || accountType === 'u') ? {
           // Allows domestic shipping and international shipping

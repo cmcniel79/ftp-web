@@ -29,6 +29,12 @@ const sanitizeNumber = nbr =>
       : 0
   ;
 
+  const sanitizeBool = bool =>
+  bool == null ? bool
+    : typeof bool === 'boolean' ? nbr
+      : null
+  ;
+
 const sanitizeStringArray = array => {
   var sanitizedArray = [];
   if (array && array.length > 0) {
@@ -243,11 +249,11 @@ export const sanitizeListing = entity => {
     } : {};
 
     const allowsInternationalOrdersMaybe = allowsInternationalOrders ? {
-      allowsInternationalOrders: allowsInternationalOrders
+      allowsInternationalOrders: sanitizeBool(allowsInternationalOrders)
     } : {};
 
     const allowsBarterMaybe = allowsBarter ? {
-      allowsBarter: allowsBarter
+      allowsBarter: sanitizeBool(allowsBarter)
     } : {};
 
     const barterMaybe = barter ? {

@@ -1013,6 +1013,8 @@
   "PurchaseOptionsForm.requiredDate": "Oops, make sure your date is correct!",
   "PurchaseOptionsForm.youWontBeChargedInfo": "You will not be charged until the seller accepts the transaction",
   "PurchaseOptionsForm.quantityMessage": "You can buy multiple of this item",
+  "PurchaseOptionsForm.shippingHeading": "Shipping",
+  "PurchaseOptionsForm.quantityHeading": "Quantity",
   "ResponsiveImage.noImage": "No image",
   "ReviewForm.reviewContentLabel": "Leave a review",
   "ReviewForm.reviewContentPlaceholder": "Describe your experience…",

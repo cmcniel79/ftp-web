@@ -400,7 +400,7 @@ export class TransactionPanelComponent extends Component {
     const shippingFee = isDomesticOrder && domesticFee ? resolveShippingFeePrice(publicData.shippingFee) :
       !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
         resolveShippingFeePrice({ amount: 0, currency: config.currency });
-    const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders && publicData.allowsInternationalOrders[0] === 'hasFee' ? true : false;
+    const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders;
 
     return (
       <div className={classes}>

@@ -37,6 +37,7 @@ import {
   LayoutWrapperFooter,
   Footer,
   BookingPanel,
+  IconSpinner
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '../../containers';
 
@@ -429,12 +430,16 @@ export class ListingPageComponent extends Component {
     const sizes = publicData && publicData.sizes ? publicData.sizes : null;
     const customOrders = publicData && publicData.customOrders ? publicData.customOrders : null;
     const websiteLink = isPremium && publicData && publicData.websiteLink ? publicData.websiteLink : null;
-    const allowsBarter = publicData && publicData.allowsBarter && publicData.allowsBarter[0] === 'hasBarter' ? true : false;
+    const allowsBarter = publicData && publicData.allowsBarter;
     const barter = publicData && publicData.barter ? publicData.barter : null;
     const userAccountType = currentUser && currentUser.attributes.profile.publicData &&
       currentUser.attributes.profile.publicData.accountType ? currentUser.attributes.profile.publicData.accountType : null;
 
     const maxQuantity = publicData && publicData.maxQuantity ? publicData.maxQuantity : null;
+
+    const loadingSpinnerMaybe = fetchLineItemsInProgress ? (
+      <IconSpinner className={css.spinner} />
+    ) : null;
 
     return (
       <Page
@@ -482,62 +487,66 @@ export class ListingPageComponent extends Component {
                       <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
                     </div>}
                 </div>
-                <div className={css.bookingPanel}>
-                  <SectionSellerMaybe
-                    title={title}
-                    listing={currentListing}
-                    authorDisplayName={authorDisplayName}
-                    onContactUser={this.onContactUser}
-                    isEnquiryModalOpen={isAuthenticated && this.state.enquiryModalOpen}
-                    onCloseEnquiryModal={() => this.setState({ enquiryModalOpen: false })}
-                    sendEnquiryError={sendEnquiryError}
-                    sendEnquiryInProgress={sendEnquiryInProgress}
-                    onSubmitEnquiry={this.onSubmitEnquiry}
-                    currentUser={currentUser}
-                    onManageDisableScrolling={onManageDisableScrolling}
-                    isPremium={isPremium}
-                    isFollowed={this.isFollowed}
-                    updateFollowed={this.updateFollowed}
-                  />
-                  <SectionDescriptionMaybe description={description} />
-                  {userAccountType === 'e' ? (
-                    <SectionBarterMaybe barter={barter} allowsBarter={allowsBarter} />
-                  ) : null}
-                  <SectionCustomOrdersMaybe customOrders={customOrders} />
-                  <SectionMaterialsMaybe options={materialOptions} material={material} />
-                  <SectionSizesMaybe sizes={sizes} />
-                  {isPremium ? (
-                    <SectionPriceMaybe
-                      currentUser={currentUser}
-                      isPremium={isPremium}
-                      price={formattedPrice}
-                      websiteLink={websiteLink}
-                      onSubmit={handleBookingSubmit}
-                    />
-                  ) : (
-                    <BookingPanel
-                      className={css.bookingBreakdown}
+                {description && publicData ? (
+                  <div className={css.bookingPanel}>
+                    <SectionSellerMaybe
+                      title={title}
                       listing={currentListing}
-                      isOwnListing={isOwnListing}
-                      unitType={unitType}
-                      onSubmit={handleBookingSubmit}
-                      title={bookingTitle}
-                      subTitle={bookingSubTitle}
                       authorDisplayName={authorDisplayName}
+                      onContactUser={this.onContactUser}
+                      isEnquiryModalOpen={isAuthenticated && this.state.enquiryModalOpen}
+                      onCloseEnquiryModal={() => this.setState({ enquiryModalOpen: false })}
+                      sendEnquiryError={sendEnquiryError}
+                      sendEnquiryInProgress={sendEnquiryInProgress}
+                      onSubmitEnquiry={this.onSubmitEnquiry}
+                      currentUser={currentUser}
                       onManageDisableScrolling={onManageDisableScrolling}
-                      onFetchTransactionLineItems={onFetchTransactionLineItems}
-                      lineItems={lineItems}
-                      fetchLineItemsInProgress={fetchLineItemsInProgress}
-                      fetchLineItemsError={fetchLineItemsError}
-                      authorCountry={authorCountry}
-                      maxQuantity={maxQuantity}
+                      isPremium={isPremium}
+                      isFollowed={this.isFollowed}
+                      updateFollowed={this.updateFollowed}
                     />
-                  )}
-                  {!isPremium &&
-                    <div className={css.reviewsContainerMobile}>
-                      <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
-                    </div>}
-                </div>
+                    <SectionDescriptionMaybe description={description} />
+                    {userAccountType === 'e' ? (
+                      <SectionBarterMaybe barter={barter} allowsBarter={allowsBarter} />
+                    ) : null}
+                    <SectionCustomOrdersMaybe customOrders={customOrders} />
+                    <SectionMaterialsMaybe options={materialOptions} material={material} />
+                    <SectionSizesMaybe sizes={sizes} />
+                    {isPremium ? (
+                      <SectionPriceMaybe
+                        currentUser={currentUser}
+                        isPremium={isPremium}
+                        price={formattedPrice}
+                        websiteLink={websiteLink}
+                        onSubmit={handleBookingSubmit}
+                      />
+                    ) : (
+                      <BookingPanel
+                        className={css.bookingBreakdown}
+                        listing={currentListing}
+                        isOwnListing={isOwnListing}
+                        unitType={unitType}
+                        onSubmit={handleBookingSubmit}
+                        title={bookingTitle}
+                        subTitle={bookingSubTitle}
+                        authorDisplayName={authorDisplayName}
+                        onManageDisableScrolling={onManageDisableScrolling}
+                        onFetchTransactionLineItems={onFetchTransactionLineItems}
+                        lineItems={lineItems}
+                        fetchLineItemsInProgress={fetchLineItemsInProgress}
+                        fetchLineItemsError={fetchLineItemsError}
+                        authorCountry={authorCountry}
+                        maxQuantity={maxQuantity}
+                      />
+                    )}
+                    {!isPremium &&
+                      <div className={css.reviewsContainerMobile}>
+                        <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
+                      </div>}
+                  </div>
+                ) : (
+                  {loadingSpinnerMaybe}
+                )}
               </div>
             </div>
           </LayoutWrapperMain>
