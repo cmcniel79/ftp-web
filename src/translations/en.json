@@ -255,7 +255,7 @@
   "EditListingPricingForm.shippingFeeInputPlaceholder": "Choose your shipping fee...",
   "EditListingPricingForm.internationalFeeInputMessage": "International Shipping Fee • optional",
   "EditListingPricingForm.internationalFeeInputPlaceholder": "Choose your shipping fee...",
-  "EditListingPricingForm.internationalCheckboxMessage": "Would you like to sell internationally?",
+  "EditListingPricingForm.internationalCheckboxMessage": "Would you like to ship internationally?",
   "EditListingPricingForm.specialAccountInfo": "You have either a Ad or Nonprofit account and do not need to enter pricing information. Press the button below to continue.",
   "EditListingPricingForm.instructionsLine1": "The international shipping fee will be applied automatically if a buyer is from a different country from you. Currrently, your country of origin is listed as {userCountry}.",
   "EditListingPricingForm.instructionsLine2": "  If this is the wrong country, you should go to your account settings and change your address before posting this item.",

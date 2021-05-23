@@ -187,7 +187,6 @@ export class PurchaseOptionsFormComponent extends Component {
                                     this.handleOnChange(values);
                                 }}
                             />
-                            {basePrice}
                             <div className={css.fieldContainer}>
                                 <div className={css.countryField}>
                                     <h2 className={css.featuresHeading}>
@@ -236,6 +235,7 @@ export class PurchaseOptionsFormComponent extends Component {
                                     </div>
                                 ) : null}
                             </div>
+                            {basePrice}
                             {bookingInfoMaybe}
                             {loadingSpinnerMaybe}
                             {bookingInfoErrorMaybe}

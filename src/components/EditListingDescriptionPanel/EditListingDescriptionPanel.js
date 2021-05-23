@@ -93,7 +93,7 @@ const EditListingDescriptionPanel = props => {
               websiteLink, 
               verifiedSellers, 
               barter, 
-              allowsBarter: allowsBarter === ["hasBarter"]
+              allowsBarter: allowsBarter && allowsBarter[0] === "hasBarter"
             },
           };
           onSubmit(updateValues);

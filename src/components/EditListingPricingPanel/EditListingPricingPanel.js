@@ -46,7 +46,7 @@ const EditListingPricingPanel = props => {
   const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders ? ["hasFee"] : null;
 
   // Order quantity stuff
-  const maxQuantity = publicData && publicData.maxQuantity ? publicData.maxQuantity : null;
+  const maxQuantity = publicData && publicData.maxQuantity ? publicData.maxQuantity : 1;
 
   const initialValues = { price, shippingFee, internationalFee, allowsInternationalOrders, maxQuantity };
 
@@ -80,11 +80,13 @@ const EditListingPricingPanel = props => {
           currency: config.currency
         };
 
+        const shouldSaveInternational = allowsInternationalOrders && allowsInternationalOrders[0] === "hasFee"
+
         const publicData = (accountType === 'e' || accountType === 'u') ? {
           // Allows domestic shipping and international shipping
           shippingFee: domesticData,
           internationalFee: shouldSaveInternational ? internationalData : domesticData,
-          allowsInternationalOrders: allowsInternationalOrders === ["hasFee"],
+          allowsInternationalOrders: shouldSaveInternational,
           maxQuantity: parseInt(maxQuantity)
         } : {
           // Empty public data for premium, ad and non-profit listings. 
