@@ -53,7 +53,7 @@ const EditListingDescriptionPanel = props => {
   const verifiedSellers = accountType && (accountType === 'e' || accountType === 'p' || accountType === 'n')
     ? 'verified' : 'unverified';
   const barter = publicData && publicData.barter;
-  const allowsBarter = publicData && publicData.allowsBarter;
+  const allowsBarter = publicData && publicData.allowsBarter ? ["hasBarter"] : null;
 
   const categoryOptions = findOptionsForSelectFilter('category', config.custom.filters);
   return (
@@ -93,7 +93,7 @@ const EditListingDescriptionPanel = props => {
               websiteLink, 
               verifiedSellers, 
               barter, 
-              allowsBarter
+              allowsBarter: allowsBarter === ["hasBarter"]
             },
           };
           onSubmit(updateValues);
