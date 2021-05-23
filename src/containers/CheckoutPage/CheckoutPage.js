@@ -422,7 +422,7 @@ export class CheckoutPageComponent extends Component {
     const shippingDetails = {
       name,
       city: shippingAddress.city,
-      country: bookingData.country,
+      country: bookingData.shippingCountry,
       addressLine1: shippingAddress.addressLine1,
       addressLine2: shippingAddress.addressLine2,
       postal: shippingAddress.postal,

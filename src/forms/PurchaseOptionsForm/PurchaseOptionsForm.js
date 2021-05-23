@@ -45,7 +45,7 @@ export class PurchaseOptionsFormComponent extends Component {
             e.preventDefault();
             this.setState({ focusedInput: "quantity" });
         } else {
-            this.props.onSubmit({ country, quantity });
+            this.props.onSubmit({ authorCountry: this.props.authorCountry, shippingCountry: country, quantity });
         }
     }
 
