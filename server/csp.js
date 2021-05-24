@@ -104,7 +104,7 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
   // const { imgSrc = [self] } = defaultDirectives;
   // const exampleImgSrc = imgSrc.concat('my-custom-domain.example.com');
 
-  const { connectSrc = [self], scriptSrc= [self] } = defaultDirectives;
+  const { connectSrc = [self] } = defaultDirectives;
   const customConnectSrc = connectSrc.concat([
    'https://native-land.ca/',
    emailURL,
