@@ -37,7 +37,7 @@ import {
   LayoutWrapperFooter,
   Footer,
   BookingPanel,
-  NamedLink
+  IconSpinner
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '../../containers';
 
@@ -48,31 +48,23 @@ import {
   sendUpdatedFollowed,
   callFollowAPI
 } from './ListingPage.duck';
-import SectionImages from './SectionImages';
-import SectionHeading from './SectionHeading';
+
+import SectionBarterMaybe from './SectionBarterMaybe';
+import SectionCustomOrdersMaybe from './SectionCustomOrdersMaybe';
 import SectionDescriptionMaybe from './SectionDescriptionMaybe';
+import SectionHeading from './SectionHeading';
+import SectionImages from './SectionImages';
 import SectionMaterialsMaybe from './SectionMaterialsMaybe';
+import SectionPriceMaybe from './SectionPriceMaybe';
 import SectionReviews from './SectionReviews';
 import SectionSellerMaybe from './SectionSellerMaybe';
 import SectionSizesMaybe from './SectionSizesMaybe';
-import SectionCustomOrdersMaybe from './SectionCustomOrdersMaybe';
-import SectionPremiumPriceMaybe from './SectionPremiumPriceMaybe';
-import SectionBarterMaybe from './SectionBarterMaybe';
-import { sanitizeProtectedData } from '../../util/sanitize';
 
 import css from './ListingPage.module.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
-const { UUID, Money } = sdkTypes;
-
-const resolveShippingFeePrice = shippingFee => {
-  const { amount, currency } = shippingFee;
-  if ((amount && currency) || (amount === 0 && currency)) {
-    return new Money(amount, currency);
-  }
-  return null;
-};
+const { UUID } = sdkTypes;
 
 const priceData = (price, intl) => {
   if (price && price.currency === config.currency) {
@@ -128,7 +120,7 @@ export class ListingPageComponent extends Component {
     const listing = getListing(listingId);
     const initialValues = {
       listing,
-      bookingData: { isDomesticOrder: values },
+      bookingData: values,
       confirmPaymentError: null,
     };
 
@@ -149,7 +141,6 @@ export class ListingPageComponent extends Component {
         'CheckoutPage',
         routes,
         { id: listing.id.uuid, slug: createSlug(listing.attributes.title) },
-        {}
       )
     );
   }
@@ -242,12 +233,9 @@ export class ListingPageComponent extends Component {
       fetchReviewsError,
       sendEnquiryInProgress,
       sendEnquiryError,
-      timeSlots,
-      fetchTimeSlotsError,
       filterConfig,
       onFetchTransactionLineItems,
-      domesticLineItems,
-      internationalLineItems,
+      lineItems,
       fetchLineItemsInProgress,
       fetchLineItemsError,
     } = this.props;
@@ -377,23 +365,14 @@ export class ListingPageComponent extends Component {
     // banned or deleted display names for the function
     const authorDisplayName = userDisplayNameAsString(ensuredAuthor, '');
 
-    const authorTribe = ensuredAuthor.attributes.profile.publicData && ensuredAuthor.attributes.profile.publicData.tribe ?
-      ensuredAuthor.attributes.profile.publicData.tribe : null;
-    const accountType = ensuredAuthor.attributes.profile.publicData && ensuredAuthor.attributes.profile.publicData.accountType ?
-      ensuredAuthor.attributes.profile.publicData.accountType : null;
+    const authorPublicData = ensuredAuthor.attributes.profile.publicData;
+    const authorCountry = authorPublicData && authorPublicData.country ? authorPublicData.country : "United States";
+    const authorTribe = authorPublicData && authorPublicData.tribe ? authorPublicData.tribe : null;
+    const accountType = authorPublicData && authorPublicData.accountType ? authorPublicData.accountType : null;
     const isPremium = accountType && (accountType === "p" || accountType === "a" || accountType === "n") ? true : false;
 
-    const authorCountry = publicData && publicData.country ? publicData.country : null;
-
-    const protectedData = currentUser && currentUser.attributes.profile.protectedData ?
-      sanitizeProtectedData(currentUser.attributes.profile.protectedData) : {};
-    const userCountry = protectedData && protectedData.protectedData && protectedData.protectedData.shippingAddress ?
-      protectedData.protectedData.shippingAddress.country : null;
-
-    const isDomesticOrder = authorCountry && userCountry && authorCountry === userCountry ? true : false;
-    const lineItems = !isPremium && isDomesticOrder ? domesticLineItems : internationalLineItems;
-    const allowsInternationalOrders = !isPremium && publicData && publicData.allowsInternationalOrders && publicData.allowsInternationalOrders[0] === 'hasFee' ? true : false;
     const { formattedPrice, priceTitle } = priceData(price, intl);
+
     const handleBookingSubmit = values => {
       const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;
       if (isOwnListing || isCurrentlyClosed) {
@@ -451,18 +430,17 @@ export class ListingPageComponent extends Component {
     const sizes = publicData && publicData.sizes ? publicData.sizes : null;
     const customOrders = publicData && publicData.customOrders ? publicData.customOrders : null;
     const websiteLink = isPremium && publicData && publicData.websiteLink ? publicData.websiteLink : null;
-    const domesticFee = publicData && publicData.shippingFee ? publicData.shippingFee : null;
-    const internationalFee = publicData && publicData.internationalFee ? publicData.internationalFee : null;
-    const shippingFee = isDomesticOrder && domesticFee ? resolveShippingFeePrice(publicData.shippingFee) :
-      !isDomesticOrder && internationalFee ? resolveShippingFeePrice(publicData.internationalFee) :
-        resolveShippingFeePrice({ amount: 0, currency: config.currency });
-    const allowsBarter = publicData && publicData.allowsBarter && publicData.allowsBarter[0] === 'hasBarter' ? true : false;
+    const allowsBarter = publicData && publicData.allowsBarter;
     const barter = publicData && publicData.barter ? publicData.barter : null;
     const userAccountType = currentUser && currentUser.attributes.profile.publicData &&
       currentUser.attributes.profile.publicData.accountType ? currentUser.attributes.profile.publicData.accountType : null;
-    const signUpLink = (<NamedLink name="SignupPage">
-      <FormattedMessage id="ListingPage.signupLink" />
-    </NamedLink>);
+
+    const maxQuantity = publicData && publicData.maxQuantity ? publicData.maxQuantity : null;
+
+    const loadingSpinnerMaybe = (
+      <IconSpinner className={css.spinner} />
+    );
+
     return (
       <Page
         title={schemaTitle}
@@ -509,77 +487,66 @@ export class ListingPageComponent extends Component {
                       <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
                     </div>}
                 </div>
-                <div className={css.bookingPanel}>
-                  <SectionSellerMaybe
-                    title={title}
-                    listing={currentListing}
-                    authorDisplayName={authorDisplayName}
-                    onContactUser={this.onContactUser}
-                    isEnquiryModalOpen={isAuthenticated && this.state.enquiryModalOpen}
-                    onCloseEnquiryModal={() => this.setState({ enquiryModalOpen: false })}
-                    sendEnquiryError={sendEnquiryError}
-                    sendEnquiryInProgress={sendEnquiryInProgress}
-                    onSubmitEnquiry={this.onSubmitEnquiry}
-                    currentUser={currentUser}
-                    onManageDisableScrolling={onManageDisableScrolling}
-                    isPremium={isPremium}
-                    isFollowed={this.isFollowed}
-                    updateFollowed={this.updateFollowed}
-                  />
-                  <SectionDescriptionMaybe description={description} />
-                  {userAccountType === 'e' ? (
-                    <SectionBarterMaybe barter={barter} allowsBarter={allowsBarter} />
-                  ) : null}
-                  <SectionCustomOrdersMaybe customOrders={customOrders} />
-                  <SectionMaterialsMaybe options={materialOptions} material={material} />
-                  <SectionSizesMaybe sizes={sizes} />
-                  {publicData ? (
-                    isPremium ?
-                      <SectionPremiumPriceMaybe price={formattedPrice} websiteLink={websiteLink} />
-                      : !currentUser ?
-                        <div>
-                          <FormattedMessage id="ListingPage.noAccount" values={{ signUpLink }} />
-                        </div>
-                        : ((isDomesticOrder) || (!isDomesticOrder && allowsInternationalOrders)) && (userCountry && authorCountry) ?
-                          <BookingPanel
-                            className={css.bookingBreakdown}
-                            listing={currentListing}
-                            isOwnListing={isOwnListing}
-                            unitType={unitType}
-                            onSubmit={handleBookingSubmit}
-                            title={bookingTitle}
-                            subTitle={bookingSubTitle}
-                            authorDisplayName={authorDisplayName}
-                            onManageDisableScrolling={onManageDisableScrolling}
-                            timeSlots={timeSlots}
-                            fetchTimeSlotsError={fetchTimeSlotsError}
-                            onFetchTransactionLineItems={onFetchTransactionLineItems}
-                            lineItems={lineItems}
-                            fetchLineItemsInProgress={fetchLineItemsInProgress}
-                            fetchLineItemsError={fetchLineItemsError}
-                            isDomesticOrder={isDomesticOrder}
-                            shippingFee={shippingFee}
-                          />
-                          : userCountry === null ?
-                            <span className={css.purchaseWarning} >
-                              <FormattedMessage id="ListingPage.noUserCountry" />
-                            </span>
-                            : authorCountry === null ?
-                              <span className={css.purchaseWarning} >
-                                <FormattedMessage id="ListingPage.noAuthorCountry" />
-                              </span>
-                              : !isDomesticOrder && !allowsInternationalOrders ?
-                                <span className={css.noInternational} >
-                                  <FormattedMessage id="ListingPage.noInternationalOrders" />
-                                </span>
-                                : <span className={css.purchaseWarning} >
-                                  <FormattedMessage id="ListingPage.listingMissingInfo" />
-                                </span>) : null}
-                  {!isPremium &&
-                    <div className={css.reviewsContainerMobile}>
-                      <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
-                    </div>}
-                </div>
+                {description && publicData ? (
+                  <div className={css.bookingPanel}>
+                    <SectionSellerMaybe
+                      title={title}
+                      listing={currentListing}
+                      authorDisplayName={authorDisplayName}
+                      onContactUser={this.onContactUser}
+                      isEnquiryModalOpen={isAuthenticated && this.state.enquiryModalOpen}
+                      onCloseEnquiryModal={() => this.setState({ enquiryModalOpen: false })}
+                      sendEnquiryError={sendEnquiryError}
+                      sendEnquiryInProgress={sendEnquiryInProgress}
+                      onSubmitEnquiry={this.onSubmitEnquiry}
+                      currentUser={currentUser}
+                      onManageDisableScrolling={onManageDisableScrolling}
+                      isPremium={isPremium}
+                      isFollowed={this.isFollowed}
+                      updateFollowed={this.updateFollowed}
+                    />
+                    <SectionDescriptionMaybe description={description} />
+                    {userAccountType === 'e' ? (
+                      <SectionBarterMaybe barter={barter} allowsBarter={allowsBarter} />
+                    ) : null}
+                    <SectionCustomOrdersMaybe customOrders={customOrders} />
+                    <SectionMaterialsMaybe options={materialOptions} material={material} />
+                    <SectionSizesMaybe sizes={sizes} />
+                    {isPremium ? (
+                      <SectionPriceMaybe
+                        currentUser={currentUser}
+                        isPremium={isPremium}
+                        price={formattedPrice}
+                        websiteLink={websiteLink}
+                        onSubmit={handleBookingSubmit}
+                      />
+                    ) : (
+                      <BookingPanel
+                        className={css.bookingBreakdown}
+                        listing={currentListing}
+                        isOwnListing={isOwnListing}
+                        unitType={unitType}
+                        onSubmit={handleBookingSubmit}
+                        title={bookingTitle}
+                        subTitle={bookingSubTitle}
+                        authorDisplayName={authorDisplayName}
+                        onManageDisableScrolling={onManageDisableScrolling}
+                        onFetchTransactionLineItems={onFetchTransactionLineItems}
+                        lineItems={lineItems}
+                        fetchLineItemsInProgress={fetchLineItemsInProgress}
+                        fetchLineItemsError={fetchLineItemsError}
+                        authorCountry={authorCountry}
+                        maxQuantity={maxQuantity}
+                      />
+                    )}
+                    {!isPremium &&
+                      <div className={css.reviewsContainerMobile}>
+                        <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
+                      </div>}
+                  </div>
+                ) : (
+                  loadingSpinnerMaybe
+                )}
               </div>
             </div>
           </LayoutWrapperMain>
@@ -599,8 +566,6 @@ ListingPageComponent.defaultProps = {
   showListingError: null,
   reviews: [],
   fetchReviewsError: null,
-  timeSlots: null,
-  fetchTimeSlotsError: null,
   sendEnquiryError: null,
   filterConfig: config.custom.filters,
   lineItems: null,
@@ -637,8 +602,6 @@ ListingPageComponent.propTypes = {
   callSetInitialValues: func.isRequired,
   reviews: arrayOf(propTypes.review),
   fetchReviewsError: propTypes.error,
-  timeSlots: arrayOf(propTypes.timeSlot),
-  fetchTimeSlotsError: propTypes.error,
   sendEnquiryInProgress: bool.isRequired,
   sendEnquiryError: propTypes.error,
   onSendEnquiry: func.isRequired,
@@ -656,12 +619,9 @@ const mapStateToProps = state => {
     showListingError,
     reviews,
     fetchReviewsError,
-    timeSlots,
-    fetchTimeSlotsError,
     sendEnquiryInProgress,
     sendEnquiryError,
-    domesticLineItems,
-    internationalLineItems,
+    lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
     enquiryModalOpenForListingId,
@@ -689,10 +649,7 @@ const mapStateToProps = state => {
     showListingError,
     reviews,
     fetchReviewsError,
-    timeSlots,
-    fetchTimeSlotsError,
-    domesticLineItems,
-    internationalLineItems,
+    lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
     sendEnquiryInProgress,

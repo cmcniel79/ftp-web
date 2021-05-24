@@ -114,6 +114,7 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
    mailchimpURL,
    eventsURL
    ]);
+
   const customDirectives = {
     // Example: Add custom directive override
     // imgSrc: exampleImgSrc,

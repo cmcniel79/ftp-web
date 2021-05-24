@@ -5,9 +5,7 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Form as FinalForm } from 'react-final-form';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
-import { Form, PrimaryButton, FieldTextInput, FieldSelect, FieldCheckbox } from '../../components';
-import getCountryCodes from '../../translations/countryCodes';
-import config from '../../config';
+import { Form, PrimaryButton, FieldTextInput, FieldCheckbox } from '../../components';
 
 import css from './SignupForm.module.css';
 
@@ -110,19 +108,11 @@ const SignupFormComponent = props => (
 
       const newsletterLabel = intl.formatMessage({ id: 'SignupForm.newsletterLabel' });
 
-      const countryLabel = intl.formatMessage({ id: 'SignupForm.countryLabel' });
-      const countryPlaceholder = intl.formatMessage({ id: 'SignupForm.countryPlaceholder' });
-      const countryRequired = validators.required(
-        intl.formatMessage({
-          id: 'SignupForm.countryRequired',
-        })
-      );
       const lastNameRequired = validators.required(lastNameRequiredMessage);
 
       const classes = classNames(rootClassName || css.root, className);
       const submitInProgress = inProgress;
       const submitDisabled = invalid || submitInProgress;
-      const countryCodes = getCountryCodes(config.locale);
 
       const handleTermsKeyUp = e => {
         // Allow click action with keyboard like with normal links
@@ -175,25 +165,6 @@ const SignupFormComponent = props => (
                 validate={lastNameRequired}
               />
             </div>
-
-            <FieldSelect
-              className={css.country}
-              id={formId ? `${formId}.country` : 'country'}
-              name="country"
-              label={countryLabel}
-              validate={countryRequired}
-            >
-              <option disabled value="">
-                {countryPlaceholder}
-              </option>
-              {countryCodes.map(country => {
-                return (
-                  <option key={country.code} value={country.name}>
-                    {country.name}
-                  </option>
-                );
-              })}
-            </FieldSelect>
             <FieldTextInput
               className={css.password}
               type="password"

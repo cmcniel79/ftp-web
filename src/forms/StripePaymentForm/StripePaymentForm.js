@@ -329,7 +329,8 @@ class StripePaymentForm extends Component {
       form,
       hasHandledCardPayment,
       defaultPaymentMethod,
-      shippingAddress
+      shippingAddress,
+      bookingCountry
     } = formRenderProps;
 
     this.finalFormAPI = form;
@@ -388,8 +389,8 @@ class StripePaymentForm extends Component {
       <StripePaymentAddress intl={intl} form={form} fieldId={formId} card={this.card} />
     );
 
-    const shippingAddressFields = shippingAddress && shippingAddress.country ? (
-      <ShippingAddress intl={intl} formId={formId} country={shippingAddress.country} isCheckoutPage={true} />
+    const shippingAddressFields = shippingAddress && bookingCountry ? (
+      <ShippingAddress intl={intl} formId={formId} country={bookingCountry} isCheckoutPage={true} />
     ) : (
       <ShippingAddress intl={intl} formId={formId} country={null} isCheckoutPage={false} />
     );

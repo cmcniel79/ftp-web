@@ -23,7 +23,6 @@ import EditListingWizardTab, {
   PRICING,
   PHOTOS,
 } from './EditListingWizardTab';
-import { sanitizeProtectedData } from '../../util/sanitize';
 import css from './EditListingWizard.module.css';
 
 // // Show availability calendar only if environment variable availabilityEnabled is true
@@ -311,12 +310,9 @@ class EditListingWizard extends Component {
     const accountType = currentUserLoaded && ensuredCurrentUser.attributes.profile.publicData.accountType ?
       ensuredCurrentUser.attributes.profile.publicData.accountType : null;
     const userUUID = currentUserLoaded && ensuredCurrentUser.id;
-    const protectedData = currentUserLoaded && ensuredCurrentUser.attributes.profile.protectedData ? 
-      sanitizeProtectedData(ensuredCurrentUser.attributes.profile.protectedData) : null; 
-    const userCountry = protectedData && protectedData.protectedData && 
-      protectedData.protectedData.shippingAddress && protectedData.protectedData.shippingAddress.country ?
-      protectedData.protectedData.shippingAddress.country : null;
-      
+    const userCountry = currentUserLoaded && ensuredCurrentUser.attributes.profile.publicData.country ?
+      ensuredCurrentUser.attributes.profile.publicData.country : "United States";
+
     const allowsCustomOrders = currentUserLoaded && ensuredCurrentUser.attributes.profile.publicData.allowsCustomOrders ?
       ensuredCurrentUser.attributes.profile.publicData.allowsCustomOrders : null;
 

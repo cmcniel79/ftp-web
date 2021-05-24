@@ -103,6 +103,7 @@ export class CheckoutPageComponent extends Component {
       pageData: {},
       dataLoaded: false,
       submitting: false,
+      userCountry: null
     };
     this.stripe = null;
 
@@ -168,7 +169,6 @@ export class CheckoutPageComponent extends Component {
     // Check if a booking is already created according to stored data.
     const tx = pageData ? pageData.transaction : null;
     const isBookingCreated = tx && tx.booking && tx.booking.id;
-
     const shouldFetchSpeculatedTransaction =
       pageData &&
       pageData.listing &&
@@ -381,8 +381,7 @@ export class CheckoutPageComponent extends Component {
       return;
     }
     this.setState({ submitting: true });
-
-    const { history, speculatedTransaction, currentUser, paymentIntent, dispatch } = this.props;
+    const { history, speculatedTransaction, currentUser, paymentIntent, dispatch, bookingData } = this.props;
     const { card, message, paymentMethod, formValues } = values;
     const {
       name,
@@ -390,8 +389,8 @@ export class CheckoutPageComponent extends Component {
       addressLine2,
       postal,
       city,
-      state,
       country,
+      state,
       saveAfterOnetimePayment,
       shippingAddress
     } = formValues;
@@ -413,6 +412,7 @@ export class CheckoutPageComponent extends Component {
           },
         }
         : {};
+
     const billingDetails = {
       name,
       email: ensureCurrentUser(currentUser).attributes.email,
@@ -421,8 +421,14 @@ export class CheckoutPageComponent extends Component {
 
     const shippingDetails = {
       name,
-      ...shippingAddress
-    }
+      city: shippingAddress.city,
+      country: bookingData.shippingCountry,
+      addressLine1: shippingAddress.addressLine1,
+      addressLine2: shippingAddress.addressLine2,
+      postal: shippingAddress.postal,
+      state: shippingAddress.state,
+    };
+
     const requestPaymentParams = {
       pageData: this.state.pageData,
       speculatedTransaction,
@@ -582,6 +588,7 @@ export class CheckoutPageComponent extends Component {
           transaction={tx}
           booking={txBooking}
           dateType={DATE_TYPE_DATE}
+          userCountry={this.userCountry}
         />
       ) : null;
 
@@ -704,20 +711,6 @@ export class CheckoutPageComponent extends Component {
       );
     }
 
-    // const unitType = config.bookingUnitType;
-    // const isNightly = unitType === LINE_ITEM_NIGHT;
-    // const isDaily = unitType === LINE_ITEM_DAY;
-
-    // const unitTranslationKey = isNightly
-    //   ? 'CheckoutPage.perNight'
-    //   : isDaily
-    //     ? 'CheckoutPage.perDay'
-    //     : 'CheckoutPage.perUnit';
-
-    // const price = currentListing.attributes.price;
-    // const formattedPrice = formatMoney(intl, price);
-    // const detailsSubTitle = `${formattedPrice} ${intl.formatMessage({ id: unitTranslationKey })}`;
-
     const showInitialMessageInput = !(
       existingTransaction && existingTransaction.attributes.lastTransition === TRANSITION_ENQUIRE
     );
@@ -807,6 +800,7 @@ export class CheckoutPageComponent extends Component {
                   paymentIntent={paymentIntent}
                   onStripeInitialized={this.onStripeInitialized}
                   shippingAddress={shippingAddress}
+                  bookingCountry={this.props.bookingData.shippingCountry}
                 />
               ) : null}
               {isPaymentExpired ? (
@@ -834,7 +828,6 @@ export class CheckoutPageComponent extends Component {
             </div>
             <div className={css.detailsHeadings}>
               <h2 className={css.detailsTitle}>{listingTitle}</h2>
-              {/* <p className={css.detailsSubtitle}>{detailsSubTitle}</p> */}
             </div>
             {speculateTransactionErrorMessage}
             {breakdown}

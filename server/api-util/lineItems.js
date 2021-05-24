@@ -1,4 +1,4 @@
-const { calculateQuantityFromDates, calculateTotalFromLineItems, resolveShippingFeePrice } = require('./lineItemHelpers');
+const { calculateTotalFromLineItems, resolveShippingFeePrice } = require('./lineItemHelpers');
 const { types } = require('sharetribe-flex-sdk');
 const { Money } = types;
 
@@ -29,7 +29,9 @@ const PROVIDER_COMMISSION_PERCENTAGE = -6;
  */
 exports.transactionLineItems = (listing, bookingData) => {
   const unitPrice = listing.attributes.price;
-  const { isDomesticOrder } = bookingData;
+  const { authorCountry, shippingCountry, quantity } = bookingData;
+
+  const isDomesticOrder = shippingCountry === authorCountry;
 
   /**
    * If you want to use pre-defined component and translations for printing the lineItems base price for booking,
@@ -41,24 +43,25 @@ exports.transactionLineItems = (listing, bookingData) => {
    *
    * By default BookingBreakdown prints line items inside LineItemUnknownItemsMaybe if the lineItem code is not recognized. */
 
+  
   const booking = {
     code: 'line-item/units',
     unitPrice: unitPrice,
-    quantity: 1,
+    quantity: quantity ? quantity : 1,
     includeFor: ['customer', 'provider'],
   };
 
   const shippingFee = isDomesticOrder ? {
-        code: 'line-item/domestic-shipping-fee',
-        unitPrice: resolveShippingFeePrice(listing.attributes.publicData.shippingFee),
-        quantity: 1,
-        includeFor: ['customer', 'provider'],
-      } : {
-        code: 'line-item/international-shipping-fee',
-        unitPrice: resolveShippingFeePrice(listing.attributes.publicData.internationalFee),
-        quantity: 1,
-        includeFor: ['customer', 'provider'],
-      };
+    code: 'line-item/shipping',
+    unitPrice: resolveShippingFeePrice(listing.attributes.publicData.shippingFee),
+    quantity: 1,
+    includeFor: ['customer', 'provider'],
+  } : {
+    code: 'line-item/shipping',
+    unitPrice: resolveShippingFeePrice(listing.attributes.publicData.internationalFee),
+    quantity: 1,
+    includeFor: ['customer', 'provider'],
+  };
 
   const providerCommission = {
     code: 'line-item/provider-commission',
@@ -67,9 +70,8 @@ exports.transactionLineItems = (listing, bookingData) => {
     includeFor: ['provider'],
   };
 
-  
   const listingEvents = listing.attributes.metadata && listing.attributes.metadata.events;
-  const isWithStanford = listingEvents && listingEvents.includes("603c0f72-8ba2-402b-93a2-b1228cc97870");
+  const isWithStanford = listingEvents && listingEvents.includes("5f99d32d-0925-4712-94a8-5482c98f565d");
 
   // No commission on Stanford Powwow Listings
   const lineItems = isWithStanford ? [booking, shippingFee] : [booking, shippingFee, providerCommission];

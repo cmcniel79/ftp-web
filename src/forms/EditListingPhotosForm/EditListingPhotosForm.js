@@ -42,7 +42,9 @@ export class EditListingPhotosFormComponent extends Component {
         {...this.props}
         onImageUploadHandler={this.onImageUploadHandler}
         imageUploadRequested={this.state.imageUploadRequested}
-        initialValues={{ images: this.props.images }}
+        initialValues={{ 
+          images: this.props.images, 
+        }}
         render={formRenderProps => {
           const {
             form,
@@ -61,7 +63,7 @@ export class EditListingPhotosFormComponent extends Component {
             updated,
             updateInProgress,
           } = formRenderProps;
-
+          
           const chooseImageText = (
             <span className={css.chooseImageText}>
               <span className={css.chooseImage}>

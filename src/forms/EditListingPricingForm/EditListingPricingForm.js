@@ -9,7 +9,7 @@ import { propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
-import { Button, Form, FieldCurrencyInput, FieldCheckbox } from '../../components';
+import { Button, Form, FieldCurrencyInput, FieldCheckbox, FieldSelect } from '../../components';
 import css from './EditListingPricingForm.module.css';
 
 const { Money } = sdkTypes;
@@ -32,37 +32,32 @@ export const EditListingPricingFormComponent = props => (
         fetchErrors,
         accountType,
         userCountry,
-        // initialValues
       } = formRenderProps;
 
-      const shippingFeeMessage = intl.formatMessage({
-        id: 'EditListingPricingForm.shippingFeeInputMessage',
-      });
+      // Domestic Shipping Fee Stuff
+      const shippingFeeMessage = intl.formatMessage({ id: 'EditListingPricingForm.shippingFeeInputMessage' });
+      const shippingFeePlaceholder = intl.formatMessage({ id: 'EditListingPricingForm.shippingFeeInputPlaceholder' });
 
-      const shippingFeePlaceholder = intl.formatMessage({
-        id: 'EditListingPricingForm.shippingFeeInputPlaceholder',
-      });
+      // International Shipping Fee Stuff
+      const internationalCheckbox = document.getElementById('allowsInternationalOrders');
+      const internationalFeeMessage = intl.formatMessage({ id: 'EditListingPricingForm.internationalFeeInputMessage' });
+      const internationalFeePlaceholder = intl.formatMessage({ id: 'EditListingPricingForm.internationalFeeInputPlaceholder' });
+      const internationalCheckboxMessage = intl.formatMessage({ id: 'EditListingPricingForm.internationalCheckboxMessage' });
 
-      const internationalFeeMessage = intl.formatMessage({
-        id: 'EditListingPricingForm.internationalFeeInputMessage',
-      });
+      // Quantity Optional Field Stuff
+      const quantityLabel = intl.formatMessage({ id: 'EditListingPricingForm.quantityLabel' });
+      const quantityRequiredMessage = intl.formatMessage({ id: 'EditListingPricingForm.quantityRequiredMessage' });
+      const quantityRequired = validators.required(quantityRequiredMessage);
 
-      const internationalFeePlaceholder = intl.formatMessage({
-        id: 'EditListingPricingForm.internationalFeeInputPlaceholder',
-      });
+      var quantityArray = [];
+      // Max quantity selection is 100
+      for (var i = 1; i <= 100; i++) {
+        quantityArray.push(i);
+      }
 
-      const internationalCheckboxMessage = intl.formatMessage({
-        id: 'EditListingPricingForm.internationalCheckboxMessage',
-      });
-
-      const pricePerUnitMessage = intl.formatMessage({
-        id: 'EditListingPricingForm.pricePerUnit',
-      });
-
-      const pricePlaceholderMessage = intl.formatMessage({
-        id: 'EditListingPricingForm.priceInputPlaceholder',
-      });
-
+      // Price Stuff
+      const pricePerUnitMessage = intl.formatMessage({ id: 'EditListingPricingForm.pricePerUnit' });
+      const pricePlaceholderMessage = intl.formatMessage({ id: 'EditListingPricingForm.priceInputPlaceholder' });
       const priceRequired = validators.required(
         intl.formatMessage({
           id: 'EditListingPricingForm.priceRequired',
@@ -89,17 +84,7 @@ export const EditListingPricingFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
-      let showInternational; 
 
-      const checkbox = document.getElementById('allowsInternationalOrders');
-
-      if (checkbox) {
-        if (checkbox.checked) {
-          showInternational = true;
-        } else {
-          showInternational = false;
-        }
-      };
       // For ad and non-profit account types, no price is needed on their listing cards.
       const noPriceNeededInfo = (accountType === "n" || accountType === "a") ?
         <div className={css.accountInfo}>
@@ -107,6 +92,34 @@ export const EditListingPricingFormComponent = props => (
             <FormattedMessage id="EditListingPricingForm.specialAccountInfo" />
           </p>
         </div> : null;
+
+      const showInternationalSection = internationalCheckbox && internationalCheckbox.checked;
+      const internationalSection = (
+        <div className={css.internationalFeeSection}>
+          <FieldCheckbox
+            id="allowsInternationalOrders"
+            name="allowsInternationalOrders"
+            label={internationalCheckboxMessage}
+            value="hasFee"
+          />
+          <div className={showInternationalSection ? css.instructionsShown : css.instructionsHidden}>
+            <FieldCurrencyInput
+              id="internationalFee"
+              name="internationalFee"
+              className={css.internationalFeeField}
+              label={internationalFeeMessage}
+              placeholder={internationalFeePlaceholder}
+              currencyConfig={config.currencyConfig}
+            />
+            <p className={css.instructionsText}>
+              <FormattedMessage id="EditListingPricingForm.instructionsLine1" values={{ userCountry }} />
+              <br />
+              <br />
+              <FormattedMessage id="EditListingPricingForm.instructionsLine2" />
+            </p>
+          </div>
+        </div>
+      );
 
       return (
         <Form onSubmit={handleSubmit} className={classes}>
@@ -124,18 +137,48 @@ export const EditListingPricingFormComponent = props => (
           <div className={css.columns}>
             {accountType !== "n" && accountType !== "a" &&
               <div className={css.priceInputs}>
-                <FieldCurrencyInput
-                  id="price"
-                  name="price"
-                  className={css.priceInput}
-                  // autoFocus
-                  label={pricePerUnitMessage}
-                  placeholder={pricePlaceholderMessage}
-                  currencyConfig={config.currencyConfig}
-                  validate={priceValidators}
-                />
+                <h2 className={css.sectionHeader}>
+                  {accountType === "p" ? (
+                    <FormattedMessage id="EditListingPricingForm.priceHeader" />
+                  ) : (
+                    <FormattedMessage id="EditListingPricingForm.priceAndQuantityHeader" />
+                  )}
+                </h2>
+                <div className={css.priceAndQuantityFieldContainer}>
+                  <FieldCurrencyInput
+                    id="price"
+                    name="price"
+                    className={css.priceField}
+                    label={pricePerUnitMessage}
+                    placeholder={pricePlaceholderMessage}
+                    currencyConfig={config.currencyConfig}
+                    validate={priceValidators}
+                  />
+                  {accountType !== "p" ? (
+                    // Premium Accounts do not need to set a quantity
+                    <FieldSelect
+                      id="maxQuantity"
+                      name="maxQuantity"
+                      className={css.quantityField}
+                      label={quantityLabel}
+                      validate={quantityRequired}
+                    >
+                      {quantityArray.map(x => {
+                        return (
+                          <option key={x} value={x}>
+                            {x}
+                          </option>
+                        );
+                      })}
+                    </FieldSelect>
+                  ) : null}
+                </div>
                 {accountType !== "p" ?
+                  // Premium Accounts do not need to set shipping fees
                   <div className={css.shippingFees}>
+                    <h2 className={css.sectionHeader}>
+                      <FormattedMessage id="EditListingPricingForm.shippingHeader" />
+                    </h2>
                     <FieldCurrencyInput
                       id="shippingFee"
                       name="shippingFee"
@@ -144,34 +187,7 @@ export const EditListingPricingFormComponent = props => (
                       placeholder={shippingFeePlaceholder}
                       currencyConfig={config.currencyConfig}
                     />
-                    <div className={css.internationalFee}>
-                      <FieldCheckbox
-                        id="allowsInternationalOrders"
-                        name="allowsInternationalOrders"
-                        label={internationalCheckboxMessage}
-                        value="hasFee"
-                      />
-                      {showInternational &&
-                      <div>
-                        <FieldCurrencyInput
-                          id="internationalFee"
-                          name="internationalFee"
-                          className={css.priceInput}
-                          label={internationalFeeMessage}
-                          placeholder={internationalFeePlaceholder}
-                          currencyConfig={config.currencyConfig}
-                        />
-                        <div className={css.instructions}>
-                        <p className={css.instructionsText}>
-                          <FormattedMessage id="EditListingPricingForm.instructionsLine1" values={{ userCountry }} />
-                          <br />
-                          <br />
-                          <FormattedMessage id="EditListingPricingForm.instructionsLine2" />
-                        </p>
-                      </div>
-                      </div>
-                      }
-                    </div>
+                    {internationalSection}
                   </div>
                   : null}
               </div>

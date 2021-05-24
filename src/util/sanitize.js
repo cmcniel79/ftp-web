@@ -29,6 +29,12 @@ const sanitizeNumber = nbr =>
       : 0
   ;
 
+  const sanitizeBool = bool =>
+  bool == null ? bool
+    : typeof bool === 'boolean' ? bool
+      : null
+  ;
+
 const sanitizeStringArray = array => {
   var sanitizedArray = [];
   if (array && array.length > 0) {
@@ -211,9 +217,9 @@ export const sanitizeListing = entity => {
       internationalFee,
       allowsInternationalOrders,
       allowsBarter,
-      barter
+      barter,
+      maxQuantity,
     } = publicData || {};
-
     const countryMaybe = country ? { country: sanitizeText(country) } : {};
 
     const categoryMaybe = category ? { category: sanitizeText(category) } : {};
@@ -243,17 +249,20 @@ export const sanitizeListing = entity => {
     } : {};
 
     const allowsInternationalOrdersMaybe = allowsInternationalOrders ? {
-      allowsInternationalOrders: allowsInternationalOrders
+      allowsInternationalOrders: sanitizeBool(allowsInternationalOrders)
     } : {};
 
     const allowsBarterMaybe = allowsBarter ? {
-      allowsBarter: allowsBarter
+      allowsBarter: sanitizeBool(allowsBarter)
     } : {};
 
     const barterMaybe = barter ? {
       barter: sanitizeText(barter)
     } : {};
 
+    const maxQuantityMaybe = maxQuantity ? {
+      maxQuantity: sanitizeNumber(maxQuantity)
+    } : {};
 
     return publicData ? {
       publicData: {
@@ -272,6 +281,7 @@ export const sanitizeListing = entity => {
         ...allowsInternationalOrdersMaybe,
         ...allowsBarterMaybe,
         ...barterMaybe,
+        ...maxQuantityMaybe,
       }
     } : {};
   };

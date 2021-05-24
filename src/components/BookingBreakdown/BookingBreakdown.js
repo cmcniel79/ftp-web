@@ -11,6 +11,7 @@ import {
   LINE_ITEM_CUSTOMER_COMMISSION,
   LINE_ITEM_PROVIDER_COMMISSION,
 } from '../../util/types';
+import LineItemUnitsMaybe from './LineItemUnitsMaybe';
 import LineItemUnitPriceMaybe from './LineItemUnitPriceMaybe';
 import LineItemSubTotalMaybe from './LineItemSubTotalMaybe';
 import LineItemCustomerCommissionMaybe from './LineItemCustomerCommissionMaybe';
@@ -81,15 +82,15 @@ export const BookingBreakdownComponent = props => {
    *
    */
 
+  // TODO: Shipping fee is printed with LineItemUnknownItemsMaybe. Make a componenet just for shipping fee
+
   return (
     <div className={classes}>
       <h3 className={css.priceBreakdownTitle}>
-        <FormattedMessage id="BookingDatesForm.priceBreakdownTitle" />
+        <FormattedMessage id="PurchaseOptionsForm.priceBreakdownTitle" />
       </h3>
-      {/* <LineItemBookingPeriod booking={booking} unitType={unitType} dateType={dateType} /> */}
-      {/* <LineItemUnitsMaybe transaction={transaction} unitType={unitType} /> */}
-      {/* <LineItemBasePriceMaybe transaction={transaction} unitType={unitType} intl={intl} /> */}
 
+      <LineItemUnitsMaybe transaction={transaction} unitType={unitType} />
       <LineItemUnitPriceMaybe transaction={transaction} unitType={unitType} intl={intl} />
       <LineItemUnknownItemsMaybe transaction={transaction} isProvider={isProvider} intl={intl} />
 

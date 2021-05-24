@@ -35,17 +35,20 @@ const EditListingPricingPanel = props => {
 
   const { price, publicData } = currentListing.attributes;
 
-  const shippingFee =
-    publicData && publicData.shippingFee ?
-      new Money(publicData.shippingFee.amount, publicData.shippingFee.currency) : null;
+  // Domestic Shipping Fee
+  const shippingFee = publicData && publicData.shippingFee ?
+    new Money(publicData.shippingFee.amount, publicData.shippingFee.currency) : null;
 
-  const internationalFee =
-    publicData && publicData.internationalFee ?
-      new Money(publicData.internationalFee.amount, publicData.internationalFee.currency) : null;
+  // International Shipping Fee
+  const internationalFee = publicData && publicData.internationalFee ?
+    new Money(publicData.internationalFee.amount, publicData.internationalFee.currency) : null;
+  // Does Listing allow international orders?    
+  const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders ? ["hasFee"] : null;
 
-  const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders ? publicData.allowsInternationalOrders : null;
+  // Order quantity stuff
+  const maxQuantity = publicData && publicData.maxQuantity ? publicData.maxQuantity : 1;
 
-  const initialValues = { price, shippingFee, internationalFee, allowsInternationalOrders };
+  const initialValues = { price, shippingFee, internationalFee, allowsInternationalOrders, maxQuantity };
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -54,8 +57,8 @@ const EditListingPricingPanel = props => {
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-      <FormattedMessage id="EditListingPricingPanel.createListingTitle" />
-    );
+    <FormattedMessage id="EditListingPricingPanel.createListingTitle" />
+  );
 
   const priceCurrencyValid = price instanceof Money ? price.currency === config.currency : true;
   const form = priceCurrencyValid ? (
@@ -65,36 +68,40 @@ const EditListingPricingPanel = props => {
       // Code for onSubmit function was taken from here: 
       // https://www.sharetribe.com/docs/tutorial-transaction-process/customize-pricing-tutorial/
       onSubmit={values => {
-        const { price, shippingFee, internationalFee, allowsInternationalOrders } = values;
-        const domesticData = shippingFee ? { amount: shippingFee.amount, currency: shippingFee.currency } :
-          { amount: 0, currency: config.currency };
-        const internationalData = internationalFee ? { amount: internationalFee.amount, currency: internationalFee.currency } :
-          { amount: 0, currency: config.currency };
+        const { price, shippingFee, internationalFee, allowsInternationalOrders, maxQuantity } = values;
 
-        const publicData = (accountType === 'e' || accountType === 'u') &&
-          allowsInternationalOrders && allowsInternationalOrders[0] === "hasFee" ? {
-            // Allows domestic shipping and international shipping
-            shippingFee: domesticData,
-            internationalFee: internationalData,
-            country: userCountry,
-            allowsInternationalOrders
-          } : (accountType === 'e' || accountType === 'u') ? {
-            // Allows only domestic shipping
-            shippingFee: domesticData,
-            internationalFee: domesticData,
-            country: userCountry,
-            allowsInternationalOrders
-          } : {
-              // Empty public data for premium, ad and non-profit listings. Those do not have shipping data show up.
-            };
+        const domesticData = {
+          amount: shippingFee ? shippingFee.amount : 0,
+          currency: config.currency
+        };
 
+        const internationalData = {
+          amount: internationalFee ? internationalFee.amount : 0,
+          currency: config.currency
+        };
+
+        const shouldSaveInternational = allowsInternationalOrders && allowsInternationalOrders[0] === "hasFee"
+
+        const publicData = (accountType === 'e' || accountType === 'u') ? {
+          // Allows domestic shipping and international shipping
+          shippingFee: domesticData,
+          internationalFee: shouldSaveInternational ? internationalData : domesticData,
+          allowsInternationalOrders: shouldSaveInternational,
+          maxQuantity: parseInt(maxQuantity)
+        } : {
+          // Empty public data for premium, ad and non-profit listings. 
+          // Those do not have shipping data show up.
+        };
+
+        // Ad and nonprofit accounts have price set to 0, people dont see their price 
+        // on their listing cards anyway 
         const updatedValues = (accountType === 'a' || accountType === 'n') ? {
           price: new Money(0, config.currency),
           publicData: publicData
         } : {
-            price,
-            publicData: publicData
-          };
+          price,
+          publicData: publicData
+        };
 
         onSubmit(updatedValues);
       }}
@@ -109,10 +116,10 @@ const EditListingPricingPanel = props => {
       accountType={accountType}
     />
   ) : (
-      <div className={css.priceCurrencyInvalid}>
-        <FormattedMessage id="EditListingPricingPanel.listingPriceCurrencyInvalid" />
-      </div>
-    );
+    <div className={css.priceCurrencyInvalid}>
+      <FormattedMessage id="EditListingPricingPanel.listingPriceCurrencyInvalid" />
+    </div>
+  );
 
   return (
     <div className={classes}>
