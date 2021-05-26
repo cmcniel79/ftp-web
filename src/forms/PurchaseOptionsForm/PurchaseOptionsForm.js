@@ -34,18 +34,24 @@ export class PurchaseOptionsFormComponent extends Component {
     // focus on that input, otherwise continue with the
     // default handleSubmit function.
     handleFormSubmit(e) {
-        const country = e && e.country ? e.country :
-            (!this.props.allowsInternationalOrders && this.props.authorCountry) ? this.props.authorCountry : null;
-        const quantity = e && e.quantity ? e.quantity : null
+        const allowsInternationalOrders = this.props && this.props.allowsInternationalOrders ? this.props.allowsInternationalOrders : false;
+        const authorCountry = this.props && this.props.authorCountry ? this.props.authorCountry : null;
 
-        if (!country) {
+        const country = e && e.country ? e.country : null;
+        const quantity = e && e.quantity ? e.quantity : 1;
+
+        if (!country && !authorCountry) {
             e.preventDefault();
             this.setState({ focusedInput: "country" });
         } else if (!quantity) {
             e.preventDefault();
             this.setState({ focusedInput: "quantity" });
         } else {
-            this.props.onSubmit({ authorCountry: this.props.authorCountry, shippingCountry: country, quantity });
+            this.props.onSubmit({ 
+                authorCountry, 
+                shippingCountry: allowsInternationalOrders ? country : authorCountry, 
+                quantity 
+            });
         }
     }
 
@@ -54,15 +60,22 @@ export class PurchaseOptionsFormComponent extends Component {
     // In case you add more fields to the form, make sure you add
     // the values here to the bookingData object.
     handleOnChange(formValues) {
-        const country = formValues.values && formValues.values.country ? formValues.values.country :
-            !this.props.allowsInternationalOrders && this.props.authorCountry ? this.props.authorCountry : null;
-        const quantity = formValues.values && formValues.values.quantity;
+        const allowsInternationalOrders = this.props && this.props.allowsInternationalOrders ? this.props.allowsInternationalOrders : false;
+        const authorCountry = this.props && this.props.authorCountry ? this.props.authorCountry : null;
+
+        const country = formValues.values && formValues.values.country ? formValues.values.country : null;
+        const quantity = formValues.values && formValues.values.quantity ? formValues.values.quantity : 1;
+
         const listingId = this.props.listingId;
         const isOwnListing = this.props.isOwnListing;
 
         if (country && quantity && !this.props.fetchLineItemsInProgress) {
             this.props.onFetchTransactionLineItems({
-                bookingData: { authorCountry: this.props.authorCountry, shippingCountry: country, quantity },
+                bookingData: { 
+                    authorCountry, 
+                    shippingCountry: allowsInternationalOrders ? country : authorCountry, 
+                    quantity 
+                },
                 listingId,
                 isOwnListing,
             });

@@ -431,6 +431,7 @@ export class ListingPageComponent extends Component {
     const customOrders = publicData && publicData.customOrders ? publicData.customOrders : null;
     const websiteLink = isPremium && publicData && publicData.websiteLink ? publicData.websiteLink : null;
     const allowsBarter = publicData && publicData.allowsBarter;
+    const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders;
     const barter = publicData && publicData.barter ? publicData.barter : null;
     const userAccountType = currentUser && currentUser.attributes.profile.publicData &&
       currentUser.attributes.profile.publicData.accountType ? currentUser.attributes.profile.publicData.accountType : null;
@@ -535,6 +536,7 @@ export class ListingPageComponent extends Component {
                         lineItems={lineItems}
                         fetchLineItemsInProgress={fetchLineItemsInProgress}
                         fetchLineItemsError={fetchLineItemsError}
+                        allowsInternationalOrders={allowsInternationalOrders}
                         authorCountry={authorCountry}
                         maxQuantity={maxQuantity}
                       />

@@ -69,19 +69,18 @@ const BookingPanel = props => {
     lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
+    allowsInternationalOrders,
     authorCountry,
-    maxQuantity
+    maxQuantity,
   } = props;
 
   const {
     price,
-    publicData,
   } = listing.attributes;
 
   const hasListingState = !!listing.attributes.state;
   const isClosed = hasListingState && listing.attributes.state === LISTING_STATE_CLOSED;
   const showPurchaseOptionsForm = hasListingState && !isClosed;
-  const allowsInternationalOrders = publicData && publicData.allowsInternationalOrders ? true : false;
 
 
   // Check where this is used in template
