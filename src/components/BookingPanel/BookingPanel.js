@@ -72,6 +72,7 @@ const BookingPanel = props => {
     allowsInternationalOrders,
     authorCountry,
     maxQuantity,
+    shippingFee
   } = props;
 
   const {
@@ -123,6 +124,7 @@ const BookingPanel = props => {
             allowsInternationalOrders={allowsInternationalOrders}
             authorCountry={authorCountry}
             maxQuantity={maxQuantity}
+            shippingFee={shippingFee}
           />
         ) : null}
       </ModalInMobile>

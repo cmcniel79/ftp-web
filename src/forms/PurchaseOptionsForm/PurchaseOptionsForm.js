@@ -11,8 +11,21 @@ import { Form, IconSpinner, PrimaryButton, FieldSelect } from '../../components'
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 import getCountryCodes from '../../translations/countryCodes';
 import { formatMoney } from '../../util/currency';
+import { types as sdkTypes } from '../../util/sdkLoader';
 
 import css from './PurchaseOptionsForm.module.css';
+
+const Decimal = require('decimal.js');
+const { Money } = sdkTypes;
+
+const resolveShippingFeePrice = shippingFee => {
+    const { amount, currency } = shippingFee;
+    if ((amount && currency) || (amount === 0 && currency)) {
+      return new Money(amount, currency);
+    }
+    return null;
+  };
+  
 
 export class PurchaseOptionsFormComponent extends Component {
     constructor(props) {
@@ -47,10 +60,10 @@ export class PurchaseOptionsFormComponent extends Component {
             e.preventDefault();
             this.setState({ focusedInput: "quantity" });
         } else {
-            this.props.onSubmit({ 
-                authorCountry, 
-                shippingCountry: allowsInternationalOrders ? country : authorCountry, 
-                quantity 
+            this.props.onSubmit({
+                authorCountry,
+                shippingCountry: allowsInternationalOrders ? country : authorCountry,
+                quantity
             });
         }
     }
@@ -60,21 +73,28 @@ export class PurchaseOptionsFormComponent extends Component {
     // In case you add more fields to the form, make sure you add
     // the values here to the bookingData object.
     handleOnChange(formValues) {
+        
         const allowsInternationalOrders = this.props && this.props.allowsInternationalOrders ? this.props.allowsInternationalOrders : false;
         const authorCountry = this.props && this.props.authorCountry ? this.props.authorCountry : null;
+        const maxQuantity = this.props && this.props.maxQuantity ? this.props.maxQuantity : null;
 
-        const country = formValues.values && formValues.values.country ? formValues.values.country : null;
-        const quantity = formValues.values && formValues.values.quantity ? formValues.values.quantity : 1;
+        // Should not update the line items through onFetchTransactionLineItems if
+        // listing does not allow international orders and if max transaction quantity is limited to 1
+        // or if maxQuantity does not exist
+        const shouldNotUpdateLineItems = !allowsInternationalOrders && (!maxQuantity || maxQuantity === 1);
 
+        const country = formValues && formValues.values && formValues.values.country ? formValues.values.country : null;
+        const quantity = formValues && formValues.values && formValues.values.quantity ? formValues.values.quantity : null;
+        
         const listingId = this.props.listingId;
         const isOwnListing = this.props.isOwnListing;
 
-        if (country && quantity && !this.props.fetchLineItemsInProgress) {
+        if (!shouldNotUpdateLineItems && country && quantity && !this.props.fetchLineItemsInProgress) {
             this.props.onFetchTransactionLineItems({
-                bookingData: { 
-                    authorCountry, 
-                    shippingCountry: allowsInternationalOrders ? country : authorCountry, 
-                    quantity 
+                bookingData: {
+                    authorCountry,
+                    shippingCountry: allowsInternationalOrders ? country : authorCountry,
+                    quantity
                 },
                 listingId,
                 isOwnListing,
@@ -125,7 +145,8 @@ export class PurchaseOptionsFormComponent extends Component {
                         fetchLineItemsError,
                         allowsInternationalOrders,
                         authorCountry,
-                        maxQuantity
+                        maxQuantity,
+                        shippingFee,
                     } = fieldRenderProps;
 
                     const country = values && values.country;
@@ -147,6 +168,35 @@ export class PurchaseOptionsFormComponent extends Component {
                         }
                     };
 
+                    // The line items here are only used if the listing does not allow 
+                    // international orders and if the listing does not allow more than 1 
+                    // to be sold at a time. In that case, the buyer does not input any info
+                    // into the form. The listing page crashes on reload if these constructed 
+                    // line items are not used for this condition. onFetchLineItems is the culprit
+                    // for crashing the listing page on reload.
+                    const shippingLineItem = shippingFee ? {
+                        code: 'line-item/shipping',
+                        unitPrice: resolveShippingFeePrice(shippingFee),
+                        quantity: new Decimal(1),
+                        includeFor: ['customer', 'provider'],
+                        lineTotal: resolveShippingFeePrice(shippingFee)
+                    } : null;
+
+                    const priceLineItem = unitPrice ? {
+                        code: 'line-item/units',
+                        unitPrice: unitPrice,
+                        quantity: new Decimal(1),
+                        includeFor: ['customer', 'provider'],
+                        lineTotal: unitPrice
+                    } : null;
+
+                    const defaultLineItems = shippingLineItem && priceLineItem ? [shippingLineItem, priceLineItem] : null;
+
+                    // Default line items are using the listing author's country for the shipping address and
+                    // if the maxQuantity is missing or equals one. User input is needed for any other cases and 
+                    // lineItems can be used - the line items taken from the API call.
+                    const bookingLineItems = !allowsInternationalOrders && (!maxQuantity || maxQuantity === 1) ? defaultLineItems : lineItems;
+
                     // This is the place to collect breakdown estimation data.
                     // Note: lineItems are calculated and fetched from FTW backend
                     // so we need to pass only booking data that is needed otherwise
@@ -163,11 +213,11 @@ export class PurchaseOptionsFormComponent extends Component {
                             : null;
 
                     const showEstimatedBreakdown =
-                        bookingData && lineItems && !fetchLineItemsInProgress && !fetchLineItemsError;
+                        bookingData && bookingLineItems && !fetchLineItemsInProgress && !fetchLineItemsError;
 
                     const bookingInfoMaybe = showEstimatedBreakdown ? (
                         <div className={css.priceBreakdownContainer}>
-                            <EstimatedBreakdownMaybe bookingData={bookingData} lineItems={lineItems} />
+                            <EstimatedBreakdownMaybe bookingData={bookingData} lineItems={bookingLineItems} />
                         </div>
                     ) : null;
 
