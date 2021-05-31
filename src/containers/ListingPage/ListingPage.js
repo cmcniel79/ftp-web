@@ -437,6 +437,7 @@ export class ListingPageComponent extends Component {
       currentUser.attributes.profile.publicData.accountType ? currentUser.attributes.profile.publicData.accountType : null;
 
     const maxQuantity = publicData && publicData.maxQuantity ? publicData.maxQuantity : null;
+    const shippingFee = publicData && publicData.shippingFee ? publicData.shippingFee : null;
 
     const loadingSpinnerMaybe = (
       <IconSpinner className={css.spinner} />
@@ -539,6 +540,7 @@ export class ListingPageComponent extends Component {
                         allowsInternationalOrders={allowsInternationalOrders}
                         authorCountry={authorCountry}
                         maxQuantity={maxQuantity}
+                        shippingFee={shippingFee}
                       />
                     )}
                     {!isPremium &&
