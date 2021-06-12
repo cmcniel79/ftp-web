@@ -70,11 +70,8 @@ exports.transactionLineItems = (listing, bookingData) => {
     includeFor: ['provider'],
   };
 
-  const listingEvents = listing.attributes.metadata && listing.attributes.metadata.events;
-  const isWithStanford = listingEvents && listingEvents.includes("5f99d32d-0925-4712-94a8-5482c98f565d");
-
   // No commission on Stanford Powwow Listings
-  const lineItems = isWithStanford ? [booking, shippingFee] : [booking, shippingFee, providerCommission];
+  const lineItems = [booking, shippingFee, providerCommission];
 
   return lineItems;
 };
