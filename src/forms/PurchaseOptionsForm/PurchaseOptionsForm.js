@@ -31,10 +31,19 @@ export class PurchaseOptionsFormComponent extends Component {
     constructor(props) {
         super(props);
         this.state = { focusedInput: null };
+        this._isMounted = false;
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.onFocusedInputChange = this.onFocusedInputChange.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
     }
+
+    componentDidMount() { 
+        this._isMounted = true;
+      }
+      
+      componentWillUnmount() {
+         this._isMounted = false;
+      }
 
     // Function that can be passed to nested components
     // so that they can notify this component when the
@@ -82,18 +91,19 @@ export class PurchaseOptionsFormComponent extends Component {
         // listing does not allow international orders and if max transaction quantity is limited to 1
         // or if maxQuantity does not exist
         const shouldNotUpdateLineItems = !allowsInternationalOrders && (!maxQuantity || maxQuantity === 1);
-
-        const country = formValues && formValues.values && formValues.values.country ? formValues.values.country : null;
-        const quantity = formValues && formValues.values && formValues.values.quantity ? formValues.values.quantity : null;
+        
+        const country = formValues.values && formValues.values.country && allowsInternationalOrders ? formValues.values.country : 
+            !allowsInternationalOrders && authorCountry ? authorCountry : null;
+        const quantity = formValues.values && formValues.values.quantity ? formValues.values.quantity : null;
         
         const listingId = this.props.listingId;
         const isOwnListing = this.props.isOwnListing;
 
-        if (!shouldNotUpdateLineItems && country && quantity && !this.props.fetchLineItemsInProgress) {
+        if (this._isMounted && !shouldNotUpdateLineItems && country && quantity && !this.props.fetchLineItemsInProgress) {
             this.props.onFetchTransactionLineItems({
                 bookingData: {
                     authorCountry,
-                    shippingCountry: allowsInternationalOrders ? country : authorCountry,
+                    shippingCountry: country,
                     quantity
                 },
                 listingId,
@@ -195,7 +205,8 @@ export class PurchaseOptionsFormComponent extends Component {
                     // Default line items are using the listing author's country for the shipping address and
                     // if the maxQuantity is missing or equals one. User input is needed for any other cases and 
                     // lineItems can be used - the line items taken from the API call.
-                    const bookingLineItems = !allowsInternationalOrders && (!maxQuantity || maxQuantity === 1) ? defaultLineItems : lineItems;
+                    const bookingLineItems = !allowsInternationalOrders && (!maxQuantity || maxQuantity === 1 || quantity === 1) ? 
+                        defaultLineItems : lineItems;
 
                     // This is the place to collect breakdown estimation data.
                     // Note: lineItems are calculated and fetched from FTW backend
