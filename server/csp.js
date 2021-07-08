@@ -13,6 +13,7 @@ const baseUrl = process.env.REACT_APP_SHARETRIBE_SDK_BASE_URL || 'https://flex-a
 const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
 const emailURL = process.env.REACT_APP_API_EMAIL + ENV;
 const rankingURL = process.env.REACT_APP_API_RANKING + ENV;
+const buttonRankingURL = process.env.REACT_APP_API_RANKING + "prd" + "/search-page";
 const databaseURL = process.env.REACT_APP_API_DATABASE + ENV;
 const likesURL = process.env.REACT_APP_API_LIKES;
 const mailchimpURL = process.env.REACT_APP_API_MAILCHIMP + ENV;
@@ -112,7 +113,8 @@ module.exports = (reportUri, enforceSsl, reportOnly) => {
    databaseURL,
    likesURL,
    mailchimpURL,
-   eventsURL
+   eventsURL,
+   buttonRankingURL
    ]);
 
   const customDirectives = {

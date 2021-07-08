@@ -82,6 +82,7 @@ export { default as ImageCarousel } from './ImageCarousel/ImageCarousel';
 export { default as ImageFromFile } from './ImageFromFile/ImageFromFile';
 export { default as ListingLink } from './ListingLink/ListingLink';
 export { default as PaginationLinks } from './PaginationLinks/PaginationLinks';
+export { default as RankingUpdateButton } from './RankingUpdateButton/RankingUpdateButton';
 export { default as ReviewRating } from './ReviewRating/ReviewRating';
 
 // Layout helpers
