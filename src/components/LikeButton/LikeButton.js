@@ -6,15 +6,15 @@ import heartFilled from './Images/heart-filled.svg';
 class LikeButton extends Component {
     constructor(props) {
         super(props);
-        const { listingId, isLiked } = props;
+        const { listingUUID, isLiked } = props;
         this.state = {
-            liked: isLiked(listingId) > -1 ? true : false,
+            liked: isLiked(listingUUID) > -1 ? true : false,
         };
     }
 
     handleClick = () => {
         this.setState({ liked: !this.state.liked });
-        this.props.updateLikes(this.props.listingId);
+        this.props.updateLikes(this.props.listingUUID);
     };
 
     render() {

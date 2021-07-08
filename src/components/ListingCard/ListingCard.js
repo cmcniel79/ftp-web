@@ -8,17 +8,16 @@ import { formatMoney } from '../../util/currency';
 import { ensureListing, ensureUser } from '../../util/data';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
-import { 
+import {
   IconVerified,
-  LikeButton, 
-  NamedLink, 
-  ResponsiveImage 
+  LikeButton,
+  NamedLink,
+  RankingUpdateButton,
+  ResponsiveImage
 } from '../../components';
 import ExternalLink from '../ExternalLink/ExternalLink';
 
 import css from './ListingCard.module.css';
-
-const MIN_LENGTH_FOR_LONG_WORDS = 10;
 
 const priceData = (price, intl) => {
   if (price && price.currency === config.currency) {
@@ -54,18 +53,20 @@ class ListingImage extends Component {
 const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export const ListingCardComponent = props => {
-  const { className, 
-    rootClassName, 
-    intl, 
-    listing, 
-    renderSizes, 
+  const { className,
+    rootClassName,
+    intl,
+    listing,
+    renderSizes,
     currentUser,
-    isLiked, 
-    updateLikes 
+    isLiked,
+    updateLikes,
+    isAdmin,
+    updateRanking
   } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
-  const id = currentListing.id.uuid;
+  const listingUUID = currentListing.id.uuid;
   const { title = '', price } = currentListing.attributes;
   const slug = createSlug(title);
 
@@ -88,6 +89,8 @@ export const ListingCardComponent = props => {
     author.attributes.profile.publicData.companyName : null;
   const companyIndustry = author.attributes.profile.publicData && author.attributes.profile.publicData.companyIndustry ?
     author.attributes.profile.publicData.companyIndustry : null;
+  
+  const userUUID = currentUser && currentUser.id && currentUser.id.uuid ? currentUser.id.uuid : null;
 
   // Text above the listing title will need to change based on the account type.
   // Standard, enrolled and premium accounts will have listing price and the listing category and the tribe associated
@@ -133,7 +136,7 @@ export const ListingCardComponent = props => {
     // for their accountType as they are unverified. Default will still pick them up however.
     default:
       imagesAndLinks =
-        <NamedLink name="ListingPage" params={{ id, slug }}>
+        <NamedLink name="ListingPage" params={{ id: listingUUID, slug }}>
           <LazyImage
             rootClassName={css.rootForImage}
             alt={title}
@@ -145,7 +148,7 @@ export const ListingCardComponent = props => {
       break;
     case "e":
       imagesAndLinks =
-        <NamedLink name="ListingPage" params={{ id, slug }}>
+        <NamedLink name="ListingPage" params={{ id: listingUUID, slug }}>
           <LazyImage
             rootClassName={css.rootForImage}
             alt={title}
@@ -153,12 +156,12 @@ export const ListingCardComponent = props => {
             variants={['landscape-crop', 'landscape-crop2x']}
             sizes={renderSizes}
           />
-          <IconVerified className={css.verifiedImage} isFilled={true}/>
+          <IconVerified className={css.verifiedImage} isFilled={true} />
         </NamedLink>;
       break;
     case "p":
       imagesAndLinks =
-        <NamedLink name="ListingPage" params={{ id, slug }}>
+        <NamedLink name="ListingPage" params={{ id: listingUUID, slug }}>
           <LazyImage
             rootClassName={css.rootForImage}
             alt={title}
@@ -208,13 +211,20 @@ export const ListingCardComponent = props => {
       <div className={css.threeToTwoWrapper}>
         <div className={css.aspectWrapper}>
           {imagesAndLinks}
-          {currentUser &&
+          {currentUser ? (
             <LikeButton
-              listingId={id}
+              listingUUID={listingUUID}
               isLiked={isLiked}
               updateLikes={updateLikes}
             />
-          }
+          ) : null}
+          {isAdmin && userUUID ? (
+            <RankingUpdateButton
+              listingUUID={listingUUID}
+              updateRanking={updateRanking}
+              userUUID={userUUID}
+            />
+          ) : null}
         </div>
       </div>
       <div className={css.cardText}>
@@ -223,11 +233,12 @@ export const ListingCardComponent = props => {
             {optionalText}
             {title}
           </ExternalLink>
-        ) : <NamedLink className={css.link} name="ListingPage" params={{ id, slug }}>
+        ) : (
+          <NamedLink className={css.link} name="ListingPage" params={{ id: listingUUID, slug }}>
             {optionalText}
             {title}
           </NamedLink>
-        }
+        )}
       </div>
     </div>
   );

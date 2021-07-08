@@ -7,8 +7,10 @@ import config from '../../config';
 import { denormalisedResponseEntities } from '../../util/data';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
 
-const KEY = process.env.REACT_APP_API_KEY;
+const KEY = "dShKIr3xlkgXBtiwSeSN7jaYIjmIwnnnN4rLDN00";
 const URL = process.env.REACT_APP_API_LIKES;
+const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
+const BASE_URL = process.env.REACT_APP_API_RANKING;
 
 // Pagination page size might need to be dynamic on responsive page layouts
 // Current design has max 3 columns 12 is divisible by 2 and 3
@@ -209,6 +211,25 @@ export const callLikeAPI = actionPayload => {
     })
     .catch(e => console.log(e));
 };
+
+export const updateRanking = actionPayload => {
+  const url = BASE_URL + "prd" + "/search-page";
+  const options = {
+    method: 'POST',
+    withCredentials: false,
+    body: JSON.stringify(actionPayload),
+    headers: {
+      "Content-Type": "application/json",
+      "X-Api-Key": KEY,
+    }
+  }
+
+  fetch(url, options)
+    .then(response => response.json())
+    .then(parsed => console.log(parsed.body))
+    .catch(() => console.log("Could not update ranking"))
+};
+
 
 export const loadData = (params, search) => {
   const queryParams = parse(search, {

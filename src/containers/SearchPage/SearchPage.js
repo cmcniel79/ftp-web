@@ -12,13 +12,19 @@ import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
 import { Page } from '../../components';
 import { TopbarContainer } from '../../containers';
-import { searchListings, setActiveListing, sendUpdatedLikes, callLikeAPI } from './SearchPage.duck';
+import { 
+  setActiveListing, 
+  sendUpdatedLikes, 
+  callLikeAPI, 
+  updateRanking 
+} from './SearchPage.duck';
 import {
   pickSearchParamsOnly,
   validURLParamsForExtendedData,
   createSearchResultSchema,
 } from './SearchPage.helpers';
 import MainPanel from './MainPanel';
+
 import css from './SearchPage.module.css';
 
 // Pagination page size might need to be dynamic on responsive page layouts
@@ -180,6 +186,7 @@ export class SearchPageComponent extends Component {
             updateLikes={this.updateLikes}
             saveTribes={this.saveTribes}
             tribes={this.tribes}
+            updateRanking={updateRanking}
           />
         </div>
       </Page>

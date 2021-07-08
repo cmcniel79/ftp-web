@@ -17,9 +17,12 @@ const SearchResultsPanel = props => {
     isLiked, 
     updateLikes,
     pageName,
-    pagePathParams 
+    pagePathParams,
+    updateRanking
   } = props;
   const classes = classNames(rootClassName || css.root, className);
+  const isAdmin = currentUser && currentUser.attributes.profile && 
+    currentUser.attributes.profile.metadata && currentUser.attributes.profile.metadata.admin;
 
   const paginationLinks =
     pagination && pagination.totalPages > 1 ? (
@@ -55,6 +58,8 @@ const SearchResultsPanel = props => {
             currentUser={currentUser}
             isLiked={isLiked}
             updateLikes={updateLikes}
+            isAdmin={isAdmin}
+            updateRanking={updateRanking}
           />
         ))}
         {props.children}

@@ -174,7 +174,8 @@ class MainPanel extends Component {
       isLiked,
       updateLikes,
       saveTribes,
-      tribes
+      tribes,
+      updateRanking
     } = this.props;
 
     const primaryFilters = filterConfig.filter(f => f.group === 'primary');
@@ -380,6 +381,7 @@ class MainPanel extends Component {
             isLiked={isLiked}
             updateLikes={updateLikes}
             pageName="SearchPage"
+            updateRanking={updateRanking}
           />
         </div>
       </div>
