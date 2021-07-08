@@ -7,7 +7,7 @@ import config from '../../config';
 import { denormalisedResponseEntities } from '../../util/data';
 import { currentUserShowSuccess } from '../../ducks/user.duck';
 
-const KEY = "dShKIr3xlkgXBtiwSeSN7jaYIjmIwnnnN4rLDN00";
+const KEY = process.env.REACT_APP_API_KEY;
 const URL = process.env.REACT_APP_API_LIKES;
 const ENV = process.env.REACT_APP_ENV === "production" ? "prd" : "dev";
 const BASE_URL = process.env.REACT_APP_API_RANKING;
